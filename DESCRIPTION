@@ -1,23 +1,16 @@
-Package: condor
-Type: Package
-Title: COmplex Network Description Of Regulators
-Version: 1.1.1
-Date: 2016-09-12
-Author: John Platig
-Maintainer: John Platig <jplatig@jimmy.harvard.edu>
-Description: Bipartite community structure analysis of biological networks,
-    especially eQTL networks, including a method for scoring nodes based on
-    their modularity contribution. Version 1.1.1 allows the user to set the convergence parameter deltaQ.
-Imports:
-    igraph,
-    gplots,
-    nnet,
-    data.table,
-    Matrix
-Depends:
-    R (>= 3.0.0)
-License: MIT + file LICENSE
+Package: pandaR
+Title: PANDA algorithm
+Version: 0.99.2
+Author: "Dan Schlauch <dschlauch@fas.harvard.edu>"
+Maintainer: Dan Schlauch <dschlauch@fas.harvard.edu>
+Description: Runs PANDA, an algorithm for discovering novel network
+        structure by combining information from multiple complimentary
+        data sources.
+Depends: R (>= 3.2.0)
+Suggests: knitr, igraph
+biocViews: StatisticalMethod, GraphAndNetwork, Microarray,
+        GeneRegulation, NetworkInference, GeneExpression,
+        Transcription, Network
 VignetteBuilder: knitr
-Suggests:
-    knitr
-RoxygenNote: 5.0.1
+License: GPL-2
+LazyData: true

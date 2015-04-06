@@ -1,0 +1,64 @@
+---
+title: "An Introduction to the pandaR Package"
+author: "Daniel Schlauch"
+date: "March, 2015"
+output: pdf_document
+---
+
+\section{Introduction}The fundamental concepts behind the PANDA approach is to model the regulatory network as a bipartite network and estimate edge weights based on the evidence that information from a particular transcription factor *i* is successfully being passed to a particular gene *j*. This evidence comes from the agreement between two measured quantities. First, the correlation in expression between gene *j* and other genes. And second, the strength ofevidence of the existence of an edge between TF *i* and those same genes. This concordance is measured using Tanimoto similarity. A gene is said to be available if there is strong evidence of this type of agreement. Analogous to this is the concept of responsibility which similarly focuses on a TF-gene network edge but instead measures the concordance between suspected protein-complex partners of TF *i* and the respective strength of evidence of a regulatory pathway between those TFs and gene *j*.
+ </p><p>
+ PANDA utilizes an iterative approach to updating the bipartite edge weights incrementally as evidence for new edges emerges and evidence for existing edges diminishes. This process continues until the algorithm reaches a point of convergence settling on a final score for the strength of information supporting a regulatory mechanism for every pairwise combination of TFs and genes. This package provides a straightforward tool for applying this established method. Beginning with data.frames or matrices representing a set of gene expression samples, motifpriors and optional protein-protein interaction users can generate an *m* by *n* matrix representing the bipartite network from *m* TFs regulating *n* genes. Additionally, pandaR reports the co-regulation and cooperative networks at convergence. These are reported as complete graphs representing the evidence for gene co-regulation and transcription factor cooperation.
+</p>
+\section{Example}
+An example dataset derived from a stress-induced Yeast is available by running
+
+```r
+library(pandaR)
+data(pandaToyData)
+```
+
+ \texttt{yeast} is a list containing a regulatory structure derived from sequence motif analysis, protein-protein interaction data and three separate gene expression datasets.  In this example we are using  \texttt{yeast\$exp.sr}, a *Saccharomyces cerevisiae* gene expression dataset collected under stress-inducing conditions.
+The primary function in pandaR is called with 
+
+
+```r
+pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
+```
+
+Where \texttt{res} is a ‘panda’ object which contains matrices describing the complete bipartite gene regulatory network as well as complete networks for gene coregulation and transcription factor cooperation.  Due to completeness, edgeweights for the regulatory network are reported for all *m*x*n* possible TF-gene edges.  This distribution of these edge weights for these networks has approximate mean 0 and and standard deviation 1.  The edges are therfore best interpreted in a relative sense.  Strongly positive values indicative of relatively larger amounts of evidence in favor a regulatory mechanism and conversely, smaller or negative values can be interpreted as lacking evidence of a shared biological role.  It is naturally of interest to specify a high edge weight subset of the complete network to investigate as a set of present/absent edges.
+This is easily performed by using the \texttt{topedges} function.
+A network containing the top 1000 edge scores as binary edges can be obtained with
+
+
+```r
+topNet <- topedges(pandaResult, 1000)
+```
+Users may then examine the genes targeted by a transcription factor of interest.
+
+```r
+targetedGenes(topNet, c("AR"))
+```
+
+```
+##  [1] "AKAP10"       "CNDP2"        "CRHR1"        "HNRNPD"      
+##  [5] "KIAA0652"     "LOC100093631" "LOC100128811" "PRR15"       
+##  [9] "TCF4"         "TCP11L2"      "TMPRSS11B"    "VCX3B"       
+## [13] "WDR4"
+```
+The network can be further simplified by focusing only on transcription factors on interest and the genes that they are found to regulate.  The \texttt{subnetwork} method serves this function
+
+```r
+topSubnet <- subnetwork(topNet, c("AR","ARID3A","ELK1"))
+```
+Existing R packages, such as igraph, can be used to visualize the results
+
+```r
+plotGraph(topSubnet)
+```
+
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
+
+\section{References}
+Glass K, Huttenhower C, Quackenbush J, Yuan GC. Passing Messages Between Biological Networks to Refine Predicted Interactions, *PLoS One*, 2013 May 31;8(5):e64832
+
+Glass K, Quackenbush J, Silverman EK, Celli B, Rennard S, Yuan GC and DeMeo DL. Sexually-dimorphic targeting of functionally-related genes in COPD, *BMC Systems Biology*, 2014 Nov 28;**8**:118
