@@ -283,6 +283,8 @@ spreadNet <- function(df){
 #'            pandaToyData$expression,pandaToyData$ppi,hamming=.001,progress=TRUE)
 #' topPandaRes <- topedges(pandaRes,1000)
 #' }
+#' data(pandaResult)
+#' topPandaRes <- topedges(pandaResult,1000)
 topedges <- function(x, count=NA, cutoff=2.0, networks=c("coregulation","cooperation","regulatory")){
     if(class(x)!="panda"){
         warning(paste(sep="","Cannot run topedges on object of class '",class(x),"'.  Must be of class 'panda'"))
@@ -318,7 +320,11 @@ topedges <- function(x, count=NA, cutoff=2.0, networks=c("coregulation","coopera
 #' pandaRes <- panda(pandaToyData$motif,
 #'            pandaToyData$expression,pandaToyData$ppi,hamming=.001,progress=TRUE)
 #' topPandaRes <- topedges(pandaRes,1000)
-#' subnet.pandaRes <- subnetwork(topPandaRes,c("AR","ARID3A","ELK1"))}
+#' subnet.pandaRes <- subnetwork(topPandaRes,c("AR","ARID3A","ELK1"))
+#' }
+#' data(pandaResult)
+#' topPandaRes <- topedges(pandaResult,1000)
+#' subnetwork(topPandaRes,c("AR","ARID3A","ELK1"))
 subnetwork <- function(x, nodes, subTf=TRUE){
     if(class(x)!="panda"){
         warning(paste(sep="","Cannot run subnetwork on object of class '",class(x),"'.    Must be of class 'panda'"))
@@ -352,7 +358,10 @@ subnetwork <- function(x, nodes, subTf=TRUE){
 #' pandaRes <- panda(pandaToyData$motif,
 #'            pandaToyData$expression,pandaToyData$ppi,hamming=.001)
 #' topPandaRes <- topedges(pandaRes,1000)
-#' targetedGenes(topPandaRes,c("AR","ELK1"))}
+#' targetedGenes(topPandaRes,c("AR","ELK1"))
+#' }
+#' data(pandaResult)
+#' topPandaRes <- topedges(pandaResult,1000)
 targetedGenes <- function(x, tfs){
     if(class(x)!="panda"){
         warning(paste(sep="","Cannot run subnetwork on object of class '",class(x),"'.  Must be of class 'panda'"))
@@ -379,15 +388,16 @@ targetedGenes <- function(x, tfs){
 #' pandaRes <- panda(pandaToyData$motif,
 #'            pandaToyData$expression,pandaToyData$ppi,hamming=.001,progress=TRUE)
 #' topPandaRes <- topedges(pandaRes,1000)
-#' subnet.pandaRes <- subnetwork(topPandaRes,c("AR","ARID3A","ELK1"))}
+#' subnet.pandaRes <- subnetwork(topPandaRes,c("AR","ARID3A","ELK1"))
+#' plotGraph(subnet.pandaRes)
+#' }
+#' data(pandaResult)
+#' topPandaRes <- topedges(pandaResult, 1000)
+#' subnet.pandaRes <- subnetwork(topPandaRes,c("AR","ARID3A","ELK1"))
+#' plotGraph(subnet.pandaRes)
 plotGraph <- function(x){
-<<<<<<< HEAD
-    plot(igraph::graph.incidence(x), layout=igraph::layout.bipartite)
-}
-=======
     if(require('igraph'))
         plot(igraph::graph.incidence(x), layout=igraph::layout.bipartite)
     else
         stop
 }
->>>>>>> 30ec413fcc5a385137b11ff2b46ceb8bae4e6598
