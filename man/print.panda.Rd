@@ -22,7 +22,10 @@ summarizes the results of a PANDA analysis
 data(pandaToyData)
 panda.res <- panda(pandaToyData$motif,
            pandaToyData$expression,pandaToyData$ppi,hamming=.001,progress=TRUE)
-print(panda.res)}
+print(panda.res)
+}
+data(pandaResult)
+print(pandaResult)
 }
 \keyword{keywords}
 

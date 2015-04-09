@@ -1,5 +1,3 @@
-*.tex
-*.Rhistory
 .Rproj.user
-*.Rproj
-.DS_Store
+.Rhistory
+.RData

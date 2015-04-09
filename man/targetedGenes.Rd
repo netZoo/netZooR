@@ -24,7 +24,10 @@ data(pandaToyData)
 pandaRes <- panda(pandaToyData$motif,
            pandaToyData$expression,pandaToyData$ppi,hamming=.001)
 topPandaRes <- topedges(pandaRes,1000)
-targetedGenes(topPandaRes,c("AR","ELK1"))}
+targetedGenes(topPandaRes,c("AR","ELK1"))
+}
+data(pandaResult)
+topPandaRes <- topedges(pandaResult,1000)
 }
 \keyword{keywords}
 

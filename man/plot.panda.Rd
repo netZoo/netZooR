@@ -24,6 +24,8 @@ panda.res <- panda(pandaToyData$motif,
            pandaToyData$expression,pandaToyData$ppi,hamming=.001,progress=TRUE)
 plot(panda.res)
 }
+data(pandaResult)
+plot(pandaResult)
 }
 \keyword{keywords}
 

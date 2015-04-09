@@ -21,7 +21,13 @@ data(pandaToyData)
 pandaRes <- panda(pandaToyData$motif,
            pandaToyData$expression,pandaToyData$ppi,hamming=.001,progress=TRUE)
 topPandaRes <- topedges(pandaRes,1000)
-subnet.pandaRes <- subnetwork(topPandaRes,c("AR","ARID3A","ELK1"))}
+subnet.pandaRes <- subnetwork(topPandaRes,c("AR","ARID3A","ELK1"))
+plotGraph(subnet.pandaRes)
+}
+data(pandaResult)
+topPandaRes <- topedges(pandaResult, 1000)
+subnet.pandaRes <- subnetwork(topPandaRes,c("AR","ARID3A","ELK1"))
+plotGraph(subnet.pandaRes)
 }
 \keyword{keywords}
 
