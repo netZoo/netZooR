@@ -381,5 +381,13 @@ targetedGenes <- function(x, tfs){
 #' topPandaRes <- topedges(pandaRes,1000)
 #' subnet.pandaRes <- subnetwork(topPandaRes,c("AR","ARID3A","ELK1"))}
 plotGraph <- function(x){
+<<<<<<< HEAD
     plot(igraph::graph.incidence(x), layout=igraph::layout.bipartite)
 }
+=======
+    if(require('igraph'))
+        plot(igraph::graph.incidence(x), layout=igraph::layout.bipartite)
+    else
+        stop
+}
+>>>>>>> 30ec413fcc5a385137b11ff2b46ceb8bae4e6598
