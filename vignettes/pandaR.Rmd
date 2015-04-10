@@ -1,13 +1,14 @@
-<!--
-%\VignetteEngine{knitr::knitr}
--->
-
 ---
 title: "An Introduction to the pandaR Package"
 author: "Daniel Schlauch"
-date: "April, 2015"
-output: html_document
+date: "`r Sys.Date()`"
+output: rmarkdown::pdf_document
+vignette: >
+  %\VignetteIndexEntry{pandaR Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
+
 
 ## Introduction
 The fundamental concepts behind the PANDA approach is to model the regulatory network as a bipartite network and estimate edge weights based on the evidence that information from a particular transcription factor *i* is successfully being passed to a particular gene *j*. This evidence comes from the agreement between two measured quantities. First, the correlation in expression between gene *j* and other genes. And second, the strength ofevidence of the existence of an edge between TF *i* and those same genes. This concordance is measured using Tanimoto similarity. A gene is said to be available if there is strong evidence of this type of agreement. Analogous to this is the concept of responsibility which similarly focuses on a TF-gene network edge but instead measures the concordance between suspected protein-complex partners of TF *i* and the respective strength of evidence of a regulatory pathway between those TFs and gene *j*.
