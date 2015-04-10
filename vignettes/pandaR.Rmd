@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{pandaR Package}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   \usepackage[utf8]{inputenc}
 ---
 
