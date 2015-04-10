@@ -2,7 +2,7 @@
 title: "An Introduction to the pandaR Package"
 author: "Daniel Schlauch"
 date: "`r Sys.Date()`"
-output: rmarkdown::pdf_document
+output: rmarkdown::html_document
 vignette: >
   %\VignetteIndexEntry{pandaR Package}
   %\VignetteEngine{knitr::knitr}
