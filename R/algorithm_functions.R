@@ -20,6 +20,8 @@
 #' be one of "None", "within.gene", "by.genes".  "within.gene" randomization scrambles each row
 #' of the gene expression matrix, "by.gene" scrambles gene labels.
 #' @keywords keywords
+#' @importFrom matrixStats rowSds
+#' @importFrom matrixStats colSds
 #' @export
 #' @return An object of class "panda" containing matrices describing networks achieved by convergence
 #' with PANDA algorithm.\cr
@@ -146,6 +148,8 @@ panda <- function( motif,
 
     if(progress)
         print('Leaning Network...')
+
+    minusAlpha = 1-alpha
     step=0
     hamming_cur=1
     if(progress)
@@ -156,16 +160,18 @@ panda <- function( motif,
         }
         Responsibility=tanimoto(tfCoopNetwork, regulatoryNetwork)
         Availability=tanimoto(regulatoryNetwork, geneCoreg)
-        hamming_cur=sum(abs(regulatoryNetwork-0.5*(Responsibility+Availability)))/(num.TFs*num.genes)
-        regulatoryNetwork=(1-alpha)*regulatoryNetwork+alpha*0.5*(Responsibility+Availability)
+        RA = 0.5*(Responsibility+Availability)
+
+        hamming_cur=sum(abs(regulatoryNetwork-RA))/(num.TFs*num.genes)
+        regulatoryNetwork=minusAlpha*regulatoryNetwork + alpha*RA
 
         ppiData=tanimoto(regulatoryNetwork, t(regulatoryNetwork))
         ppiData=update.diagonal(ppiData, num.TFs, alpha, step)
-        tfCoopNetwork=(1-alpha)*tfCoopNetwork+alpha*ppiData
+        tfCoopNetwork=minusAlpha*tfCoopNetwork + alpha*ppiData
 
         CoReg2=tanimoto(t(regulatoryNetwork), regulatoryNetwork)
         CoReg2=update.diagonal(CoReg2, num.genes, alpha, step)
-        geneCoreg=(1-alpha)*geneCoreg+alpha*CoReg2
+        geneCoreg=minusAlpha*geneCoreg + alpha*CoReg2
 
         if(progress)
             message("Iteration", step,": hamming distance =", round(hamming_cur,5))
@@ -201,22 +207,34 @@ prepResult <- function(zScale, output, regulatoryNetwork, geneCoreg, tfCoopNetwo
 normalizeNetwork<-function(X){
     X <- as.matrix(X)
 
+    nr = nrow(X)
+    nc = ncol(X)
+    dm = c(nr,nc)
+
     # overall values
     mu0=mean(X)
     std0=sd(X)
 
     # operations on rows
-    mu1=apply(X,1,mean) # operations on rows
-    std1=apply(X,1,sd)*sqrt((dim(X)[2]-1)/dim(X)[2])
-    mu1=matrix(rep(mu1, dim(X)[2]), dim(X))
-    std1=matrix(rep(std1, dim(X)[2]), dim(X))
+    mu1=rowMeans(X) # operations on rows
+    std1=rowSds(X)*sqrt((dim(X)[2]-1)/dim(X)[2])
+    
+    mu1=rep(mu1, nc)
+    dim(mu1) = dm
+    std1=rep(std1,nc)
+    dim(std1)= dm
+
     Z1=(X-mu1)/std1
 
     # operations on columns
-    mu2=apply(X,2,mean) # operations on columns
-    std2=apply(X,2,sd)*sqrt((dim(X)[1]-1)/dim(X)[1])
-    mu2=matrix(rep(mu2, each=dim(X)[1]), dim(X))
-    std2=matrix(rep(std2, each=dim(X)[1]), dim(X))
+    mu2=colMeans(X) # operations on columns
+    std2=colSds(X)*sqrt((nr-1)/nr)
+    
+    mu2 = rep(mu2, each=nr)
+    dim(mu2) = dm
+    std2= rep(std2, each=nr)
+    dim(std2) = dm
+
     Z2=(X-mu2)/std2
 
     # combine and return
@@ -228,15 +246,27 @@ normalizeNetwork<-function(X){
 }
 
 tanimoto<-function(X,Y){
+
+    nc = ncol(Y)
+    nr = nrow(X)
+    dm = c(nr,nc)
+
     Amat=(X %*% Y)
-    Bmat=apply(Y*Y,2,sum)
-    Bmat=matrix(rep(Bmat, each=dim(X)[1]), dim(Amat))
-    Cmat=apply(X*X,1,sum)
-    Cmat=matrix(rep(Cmat, dim(Y)[2]), dim(Amat))
+    Bmat=colSums(Y*Y)
+    
+    Bmat = rep(Bmat,each=nr)
+    dim(Bmat) = dm
+    #Bmat=matrix(rep(Bmat, each=nr), dm)
 
-    Amat=Amat/sqrt(Bmat+Cmat-abs(Amat))
+    Cmat=rowSums(X*X)
+    Cmat=rep(Cmat,nc)
+    dim(Cmat) = dm
+    #Cmat=matrix(rep(Cmat, nc), dm)
 
-    Amat
+    den = (Bmat+Cmat-abs(Amat))
+    Amat=Amat/sqrt(den)
+
+    return(Amat)
 }
 
 dFunction<-function(X,Y){
@@ -247,10 +277,11 @@ dFunction<-function(X,Y){
 
 
 update.diagonal<-function(diagMat, num, alpha, step){
-    diagMat[seq(1, num*num, num+1)]=NaN
-    diagstd=apply(diagMat,2,sd,na.rm=TRUE)*sqrt((num-2)/(num-1))
-    diagMat[seq(1, num*num, num+1)]=diagstd*num*exp(2*alpha*step)
-    diagMat
+    seqs = seq(1, num*num, num+1)
+    diagMat[seqs]=NaN;
+    diagstd=rowSds(diagMat,na.rm=TRUE)*sqrt( (num-2)/(num-1) );
+    diagMat[seqs]=diagstd*num*exp(2*alpha*step);
+    return(diagMat);
 }
 
 spreadNet <- function(df){
@@ -332,11 +363,11 @@ subnetwork <- function(x, nodes, subTf=TRUE){
     }
     if (subTf){
         subnet <- x@regNet[nodes,]
-        edgeexists <- apply(subnet,2,sum)>0
+        edgeexists <- colSums(subnet)>0
         subnet <- subnet[,edgeexists]
     } else {
         subnet <- x@regNet[,nodes]
-        edgeexists <- apply(subnet,1,sum)>0
+        edgeexists <- rowSums(subnet)>0
         subnet <- subnet[edgeexists,]
     }
     subnet
@@ -368,7 +399,7 @@ targetedGenes <- function(x, tfs){
         stop
     }
     subnet <- x@regNet[tfs,,drop=FALSE]
-    edgeexists <- apply(subnet,2,sum)>0
+    edgeexists <- colSums(subnet)>0
     targeted <- colnames(x@regNet)[edgeexists]
     targeted
 }
@@ -380,6 +411,8 @@ targetedGenes <- function(x, tfs){
 #'
 #' @param x an object of class "panda"
 #' @keywords keywords
+#' @importFrom igraph graph.incidence
+#' @importFrom igraph layout.bipartite
 #' @export
 #' @return An matrix describing the subsetted bipartite network.
 #' @examples
@@ -396,8 +429,5 @@ targetedGenes <- function(x, tfs){
 #' subnet.pandaRes <- subnetwork(topPandaRes,c("AR","ARID3A","ELK1"))
 #' plotGraph(subnet.pandaRes)
 plotGraph <- function(x){
-    if(require('igraph'))
-        plot(igraph::graph.incidence(x), layout=igraph::layout.bipartite)
-    else
-        stop
+    plot(graph.incidence(x), layout=layout.bipartite)
 }
