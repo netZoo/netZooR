@@ -19,6 +19,8 @@
 #' @param randomize method by which to randomize gene expression matrix.  Default "None".  Must
 #' be one of "None", "within.gene", "by.genes".  "within.gene" randomization scrambles each row
 #' of the gene expression matrix, "by.gene" scrambles gene labels.
+#' @param cor.method Correlation method, default is "pearson".
+#' @param scale.by.present Boolean to indicate scaling of correlations by percentage of positive samples. 
 #' @keywords keywords
 #' @importFrom matrixStats rowSds
 #' @importFrom matrixStats colSds
@@ -44,7 +46,9 @@ panda <- function( motif,
                 output=c('regulatory','coexpression','cooperative'),
                 zScale=TRUE,
                 progress=FALSE,
-                randomize="None"){
+                randomize="None",
+                cor.method="pearson",
+                scale.by.present=FALSE){
     if(progress)
         print('Initializing and validating')
     exprData  <- expr
@@ -101,7 +105,14 @@ panda <- function( motif,
         warning('Not enough expression conditions detected to calculate correlation. Co-regulation network will be initialized to an identity matrix.')
         geneCoreg <- diag(num.genes)
     } else {
-        geneCoreg <- cor(t(exprData), method="pearson", use="pairwise.complete.obs")
+        
+        if(scale.by.present){
+            num.positive=(exprData>0)%*%t((exprData>0))
+            geneCoreg <- cor(t(exprData), method=cor.method, use="pairwise.complete.obs")*(num.positive/num.conditions)
+
+        } else {
+            geneCoreg <- cor(t(exprData), method=cor.method, use="pairwise.complete.obs")
+        }
         if(progress)
             print('Verified sufficient samples')
     }

@@ -6,7 +6,8 @@
 \usage{
 panda(motif, expr = NULL, ppi = NULL, alpha = 0.1, hamming = 1e-05,
   k = NA, output = c("regulatory", "coexpression", "cooperative"),
-  zScale = TRUE, progress = FALSE, randomize = "None")
+  zScale = TRUE, progress = FALSE, randomize = "None",
+  cor.method = "pearson", scale.by.present = FALSE)
 }
 \arguments{
 \item{motif}{A motif dataset, a data.frame, matrix or exprSet containing 3 columns.
@@ -35,6 +36,10 @@ transcription factor 2 (column 2) and a score (column 3) for the interaction.}
 \item{randomize}{method by which to randomize gene expression matrix.  Default "None".  Must
 be one of "None", "within.gene", "by.genes".  "within.gene" randomization scrambles each row
 of the gene expression matrix, "by.gene" scrambles gene labels.}
+
+\item{cor.method}{Correlation method, default is "pearson".}
+
+\item{scale.by.present}{Boolean to indicate scaling of correlations by percentage of positive samples.}
 }
 \value{
 An object of class "panda" containing matrices describing networks achieved by convergence

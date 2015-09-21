@@ -1,11 +1,11 @@
 Package: pandaR
 Title: PANDA algorithm
-Version: 1.1.1
+Version: 1.1.21
 Author: "Dan Schlauch <dschlauch@fas.harvard.edu>"
 Maintainer: Dan Schlauch <dschlauch@fas.harvard.edu>
 Description: Runs PANDA, an algorithm for discovering novel network structure
     by combining information from multiple complimentary data sources.
-Depends: R (>= 3.1.3), methods
+Depends: R (>= 3.0.0), methods
 Imports: matrixStats, igraph
 Suggests: knitr
 biocViews: StatisticalMethod, GraphAndNetwork, Microarray, GeneRegulation, NetworkInference, GeneExpression, Transcription, Network
