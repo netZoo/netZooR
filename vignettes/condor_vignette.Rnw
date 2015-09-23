@@ -1,3 +1,5 @@
+%\VignetteEngine{knitr::sweave}
+%\VignetteIndexEntry{condor_vignette}
 \documentclass{article}
 \usepackage[margin=0.75in]{geometry}
 %\VignetteIndexEntry{CONDOR Vignette}
