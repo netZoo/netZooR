@@ -1,8 +1,8 @@
-%\VignetteEngine{knitr::sweave}
-%\VignetteIndexEntry{condor_vignette}
+%\VignetteIndexEntry{condor vignette}
+%\VignetteDepends{CONDOR}
+%\VignettePackage{CONDOR}
 \documentclass{article}
 \usepackage[margin=0.75in]{geometry}
-%\VignetteIndexEntry{CONDOR Vignette}
 %\usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \title{CONDOR Vignette}
