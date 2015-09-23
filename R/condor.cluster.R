@@ -1,8 +1,11 @@
 #' Main clustering function for CONDOR. 
 #' 
-#' This function uses a standard (non-bipartite) community structure 
-#' clustering of the uni-partite, weighted projection of the original 
-#' bipartite graph as an initial guess for the bipartite clustering
+#' This function performs community structure clustering using
+#' the bipartite modularity described in
+#' \code{\link{condor.modularity.max}}. This function uses a standard
+#' (non-bipartite) community structure clustering of the uni-partite,
+#' weighted projection of the original bipartite graph as an initial
+#' guess for the bipartite modularity.
 #' @param condor.object Output of make.condor.object. This function uses 
 #' \code{condor.object$edges}
 #' @param cs.method is a string to specify which unipartite community 
