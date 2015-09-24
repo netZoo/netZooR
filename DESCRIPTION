@@ -1,4 +1,4 @@
-Package: CONDOR
+Package: condor
 Type: Package
 Title: COmplex Network Description Of Regulators
 Version: 1.0
