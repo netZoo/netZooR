@@ -5,8 +5,9 @@
 \title{condor Vignette}
 %\author{John Platig}
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \SweaveOpts{engine=R}
-%\VignetteIndexEntry{Using condor} 
+%\VignetteIndexEntry{condor} 
 %\VignetteDepends{condor,igraph} 
 %\VignetteKeywords{condor} 
 %\VignettePackage{condor} 

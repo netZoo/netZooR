@@ -2,7 +2,7 @@
 % Please edit documentation in R/create.condor.object.R
 \name{create.condor.object}
 \alias{create.condor.object}
-\title{Create list amenable to analysis using \code{CONDOR} package.}
+\title{Create list amenable to analysis using \code{condor} package.}
 \usage{
 create.condor.object(edgelist, return.gcc = TRUE)
 }
@@ -22,7 +22,7 @@ with V(g)$color to identify red/blue node names
 edges corresponding to graph G. If return.gcc=TRUE, includes only
 those edges in the giant connected component.
 
-Qcom output from \code{\link{condor.cluster}} or
+Qcoms output from \code{\link{condor.cluster}} or
 \code{\link{BRIM}}
 
 modularity \code{NULL} output from \code{\link{condor.cluster}}
@@ -38,7 +38,7 @@ qscores \code{NULL} output from \code{\link{condor.qscore}}
 }
 \description{
 Converts an edge list into a \code{list} which is then an input for
-other functions in the \code{\link{CONDOR}} package.
+other functions in the \code{\link{condor}} package.
 }
 \examples{
 r = c(1,1,1,2,2,2,3,3,3,4,4);

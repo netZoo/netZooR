@@ -12,7 +12,7 @@
 #' with V(g)$color to identify red/blue node names
 #' @return edges corresponding to graph G. If return.gcc=TRUE, includes only
 #' those edges in the giant connected component.
-#' @return Qcom output from \code{\link{condor.cluster}} or 
+#' @return Qcoms output from \code{\link{condor.cluster}} or 
 #' \code{\link{BRIM}}
 #' @return modularity \code{NULL} output from \code{\link{condor.cluster}} 
 #' or \code{\link{BRIM}}
@@ -68,7 +68,7 @@ create.condor.object <- function(edgelist,return.gcc=TRUE){
     red.names <- V(g.out)$name[V(g.out)$name %in% unique(edgelist$red)]
     edges <- edgelist[edgelist$blue %in% blue.names,]
     
-    return(list(G=g.out,edges=edges,Qcom=NULL,modularity=NULL,red.memb=NULL,
+    return(list(G=g.out,edges=edges,Qcoms=NULL,modularity=NULL,red.memb=NULL,
                 blue.memb=NULL,qscores=NULL))
 }
 

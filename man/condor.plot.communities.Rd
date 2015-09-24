@@ -31,7 +31,7 @@ representing within-community links and black dots between-community
 links
 }
 \note{
-For the CONDOR paper \url{http://arxiv.org/abs/1509.02816}, I used
+For the condor paper \url{http://arxiv.org/abs/1509.02816}, I used
   35 colors from the "Tarnish" palette with "hard" clustering
 }
 \examples{

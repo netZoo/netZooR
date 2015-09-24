@@ -22,7 +22,7 @@
 #' though this is not strictly necessary. The first column contains the 
 #' node name, the second column the community assignment.
 #' @param weights edgeweights for each edge in \code{edgelist}.j
-#' @return Qcom data.frame with modularity of each community. 
+#' @return Qcoms data.frame with modularity of each community. 
 #' @return modularity modularity value after each iteration.
 #' @return red.memb community membership of the red nodes
 #' @return blue.memb community membership of the blue.nodes
@@ -180,7 +180,7 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1)
         Tmat[,2] <- as.integer(factor(Tmat[,2]))
     }
     colnames(qcom_out) <- c("Qcom","community")
-    condor.object$Qcom = qcom_out
+    condor.object$Qcoms = qcom_out
     condor.object$modularity=Qhist
     condor.object$red.memb=data.frame(red.names=red.names[R[,1]],com=R[,2])
     condor.object$blue.memb=data.frame(blue.names=blue.names[Tmat[,1]],com=Tmat[,2])

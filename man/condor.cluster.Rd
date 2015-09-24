@@ -2,7 +2,7 @@
 % Please edit documentation in R/condor.cluster.R
 \name{condor.cluster}
 \alias{condor.cluster}
-\title{Main clustering function for CONDOR.}
+\title{Main clustering function for condor.}
 \usage{
 condor.cluster(condor.object, cs.method = "LCS", project = TRUE)
 }
@@ -28,9 +28,12 @@ methods listed in \code{cs.method}.}
 included.
 }
 \description{
-This function uses a standard (non-bipartite) community structure
-clustering of the uni-partite, weighted projection of the original
-bipartite graph as an initial guess for the bipartite clustering
+This function performs community structure clustering using
+the bipartite modularity described in
+\code{\link{condor.modularity.max}}. This function uses a standard
+(non-bipartite) community structure clustering of the uni-partite,
+weighted projection of the original bipartite graph as an initial
+guess for the bipartite modularity.
 }
 \examples{
 r = c(1,1,1,2,2,2,3,3,3,4,4);

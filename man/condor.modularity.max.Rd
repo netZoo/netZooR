@@ -20,7 +20,7 @@ node name, the second column the community assignment.}
 \item{weights}{edgeweights for each edge in \code{edgelist}.j}
 }
 \value{
-Qcom data.frame with modularity of each community.
+Qcoms data.frame with modularity of each community.
 
 modularity modularity value after each iteration.
 
