@@ -36,6 +36,15 @@
 condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
 
     elist <- condor.object$edges
+    
+    #extract weights, if any
+    if(!is.null(elist$weight)){
+      weights <- elist$weight
+    }
+    else {
+      weights <- 1
+    }
+    
     #make sure there's only one connected component
     g.component.test <- graph.data.frame(elist,directed=FALSE)
     if(!is.connected(g.component.test)){
@@ -80,9 +89,9 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
         #blue.indx <- V(G)$name %in% blue.names
     }
     
-    if(cs.method=="LCS"){cs0 = multilevel.community(gcc.initialize)}
-    if(cs.method=="LEC"){cs0 = leading.eigenvector.community(gcc.initialize)}
-    if(cs.method=="FG"){cs0 = fastgreedy.community(gcc.initialize)}
+    if(cs.method=="LCS"){cs0 = multilevel.community(gcc.initialize, weights=weights)}
+    if(cs.method=="LEC"){cs0 = leading.eigenvector.community(gcc.initialize, weights=weights)}
+    if(cs.method=="FG"){cs0 = fastgreedy.community(gcc.initialize, weights=weights)}
     print(paste("modularity of projected graph",max(cs0$modularity)))
     
     #initial condition for genes community membership
@@ -93,7 +102,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
         T0 <- data.frame(as.integer(factor(blue.names)),blue.membs)
     }
     #run bipartite modularity maximization using intial assignments T0
-    condor.object <- condor.modularity.max(condor.object,T0=T0)
+    condor.object <- condor.modularity.max(condor.object,T0=T0,weights=weights)
     
     return(condor.object)
     }
