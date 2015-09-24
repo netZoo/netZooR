@@ -1,4 +1,4 @@
-#' Main clustering function for CONDOR. 
+#' Main clustering function for condor. 
 #' 
 #' This function performs community structure clustering using
 #' the bipartite modularity described in

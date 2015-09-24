@@ -2,14 +2,14 @@
 \usepackage[margin=0.75in]{geometry}
 %\usepackage[utf8]{inputenc}
 \usepackage{hyperref}
-\title{CONDOR Vignette}
+\title{condor Vignette}
 %\author{John Platig}
 \begin{document}
 \SweaveOpts{engine=R}
-%\VignetteIndexEntry{Using CONDOR} 
-%\VignetteDepends{CONDOR,igraph} 
-%\VignetteKeywords{CONDOR} 
-%\VignettePackage{CONDOR} 
+%\VignetteIndexEntry{Using condor} 
+%\VignetteDepends{condor,igraph} 
+%\VignetteKeywords{condor} 
+%\VignettePackage{condor} 
 
 \maketitle
 %\SweaveOpts{concordance=TRUE}
@@ -27,10 +27,10 @@ The code in \textbf{condor.modularity.max} is an implementation of the method de
 \end{itemize}
 \section{Workflow}
 <<>>=
-library(CONDOR)
+library(condor)
 library(igraph)
 @
-\textbf{CONDOR} works with an edgelist (\textbf{elist} in the code below) as its input. 
+\textbf{condor} works with an edgelist (\textbf{elist} in the code below) as its input. 
 <<>>=
 r = c(1,1,1,2,2,2,3,3,3,4,4);
 b = c(1,2,3,1,2,4,2,3,4,3,4);

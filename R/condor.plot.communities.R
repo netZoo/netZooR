@@ -15,7 +15,7 @@
 #' @return produces a \code{\link[graphics]{plot}} output.
 #' @references \url{http://tools.medialab.sciences-po.fr/iwanthue/} for 
 #'  a nice color generator at 
-#' @note For the CONDOR paper \url{http://arxiv.org/abs/1509.02816}, I used
+#' @note For the condor paper \url{http://arxiv.org/abs/1509.02816}, I used
 #'   35 colors from the "Tarnish" palette with "hard" clustering
 #' @examples
 #' r = c(1,1,1,2,2,2,3,3,3,4,4);
