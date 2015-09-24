@@ -11,7 +11,7 @@
 %\VignetteDepends{condor,igraph} 
 %\VignetteKeywords{condor} 
 %\VignettePackage{condor}
-%\VignetteEngine{r}
+%\VignetteEngine{Sweave}
 
 \maketitle
 
