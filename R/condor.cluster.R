@@ -86,7 +86,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
     print(paste("modularity of projected graph",max(cs0$modularity)))
     
     #initial condition for genes community membership
-    if(project){ T0 <- data.frame(as.integer(factor(blue.names)),membership(cs0)) }
+    if(project){ T0 <- data.frame(as.integer(factor(blue.names)),as.vector(membership(cs0))) }
     if(!project)
     {
         blue.membs <- membership(cs0)[blue.names]
