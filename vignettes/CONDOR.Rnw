@@ -10,10 +10,11 @@
 %\VignetteIndexEntry{condor} 
 %\VignetteDepends{condor,igraph} 
 %\VignetteKeywords{condor} 
-%\VignettePackage{condor} 
+%\VignettePackage{condor}
+%\VignetteEngine{r}
 
 \maketitle
-%\SweaveOpts{concordance=TRUE}
+
 
 \section{Introduction}
 COmplex Network Description Of Regulators (CONDOR) implements methods for clustering bipartite networks and estimating the contribution of each node to its community's modularity. For an application of this method to identify diesease-associated single nucleotide polymorphisms, see \url{http://arxiv.org/abs/1509.02816}.
