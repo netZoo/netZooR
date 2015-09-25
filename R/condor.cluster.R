@@ -42,7 +42,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
       weights <- elist$weight
     }
     else {
-      weights <- 1
+      weights <- rep(1, nrow(elist))
     }
     
     #make sure there's only one connected component
@@ -55,7 +55,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
     G <- graph.data.frame(elist,directed=FALSE)
     
     #Use unipartite comm. structure method for first pass
-    #project network into gene space to obtain intial community assignment for genes
+    #project network into gene space to obtain initial community assignment for genes
     if(project){
         #SNP row indices
         reds = as.integer(factor(elist[,1]))
@@ -65,9 +65,9 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
         blue.names = levels(factor(elist[,2]))
         N = max(blues)
         
-        #Sparese matrix with the upper right block of the true Adjacency matrix. notices the dimension is reds x blues
+        #Spares matrix with the upper right block of the true Adjacency matrix. notices the dimension is reds x blues
         sM = sparseMatrix(i=reds,j=blues,x=1,dims=c(length(unique(reds)),length(unique(blues))),index1=T);
-        #Project into gene space, projected adjacency matrix is has dim = genes x genes
+        #Project into gene space, projected adjacency matrix has dim = genes x genes
         gM = t(sM) %*% sM;
         rm(sM)
         gc()
@@ -101,7 +101,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
         blue.membs <- membership(cs0)[blue.names]
         T0 <- data.frame(as.integer(factor(blue.names)),blue.membs)
     }
-    #run bipartite modularity maximization using intial assignments T0
+    #run bipartite modularity maximization using initial assignments T0
     condor.object <- condor.modularity.max(condor.object,T0=T0,weights=weights)
     
     return(condor.object)
