@@ -2,9 +2,10 @@
 #' 
 #' Converts an edge list into a \code{list} which is then an input for 
 #' other functions in the \code{\link{condor}} package.
-#' @param edgelist a two column data.frame with colnames 'red' and 'blue'
+#' @param edgelist a data.frame with required colnames 'red' and 'blue'
 #' representing links from the node in the first column to the node in the 
-#' second column.
+#' second column. An optional third column named 'weight' may be provided
+#' to create a weighted network.
 #' @param return.gcc if TRUE, returns the giant connected component
 #' @return G is an igraph graph object with a 'color' attribute
 #' based on the colnames of edgelist. This can be accessed via
@@ -55,6 +56,16 @@ create.condor.object <- function(edgelist,return.gcc=TRUE){
         stop("edgelist contains one or more nodes that appear in both red and blue columns.
         Check to make sure network is truly bipartite and nodes of each type appear in the
              same column of 'edgelist'.")
+    }
+    if(!is.null(edgelist$weight))
+    {
+      if(class(edgelist$weight) != "numeric") {
+        stop("Non-numeric weights detected.")
+      }
+      if(any(is.na(edgelist$weight))) {
+        stop("Missing weights detected.")
+      }
+      message("Weights detected. Running CONDOR with weighted edges.")
     }
     
     g <- graph.data.frame(edgelist,directed=FALSE)

@@ -1,2 +1,4 @@
 *.tex
 
+.Rproj.user
+.Rproj

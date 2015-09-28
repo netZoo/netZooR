@@ -9,7 +9,7 @@
 #' modularity between iterations is less that 10^-4. Starting from a random 
 #' initial condition, this could take some time. Use 
 #' \code{\link{condor.cluster}} for quicker runtimes and likely better 
-#' clustering, it intializes the blue 
+#' clustering, it initializes the blue 
 #' node memberships by projecting the blue nodes into a unipartite "blue" 
 #' network and then identify communities in that network using a standard 
 #' unipartite community detection algorithm run on the projected network.
@@ -17,7 +17,7 @@
 #' @param condor.object is a list created by 
 #' \code{\link{create.condor.object}}. \code{condor.object$edges} must 
 #' contain the edges in the giant connected component of a bipartite network 
-#' @param T0 is a two column data.frame with the intial community 
+#' @param T0 is a two column data.frame with the initial community 
 #' assignment for each "blue" node, assuming there are more reds than blues, 
 #' though this is not strictly necessary. The first column contains the 
 #' node name, the second column the community assignment.

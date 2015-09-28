@@ -7,9 +7,10 @@
 create.condor.object(edgelist, return.gcc = TRUE)
 }
 \arguments{
-\item{edgelist}{a two column data.frame with colnames 'red' and 'blue'
+\item{edgelist}{a data.frame with required colnames 'red' and 'blue'
 representing links from the node in the first column to the node in the
-second column.}
+second column. An optional third column named 'weight' may be provided
+to create a weighted network.}
 
 \item{return.gcc}{if TRUE, returns the giant connected component}
 }
