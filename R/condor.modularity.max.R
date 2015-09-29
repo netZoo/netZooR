@@ -106,7 +106,7 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1)
                 cs <- sort(c(cs,R[i,2]))
             }
             #if(length(h) > 1){h <- sample(h,1)}
-            if(bt[h] > 0){
+            if(bt[h] >= 0){
                 R[i,2] <- h # assign blue vertex i to comm k such that Q is maximized
                 bt[-h] <- 0 # BTR is zero if i is not in k (see definition of Q)
                 
@@ -145,7 +145,7 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1)
                 print(btr)
             }
             
-            if(btr[g] > 0)
+            if(btr[g] >= 0)
             {
                 Tmat[j,2] <- g
                 btr[-g] <- 0
