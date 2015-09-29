@@ -66,7 +66,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
         N = max(blues)
         
         #Sparse matrix with the upper right block of the true Adjacency matrix. Notice the dimension is reds x blues
-        sM = sparseMatrix(i=reds,j=blues,x=1,dims=c(length(unique(reds)),length(unique(blues))),index1=T);
+        sM = sparseMatrix(i=reds,j=blues,x=weights,dims=c(length(unique(reds)),length(unique(blues))),index1=T);
         #Project into gene space, projected adjacency matrix has dim = genes x genes
         gM = t(sM) %*% sM;
         rm(sM)
@@ -94,10 +94,11 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
     if(cs.method=="FG"){cs0 = fastgreedy.community(gcc.initialize, weights=weights)}
     print(paste("modularity of projected graph",max(cs0$modularity)))
     
-    #initial condition for genes' community membership
-    if(project){ T0 <- data.frame(as.integer(factor(blue.names)),as.vector(membership(cs0))) }
-    if(!project)
-    {
+    #initial condition for blues' community membership
+    if(project){
+        T0 <- data.frame(as.integer(factor(blue.names)),as.vector(membership(cs0)))
+    }
+    else {
         blue.membs <- membership(cs0)[blue.names]
         T0 <- data.frame(as.integer(factor(blue.names)),blue.membs)
     }

@@ -16,7 +16,8 @@
 #' @export
 #'  
 condor.plot.heatmap = function(condor.object, main="", xlab="blues", ylab="reds"){
-  attach(condor.object)
+  bo <- condor.object
+  attach(bo)
   # convert edge lists to adjacency matrices (n reds x m blues)
   adj = get.adjacency(G, attr="weight", sparse=FALSE)
   # reorder reds according to community membership
@@ -34,5 +35,5 @@ condor.plot.heatmap = function(condor.object, main="", xlab="blues", ylab="reds"
             sepwidth = c(0.025, 0.025), ylab=ylab, xlab=xlab, margins=c(3,1.5),
             labRow=FALSE, labCol=sort(blue.memb[,2]), offsetRow=0, offsetCol=0,
             breaks=sort(c(0.1,seq(0, max(adj),length.out=10))))
-  detach(condor.object)
+  detach(bo)
 }
