@@ -92,8 +92,8 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1)
             #find the optimal community for node i
             bt <- rep(0,length(cs))
             for(k in cs){
-                if(length(Tmat[Tmat[,2]==k,2]) != 0){
-                    ind <- Tmat[,2] == k
+                ind <- Tmat[,2] == k
+                if(any(ind)){
                     #bt[k] = sum(A[i,ind] - (ki[i]*dj[ind])/m)
                     bt[k] = sum((A[i,] - (ki[i]*dj)/m)[ind])
                 }
@@ -109,7 +109,6 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1)
             if(bt[h] >= 0){
                 R[i,2] <- h # assign blue vertex i to comm k such that Q is maximized
                 bt[-h] <- 0 # BTR is zero if i is not in k (see definition of Q)
-                
             }
             
             #BT <- rbind(BT,bt)
@@ -123,10 +122,8 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1)
             for(k in cs)
             {
                 #if node j is in community k, else BTR[j,k] = 0
-                if(length(R[R[,2]==k,2]) != 0)
-                {
-                    
-                    ind <- R[,2] == k
+                ind <- R[,2] == k
+                if(any(ind)){
                     #btr[k] = sum(A[ind,j]-(ki[ind]*dj[j])/m)
                     btr[k] = sum((A[,j]-(ki*dj[j])/m)[ind])
                 }
@@ -144,7 +141,6 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1)
                 btr[length(cs)] <- sum(A[,j]-(ki*dj[j])/m)
                 print(btr)
             }
-            
             if(btr[g] >= 0)
             {
                 Tmat[j,2] <- g

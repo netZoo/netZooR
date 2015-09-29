@@ -38,8 +38,8 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
     elist <- condor.object$edges
     
     #extract weights, if any
-    if(!is.null(elist$weight)){
-      weights <- elist$weight
+    if(ncol(elist) > 2){
+      weights <- elist[, 3]
     }
     else {
       weights <- rep(1, nrow(elist))
@@ -54,7 +54,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
     
     G <- graph.data.frame(elist,directed=FALSE)
     
-    #Use unipartite comm. structure method for first pass
+    #Use unipartite community structure method for first pass
     #project network into gene space to obtain initial community assignment for genes
     if(project){
         #SNP row indices
@@ -65,7 +65,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
         blue.names = levels(factor(elist[,2]))
         N = max(blues)
         
-        #Spares matrix with the upper right block of the true Adjacency matrix. notices the dimension is reds x blues
+        #Sparse matrix with the upper right block of the true Adjacency matrix. Notice the dimension is reds x blues
         sM = sparseMatrix(i=reds,j=blues,x=1,dims=c(length(unique(reds)),length(unique(blues))),index1=T);
         #Project into gene space, projected adjacency matrix has dim = genes x genes
         gM = t(sM) %*% sM;
@@ -94,7 +94,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
     if(cs.method=="FG"){cs0 = fastgreedy.community(gcc.initialize, weights=weights)}
     print(paste("modularity of projected graph",max(cs0$modularity)))
     
-    #initial condition for genes community membership
+    #initial condition for genes' community membership
     if(project){ T0 <- data.frame(as.integer(factor(blue.names)),as.vector(membership(cs0))) }
     if(!project)
     {
