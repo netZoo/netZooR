@@ -8,7 +8,7 @@
 \SweaveOpts{concordance=TRUE}
 \SweaveOpts{engine=R}
 %\VignetteIndexEntry{condor} 
-%\VignetteDepends{condor,igraph} 
+%\VignetteDepends{condor,igraph,gplots} 
 %\VignetteKeywords{condor} 
 %\VignettePackage{condor}
 %\VignetteEngine{Sweave}
@@ -38,7 +38,7 @@ r = c(1,1,1,2,2,2,3,3,3,4,4);
 b = c(1,2,3,1,2,4,2,3,4,3,4);
 reds <- c("Alice","Sue","Janine","Mary")
 blues <- c("Bob","John","Ed","Hank")
-elist <- data.frame(red=reds[r],blue=blues[b])
+elist <- data.frame(red=reds[r], blue=blues[b])
 @
 In \textbf{elist}, notice all nodes of the same type--women and men in this case--appear in the same column together. This is a requirement. \textbf{create.condor.object} will throw an error if a node appears in both columns. 
 <<>>=
@@ -68,7 +68,7 @@ plot(gtoy,vertex.label.dist=2)
 
 To get each node's modularity contribution (as a fraction of the community's modularity), run
 <<>>=
-condor.object <- condor.qscore(condor.object)   
+condor.object <- condor.qscore(condor.object)
 @
 If you have a subset of nodes that you think are more likely to lie at the cores of your communities, you can test this using \textbf{condor.core.enrich}:
 
@@ -76,6 +76,17 @@ If you have a subset of nodes that you think are more likely to lie at the cores
 q_women <- condor.object$qscores$red.qscore
 core_stats <- condor.core.enrich(test_nodes=c("Alice","Mary"),
                                  q=q_women,perm=TRUE,plot.hist=TRUE)
+@
+
+\textbf{condor} also works on weighted bipartite networks. The package comes with a quantitative pollination network data set (Small 1976) taken from the NCEAS interaction webs data base, containing interactions between 13 plants and 34 pollinators.
+<<>>=
+data(small1976)
+condor.object <- create.condor.object(small1976)
+condor.object <- condor.cluster(condor.object, project=F)
+@
+
+<<fig=TRUE>>=
+condor.plot.heatmap(condor.object)
 @
 
 If you have questions, contact John Platig at \href{mailto:jplatig@jimmy.harvard.edu}{jplatig@jimmy.harvard.edu}

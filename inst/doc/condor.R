@@ -14,7 +14,7 @@ r = c(1,1,1,2,2,2,3,3,3,4,4);
 b = c(1,2,3,1,2,4,2,3,4,3,4);
 reds <- c("Alice","Sue","Janine","Mary")
 blues <- c("Bob","John","Ed","Hank")
-elist <- data.frame(red=reds[r],blue=blues[b])
+elist <- data.frame(red=reds[r], blue=blues[b])
 
 
 ###################################################
@@ -54,7 +54,7 @@ plot(gtoy,vertex.label.dist=2)
 ###################################################
 ### code chunk number 8: condor.Rnw:70-71
 ###################################################
-condor.object <- condor.qscore(condor.object)   
+condor.object <- condor.qscore(condor.object)
 
 
 ###################################################
@@ -63,5 +63,19 @@ condor.object <- condor.qscore(condor.object)
 q_women <- condor.object$qscores$red.qscore
 core_stats <- condor.core.enrich(test_nodes=c("Alice","Mary"),
                                  q=q_women,perm=TRUE,plot.hist=TRUE)
+
+
+###################################################
+### code chunk number 10: condor.Rnw:82-85
+###################################################
+data(small1976)
+condor.object <- create.condor.object(small1976)
+condor.object <- condor.cluster(condor.object, project=F)
+
+
+###################################################
+### code chunk number 11: condor.Rnw:88-89
+###################################################
+condor.plot.heatmap(condor.object)
 
 

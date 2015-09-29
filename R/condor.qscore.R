@@ -37,8 +37,17 @@ condor.qscore = function(condor.object){
     esub <- condor.object$edges
     reds = as.integer(factor(esub[,1]))
     blues = as.integer(factor(esub[,2]))
+    
+    #extract weights, if any
+    if(ncol(esub) > 2){
+      weights <- esub[, 3]
+    }
+    else {
+      weights <- rep(1, nrow(esub))
+    }
+    
     #Sparse matrix with the upper right block of the true Adjacency matrix. notices the dimension is reds x blues
-    A = sparseMatrix(i=reds,j=blues,x=1,dims=c(length(unique(reds)),length(unique(blues))),index1=TRUE);
+    A = sparseMatrix(i=reds,j=blues,x=weights,dims=c(length(unique(reds)),length(unique(blues))),index1=TRUE);
     if(nrow(A) < ncol(A)){A <- t(A)}
     #if(max(blues) > max(reds)){blues <- reds;}
     p = nrow(A)

@@ -2,10 +2,11 @@
 #' 
 #' Converts an edge list into a \code{list} which is then an input for 
 #' other functions in the \code{\link{condor}} package.
-#' @param edgelist a data.frame with required colnames 'red' and 'blue'
-#' representing links from the node in the first column to the node in the 
-#' second column. An optional third column named 'weight' may be provided
-#' to create a weighted network.
+#' @param edgelist a data.frame with 'red' nodes in the first column and
+#' 'blue' nodes in the second column, representing links from the node in
+#' the first column to the node in the second column. There must be more
+#' unique 'red' nodes than 'blue' nodes. Optionally, a third column may be
+#' provided to create a weighted network.
 #' @param return.gcc if TRUE, returns the giant connected component
 #' @return G is an igraph graph object with a 'color' attribute
 #' based on the colnames of edgelist. This can be accessed via
@@ -35,49 +36,38 @@
 #' 
 create.condor.object <- function(edgelist,return.gcc=TRUE){
     
-    if(sum(colnames(edgelist) %in% c("red","blue")) != 2)
-    {
-        stop("edgelist colnames must be labeled 'red' and 'blue'")
-    }
-    if(sum(is.na(edgelist$red) + is.na(edgelist$blue)) > 0)
-    {
+    # make sure first to columns are of class character
+    edgelist[, 1] <- as.character(edgelist[, 1])
+    edgelist[, 2] <- as.character(edgelist[, 2])
+    if(any(is.na(edgelist))) {
         stop("NA's detected. Remove these from edgelist")
     }
-    if(sum(edgelist$red == "NA") + sum(edgelist$blue == "NA") > 0)
-    {
-        stop("NA's detected. Remove these from edgelist")
-    }
-    if(sum(edgelist$red == "") + sum(edgelist$blue == "") > 0)
-    {
+    if(any(edgelist[, 1] == "") | any(edgelist[, 2] == "")) {
         stop("Empty strings detected. Remove these from edgelist")
     }
-    if(sum(edgelist$red %in% edgelist$blue) > 0)
-    {
+    if(sum(edgelist[, 1] %in% edgelist[, 2]) > 0) {
         stop("edgelist contains one or more nodes that appear in both red and blue columns.
         Check to make sure network is truly bipartite and nodes of each type appear in the
              same column of 'edgelist'.")
     }
-    if(!is.null(edgelist$weight))
-    {
-      if(class(edgelist$weight) != "numeric") {
-        stop("Non-numeric weights detected.")
-      }
-      if(any(is.na(edgelist$weight))) {
-        stop("Missing weights detected.")
-      }
-      message("Weights detected. Running CONDOR with weighted edges.")
-    }
     
     g <- graph.data.frame(edgelist,directed=FALSE)
-    blue.indx <- V(g)$name %in% unique(edgelist$blue)
+    blue.indx <- V(g)$name %in% unique(edgelist[, 2])
     V(g)$color <- "red"
     V(g)$color[blue.indx] <- "blue"
     
+    if(ncol(edgelist) > 2) {
+      message("Weights detected. Building condor object with weighted edges.")
+      E(g)$weight <- as.numeric(edgelist[, 3])
+      # omit 0 edges
+      edgelist <- edgelist[edgelist[, 3] != 0, ]
+    }
+    
     if(!return.gcc){ g.out <- g}
     if(return.gcc){ gcc <- max.component(g); g.out <- gcc }
-    blue.names <- V(g.out)$name[V(g.out)$name %in% unique(edgelist$blue)]
-    red.names <- V(g.out)$name[V(g.out)$name %in% unique(edgelist$red)]
-    edges <- edgelist[edgelist$blue %in% blue.names,]
+    blue.names <- V(g.out)$name[V(g.out)$name %in% unique(edgelist[, 2])]
+    red.names <- V(g.out)$name[V(g.out)$name %in% unique(edgelist[, 1])]
+    edges <- edgelist[edgelist[, 2] %in% blue.names,]
     
     return(list(G=g.out,edges=edges,Qcoms=NULL,modularity=NULL,red.memb=NULL,
                 blue.memb=NULL,qscores=NULL))
