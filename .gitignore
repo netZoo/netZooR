@@ -1,4 +1,5 @@
 *.tex
 
 .Rproj.user
-.Rproj
+*.Rproj
+.DS_Store
