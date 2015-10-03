@@ -54,6 +54,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
     
     G <- graph.data.frame(elist,directed=FALSE)
     
+    project.weights <- weights
     #Use unipartite community structure method for first pass
     #project network into gene space to obtain initial community assignment for genes
     if(project){
@@ -73,25 +74,25 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
         gc()
         colnames(gM) <- blue.names
         rownames(gM) <- blue.names
-        G1 = graph.adjacency(gM,mode="undirected",weight=TRUE,diag=FALSE);
+        G1 = graph.adjacency(gM,mode="undirected",weighted=TRUE,diag=FALSE);
         #if(clusters(G1)$no > 1){print("Warning more than one component! May cause indexing error")}
         #V(G1)$name <- sort(unique(as.vector(esub[,2])))
         #remove loops and multiple edges
         gcc.initialize = simplify(max.component(G1))
+        project.weights <- edge.attributes(gcc.initialize)$weight
     }
     
     #option to treat the bipartite network as if it is unipartite
     #for community initialization only
-    if(!project)
-    {
+    if(!project) {
         gcc.initialize <- G 
         blue.names = levels(factor(elist[,2]))
         #blue.indx <- V(G)$name %in% blue.names
     }
     
-    if(cs.method=="LCS"){cs0 = multilevel.community(gcc.initialize, weights=weights)}
-    if(cs.method=="LEC"){cs0 = leading.eigenvector.community(gcc.initialize, weights=weights)}
-    if(cs.method=="FG"){cs0 = fastgreedy.community(gcc.initialize, weights=weights)}
+    if(cs.method=="LCS"){cs0 = multilevel.community(gcc.initialize, weights=project.weights)}
+    if(cs.method=="LEC"){cs0 = leading.eigenvector.community(gcc.initialize, weights=project.weights)}
+    if(cs.method=="FG"){cs0 = fastgreedy.community(gcc.initialize, weights=project.weights)}
     print(paste("modularity of projected graph",max(cs0$modularity)))
     
     #initial condition for blues' community membership
