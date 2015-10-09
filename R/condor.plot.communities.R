@@ -35,7 +35,7 @@ condor.plot.communities = function(condor.object,color_list,point.size=0.01,
                                    xlab="SNP",ylab="Gene"){
   
     dt0 <- data.table(condor.object$edges)
-    setnames(dt0,1:2,c("SNP","gene"))
+    setnames(dt0,c("red","blue"),c("SNP","gene"))
     dt1 <- data.table(condor.object$red.memb)
     setnames(dt1,c("SNP","red.memb"))
     dt2 <- data.table(condor.object$blue.memb)
@@ -92,7 +92,6 @@ condor.plot.communities = function(condor.object,color_list,point.size=0.01,
     mtext(ylab,side=2,font=2,cex=2.5,padj=-0.5)
     
     ## Add community labels to top 
-    browser()
     cs <- cumsum(rle(sort(m2[!duplicated(SNP)]$red.memb))$lengths)
     lens <- rle(sort(m2[!duplicated(SNP)]$red.memb))$lengths
     lpts <- cs - lens/2
