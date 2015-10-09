@@ -26,7 +26,7 @@ This function will generate the network link 'heatmap' for a weighted network
 \examples{
 data(small1976)
 condor.object <- create.condor.object(small1976)
-condor.object <- condor.cluster(condor.object, project=F)
+condor.object <- condor.cluster(condor.object, project=FALSE)
 condor.plot.heatmap(condor.object)
 }
 

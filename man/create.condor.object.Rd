@@ -25,16 +25,16 @@ edges corresponding to graph G. If return.gcc=TRUE, includes only
 those edges in the giant connected component.
 
 Qcoms output from \code{\link{condor.cluster}} or
-\code{\link{BRIM}}
+\code{\link{condor.modularity.max}}
 
 modularity \code{NULL} output from \code{\link{condor.cluster}}
-or \code{\link{BRIM}}
+or \code{\link{condor.modularity.max}}
 
 red.memb \code{NULL} output from \code{\link{condor.cluster}}
-or \code{\link{BRIM}}
+or \code{\link{condor.modularity.max}}
 
 blue.memb \code{NULL} output from \code{\link{condor.cluster}}
-or \code{\link{BRIM}}
+or \code{\link{condor.modularity.max}}
 
 qscores \code{NULL} output from \code{\link{condor.qscore}}
 }

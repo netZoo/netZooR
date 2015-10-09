@@ -1,7 +1,7 @@
 #' Create list amenable to analysis using \code{condor} package.
 #' 
 #' Converts an edge list into a \code{list} which is then an input for 
-#' other functions in the \code{\link{condor}} package.
+#' other functions in the \code{condor} package.
 #' @param edgelist a data.frame with 'red' nodes in the first column and
 #' 'blue' nodes in the second column, representing links from the node in
 #' the first column to the node in the second column. There must be more
