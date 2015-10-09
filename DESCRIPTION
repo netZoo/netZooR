@@ -7,6 +7,7 @@ Author: John Platig
 Maintainer: John Platig <jplatig@jimmy.harvard.edu>
 Description: Bipartite community structure analysis of biological networks, especially eQTL networks, including a method for scoring nodes based on their modularity contribution.
 Imports: igraph, gplots, Matrix, nnet, data.table
+Depends: R (>= 2.10.0)
 License: MIT
 VignetteBuilder: knitr
 Suggests: knitr

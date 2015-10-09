@@ -40,7 +40,7 @@ qscores \code{NULL} output from \code{\link{condor.qscore}}
 }
 \description{
 Converts an edge list into a \code{list} which is then an input for
-other functions in the \code{\link{condor}} package.
+other functions in the \code{condor} package.
 }
 \examples{
 r = c(1,1,1,2,2,2,3,3,3,4,4);
