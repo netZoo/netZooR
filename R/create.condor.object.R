@@ -15,13 +15,13 @@
 #' @return edges corresponding to graph G. If return.gcc=TRUE, includes only
 #' those edges in the giant connected component.
 #' @return Qcoms output from \code{\link{condor.cluster}} or 
-#' \code{\link{BRIM}}
+#' \code{\link{condor.modularity.max}}
 #' @return modularity \code{NULL} output from \code{\link{condor.cluster}} 
-#' or \code{\link{BRIM}}
+#' or \code{\link{condor.modularity.max}}
 #' @return red.memb \code{NULL} output from \code{\link{condor.cluster}} 
-#' or \code{\link{BRIM}}
+#' or \code{\link{condor.modularity.max}}
 #' @return blue.memb \code{NULL} output from \code{\link{condor.cluster}} 
-#' or \code{\link{BRIM}}
+#' or \code{\link{condor.modularity.max}}
 #' @return qscores \code{NULL} output from \code{\link{condor.qscore}} 
 #' @examples 
 #' r = c(1,1,1,2,2,2,3,3,3,4,4);
