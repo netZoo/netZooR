@@ -15,10 +15,15 @@
 #' \code{FG} (\code{\link[igraph]{fastgreedy.community}}).
 #' @param project Provides options for initial seeding of the bipartite 
 #' modularity maximization.
-#' If TRUE, the nodes in the first column of \code{condor.object$edges} 
+#' If TRUE, the nodes in the first column of \code{condor.object$edges}
 #' are projected and clustered using \code{cs.method}. If FALSE, the 
 #' complete bipartite network is clustered using the unipartite clustering 
 #' methods listed in \code{cs.method}.
+#' @param low.memory If TRUE, uses \code{\link{condor.modularity.max}}
+#' instead of \code{\link{condor.matrix.modularity}}. This is a slower
+#' implementation of the modularity maximization, which does not store any
+#' matrices in memory. Useful on a machine with low RAM. However, runtimes
+#' are longer.
 #' @return \code{condor.object} with \code{\link{condor.modularity.max}} output 
 #' included.
 #' @examples 
@@ -33,7 +38,7 @@
 #' @import Matrix
 #' @export
 #' 
-condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
+condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=FALSE){
 
     elist <- condor.object$edges
     
@@ -104,7 +109,13 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE){
         T0 <- data.frame(as.integer(factor(blue.names)),blue.membs)
     }
     #run bipartite modularity maximization using initial assignments T0
+    if(low.memory){
     condor.object <- condor.modularity.max(condor.object,T0=T0,weights=weights)
+    }
+    if(!low.memory){
+        condor.object <- condor.matrix.modularity(condor.object,T0=T0,weights=weights)
+    }
+    
     
     return(condor.object)
     }
