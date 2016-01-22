@@ -40,7 +40,6 @@
 #' #randomly assign blues to their own community
 #' T0 <- data.frame(nodes=blues,coms=1:4)
 #' condor.object <- condor.matrix.modularity(condor.object,T0=T0)
-#' @import Matrix
 #' @import nnet
 #' @export
 #' 
@@ -81,8 +80,11 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
         stop("Adjacency matrix dimension error: This code requires nrows > ncols")
     }
     
-    #Sparse matrix with the upper right block of the true Adjacency matrix. notices the dimension is reds x blues
-    A = sparseMatrix(i=reds,j=blues,x=weights,dims=c(length(unique(reds)),length(unique(blues))),index1=TRUE);
+    #The upper right block of the true Adjacency matrix. notices the dimension is reds x blues
+    #A = sparseMatrix(i=reds,j=blues,x=weights,dims=c(length(unique(reds)),length(unique(blues))),index1=TRUE);
+    A = matrix(0,nrow=length(unique(reds)),ncol=length(unique(blues)))
+    edges = cbind(reds,blues)
+    A[edges] <- weights
     rownames(A) <- red.names
     colnames(A) <- blue.names
     
@@ -108,12 +110,13 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
     dj = colSums(A)
     m = sum(ki) # m = sum(dj) too
     
-    #Make B tilde
-    Btilde = A - Matrix((ki %o% dj)/m) ###
+    #Make B tilde, Btilde = Aij - (ki*dj)/m
+    Btilde = -(ki %o% dj)/m ###
+    Btilde[edges] = weights + Btilde[edges]
     #initialize Tm
-    Tm = sparseMatrix(i=Tind[,1],j=Tind[,2],x=1,index1=TRUE)
-    
-    
+    #Tm = sparseMatrix(i=Tind[,1],j=Tind[,2],x=1,index1=TRUE)
+    Tm = matrix(0,nrow=q,ncol=unique(Tind[,2]))
+    Tm[Tind] <- 1 
     #Begin iterations?
     
     #______________________________________
@@ -143,8 +146,9 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
         Rind[negative_contribution,2] <- (cs + 1):(cs + num_new_com)
     }
     
-    Rm = sparseMatrix(i=Rind[,1],j=Rind[,2],x=1,index1=TRUE)
-    
+    #Rm = sparseMatrix(i=Rind[,1],j=Rind[,2],x=1,index1=TRUE)
+    Rm = matrix(0,nrow=p,ncol=length(unique(Rind[,2]))
+    Rm[Rind] <- 1
     ### Step 2, assign blue nodes
     
     # R tilde = transpose(Btilde) %*% R
@@ -162,8 +166,9 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
         Tind[negative_contribution,2] <- (cs + 1):(cs + num_new_com)
     }
     #Tm dimensions, note the extra empty community.
-    Tm = sparseMatrix(i=Tind[,1],j=Tind[,2],x=1,index1=TRUE)
-  
+    #Tm = sparseMatrix(i=Tind[,1],j=Tind[,2],x=1,index1=TRUE) 
+    Tm = matrix(0,nrow=q,ncol=unique(Tind[,2]))
+    Tm[Tind] <- 1 
     
     Qthen <- Qnow
     #replace with diag(crossprod(T,BTR))/m
