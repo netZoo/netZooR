@@ -115,7 +115,7 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
     Btilde[edges] = weights + Btilde[edges]
     #initialize Tm
     #Tm = sparseMatrix(i=Tind[,1],j=Tind[,2],x=1,index1=TRUE)
-    Tm = matrix(0,nrow=q,ncol=length(unique(Tind[,2])))
+    Tm = matrix(0,nrow=q,ncol=max(Tind[,2]))
     print(Tind)
     Tm[Tind] <- 1 
     #Begin iterations?
@@ -148,7 +148,7 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
     }
     
     #Rm = sparseMatrix(i=Rind[,1],j=Rind[,2],x=1,index1=TRUE)
-    Rm = matrix(0,nrow=p,ncol=length(unique(Rind[,2])))
+    Rm = matrix(0,nrow=p,ncol=max(Rind[,2]))
     Rm[data.matrix(Rind)] <- 1
     ### Step 2, assign blue nodes
     
@@ -168,7 +168,7 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
     }
     #Tm dimensions, note the extra empty community.
     #Tm = sparseMatrix(i=Tind[,1],j=Tind[,2],x=1,index1=TRUE) 
-    Tm = matrix(0,nrow=q,ncol=length(unique(Tind[,2])))
+    Tm = matrix(0,nrow=q,ncol=max(Tind[,2]))
     Tm[data.matrix(Tind)] <- 1 
     
     Qthen <- Qnow
