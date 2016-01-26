@@ -33,14 +33,14 @@
 #' @export
 #' 
 condor.core.enrich = function(test_nodes,q,perm=FALSE,plot.hist=FALSE,nsamp=1000){
-    qtest <- q[q[,1] %in% test_nodes,2]
+    qtest <- q[q[,1] %in% test_nodes,3]
     #
-    qall <- q[,2]
+    qall <- q[,3]
     ks_out <- ks.test(qtest,qall,exact=FALSE,alternative="less")
     
     w_out <- wilcox.test(qtest,qall,exact=FALSE,alternative="greater")
     if(perm){
-        qnull <- q[!(q[,1] %in% test_nodes),2]
+        qnull <- q[!(q[,1] %in% test_nodes),3]
         ks_true <- ks.test(qtest,qnull,exact=FALSE,alternative="less")$statistic
         ks_rand <- ks.permute(qtest,qnull,nsamp=nsamp)
         pv_permuted <- perm.pval(ks_true,ks_rand)
