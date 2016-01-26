@@ -1,13 +1,13 @@
 Package: condor
 Type: Package
 Title: COmplex Network Description Of Regulators
-Version: 1.0
+Version: 1.1
 Date: 2015-09-15
 Author: John Platig
 Maintainer: John Platig <jplatig@jimmy.harvard.edu>
-Description: Bipartite community structure analysis of biological networks, especially eQTL networks, including a method for scoring nodes based on their modularity contribution.
-Imports: igraph, gplots, Matrix, nnet, data.table
-Depends: R (>= 2.10.0)
+Description: Bipartite community structure analysis of biological networks, especially eQTL networks, including a method for scoring nodes based on their modularity contribution. Version 1.1 includes bug fixes and a faster implementation of the modularity maximization.
+Imports: igraph, gplots, nnet, data.table
+Depends: R (>= 3.0.0)
 License: MIT
 VignetteBuilder: knitr
 Suggests: knitr
