@@ -116,7 +116,6 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
     #initialize Tm
     #Tm = sparseMatrix(i=Tind[,1],j=Tind[,2],x=1,index1=TRUE)
     Tm = matrix(0,nrow=q,ncol=max(Tind[,2]))
-    print(Tind)
     Tm[Tind] <- 1 
     #Begin iterations?
     
