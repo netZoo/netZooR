@@ -23,7 +23,7 @@
 #' instead of \code{\link{condor.matrix.modularity}}. This is a slower
 #' implementation of the modularity maximization, which does not store any
 #' matrices in memory. Useful on a machine with low RAM. However, runtimes
-#' are longer.
+#' are (much) longer.
 #' @return \code{condor.object} with \code{\link{condor.modularity.max}} output 
 #' included.
 #' @examples 

@@ -2,6 +2,7 @@
 
 export(condor.cluster)
 export(condor.core.enrich)
+export(condor.matrix.modularity)
 export(condor.modularity.max)
 export(condor.plot.communities)
 export(condor.plot.heatmap)
