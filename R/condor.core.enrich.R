@@ -116,7 +116,7 @@ plot.enrich.hist = function(qik_enrich_out,ks=TRUE,wilcoxon=TRUE,...){
         h1 <- hist(w_rand,plot=FALSE)[c("breaks","counts")]
         hist(w_rand,col="steelblue",xlim=c(min(h1$breaks),1.1*max(c(w_rand,w_true))),
              xlab="",ylab="",xaxt="n",yaxt="n",main="")
-        rect(min(h1$breaks),0,max(c(h1$breaks,w_true))+0.1,1.03*max(h1$counts),lwd=2)
+        rect(min(c(h1$breaks,w_true)),0,max(c(h1$breaks,w_true))+0.1,1.03*max(h1$counts),lwd=2)
         axis(1, at = pretty(w_rand), pos = 0,font=2,lwd.ticks=2)
         axis(2, at = pretty(h1$counts), pos = min(h1$breaks),lwd=1,lwd.ticks=2,font=2)
         points(w_true,5,cex=2,col="red",pch=19)
