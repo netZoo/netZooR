@@ -11,6 +11,7 @@
 #' @param addLine  TRUE/FALSE - to add y=x line.
 #' @param rank TRUE/FALSE - If TRUE, plot rank of edge weights rather than weight values.
 #' @return ggplot comparing the Z-scores between the two networks.
+#' @import hexbin
 #' @importFrom reshape melt.array
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 xlab
@@ -140,7 +141,7 @@ testMotif <- function(x,motif,expr,ppi,mode=c("augment","remove"),prop=0.05,seed
 #'              else plot those given a weight of 0
 #' @param cuts either a numeric vector of two or more unique cut points or a
 #'        single number (greater than or equal to 2) giving the number
-#'        of intervals into which ‘x’ is to be cut.
+#'        of intervals into which 'x' is to be cut.
 #' @param cols Number of columns in layout.
 #' @export
 #' @return ggplot heatmapfor each TF, get outdegree in regulatory prior
