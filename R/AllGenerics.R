@@ -72,7 +72,7 @@ print.panda <- function(x, ...){
 #' data(pandaResult)
 #' plot(pandaResult)
 plot.panda <- function(x, ...){
-    message("PANDA network for ", nrow(x@coregNet)," genes and ",nrow(x@coopNet)," transcription factors.")
+    message("PANDA network for  ",nrow(x@coregNet),"  genes and  ",nrow(x@coopNet),"  transcription factors.")
     message("Mean edge weight = ", mean(x@regNet))
     message("Min edge weight = ", min(x@regNet))
     message("Max edge weight = ", max(x@regNet))
