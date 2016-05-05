@@ -1,7 +1,7 @@
 Package: pandaR
 Title: PANDA Algorithm
-Version: 1.5.03
-Author: Dan Schlauch [cre,aut], Joseph N. Paulson [aut], Albert Young [ctb], Kimberly Glass [aut], John Quackenbush [ctb]
+Version: 1.5.04
+Author: Dan Schlauch [cre,aut], Joseph N. Paulson [aut], Albert Young [ctb], John Quackenbush [ctb,aut], Kimberly Glass [cre,aut]
 Maintainer: Joseph N. Paulson <jpaulson@jimmy.harvard.edu>, Dan Schlauch <dschlauch@fas.harvard.edu>
 Description: Runs PANDA, an algorithm for discovering novel network structure
     by combining information from multiple complementary data sources.
