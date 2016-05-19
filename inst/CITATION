@@ -10,5 +10,5 @@ citEntry(entry = "Article",
          doi = "http://dx.doi.org/10.1371/journal.pone.0064832",
          publisher = "PLOS",
          address = "XX",
-         textVersion = "Glass, Kimberly, et al. "Passing messages between biological networks to refine predicted interactions." PloS one 8.5 (2013): e64832."
+         textVersion = "Glass, Kimberly, et al. 'Passing messages between biological networks to refine predicted interactions.' PloS one 8.5 (2013): e64832."
 )
