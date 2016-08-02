@@ -1,4 +1,4 @@
-#' Main clustering function for condor. 
+#' Main clustering function for condor.
 #' 
 #' This function performs community structure clustering using
 #' the bipartite modularity described in
@@ -24,7 +24,11 @@
 #' implementation of the modularity maximization, which does not store any
 #' matrices in memory. Useful on a machine with low RAM. However, runtimes
 #' are (much) longer.
-#' @return \code{condor.object} with \code{\link{condor.modularity.max}} output 
+#' @param deltaQmin convergence parameter determining the minimum required increase
+#' in the modularity for each iteration. Default is min(10^{-4},1/(number of edges)),
+#' with number of edges determined by \code{nrow(condor.object$edges)}. User can
+#' set this parameter by passing a numeric value to deltaQmin.
+#' @return \code{condor.object} with \code{\link{condor.modularity.max}} output
 #' included.
 #' @examples 
 #' r = c(1,1,1,2,2,2,3,3,3,4,4);
@@ -38,8 +42,9 @@
 #' @import Matrix
 #' @export
 #' 
-condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=FALSE){
-
+condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=FALSE,deltaQmin="default"){
+    
+    
     elist <- condor.object$edges
     
     #extract weights, if any
@@ -110,10 +115,10 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory
     }
     #run bipartite modularity maximization using initial assignments T0
     if(low.memory){
-    condor.object <- condor.modularity.max(condor.object,T0=T0,weights=weights)
+    condor.object <- condor.modularity.max(condor.object,T0=T0,weights=weights,deltaQmin=deltaQmin)
     }
     if(!low.memory){
-        condor.object <- condor.matrix.modularity(condor.object,T0=T0,weights=weights)
+        condor.object <- condor.matrix.modularity(condor.object,T0=T0,weights=weights,deltaQ=deltaQmin)
     }
     
     

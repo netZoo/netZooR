@@ -21,7 +21,11 @@
 #' assignment for each "blue" node, assuming there are more reds than blues, 
 #' though this is not strictly necessary. The first column contains the 
 #' node name, the second column the community assignment.
-#' @param weights edgeweights for each edge in \code{edgelist}.j
+#' @param weights edgeweights for each edge in \code{edgelist}.
+#' @param deltaQmin convergence parameter determining the minimum required increase
+#' in the modularity for each iteration. Default is min(10^-4,1/(number of edges)),
+#' with number of edges determined by \code{nrow(condor.object$edges)}. User can
+#' set this parameter by passing a numeric value to deltaQmin.
 #' @return Qcoms data.frame with modularity of each community. 
 #' @return modularity modularity value after each iteration.
 #' @return red.memb community membership of the red nodes
@@ -40,7 +44,19 @@
 #' @import nnet
 #' @export
 #' 
-condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1){
+condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,deltaQmin="default"){
+
+    #assign convergence parameter
+    if(deltaQmin == "default"){
+        #number of edges
+        m = nrow(condor.object$edges)
+        deltaQmin <- min(10^-4,1/m)
+    }
+    if(deltaQmin != "default" & !is.numeric(deltaQmin)){
+        stop("deltaQmin must be either 'default' or a numeric value")
+    }
+
+
 
     #Convert the edgelist to a sparseMatrix object
     esub <- condor.object$edges
@@ -84,7 +100,7 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1)
     deltaQ <- 1
     #______________________________________
     iter=1
-    while(round(deltaQ,digits=4) > 0){
+    while(deltaQ > deltaQmin){
         btr <- BTR <- bt <- BT <- vector();
         #calculate T tilde
         for(i in 1:p){
@@ -159,7 +175,7 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1)
         Qhist = c(Qhist,Qnow)
         
         print(paste("Q =",Qnow,sep=" "))
-        if(round(Qnow,digits=4) != 0 && round(Qnow,digits=4) != 0){
+        if(Qnow != 0){
             deltaQ = Qnow - Qthen
         }
         iter=iter+1
