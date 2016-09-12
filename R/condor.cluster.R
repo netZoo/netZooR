@@ -118,7 +118,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory
     condor.object <- condor.modularity.max(condor.object,T0=T0,weights=weights,deltaQmin=deltaQmin)
     }
     if(!low.memory){
-        condor.object <- condor.matrix.modularity(condor.object,T0=T0,weights=weights,deltaQ=deltaQmin)
+        condor.object <- condor.matrix.modularity(condor.object,T0=T0,weights=weights,deltaQmin=deltaQmin)
     }
     
     
