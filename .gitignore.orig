@@ -1,0 +1,17 @@
+<<<<<<< HEAD
+.DS_Store
+.Rhistory
+Untitled.R
+.Rbuildignore
+inst/doc
+docs/
+doc
+Meta
+=======
+.Rproj.user
+.Rhistory
+.RData
+.rds
+tmp/*
+inst/doc
+>>>>>>> version 0.99 commit
