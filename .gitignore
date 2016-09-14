@@ -1,4 +1,6 @@
 .Rproj.user
 .Rhistory
 .RData
-.Rproj
+.rds
+tmp/*
+inst/doc

@@ -1,80 +1,40 @@
-#' Summary.panda
+#' plot.monster
 #'
-#' summarizes the results of a PANDA analysis
+#' plots the sum of squares of off diagonal mass (differential TF Involvement)
 #'
-#' @param object an object of class "panda"
+#' @param x an object of class "monster"
 #' @param ... further arguments passed to or from other methods.
 #' @keywords keywords
 #' @export
-#' @return Summary description of panda S4 object
+#' @return Plot of the dTFI for each TF against null distribution
 #' @examples
 #' \donttest{
-#' data(pandaToyData)
-#' panda.res <- panda(pandaToyData$motif,
-#'            pandaToyData$expression,pandaToyData$ppi,hamming=.001,progress=TRUE)
-#' summary(panda.res)
+#' data(yeast)
+#' monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
+#' plot(monsterRes)
 #' }
-#' data(pandaResult)
-#' summary(pandaResult)
-summary.panda <- function(object, ...){
-    l <- list(coregNet=dim(object@coregNet),regNet=dim(object@regNet),coopNet=dim(object@coopNet))
-    message("PANDA network for ", nrow(object@coregNet)," genes and ",nrow(object@coopNet)," transcription factors.")
+plot.monster <- function(x, ...){
+    dTFIPlot(x,...)
 }
 #' print.panda
 #'
-#' summarizes the results of a PANDA analysis
+#' summarizes the results of a MONSTER analysis
 #'
-#' @param x an object of class "panda"
+#' @param x an object of class "monster"
 #' @param ... further arguments passed to or from other methods.
 #' @keywords keywords
 #' @export
-#' @return Summary description of panda S4 object
+#' @return Description of transition matrices in object
 #' @examples
 #' \donttest{
-#' data(pandaToyData)
-#' panda.res <- panda(pandaToyData$motif,
-#'            pandaToyData$expression,pandaToyData$ppi,hamming=.001,progress=TRUE)
-#' print(panda.res)
+#' data(yeast)
+#' monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
 #' }
-#' data(pandaResult)
-#' print(pandaResult)
-print.panda <- function(x, ...){
-    l <- list(coregNet=dim(x@coregNet),regNet=dim(x@regNet),coopNet=dim(x@coopNet))
-    message("PANDA network for", nrow(x@coregNet),"genes and",nrow(x@coopNet),"transcription factors.")
-    message("\nSlots:")
-    message(slotNames(x)[1],"\t: Regulatory network of ",nrow(x@coopNet)," transcription factors to ", nrow(x@coregNet)," genes.")
-    message(slotNames(x)[2],": Co-regulation network of ", nrow(x@coregNet)," genes.")
-    message(slotNames(x)[3],"\t: Cooperative network of ", nrow(x@coopNet)," transcription factors.\n")
-    numEdges <- sum(x@regNet!=0)
-    message("Regulatory graph contains ",numEdges," edges.")
-    if (numEdges==nrow(x@regNet)*ncol(x@regNet)){
-        message("Regulatory graph is complete.")
-    } else {
-        message("Regulatory graph is not complete.")
-    }
-}
-#' Plot.panda
-#'
-#' summarizes the results of a PANDA analysis
-#'
-#' @param x an object of class "panda"
-#' @param ... further arguments passed to or from other methods.
-#' @keywords keywords
-#' @export
-#' @return Plot of the distribution of edge weights in the regulatory network.
-#' @examples
-#' \donttest{
-#' data(pandaToyData)
-#' panda.res <- panda(pandaToyData$motif,
-#'            pandaToyData$expression,pandaToyData$ppi,hamming=.001,progress=TRUE)
-#' plot(panda.res)
-#' }
-#' data(pandaResult)
-#' plot(pandaResult)
-plot.panda <- function(x, ...){
-    message("PANDA network for ",nrow(x@coregNet)," genes and ",nrow(x@coopNet),"  transcription factors.")
-    message("Mean edge weight = ", mean(x@regNet))
-    message("Min edge weight = ", min(x@regNet))
-    message("Max edge weight = ", max(x@regNet))
-    hist(x@regNet, main="Distribution of edge weights")
+print.monster <- function(x, ...){
+    cat("MONSTER object\n")
+    cat(paste(x@numGenes, "genes\n"))
+    cat(paste(x@numSamples[1],"baseline samples\n"))
+    cat(paste(x@numSamples[2],"final samples\n"))
+    cat(paste("Transition driven by", ncol(x@tm), "transcription factors\n"))
+    cat(paste("Run with", length(x@nullTM), "randomized permutations.\n"))
 }
