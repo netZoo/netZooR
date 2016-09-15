@@ -41,9 +41,6 @@ RoxygenNote: 6.1.1.9000
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
-    rmarkdown,
-    pkgdown,
-VignetteBuilder: knitr
 =======
 Package: MONSTER
 Type: Package
@@ -58,6 +55,7 @@ Description: Indentifies transcription factor drivers of state change from
 biocViews: StatisticalMethod, GraphAndNetwork, Microarray, GeneRegulation, NetworkInference, GeneExpression, Transcription, Network
 Imports: reshape2, 
     ggplot2, ggdendro, grid,
+    pandaR,
     MASS,
     igraph,
     assertthat,
@@ -65,8 +63,7 @@ Imports: reshape2,
 License: GPL-2
 RoxygenNote: 5.0.1
 Suggests: knitr,
+>>>>>>> adding pandaR import
     rmarkdown,
-    testthat,
-    Biobase
-VignetteBuilder: rmarkdown
->>>>>>> version 0.99 commit
+    pkgdown,
+VignetteBuilder: knitr
