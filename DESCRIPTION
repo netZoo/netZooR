@@ -11,6 +11,7 @@ Description: Indentifies transcription factor drivers of state change from
 biocViews: StatisticalMethod, GraphAndNetwork, Microarray, GeneRegulation, NetworkInference, GeneExpression, Transcription, Network
 Imports: reshape2, 
     ggplot2, ggdendro, grid,
+    pandaR,
     MASS,
     igraph,
     assertthat,
