@@ -248,6 +248,7 @@ ldaBERE <- function(motifs, expData, score="motifincluded"){
 #' be readded upon completion of the algorithm
 #' @keywords keywords
 #' @importFrom reshape2 dcast
+#' @importFrom penalized penalized
 #' @export
 #' @return TBD, An object of class "bere" (currently matrix or 
 #' data.frame) 
