@@ -41,18 +41,20 @@ RoxygenNote: 6.1.1.9000
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
+    rmarkdown,
+    pkgdown,
 =======
 Package: MONSTER
 Type: Package
 Title: Modeling Network State Transitions from Expression and Regulatory data
     (MONSTER)
-Version: 0.99.2
+Version: 0.99.3
 Date: 2016-04-04
 Author: Dan Schlauch
 Maintainer: Dan Schlauch <dschlauch@fas.harvard.edu>
 Description: Indentifies transcription factor drivers of state change from expression data
 biocViews: StatisticalMethod, GraphAndNetwork, Microarray, GeneRegulation, NetworkInference, GeneExpression, Transcription, Network
-Imports: reshape2, 
+Imports: reshape2, penalized,
     ggplot2, ggdendro, grid,
     pandaR,
     MASS,
@@ -62,7 +64,8 @@ Imports: reshape2,
 License: GPL-2
 RoxygenNote: 5.0.1
 Suggests: knitr,
->>>>>>> increment version
     rmarkdown,
-    pkgdown,
+    testthat,
+    Biobase
+>>>>>>> updated vignetteBuilder
 VignetteBuilder: knitr
