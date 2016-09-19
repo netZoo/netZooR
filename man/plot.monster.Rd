@@ -4,7 +4,7 @@
 \alias{plot.monster}
 \title{plot.monster}
 \usage{
-plot.monster(x, ...)
+\method{plot}{monster}(x, ...)
 }
 \arguments{
 \item{x}{an object of class "monster"}
