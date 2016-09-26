@@ -16,7 +16,7 @@
 plot.monster <- function(x, ...){
     dTFIPlot(x,...)
 }
-#' print.panda
+#' print.monster
 #'
 #' summarizes the results of a MONSTER analysis
 #'

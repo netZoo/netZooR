@@ -25,8 +25,7 @@ for the existence of edges between}
 matrix object corresponding to transition matrix
 }
 \description{
-This function analyzes a bi-partite network, such as a Transcription factor 
-to gene network derived from the PANDA algorithm.
+This function analyzes a bi-partite network.
 }
 \examples{
 data(yeast)
