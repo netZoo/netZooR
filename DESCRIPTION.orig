@@ -41,14 +41,12 @@ RoxygenNote: 6.1.1.9000
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
-    rmarkdown,
-    pkgdown,
 =======
 Package: MONSTER
 Type: Package
 Title: Modeling Network State Transitions from Expression and Regulatory data
     (MONSTER)
-Version: 0.99.6
+Version: 0.99.7
 Date: 2016-04-04
 Author: "Dan Schlauch <dschlauch@fas.harvard.edu>"
 Maintainer: Dan Schlauch <dschlauch@fas.harvard.edu>
@@ -64,8 +62,7 @@ Imports: reshape2, penalized, doParallel,
 License: GPL-2
 RoxygenNote: 5.0.1
 Suggests: knitr,
+>>>>>>> incremented version
     rmarkdown,
-    testthat,
-    Biobase
->>>>>>> added tidyr to imports, incremented version
+    pkgdown,
 VignetteBuilder: knitr
