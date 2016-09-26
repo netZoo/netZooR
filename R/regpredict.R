@@ -18,8 +18,12 @@
 #' @param verbose logical to indicate printing of output for 
 #' @param cpp logical use C++ for maximum speed, set to false if unable to run.
 #' @keywords keywords
+#' @export
 #' @return matrix for inferred network between TFs and genes
 #' @importFrom tidyr spread
+#' @examples
+#' data(yeast)
+#' cc.net <- monsterNI(yeast$motif,yeast$exp.cc)
 monsterNI <- function(motif.data, 
                     expr.data,
                     verbose=FALSE,
