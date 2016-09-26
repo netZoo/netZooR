@@ -13,7 +13,6 @@
 #' @return matrix object corresponding to transition matrix
 #' @keywords keywords
 #' @import MASS
-#' @importFrom testthat test_that
 #' @importFrom reshape2 melt
 #' @export
 #' @examples

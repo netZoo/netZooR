@@ -43,7 +43,6 @@ Suggests:
     knitr,
     rmarkdown,
     pkgdown,
-VignetteBuilder: knitr
 =======
 Package: MONSTER
 Type: Package
@@ -60,6 +59,7 @@ Imports: reshape2, penalized, doParallel,
     MASS,
     igraph,
     assertthat,
+    tidyr,
     methods
 License: GPL-2
 RoxygenNote: 5.0.1
@@ -67,5 +67,5 @@ Suggests: knitr,
     rmarkdown,
     testthat,
     Biobase
-VignetteBuilder: rmarkdown
->>>>>>> addressed warnings, added monsterRes.rda
+>>>>>>> added tidyr to imports, incremented version
+VignetteBuilder: knitr
