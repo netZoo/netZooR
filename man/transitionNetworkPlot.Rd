@@ -20,10 +20,10 @@ igraph object for transition matrix
 This function uses igraph to plot the transition matrix as a network
 }
 \examples{
-data(yeast)
-monsterRes <- monster(yeast$exp.ko,
-    c(rep(1,42),rep(0,49),rep(NA,15)),
-    yeast$motif, nullPerms=10, numMaxCores=4)
+# data(yeast)
+# design <- c(rep(0,20),rep(NA,10),rep(1,20))
+# monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+load(file="./data/monsterRes.rda")
 transitionNetworkPlot(monsterRes)
 
 }

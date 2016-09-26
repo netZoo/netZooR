@@ -1,7 +1,6 @@
 #' Bi-partite network analysis tools
 #'
-#' This function analyzes a bi-partite network, such as a Transcription factor 
-#' to gene network derived from the PANDA algorithm.
+#' This function analyzes a bi-partite network.
 #'
 #' @param net1 starting network, a genes by transcription factors data.frame with scores 
 #' for the existence of edges between
@@ -15,6 +14,7 @@
 #' @keywords keywords
 #' @import MASS
 #' @importFrom testthat test_that
+#' @importFrom reshape2 melt
 #' @export
 #' @examples
 #' data(yeast)
@@ -159,6 +159,7 @@ ssodm <-    function(tm){
 #' @export
 #' @import ggplot2
 #' @import grid
+#' @import stats
 #' @return ggplot2 object for transition matrix heatmap
 #' @examples
 #' data(yeast)
@@ -257,9 +258,10 @@ hcl.heatmap.plot <- function(x, method="pearson"){
 #' @import ggdendro
 #' @export
 #' @examples
-#' data(yeast)
-#' monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),
-#'     yeast$motif, nullPerms=10, numMaxCores=4)
+#' # data(yeast)
+#' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+#' load(file="./data/monsterRes.rda")
 #' # Color the nodes according to cluster membership
 #' clusters <- kmeans(slot(monsterRes, 'tm'),3)$cluster 
 #' transitionPCAPlot(monsterRes, 
@@ -291,10 +293,10 @@ transitionPCAPlot <-    function(monsterObj,
 #' @import igraph
 #' @export
 #' @examples
-#' data(yeast)
-#' monsterRes <- monster(yeast$exp.ko,
-#'     c(rep(1,42),rep(0,49),rep(NA,15)),
-#'     yeast$motif, nullPerms=10, numMaxCores=4)
+#' # data(yeast)
+#' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+#' load(file="./data/monsterRes.rda")
 #' transitionNetworkPlot(monsterRes)
 #' 
 transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
@@ -309,11 +311,11 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
     
     tm.sigmas <- transitionSigmas(monsterObj@tm, monsterObj@nullTM)
     diag(tm.sigmas) <- 0
-    tm.sigmas.melt <- melt(tm.sigmas)
+    tm.sigmas.melt <- reshape2::melt(tm.sigmas)
     
     adjMat <- monsterObj@tm
     diag(adjMat) <- 0
-    adjMat.melt <- melt(adjMat)
+    adjMat.melt <- reshape2::melt(adjMat)
     
     adj.combined <- merge(tm.sigmas.melt, adjMat.melt, by=c("Var1","Var2"))
     
@@ -357,7 +359,11 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
 #' @keywords keywords
 #' @export
 #' @examples
-#' 1+1
+#' # data(yeast)
+#' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+#' load(file="./data/monsterRes.rda")
+#' dTFIPlot(monsterRes)
 dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA){
     require(ggplot2)
     if(is.na(plot.title)){
@@ -430,7 +436,11 @@ dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA)
 #' @keywords keywords
 #' @export
 #' @examples
-#' 1+1
+#' # data(yeast)
+#' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+#' load(file="./data/monsterRes.rda")
+#' calculate.tm.p.values(monsterRes)
 calculate.tm.p.values <- function(monsterObj, method="z-score"){
     num.iterations <- length(monsterObj@nullTM)
     # Calculate the off-diagonal squared mass for each transition matrix

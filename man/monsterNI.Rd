@@ -11,7 +11,7 @@ monsterNI(motif.data, expr.data, verbose = FALSE, randomize = "none",
 \item{verbose}{logical to indicate printing of output for algorithm progress.}
 
 \item{method}{String to indicate algorithm method.  Must be one of 
-"bere","pearson","panda","cd","lda", or "wcd". Default is "bere"}
+"bere","pearson","cd","lda", or "wcd". Default is "bere"}
 
 \item{alphaw}{A weight parameter specifying proportion of weight 
 to give to indirect compared to direct evidence.  See documentation.}
@@ -36,9 +36,6 @@ matrix for inferred network between TFs and genes
 \description{
 This function generates a complete bipartite network from 
 gene expression data and sequence motif data
-}
-\examples{
-data(yeast)
 }
 \keyword{keywords}
 

@@ -25,9 +25,10 @@ This function plots the first two principal components for a
 transaction matrix
 }
 \examples{
-data(yeast)
-monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),
-    yeast$motif, nullPerms=10, numMaxCores=4)
+# data(yeast)
+# design <- c(rep(0,20),rep(NA,10),rep(1,20))
+# monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+load(file="./data/monsterRes.rda")
 # Color the nodes according to cluster membership
 clusters <- kmeans(slot(monsterRes, 'tm'),3)$cluster 
 transitionPCAPlot(monsterRes, 

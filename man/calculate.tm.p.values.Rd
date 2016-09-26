@@ -19,7 +19,11 @@ This function calculates the significance of an observed
 transition matrix given a set of null transition matrices
 }
 \examples{
-1+1
+# data(yeast)
+# design <- c(rep(0,20),rep(NA,10),rep(1,20))
+# monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+load(file="./data/monsterRes.rda")
+calculate.tm.p.values(monsterRes)
 }
 \keyword{keywords}
 
