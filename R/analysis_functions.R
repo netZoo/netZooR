@@ -260,7 +260,7 @@ hcl.heatmap.plot <- function(x, method="pearson"){
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
-#' load(file="./data/monsterRes.rda")
+#' data(monsterRes)
 #' # Color the nodes according to cluster membership
 #' clusters <- kmeans(slot(monsterRes, 'tm'),3)$cluster 
 #' transitionPCAPlot(monsterRes, 
@@ -295,7 +295,7 @@ transitionPCAPlot <-    function(monsterObj,
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
-#' load(file="./data/monsterRes.rda")
+#' data(monsterRes)
 #' transitionNetworkPlot(monsterRes)
 #' 
 transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
@@ -361,7 +361,7 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
-#' load(file="./data/monsterRes.rda")
+#' data(monsterRes)
 #' dTFIPlot(monsterRes)
 dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA){
     require(ggplot2)
@@ -438,7 +438,7 @@ dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA)
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
-#' load(file="./data/monsterRes.rda")
+#' data(monsterRes)
 #' calculate.tm.p.values(monsterRes)
 calculate.tm.p.values <- function(monsterObj, method="z-score"){
     num.iterations <- length(monsterObj@nullTM)
