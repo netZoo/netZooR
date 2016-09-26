@@ -37,5 +37,9 @@ matrix for inferred network between TFs and genes
 This function generates a complete bipartite network from 
 gene expression data and sequence motif data
 }
+\examples{
+data(yeast)
+cc.net <- monsterNI(yeast$motif,yeast$exp.cc)
+}
 \keyword{keywords}
 
