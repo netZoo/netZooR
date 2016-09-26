@@ -10,7 +10,7 @@
 #'  data.frame
 #' @param verbose logical to indicate printing of output for algorithm progress.
 #' @param method String to indicate algorithm method.  Must be one of 
-#' "bere","pearson","panda","cd","lda", or "wcd". Default is "bere"
+#' "bere","pearson","cd","lda", or "wcd". Default is "bere"
 #' @param score String to indicate whether motif information will be 
 #' readded upon completion of the algorithm
 #' @param alphaw A weight parameter specifying proportion of weight 
@@ -18,10 +18,8 @@
 #' @param verbose logical to indicate printing of output for 
 #' @param cpp logical use C++ for maximum speed, set to false if unable to run.
 #' @keywords keywords
-#' @export
 #' @return matrix for inferred network between TFs and genes
-#' @examples
-#' data(yeast)
+#' @importFrom tidyr spread
 monsterNI <- function(motif.data, 
                     expr.data,
                     verbose=FALSE,
@@ -193,11 +191,7 @@ monsterNI <- function(motif.data,
 #' @param score String to indicate whether motif information 
 #' will be readded upon completion of the algorithm
 #' @keywords keywords
-#' @export
-#' @return TBD, An object of class "bere" (currently matrix or 
-#' data.frame) 
-#' @examples
-#' 1+1
+#' @return An currently matrix or data.frame
 ldaBERE <- function(motifs, expData, score="motifincluded"){
     require(MASS)
     expData <- data.frame(expData)
@@ -249,11 +243,7 @@ ldaBERE <- function(motifs, expData, score="motifincluded"){
 #' @keywords keywords
 #' @importFrom reshape2 dcast
 #' @importFrom penalized predict
-#' @export
-#' @return TBD, An object of class "bere" (currently matrix or 
-#' data.frame) 
-#' @examples
-#' 1+1
+#' @return An matrix or data.frame
 bereFull <- function(motifs, 
                     exprData, 
                     alpha=.5, 
@@ -316,33 +306,4 @@ bereFull <- function(motifs,
         consensus <- as.matrix(consensus + consensusRange*tfdcast)
     }
     consensus
-}
-
-#' function for building a network based only on node degree
-#'
-#' This function creates an unsophisticated graph based solely on 
-#' the node degrees
-#' 
-#' @param motif A motif dataset, a data.frame, matrix or exprSet 
-#' containing 3 columns. Each row describes an motif associated 
-#' with a transcription factor (column 1) a gene (column 2) and 
-#' a score (column 3) for the motif.
-#' @keywords keywords
-#' @export
-#' @return network 
-#' @examples
-#' 1+1
-degreeApproach <- function(motifs){
-    tfDegree <- table(motifs[,c(1,3)])
-    geneDegree <- table(motifs[,c(2,3)])
-    
-    tfMatrix <- matrix(rep(tfDegree[,2],nrow(geneDegree)), 
-                        ncol=nrow(geneDegree))
-    geneMatrix <- t(matrix(rep(geneDegree[,2],nrow(tfDegree)), 
-                        nrow=nrow(geneDegree)))
-    
-    result <- tfMatrix+geneMatrix
-    rownames(result) <- rownames(tfDegree)
-    colnames(result) <- rownames(geneDegree)
-    result
 }

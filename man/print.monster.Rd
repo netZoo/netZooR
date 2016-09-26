@@ -2,7 +2,7 @@
 % Please edit documentation in R/AllGenerics.R
 \name{print.monster}
 \alias{print.monster}
-\title{print.panda}
+\title{print.monster}
 \usage{
 \method{print}{monster}(x, ...)
 }

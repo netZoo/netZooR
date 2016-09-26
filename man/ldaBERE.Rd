@@ -26,15 +26,11 @@ be one of "cd","lda", or "wcd". Default is correlation
 difference "cd".}
 }
 \value{
-TBD, An object of class "bere" (currently matrix or 
-data.frame)
+An currently matrix or data.frame
 }
 \description{
 This function generates a complete bipartite network from 
 gene expression data and sequence motif data
-}
-\examples{
-1+1
 }
 \keyword{keywords}
 
