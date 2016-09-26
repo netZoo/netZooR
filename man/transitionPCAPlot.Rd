@@ -28,7 +28,7 @@ transaction matrix
 # data(yeast)
 # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
-load(file="./data/monsterRes.rda")
+data(monsterRes)
 # Color the nodes according to cluster membership
 clusters <- kmeans(slot(monsterRes, 'tm'),3)$cluster 
 transitionPCAPlot(monsterRes, 

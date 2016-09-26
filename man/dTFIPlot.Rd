@@ -32,7 +32,7 @@ observed Transition Matrix compared to a set of null TMs
 # data(yeast)
 # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
-load(file="./data/monsterRes.rda")
+data(monsterRes)
 dTFIPlot(monsterRes)
 }
 \keyword{keywords}
