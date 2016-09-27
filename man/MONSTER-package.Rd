@@ -13,7 +13,9 @@
 The DESCRIPTION file:
 \packageDESCRIPTION{MONSTER}
 \packageIndices{MONSTER}
-~~ An overview of how to use the package, including the most important functions ~~
+
+MONSTER takes in sequence motif data linking transcription factors (TFs) to genes and gene expression from two conditions. The goal is generate bipartite networks from the gene expression data which quantify evidence of the regulatory roles of each of the TFs to each of the genes. Next, critical TFs are identified by computing a transition matrix, which maps the gene regulatory network in the first state to the gene regulatory network in the second state.
+
 }
 \author{
 \packageAuthor{MONSTER}
@@ -25,10 +27,7 @@ Maintainer: \packageMaintainer{MONSTER}
 }
 
 \keyword{ package }
-\seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
-}
+
 \examples{
 ##
 }
