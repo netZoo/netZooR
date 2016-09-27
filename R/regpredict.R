@@ -3,19 +3,19 @@
 #' This function generates a complete bipartite network from 
 #' gene expression data and sequence motif data 
 #' 
-#' @param motif A motif dataset, a data.frame, matrix or exprSet containing 
+#' @param motif.data A motif dataset, a data.frame, matrix or exprSet containing 
 #' 3 columns. Each row describes an motif associated with a transcription 
 #' factor (column 1) a gene (column 2) and a score (column 3) for the motif.
-#' @param expr An expression dataset, as a genes (rows) by samples (columns)
+#' @param expr.data An expression dataset, as a genes (rows) by samples (columns)
 #'  data.frame
 #' @param verbose logical to indicate printing of output for algorithm progress.
 #' @param method String to indicate algorithm method.  Must be one of 
 #' "bere","pearson","cd","lda", or "wcd". Default is "bere"
+#' @param randomize logical indicating randomization by genes, within genes or none
 #' @param score String to indicate whether motif information will be 
 #' readded upon completion of the algorithm
 #' @param alphaw A weight parameter specifying proportion of weight 
 #' to give to indirect compared to direct evidence.  See documentation.
-#' @param verbose logical to indicate printing of output for 
 #' @param cpp logical use C++ for maximum speed, set to false if unable to run.
 #' @keywords keywords
 #' @export
@@ -182,17 +182,12 @@ monsterNI <- function(motif.data,
 #' This function generates a complete bipartite network from 
 #' gene expression data and sequence motif data 
 #' 
-#' @param motif A motif dataset, a data.frame, matrix or exprSet 
+#' @param motifs A motif dataset, a data.frame, matrix or exprSet 
 #' containing 3 columns. Each row describes an motif associated 
 #' with a transcription factor (column 1) a gene (column 2) and 
 #' a score (column 3) for the motif.
-#' @param expr An expression dataset, as a genes (rows) by 
+#' @param expData An expression dataset, as a genes (rows) by 
 #' samples (columns) data.frame
-#' @param verbose logical to indicate printing of output for 
-#' algorithm progress.
-#' @param method String to indicate algorithm method.  Must 
-#' be one of "cd","lda", or "wcd". Default is correlation 
-#' difference "cd".
 #' @param score String to indicate whether motif information 
 #' will be readded upon completion of the algorithm
 #' @keywords keywords
@@ -230,14 +225,16 @@ ldaBERE <- function(motifs, expData, score="motifincluded"){
 #' This function generates a complete bipartite network from 
 #' gene expression data and sequence motif data 
 #' 
-#' @param motif A motif dataset, a data.frame, matrix or exprSet 
+#' @param motifs A motif dataset, a data.frame, matrix or exprSet 
 #' containing 3 columns. Each row describes an motif associated 
 #' with a transcription factor (column 1) a gene (column 2) 
 #' and a score (column 3) for the motif.
-#' @param expr An expression dataset, as a genes (rows) by 
+#' @param exprData An expression dataset, as a genes (rows) by 
 #' samples (columns) data.frame
 #' @param alpha A weight parameter specifying proportion of weight 
 #' to give to indirect compared to direct evidence.  See documentation.
+#' @param penalized logical indicating whether or not to use penalized logistic regression
+#' @param lambda if using penalized, the lambda parameter in the penalized logistic regression
 #' @param verbose logical to indicate printing of output for 
 #' algorithm progress.
 #' @param method String to indicate algorithm method.  Must be 
