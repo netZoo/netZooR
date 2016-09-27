@@ -21,8 +21,8 @@ corresponding dendrogram of a transaction matrix
 }
 \examples{
 data(yeast)
-cc.net <- monsterNI(yeast$motif,yeast$exp.cc)
-sr.net <- monsterNI(yeast$motif,yeast$exp.sr)
+cc.net <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,])
+sr.net <- monsterNI(yeast$motif,yeast$exp.sr[1:1000,])
 transformation.matrix(cc.net, sr.net)
 }
 \keyword{keywords}
