@@ -30,9 +30,8 @@ This function runs the MONSTER algorithm
 }
 \examples{
 data(yeast)
-design <- c(rep(0,ncol(yeast$exp.cc)), rep(1,ncol(yeast$exp.sr)))
-monsterRes <- monster(cbind(yeast$exp.cc, yeast$exp.sr), 
-    design, yeast$motif, nullPerms=10, numMaxCores=4)
+design <- c(rep(0,20),rep(NA,10),rep(1,20))
+monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)
 plot(monsterRes)
 
 

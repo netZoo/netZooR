@@ -17,9 +17,8 @@
 #' @return An object of class "monster" containing results
 #' @examples
 #' data(yeast)
-#' design <- c(rep(0,ncol(yeast$exp.cc)), rep(1,ncol(yeast$exp.sr)))
-#' monsterRes <- monster(cbind(yeast$exp.cc, yeast$exp.sr), 
-#'     design, yeast$motif, nullPerms=10, numMaxCores=4)
+#' design <- c(rep(0,20),rep(NA,10),rep(1,20))
+#' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)
 #' plot(monsterRes)
 #' 
 #' 
@@ -29,8 +28,6 @@ monster <- function(expr,
                     nullPerms=100, 
                     numMaxCores=1, 
                     outputDir=NA){
-    require(doParallel)
-    require(foreach)
     
     # Data type checking
     expr <- checkDataType(expr)
@@ -108,8 +105,6 @@ monster <- function(expr,
 #' @importFrom assertthat assert_that
 #' 
 checkDataType <- function(expr){
-    requireNamespace("assertthat")
-    require(assertthat)
     assert_that(is.data.frame(expr)||is.matrix(expr)||class(expr)=="ExpressionSet")
     if(class(expr)=="ExpressionSet"){
         expr <- exprs(expr)
