@@ -14,6 +14,7 @@
 #' @export
 #' @import doParallel
 #' @import parallel
+#' @import foreach
 #' @importFrom methods new
 #' @return An object of class "monster" containing results
 #' @examples
