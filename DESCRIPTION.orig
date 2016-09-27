@@ -46,7 +46,7 @@ Package: MONSTER
 Type: Package
 Title: Modeling Network State Transitions from Expression and Regulatory data
     (MONSTER)
-Version: 0.99.12
+Version: 0.99.13
 Date: 2016-04-04
 Author: "Dan Schlauch <dschlauch@fas.harvard.edu>"
 Maintainer: Dan Schlauch <dschlauch@fas.harvard.edu>
@@ -62,7 +62,7 @@ Imports: reshape2, penalized, doParallel,
 License: GPL-2
 RoxygenNote: 5.0.1
 Suggests: knitr,
->>>>>>> fixing methods import
+>>>>>>> sped up examples, version increment
     rmarkdown,
     pkgdown,
 VignetteBuilder: knitr
