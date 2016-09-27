@@ -234,11 +234,6 @@ ldaBERE <- function(motifs, expData, score="motifincluded"){
 #' to give to indirect compared to direct evidence.  See documentation.
 #' @param penalized logical indicating whether or not to use penalized logistic regression
 #' @param lambda if using penalized, the lambda parameter in the penalized logistic regression
-#' @param verbose logical to indicate printing of output for 
-#' algorithm progress.
-#' @param method String to indicate algorithm method.  Must be 
-#' one of "cd","lda", or "wcd". Default is correlation difference 
-#' "cd".
 #' @param score String to indicate whether motif information will 
 #' be readded upon completion of the algorithm
 #' @keywords keywords
