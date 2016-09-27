@@ -7,23 +7,16 @@
 ldaBERE(motifs, expData, score = "motifincluded")
 }
 \arguments{
-\item{score}{String to indicate whether motif information 
-will be readded upon completion of the algorithm}
-
-\item{motif}{A motif dataset, a data.frame, matrix or exprSet 
+\item{motifs}{A motif dataset, a data.frame, matrix or exprSet 
 containing 3 columns. Each row describes an motif associated 
 with a transcription factor (column 1) a gene (column 2) and 
 a score (column 3) for the motif.}
 
-\item{expr}{An expression dataset, as a genes (rows) by 
+\item{expData}{An expression dataset, as a genes (rows) by 
 samples (columns) data.frame}
 
-\item{verbose}{logical to indicate printing of output for 
-algorithm progress.}
-
-\item{method}{String to indicate algorithm method.  Must 
-be one of "cd","lda", or "wcd". Default is correlation 
-difference "cd".}
+\item{score}{String to indicate whether motif information 
+will be readded upon completion of the algorithm}
 }
 \value{
 An currently matrix or data.frame

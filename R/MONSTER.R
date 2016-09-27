@@ -28,8 +28,7 @@ monster <- function(expr,
                     motif=NULL, 
                     nullPerms=100, 
                     numMaxCores=1, 
-                    outputDir=NA, 
-                    ...){
+                    outputDir=NA){
     require(doParallel)
     require(foreach)
     

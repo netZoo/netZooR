@@ -2,13 +2,14 @@
 #'
 #' This function analyzes a bi-partite network.
 #'
-#' @param net1 starting network, a genes by transcription factors data.frame with scores 
+#' @param network.1 starting network, a genes by transcription factors data.frame with scores 
 #' for the existence of edges between
-#' @param net2 final network, a genes by transcription factors data.frame with scores 
+#' @param network.2 final network, a genes by transcription factors data.frame with scores 
 #' for the existence of edges between
 #' @param by.tfs logical indicating a transcription factor based transformation.    If 
 #' false, gives gene by gene transformation matrix
 #' @param remove.diagonal logical for returning a result containing 0s across the diagonal
+#' @param standardize logical indicating whether to standardize the rows and columns
 #' @param method character specifying which algorithm to use, default='kabsch'
 #' @return matrix object corresponding to transition matrix
 #' @keywords keywords
@@ -18,8 +19,8 @@
 #' @export
 #' @examples
 #' data(yeast)
-#' cc.net <- monsterNI(yeast$motif,yeast$exp.cc)
-#' sr.net <- monsterNI(yeast$motif,yeast$exp.sr)
+#' cc.net <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,])
+#' sr.net <- monsterNI(yeast$motif,yeast$exp.sr[1:1000,])
 #' transformation.matrix(cc.net, sr.net)
 transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize=FALSE, 
                                 remove.diagonal=TRUE, method="ols"){
@@ -163,8 +164,8 @@ ssodm <-    function(tm){
 #' @return ggplot2 object for transition matrix heatmap
 #' @examples
 #' data(yeast)
-#' cc.net <- monsterNI(yeast$motif,yeast$exp.cc)
-#' sr.net <- monsterNI(yeast$motif,yeast$exp.sr)
+#' cc.net <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,])
+#' sr.net <- monsterNI(yeast$motif,yeast$exp.sr[1:1000,])
 #' transformation.matrix(cc.net, sr.net)
 hcl.heatmap.plot <- function(x, method="pearson"){
     assert_that(class(x)=="monster")
@@ -248,11 +249,10 @@ hcl.heatmap.plot <- function(x, method="pearson"){
 #' This function plots the first two principal components for a 
 #' transaction matrix
 #'
-#' @param tm a transition matrix for a bipartite network
+#' @param monsterObj a MONSTER object resulting from a monster analysis
 #' @param title The title of the plot
-#' @param clusters A vector indicating the colors to be plotted for each node
-#' @param alpha A vector indicating the level of transparency to be plotted 
-#' for each node
+#' @param clusters A vector indicating the number of clusters to compute
+#' @param alpha A vector indicating the level of transparency to be plotted
 #' @return ggplot2 object for transition matrix PCA
 #' @keywords keywords
 #' @import ggdendro
@@ -348,7 +348,7 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
 #' observed Transition Matrix compared to a set of null TMs
 #'
 #' @param monsterObj Monster Object
-#' @param logical indicating whether to reorder transcription
+#' @param rescale logical indicating whether to reorder transcription
 #' factors according to their statistical significance and to 
 #' rescale the values observed to be standardized by the null
 #' distribution 

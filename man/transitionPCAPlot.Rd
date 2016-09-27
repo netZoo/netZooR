@@ -8,14 +8,13 @@ transitionPCAPlot(monsterObj, title = "PCA Plot of Transition",
   clusters = 1, alpha = 1)
 }
 \arguments{
+\item{monsterObj}{a MONSTER object resulting from a monster analysis}
+
 \item{title}{The title of the plot}
 
-\item{clusters}{A vector indicating the colors to be plotted for each node}
+\item{clusters}{A vector indicating the number of clusters to compute}
 
-\item{alpha}{A vector indicating the level of transparency to be plotted 
-for each node}
-
-\item{tm}{a transition matrix for a bipartite network}
+\item{alpha}{A vector indicating the level of transparency to be plotted}
 }
 \value{
 ggplot2 object for transition matrix PCA
