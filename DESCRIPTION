@@ -8,7 +8,7 @@ Author: "Dan Schlauch <dschlauch@fas.harvard.edu>"
 Maintainer: Dan Schlauch <dschlauch@fas.harvard.edu>
 Description: Indentifies transcription factor drivers of state change from expression data
 biocViews: StatisticalMethod, GraphAndNetwork, Microarray, GeneRegulation, NetworkInference, GeneExpression, Transcription, Network
-Depends: R (>= 3.0.0)
+Depends: R (>= 3.3)
 Imports: reshape2, penalized, 
     parallel, doParallel, foreach,
     ggplot2, ggdendro, grid,
