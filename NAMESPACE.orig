@@ -56,10 +56,9 @@ import(reticulate)
 import(stats)
 importFrom(assertthat,assert_that)
 importFrom(doParallel,registerDoParallel)
+importFrom(methods,new)
+>>>>>>> fixing methods import
 importFrom(penalized,optL1)
 importFrom(penalized,penalized)
-importFrom(penalized,predict)
-importFrom(reshape2,dcast)
->>>>>>> importing functions
 importFrom(reshape2,melt)
 importFrom(tidyr,spread)
