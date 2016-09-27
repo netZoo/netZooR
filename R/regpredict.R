@@ -21,6 +21,7 @@
 #' @export
 #' @return matrix for inferred network between TFs and genes
 #' @importFrom tidyr spread
+#' @importFrom penalized penalized
 #' @examples
 #' data(yeast)
 #' cc.net <- monsterNI(yeast$motif,yeast$exp.cc)
