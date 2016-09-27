@@ -70,9 +70,11 @@ import(grid)
 import(stats)
 importFrom(assertthat,assert_that)
 importFrom(doParallel,registerDoParallel)
+importFrom(igraph,"E<-")
+importFrom(igraph,"V<-")
 importFrom(igraph,E)
 importFrom(igraph,V)
->>>>>>> added V, E to igraph imports
+>>>>>>> added V<-, E<- to igraph imports
 importFrom(igraph,graph.data.frame)
 importFrom(igraph,plot.igraph)
 importFrom(methods,new)
