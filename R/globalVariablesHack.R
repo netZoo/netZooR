@@ -1,3 +1,1 @@
-globalVariables(c(
-    "Comp.1", "Comp.2", "GENE", "TF", "Var1", "Var2", "exprData", "exprs", "i", "lambda", "node.names",
-    "rcpp_ccorr", "tfNames", "tfdcast", "value", "variable", "xend", "y", "yend"))
+globalVariables(c("Comp.1", "Comp.2", "GENE", "TF", "Var1", "Var2", "exprData", "exprs", "i", "lambda", "node.names","rcpp_ccorr", "tfNames", "tfdcast", "value", "variable", "xend", "y", "yend"))

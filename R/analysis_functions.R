@@ -141,7 +141,6 @@ kabsch <- function(P,Q){
 #' @examples
 #' mat <- matrix(rnorm(100),ncol=10)
 #' ssodm(mat)
-#' 
 ssodm <-    function(tm){
     diag(tm)<-0
     apply(tm,1,function(x){t(x)%*%x})
@@ -334,7 +333,7 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
     V(tfNet)$size <- vSize[V(tfNet)$name]*5
     V(tfNet)$color <- "yellow"
     E(tfNet)$width <- (abs(E(tfNet)$value.x))*15/max(abs(E(tfNet)$value.x))
-    E(tfNet)$color<-ifelse(E(tfNet)$value.x>0, "blue", "red")
+    E(tfNet)$color <-ifelse(E(tfNet)$value.x>0, "blue", "red")
     
     plot.igraph(tfNet, edge.arrow.size=2, vertex.label.cex= 1.5, vertex.label.color= "black",main="")
 }

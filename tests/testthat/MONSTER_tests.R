@@ -8,5 +8,4 @@ test_that("Data is in an acceptable format", {
     expect_equal(checkDataType(df), as.matrix(df))
     expect_equal(checkDataType(mt), mt)
     expect_equivalent(checkDataType(eset), mt)
-    
 })

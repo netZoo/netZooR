@@ -18,7 +18,6 @@ This function calculates the off-diagonal sum of squared mass for a transition m
 \examples{
 mat <- matrix(rnorm(100),ncol=10)
 ssodm(mat)
-
 }
 \keyword{keywords}
 

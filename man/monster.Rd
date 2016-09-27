@@ -5,7 +5,7 @@
 \title{MOdeling Network State Transitions from Expression and Regulatory data (MONSTER)}
 \usage{
 monster(expr, design, motif = NULL, nullPerms = 100, numMaxCores = 1,
-  outputDir = NA)
+    outputDir = NA)
 }
 \arguments{
 \item{expr}{Gene Expression dataset}
@@ -33,8 +33,6 @@ data(yeast)
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
 monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)
 plot(monsterRes)
-
-
 }
 \keyword{keywords}
 
