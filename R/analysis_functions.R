@@ -290,7 +290,8 @@ transitionPCAPlot <-    function(monsterObj,
 #' @param numTopTFs The number of TFs to display, ranked by largest dTFI
 #' @return igraph object for transition matrix
 #' @keywords keywords
-#' @import igraph
+#' @importFrom igraph graph.data.frame
+#' @importFrom igraph plot.igraph
 #' @export
 #' @examples
 #' # data(yeast)
