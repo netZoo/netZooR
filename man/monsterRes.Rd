@@ -10,6 +10,4 @@ data(monsterRes)
 }
 \format{MONSTER obj}
 \value{MONSTER obj}
-\references{
-}
 \keyword{datasets}
