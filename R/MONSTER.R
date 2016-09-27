@@ -12,7 +12,7 @@
 #' @param outputDir save MONSTER results in a directory
 #' @keywords keywords
 #' @export
-#' @importFrom doParallel registerDoParallel
+#' @import doParallel
 #' @import parallel
 #' @importFrom methods new
 #' @return An object of class "monster" containing results
