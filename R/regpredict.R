@@ -193,7 +193,6 @@ monsterNI <- function(motif.data,
 #' @keywords keywords
 #' @return An currently matrix or data.frame
 ldaBERE <- function(motifs, expData, score="motifincluded"){
-    require(MASS)
     expData <- data.frame(expData)
     tfdcast <- dcast(motifs,V1~V2,fill=0)
     rownames(tfdcast) <- tfdcast[,1]
@@ -252,7 +251,6 @@ bereFull <- function(motifs,
                     penalized=TRUE, 
                     lambda=10, 
                     score="motifincluded"){
-    require(MASS)
     exprData <- data.frame(exprData)
     tfdcast <- dcast(motifs,V1~V2,fill=0)
     rownames(tfdcast) <- tfdcast[,1]

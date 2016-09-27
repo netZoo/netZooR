@@ -24,7 +24,6 @@
 #' transformation.matrix(cc.net, sr.net)
 transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize=FALSE, 
                                 remove.diagonal=TRUE, method="ols"){
-    require(MASS)
     if(is.list(network.1)&&is.list(network.2)){
         if(by.tfs){
             net1 <- t(network.1$reg.net)
@@ -270,7 +269,6 @@ hcl.heatmap.plot <- function(x, method="pearson"){
 transitionPCAPlot <-    function(monsterObj, 
                                 title="PCA Plot of Transition", 
                                 clusters=1, alpha=1){
-    require(ggplot2)
     tm.pca <- princomp(monsterObj@tm)
     odsm <- apply(monsterObj@tm,2,function(x){t(x)%*%x})
     odsm.scaled <- 2*(odsm-mean(odsm))/sd(odsm)+4
@@ -300,8 +298,6 @@ transitionPCAPlot <-    function(monsterObj,
 #' transitionNetworkPlot(monsterRes)
 #' 
 transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
-    require(reshape2)
-    require(igraph)
     ## Calculate p-values for off-diagonals
     transitionSigmas <- function(tm.observed, tm.null){
         tm.null.mean <- apply(simplify2array(tm.null), 1:2, mean)
@@ -365,7 +361,6 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
 #' data(monsterRes)
 #' dTFIPlot(monsterRes)
 dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA){
-    require(ggplot2)
     if(is.na(plot.title)){
         plot.title <- "Differential TF Involvement"
     }
