@@ -2,7 +2,7 @@ Package: MONSTER
 Type: Package
 Title: Modeling Network State Transitions from Expression and Regulatory data
     (MONSTER)
-Version: 0.99.11
+Version: 0.99.12
 Date: 2016-04-04
 Author: "Dan Schlauch <dschlauch@fas.harvard.edu>"
 Maintainer: Dan Schlauch <dschlauch@fas.harvard.edu>
@@ -10,7 +10,7 @@ Description: Indentifies transcription factor drivers of state change from expre
 biocViews: StatisticalMethod, GraphAndNetwork, Microarray, GeneRegulation, NetworkInference, GeneExpression, Transcription, Network
 Imports: reshape2, penalized, doParallel,
     ggplot2, ggdendro, grid,
-    MASS,
+    MASS, stats,
     igraph,
     assertthat,
     tidyr,
