@@ -26,13 +26,6 @@ to give to indirect compared to direct evidence.  See documentation.}
 
 \item{score}{String to indicate whether motif information will 
 be readded upon completion of the algorithm}
-
-\item{verbose}{logical to indicate printing of output for 
-algorithm progress.}
-
-\item{method}{String to indicate algorithm method.  Must be 
-one of "cd","lda", or "wcd". Default is correlation difference 
-"cd".}
 }
 \value{
 An matrix or data.frame
