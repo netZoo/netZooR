@@ -12,6 +12,8 @@
 #' @param outputDir save MONSTER results in a directory
 #' @keywords keywords
 #' @export
+#' @importFrom doParallel registerDoParallel
+#' @importFrom methods new
 #' @return An object of class "monster" containing results
 #' @examples
 #' data(yeast)

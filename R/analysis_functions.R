@@ -13,6 +13,7 @@
 #' @return matrix object corresponding to transition matrix
 #' @keywords keywords
 #' @import MASS
+#' @importFrom penalized optL1
 #' @importFrom reshape2 melt
 #' @export
 #' @examples
