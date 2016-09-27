@@ -9,19 +9,23 @@ bereFull(motifs, exprData, alpha = 0.5, penalized = TRUE, lambda = 10,
   score = "motifincluded")
 }
 \arguments{
-\item{alpha}{A weight parameter specifying proportion of weight 
-to give to indirect compared to direct evidence.  See documentation.}
-
-\item{score}{String to indicate whether motif information will 
-be readded upon completion of the algorithm}
-
-\item{motif}{A motif dataset, a data.frame, matrix or exprSet 
+\item{motifs}{A motif dataset, a data.frame, matrix or exprSet 
 containing 3 columns. Each row describes an motif associated 
 with a transcription factor (column 1) a gene (column 2) 
 and a score (column 3) for the motif.}
 
-\item{expr}{An expression dataset, as a genes (rows) by 
+\item{exprData}{An expression dataset, as a genes (rows) by 
 samples (columns) data.frame}
+
+\item{alpha}{A weight parameter specifying proportion of weight 
+to give to indirect compared to direct evidence.  See documentation.}
+
+\item{penalized}{logical indicating whether or not to use penalized logistic regression}
+
+\item{lambda}{if using penalized, the lambda parameter in the penalized logistic regression}
+
+\item{score}{String to indicate whether motif information will 
+be readded upon completion of the algorithm}
 
 \item{verbose}{logical to indicate printing of output for 
 algorithm progress.}

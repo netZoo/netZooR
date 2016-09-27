@@ -7,14 +7,6 @@
 }
 \usage{
 data(monsterRes)
-plot(monsterRes)
-library(gplots)
-heatmap.2(slot(monsterRes, 'tm'), col = "bluered",
-    density.info="none",  
-    trace="none", 
-    dendrogram='none',     
-    Rowv=FALSE,
-    Colv=FALSE)
 }
 \format{MONSTER obj}
 \value{MONSTER obj}

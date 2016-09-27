@@ -8,18 +8,20 @@ transformation.matrix(network.1, network.2, by.tfs = TRUE,
   standardize = FALSE, remove.diagonal = TRUE, method = "ols")
 }
 \arguments{
+\item{network.1}{starting network, a genes by transcription factors data.frame with scores 
+for the existence of edges between}
+
+\item{network.2}{final network, a genes by transcription factors data.frame with scores 
+for the existence of edges between}
+
 \item{by.tfs}{logical indicating a transcription factor based transformation.    If 
 false, gives gene by gene transformation matrix}
+
+\item{standardize}{logical indicating whether to standardize the rows and columns}
 
 \item{remove.diagonal}{logical for returning a result containing 0s across the diagonal}
 
 \item{method}{character specifying which algorithm to use, default='kabsch'}
-
-\item{net1}{starting network, a genes by transcription factors data.frame with scores 
-for the existence of edges between}
-
-\item{net2}{final network, a genes by transcription factors data.frame with scores 
-for the existence of edges between}
 }
 \value{
 matrix object corresponding to transition matrix
