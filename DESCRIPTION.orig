@@ -41,6 +41,9 @@ RoxygenNote: 6.1.1.9000
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
+    rmarkdown,
+    pkgdown,
+VignetteBuilder: knitr
 =======
 Package: MONSTER
 Type: Package
@@ -51,7 +54,7 @@ Date: 2016-04-04
 Author: "Dan Schlauch <dschlauch@fas.harvard.edu>"
 Maintainer: Dan Schlauch <dschlauch@fas.harvard.edu>
 Description: MONSTER indentifies transcription factor drivers of state change from expression data.
-biocViews: StatisticalMethod, GraphAndNetwork, Microarray, GeneRegulation, NetworkInference, GeneExpression, Transcription, Network, Regression
+biocViews: StatisticalMethod, Regression, GraphAndNetwork, Microarray, NetworkInference, GeneExpression, Transcription, Network
 Depends: R (>= 3.3)
 Imports: reshape2, penalized, 
     parallel, doParallel, foreach,
@@ -64,7 +67,8 @@ Imports: reshape2, penalized,
 License: GPL-2
 RoxygenNote: 5.0.1
 Suggests: knitr,
->>>>>>> globalVariables
     rmarkdown,
-    pkgdown,
+    testthat,
+    Biobase
 VignetteBuilder: knitr
+>>>>>>> indentation multiple of 4 spaces

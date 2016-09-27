@@ -4,9 +4,9 @@ author: "Daniel Schlauch"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{MONSTER Package}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{MONSTER Package}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
 
 MONSTER (MOdeling Network State Transitions from Expression and Regulatory data) is a tool for identifying the transcription factor drivers of state change.
@@ -127,7 +127,7 @@ transitionNetworkPlot(monsterRes, numEdges=20)
 ```
 
 A network visualization of the strongest 20 transitions identified based on the transition matrix above. Arrows indicate a change in edges from a transcription factor in the network of the first 10 timepoints in the Yeast Cell Cycle to resemble those of a transcription factor in the last 10 timepoints in the Yeast Cell Cycle. Edges are sized according to the magnitude of the transition and nodes (TFs) are sized by the dTFI for that TF. The gain of targeting features is indicated by the color blue while the loss of features is indicated by red.
- 
+
 Furthermore, we are often interested in correlated targetting pattern sharing.  To find clusters of transcription factor transitions, we can plot the set of TFs onto the first two principal components taken from the transition matrix.
 
 ```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=F}

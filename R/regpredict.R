@@ -1,13 +1,12 @@
 #' Bipartite Edge Reconstruction from Expression data
 #'
 #' This function generates a complete bipartite network from 
-#' gene expression data and sequence motif data 
-#' 
+#' gene expression data and sequence motif data
+#'
 #' @param motif.data A motif dataset, a data.frame, matrix or exprSet containing 
 #' 3 columns. Each row describes an motif associated with a transcription 
 #' factor (column 1) a gene (column 2) and a score (column 3) for the motif.
 #' @param expr.data An expression dataset, as a genes (rows) by samples (columns)
-#'  data.frame
 #' @param verbose logical to indicate printing of output for algorithm progress.
 #' @param method String to indicate algorithm method.  Must be one of 
 #' "bere","pearson","cd","lda", or "wcd". Default is "bere"
@@ -62,14 +61,14 @@ monsterNI <- function(motif.data,
                 print("Randomizing by reordering each gene labels")
         }
     }
-  
+
     # Bad data checking
     if (num.genes==0){
         stop("Error validating data.  No matched genes.\n
             Please ensure that gene names in expression 
             file match gene names in motif file.")
     }
-  
+
     strt<-Sys.time()
     if(num.conditions==0) {
         stop("Error: Number of samples = 0")
@@ -90,9 +89,9 @@ monsterNI <- function(motif.data,
             gene.coreg <- cor(t(expr.data), method="pearson", use="pairwise.complete.obs")
         }
     }
-  
+
     print(Sys.time()-strt)
-  
+
     if(verbose)
         print('More data cleaning')
     # Convert 3 column format to matrix format
@@ -211,7 +210,7 @@ ldaBERE <- function(motifs, expData, score="motifincluded"){
         
         predict(z, expData)$posterior[,2]
     }))
-  
+
     if(score=="motifincluded"){
         result <- as.matrix(result + tfdcast)
     }
@@ -223,7 +222,7 @@ ldaBERE <- function(motifs, expData, score="motifincluded"){
 #'
 #' This function generates a complete bipartite network from 
 #' gene expression data and sequence motif data 
-#' 
+#'
 #' @param motifs A motif dataset, a data.frame, matrix or exprSet 
 #' containing 3 columns. Each row describes an motif associated 
 #' with a transcription factor (column 1) a gene (column 2) 
@@ -278,12 +277,12 @@ bereFull <- function(motifs,
         tfTargets <- as.numeric(x)
         
         # Ordinary Logistic Reg
-#         z <- glm(tfTargets ~ ., data=exprData, family="binomial")
+        # z <- glm(tfTargets ~ ., data=exprData, family="binomial")
         
         # Penalized Logistic Reg
         z <- penalized(tfTargets, exprData, 
                         lambda2=lambda, model="logistic", standardize=TRUE)
-#         z <- optL1(tfTargets, exprData, minlambda1=25, fold=5)
+        #z <- optL1(tfTargets, exprData, minlambda1=25, fold=5)
         
         
         predict(z, exprData)

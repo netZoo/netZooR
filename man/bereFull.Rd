@@ -6,7 +6,7 @@
 (composite method with direct/indirect)}
 \usage{
 bereFull(motifs, exprData, alpha = 0.5, penalized = TRUE, lambda = 10,
-  score = "motifincluded")
+    score = "motifincluded")
 }
 \arguments{
 \item{motifs}{A motif dataset, a data.frame, matrix or exprSet 
