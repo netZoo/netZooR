@@ -13,7 +13,7 @@
 #' @keywords keywords
 #' @export
 #' @importFrom doParallel registerDoParallel
-#' @importFrom parallel detectCores
+#' @import parallel
 #' @importFrom methods new
 #' @return An object of class "monster" containing results
 #' @examples
