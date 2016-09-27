@@ -22,8 +22,6 @@
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)
 #' plot(monsterRes)
-#' 
-#' 
 monster <- function(expr, 
                     design, 
                     motif=NULL, 
@@ -35,7 +33,6 @@ monster <- function(expr,
     expr <- checkDataType(expr)
 
     # Parallelize
-    
     # Initiate cluster
     if(!is.na(numMaxCores)){
         # Calculate the number of cores
@@ -95,7 +92,6 @@ monster <- function(expr,
             nullTM=transMatrices[-1], 
             numGenes=nrow(expr), 
             numSamples=c(sum(design==0), sum(design==1))))
-    
 }
 
 #' Checks that data is something MONSTER can handle
