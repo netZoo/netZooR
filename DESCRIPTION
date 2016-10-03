@@ -22,5 +22,6 @@ RoxygenNote: 5.0.1
 Suggests: knitr,
     rmarkdown,
     testthat,
-    Biobase
-VignetteBuilder: knitr
+    Biobase,
+    BiocStyle
+VignetteBuilder: BiocStyle::html_document
