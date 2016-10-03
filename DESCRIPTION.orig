@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Package: netZooR
 Title: Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, and SAMBAR into one workflow.
 Version: 1.3.0
@@ -42,33 +41,12 @@ Suggests:
     testthat (>= 2.1.0),
     knitr,
     rmarkdown,
+<<<<<<< HEAD
     pkgdown,
 VignetteBuilder: knitr
 =======
-Package: MONSTER
-Type: Package
-Title: Modeling Network State Transitions from Expression and Regulatory data
-    (MONSTER)
-Version: 0.99.23
-Date: 2016-04-04
-Author: "Dan Schlauch <dschlauch@fas.harvard.edu>"
-Maintainer: Dan Schlauch <dschlauch@fas.harvard.edu>
-Description: MONSTER indentifies transcription factor drivers of state change from expression data.
-biocViews: StatisticalMethod, Regression, GraphAndNetwork, Microarray, NetworkInference, GeneExpression, Transcription, Network
-Depends: R (>= 3.3)
-Imports: reshape2, penalized, 
-    parallel, doParallel, foreach,
-    ggplot2, ggdendro, grid,
-    MASS, stats,
-    igraph,
-    assertthat,
-    tidyr,
-    methods
-License: GPL-2
-RoxygenNote: 5.0.1
-Suggests: knitr,
-    rmarkdown,
     testthat,
-    Biobase
-VignetteBuilder: knitr
->>>>>>> indentation multiple of 4 spaces
+    Biobase,
+    BiocStyle
+VignetteBuilder: BiocStyle::html_document
+>>>>>>> added BiocStyle

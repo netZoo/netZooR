@@ -42,4 +42,5 @@ Suggests:
     knitr,
     rmarkdown,
     pkgdown,
-VignetteBuilder: knitr
+    BiocStyle
+VignetteBuilder: BiocStyle::html_document
