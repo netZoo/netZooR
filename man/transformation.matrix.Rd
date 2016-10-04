@@ -5,7 +5,7 @@
 \title{Bi-partite network analysis tools}
 \usage{
 transformation.matrix(network.1, network.2, by.tfs = TRUE,
-    standardize = FALSE, remove.diagonal = TRUE, method = "ols")
+  standardize = FALSE, remove.diagonal = TRUE, method = "ols")
 }
 \arguments{
 \item{network.1}{starting network, a genes by transcription factors data.frame with scores 

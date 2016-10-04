@@ -6,7 +6,7 @@
 (composite method with direct/indirect)}
 \usage{
 bereFull(motifs, exprData, alpha = 0.5, penalized = TRUE, lambda = 10,
-    score = "motifincluded")
+  score = "motifincluded")
 }
 \arguments{
 \item{motifs}{A motif dataset, a data.frame, matrix or exprSet 
@@ -32,7 +32,14 @@ An matrix or data.frame
 }
 \description{
 This function generates a complete bipartite network from 
-gene expression data and sequence motif data
+gene expression data and sequence motif data. This NI method
+serves as a default method for inferring bipartite networks
+in MONSTER.  Running bereFull can generate these networks
+independently from the larger MONSTER method.
+}
+\examples{
+data(yeast)
+monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5, penalized=F)
 }
 \keyword{keywords}
 
