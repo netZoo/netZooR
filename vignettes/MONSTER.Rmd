@@ -16,6 +16,10 @@ Specific cellular states are often associated with distinct gene expression patt
 MONSTER takes in sequence motif data linking transcription factors (TFs) to genes and gene expression from two conditions. The goal is generate bipartite networks from the gene expression data which quantify evidence of the regulatory roles of each of the TFs to each of the genes. Next, critical TFs are identified by computing a transition matrix, which maps the gene regulatory network in the first state to the gene regulatory network in the second state.
 
 A stable version of this package is expected to be available in the next release of Bioconductor.
+```{r}
+source("http://www.bioconductor.org/biocLite.R")
+biocLite("MONSTER")
+```
 
 The development version of MONSTER can be installed from Github using the `devtools` package
 ```{r, message=F,eval=FALSE}
@@ -41,7 +45,7 @@ data(yeast)
 
 Next, we create our design vector indicating to which group each sample belongs.  This vector must contain only 0's and 1's (NAs allowed). 
 
-In this example we are running the analysis on the first 10 timepoints compared to the last 10 timepoints, ignoring the middle 5 and replicates for the purposes of simplicity in this tutorial.
+In this example we are running the analysis on the first 10 timepoints compared to the last 10 timepoints, ignoring the middle 5 for the purposes of simplicity in this tutorial.  Each timepoint contains two samples.
 
 ```{r, message=F}
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
