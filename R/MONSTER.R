@@ -96,11 +96,18 @@ monster <- function(expr,
 
 #' Checks that data is something MONSTER can handle
 #'
-#' This function runs the MONSTER algorithm
-#'
 #' @param expr Gene Expression dataset
 #' @return expr Gene Expression dataset in the proper form (may be the same as input)
 #' @importFrom assertthat assert_that
+#' @export
+#' @examples
+#' expr.matrix <- matrix(rnorm(2000),ncol=20)
+#' checkDataType(expr.matrix)
+#' #TRUE
+#' data(yeast)
+#' class(yeast$exp.cc)
+#' checkDataType(yeast$exp.cc)
+#' #TRUE
 #' 
 checkDataType <- function(expr){
     assert_that(is.data.frame(expr)||is.matrix(expr)||class(expr)=="ExpressionSet")

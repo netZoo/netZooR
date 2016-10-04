@@ -176,52 +176,14 @@ monsterNI <- function(motif.data,
     return(result)
 }
 
-#' Bipartite Edge Reconstruction from Expression data (LDA method)
-#'
-#' This function generates a complete bipartite network from 
-#' gene expression data and sequence motif data 
-#' 
-#' @param motifs A motif dataset, a data.frame, matrix or exprSet 
-#' containing 3 columns. Each row describes an motif associated 
-#' with a transcription factor (column 1) a gene (column 2) and 
-#' a score (column 3) for the motif.
-#' @param expData An expression dataset, as a genes (rows) by 
-#' samples (columns) data.frame
-#' @param score String to indicate whether motif information 
-#' will be readded upon completion of the algorithm
-#' @keywords keywords
-#' @return An currently matrix or data.frame
-ldaBERE <- function(motifs, expData, score="motifincluded"){
-    expData <- data.frame(expData)
-    tfdcast <- dcast(motifs,V1~V2,fill=0)
-    rownames(tfdcast) <- tfdcast[,1]
-    tfdcast <- tfdcast[,-1]
-    
-    expData <- expData[sort(rownames(expData)),]
-    tfdcast <- tfdcast[,sort(colnames(tfdcast)),]
-    # check that IDs match
-    if (prod(rownames(expData)==colnames(tfdcast))!=1){
-        stop("ID mismatch")
-    }
-    result <- t(apply(tfdcast, 1, function(x){
-        cat(".")
-        tfTargets <- as.numeric(x)
-        z <- lda(tfTargets ~ ., expData)
-        
-        predict(z, expData)$posterior[,2]
-    }))
-
-    if(score=="motifincluded"){
-        result <- as.matrix(result + tfdcast)
-    }
-    result
-}
-
 #' Bipartite Edge Reconstruction from Expression data 
 #' (composite method with direct/indirect)
 #'
 #' This function generates a complete bipartite network from 
-#' gene expression data and sequence motif data 
+#' gene expression data and sequence motif data. This NI method
+#' serves as a default method for inferring bipartite networks
+#' in MONSTER.  Running bereFull can generate these networks
+#' independently from the larger MONSTER method.
 #'
 #' @param motifs A motif dataset, a data.frame, matrix or exprSet 
 #' containing 3 columns. Each row describes an motif associated 
@@ -239,6 +201,9 @@ ldaBERE <- function(motifs, expData, score="motifincluded"){
 #' @importFrom reshape2 dcast
 #' @importFrom penalized predict
 #' @return An matrix or data.frame
+#' @examples
+#' data(yeast)
+#' monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5, penalized=F)
 bereFull <- function(motifs, 
                     exprData, 
                     alpha=.5, 
