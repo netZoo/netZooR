@@ -3,6 +3,7 @@
 S3method(plot,monster)
 S3method(print,monster)
 export(calculate.tm.p.values)
+export(checkDataType)
 export(dTFIPlot)
 export(hcl.heatmap.plot)
 export(monster)
