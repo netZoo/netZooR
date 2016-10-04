@@ -5,7 +5,7 @@
 \title{Principal Components plot of transformation matrix}
 \usage{
 transitionPCAPlot(monsterObj, title = "PCA Plot of Transition",
-    clusters = 1, alpha = 1)
+  clusters = 1, alpha = 1)
 }
 \arguments{
 \item{monsterObj}{a MONSTER object resulting from a monster analysis}
