@@ -13,6 +13,16 @@ checkDataType(expr)
 expr Gene Expression dataset in the proper form (may be the same as input)
 }
 \description{
-This function runs the MONSTER algorithm
+Checks that data is something MONSTER can handle
+}
+\examples{
+expr.matrix <- matrix(rnorm(2000),ncol=20)
+checkDataType(expr.matrix)
+#TRUE
+data(yeast)
+class(yeast$exp.cc)
+checkDataType(yeast$exp.cc)
+#TRUE
+
 }
 

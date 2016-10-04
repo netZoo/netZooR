@@ -22,12 +22,9 @@ MONSTER takes in sequence motif data linking transcription factors (TFs) to gene
 
 Maintainer: \packageMaintainer{MONSTER}
 }
-\references{
-References
-}
 
+\seealso{
+\code{\link{monster}}
+}
 \keyword{ package }
 
-\examples{
-##
-}
