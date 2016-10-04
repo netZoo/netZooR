@@ -24,4 +24,4 @@ Suggests: knitr,
     testthat,
     Biobase,
     BiocStyle
-VignetteBuilder: BiocStyle::html_document
+VignetteBuilder: html_document
