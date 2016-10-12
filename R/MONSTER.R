@@ -1,22 +1,32 @@
 #' MOdeling Network State Transitions from Expression and Regulatory data (MONSTER)
 #'
-#' This function runs the MONSTER algorithm
+#' This function runs the MONSTER algorithm.  Biological states are characterized by distinct patterns 
+#' of gene expression that reflect each phenotype's active cellular processes. 
+#' Driving these phenotypes are gene regulatory networks in which transcriptions factors control 
+#' when and to what degree individual genes are expressed. Phenotypic transitions, such as those that 
+#' occur when disease arises from healthy tissue, are associated with changes in these  networks. 
+#' MONSTER is an approach to understanding these transitions. MONSTER models phenotypic-specific 
+#' regulatory networks and then estimates a "transition matrix" that converts one state to another. 
+#' By examining the properties of the transition matrix, we can gain insight into regulatory 
+#' changes associated with phenotypic state transition.
 #'
-#' @param expr Gene Expression dataset
+#' @param expr Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet
 #' @param design Binary vector indicating case control partition
-#' @param motif Regulatory data.frame
+#' @param motif Regulatory data.frame consisting of three columns.  For each row, a transcription factor (column 1) 
+#' regulates a gene (column 2) with a defined strength (column 3), usually taken to be 0 or 1 
 #' @param nullPerms number of random permutations to run (default 100).  Set to 0 to only 
 #' calculate observed transition matrix
 #' @param numMaxCores requires doParallel, foreach.  Runs MONSTER in parallel computing 
 #' environment.  Set to 1 to avoid parallelization.
-#' @param outputDir save MONSTER results in a directory
-#' @keywords keywords
+#' @param outputDir character vector specifying a directory or path in which 
+#' which to save MONSTER results, default is NA and results are not saved.
 #' @export
 #' @import doParallel
 #' @import parallel
 #' @import foreach
 #' @importFrom methods new
-#' @return An object of class "monster" containing results
+#' @return An object of class "monsterAnalysis" containing results
+#' @seealso \code{\link{monsterAnalysis-class}}
 #' @examples
 #' data(yeast)
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
@@ -87,7 +97,7 @@ monster <- function(expr,
     
     gc()
     return(
-        monsterObj(
+        monsterAnalysis(
             tm=transMatrices[[1]], 
             nullTM=transMatrices[-1], 
             numGenes=nrow(expr), 
@@ -99,7 +109,7 @@ monster <- function(expr,
 #' @param expr Gene Expression dataset
 #' @return expr Gene Expression dataset in the proper form (may be the same as input)
 #' @importFrom assertthat assert_that
-#' @export
+#' @keywords internal
 #' @examples
 #' expr.matrix <- matrix(rnorm(2000),ncol=20)
 #' checkDataType(expr.matrix)

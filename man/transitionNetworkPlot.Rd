@@ -7,7 +7,7 @@
 transitionNetworkPlot(monsterObj, numEdges = 100, numTopTFs = 10)
 }
 \arguments{
-\item{monsterObj}{Monster Object}
+\item{monsterObj}{monsterAnalysis Object}
 
 \item{numEdges}{The number of edges to display}
 
@@ -27,5 +27,4 @@ data(monsterRes)
 transitionNetworkPlot(monsterRes)
 
 }
-\keyword{keywords}
 

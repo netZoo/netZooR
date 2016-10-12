@@ -8,7 +8,7 @@ transitionPCAPlot(monsterObj, title = "PCA Plot of Transition",
   clusters = 1, alpha = 1)
 }
 \arguments{
-\item{monsterObj}{a MONSTER object resulting from a monster analysis}
+\item{monsterObj}{a monsterAnalysis object resulting from a monster analysis}
 
 \item{title}{The title of the plot}
 
@@ -34,5 +34,4 @@ transitionPCAPlot(monsterRes,
 title="PCA Plot of Transition - Cell Cycle vs Stress Response", 
 clusters=clusters)
 }
-\keyword{keywords}
 
