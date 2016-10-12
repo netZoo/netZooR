@@ -8,7 +8,7 @@ observed Transition Matrix compared to a set of null TMs}
 dTFIPlot(monsterObj, rescale = FALSE, plot.title = NA, highlight.tfs = NA)
 }
 \arguments{
-\item{monsterObj}{Monster Object}
+\item{monsterObj}{monsterAnalysis Object}
 
 \item{rescale}{logical indicating whether to reorder transcription
 factors according to their statistical significance and to 
@@ -35,5 +35,4 @@ observed Transition Matrix compared to a set of null TMs
 data(monsterRes)
 dTFIPlot(monsterRes)
 }
-\keyword{keywords}
 

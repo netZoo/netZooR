@@ -33,7 +33,7 @@ The package can then be loaded via
 library(MONSTER)
 ```
 
-In this demo, we use the included Yeast dataset, containing three separate Yeast datasets, and a sequence motif object.  The    `yeast` dataset includes three separate experimental designs each involving microarray assays of 2555 genes of yeast (Saccharomyces cerevisiae).  `yeast$exp.ko` is a set of 106 gene expression samples of following a number of gene knockouts.  `yeast$exp.cc` is a set of 50 gene expression samples taken sets of two across 25 timepoints spanning the cellular cycle. `yeast$exp.sr` is a set of 173 gene expression samples collected under conditions of stress such as heat shock.
+In this demo, we use the included Yeast dataset, containing three separate Yeast datasets, and a sequence motif object.  The `yeast` dataset includes three separate experimental designs each involving microarray assays of 2555 genes of yeast (Saccharomyces cerevisiae).  `yeast$exp.ko` is a set of 106 gene expression samples of following a number of gene knockouts.  `yeast$exp.cc` is a set of 50 gene expression samples taken sets of two across 25 timepoints spanning the cellular cycle. `yeast$exp.sr` is a set of 173 gene expression samples collected under conditions of stress such as heat shock.  Each expression dataset has been normalized and scaled.
 
 In this tutorial, we will run `monster` to identify suspected TF drivers of the change from the early cell cycle to late cell cycle. 
 
@@ -56,6 +56,13 @@ The main method in MONSTER is the `monster` function.  This function has three r
 * A gene expression matrix, `yeast$exp.cc` 
 * A motif mapping data.frame, `yeast$motif`
 * A design integer vector, `design` 
+
+The gene expression argument may be a `matrix`, a `data.frame` or an `ExpressionSet`.  In this example, `yeast$exp.cc` is a `data.frame` consisting of 2555 rows and 50 columns.
+
+The first five rows and columns can be seen
+```{r}
+yeast$exp.cc[1:5,1:5]
+```
 
 MONSTER tests the statistical significance of its results by permuting the samples `n` times and rerunning the analysis for each permutation.  By default, the number of permutations is set to be 100 and can be manually set via the argument `nullPerms`.
 

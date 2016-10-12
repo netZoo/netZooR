@@ -7,7 +7,7 @@
 hcl.heatmap.plot(x, method = "pearson")
 }
 \arguments{
-\item{x}{monster Object}
+\item{x}{monsterAnalysis Object}
 
 \item{method}{distance metric for hierarchical clustering.
 Default is "Pearson correlation"}
@@ -25,5 +25,4 @@ cc.net <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,])
 sr.net <- monsterNI(yeast$motif,yeast$exp.sr[1:1000,])
 transformation.matrix(cc.net, sr.net)
 }
-\keyword{keywords}
 
