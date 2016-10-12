@@ -16,7 +16,6 @@
 #' @param alphaw A weight parameter specifying proportion of weight 
 #' to give to indirect compared to direct evidence.  See documentation.
 #' @param cpp logical use C++ for maximum speed, set to false if unable to run.
-#' @keywords keywords
 #' @export
 #' @return matrix for inferred network between TFs and genes
 #' @importFrom tidyr spread
@@ -197,7 +196,6 @@ monsterNI <- function(motif.data,
 #' @param lambda if using penalized, the lambda parameter in the penalized logistic regression
 #' @param score String to indicate whether motif information will 
 #' be readded upon completion of the algorithm
-#' @keywords keywords
 #' @importFrom reshape2 dcast
 #' @importFrom penalized predict
 #' @return An matrix or data.frame

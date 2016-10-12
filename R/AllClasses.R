@@ -1,2 +1,2 @@
-monsterObj <- setClass("monster", slots=c("tm","nullTM","numGenes","numSamples"))
-setMethod("show","monster",function(object){print.monster(object)})
+monsterAnalysis <- setClass("monsterAnalysis", slots=c("tm","nullTM","numGenes","numSamples"))
+setMethod("show","monsterAnalysis",function(object){print.monsterAnalysis(object)})

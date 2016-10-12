@@ -40,5 +40,4 @@ gene expression data and sequence motif data
 data(yeast)
 cc.net <- monsterNI(yeast$motif,yeast$exp.cc)
 }
-\keyword{keywords}
 

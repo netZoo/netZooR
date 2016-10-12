@@ -7,7 +7,7 @@
 calculate.tm.p.values(monsterObj, method = "z-score")
 }
 \arguments{
-\item{monsterObj}{Monster Object}
+\item{monsterObj}{monsterAnalysis Object}
 
 \item{method}{one of 'z-score' or 'non-parametric'}
 }
@@ -25,5 +25,4 @@ transition matrix given a set of null transition matrices
 data(monsterRes)
 calculate.tm.p.values(monsterRes)
 }
-\keyword{keywords}
 

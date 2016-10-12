@@ -12,7 +12,6 @@
 #' @param standardize logical indicating whether to standardize the rows and columns
 #' @param method character specifying which algorithm to use, default='kabsch'
 #' @return matrix object corresponding to transition matrix
-#' @keywords keywords
 #' @import MASS
 #' @importFrom penalized optL1
 #' @importFrom reshape2 melt
@@ -135,7 +134,6 @@ kabsch <- function(P,Q){
 #' This function calculates the off-diagonal sum of squared mass for a transition matrix
 #'
 #' @param tm a transition matrix for two bipartite networks
-#' @keywords keywords
 #' @export
 #' @return vector containined the sum of squared off diagonal mass, dTFI
 #' @examples
@@ -151,10 +149,9 @@ ssodm <-    function(tm){
 #' This function plots a hierachically clustered heatmap and 
 #' corresponding dendrogram of a transaction matrix
 #'
-#' @param x monster Object
+#' @param x monsterAnalysis Object
 #' @param method distance metric for hierarchical clustering.    
 #' Default is "Pearson correlation"
-#' @keywords keywords
 #' @export
 #' @import ggplot2
 #' @import grid
@@ -166,7 +163,7 @@ ssodm <-    function(tm){
 #' sr.net <- monsterNI(yeast$motif,yeast$exp.sr[1:1000,])
 #' transformation.matrix(cc.net, sr.net)
 hcl.heatmap.plot <- function(x, method="pearson"){
-    assert_that(class(x)=="monster")
+    assert_that(class(x)=="monsterAnalysis")
     x <- x@tm
     if(method=="pearson"){
         dist.func <- function(y) as.dist(cor(y))
@@ -247,12 +244,11 @@ hcl.heatmap.plot <- function(x, method="pearson"){
 #' This function plots the first two principal components for a 
 #' transaction matrix
 #'
-#' @param monsterObj a MONSTER object resulting from a monster analysis
+#' @param monsterObj a monsterAnalysis object resulting from a monster analysis
 #' @param title The title of the plot
 #' @param clusters A vector indicating the number of clusters to compute
 #' @param alpha A vector indicating the level of transparency to be plotted
 #' @return ggplot2 object for transition matrix PCA
-#' @keywords keywords
 #' @import ggdendro
 #' @export
 #' @examples
@@ -282,11 +278,10 @@ transitionPCAPlot <-    function(monsterObj,
 
 #' This function uses igraph to plot the transition matrix as a network
 #'
-#' @param monsterObj Monster Object
+#' @param monsterObj monsterAnalysis Object
 #' @param numEdges The number of edges to display
 #' @param numTopTFs The number of TFs to display, ranked by largest dTFI
 #' @return igraph object for transition matrix
-#' @keywords keywords
 #' @importFrom igraph graph.data.frame plot.igraph V E V<- E<-
 #' @export
 #' @examples
@@ -341,7 +336,7 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
 #' This function plots the Off diagonal mass of an 
 #' observed Transition Matrix compared to a set of null TMs
 #'
-#' @param monsterObj Monster Object
+#' @param monsterObj monsterAnalysis Object
 #' @param rescale logical indicating whether to reorder transcription
 #' factors according to their statistical significance and to 
 #' rescale the values observed to be standardized by the null
@@ -351,7 +346,6 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
 #' factors to highlight in the plot
 #' @return ggplot2 object for transition matrix comparing observed 
 #' distribution to that estimated under the null 
-#' @keywords keywords
 #' @export
 #' @examples
 #' # data(yeast)
@@ -424,10 +418,9 @@ dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA)
 #' This function calculates the significance of an observed
 #' transition matrix given a set of null transition matrices
 #'
-#' @param monsterObj Monster Object
+#' @param monsterObj monsterAnalysis Object
 #' @param method one of 'z-score' or 'non-parametric'
 #' @return vector of p-values for each transcription factor
-#' @keywords keywords
 #' @export
 #' @examples
 #' # data(yeast)

@@ -41,5 +41,4 @@ independently from the larger MONSTER method.
 data(yeast)
 monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5, penalized=F)
 }
-\keyword{keywords}
 
