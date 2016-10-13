@@ -34,14 +34,16 @@
 #' plot(monsterRes)
 monster <- function(expr, 
                     design, 
-                    motif=NULL, 
+                    motif, 
                     nullPerms=100, 
                     numMaxCores=1, 
                     outputDir=NA){
     
     # Data type checking
     expr <- checkDataType(expr)
-
+    if(is.null(motif)){
+        stop("motif may not be NULL")
+    }
     # Parallelize
     # Initiate cluster
     if(!is.na(numMaxCores)){
@@ -74,7 +76,7 @@ monster <- function(expr,
                              .packages=c("MONSTER","reshape2","penalized","MASS")) %dopar% {
         print(paste0("Running iteration ", i))
         if(i!=1){
-            nullExpr[] <- expr[sample(1:length(c(expr)))]
+            nullExpr[] <- expr[sample(seq_along(c(expr)))]
         }
         nullExprCases <- nullExpr[,design==1]
         nullExprControls <- nullExpr[,design==0]

@@ -95,7 +95,7 @@ monsterNI <- function(motif.data,
         print('More data cleaning')
     # Convert 3 column format to matrix format
     colnames(motif.data) <- c('TF','GENE','value')
-    regulatory.network <- tidyr::spread(motif.data, GENE, value, fill=0)
+    regulatory.network <- spread(motif.data, GENE, value, fill=0)
     rownames(regulatory.network) <- regulatory.network[,1]
     # sort the TFs (rows), and remove redundant first column
     regulatory.network <- regulatory.network[order(rownames(regulatory.network)),-1]
