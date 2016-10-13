@@ -10,7 +10,7 @@
 #' false, gives gene by gene transformation matrix
 #' @param remove.diagonal logical for returning a result containing 0s across the diagonal
 #' @param standardize logical indicating whether to standardize the rows and columns
-#' @param method character specifying which algorithm to use, default='kabsch'
+#' @param method character specifying which algorithm to use, default='ols'
 #' @return matrix object corresponding to transition matrix
 #' @import MASS
 #' @importFrom penalized optL1
@@ -42,17 +42,17 @@ transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize
     } else {
         stop("Networks must be lists or matrices")
     }
-    #gene.trans.matrix <- svd(net2)$v %*% diag(1/svd(net2)$d) %*% t(svd(net2)$u) %*% net1
+    if(!method%in%c("ols","kabsch","L1","orig")){
+        stop("Invalid method.  Must be one of 'ols', 'kabsch', 'L1','orig'")
+    }
     if (method == "kabsch"){
         tf.trans.matrix <- kabsch(net1,net2)
     }
-    if (method == "old"){
+    if (method == "orig"){
         svd.net2 <- svd(net2)
         tf.trans.matrix <- svd.net2$v %*% diag(1/svd.net2$d) %*% t(svd.net2$u) %*% net1
     }
     if (method == "ols"){
-        # 9/14/15
-        # re-rewrote 'same column priority' feature
         net2.star <- sapply(1:ncol(net1), function(i,x,y){
             lm(y[,i]~x[,i])$resid
         }, net1, net2)
@@ -63,21 +63,20 @@ transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize
 
     }
     if (method == "L1"){
-            net2.star <- sapply(1:ncol(net1), function(i,x,y){
-                    lm(y[,i]~x[,i])$resid
-            }, net1, net2)
-            tf.trans.matrix <- sapply(1:ncol(net1), function(i){
-                    z <- optL1(net2.star[,i], net1, fold=5, minlambda1=1, 
-                            maxlambda1=2, model="linear", standardize=TRUE)
-                    coefficients(z$fullfit, "penalized")
-            })
-            colnames(tf.trans.matrix) <- rownames(tf.trans.matrix)
-            print("Using L1 method")
+        net2.star <- sapply(1:ncol(net1), function(i,x,y){
+                lm(y[,i]~x[,i])$resid
+        }, net1, net2)
+        tf.trans.matrix <- sapply(1:ncol(net1), function(i){
+                z <- optL1(net2.star[,i], net1, fold=5, minlambda1=1, 
+                        maxlambda1=2, model="linear", standardize=TRUE)
+                coefficients(z$fullfit, "penalized")
+        })
+        colnames(tf.trans.matrix) <- rownames(tf.trans.matrix)
+        print("Using L1 method")
 
     }
     if (standardize){
         tf.trans.matrix <- apply(tf.trans.matrix, 1, function(x){
-            #     x.zero <- (x-mean(x))
             x/sum(abs(x))
         })
     }
@@ -85,19 +84,10 @@ transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize
     if (remove.diagonal){
         diag(tf.trans.matrix) <- 0
     }
-    # Add column labels
     colnames(tf.trans.matrix) <- rownames(tf.trans.matrix)
     tf.trans.matrix
 }
-plottm <- function(melt.tm,title="Transition Matrix"){
-    ggplot(melt.tm, aes(y=Var1,x=Var2)) +
-        ggtitle(title) +
-        geom_tile(aes(fill=value)) +
-        scale_fill_gradient(low="blue", high="yellow") +
-        xlab("") +
-        ylab("") +
-        theme(axis.text.x = element_text(angle = 90,hjust=1,vjust=0.5))
-}
+
 kabsch <- function(P,Q){
 
     P <- apply(P,2,function(x){
@@ -129,20 +119,6 @@ kabsch <- function(P,Q){
     W
 }
 
-#' Sum of squared off-diagonal mass
-#'
-#' This function calculates the off-diagonal sum of squared mass for a transition matrix
-#'
-#' @param tm a transition matrix for two bipartite networks
-#' @export
-#' @return vector containined the sum of squared off diagonal mass, dTFI
-#' @examples
-#' mat <- matrix(rnorm(100),ncol=10)
-#' ssodm(mat)
-ssodm <-    function(tm){
-    diag(tm)<-0
-    apply(tm,1,function(x){t(x)%*%x})
-}
 
 #' Transformation matrix plot
 #'
@@ -163,14 +139,12 @@ ssodm <-    function(tm){
 #' sr.net <- monsterNI(yeast$motif,yeast$exp.sr[1:1000,])
 #' transformation.matrix(cc.net, sr.net)
 hcl.heatmap.plot <- function(x, method="pearson"){
-    assert_that(class(x)=="monsterAnalysis")
     x <- x@tm
     if(method=="pearson"){
         dist.func <- function(y) as.dist(cor(y))
     } else {
         dist.func <- dist
     }
-    # x <- as.matrix(scale(mtcars))
     x <- scale(x)
     dd.col <- as.dendrogram(hclust(dist.func(x)))
     col.ord <- order.dendrogram(dd.col)
@@ -184,7 +158,7 @@ hcl.heatmap.plot <- function(x, method="pearson"){
     colnames(df) <- xx_names[[2]]
     df$Var1 <- xx_names[[1]]
     df$Var1 <- with(df, factor(Var1, levels=Var1, ordered=TRUE))
-    mdf <- reshape2::melt(df)
+    mdf <- melt(df)
 
 
     ddata_x <- dendro_data(dd.row)
@@ -200,7 +174,6 @@ hcl.heatmap.plot <- function(x, method="pearson"){
         axis.text.x = element_blank(),
         axis.text.y = element_blank(),
         axis.line = element_blank()
-        #axis.ticks.length = element_blank()
     )
     ### Set up a blank theme
     theme_heatmap <- theme(
@@ -212,7 +185,6 @@ hcl.heatmap.plot <- function(x, method="pearson"){
         axis.text.x = element_blank(),
         axis.text.y = element_blank(),
         axis.line = element_blank()
-        #axis.ticks.length = element_blank()
     )
     ### Create plot components ###
     # Heatmap
@@ -301,11 +273,11 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
     
     tm.sigmas <- transitionSigmas(monsterObj@tm, monsterObj@nullTM)
     diag(tm.sigmas) <- 0
-    tm.sigmas.melt <- reshape2::melt(tm.sigmas)
+    tm.sigmas.melt <- melt(tm.sigmas)
     
     adjMat <- monsterObj@tm
     diag(adjMat) <- 0
-    adjMat.melt <- reshape2::melt(adjMat)
+    adjMat.melt <- melt(adjMat)
     
     adj.combined <- merge(tm.sigmas.melt, adjMat.melt, by=c("Var1","Var2"))
     
@@ -367,14 +339,10 @@ dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA)
 
     ssodm <- apply(monsterObj@tm,2,function(x){t(x)%*%x})
 
-    # Get p-value (rank of observed within null ssodm)
-    #     p.values <- sapply(1:length(ssodm),function(i){
-    #         1-findInterval(ssodm[i], null.ssodm.matrix[i,])/num.iterations
-    #     })
-    p.values <- 1-pnorm(sapply(1:length(ssodm),function(i){
+    p.values <- 1-pnorm(sapply(seq_along(ssodm),function(i){
         (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
     }))
-    t.values <- sapply(1:length(ssodm),function(i){
+    t.values <- sapply(seq_along(ssodm),function(i){
             (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
     })
 
@@ -394,7 +362,7 @@ dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA)
         x.axis.size    <- pmin(15,7-log(p.values))
     }
 
-    null.SSODM.melt <- reshape2::melt(combined.mat)[,-1][,c(2,1)]
+    null.SSODM.melt <- melt(combined.mat)[,-1][,c(2,1)]
     null.SSODM.melt$TF<-rep(rownames(monsterObj@nullTM[[1]]),num.iterations+1)
 
     ## Plot the data
@@ -441,11 +409,11 @@ calculate.tm.p.values <- function(monsterObj, method="z-score"){
 
     # Get p-value (rank of observed within null ssodm)
     if(method=="non-parametric"){
-        p.values <- sapply(1:length(ssodm),function(i){
+        p.values <- sapply(seq_along(ssodm),function(i){
             1-findInterval(ssodm[i], null.ssodm.matrix[i,])/num.iterations
         })
     } else if (method=="z-score"){
-        p.values <- pnorm(sapply(1:length(ssodm),function(i){
+        p.values <- pnorm(sapply(seq_along(ssodm),function(i){
             (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
         }))
     } else {
