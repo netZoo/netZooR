@@ -42,6 +42,7 @@ transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize
     } else {
         stop("Networks must be lists or matrices")
     }
+    
     if(!method%in%c("ols","kabsch","L1","orig")){
         stop("Invalid method.  Must be one of 'ols', 'kabsch', 'L1','orig'")
     }
@@ -125,7 +126,7 @@ kabsch <- function(P,Q){
 #' This function plots a hierachically clustered heatmap and 
 #' corresponding dendrogram of a transaction matrix
 #'
-#' @param x monsterAnalysis Object
+#' @param monsterObj monsterAnalysis Object
 #' @param method distance metric for hierarchical clustering.    
 #' Default is "Pearson correlation"
 #' @export
@@ -138,8 +139,8 @@ kabsch <- function(P,Q){
 #' cc.net <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,])
 #' sr.net <- monsterNI(yeast$motif,yeast$exp.sr[1:1000,])
 #' transformation.matrix(cc.net, sr.net)
-hcl.heatmap.plot <- function(x, method="pearson"){
-    x <- x@tm
+hcl.heatmap.plot <- function(monsterObj, method="pearson"){
+    x <- monsterObj@tm
     if(method=="pearson"){
         dist.func <- function(y) as.dist(cor(y))
     } else {
@@ -422,4 +423,4 @@ calculate.tm.p.values <- function(monsterObj, method="z-score"){
     p.values
 }
 
-
+globalVariables(c("Var1", "Var2","value","variable","xend","yend","y","Comp.1", "Comp.2","node.names","TF","i"))

@@ -4,10 +4,10 @@
 \alias{hcl.heatmap.plot}
 \title{Transformation matrix plot}
 \usage{
-hcl.heatmap.plot(x, method = "pearson")
+hcl.heatmap.plot(monsterObj, method = "pearson")
 }
 \arguments{
-\item{x}{monsterAnalysis Object}
+\item{monsterObj}{monsterAnalysis Object}
 
 \item{method}{distance metric for hierarchical clustering.
 Default is "Pearson correlation"}
