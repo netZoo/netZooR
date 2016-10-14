@@ -116,11 +116,35 @@ monsterNI <- function(motif.data,
     result <- NULL
     ########################################
     if (method=="BERE"){
+        
+        exprData <- data.frame(exprData)
+        tfdcast <- dcast(motifs,V1~V2,fill=0)
+        rownames(tfdcast) <- tfdcast[,1]
+        tfdcast <- tfdcast[,-1]
+        
+        exprData <- exprData[sort(rownames(exprData)),]
+        tfdcast <- tfdcast[,sort(colnames(tfdcast)),]
+        tfNames <- rownames(tfdcast)[rownames(tfdcast) %in% rownames(exprData)]
+        
+        ## Filtering
+        # filter out the TFs that are not in expression set
+        tfdcast <- tfdcast[rownames(tfdcast)%in%tfNames,]
+        
+        # Filter out genes that aren't targetted by anything 7/28/15
+        commonGenes <- intersect(colnames(tfdcast),rownames(exprData))
+        exprData <- exprData[commonGenes,]
+        tfdcast <- tfdcast[,commonGenes]
+        
+        # check that IDs match
+        if (prod(rownames(exprData)==colnames(tfdcast))!=1){
+            stop("ID mismatch")
+        }
+        
         ## Get direct evidence
         directCor <- t(cor(t(exprData),t(exprData[rownames(exprData)%in%tfNames,]))^2)
         
         ## Get the indirect evidence    
-        result <- t(apply(tfdcast, 1, function(x){
+        result <- t(apply(regulatory.network, 1, function(x){
             cat(".")
             tfTargets <- as.numeric(x)
             
@@ -141,17 +165,17 @@ monsterNI <- function(motif.data,
         result <- matrix(rank(result), ncol=ncol(result))
         
         consensus <- directCor*(1-alphaw) + result*alphaw
-        rownames(consensus) <- rownames(tfdcast)
+        rownames(consensus) <- rownames(regulatory.network)
         colnames(consensus) <- rownames(exprData)
         consensusRange <- max(consensus)- min(consensus)
         if(score=="motifincluded"){
-            consensus <- as.matrix(consensus + consensusRange*tfdcast)
+            consensus <- as.matrix(consensus + consensusRange*regulatory.network)
         }
         consensus
     } else if (method=="pearson"){
         result <- t(cor(t(exprData),t(exprData[rownames(exprData)%in%tfNames,]))^2)
         if(score=="motifincluded"){
-            result <- as.matrix(consensus + consensusRange*tfdcast)
+            result <- as.matrix(consensus + consensusRange*regulatory.network)
         }
         result
     } else {
@@ -208,6 +232,7 @@ bereFull <- function(motifs,
                     penalized=TRUE, 
                     lambda=10, 
                     score="motifincluded"){
+    
     exprData <- data.frame(exprData)
     tfdcast <- dcast(motifs,V1~V2,fill=0)
     rownames(tfdcast) <- tfdcast[,1]
@@ -264,3 +289,5 @@ bereFull <- function(motifs,
     }
     consensus
 }
+
+globalVariables(c("exprData","lambda","rcpp_ccorr","GENE", "TF","value"))

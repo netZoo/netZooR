@@ -124,10 +124,14 @@ monster <- function(expr,
 checkDataType <- function(expr){
     assert_that(is.data.frame(expr)||is.matrix(expr)||class(expr)=="ExpressionSet")
     if(class(expr)=="ExpressionSet"){
-        expr <- exprs(expr)
+        if (requireNamespace("Biobase", quietly = TRUE)) {
+            expr <- Biobase::exprs(expr)
+        } 
     }
     if(is.data.frame(expr)){
         expr <- as.matrix(expr)
     }
     expr
 }
+
+globalVariables("i")

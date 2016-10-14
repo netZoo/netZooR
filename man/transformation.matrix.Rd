@@ -21,7 +21,7 @@ false, gives gene by gene transformation matrix}
 
 \item{remove.diagonal}{logical for returning a result containing 0s across the diagonal}
 
-\item{method}{character specifying which algorithm to use, default='kabsch'}
+\item{method}{character specifying which algorithm to use, default='ols'}
 }
 \value{
 matrix object corresponding to transition matrix
