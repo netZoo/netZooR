@@ -5,11 +5,11 @@
 \title{Bipartite Edge Reconstruction from Expression data 
 (composite method with direct/indirect)}
 \usage{
-bereFull(motifs, exprData, alpha = 0.5, penalized = TRUE, lambda = 10,
+bereFull(motifData, exprData, alpha = 0.5, penalized = TRUE, lambda = 10,
   score = "motifincluded")
 }
 \arguments{
-\item{motifs}{A motif dataset, a data.frame, matrix or exprSet 
+\item{motifData}{A motif dataset, a data.frame, matrix or exprSet 
 containing 3 columns. Each row describes an motif associated 
 with a transcription factor (column 1) a gene (column 2) 
 and a score (column 3) for the motif.}
@@ -39,6 +39,6 @@ independently from the larger MONSTER method.
 }
 \examples{
 data(yeast)
-monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5, penalized=F)
+monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5, penalized=FALSE)
 }
 
