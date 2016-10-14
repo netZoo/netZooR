@@ -25,5 +25,4 @@ checkDataType(yeast$exp.cc)
 #TRUE
 
 }
-\keyword{internal}
 
