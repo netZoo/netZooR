@@ -2,7 +2,7 @@
 title: "An Introduction to the MONSTER Package"
 author: "Daniel Schlauch"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: BiocStyle::html_document
 vignette: >
     %\VignetteIndexEntry{MONSTER Package}
     %\VignetteEngine{knitr::rmarkdown}

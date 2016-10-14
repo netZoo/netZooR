@@ -43,4 +43,4 @@ Suggests:
     rmarkdown,
     pkgdown,
     BiocStyle
-VignetteBuilder: BiocStyle::html_document
+VignetteBuilder: knitr
