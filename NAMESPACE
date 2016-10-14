@@ -2,6 +2,7 @@
 
 S3method(plot,monsterAnalysis)
 S3method(print,monsterAnalysis)
+export(bereFull)
 export(calculate.tm.p.values)
 export(dTFIPlot)
 export(hcl.heatmap.plot)
