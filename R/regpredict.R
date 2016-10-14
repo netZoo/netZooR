@@ -226,7 +226,7 @@ monsterNI <- function(motif.data,
 #' @return An matrix or data.frame
 #' @examples
 #' data(yeast)
-#' monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5, penalized=F)
+#' monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5, penalized=FALSE)
 bereFull <- function(motifData, 
                     exprData, 
                     alpha=.5, 
