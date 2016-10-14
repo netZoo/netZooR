@@ -5,7 +5,7 @@
 \title{Bipartite Edge Reconstruction from Expression data 
 (composite method with direct/indirect)}
 \usage{
-bereFull(motifData, exprData, alpha = 0.5, penalized = TRUE, lambda = 10,
+bereFull(motifData, exprData, alpha = 0.5, lambda = 10,
   score = "motifincluded")
 }
 \arguments{
@@ -19,8 +19,6 @@ samples (columns) data.frame}
 
 \item{alpha}{A weight parameter specifying proportion of weight 
 to give to indirect compared to direct evidence.  See documentation.}
-
-\item{penalized}{logical indicating whether or not to use penalized logistic regression}
 
 \item{lambda}{if using penalized, the lambda parameter in the penalized logistic regression}
 
@@ -39,6 +37,6 @@ independently from the larger MONSTER method.
 }
 \examples{
 data(yeast)
-monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5, penalized=FALSE)
+monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5)
 }
 

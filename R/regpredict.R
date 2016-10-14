@@ -216,7 +216,6 @@ monsterNI <- function(motif.data,
 #' samples (columns) data.frame
 #' @param alpha A weight parameter specifying proportion of weight 
 #' to give to indirect compared to direct evidence.  See documentation.
-#' @param penalized logical indicating whether or not to use penalized logistic regression
 #' @param lambda if using penalized, the lambda parameter in the penalized logistic regression
 #' @param score String to indicate whether motif information will 
 #' be readded upon completion of the algorithm
@@ -226,11 +225,10 @@ monsterNI <- function(motif.data,
 #' @return An matrix or data.frame
 #' @examples
 #' data(yeast)
-#' monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5, penalized=FALSE)
+#' monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5)
 bereFull <- function(motifData, 
                     exprData, 
                     alpha=.5, 
-                    penalized=TRUE, 
                     lambda=10, 
                     score="motifincluded"){
     
@@ -256,7 +254,6 @@ bereFull <- function(motifData,
     if (prod(rownames(exprData)==colnames(tfdcast))!=1){
         stop("ID mismatch")
     }
-
     ## Get direct evidence
     directCor <- t(cor(t(exprData),t(exprData[rownames(exprData)%in%tfNames,]))^2)
     
@@ -269,7 +266,8 @@ bereFull <- function(motifData,
         # z <- glm(tfTargets ~ ., data=exprData, family="binomial")
         
         # Penalized Logistic Reg
-        z <- penalized(tfTargets, exprData, 
+        exprData[is.na(exprData)] <- 0
+        z <- penalized(response=tfTargets, penalized=exprData, unpenalized=~0,
                         lambda2=lambda, model="logistic", standardize=TRUE)
         #z <- optL1(tfTargets, exprData, minlambda1=25, fold=5)
         
