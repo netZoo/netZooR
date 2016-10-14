@@ -54,6 +54,7 @@ import(reticulate)
 =======
 S3method(plot,monsterAnalysis)
 S3method(print,monsterAnalysis)
+export(bereFull)
 export(calculate.tm.p.values)
 export(dTFIPlot)
 export(hcl.heatmap.plot)
@@ -75,7 +76,7 @@ importFrom(igraph,"E<-")
 importFrom(igraph,"V<-")
 importFrom(igraph,E)
 importFrom(igraph,V)
->>>>>>> checklist
+>>>>>>> fixed berefull example
 importFrom(igraph,graph.data.frame)
 importFrom(igraph,plot.igraph)
 importFrom(methods,new)

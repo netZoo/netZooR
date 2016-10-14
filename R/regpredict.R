@@ -118,7 +118,7 @@ monsterNI <- function(motif.data,
     if (method=="BERE"){
         
         exprData <- data.frame(exprData)
-        tfdcast <- dcast(motifs,V1~V2,fill=0)
+        tfdcast <- dcast(motifData,V1~V2,fill=0)
         rownames(tfdcast) <- tfdcast[,1]
         tfdcast <- tfdcast[,-1]
         
@@ -208,7 +208,7 @@ monsterNI <- function(motif.data,
 #' in MONSTER.  Running bereFull can generate these networks
 #' independently from the larger MONSTER method.
 #'
-#' @param motifs A motif dataset, a data.frame, matrix or exprSet 
+#' @param motifData A motif dataset, a data.frame, matrix or exprSet 
 #' containing 3 columns. Each row describes an motif associated 
 #' with a transcription factor (column 1) a gene (column 2) 
 #' and a score (column 3) for the motif.
@@ -222,11 +222,12 @@ monsterNI <- function(motif.data,
 #' be readded upon completion of the algorithm
 #' @importFrom reshape2 dcast
 #' @importFrom penalized predict
+#' @export
 #' @return An matrix or data.frame
 #' @examples
 #' data(yeast)
 #' monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5, penalized=F)
-bereFull <- function(motifs, 
+bereFull <- function(motifData, 
                     exprData, 
                     alpha=.5, 
                     penalized=TRUE, 
@@ -234,7 +235,7 @@ bereFull <- function(motifs,
                     score="motifincluded"){
     
     exprData <- data.frame(exprData)
-    tfdcast <- dcast(motifs,V1~V2,fill=0)
+    tfdcast <- dcast(motifData,V1~V2,fill=0)
     rownames(tfdcast) <- tfdcast[,1]
     tfdcast <- tfdcast[,-1]
     
