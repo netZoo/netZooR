@@ -18,9 +18,9 @@
 #' @export
 #' @examples
 #' data(yeast)
-#' cc.net <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,])
-#' sr.net <- monsterNI(yeast$motif,yeast$exp.sr[1:1000,])
-#' transformation.matrix(cc.net, sr.net)
+#' cc.net.1 <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
+#' cc.net.2 <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])
+#' transformation.matrix(cc.net.1, cc.net.2)
 transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize=FALSE, 
                                 remove.diagonal=TRUE, method="ols"){
     if(is.list(network.1)&&is.list(network.2)){
@@ -135,10 +135,11 @@ kabsch <- function(P,Q){
 #' @import stats
 #' @return ggplot2 object for transition matrix heatmap
 #' @examples
-#' data(yeast)
-#' cc.net <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,])
-#' sr.net <- monsterNI(yeast$motif,yeast$exp.sr[1:1000,])
-#' transformation.matrix(cc.net, sr.net)
+#' # data(yeast)
+#' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
+#' data(monsterRes)
+#' hcl.heatmap.plot(monsterRes)
 hcl.heatmap.plot <- function(monsterObj, method="pearson"){
     x <- monsterObj@tm
     if(method=="pearson"){
