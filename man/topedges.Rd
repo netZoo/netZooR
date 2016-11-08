@@ -12,7 +12,7 @@ topedges(x, count = NA, cutoff = 2, networks = c("coregulation",
 
 \item{count}{an optional integer indicating number of top edges to be included in regulatory network.}
 
-\item{cutoff}{an optional numeric indicating the z-score edge weight cutoff to be used to identify edges. Default is 3.0.  Not used if count is not NA.}
+\item{cutoff}{an optional numeric indicating the z-score edge weight cutoff to be used to identify edges. Default is 2.0.  Not used if count is not NA.}
 
 \item{networks}{an optional vector specifying which networks to be included in output.  May be any combination of c("coregulation","cooperation","regulatory").}
 }

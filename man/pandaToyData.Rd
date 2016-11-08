@@ -8,7 +8,6 @@
 \usage{pandaToyData}
 \format{A list containing 3 data.frames}
 \value{A list of length 3}
-\source{}
 \references{
 Glass K, Huttenhower C, Quackenbush J, Yuan GC. Passing Messages Between Biological Networks to Refine Predicted Interactions. PLoS One. 2013 May 31;8(5):e64832.
 }
