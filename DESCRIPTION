@@ -13,14 +13,17 @@ Depends:
 Imports:
     matrixStats,
     igraph,
-    assertthat,
-    tidyr,
-    methods
+    ggplot2,
+    grid,
+    reshape,
+    plyr,
+    RUnit,
+    hexbin
+Suggests:
+    rmarkdown
+biocViews: StatisticalMethod, GraphAndNetwork, Microarray, GeneRegulation,
+    NetworkInference, GeneExpression, Transcription, Network
+VignetteBuilder: rmarkdown
 License: GPL-2
+LazyData: true
 RoxygenNote: 5.0.1
-Suggests: knitr,
-    rmarkdown,
-    testthat,
-    Biobase,
-    BiocStyle
-VignetteBuilder: knitr
