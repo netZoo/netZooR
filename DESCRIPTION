@@ -1,0 +1,29 @@
+Package: pandaR
+Title: PANDA Algorithm
+Version: 1.7.0
+Author: Dan Schlauch, Joseph N. Paulson, Albert Young, John Quackenbush, Kimberly Glass
+Maintainer: Joseph N. Paulson <jpaulson@jimmy.harvard.edu>, Dan Schlauch <dschlauch@fas.harvard.edu>
+Description: Runs PANDA, an algorithm for discovering novel network structure
+    by combining information from multiple complementary data sources.
+Depends:
+    R (>= 3.0.0),
+    methods,
+    Biobase,
+    BiocGenerics,
+Imports:
+    matrixStats,
+    igraph,
+    ggplot2,
+    grid,
+    reshape,
+    plyr,
+    RUnit,
+    hexbin
+Suggests:
+    rmarkdown
+biocViews: StatisticalMethod, GraphAndNetwork, Microarray, GeneRegulation,
+    NetworkInference, GeneExpression, Transcription, Network
+VignetteBuilder: rmarkdown
+License: GPL-2
+LazyData: true
+RoxygenNote: 5.0.1
