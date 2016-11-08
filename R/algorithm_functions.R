@@ -367,11 +367,11 @@ topedges <- function(x, count=NA, cutoff=2.0, networks=c("coregulation","coopera
     if (!is.na(count)){
         cutoff <- sort(x@regNet)[length(x@regNet)-(count-1)]
     }
-    regulatoryNetwork <- apply(x@regNet>cutoff, 2,as.numeric)
+    regulatoryNetwork <- apply(x@regNet>=cutoff, 2,as.numeric)
     rownames(regulatoryNetwork)<-rownames(x@regNet)
-    geneCoreg <- apply(x@coregNet>cutoff, 2,as.numeric)
+    geneCoreg <- apply(x@coregNet>=cutoff, 2,as.numeric)
     rownames(geneCoreg)<-rownames(x@coregNet)
-    tfCoopNetwork <- apply(x@coopNet>cutoff, 2,as.numeric)
+    tfCoopNetwork <- apply(x@coopNet>=cutoff, 2,as.numeric)
     rownames(tfCoopNetwork)<-rownames(x@coopNet)
 
     res <- pandaObj(regNet=regulatoryNetwork, coregNet=geneCoreg, coopNet=tfCoopNetwork)
@@ -451,12 +451,11 @@ targetedGenes <- function(x, tfs){
 #'
 #' plotGraph plots a bipartite graph
 #'
-#' @param x an object of class "panda"
+#' @param x An incidence matrix describing a bipartite graph.
 #' @keywords keywords
 #' @importFrom igraph graph.incidence
 #' @importFrom igraph layout.bipartite
 #' @export
-#' @return An matrix describing the subsetted bipartite network.
 #' @examples
 #' \donttest{
 #' data(pandaToyData)

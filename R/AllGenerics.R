@@ -40,7 +40,7 @@ summary.panda <- function(object, ...){
 #' print(pandaResult)
 print.panda <- function(x, ...){
     l <- list(coregNet=dim(x@coregNet),regNet=dim(x@regNet),coopNet=dim(x@coopNet))
-    message("PANDA network for", nrow(x@coregNet),"genes and",nrow(x@coopNet),"transcription factors.")
+    message("PANDA network for ", nrow(x@coregNet)," genes and ",nrow(x@coopNet)," transcription factors.")
     message("\nSlots:")
     message(slotNames(x)[1],"\t: Regulatory network of ",nrow(x@coopNet)," transcription factors to ", nrow(x@coregNet)," genes.")
     message(slotNames(x)[2],": Co-regulation network of ", nrow(x@coregNet)," genes.")
