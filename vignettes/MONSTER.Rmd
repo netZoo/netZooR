@@ -69,6 +69,7 @@ MONSTER tests the statistical significance of its results by permuting the sampl
 Monster is optimized to run on multiple cores, if available.  We can specify the maximum number of cores which are available to run the algorithm.  If `numMaxCores` unspecified, MONSTER will check available resources and run on all but four of the available cores.
 
 ```{r, message=F}
+yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
 monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
 ```
 

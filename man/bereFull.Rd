@@ -5,16 +5,16 @@
 \title{Bipartite Edge Reconstruction from Expression data 
 (composite method with direct/indirect)}
 \usage{
-bereFull(motifData, exprData, alpha = 0.5, lambda = 10,
+bereFull(motif.data, expr.data, alpha = 0.5, lambda = 10,
   score = "motifincluded")
 }
 \arguments{
-\item{motifData}{A motif dataset, a data.frame, matrix or exprSet 
+\item{motif.data}{A motif dataset, a data.frame, matrix or exprSet 
 containing 3 columns. Each row describes an motif associated 
 with a transcription factor (column 1) a gene (column 2) 
 and a score (column 3) for the motif.}
 
-\item{exprData}{An expression dataset, as a genes (rows) by 
+\item{expr.data}{An expression dataset, as a genes (rows) by 
 samples (columns) data.frame}
 
 \item{alpha}{A weight parameter specifying proportion of weight 

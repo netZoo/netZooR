@@ -4,8 +4,8 @@
 \alias{monster}
 \title{MOdeling Network State Transitions from Expression and Regulatory data (MONSTER)}
 \usage{
-monster(expr, design, motif, nullPerms = 100, numMaxCores = 1,
-  outputDir = NA)
+monster(expr, design, motif, nullPerms = 100, ni_method = "BERE",
+  numMaxCores = 1, outputDir = NA)
 }
 \arguments{
 \item{expr}{Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet}
