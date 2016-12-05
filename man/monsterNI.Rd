@@ -5,7 +5,8 @@
 \title{Bipartite Edge Reconstruction from Expression data}
 \usage{
 monsterNI(motif.data, expr.data, verbose = FALSE, randomize = "none",
-  method = "bere", alphaw = 0.5, score = "motifincluded", cpp = FALSE)
+  method = "bere", alphaw = 1, regularization = "none",
+  score = "motifincluded", cpp = FALSE)
 }
 \arguments{
 \item{motif.data}{A motif dataset, a data.frame, matrix or exprSet containing 
@@ -23,6 +24,8 @@ factor (column 1) a gene (column 2) and a score (column 3) for the motif.}
 
 \item{alphaw}{A weight parameter specifying proportion of weight 
 to give to indirect compared to direct evidence.  See documentation.}
+
+\item{regularization}{String parameter indicating one of "none", "L1", "L2"}
 
 \item{score}{String to indicate whether motif information will be 
 readded upon completion of the algorithm}
