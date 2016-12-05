@@ -15,6 +15,7 @@
 #' readded upon completion of the algorithm
 #' @param alphaw A weight parameter specifying proportion of weight 
 #' to give to indirect compared to direct evidence.  See documentation.
+#' @param regularization String parameter indicating one of "none", "L1", "L2"
 #' @param cpp logical use C++ for maximum speed, set to false if unable to run.
 #' @export
 #' @return matrix for inferred network between TFs and genes
@@ -28,7 +29,8 @@ monsterNI <- function(motif.data,
                     verbose=FALSE,
                     randomize="none",
                     method="bere",
-                    alphaw=.5,
+                    alphaw=1.0,
+                    regularization="none",
                     score="motifincluded",
                     cpp=FALSE){
     if(verbose)
@@ -117,63 +119,67 @@ monsterNI <- function(motif.data,
     ########################################
     if (method=="BERE"){
         
-        exprData <- data.frame(exprData)
-        tfdcast <- dcast(motifData,V1~V2,fill=0)
+        expr.data <- data.frame(expr.data)
+        tfdcast <- dcast(motif.data,TF~GENE,fill=0)
         rownames(tfdcast) <- tfdcast[,1]
         tfdcast <- tfdcast[,-1]
         
-        exprData <- exprData[sort(rownames(exprData)),]
+        expr.data <- expr.data[sort(rownames(expr.data)),]
         tfdcast <- tfdcast[,sort(colnames(tfdcast)),]
-        tfNames <- rownames(tfdcast)[rownames(tfdcast) %in% rownames(exprData)]
+        tfNames <- rownames(tfdcast)[rownames(tfdcast) %in% rownames(expr.data)]
         
         ## Filtering
         # filter out the TFs that are not in expression set
         tfdcast <- tfdcast[rownames(tfdcast)%in%tfNames,]
         
         # Filter out genes that aren't targetted by anything 7/28/15
-        commonGenes <- intersect(colnames(tfdcast),rownames(exprData))
-        exprData <- exprData[commonGenes,]
+        commonGenes <- intersect(colnames(tfdcast),rownames(expr.data))
+        expr.data <- expr.data[commonGenes,]
         tfdcast <- tfdcast[,commonGenes]
         
         # check that IDs match
-        if (prod(rownames(exprData)==colnames(tfdcast))!=1){
+        if (prod(rownames(expr.data)==colnames(tfdcast))!=1){
             stop("ID mismatch")
         }
         
         ## Get direct evidence
-        directCor <- t(cor(t(exprData),t(exprData[rownames(exprData)%in%tfNames,]))^2)
+        
+        directCor <- t(cor(t(expr.data),t(expr.data[rownames(expr.data)%in%tfNames,]))^2)
         
         ## Get the indirect evidence    
         result <- t(apply(regulatory.network, 1, function(x){
             cat(".")
             tfTargets <- as.numeric(x)
-            
-            # Ordinary Logistic Reg
-            #         z <- glm(tfTargets ~ ., data=exprData, family="binomial")
+            z <- NULL
+            if(regularization=="none"){
+                z <- glm(tfTargets ~ ., data=expr.data, family="binomial")
+            } else {
+                z <- penalized(tfTargets, expr.data,
+                    lambda2=10, model="logistic", standardize=TRUE)
+                # z <- optL1(tfTargets, expr.data, minlambda1=25, fold=5)
+                
+            }
             
             # Penalized Logistic Reg
-            z <- penalized(tfTargets, exprData, 
-                           lambda2=lambda, model="logistic", standardize=TRUE)
-            #         z <- optL1(tfTargets, exprData, minlambda1=25, fold=5)
             
             
-            predict(z, exprData)
+            predict(z, expr.data)
         }))
         
         ## Convert values to ranks
-        directCor <- matrix(rank(directCor), ncol=ncol(directCor))
-        result <- matrix(rank(result), ncol=ncol(result))
+        # directCor <- matrix(directCor, ncol=ncol(directCor))
+        # result <- matrix(result, ncol=ncol(result))
         
         consensus <- directCor*(1-alphaw) + result*alphaw
         rownames(consensus) <- rownames(regulatory.network)
-        colnames(consensus) <- rownames(exprData)
+        colnames(consensus) <- rownames(expr.data)
         consensusRange <- max(consensus)- min(consensus)
         if(score=="motifincluded"){
             consensus <- as.matrix(consensus + consensusRange*regulatory.network)
         }
         consensus
     } else if (method=="pearson"){
-        result <- t(cor(t(exprData),t(exprData[rownames(exprData)%in%tfNames,]))^2)
+        result <- t(cor(t(expr.data),t(expr.data[rownames(expr.data)%in%tfNames,]))^2)
         if(score=="motifincluded"){
             result <- as.matrix(consensus + consensusRange*regulatory.network)
         }
@@ -208,11 +214,11 @@ monsterNI <- function(motif.data,
 #' in MONSTER.  Running bereFull can generate these networks
 #' independently from the larger MONSTER method.
 #'
-#' @param motifData A motif dataset, a data.frame, matrix or exprSet 
+#' @param motif.data A motif dataset, a data.frame, matrix or exprSet 
 #' containing 3 columns. Each row describes an motif associated 
 #' with a transcription factor (column 1) a gene (column 2) 
 #' and a score (column 3) for the motif.
-#' @param exprData An expression dataset, as a genes (rows) by 
+#' @param expr.data An expression dataset, as a genes (rows) by 
 #' samples (columns) data.frame
 #' @param alpha A weight parameter specifying proportion of weight 
 #' to give to indirect compared to direct evidence.  See documentation.
@@ -226,36 +232,36 @@ monsterNI <- function(motif.data,
 #' @examples
 #' data(yeast)
 #' monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5)
-bereFull <- function(motifData, 
-                    exprData, 
+bereFull <- function(motif.data, 
+                    expr.data, 
                     alpha=.5, 
                     lambda=10, 
                     score="motifincluded"){
     
-    exprData <- data.frame(exprData)
-    tfdcast <- dcast(motifData,V1~V2,fill=0)
+    expr.data <- data.frame(expr.data)
+    tfdcast <- dcast(motif.data,TF~GENE,fill=0)
     rownames(tfdcast) <- tfdcast[,1]
     tfdcast <- tfdcast[,-1]
     
-    exprData <- exprData[sort(rownames(exprData)),]
+    expr.data <- expr.data[sort(rownames(expr.data)),]
     tfdcast <- tfdcast[,sort(colnames(tfdcast)),]
-    tfNames <- rownames(tfdcast)[rownames(tfdcast) %in% rownames(exprData)]
+    tfNames <- rownames(tfdcast)[rownames(tfdcast) %in% rownames(expr.data)]
     
     ## Filtering
     # filter out the TFs that are not in expression set
     tfdcast <- tfdcast[rownames(tfdcast)%in%tfNames,]
     
     # Filter out genes that aren't targetted by anything 7/28/15
-    commonGenes <- intersect(colnames(tfdcast),rownames(exprData))
-    exprData <- exprData[commonGenes,]
+    commonGenes <- intersect(colnames(tfdcast),rownames(expr.data))
+    expr.data <- expr.data[commonGenes,]
     tfdcast <- tfdcast[,commonGenes]
     
     # check that IDs match
-    if (prod(rownames(exprData)==colnames(tfdcast))!=1){
+    if (prod(rownames(expr.data)==colnames(tfdcast))!=1){
         stop("ID mismatch")
     }
     ## Get direct evidence
-    directCor <- t(cor(t(exprData),t(exprData[rownames(exprData)%in%tfNames,]))^2)
+    directCor <- t(cor(t(expr.data),t(expr.data[rownames(expr.data)%in%tfNames,]))^2)
     
     ## Get the indirect evidence    
     result <- t(apply(tfdcast, 1, function(x){
@@ -263,16 +269,16 @@ bereFull <- function(motifData,
         tfTargets <- as.numeric(x)
         
         # Ordinary Logistic Reg
-        # z <- glm(tfTargets ~ ., data=exprData, family="binomial")
+        # z <- glm(tfTargets ~ ., data=expr.data, family="binomial")
         
         # Penalized Logistic Reg
-        exprData[is.na(exprData)] <- 0
-        z <- penalized(response=tfTargets, penalized=exprData, unpenalized=~0,
+        expr.data[is.na(expr.data)] <- 0
+        z <- penalized(response=tfTargets, penalized=expr.data, unpenalized=~0,
                         lambda2=lambda, model="logistic", standardize=TRUE)
-        #z <- optL1(tfTargets, exprData, minlambda1=25, fold=5)
+        #z <- optL1(tfTargets, expr.data, minlambda1=25, fold=5)
         
         
-        predict(z, exprData)
+        predict(z, expr.data)
     }))
     
     ## Convert values to ranks
@@ -281,7 +287,7 @@ bereFull <- function(motifData,
     
     consensus <- directCor*(1-alpha) + result*alpha
     rownames(consensus) <- rownames(tfdcast)
-    colnames(consensus) <- rownames(exprData)
+    colnames(consensus) <- rownames(expr.data)
     consensusRange <- max(consensus)- min(consensus)
     if(score=="motifincluded"){
         consensus <- as.matrix(consensus + consensusRange*tfdcast)
@@ -289,4 +295,4 @@ bereFull <- function(motifData,
     consensus
 }
 
-globalVariables(c("exprData","lambda","rcpp_ccorr","GENE", "TF","value"))
+globalVariables(c("expr.data","lambda","rcpp_ccorr","GENE", "TF","value"))

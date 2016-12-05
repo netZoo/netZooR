@@ -35,7 +35,8 @@
 monster <- function(expr, 
                     design, 
                     motif, 
-                    nullPerms=100, 
+                    nullPerms=100,
+                    ni_method="BERE",
                     numMaxCores=1, 
                     outputDir=NA){
     
@@ -81,8 +82,8 @@ monster <- function(expr,
         nullExprCases <- nullExpr[,design==1]
         nullExprControls <- nullExpr[,design==0]
 
-        tmpNetCases <- monsterNI(motif, nullExprCases)
-        tmpNetControls <- monsterNI(motif, nullExprControls)
+        tmpNetCases <- monsterNI(motif, nullExprCases, method=ni_method, regularization="none")
+        tmpNetControls <- monsterNI(motif, nullExprControls, method=ni_method, regularization="none")
         transitionMatrix <- transformation.matrix(
             tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
         print(paste("Finished running iteration", i))
