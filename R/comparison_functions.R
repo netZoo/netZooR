@@ -70,3 +70,46 @@ calcDegreeDifference <- function(x,y,type=c("tf","gene"),filter=FALSE,trim=FALSE
 	ydegree = calcDegree(y,type,trim,...)
 	xdegree-ydegree
 }
+
+#' Compare a panda network with a gold standard
+#'
+#' Computes the ROC curve for the panda result, allowing for plotting
+#' the against a gold standard.  Optionally, allows the inclusion of 
+#' another network for comparison
+#' 
+#' @param x An object of class "panda" or matrix
+#' @param y A gold standard dataset, a data.frame, matrix or exprSet containing 2 or 3 columns.
+#' Each row describes an motif associated with a transcription factor (column 1) a
+#' gene (column 2) and a score (column 3) for the gold standard score (0 or 1).
+#' If column 3 is not given, all rows will be assumed to be gold standard edges.
+#' @param ... Options 
+#' @export
+#' @importFrom ROCR prediction
+#' @importFrom ROCR performance
+#' @importFrom reshape2 melt
+#' @examples
+#' \donttest{
+#' data(pandaToyData)
+#' pandaRes <- panda(pandaToyData$motif,
+#'            pandaToyData$expression,pandaToyData$ppi,hamming=.001,progress=TRUE)
+#' gold <- melt(pandaRes@regNet)[sample(1000,200),]
+#' gold[,3] <-1
+#' roc <- calcROC(pandaRes,gold)
+#' plot(roc)
+#' }
+#'
+calcROC <- function(x,y,...){
+    gs <- y
+    if (ncol(gs)==2){
+        gs <- cbind(gs,1)
+    } else {
+        gs <- gs[gs[,3]==1,]
+    }
+    combinedNetGS <- merge(melt(x@regNet),gs,by=c(1,2),all.x=T)
+    combinedNetGS[is.na(combinedNetGS)] <- 0
+    networkPred  <- prediction(combinedNetGS$value.x, combinedNetGS[,4]==1)
+    networkPerf  <- performance(networkPred, measure = c("tpr","auc"), x.measure = "fpr")
+    networkAUC  <- performance(networkPred, "auc")@y.values[[1]]
+    print(paste("AUC-ROC:",round(networkAUC,4)))
+    return(networkPerf)
+}

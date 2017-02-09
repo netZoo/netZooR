@@ -4,7 +4,7 @@
 \alias{lioness}
 \title{Compute LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples)}
 \usage{
-lioness(motif, expr = expr, ppi = NULL, network.inference.method, ...)
+lioness(motif, expr, ppi = NULL, network.inference.method, ...)
 }
 \arguments{
 \item{motif}{A motif dataset, a data.frame, matrix or exprSet containing 3 columns.
