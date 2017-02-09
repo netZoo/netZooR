@@ -18,6 +18,7 @@ Imports:
     reshape,
     plyr,
     RUnit,
+    ROCR,
     hexbin
 Suggests:
     rmarkdown

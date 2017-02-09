@@ -505,7 +505,7 @@ plotGraph <- function(x){
 #' @references
 #' Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 #' Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.
-lioness <- function(motif,expr=expr,ppi=NULL, network.inference.method, ...){
+lioness <- function(motif,expr,ppi=NULL, network.inference.method, ...){
     N <- ncol(expr)
     fullnet <- panda(motif, expr, ppi, ...)
     lapply(seq_len(N), function(i){
