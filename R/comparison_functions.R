@@ -94,11 +94,11 @@ calcDegreeDifference <- function(x,y,type=c("tf","gene"),filter=FALSE,trim=FALSE
 #'            pandaToyData$expression,pandaToyData$ppi,hamming=.001,progress=TRUE)
 #' gold <- melt(pandaRes@regNet)[sample(1000,200),]
 #' gold[,3] <-1
-#' roc <- calcROC(pandaRes,gold)
+#' roc <- validateNetwork(pandaRes,gold)
 #' plot(roc)
 #' }
 #'
-calcROC <- function(x,y,...){
+validateNetwork <- function(x,y,...){
     gs <- y
     if (ncol(gs)==2){
         gs <- cbind(gs,1)
@@ -113,3 +113,4 @@ calcROC <- function(x,y,...){
     print(paste("AUC-ROC:",round(networkAUC,4)))
     return(networkPerf)
 }
+
