@@ -25,4 +25,3 @@ transition matrix given a set of null transition matrices
 data(monsterRes)
 calculate.tm.p.values(monsterRes)
 }
-

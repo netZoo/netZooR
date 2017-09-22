@@ -47,4 +47,3 @@ plot(monsterRes)
 \seealso{
 \code{\link{monsterAnalysis-class}}
 }
-

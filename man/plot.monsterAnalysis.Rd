@@ -24,4 +24,3 @@ monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif
 plot(monsterRes)
 }
 }
-

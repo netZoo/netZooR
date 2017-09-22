@@ -27,4 +27,3 @@ data(monsterRes)
 transitionNetworkPlot(monsterRes)
 
 }
-

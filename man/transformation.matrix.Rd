@@ -35,4 +35,3 @@ cc.net.1 <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
 cc.net.2 <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])
 transformation.matrix(cc.net.1, cc.net.2)
 }
-
