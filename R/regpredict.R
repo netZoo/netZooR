@@ -10,6 +10,8 @@
 #' @param verbose logical to indicate printing of output for algorithm progress.
 #' @param method String to indicate algorithm method.  Must be one of 
 #' "bere","pearson","cd","lda", or "wcd". Default is "bere"
+#' @param ni.coefficient.cutoff numeric to specify a p-value cutoff at the network
+#' inference step.  Default is NA, indicating inclusion of all coefficients.
 #' @param randomize logical indicating randomization by genes, within genes or none
 #' @param score String to indicate whether motif information will be 
 #' readded upon completion of the algorithm
@@ -29,6 +31,7 @@ monsterNI <- function(motif.data,
                     verbose=FALSE,
                     randomize="none",
                     method="bere",
+                    ni.coefficient.cutoff=NA,
                     alphaw=1.0,
                     regularization="none",
                     score="motifincluded",
@@ -153,6 +156,19 @@ monsterNI <- function(motif.data,
             z <- NULL
             if(regularization=="none"){
                 z <- glm(tfTargets ~ ., data=expr.data, family="binomial")
+                
+                # 9/10/17
+                # Adding argument to allow cutoffs based on p-values
+                if(is.numeric(ni.coefficient.cutoff)){
+                    coefs <- coef(z)
+                    coefs[summary(z)$coef[,4]>ni.coefficient.cutoff] <- 0
+                    logit.res <- apply(expr.data,1,function(x){coefs[1] + sum(coefs[-1]*x)})
+                    return(exp(logit.res)/(1+exp(logit.res)))
+                    
+                } else {
+                    return(predict(z, expr.data,type='response'))
+                }
+                
             } else {
                 z <- penalized(tfTargets, expr.data,
                     lambda2=10, model="logistic", standardize=TRUE)
