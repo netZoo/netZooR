@@ -16,6 +16,8 @@
 #' regulates a gene (column 2) with a defined strength (column 3), usually taken to be 0 or 1 
 #' @param nullPerms number of random permutations to run (default 100).  Set to 0 to only 
 #' calculate observed transition matrix
+#' @param ni.coefficient.cutoff numeric to specify a p-value cutoff at the network
+#' inference step.  Default is NA, indicating inclusion of all coefficients.
 #' @param numMaxCores requires doParallel, foreach.  Runs MONSTER in parallel computing 
 #' environment.  Set to 1 to avoid parallelization.
 #' @param outputDir character vector specifying a directory or path in which 
@@ -37,6 +39,7 @@ monster <- function(expr,
                     motif, 
                     nullPerms=100,
                     ni_method="BERE",
+                    ni.coefficient.cutoff = NA,
                     numMaxCores=1, 
                     outputDir=NA){
     
@@ -82,8 +85,8 @@ monster <- function(expr,
         nullExprCases <- nullExpr[,design==1]
         nullExprControls <- nullExpr[,design==0]
 
-        tmpNetCases <- monsterNI(motif, nullExprCases, method=ni_method, regularization="none",score="none")
-        tmpNetControls <- monsterNI(motif, nullExprControls, method=ni_method, regularization="none",score="none")
+        tmpNetCases <- monsterNI(motif, nullExprCases, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff)
+        tmpNetControls <- monsterNI(motif, nullExprControls, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff)
         transitionMatrix <- transformation.matrix(
             tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
         print(paste("Finished running iteration", i))
