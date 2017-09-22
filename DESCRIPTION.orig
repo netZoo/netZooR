@@ -62,9 +62,9 @@ Imports: reshape2, penalized,
     tidyr,
     methods
 License: GPL-2
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Suggests: knitr,
->>>>>>> version increment
+>>>>>>> Removed whitespace from DESCRIPTION
     rmarkdown,
     pkgdown,
     BiocStyle
