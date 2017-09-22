@@ -25,4 +25,3 @@ checkDataType(yeast$exp.cc)
 #TRUE
 
 }
-

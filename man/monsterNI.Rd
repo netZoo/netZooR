@@ -5,8 +5,8 @@
 \title{Bipartite Edge Reconstruction from Expression data}
 \usage{
 monsterNI(motif.data, expr.data, verbose = FALSE, randomize = "none",
-  method = "bere", alphaw = 1, regularization = "none",
-  score = "motifincluded", cpp = FALSE)
+  method = "bere", ni.coefficient.cutoff = NA, alphaw = 1,
+  regularization = "none", score = "motifincluded", cpp = FALSE)
 }
 \arguments{
 \item{motif.data}{A motif dataset, a data.frame, matrix or exprSet containing 
@@ -21,6 +21,9 @@ factor (column 1) a gene (column 2) and a score (column 3) for the motif.}
 
 \item{method}{String to indicate algorithm method.  Must be one of 
 "bere","pearson","cd","lda", or "wcd". Default is "bere"}
+
+\item{ni.coefficient.cutoff}{numeric to specify a p-value cutoff at the network
+inference step.  Default is NA, indicating inclusion of all coefficients.}
 
 \item{alphaw}{A weight parameter specifying proportion of weight 
 to give to indirect compared to direct evidence.  See documentation.}
@@ -43,4 +46,3 @@ gene expression data and sequence motif data
 data(yeast)
 cc.net <- monsterNI(yeast$motif,yeast$exp.cc)
 }
-
