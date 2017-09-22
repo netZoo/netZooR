@@ -9,11 +9,16 @@ vignette: >
     %\VignetteEncoding{UTF-8}
 ---
 
+# Using MONSTER
+
 MONSTER (MOdeling Network State Transitions from Expression and Regulatory data) is a tool for identifying the transcription factor drivers of state change.
 
 Specific cellular states are often associated with distinct gene expression patterns. These states are plastic, changing during development, or in the transition from health to disease. One relatively simple extension of this concept is to recognize that we can classify different cell-types by their active gene regulatory networks and that, consequently, transitions between cellular states can be modeled by changes in these underlying regulatory networks. This package is an implementation of MONSTER, MOdeling Network State Transitions from Expression and Regulatory data, a regression-based method for inferring transcription factor drivers of cell state conditions at the gene regulatory network level.
 
 MONSTER takes in sequence motif data linking transcription factors (TFs) to genes and gene expression from two conditions. The goal is generate bipartite networks from the gene expression data which quantify evidence of the regulatory roles of each of the TFs to each of the genes. Next, critical TFs are identified by computing a transition matrix, which maps the gene regulatory network in the first state to the gene regulatory network in the second state.
+
+
+## Installing MONSTER
 
 This package is available from Bioconductor.
 ```{r}
@@ -24,7 +29,7 @@ biocLite("MONSTER")
 The development version of MONSTER can be installed from Github using the `devtools` package
 ```{r, message=F,eval=FALSE}
 install.packages('devtools')
-devtools::install_github('dschlauch/MONSTER')
+devtools::install_github('QuackenbushLab/MONSTER')
 ```
 
 The package can then be loaded via
@@ -32,6 +37,8 @@ The package can then be loaded via
 ```{r, message=F}
 library(MONSTER)
 ```
+
+## Input files
 
 In this demo, we use the included Yeast dataset, containing three separate Yeast datasets, and a sequence motif object.  The `yeast` dataset includes three separate experimental designs each involving microarray assays of 2555 genes of yeast (Saccharomyces cerevisiae).  `yeast$exp.ko` is a set of 106 gene expression samples of following a number of gene knockouts.  `yeast$exp.cc` is a set of 50 gene expression samples taken sets of two across 25 timepoints spanning the cellular cycle. `yeast$exp.sr` is a set of 173 gene expression samples collected under conditions of stress such as heat shock.  Each expression dataset has been normalized and scaled.
 
@@ -64,9 +71,27 @@ The first five rows and columns can be seen
 yeast$exp.cc[1:5,1:5]
 ```
 
+The motif mapping data.frame tells the MONSTER algorithm which genes contain likely transcription factor binding sites in the vicinity of their promoter. This serves as the regulatory prior and informs the initial network inference method by supplying a partial list of TF targeting.
+
+This data.frame contains 3 columns, where each row is a specific edge in the prior network.  
+
+* Column 1 specifies the transcription factor for the edge.
+* Column 2 specifies the targeted gene for the edge
+* Column 3 defines the strength of the edge.  By default, in unweighted graphs, this column may be populated entirely with 1's.
+
+The set of unique TFs in column 1 and unique genes in column 2 serve to determine the set of TFs and genes that are used in the downstream analysis.
+
+The first five rows and columns of the example motif `data.frame` can be seen
+
+```{r}
+yeast$motif[1:5,]
+```
+
 MONSTER tests the statistical significance of its results by permuting the samples `n` times and rerunning the analysis for each permutation.  By default, the number of permutations is set to be 100 and can be manually set via the argument `nullPerms`.
 
 Monster is optimized to run on multiple cores, if available.  We can specify the maximum number of cores which are available to run the algorithm.  If `numMaxCores` unspecified, MONSTER will check available resources and run on all but four of the available cores.
+
+## Running MONSTER
 
 ```{r, message=F}
 yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
