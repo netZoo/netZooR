@@ -26,4 +26,3 @@ corresponding dendrogram of a transaction matrix
 data(monsterRes)
 hcl.heatmap.plot(monsterRes)
 }
-
