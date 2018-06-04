@@ -2,7 +2,7 @@
 % Please edit documentation in R/corgenelength.R
 \name{corgenelength}
 \alias{corgenelength}
-\title{Determine the total non-overlapping exon length of each gene in base pairs.}
+\title{Normalize gene mutation scores by gene length.}
 \usage{
 corgenelength(x, cagenes, exonsize, ...)
 }
@@ -17,5 +17,5 @@ corgenelength(x, cagenes, exonsize, ...)
 Mutation rate-adjusted gene mutation scores.
 }
 \description{
-Determine the total non-overlapping exon length of each gene in base pairs.
+Normalize gene mutation scores by gene length.
 }
