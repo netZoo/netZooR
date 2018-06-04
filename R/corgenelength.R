@@ -12,7 +12,7 @@ corgenelength <- function(x, cagenes, exonsize, ...){
 
 	# match with mutation data
 		x <- x[,order(colnames(x))]
-		x <- x[,which(colnames(x) %in% names(exon.size))]
+		x <- x[,which(colnames(x) %in% names(exonsize))]
 		exonsize <- exonsize[which(names(exonsize) %in% colnames(x))]
 
 	# normalize the number of mutations by gene length
