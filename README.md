@@ -1,12 +1,12 @@
 # SAMBAR #
 ## Subtyping Agglomerated Mutations By Annotation Relations ##
-NOTE: the R package is still under development. Current dependencies are Bioconductor packages TxDb.Hsapiens.UCSC.hg19.knownGene, annotate, org.Hs.eg.db, and CRAN packages vegan and stats.
+NOTE: the R package is still under development. Current dependencies are CRAN packages vegan, stats, and utils.
 
-The easiest way to install the R package sambaR is via the devtools package from CRAN:
+The easiest way to install the R package SAMBAR is via the devtools package from CRAN:
 ```
 install.packages("devtools")
 library(devtools)
-devtools::install_github("mararie/SAMBAR/sambaR")
+devtools::install_github("mararie/SAMBAR")
 ```
 
 SAMBAR, or **S**ubtyping **A**gglomerated **M**utations **B**y **A**nnotation **R**elations, is a method to identify subtypes based on somatic mutation data. SAMBAR was used to identify mutational subtypes in 23 cancer types from The Cancer Genome Atlas (Kuijjer ML, Paulson JN, Salzman P, Ding W, Quackenbush J, *in revision*, pre-published on the *BioRxiv*, doi: https://doi.org/10.1101/228031).
