@@ -1,4 +1,4 @@
-#' Determine the total non-overlapping exon length of each gene in base pairs.
+#' Normalize gene mutation scores by gene length.
 #' @param x Mutation data, in the format of a matrix, including the number of mutations for samples (rows) and genes (columns).
 #' @param cagenes A vector of genes, for example of cancer-associated genes. This will be used to subset the gene-level mutation data to.
 #' @param exonsize A vector of gene lengths. This will be used to normalize the gene mutation scores.
