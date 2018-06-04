@@ -5,8 +5,8 @@
 \title{Main SAMBAR function.}
 \usage{
 sambar(mutdata = data(mut.ucec), esize = data(exon.size),
-  signatureset = system.file("extdata", "c2.cp.v5.0.symbols.gmt", package =
-  "sambaR", mustWork = TRUE), cangenes = data(gene), kmin = 2, kmax = 4,
+  signatureset = system.file("extdata", "h.all.v6.1.symbols.gmt", package =
+  "SAMBAR", mustWork = TRUE), cangenes = data(gene), kmin = 2, kmax = 4,
   ...)
 }
 \arguments{
