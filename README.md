@@ -8,6 +8,7 @@ install.packages("devtools")
 library(devtools)
 devtools::install_github("mararie/SAMBAR")
 ```
+Then run: ```library(SAMBAR)```.
 
 SAMBAR, or **S**ubtyping **A**gglomerated **M**utations **B**y **A**nnotation **R**elations, is a method to identify subtypes based on somatic mutation data. SAMBAR was used to identify mutational subtypes in 23 cancer types from The Cancer Genome Atlas (Kuijjer ML, Paulson JN, Salzman P, Ding W, Quackenbush J, *British Journal of Cancer* (May 16, 2018), doi: 10.1038/s41416-018-0109-7, https://www.nature.com/articles/s41416-018-0109-7, *BioRxiv*, doi: https://doi.org/10.1101/228031).
 
