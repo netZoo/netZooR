@@ -1,3 +1,4 @@
+#' Main SAMBAR function.
 #' @param mutdata Mutation data in matrix format. The number of mutations should be listed for samples (rows) and genes (columns).
 #' @param signature A file containing gene sets (signatures) in .gmt format. These gene sets will be used to de-sparsify the gene-level mutation scores.
 #' @param cagenes A vector of genes, for example of cancer-associated genes. This will be used to subset the gene-level mutation data to.
