@@ -1,0 +1,17 @@
+Package: SAMBAR
+Title: Subtyping Agglomerated Mutations By Annotation Relations
+Version: 0.2
+Author: Marieke Lydia Kuijjer
+Maintainer: Marieke Lydia Kuijjer <mkuijjer@jimmy.harvard.edu>
+Description: SAMBAR, or Subtyping Agglomerated Mutations By Annotation
+    Relations, is a method to identify subtypes based on somatic mutation data.
+Depends:
+    R (>= 3.0.2)
+Imports:
+    vegan,
+    stats,
+    utils
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
