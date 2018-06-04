@@ -23,3 +23,5 @@ The next step in SAMBAR is de-sparsification of these gene mutation scores (aggl
 Finally, SAMBAR uses binomial distance to cluster the pathway mutation scores. The cluster dendrogram is then divided into *k* groups (or a range of *k* groups), and the cluster assignments are returned in a list.
 
 As an example, we use SAMBAR to subtype mutation data of Uterine Corpus Endometrial Carcinoma (UCEC) primary tumor samples.
+
+Running ```subtypes <- sambar()``` will run SAMBAR with default settings on the UCEC data and will return a list of samples belonging to *k*=2-4 subtypes.
