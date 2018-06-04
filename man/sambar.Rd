@@ -4,10 +4,9 @@
 \alias{sambar}
 \title{Main SAMBAR function.}
 \usage{
-sambar(mutdata = data(mut.ucec), esize = data(exon.size),
+sambar(mutdata = mut.ucec, esize = exon.size,
   signatureset = system.file("extdata", "h.all.v6.1.symbols.gmt", package =
-  "SAMBAR", mustWork = TRUE), cangenes = data(gene), kmin = 2, kmax = 4,
-  ...)
+  "SAMBAR", mustWork = TRUE), cangenes = genes, kmin = 2, kmax = 4, ...)
 }
 \arguments{
 \item{mutdata}{Mutation data in matrix format. The number of mutations should be listed for samples (rows) and genes (columns).}
