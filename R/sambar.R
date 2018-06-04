@@ -8,13 +8,13 @@
 #' @export
 #
 # dependencies: vegan, stats
-sambar <- function(mutdata=data(mut.ucec), esize=data(exon.size), signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package = "SAMBAR", mustWork = TRUE), cangenes=data(gene), kmin=2, kmax=4, ...){
+sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package = "SAMBAR", mustWork = TRUE), cangenes=genes, kmin=2, kmax=4, ...){
 
 	# convert gmt file to binary matrix, subset to cancer-associated genes
-		edg <- convertgmt(signature=signatureset, cagenes=genes)
+		edg <- convertgmt(signature=signatureset, cagenes=cangenes)
 
 	# correct number of mutations for gene length (returns gene mutation scores)
-		mutrate <- corgenelength(x=mut.ucec, cagenes=genes, exonsize=exon.size)
+		mutrate <- corgenelength(x=mutdata, cagenes=cangenes, exonsize=esize)
 
 	# transform mutrate ### OBS! probably want to start with patient ids in columns
 		mutrate <- t(mutrate)
