@@ -43,4 +43,6 @@ This will run SAMBAR on the UCEC mutation data, using desparsification on cancer
 
 Instead of using the default signatureset, you can download any .gmt file from MSigDb and add the path to this file in `signatureset=PATH_TO_FILE`.
 
-Please note that, in order to be able to cluster the data using the binomial distance, SAMBAR removes samples that have mutation scores of 0 across all pathways, and pathways that have mutation scores of 0 across all samples. Using fewer genes of interest in `cangenes` or fewer pathways could result in errors. We have not yet added user-friendly error checks to the package.
+## Notes
+
+Please note that, in order to be able to cluster the data using the binomial distance, SAMBAR removes samples that have mutation scores of 0 across all pathways, and pathways that have mutation scores of 0 across all samples. Using a small number of genes of interest (`cangenes`) or a pathways that include small numbers of genes could result in errors. We have not yet added any user-friendly error checks to the package but plan to do this in the future.
