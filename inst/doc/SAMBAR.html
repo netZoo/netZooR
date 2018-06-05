@@ -49,7 +49,10 @@
 <p>Or: <code>subtypes &lt;- sambar(mutdata=mut.ucec, esize=exon.size, signatureset=system.file(&quot;extdata&quot;, &quot;h.all.v6.1.symbols.gmt&quot;, package=&quot;SAMBAR&quot;, mustWork=TRUE), cangenes=genes, kmin=2, kmax=4)</code></p>
 <p>This will run SAMBAR on the UCEC mutation data, using desparsification on cancer-associated genes based on the MSigDb “Hallmark” gene sets. It will return a list of samples belonging to <span class="math">\(k=2-4\)</span> subtypes.</p>
 <p>Instead of using the default signatureset, you can download any .gmt file from MSigDb and add the path to this file in <code>signatureset=PATH_TO_FILE</code>.</p>
-<p>Please note that, in order to be able to cluster the data using the binomial distance, SAMBAR removes samples that have mutation scores of 0 across all pathways, and pathways that have mutation scores of 0 across all samples. Using fewer genes of interest in <code>cangenes</code> or fewer pathways could result in errors. We have not yet added user-friendly error checks to the package.</p>
+</div>
+<div id="notes" class="section level2">
+<h2>Notes</h2>
+<p>Please note that, in order to be able to cluster the data using the binomial distance, SAMBAR removes samples that have mutation scores of 0 across all pathways, and pathways that have mutation scores of 0 across all samples. Using a small number of genes of interest (<code>cangenes</code>) or a pathways that include small numbers of genes could result in errors. We have not yet added any user-friendly error checks to the package but plan to do this in the future.</p>
 </div>
 
 
