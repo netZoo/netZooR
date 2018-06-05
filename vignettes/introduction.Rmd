@@ -1,32 +1,46 @@
 ---
-title: Detecting differential modules using ALPACA
-output:
-  knitr:::html_vignette:
-    toc: true
-    fig_caption: yes
-  pdf_document:
-    highlight: null
-    number_sections: yes
+title: "SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations"
+author: "Marieke L. Kuijjer"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{SAMBAR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-\section{A simple example with two node groups}
-We will show how ALPACA can find changes in modular structure between two simulated networks. The networks both have 20 regulator nodes and 80 target nodes. The baseline network consists of two groups that are strongly connected to each other, whereas the perturbed network has weaker connections between the two groups. The two groups consist of nodes {A1-A10,B1-B40} and {A11-A20,B41-B80}. Contrasting the two networks using ALPACA identifies these two groups as being the modules that best characterize the perturbation.
-
-```{r,echo=TRUE,message=FALSE,warning=FALSE}
-library(ALPACA)
-
-simp.mat <- read.table('Example_2comm.txt',header=T)
-
-simp.alp <- alpaca(simp.mat,NULL,verbose=F)
-simp.alp2 <- simp.alp[[1]]
-simp.memb <- as.vector(simp.alp2)
-names(simp.memb) <- names(simp.alp2)
-
-simp.memb
-
-
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 ```
+
+SAMBAR, or Subtyping Agglomerated Mutations By Annotation Relations, is a method to identify subtypes based on somatic mutation data. SAMBAR was used to identify mutational subtypes in 23 cancer types from The Cancer Genome Atlas (Kuijjer ML, Paulson JN, Salzman P, Ding W, Quackenbush J, British Journal of Cancer (May 16, 2018), doi: 10.1038/s41416-018-0109-7, https://www.nature.com/articles/s41416-018-0109-7, BioRxiv, doi: https://doi.org/10.1101/228031).
+
+SAMBAR's input is a matrix that includes the number of non-synonymous mutations in a sample $i$ and gene $j$ . SAMBAR first subsets these data to a set of 2,219 cancer-associated genes (optional) from the Catalogue Of Somatic Mutations In Cancer (COSMIC) and Östlund et al. (Network-based identification of novel cancer genes, 2010, Mol Cell Prot), or from a user-defined list. It then divides the number of non-synonymous mutations by the gene's length $L_j$, defined as the number of non-overlapping exonic base pairs of a gene. For each sample, SAMBAR then calculates the overall cancer-associated mutation rate by summing mutation scores in all cancer-associated genes $j'$ . It removes samples for which the mutation rate is zero and divides the mutation scores the remaining samples by the sample's mutation rate, resulting in a matrix of mutation rate-adjusted scores $G$:
+
+$G_{ij}=\frac{N_{ij}/L_{j}}{\displaystyle\sum_{j'}({N_{ij'}/L_{j'}})}$
+
+The next step in SAMBAR is de-sparsification of these gene mutation scores (agglomerated mutations) into pathway mutation (annotation relation) scores. SAMBAR converts a (user-defined) gene signature (.gmt format) into a binary matrix $M$ , with information of whether a gene $j$ belongs to a pathway $q$ . It then calculates pathway mutation scores $P$ by correcting the sum of mutation scores of all genes in a pathway for the number of pathways $q'$ a gene belongs to, and for the number of cancer-associated genes present in that pathway:
+
+$P_{iq}=\frac{\displaystyle\sum_{j \in q} G_{ij}/{\displaystyle\sum_{q'} M_{jq'}}}{\displaystyle\sum_{j} M_{jq}}$
+
+Finally, SAMBAR uses binomial distance to cluster the pathway mutation scores. The cluster dendrogram is then divided into $k$ groups (or a range of $k$ groups), and the cluster assignments are returned in a list.
+
+
+## Example: Subtyping Uterine Corpus Endometrial Carcinoma
+
+As an example, we've added mutation data of Uterine Corpus Endometrial Carcinoma (UCEC) primary tumor samples, obtained from The Cancer Genome Atlas, to this package in `data(mut.ucec)`. We've also added gene lengths (the number of non-overlapping exonic base pairs) for 23,459 genes (hg19) in `data(exon.size)`. We've added a list of cancer-associated genes in `data(gene)`. Finally, the package includes a .gmt file that contains Hallmarks pathways from MSigDb.
+
+To run SAMBAR with default settings on these data:
+`subtypes <- sambar()`
+
+Or:
+`subtypes <- sambar(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package="SAMBAR", mustWork=TRUE), cangenes=genes, kmin=2, kmax=4)`
+
+This will run SAMBAR on the UCEC mutation data, using desparsification on cancer-associated genes based on the MSigDb "Hallmark" gene sets. It will return a list of samples belonging to $k=2-4$ subtypes.
+
+Instead of using the default signatureset, you can download any .gmt file from MSigDb and add the path to this file in `signatureset=PATH_TO_FILE`.
+
+Please note that, in order to be able to cluster the data using the binomial distance, SAMBAR removes samples that have mutation scores of 0 across all pathways, and pathways that have mutation scores of 0 across all samples. Using fewer genes of interest in `cangenes` or fewer pathways could result in errors. We have not yet added user-friendly error checks to the package.
