@@ -1,6 +1,6 @@
 # SAMBAR #
 ## Subtyping Agglomerated Mutations By Annotation Relations ##
-This R package is still under development! It depends on CRAN packages vegan, stats, and utils.
+This R package depends on CRAN packages vegan, stats, and utils.
 
 The easiest way to install the R package SAMBAR is via the devtools package from CRAN:
 ```
