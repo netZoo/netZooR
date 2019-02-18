@@ -1,27 +1,168 @@
-# SAMBAR #
-## Subtyping Agglomerated Mutations By Annotation Relations ##
-This R package depends on CRAN packages vegan, stats, and utils.
+# netZoo
 
-The easiest way to install the R package SAMBAR is via the devtools package from CRAN:
-```
+An R package to integrate [pypanda](https://github.com/davidvi/pypanda)--Python implementation of PANDA and LIONESS, R implementation of [CONDOR](https://github.com/jplatig/condor), and R implementation of [ALPACA](https://github.com/meghapadi/ALPACA)
+
+**PANDA**(Passing Attributes between Networks for Data Assimilation) is a message-passing model to gene regulatory network reconstruction. It integrates multiple sources of biological data, including protein-protein interaction, gene expression, and sequence motif information, in order to reconstruct genome-wide, condition-specific regulatory networks.[[Glass et al. 2013]](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832)
+
+**LIONESS**(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks by applying linear interpolation to the predictions made by existing aggregate network inference 		approaches.[[LIONESS arxiv paper]](https://arxiv.org/abs/1505.06440)
+
+**CONDOR** (COmplex Network Description Of Regulators) implements methods for clustering biapartite networks
+and estimatiing the contribution of each node to its community's modularity.[[Platig et al. 2016]](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033)
+
+**ALPACA**(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules. [[Padi and Quackenbush 2018]](https://www.nature.com/articles/s41540-018-0052-5)
+
+
+## Table of Contents
+* [Getting Started](#getting-started) 
+  * [Prerequisites](#prerequisites)
+  * [Installing](#installing)
+* [Running the sample datasets](#running-the-sample-datasets)
+  * [PANDA and plot PANDA network](#panda-and-plot-panda-network)
+  * [LIONESS and plot LIONESS network](#lioness-and-plot-lioness-network)
+  * [CONDOR](#condor)
+  * [ALPACA](#ALPACA)
+* [Further information](#further-information)
+  * [Future Work](#future-work)
+  * [Note](#note)
+ 
+
+
+## Getting Started
+
+### Prerequisites
+Use this pacakage requires Python 2.7 and R (>= 3.3.3) and Internet access.
+
+Python version and installation information is available [here](https://www.python.org/downloads/).
+
+R version and installation information is available [here](https://cran.r-project.org/).
+
+There are also some Python packages required to apply Python implementation of PANDA and LIONESS.
+
+How to install packages in different platforms could be find [here](https://packaging.python.org/tutorials/installing-packages/). 
+
+The required Python packages are:
+[pandas](https://pandas.pydata.org/), [numpy](http://www.numpy.org/), [networkx](https://networkx.github.io/), [matplotlib.pyplot](https://matplotlib.org/api/pyplot_api.html).
+
+### Installing
+This package could be downloaded via `install_github()` function from `devtools` package.
+
+```R
 install.packages("devtools")
 library(devtools)
-devtools::install_github("mararie/SAMBAR")
+devtools::install_github("twangxxx/netZoo")
+
 ```
-And then load the package using: ```library(SAMBAR)```.
 
-As an example, we've added mutation data of Uterine Corpus Endometrial Carcinoma (UCEC) primary tumor samples, obtained from The Cancer Genome Atlas, to this package. Running ```subtypes <- sambar()``` will run SAMBAR with default settings on these data, using desparsification based on based on the MSigDb "Hallmark" gene sets. It will return a list of samples belonging to *k*=2-4 subtypes.
+## Running the sample datasets
 
-## More information on the method ##
+Package [CONDOR](https://github.com/jplatig/condor), [igprah](http://igraph.org/r/), [viridisLite](https://cran.r-project.org/web/packages/viridisLite/index.html), and [ALPACA](https://github.com/meghapadi/ALPACA) are loaded with this package for further downstream analyses.
 
-SAMBAR, or **S**ubtyping **A**gglomerated **M**utations **B**y **A**nnotation **R**elations, is a method to identify subtypes based on somatic mutation data. SAMBAR was used to identify mutational subtypes in 23 cancer types from The Cancer Genome Atlas (Kuijjer ML, Paulson JN, Salzman P, Ding W, Quackenbush J, *British Journal of Cancer* (May 16, 2018), doi: 10.1038/s41416-018-0109-7, https://www.nature.com/articles/s41416-018-0109-7, *BioRxiv*, doi: https://doi.org/10.1101/228031).
+Use search() to check all loaded package currently.
+```R
+library(netZoo)
+search()
+```
+Access help pages for usage of six core functions.
+```
+?runPanda
+?plotPanda
+?runLioness
+?plotLioness
+?runCondor
+?runAlpaca
+```
+Use example datasets within package to test this package.
 
-SAMBAR's input is a matrix that includes the number of non-synonymous mutations in a sample <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;i" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;i" title="i" /></a> and gene <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;j" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;j" title="j" /></a>. SAMBAR first subsets these data to a set of 2,219 cancer-associated genes (optional) from the Catalogue Of Somatic Mutations In Cancer (COSMIC) and Östlund *et al*. (Network-based identification of novel cancer genes, 2010, *Mol Cell Prot*), or from a user-defined list. It then divides the number of non-synonymous mutations by the gene's length <a href="https://www.codecogs.com/eqnedit.php?latex=L_j" target="_blank"><img src="https://latex.codecogs.com/gif.latex?L_j" title="L_j" /></a>, defined as the number of non-overlapping exonic base pairs of a gene. For each sample, SAMBAR then calculates the overall cancer-associated mutation rate by summing mutation scores in all cancer-associated genes <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;j'" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;j'" title="j'" /></a>. It removes samples for which the mutation rate is zero and divides the mutation scores the remaining samples by the sample's mutation rate, resulting in a matrix of mutation rate-adjusted scores <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;G" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;G" title="G" /></a>:
+Refer to four input datasets files: one TB control expression dataset, one TB treated expression dataset, one motif sequence dataset, and one protein-protein interaction datasets in inst/extdat. All datasets are public data.
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;G_{ij}=\frac{N_{ij}/L_{j}}{\displaystyle\sum_{j'}({N_{ij'}/L_{j'}})}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;G_{ij}=\frac{N_{ij}/L_{j}}{\displaystyle\sum_{j'}({N_{ij'}/L_{j'}})}" title="G_{ij}=\frac{N_{ij}/L_{j}}{\displaystyle\sum_{j'}({N_{ij'}/L_{j'}})}" /></a>.
+```R
+treated_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZoo", mustWork = TRUE)
+control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZoo", mustWork = TRUE)
+motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
+ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZoo", mustWork = TRUE)
+```
 
-The next step in SAMBAR is de-sparsification of these gene mutation scores (agglomerated mutations) into pathway mutation (annotation relation) scores. SAMBAR converts a (user-defined) gene signature (.gmt format) into a binary matrix <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;M" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;M" title="M" /></a>, with information of whether a gene <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;j" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;j" title="j" /></a> belongs to a pathway <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;q" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;q" title="q" /></a>. It then calculates pathway mutation scores <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;P" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;P" title="P" /></a> by correcting the sum of mutation scores of all genes in a pathway for the number of pathways <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;q'" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;q'" title="q'" /></a> a gene belongs to, and for the number of cancer-associated genes present in that pathway:
+### PANDA and plot PANDA network
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{100}&space;P_{iq}=\frac{\displaystyle\sum_{j&space;\in&space;q}&space;G_{ij}/{\displaystyle\sum_{q'}&space;M_{jq'}}}{\displaystyle\sum_{j}&space;M_{jq}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;P_{iq}=\frac{\displaystyle\sum_{j&space;\in&space;q}&space;G_{ij}/{\displaystyle\sum_{q'}&space;M_{jq'}}}{\displaystyle\sum_{j}&space;M_{jq}}" title="P_{iq}=\frac{\displaystyle\sum_{j \in q} G_{ij}/{\displaystyle\sum_{q'} M_{jq'}}}{\displaystyle\sum_{j} M_{jq}}" /></a>.
+Assign the paths of treated expression dataset, motif dataset, and ppi dataset above to flag `e`(refers to "expression dataset"), `m`(refers to "=motif dataset"), and `ppi`(refers to "PPI" dataset) respectively. Then set option `rm_missing` to `TRUE` to run **PANDA** to generate an aggregate network for treated.
+Repeat but alter the paths of treated expression dataset to control expression datasets to generate an aggregate network for control. 
+vector `treated_all_panda_result` and vector `control_all_panda_result` below are large lists with three elements: the entire PANDA network, indegree ("to" nodes) nodes and score, outdegree ("from" nodes) nodes and score. Use `$panda`,`$indegree` and '$outdegree' to access each item resepctively.
 
-Finally, SAMBAR uses binomial distance to cluster the pathway mutation scores. The cluster dendrogram is then divided into *k* groups (or a range of *k* groups), and the cluster assignments are returned in a list.
+```R
+treated_all_panda_result <- runPanda(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+control_all_panda_result <- runPanda(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+```
+Use `$panda`to access the entire PANDA network.
+```R
+treated_net <- treated_all_panda_result$panda
+```
+Plot the 100 edge with the largest weight of two PANDA network. Besides, one message will be returned to indicate the location of output .png plot.
+```R
+plotPanda(top =100, file="treated_panda_100.png")
+```
+Repeat with networl of control. 
+```R
+control_net <- control_all_panda_result$panda
+plotPanda(top =100, file="control_panda_100.png")
+```
+
+### LIONESS and plot LIONESS network
+The method how to run LIONESS is mostly idential with method how to run PANDA in this package, unless the return values of `runLioness` is a data frame where first two columns represent TFs (regulators) and Genes (targets) while the rest columns represent each sample. each cell filled with estimated score calculated by LIONESS.
+
+```R
+treated_lioness <- runLioness(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+```
+Plot LIONESS network should clarify which sample by 0-based index.
+
+```R
+plotLioness(col = 0, top = 100, file = "treat_lioness_sample1_100.png")
+```
+
+Repeat with control.
+```R
+control_lioness <- runLioness(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+plotLioness(col = 0, top = 100, file = "control_lioness_sample1_100.png")
+```
+
+### CONDOR 
+
+run CONDOR with a threshold to select edges. 
+Defaults to `threshold` is the average of [median weight of non-prior edges] and [median weight of prior edges], all weights mentioned previous are transformationed with formula `w'=ln(e^w+1)` before calculating the median and average. But all the edges selected will remain the orginal weights calculated by PANDA before applying CONDOR.
+
+```R
+treated_condor_object <- runCondor(treated_net, threshold = 0)
+control_condor_object <- runCondor(control_net, threshold = 0)
+```
+
+plot communities. package igraph and package viridisLite (a color map package) are already loaded with this package.
+
+*treated network*:
+```R
+treated_color_num <- max(treated_condor_object$red.memb$com)
+treated_color <- viridis(treated_color_num, alpha = 1, begin = 0, end = 1, direction = 1, option = "D")
+condor.plot.communities(treated_condor_object, color_list=treated_color, point.size=0.04, xlab="Target", ylab="Regulator")
+```
+
+*control network*:
+```R
+control_color_num <- max(control_condor_object$red.memb$com)
+control_color <- viridis(control_color_num, alpha = 1, begin = 0, end = 1, direction = 1, option = "D")
+condor.plot.communities(control_condor_object, color_list=control_color , point.size=0.04, xlab="Target", ylab="Regulator")
+```
+### ALPACA
+
+run LIONESS with two PANDA network above as first two arguments.
+
+```R
+alpaca_result<- runAlpaca(treated_net, control_net, "~/Desktop/TB", verbose=T)
+```
+
+
+## Further information
+
+### Future Work
+Use `vignette("condor")` to access the vignette page of `condor` package and `vignette("ALPACA")` to access the vignette page of `ALPACA` package for any downstream analyses.
+
+### Note
+If there is an error like `Error in fetch(key) : lazy-load database.rdb' is corrupt` when accessing the help pages of functions in this package after being loaded. It's [a limitation of base R](https://github.com/r-lib/devtools/issues/1660) and has not been solved yet. Restart R session and re-load this package will help.
+
