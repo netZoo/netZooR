@@ -37,16 +37,7 @@ and estimatiing the contribution of each node to its community's modularity.[[Pl
 ## Getting Started
 
 ### Prerequisites
-Using this pacakage requires **Python** 2.7, **R** (>= 3.3.3), **Cytoscape** (>=3.6.1),**GSEA**, and **Internet access**.
-
-Python version and installation information is available [here](https://www.python.org/downloads/).
-
-R version and installation information is available [here](https://cran.r-project.org/).
-
-Cytoscape version and installation information is available [here](https://cytoscape.org/).
-
-GSEA version and installation information is available [here](http://software.broadinstitute.org/gsea/index.jsp).
-
+Using this pacakage requires [**Python**](https://www.python.org/downloads/) 2.7, [**R**](https://cran.r-project.org/) (>= 3.3.3), [**Cytoscape**](https://cytoscape.org/) (>=3.6.1), [**GSEA**](http://software.broadinstitute.org/gsea/index.jsp), and **Internet access**.
 There are also some Python packages required to apply Python implementation of PANDA and LIONESS.
 
 How to install packages in different platforms could be find [here](https://packaging.python.org/tutorials/installing-packages/). 
