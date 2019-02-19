@@ -2,7 +2,7 @@
 % Please edit documentation in R/runCytoscapePlot.R
 \name{runCytoscapePlot}
 \alias{runCytoscapePlot}
-\title{Plot PANDA network i Cytoscape}
+\title{Plot PANDA network in Cytoscape}
 \usage{
 runCytoscapePlot(panda.net, top = 100, network.name = "PANDA")
 }
@@ -14,10 +14,10 @@ runCytoscapePlot(panda.net, top = 100, network.name = "PANDA")
 \item{network.name}{Character string indicating the name of Cytoscape network. Defaults to "PANDA".}
 }
 \description{
-This function is able to plot specified amount of egdes in PANDA network in Cytoscape in .
+This function is able to plot specified amount of egdes in PANDA network in Cytoscape network.
 }
 \examples{
-refer to the input datasets files of control TB dataset in inst/extdat as example
+# refer to the input datasets files of control TB dataset in inst/extdat as example
 control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZoo", mustWork = TRUE)
 motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
 ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZoo", mustWork = TRUE)
@@ -28,6 +28,7 @@ control_all_panda_result <- runPanda(e = control_expression_file_path, m = motif
 # access PANDA regulatory network
 control_net <- control_all_panda_result$panda
 
+# run this function to create a network in Cytoscape.
 runCytoscapePlot(control_net, top = 200, network.name="TB_control")
 
 }

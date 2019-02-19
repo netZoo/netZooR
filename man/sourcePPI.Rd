@@ -2,7 +2,7 @@
 % Please edit documentation in R/sourcePPI.R
 \name{sourcePPI}
 \alias{sourcePPI}
-\title{Source the Protein-Protein interation in STRING database}
+\title{Source the Protein-Protein interaction in STRING database}
 \usage{
 sourcePPI(TF, species.index, score_threshold = 0)
 }
@@ -17,13 +17,16 @@ sourcePPI(TF, species.index, score_threshold = 0)
 A PPI data frame
 }
 \description{
-This function is able to use a list of Transcription factors(TF) of interest to source the Protein-Protein interations (PPI)in STRING database
+This function is able to use a list of Transcription Factors(TF) of interest to source the Protein-Protein interactions (PPI)in STRING database
 }
 \examples{
 # the example motif file
 motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
 motif <- read.table(motif_file_path, sep="\\t")
+# create a TF data frame with one column
 TF <- motif[,1]
+# create PPI data frame
 PPI <- sourcePPI(TF,species.index=83332, score_streshold=0)
+# write locally then use in \\code{\\link{runPanda}}.
 
 }
