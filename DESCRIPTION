@@ -9,13 +9,14 @@ Depends: R (>= 3.3.2),
 	 condor,
 	 igraph,
 	 viridisLite, 
-	 ALPACA	
+	 ALPACA,
+	 STRINGdb,
+	 RCy3,
 Imports: reticulate,
 	 GO.db,
 	 org.Hs.eg.db,
 	 GOstats,
 	 Matrix,
-	 RCy3,
 Remotes: jplatig/condor,
 	 meghapadi/ALPACA
 License: MIT + file LICENSE
