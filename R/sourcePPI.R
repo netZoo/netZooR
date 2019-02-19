@@ -36,4 +36,3 @@ sourcePPI <- function(TF, species.index, score_threshold=0){
   return(PPI)
 }
 
-

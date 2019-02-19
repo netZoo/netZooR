@@ -1,8 +1,10 @@
 setwd("~/Documents/GitHub/netZoo-draft/")
 
 
+
  library(devtools)
 build()
+setwd("..")
 install()
 
 library(roxygen2)
