@@ -1,7 +1,7 @@
 setwd("~/Documents/GitHub/netZoo-draft/")
 
 
-library(devtools)
+ library(devtools)
 build()
 install()
 
