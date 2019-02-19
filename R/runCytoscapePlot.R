@@ -1,13 +1,13 @@
-#' Plot PANDA network i Cytoscape
+#' Plot PANDA network in Cytoscape
 #'
-#'This function is able to plot specified amount of egdes in PANDA network in Cytoscape in .
+#'This function is able to plot specified amount of egdes in PANDA network in Cytoscape network.
 #'
 #' @param panda.net Character string indicating the input PANDA network in data frame structure type.
 #' @param top Numeric vector indicating the specified amount of edges to plot. Defaults to top 100 edges.
 #' @param network.name Character string indicating the name of Cytoscape network. Defaults to "PANDA".
 #'
 #' @examples
-#' refer to the input datasets files of control TB dataset in inst/extdat as example
+#' # refer to the input datasets files of control TB dataset in inst/extdat as example
 #' control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZoo", mustWork = TRUE)
 #' motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
 #' ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZoo", mustWork = TRUE)
@@ -18,6 +18,7 @@
 #' # access PANDA regulatory network
 #' control_net <- control_all_panda_result$panda
 #' 
+#' # run this function to create a network in Cytoscape.
 #' runCytoscapePlot(control_net, top = 200, network.name="TB_control")
 #' 
 #' @return NULL
@@ -43,4 +44,3 @@ runCytoscapePlot <- function(panda.net, top = 100, network.name="PANDA"){
   
 }
 
-# runCytoscapePlot(treated_net)

@@ -7,9 +7,9 @@ install()
 
 library(roxygen2)
 
-setwd("./cats")
+
 document()
 
 library(netZoo)
-?run
-
+?runCytoscapePlot
+?sourcePPI
