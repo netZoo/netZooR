@@ -1,6 +1,6 @@
 # netZoo
 
-An R package to integrate [pypanda](https://github.com/davidvi/pypanda)--Python implementation of PANDA and LIONESS, R implementation of [CONDOR](https://github.com/jplatig/condor), and R implementation of [ALPACA](https://github.com/meghapadi/ALPACA)
+An R package to integrate [pypanda](https://github.com/davidvi/pypanda)--Python implementation of PANDA and LIONESS, R implementation of [CONDOR](https://github.com/jplatig/condor), R implementation of [ALPACA](https://github.com/meghapadi/ALPACA), and realated downsteaming analysis.
 
 **PANDA**(Passing Attributes between Networks for Data Assimilation) is a message-passing model to gene regulatory network reconstruction. It integrates multiple sources of biological data, including protein-protein interaction, gene expression, and sequence motif information, in order to reconstruct genome-wide, condition-specific regulatory networks.[[Glass et al. 2013]](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832)
 
