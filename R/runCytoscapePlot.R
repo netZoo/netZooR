@@ -36,10 +36,6 @@ runCytoscapePlot <- function(panda.net, top = 100, network.name="PANDA"){
   panda_nodes <- data.frame(id=c(panda_sorted$source,panda_sorted$target), group=rep(c("TF","Gene"), each=top),stringsAsFactors=FALSE)
   # creat cytoscape from DataFrames
   createNetworkFromDataFrames(nodes=panda_nodes,edges=panda_sorted, title=network.name, collection="DataFrame Example")
-
-  #change plotting style // to be updated
-  # now using "Marquee" temporarily.
-  
   setVisualStyle('Marquee')
   
 }
