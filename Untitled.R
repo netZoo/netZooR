@@ -2,15 +2,19 @@ setwd("~/Documents/GitHub/netZoo-draft/")
 
 
 
- library(devtools)
+library(devtools)
+library(roxygen2)
+
 build()
+document()
+
 setwd("..")
 install()
 
-library(roxygen2)
 
 
-document()
+
+
 
 library(netZoo)
 ?runCytoscapePlot

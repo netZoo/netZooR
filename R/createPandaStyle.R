@@ -13,7 +13,7 @@
 #' # Run PANDA algorithm and access PANDA output
 #' panda.net <- runPanda(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE)$panda
 #' 
-#' 
+#' @import RCy3
 #' @export
 createPandaStyle <- function(style.name="PandaStyle"){
   
@@ -42,4 +42,3 @@ createPandaStyle <- function(style.name="PandaStyle"){
 
 }
 
-createPandaStyle("PandaStyle")
