@@ -72,7 +72,7 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   
   if(rm_missing == FALSE){
     str4 <- paste('False')
-    message("Miss the value of options rm_missing, using the default value FALSE, i.e. Not removing missing values ") }
+    message("Not removing missing values") }
   else { str4 <- paste('True') }
   
   # source the pypanda from github raw website.
@@ -84,10 +84,10 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   py_run_string(str)
   py_run_string("a=pd.DataFrame(p.export_panda_results,columns=['tf','gene','motif','force'])",local = FALSE, convert = TRUE)
   
-  in-degree of panda network
+  # in-degree of panda network
   py_run_string(paste("indegree=p.return_panda_indegree()"))
   
-  out-degree of panda netwook
+  # out-degree of panda netwook
   py_run_string(paste("outdegree=p.return_panda_outdegree()"))
   
   # return a list with three items-- panda all output data frame, indegree (gene nodes) data frame, 
@@ -96,12 +96,6 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   
   # assign the output into three data frames
   panda_net <- py$a
-  
-  # Tian to do: ues R to calculate the in/outdegree network.
-  outdegree_net <- aggregate(panda_net[,4],list(panda_net[,1]),sum)
-  indegree_net <- aggregate(panda_net[,4],list(panda_net[,2]),sum)
-  
-  
   indegree_net <- py$indegree
   outdegree_net <- py$outdegree
   
@@ -121,3 +115,4 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   message ("...Finish PANDA run...")
   return(output)
 }
+
