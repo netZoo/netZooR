@@ -20,9 +20,9 @@
 #' @import STRINGdb
 #' @export
 
-sourcePPI <- function(TF, species.index, score_threshold=0){
+sourcePPI <- function(TF, species.index, score.threshold=0){
   # creat a new STRINGdb class.
-  string_db=STRINGdb$new(version="10",species=species.index, score_threshold=score_threshold)
+  string_db=STRINGdb$new(version="10",species=species.index, score_threshold=score.threshold)
   # change the colname to "TF"
   colnames(TF) <- c("TF")
   # map the TF to STRINGdb dataset
