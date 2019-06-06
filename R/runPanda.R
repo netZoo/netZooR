@@ -76,7 +76,7 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   else { str4 <- paste('True') }
   
   # source the pypanda from github raw website.
-  reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda-1/master/pypanda/panda.py",convert = TRUE)
+  reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda-1/netZoo/pypanda/panda.py",convert = TRUE)
   
   # invoke py code to create a pypanda object
   str <-  paste("p=Panda(", str1, ",", str2,",", str3, ",", str4, ")", sep ='')
@@ -84,13 +84,11 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   py_run_string(str)
   py_run_string("a=pd.DataFrame(p.export_panda_results,columns=['tf','gene','motif','force'])",local = FALSE, convert = TRUE)
   
-  #Tian to do: try to access the indegree & outdegree network calculated by pypanda itself.
+  in-degree of panda network
+  py_run_string(paste("indegree=p.return_panda_indegree()"))
   
-  # in-degree of panda network
-  #py_run_string(paste("indegree=p.return_panda_indegree()"))
-  
-  # out-degree of panda netwook
-  #py_run_string(paste("outdegree=p.return_panda_outdegree()"))
+  out-degree of panda netwook
+  py_run_string(paste("outdegree=p.return_panda_outdegree()"))
   
   # return a list with three items-- panda all output data frame, indegree (gene nodes) data frame, 
   # and outdegree (tf nodes) data frame.
@@ -104,8 +102,8 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   indegree_net <- aggregate(panda_net[,4],list(panda_net[,2]),sum)
   
   
-  #indegree_net <- py$indegree
-  #outdegree_net <- py$outdegree
+  indegree_net <- py$indegree
+  outdegree_net <- py$outdegree
   
   # check if there is duplicate name of nodes in first two columns
   # if true, prefix the content in regulator column with "reg_" and content in target column with"tar_"
