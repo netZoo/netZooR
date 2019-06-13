@@ -37,7 +37,7 @@ to gene regulatory network reconstruction. It integrates multiple sources of bio
 including protein-protein interaction, gene expression, and sequence motif information,
 in order to reconstruct genome-wide, condition-specific regulatory networks.
 \href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832}{[(Glass et al. 2013)])}
-This function is able to run \href{https://github.com/davidvi/pypanda}{pypanda} -- Python implementation of PANDA in R enviroment.
+This function is able to run \href{https://github.com/aless80/pypanda}{pypanda} -- Python implementation of PANDA in R enviroment.
 }
 \examples{
 # refer to four input datasets files in inst/extdat
