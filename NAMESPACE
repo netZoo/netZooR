@@ -2,9 +2,7 @@
 
 export(calculateThreshold)
 export(createPandaStyle)
-export(plotLioness)
 export(plotPANDAinCytoscape)
-export(plotPanda)
 export(runAlpaca)
 export(runCondor)
 export(runLioness)

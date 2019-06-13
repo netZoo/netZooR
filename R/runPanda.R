@@ -5,7 +5,7 @@
 #' including protein-protein interaction, gene expression, and sequence motif information,
 #' in order to reconstruct genome-wide, condition-specific regulatory networks.
 #' \href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832}{[(Glass et al. 2013)])}
-#' This function is able to run \href{https://github.com/davidvi/pypanda}{pypanda} -- Python implementation of PANDA in R enviroment.
+#' This function is able to run \href{https://github.com/aless80/pypanda}{pypanda} -- Python implementation of PANDA in R enviroment.
 #'
 #' @param e Character String indicatining the file path of expression values file, as each gene (row) by samples (columns) \emph{required}
 #' @param m Character String indicatining the file path of pair file of motif edges,
@@ -70,39 +70,39 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
     message("No PPI provided.") }
   else{ str3 <- paste("\'", ppi, "\'", sep = '') }
   
-  if(rm_missing == FALSE){
+  if(rm_missing == FALSE | missing(e)){
     str4 <- paste('False')
-    message("Miss the value of options rm_missing, using the default value FALSE, i.e. Not removing missing values ") }
+    message("Not removing missing values") }
   else { str4 <- paste('True') }
   
   # source the pypanda from github raw website.
-  reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda/master/pypanda/panda.py",convert = TRUE)
+  reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda-1/netZoo/pypanda/panda.py",convert = TRUE)
   
-  # invoke py code to create a pypanda object
-  str <-  paste("p=Panda(", str1, ",", str2,",", str3, ",", str4, ")", sep ='')
+  # invoke py code to create a Panda object
+  str <-  paste("panda_obj=Panda(", str1, ",", str2,",", str3, ",", str4, ")", sep ='')
   # call py
   py_run_string(str)
-  py_run_string(paste("a=p.export_panda_results"))
+  py_run_string("panda_network=pd.DataFrame(panda_obj.export_panda_results,columns=['tf','gene','motif','force'])",local = FALSE, convert = TRUE)
   
   # in-degree of panda network
-  py_run_string(paste("indegree=p.return_panda_indegree()"))
+  py_run_string(paste("indegree=panda_obj.return_panda_indegree()"))
   
   # out-degree of panda netwook
-  py_run_string(paste("outdegree=p.return_panda_outdegree()"))
+  py_run_string(paste("outdegree=panda_obj.return_panda_outdegree()"))
   
   # return a list with three items-- panda all output data frame, indegree (gene nodes) data frame, 
   # and outdegree (tf nodes) data frame.
   # use $panda, $indegree and $outdegree to access each item.
   
   # assign the output into three data frames
-  panda_net <- py$a
+  panda_net <- py$panda_network
   indegree_net <- py$indegree
   outdegree_net <- py$outdegree
   
   # check if there is duplicate name of nodes in first two columns
   # if true, prefix the content in regulator column with "reg_" and content in target column with"tar_"
   
-  if( sum(panda_net[, 1] %in% panda_net[, 2]) > 0){
+  if( length(intersect(panda_net[, 1], panda_net[, 2]))>0){
     panda_net[,1] <-paste('reg_', panda_net[,1], sep='')
     panda_net[,2] <-paste('tar_', panda_net[,2], sep='')
     colnames(indegree_net)<- paste("tar_",colnames(indegree_net), sep='')
@@ -115,3 +115,4 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   message ("...Finish PANDA run...")
   return(output)
 }
+

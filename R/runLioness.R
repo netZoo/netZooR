@@ -41,29 +41,44 @@ runLioness <- function(e = expression, m = motif, ppi = ppi, rm_missing = FALSE)
     message("No PPI provided.") }
   else{ str3 <- paste("\'", ppi, "\'", sep = '') }
   
-  if(rm_missing == FALSE){
+  if(rm_missing == FALSE | missing(e)){
     str4 <- paste('False')
-    message("Miss the value of options rm_missing, using the default value FALSE, i.e. Not removing missing values ") }
+    message("Not removing missing values ") }
   else { str4 <- paste('True') }
   
+    str5 <- "keep_expression_matrix=True"
+    
   # source the panda.py and lioness.py from GitHub raw website.
-  reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda/master/pypanda/panda.py",convert = TRUE)
-  reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda/master/pypanda/lioness.py",convert = TRUE)
+  reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda-1/netZoo/pypanda/panda.py",convert = TRUE)
+  reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda-1/netZoo/pypanda/lioness.py",convert = TRUE)
   # run py code to create an instance named "p" of Panda Class 
-  str <-  paste("p=Panda(", str1, ",", str2,",", str3, ",", str4, ")", sep ='')
-  py_run_string(str)
-  # assign a with the output PANDA network
-  py_run_string(paste("a=p.export_panda_results"))
-  panda_net <- py$a
+  str <-  paste("panda_obj=Panda(", str1, ",", str2,",", str3, ",", str4, ",", str5, ")", sep ='')
+  py_run_string(str,local = FALSE, convert = TRUE)
+  # assign "panda_network" with the output PANDA network
+  py_run_string("panda_network=pd.DataFrame(panda_obj.export_panda_results,columns=['tf','gene','motif','force'])",local = FALSE, convert = TRUE)
+  panda_net <- py$panda_network
   
-  # create an instance named "l" of Lioness Class.
-  py_run_string(paste("l = Lioness(p)"))
-  # call method "export_lioness_result" of instance "l" to assign varible "b" with the PANDA output in pd.DataFrame.
-  py_run_string(paste("b = l.export_lioness_results"))
-  # convert the python varible "b" to a data.frame in R enviroment.
-  lioness_net <- py$b
+  if( length(intersect(panda_net[, 1], panda_net[, 2]))>0){
+    panda_net[,1] <-paste('reg_', panda_net[,1], sep='')
+    panda_net[,2] <-paste('tar_', panda_net[,2], sep='')
+    message("Rename the context of first two columns with prefix 'reg_' and 'tar_'" )
+  }
+  
+  # create an instance named "lioness_obj" of Lioness Class.
+  py_run_string(paste("lioness_obj = Lioness(panda_obj)"))
+  # retrieve the "total_lioness_network" attribute of instance "lionesss_obj"
+  py_run_string(paste("lioness_network = lioness_obj.total_lioness_network"))
+  # convert the python varible "lionesss_network" to a data.frame in R enviroment.
+  lioness_net <- py$lioness_network
   # cbind the first two columns of PANDA output with LIONESS output.
   lioness_output <- cbind(panda_net[,c(1,2)], lioness_net)
   return(lioness_output)
 }
+
+
+
+
+
+
+  
 
