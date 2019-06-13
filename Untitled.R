@@ -1,4 +1,4 @@
-setwd("~/Documents/GitHub/netZoo-draft/")
+setwd("~/Documents/GitHub/netZoo-devel/")
 
 
 
@@ -11,7 +11,7 @@ document()
 setwd("..")
 install()
 
-
+getwd()
 
 
 
