@@ -1,4 +1,4 @@
-# netZoo
+# netZooR
 
 An R package to integrate [pypanda](https://github.com/davidvi/pypanda)--Python implementation of PANDA and LIONESS, R implementation of [CONDOR](https://github.com/jplatig/condor), R implementation of [ALPACA](https://github.com/meghapadi/ALPACA), and realated downsteaming analysis.
 
