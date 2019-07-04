@@ -18,14 +18,6 @@ convertgmt <- function(signature, cagenes, ...){
 	  sign <- sign[,3:ncol(sign)]
 	  sign <- as.matrix(sign)
 
-	# calculate number pathways a gene belongs to
-	  genefreq <- c(sign)
-	  genefreq <- table(genefreq)
-	  namesgenefreq <- names(genefreq)
-	  genefreq <- as.vector(genefreq)
-	  names(genefreq) <- namesgenefreq
-	  genefreq <- genefreq[-1]
-
 	# convert the signature dataset to a binary matrix with pathways and genes
 		allgenes <- unique(unlist(c(sign)))
 		allgenes <- allgenes[order(allgenes)]
