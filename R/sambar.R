@@ -14,10 +14,26 @@ sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("
 		edg <- convertgmt(signature=signatureset, cagenes=cangenes)
 
 	# correct number of mutations for gene length (returns gene mutation scores)
-		mutrate <- corgenelength(x=mutdata, cagenes=cangenes, exonsize=esize)
+		mutlength <- corgenelength(x=mutdata, cagenes=cangenes, exonsize=esize)
 
-	# transform mutrate ### OBS! probably want to start with patient ids in columns
-		mutrate <- t(mutrate)
+	# transform mutlength
+		mutlength <- t(mutlength)
+
+	# correct for patient-specific mutation rate
+		# calculate mutation rate
+			patmutrate <- apply(mutlength, 2, sum)
+			patmut0 <- which(patmutrate==0)
+		# remove patients with mutationrate==0
+			if(length(patmut0)>0){
+				mutlength <- mutlength[,-patmut0,drop=F]
+				patmutrate <- patmutrate[-patmut0]
+			}
+			
+		# correct for mutation rate		
+			mutrate <- mutlength
+		  for (p in 1:ncol(mutlength)){
+		    mutrate[,p] <- mutlength[,p]/patmutrate[p]
+		  }
 
   # correct gene scores for the number of pathways each gene belongs to
 	  mutrate <- mutrate[which(row.names(mutrate) %in% colnames(edg)),]
