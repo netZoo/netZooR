@@ -44,8 +44,12 @@
 #' 
 condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=FALSE,deltaQmin="default"){
     
-    
     elist <- condor.object$edges
+    
+    #throw exception if subgraphs are disjoint
+    if (max(table(elist[, 1])) == 1) {
+      stop("Unable to cluster. Subgraphs are disjoint.")
+    }
     
     #extract weights, if any
     if(ncol(elist) > 2){
