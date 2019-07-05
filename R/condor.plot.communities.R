@@ -35,7 +35,7 @@ condor.plot.communities = function(condor.object,color_list,point.size=0.01,
                                    xlab="SNP",ylab="Gene"){
   
     dt0 <- data.table(condor.object$edges)
-    setnames(dt0,c("red","blue"),c("SNP","gene"))
+    setnames(dt0,1:2,c("SNP","gene"))
     dt1 <- data.table(condor.object$red.memb)
     setnames(dt1,c("SNP","red.memb"))
     dt2 <- data.table(condor.object$blue.memb)
