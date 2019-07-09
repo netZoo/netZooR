@@ -47,7 +47,7 @@ runAlpaca <- function(panda_net1, panda_net2, file.stem, verbose=F){
   alp <- alpaca(net, file.stem, verbose)
   # if full differential modularity matrix has been written to a file, print out the location.
   if(exists(file.stem)) {
-    return(message(passte("the ALPACA output located in", file.stem, sep="")))
+    return(message(paste("the ALPACA output located in", file.stem, sep="")))
   }
   
   # if not return the list of ALPACA output.
