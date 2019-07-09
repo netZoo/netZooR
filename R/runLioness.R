@@ -16,9 +16,9 @@
 #'
 #' @examples
 #' # refer to the input datasets files of control in inst/extdat as example
-#' control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZoo", mustWork = TRUE)
-#' motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
-#' ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZoo", mustWork = TRUE)
+#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+#' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
+#' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' # Run PANDA algorithm
 #' control_lioness_result <- runLioness(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
@@ -52,7 +52,7 @@ runLioness <- function(e = expression, m = motif, ppi = ppi, rm_missing = FALSE)
   reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda-1/netZoo/pypanda/panda.py",convert = TRUE)
   reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda-1/netZoo/pypanda/lioness.py",convert = TRUE)
   # run py code to create an instance named "p" of Panda Class 
-  str <-  paste("panda_obj=Panda(", str1, ",", str2,",", str3, ",", str4, ",", str5, ")", sep ='')
+  str <-  paste("panda_obj=Panda(", str1, ",", str2,",", str3, ",", "remove_missing=", str4, ",", str5, ")", sep ='')
   py_run_string(str,local = FALSE, convert = TRUE)
   # assign "panda_network" with the output PANDA network
   py_run_string("panda_network=pd.DataFrame(panda_obj.export_panda_results,columns=['tf','gene','motif','force'])",local = FALSE, convert = TRUE)
