@@ -29,10 +29,10 @@
 #' 
 #' @examples 
 #' # refer to four input datasets files in inst/extdat
-#' treated_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZoo", mustWork = TRUE)
-#' control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZoo", mustWork = TRUE)
-#' motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
-#' ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZoo", mustWork = TRUE)
+#' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
+#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+#' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
+#' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' 
 #' # Run PANDA for treated and control network
@@ -47,7 +47,7 @@
 #' indegree_net <- treated_all_panda_result$indegree
 #' 
 #' # access PANDA regulatory outdegree network result
-#' outdegree_net <- treated_all_panda_resultt$outdegree
+#' outdegree_net <- treated_all_panda_result$outdegree
 #' 
 #' @import reticulate
 #' @export
@@ -79,7 +79,7 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda-1/netZoo/pypanda/panda.py",convert = TRUE)
   
   # invoke py code to create a Panda object
-  str <-  paste("panda_obj=Panda(", str1, ",", str2,",", str3, ",", str4, ")", sep ='')
+  str <-  paste("panda_obj=Panda(", str1, ",", str2,",", str3, ",", "remove_missing=", str4, ")", sep ='')
   # call py
   py_run_string(str)
   py_run_string("panda_network=pd.DataFrame(panda_obj.export_panda_results,columns=['tf','gene','motif','force'])",local = FALSE, convert = TRUE)
@@ -96,9 +96,9 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   
   # assign the output into three data frames
   panda_net <- py$panda_network
+  panda_net[,c(3,4)] <- apply(panda_net[,c(3,4)],1,function(x) x <- as.numeric(as.character(x)))
   indegree_net <- py$indegree
   outdegree_net <- py$outdegree
-  
   # check if there is duplicate name of nodes in first two columns
   # if true, prefix the content in regulator column with "reg_" and content in target column with"tar_"
   

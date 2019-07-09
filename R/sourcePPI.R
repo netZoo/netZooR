@@ -8,21 +8,21 @@
 #'
 #' @examples
 #' # the example motif file
-#' motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
+#' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
 #' motif <- read.table(motif_file_path, sep="\t")
 #' # create a TF data frame with one column
-#' TF <- motif[,1]
+#' TF <-data.frame(motif[,1])
 #' # create PPI data frame
-#' PPI <- sourcePPI(TF,species.index=83332, score_streshold=0)
-#' # write locally then use in \code{\link{runPanda}}.
+#' PPI <- sourcePPI(TF,species.index=83332, score_threshold=0)
+#' # write out locally then can be used in \code{\link{runPanda}}.
 #' 
 #' @return A PPI data frame
 #' @import STRINGdb
 #' @export
 
-sourcePPI <- function(TF, species.index, score.threshold=0){
+sourcePPI <- function(TF, species.index, ...){
   # creat a new STRINGdb class.
-  string_db=STRINGdb$new(version="10",species=species.index, score_threshold=score.threshold)
+  string_db=STRINGdb$new(version="10",species=species.index,...)
   # change the colname to "TF"
   colnames(TF) <- c("TF")
   # map the TF to STRINGdb dataset

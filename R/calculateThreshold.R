@@ -11,10 +11,10 @@
 #' 
 #' @examples 
 #' # refer to four input datasets files in inst/extdat
-#' treated_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZoo", mustWork = TRUE)
-#' control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZoo", mustWork = TRUE)
-#' motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
-#' ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZoo", mustWork = TRUE)
+#' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
+#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+#' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
+#' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' 
 #' # Run PANDA for treated and control network
@@ -26,13 +26,13 @@
 #' control_net <- control_all_panda_result$panda
 #' 
 #' # Calculate the default threshold of edge-weight in a PANDA network.
-#' calculateCutoff (treated_net )
+#' calculateThreshold(treated_net)
 #' 
 #' @export
 
 
 calculateThreshold <- function(df){
-  
+
   # transforming edge weights 
   newdf <- cbind(df[,c(1,2,3)],log(exp(df[,4])+1))
   # rename the colnames

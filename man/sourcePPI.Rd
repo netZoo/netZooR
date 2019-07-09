@@ -4,7 +4,7 @@
 \alias{sourcePPI}
 \title{Source the Protein-Protein interaction in STRING database}
 \usage{
-sourcePPI(TF, species.index, score.threshold = 0)
+sourcePPI(TF, species.index, ...)
 }
 \arguments{
 \item{TF}{Data frame with one column indicating the TF of interest}
@@ -21,12 +21,12 @@ This function is able to use a list of Transcription Factors(TF) of interest to 
 }
 \examples{
 # the example motif file
-motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
+motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
 motif <- read.table(motif_file_path, sep="\\t")
 # create a TF data frame with one column
-TF <- motif[,1]
+TF <-data.frame(motif[,1])
 # create PPI data frame
-PPI <- sourcePPI(TF,species.index=83332, score_streshold=0)
-# write locally then use in \\code{\\link{runPanda}}.
+PPI <- sourcePPI(TF,species.index=83332, score_threshold=0)
+# write out locally then can be used in \\code{\\link{runPanda}}.
 
 }
