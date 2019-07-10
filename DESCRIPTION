@@ -18,7 +18,7 @@ Imports: reticulate,
 	 GOstats,
 	 Matrix,
 Remotes: jplatig/condor,
-	 meghapadi/ALPACA
+	 twangxxx/ALPACA@devel
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
