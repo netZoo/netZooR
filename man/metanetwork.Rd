@@ -17,6 +17,3 @@ The differential modularity matrix, with rows representing "from" nodes and colu
 \description{
 Computes the "effective" adjacency matrix of a metanetwork whose nodes represent communities in the larger input matrix.
 }
-\examples{
-metanetwork()
-}

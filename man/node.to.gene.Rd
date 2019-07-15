@@ -15,6 +15,3 @@ Untagged node name
 \description{
 In gene regulatory networks, transcription factors can act as both "from" nodes (regulators) and "to" nodes (target genes), so the network analysis functions automatically tag the two columns to differentiate them. This function removes those tags from the gene identifiers.
 }
-\examples{
-node.to.gene()
-}

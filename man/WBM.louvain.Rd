@@ -15,6 +15,3 @@ List where first element is the community membership vector and second element i
 \description{
 This function implements a generalized form of the Louvain method for weighted bipartite networks.
 }
-\examples{
-WBM.louvain()
-}

@@ -1,17 +1,10 @@
-library(Matrix)
-library(igraph)
-library(GOstats)
-library("org.Hs.eg.db")
-library(condor)
-library(GO.db)
-
 #' Main ALPACA function
 #'
 #' This function compares two networks and finds the sets of nodes that best characterize the change in modular structure
 #' @param net.table A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the control or healthy network, and the fourth column contains the edge weights for the disease network or network of interest.
 #' @param file.stem The folder location and title under which all results will be stored.
 #' @param verbose Indicates whether the full differential modularity matrix should also be written to a file. Defaults to FALSE.
-#' @keywords modularity 
+#'  modularity 
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its module's total differential modularity
 #' @import igraph
 #' @import condor
@@ -19,8 +12,8 @@ library(GO.db)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' alpaca()
+#' 
+
 alpaca <- function(net.table,file.stem,verbose=F)
 {
 	net.table[,1] <- paste(net.table[,1],"A",sep="_")
@@ -99,7 +92,7 @@ alpaca <- function(net.table,file.stem,verbose=F)
 #' This function outputs the top target genes in each module, ranked by their contribution to the differential modularity of the particular module in which they belong.
 #' @param module.result A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the control or healthy network, and the fourth column contains the edge weights for the disease network or network of interest.
 #' @param set.lengths The desired lengths of the top gene lists.
-#' @keywords 
+#'  
 #' @return List with two elements. First element is a list of the top target genes in each cluster. Second element is a vector with the names of the gene sets. The names are in the format "number_length", where number is the module number label and length is the length of the gene set.
 #' @import igraph
 #' @import condor
@@ -107,8 +100,8 @@ alpaca <- function(net.table,file.stem,verbose=F)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' ExtractTopGenes()
+#' 
+
 ExtractTopGenes <- function(module.result,set.lengths)
 {
 	mod.memb <- module.result[[1]]
@@ -138,7 +131,7 @@ ExtractTopGenes <- function(module.result,set.lengths)
 #' Get all the genes in the top-scoring lists which are annotated with the enriched GO terms. Only GO terms with at least 3 genes in the overlap are included.
 #' @param go.result The result of the GO term analysis (list.to.go)
 #' @param dm.top The result of extracting the top genes of the differential modules (dm.top)
-#' @keywords 
+#'  
 #' @return A vector with strings representing gene lists, each element of the vector has the genes in that GO term and community pasted together with spaces in between.
 #' @import igraph
 #' @import condor
@@ -147,8 +140,8 @@ ExtractTopGenes <- function(module.result,set.lengths)
 #' @import org.Hs.eg.db
 #' @import GO.db
 #' @export
-#' @examples
-#' GOtab.to.genes()
+#' 
+
 GOtab.to.genes <- function(go.result,dm.top)
 {
 	names(dm.top[[1]]) <- dm.top[[2]]
@@ -173,7 +166,7 @@ GOtab.to.genes <- function(go.result,dm.top)
 #' Takes a list of gene sets named using gene identifiers and converts them to a list of symbols given a user-defined annotation table.
 #' @param mod.top A list of gene sets (gene identifiers)
 #' @param annot.vec A vector of gene symbols with gene identifiers as the names of the vector, that defines the translation between annotations.
-#' @keywords 
+#'  
 #' @return A list of sets of gene symbols.
 #' @import igraph
 #' @import condor
@@ -181,8 +174,8 @@ GOtab.to.genes <- function(go.result,dm.top)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' TopEnsembl.to.TopSym()
+#' 
+
 TopEnsembl.to.TopSym <- function(mod.top,annot.vec)
 {
 	res.sym <- NULL
@@ -199,7 +192,7 @@ TopEnsembl.to.TopSym <- function(mod.top,annot.vec)
 #' Takes two networks, subtracts edges individually, and then clusters the subtracted network using CONDOR. 
 #' @param net.table A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the control or healthy network, and the fourth column contains the edge weights for the disease network or network of interest.
 #' @param file.stem The folder location and title under which all results will be stored.
-#' @keywords 
+#'  
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its community's modularity in the final edge-subtracted network
 #' @import igraph
 #' @import condor
@@ -207,8 +200,8 @@ TopEnsembl.to.TopSym <- function(mod.top,annot.vec)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' DeltaZAnalysis()
+#' 
+
 DeltaZAnalysis <- function(net.table,file.stem)
 {
 	net.table[,1] <- paste(net.table[,1],"A",sep="_")
@@ -244,7 +237,7 @@ DeltaZAnalysis <- function(net.table,file.stem)
 #' Takes two networks, subtracts edges individually, and then clusters the subtracted network using Louvain method. 
 #' @param net.table A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the control or healthy network, and the fourth column contains the edge weights for the disease network or network of interest.
 #' @param file.stem The folder location and title under which all results will be stored.
-#' @keywords 
+#'  
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its community's modularity in the final edge-subtracted network
 #' @import igraph
 #' @import condor
@@ -252,8 +245,8 @@ DeltaZAnalysis <- function(net.table,file.stem)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' DeltaZAnalysis.Louvain()
+#' 
+
 DeltaZAnalysis.Louvain <- function(net.table,file.stem)
 {
 	net.table[,1] <- paste(net.table[,1],"A",sep="_")
@@ -281,7 +274,7 @@ DeltaZAnalysis.Louvain <- function(net.table,file.stem)
 #'
 #' Takes two networks, finds community structure of each one individually using CONDOR, and then ranks the nodes that show the biggest difference in their community membership. 
 #' @param net.table A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the control or healthy network, and the fourth column contains the edge weights for the disease network or network of interest.
-#' @keywords 
+#'  
 #' @return Vector of nodes ordered by how much they change their community membership between the two networks.
 #' @import igraph
 #' @import condor
@@ -289,8 +282,8 @@ DeltaZAnalysis.Louvain <- function(net.table,file.stem)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' RotationAnalysis()
+#' 
+
 RotationAnalysis <- function(net.table)
 {
 	
@@ -319,7 +312,7 @@ RotationAnalysis <- function(net.table)
 #'
 #' Takes two networks, finds community structure of each one individually using a generalization of the Louvain method, and then ranks the nodes that show the biggest difference in their community membership. 
 #' @param net.table A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the control or healthy network, and the fourth column contains the edge weights for the disease network or network of interest.
-#' @keywords 
+#'  
 #' @return Vector of nodes ordered by how much they change their community membership between the two networks.
 #' @import igraph
 #' @import condor
@@ -327,8 +320,8 @@ RotationAnalysis <- function(net.table)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' RotationAnalysis.Louvain()
+#' 
+
 RotationAnalysis.Louvain <- function(net.table)
 {
 	
@@ -351,7 +344,7 @@ RotationAnalysis.Louvain <- function(net.table)
 #'
 #' This function implements a generalized form of the Louvain method for weighted bipartite networks. 
 #' @param net.frame A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the network of interest.
-#' @keywords 
+#'  
 #' @return List where first element is the community membership vector and second element is the contribution score of each node to its community's portion of the bipartite modularity.
 #' @import igraph
 #' @import condor
@@ -359,8 +352,8 @@ RotationAnalysis.Louvain <- function(net.table)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' WBM.louvain()
+#' 
+
 WBM.louvain <- function(net.frame)
 {
 	wbm.mat <- computeWBMmat(net.frame)
@@ -407,7 +400,7 @@ WBM.louvain <- function(net.frame)
 #'
 #' This function computes the modularity matrix for a weighted bipartite network.
 #' @param edge.mat A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the network of interest.
-#' @keywords 
+#'  
 #' @return Modularity matrix with rows representing TFs ("from" nodes) and columns repesenting targets ("to" nodes)
 #' @import igraph
 #' @import condor
@@ -415,8 +408,8 @@ WBM.louvain <- function(net.frame)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' computeWBMmat()
+#' 
+
 computeWBMmat <- function(edge.mat)
 {
 	red.nodes <- unique(edge.mat[,1])
@@ -438,7 +431,7 @@ computeWBMmat <- function(edge.mat)
 #'
 #' In gene regulatory networks, transcription factors can act as both "from" nodes (regulators) and "to" nodes (target genes), so the network analysis functions automatically tag the two columns to differentiate them. This function removes those tags from the gene identifiers. 
 #' @param x Tagged node identifier
-#' @keywords 
+#'  
 #' @return Untagged node name
 #' @import igraph
 #' @import condor
@@ -446,8 +439,8 @@ computeWBMmat <- function(edge.mat)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' node.to.gene()
+#' 
+
 node.to.gene <- function(x){strsplit(x,split="_")[[1]][1]}
 
 #' GO term enrichment for a list of gene sets
@@ -456,7 +449,7 @@ node.to.gene <- function(x){strsplit(x,split="_")[[1]][1]}
 #' @param gene.list A list consisting of vectors of genes; genes must be identified by their official gene symbols.
 #' @param univ.vec A vector of  all gene symbols that were present in the original network. This set is used as the universe for running the hypergeometric test in GOstats.
 #' @param comm.nums A vector of names for the gene sets in the input parameter "gene.list". These are used to create the table of final results.
-#' @keywords 
+#'  
 #' @return A table whose rows represent enriched GO terms (p_adj<0.05) and columns describe useful properties, like the name of the GO term, the label of the gene set which is enriched in that GO term, the adjusted p-value and Odds Ratio.
 #' @import igraph
 #' @import condor
@@ -464,8 +457,8 @@ node.to.gene <- function(x){strsplit(x,split="_")[[1]][1]}
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' list.to.go()
+#' 
+
 list.to.go <- function(gene.list,univ.vec,comm.nums){
 
 	xx <- AnnotationDbi::as.list(org.Hs.egSYMBOL)
@@ -504,7 +497,7 @@ list.to.go <- function(gene.list,univ.vec,comm.nums){
 #' This function computes the enrichment of selected nodes in a ranked list, using Wilcoxon, Kolmogorov-Smirnov, and Fisher exact tests.  
 #' @param node.ordered An ordered list of nodes (high-scoring to low-scoring).
 #' @param true.pos The selected set of nodes being tested for enrichment among the ranked list.
-#' @keywords 
+#'  
 #' @return A vector of 4 values. 1) Wilcoxon p-value, 2) KS p-value, 3) Fisher p-value, 4) Fisher odds ratio.
 #' @import igraph
 #' @import condor
@@ -512,8 +505,8 @@ list.to.go <- function(gene.list,univ.vec,comm.nums){
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' TestNodeRank()
+#' 
+
 TestNodeRank <- function(node.ordered,true.pos)
 {
 	node.ind <- rev(1:length(node.ordered))
@@ -541,7 +534,7 @@ TestNodeRank <- function(node.ordered,true.pos)
 #' This function uses the pseudo-inverse to find the optimal linear transformation mapping the community structures of two networks, then ranks nodes in the network by how much they deviate from the linear mapping.
 #' @param net1.memb The community membership for Network 1.
 #' @param net2.memb The community membership for Network 2.
-#' @keywords 
+#'  
 #' @return A ranked list of nodes.
 #' @import igraph
 #' @import condor
@@ -549,8 +542,8 @@ TestNodeRank <- function(node.ordered,true.pos)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' CommunityStructureRotation()
+#' 
+
 CommunityStructureRotation <- function(net1.memb,net2.memb){
 	
 	net1.mat <- array(0,dim=c(length(net1.memb),max(net1.memb)))
@@ -581,7 +574,7 @@ CommunityStructureRotation <- function(net1.memb,net2.memb){
 #' This function computes the differential modularity matrix for weighted bipartite networks. The community structure of the healthy network is rescaled by the ratio of m (the total edge weight) of each network.
 #' @param edge.mat A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the control or healthy network, and the fourth column contains the edge weights for the disease network or network of interest.
 #' @param ctrl.memb The community membership for the control (healthy) network.
-#' @keywords 
+#'  
 #' @return The differential modularity matrix, with rows representing "from" nodes and columns representing "to" nodes.
 #' @import igraph
 #' @import condor
@@ -589,8 +582,8 @@ CommunityStructureRotation <- function(net1.memb,net2.memb){
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' computeDWBMmat.mscale()
+#' 
+
 computeDWBMmat.mscale <- function(edge.mat,ctrl.memb){
 	
 	graph.nodes <- names(ctrl.memb)
@@ -681,7 +674,7 @@ computeDWBMmat.mscale <- function(edge.mat,ctrl.memb){
 #' Computes the "effective" adjacency matrix of a metanetwork whose nodes represent communities in the larger input matrix.
 #' @param J The modularity matrix
 #' @param S The community membership vector from the previous round of agglomeration.
-#' @keywords 
+#'  
 #' @return The differential modularity matrix, with rows representing "from" nodes and columns representing "to" nodes.
 #' @import igraph
 #' @import condor
@@ -689,8 +682,8 @@ computeDWBMmat.mscale <- function(edge.mat,ctrl.memb){
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' metanetwork()
+#' 
+
 metanetwork <- function(J,S)
 {
 	PP <- sparseMatrix(i=1:length(S),j=S,x=1)
@@ -702,7 +695,7 @@ metanetwork <- function(J,S)
 #' This is a helper function genlouvain. It re-numbers the communities so that they run from 1 to N increasing through the vector.
 #' @param J The modularity matrix
 #' @param S The community membership vector derived from the previous round of agglomeration.
-#' @keywords 
+#'  
 #' @return The renumbered membership vector.
 #' @import igraph
 #' @import condor
@@ -710,8 +703,8 @@ metanetwork <- function(J,S)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' tidyconfig()
+#' 
+
 tidyconfig <- function(S)
 {
 	T <- rep(0,length(S))
@@ -726,7 +719,7 @@ tidyconfig <- function(S)
 #'
 #' This function implements the Louvain optimization scheme on a general symmetric matrix. First, nodes are all placed in separate communities, and merged iteratively according to which merge moves result in the greatest increase in the modularity sum. Note that nodes are iterated in the order of the input matrix (not randomly) so that all results are reproducible. Second, the final community membership is used to form a metanetwork whose nodes represent communities from the prevous step, and which are connected by effective edge weights. The merging process is then repeated on the metanetwork. These two steps are repeated until the modularity sum does not increase more than a very small tolerance factor. New
 #' @param B Symmetric modularity matrix
-#' @keywords 
+#'  
 #' @return The community membership vector
 #' @import igraph
 #' @import condor
@@ -734,8 +727,8 @@ tidyconfig <- function(S)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' genlouvain()
+#' 
+
 genlouvain <- function(B)
 {
 	eps <- 2e-16
@@ -830,7 +823,7 @@ genlouvain <- function(B)
 #' @param num.module The number of modules that will be added to simulate the disease network.
 #' @param size.module A two-column matrix indicating the number of "from" and "to" nodes in each new module (row) that will be added to simulate the disease network.
 #' @param dens.module A vector of length num.module, indicating the edge density of each added module.
-#' @keywords 
+#'  
 #' @return A list with two elements. The first element is a four-column edge table of the same form that is input into the differential modularity function. The second element is a list of all the new nodes in the modules that were added to create the disease network.
 #' @import igraph
 #' @import condor
@@ -838,8 +831,8 @@ genlouvain <- function(B)
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
-#' @examples
-#' simulateNetwork()
+#' 
+
 simulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,dens.module)
 {
 	if (length(size.module)==2) size.module <- rbind(size.module,c(0,0))
@@ -906,7 +899,7 @@ simulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,dens.modu
 #'
 #' This function extracts all the gene symbols associated with a GO term and its descendants. (v1)
 #' @param go.term The GO Biological Process ID (string).
-#' @keywords 
+#'  
 #' @return A vector of all gene symbols associated with the GO term.
 #' @import igraph
 #' @import condor
@@ -915,8 +908,8 @@ simulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,dens.modu
 #' @import org.Hs.eg.db
 #' @import GO.db
 #' @export
-#' @examples
-#' go.to.genes()
+#' 
+
 go.to.genes <- function(go.term)
 {
 	GOoffspring <- AnnotationDbi::as.list(GOBPOFFSPRING)

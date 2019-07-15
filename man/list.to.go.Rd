@@ -17,8 +17,5 @@ list.to.go(gene.list, univ.vec, comm.nums)
 A table whose rows represent enriched GO terms (p_adj<0.05) and columns describe useful properties, like the name of the GO term, the label of the gene set which is enriched in that GO term, the adjusted p-value and Odds Ratio.
 }
 \description{
-changed 3:57pm GO term enrichment is run using the GOstats package, and corrected for multiple testing using the Benjamini-Hochberg method.
-}
-\examples{
-list.to.go()
+GO term enrichment is run using the GOstats package, and corrected for multiple testing using the Benjamini-Hochberg method.
 }

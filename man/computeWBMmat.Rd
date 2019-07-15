@@ -15,6 +15,3 @@ Modularity matrix with rows representing TFs ("from" nodes) and columns repesent
 \description{
 This function computes the modularity matrix for a weighted bipartite network.
 }
-\examples{
-computeWBMmat()
-}

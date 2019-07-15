@@ -11,7 +11,8 @@ alpaca(net.table, file.stem, verbose = F)
 
 \item{file.stem}{The folder location and title under which all results will be stored.}
 
-\item{verbose}{Indicates whether the full differential modularity matrix should also be written to a file. Defaults to FALSE.}
+\item{verbose}{Indicates whether the full differential modularity matrix should also be written to a file. Defaults to FALSE.
+modularity}
 }
 \value{
 List where first element is the membership vector and second element is the contribution score of each node to its module's total differential modularity
@@ -19,7 +20,3 @@ List where first element is the membership vector and second element is the cont
 \description{
 This function compares two networks and finds the sets of nodes that best characterize the change in modular structure
 }
-\examples{
-alpaca()
-}
-\keyword{modularity}

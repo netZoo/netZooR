@@ -15,6 +15,3 @@ Vector of nodes ordered by how much they change their community membership betwe
 \description{
 Takes two networks, finds community structure of each one individually using CONDOR, and then ranks the nodes that show the biggest difference in their community membership.
 }
-\examples{
-RotationAnalysis()
-}

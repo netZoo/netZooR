@@ -17,6 +17,3 @@ List with two elements. First element is a list of the top target genes in each 
 \description{
 This function outputs the top target genes in each module, ranked by their contribution to the differential modularity of the particular module in which they belong.
 }
-\examples{
-ExtractTopGenes()
-}

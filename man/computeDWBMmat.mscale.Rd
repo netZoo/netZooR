@@ -17,6 +17,3 @@ The differential modularity matrix, with rows representing "from" nodes and colu
 \description{
 This function computes the differential modularity matrix for weighted bipartite networks. The community structure of the healthy network is rescaled by the ratio of m (the total edge weight) of each network.
 }
-\examples{
-computeDWBMmat.mscale()
-}
