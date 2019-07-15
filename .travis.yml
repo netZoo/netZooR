@@ -2,7 +2,7 @@
 
 language: R
 r: bioc-release
-sudo: false
+sudo: true
 cache: packages
 os:
 - osx
@@ -10,6 +10,6 @@ bioc_packages:
 - GO.db
 - org.Hs.eg.db
 
-install:
+before_install:
 - pip install -r requirements.txt
 
