@@ -17,9 +17,8 @@ Imports: reticulate,
 	 org.Hs.eg.db,
 	 GO.db,
 Remotes: jplatig/condor,
-	 bioc::3.9/GO.db,
+	 Bioconductor/GO.db,
 	 bioc::3.9/GOstats,
-	 bioc::3.9/org.Hs.eg.db,
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
