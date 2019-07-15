@@ -11,5 +11,7 @@ bioc_packages:
 - org.Hs.eg.db
 
 before_install:
+- chmod +x installCytoscape.sh
+- ./installCytoscape.sh
 - pip install -r requirements.txt
 
