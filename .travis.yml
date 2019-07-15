@@ -6,3 +6,5 @@ sudo: false
 cache: packages
 os:
 - osx
+bioc_packages:
+- GO.db
