@@ -9,3 +9,7 @@ os:
 bioc_packages:
 - GO.db
 - org.Hs.eg.db
+
+install:
+- pip install -r requirements.txt
+
