@@ -12,11 +12,9 @@ Depends: R (>= 3.3.2),
 	 STRINGdb,
 	 RCy3,
 Imports: reticulate,
-	 org.Hs.eg.db,
 	 GOstats,
 	 Matrix,
 Remotes: jplatig/condor,
-	 bioc::3.9/org.Hs.eg.db,
 	 bioc::3.9/GOstats,
 License: MIT + file LICENSE
 Encoding: UTF-8
