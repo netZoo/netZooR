@@ -22,9 +22,9 @@
 #' 
 #' # run this function to create a network in Cytoscape.
 #' plotPANDAinCytoscape(panda.net, network.name="PANDA")
-#' 
-#' @return NULL
 #' }
+#' @return NULL
+#' 
 #' @import RCy3
 #' @export 
 #' 
