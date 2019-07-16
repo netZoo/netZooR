@@ -1,32 +1,32 @@
-#' Plot PANDA network in Cytoscape
+#'Plot PANDA network in Cytoscape
 #'
 #'This function is able to modify PANDA network and plot in Cytoscape.
 #'
-#' @param panda.net Character string indicating the input PANDA network in data frame structure type.
-#' @param network.name Character string indicating the name of Cytoscape network. 
-#' @examples
-#' \dontrun{
-#' # refer to the input datasets files of control TB dataset in inst/extdat as example
-#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
-#' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
-#' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
+#'@param panda.net Character string indicating the input PANDA network in data frame structure type.
+#'@param network.name Character string indicating the name of Cytoscape network. 
+#'@examples
+#'\dontrun{
+#'# refer to the input datasets files of control TB dataset in inst/extdat as example
+#'control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+#'motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
+#'ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
-#' # Run PANDA algorithm
-#' control_all_panda_result <- runPanda(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+#'# Run PANDA algorithm
+#'control_all_panda_result <- runPanda(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
 #' 
-#' # access PANDA regulatory network
-#' control_net <- control_all_panda_result$panda
+#'# access PANDA regulatory network
+#'control_net <- control_all_panda_result$panda
 #' 
-#' # select top 1000 edges in PANDA network by edge weight.
-#' panda.net <- head(control_net[order(control_net$force,decreasing = TRUE),], 1000)
+#'# select top 1000 edges in PANDA network by edge weight.
+#'panda.net <- head(control_net[order(control_net$force,decreasing = TRUE),], 1000)
 #' 
-#' # run this function to create a network in Cytoscape.
-#' plotPANDAinCytoscape(panda.net, network.name="PANDA")
+#'# run this function to create a network in Cytoscape.
+#'plotPANDAinCytoscape(panda.net, network.name="PANDA")
 #' 
-#' @return NULL
-#' @import RCy3
-#' @export
-#' }
+#'@return NULL
+#'@import RCy3
+#'@export
+#'}
 plotPANDAinCytoscape <- function(panda.net, network.name="PANDA"){
   # launch Cytoscape 3.6.1 or greater
   cytoscapePing ()
