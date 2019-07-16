@@ -15,6 +15,7 @@ plotPANDAinCytoscape(panda.net, network.name = "PANDA")
 This function is able to modify PANDA network and plot in Cytoscape.
 }
 \examples{
+
 # refer to the input datasets files of control TB dataset in inst/extdat as example
 control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
 motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
