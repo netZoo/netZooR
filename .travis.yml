@@ -12,9 +12,7 @@ bioc_packages:
 - org.Hs.eg.db
 
 before_install:
-- chmod +x installCytoscape.sh
-- ./installCytoscape.sh
-- pip install -r requirements.txt
+- pip install --user -r requirements.txt
 
 install:
 - Rscript travis_script.r
