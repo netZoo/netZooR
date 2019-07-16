@@ -6,6 +6,7 @@ sudo: true
 cache: packages
 os:
 - osx
+- linux
 bioc_packages:
 - GO.db
 - org.Hs.eg.db
