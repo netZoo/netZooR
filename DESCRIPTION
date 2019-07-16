@@ -15,9 +15,8 @@ Depends: R (>= 3.3.2),
 Imports: reticulate,
 	 GOstats,
 	 Matrix,
-	 org.Hs.eg.db,
-	 GO.db,
 Remotes: github::jplatig/condor,
+	 Bioconductor/GO.db,
 	 bioc::3.9/GOstats,
 License: MIT + file LICENSE
 Encoding: UTF-8
