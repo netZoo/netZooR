@@ -15,7 +15,7 @@ Depends: R (>= 3.3.2),
 Imports: reticulate,
 	 GOstats,
 	 Matrix,
-Remotes: github::jplatig/condor,
+Remotes: jplatig/condor,
 	 Bioconductor/GO.db,
 	 bioc::3.9/GOstats,
 License: MIT + file LICENSE
