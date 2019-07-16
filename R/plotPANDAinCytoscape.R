@@ -5,6 +5,7 @@
 #' @param panda.net Character string indicating the input PANDA network in data frame structure type.
 #' @param network.name Character string indicating the name of Cytoscape network. 
 #' @examples
+#' \dontrun{
 #' # refer to the input datasets files of control TB dataset in inst/extdat as example
 #' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
 #' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
@@ -24,7 +25,8 @@
 #' 
 #' @return NULL
 #' @import RCy3
-#' @export 
+#' @export
+#' }
 plotPANDAinCytoscape <- function(panda.net, network.name="PANDA"){
   # launch Cytoscape 3.6.1 or greater
   cytoscapePing ()
