@@ -14,7 +14,7 @@ before_install:
 - pip install -r requirements.txt
 
 install:
-- R travis_script.r
+- Rscript travis_script.r
 
 script:
 - travis_wait R CMD build .
