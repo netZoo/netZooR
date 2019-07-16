@@ -13,3 +13,9 @@ bioc_packages:
 before_install:
 - pip install -r requirements.txt
 
+install:
+- R -e 'devtools::install_deps(dep = T)'
+
+script:
+- travis_wait R CMD build .
+- travis_wait R CMD check *tar.gz --no-manual
