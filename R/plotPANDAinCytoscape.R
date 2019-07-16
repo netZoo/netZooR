@@ -24,9 +24,10 @@
 #' plotPANDAinCytoscape(panda.net, network.name="PANDA")
 #' 
 #' @return NULL
+#' }
 #' @import RCy3
 #' @export 
-#' }
+#' 
 plotPANDAinCytoscape <- function(panda.net, network.name="PANDA"){
   # launch Cytoscape 3.6.1 or greater
   cytoscapePing ()
