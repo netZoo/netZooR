@@ -1,0 +1,21 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+r: bioc-release
+sudo: true
+cache: packages
+os:
+- osx
+bioc_packages:
+- GO.db
+- org.Hs.eg.db
+
+before_install:
+- pip install -r requirements.txt
+
+install:
+- Rscript travis_script.r
+
+script:
+- travis_wait R CMD build .
+- travis_wait R CMD check *tar.gz --no-manual

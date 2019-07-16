@@ -15,6 +15,7 @@
 
 #'
 #' @examples
+#' \dontrun{
 #' # refer to the input datasets files of control in inst/extdat as example
 #' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
 #' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
@@ -22,7 +23,7 @@
 #' 
 #' # Run PANDA algorithm
 #' control_lioness_result <- runLioness(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
-#' 
+#' }
 #' @import reticulate
 #' @export
 runLioness <- function(e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
