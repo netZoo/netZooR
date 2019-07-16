@@ -6,9 +6,6 @@ sudo: true
 cache: packages
 os:
 - osx
-bioc_packages:
-- GO.db
-- org.Hs.eg.db
 
 before_install:
 - pip install -r requirements.txt
