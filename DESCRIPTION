@@ -16,7 +16,6 @@ Imports: reticulate,
 	 GOstats,
 	 Matrix,
 Remotes: jplatig/condor,
-	 Bioconductor/GO.db,
 	 bioc::3.9/GOstats,
 License: MIT + file LICENSE
 Encoding: UTF-8
