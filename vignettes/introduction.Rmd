@@ -1,0 +1,32 @@
+---
+title: Detecting differential modules using ALPACA
+output:
+  knitr:::html_vignette:
+    toc: true
+    fig_caption: yes
+  pdf_document:
+    highlight: null
+    number_sections: yes
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+\section{A simple example with two node groups}
+We will show how ALPACA can find changes in modular structure between two simulated networks. The networks both have 20 regulator nodes and 80 target nodes. The baseline network consists of two groups that are strongly connected to each other, whereas the perturbed network has weaker connections between the two groups. The two groups consist of nodes {A1-A10,B1-B40} and {A11-A20,B41-B80}. Contrasting the two networks using ALPACA identifies these two groups as being the modules that best characterize the perturbation.
+
+```{r,echo=TRUE,message=FALSE,warning=FALSE}
+library(ALPACA)
+
+simp.mat <- read.table('Example_2comm.txt',header=T)
+
+simp.alp <- alpaca(simp.mat,NULL,verbose=F)
+simp.alp2 <- simp.alp[[1]]
+simp.memb <- as.vector(simp.alp2)
+names(simp.memb) <- names(simp.alp2)
+
+simp.memb
+
+
+```

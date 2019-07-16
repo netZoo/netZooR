@@ -13,9 +13,6 @@
 #'        or a List where first element is the membership vector and second element is the contribution score of each node to its module's total differential modularity
 #' @import condor
 #' @import Matrix
-#' @import GOstats
-#' @import org.Hs.eg.db
-#' @import GO.db
 #'
 #' @examples
 #' # refer to four input datasets files in inst/extdat
