@@ -37,6 +37,6 @@ treated_panda_net <- runPanda(e = treated_expression_file_path, m = motif_file_p
 control_panda_net <- runPanda(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )$panda
  
 # Run ALPACA
-alpaca<- runAlpaca(treated_panda_net, control_panda_net, "~/Desktop/TB", verbose=TRUE)
+alpaca<- runAlpaca(treated_panda_net, control_panda_net, "~/TB", verbose=TRUE)
 
 }
