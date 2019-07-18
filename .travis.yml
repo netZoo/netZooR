@@ -6,12 +6,13 @@ sudo: true
 cache: packages
 os:
 - osx
+- linux
 bioc_packages:
 - GO.db
 - org.Hs.eg.db
 
 before_install:
-- pip install -r requirements.txt
+- pip install --user -r requirements.txt
 
 install:
 - Rscript travis_script.r
@@ -19,3 +20,9 @@ install:
 script:
 - travis_wait R CMD build .
 - travis_wait R CMD check *tar.gz --no-manual
+
+r_packages:
+  - covr
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
