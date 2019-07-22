@@ -1,5 +1,3 @@
-library(GO.db)
-library(org.Hs.eg.db)
 #' Main ALPACA function
 #'
 #' This function compares two networks and finds the sets of nodes that best characterize the change in modular structure
@@ -12,6 +10,7 @@ library(org.Hs.eg.db)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -99,6 +98,7 @@ alpaca <- function(net.table,file.stem,verbose=F)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -137,6 +137,8 @@ ExtractTopGenes <- function(module.result,set.lengths)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
+#' @import GO.db
 #' @export
 #' 
 
@@ -170,6 +172,7 @@ GOtab.to.genes <- function(go.result,dm.top)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -195,6 +198,7 @@ TopEnsembl.to.TopSym <- function(mod.top,annot.vec)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -239,6 +243,7 @@ DeltaZAnalysis <- function(net.table,file.stem)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -275,6 +280,7 @@ DeltaZAnalysis.Louvain <- function(net.table,file.stem)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -312,6 +318,7 @@ RotationAnalysis <- function(net.table)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -343,6 +350,7 @@ RotationAnalysis.Louvain <- function(net.table)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -398,6 +406,7 @@ WBM.louvain <- function(net.frame)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -428,6 +437,7 @@ computeWBMmat <- function(edge.mat)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -445,6 +455,7 @@ node.to.gene <- function(x){strsplit(x,split="_")[[1]][1]}
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -492,6 +503,7 @@ list.to.go <- function(gene.list,univ.vec,comm.nums){
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -528,6 +540,7 @@ TestNodeRank <- function(node.ordered,true.pos)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -567,6 +580,7 @@ CommunityStructureRotation <- function(net1.memb,net2.memb){
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -666,6 +680,7 @@ computeDWBMmat.mscale <- function(edge.mat,ctrl.memb){
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -686,6 +701,7 @@ metanetwork <- function(J,S)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -709,6 +725,7 @@ tidyconfig <- function(S)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -812,6 +829,7 @@ genlouvain <- function(B)
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
 #' @export
 #' 
 
@@ -887,6 +905,8 @@ simulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,dens.modu
 #' @import condor
 #' @import Matrix
 #' @import GOstats
+#' @import org.Hs.eg.db
+#' @import GO.db
 #' @export
 #' 
 
@@ -908,6 +928,7 @@ go.to.genes <- function(go.term)
   
   base.sym[all.entrez]  
 }
+
 
 
 

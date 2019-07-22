@@ -9,9 +9,8 @@
 #' @param threshold Numeric vector of the customered threshold to select edges. Default value is the the midpoint between 
 #' the median edge-weight of prior ( 3rd column "Motif" is 1.0) edges 
 #' and the median edge-weight of non-prior edges (3rd column "Motif" is 0.0) in PANDA network, see \code{\link{calculateThreshold}}.
-#'
-#' @return a CONDOR object, see \code{\link[condor]{create.condor.object}}.
 #' 
+#' @return a CONDOR object, see \code{\link[condor]{create.condor.object}}.
 #' @examples 
 #' # refer to four input datasets files in inst/extdat
 #' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
