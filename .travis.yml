@@ -7,9 +7,6 @@ cache: packages
 os:
 - osx
 - linux
-bioc_packages:
-- GO.db
-- org.Hs.eg.db
 
 before_install:
 - pip install --user -r requirements.txt

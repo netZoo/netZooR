@@ -9,14 +9,17 @@ Depends: R (>= 3.3.2),
 	 condor,
 	 igraph,
 	 viridisLite, 
-	 STRINGdb,
+         STRINGdb,
 	 RCy3,
-	 org.Hs.eg.db
-Imports: reticulate,
+Imports: GOstats,
+         GO.db,
+	 org.Hs.eg.db,
+	 reticulate,
 	 GOstats,
 	 Matrix,
 Remotes: jplatig/condor,
 	 bioc::3.9/GOstats,
+	 bioc::3.9/GO.db,
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
