@@ -1,2 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+travis_script.r
+requirements.txt
+.travis.yml
