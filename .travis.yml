@@ -8,6 +8,12 @@ os:
 - osx
 - linux
 
+r_packages:
+  - covr
+  - devetools
+r_github_packages:
+  -twangxxx/netZooR@add-codecov
+
 before_install:
 - pip install --user -r requirements.txt
 
@@ -17,9 +23,6 @@ install:
 script:
 - travis_wait R CMD build .
 - travis_wait R CMD check *tar.gz --no-manual
-
-r_packages:
-  - covr
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
