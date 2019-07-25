@@ -8,6 +8,9 @@ os:
 - osx
 - linux
 
+r_github_packages:
+  - r-lib/covr
+
 before_install:
 - pip install --user -r requirements.txt
 
