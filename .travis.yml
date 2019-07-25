@@ -8,9 +8,6 @@ os:
 - osx
 - linux
 
-r_github_packages:
-  - r-lib/covr
-
 before_install:
 - pip install --user -r requirements.txt
 
@@ -21,5 +18,8 @@ script:
 - travis_wait R CMD build .
 - travis_wait R CMD check *tar.gz --no-manual
 
+r_github_packages:
+  - r-lib/covr
+
 after_success:
-  - Rscript -e 'library(covr); codecov()'
+  - Rscript -e 'covr::codecov()'
