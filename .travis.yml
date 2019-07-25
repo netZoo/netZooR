@@ -8,11 +8,8 @@ os:
 - osx
 - linux
 
-r_packages:
-  - covr
-  - devetools
 r_github_packages:
-  -twangxxx/netZooR@add-codecov
+  - r-lib/covr
 
 before_install:
 - pip install --user -r requirements.txt
