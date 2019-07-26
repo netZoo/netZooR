@@ -76,7 +76,7 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   else { str4 <- paste('True') }
   
   # source the pypanda from github raw website.
-  reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda-1/netZoo/pypanda/panda.py",convert = TRUE)
+  reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/panda.py",convert = TRUE)
   
   # invoke py code to create a Panda object
   str <-  paste("panda_obj=Panda(", str1, ",", str2,",", str3, ",", "remove_missing=", str4, ")", sep ='')
