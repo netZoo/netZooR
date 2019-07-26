@@ -18,8 +18,5 @@ script:
 - travis_wait R CMD build .
 - travis_wait R CMD check *tar.gz --no-manual
 
-r_github_packages:
-  - r-lib/covr
-
 after_success:
-  - Rscript -e 'covr::codecov()'
+  - Rscript -e 'devtools::install_github("r-lib/covr");library(covr);codecov()'
