@@ -50,8 +50,8 @@ runLioness <- function(e = expression, m = motif, ppi = ppi, rm_missing = FALSE)
     str5 <- "keep_expression_matrix=True"
     
   # source the panda.py and lioness.py from GitHub raw website.
-  reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda-1/netZoo/pypanda/panda.py",convert = TRUE)
-  reticulate::source_python("https://raw.githubusercontent.com/twangxxx/pypanda-1/netZoo/pypanda/lioness.py",convert = TRUE)
+  reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/panda.py",convert = TRUE)
+  reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/lioness.py",convert = TRUE)
   # run py code to create an instance named "p" of Panda Class 
   str <-  paste("panda_obj=Panda(", str1, ",", str2,",", str3, ",", "remove_missing=", str4, ",", str5, ")", sep ='')
   py_run_string(str,local = FALSE, convert = TRUE)
