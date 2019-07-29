@@ -26,10 +26,10 @@ This function compares two networks generate by \code{\link{runPanda}} in this p
 }
 \examples{
 # refer to four input datasets files in inst/extdat
-treated_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZoo", mustWork = TRUE)
-control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZoo", mustWork = TRUE)
-motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
-ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZoo", mustWork = TRUE)
+treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
+control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
+ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 
 
 # Run PANDA for treated and control network
@@ -37,6 +37,6 @@ treated_panda_net <- runPanda(e = treated_expression_file_path, m = motif_file_p
 control_panda_net <- runPanda(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )$panda
  
 # Run ALPACA
-alpaca<- runAlpaca(treated_panda_net, control_panda_net, "~/Desktop/TB", verbose=T)
+alpaca<- runAlpaca(treated_panda_net, control_panda_net, "~/TB", verbose=TRUE)
 
 }

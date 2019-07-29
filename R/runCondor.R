@@ -9,15 +9,14 @@
 #' @param threshold Numeric vector of the customered threshold to select edges. Default value is the the midpoint between 
 #' the median edge-weight of prior ( 3rd column "Motif" is 1.0) edges 
 #' and the median edge-weight of non-prior edges (3rd column "Motif" is 0.0) in PANDA network, see \code{\link{calculateThreshold}}.
-#'
-#' @return a CONDOR object, see \code{\link[condor]{create.condor.object}}.
 #' 
+#' @return a CONDOR object, see \code{\link[condor]{create.condor.object}}.
 #' @examples 
 #' # refer to four input datasets files in inst/extdat
-#' treated_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZoo", mustWork = TRUE)
-#' control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZoo", mustWork = TRUE)
-#' motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
-#' ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZoo", mustWork = TRUE)
+#' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
+#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+#' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
+#' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' 
 #' # Run PANDA for treated and control network

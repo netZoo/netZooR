@@ -6,19 +6,21 @@ Authors@R: person("Tian", "Wang", email = "tianwangxxx@gmail.com", role = c("aut
 Description: PANDA(Passing Attributes between Networks for Data Assimilation) is a message-passing model to gene regulatory network reconstruction. It integrates multiple sources of biological data, including protein-protein interaction, gene expression, and sequence motif information, in order to reconstruct genome-wide, condition-specific regulatory networks.[(Glass et al. 2013)]. LIONESS(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks by applying linear interpolation to the predictions made by existing aggregate network inference approaches. CONDOR(COmplex Network Description Of Regulators)is a bipartite community structure analysis tool of biological networks, especially eQTL networks, including a method for scoring nodes based on their modularity contribution.[(Platig et al. 2016). ALPACA(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules.[(Padi and Quackenbush 2018)]. This package integrates pypanda--the Python implementation of PANDA and LIONESS(https://github.com/davidvi/pypanda),the R implementation of CONDOR(https://github.com/jplatig/condor) and the R implementation of ALPACA (https://github.com/meghapadi/ALPACA) into one workflow. Each tool can be call in this package by one function, and the relevant output could be accessible in current R session for downstream analysis. 
 biocViews:
 Depends: R (>= 3.3.2),
-	 condor,
 	 igraph,
 	 viridisLite, 
-	 ALPACA,
-	 STRINGdb,
+         STRINGdb,
 	 RCy3,
-Imports: reticulate,
-	 GO.db,
+Imports: GOstats,
+         GO.db,
 	 org.Hs.eg.db,
+	 reticulate,
 	 GOstats,
 	 Matrix,
-Remotes: jplatig/condor,
-	 meghapadi/ALPACA
+	 gplots,
+	 nnet,
+	 data.table,
+Remotes: bioc::3.9/GOstats,
+	 bioc::3.9/GO.db,
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

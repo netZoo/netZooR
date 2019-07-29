@@ -27,10 +27,11 @@ A data frame with columns representing each sample, rows representing the regula
  \href{https://arxiv.org/abs/1505.06440}{[(LIONESS arxiv paper)])}.
 }
 \examples{
+
 # refer to the input datasets files of control in inst/extdat as example
-control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZoo", mustWork = TRUE)
-motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
-ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZoo", mustWork = TRUE)
+control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
+ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 
 # Run PANDA algorithm
 control_lioness_result <- runLioness(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
