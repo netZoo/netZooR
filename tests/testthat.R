@@ -1,3 +1,4 @@
-library(MONSTER)
+library(testthat)
+library(netZooR)
 
-# testthat::test_check("MONSTER")
+test_check("netZooR")
