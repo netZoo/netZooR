@@ -51,7 +51,7 @@ This package could be downloaded via `install_github()` function from `devtools`
 ```R
 install.packages("devtools")
 library(devtools)
-devtools::install_github("twangxxx/netZoo")
+devtools::install_github("netZoo/netZooR")
 
 ```
 ## Data Resources
