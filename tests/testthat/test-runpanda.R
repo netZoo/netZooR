@@ -2,6 +2,8 @@ context("test PANDA result")
 
 test_that("runPanda function works", {
   
+  load("./testDataset.RData")
+  
   # test error message when empty inputs
   expect_error(runPanda())
   
