@@ -96,7 +96,9 @@ runPanda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   
   # assign the output into three data frames
   panda_net <- py$panda_network
-  panda_net[,c(3,4)] <- apply(panda_net[,c(3,4)],1,function(x) x <- as.numeric(as.character(x)))
+  # convert the character to numeric
+  panda_net$motif <- as.numeric(panda_net$motif)
+  panda_net$force <- as.numeric(panda_net$force)
   indegree_net <- py$indegree
   outdegree_net <- py$outdegree
   # check if there is duplicate name of nodes in first two columns
