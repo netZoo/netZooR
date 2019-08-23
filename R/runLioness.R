@@ -34,12 +34,11 @@
 runLioness <- function(e = expression, m = motif, ppi = ppi, rm_missing = FALSE, start_sample=1, end_sample="None", save_dir="lioness_output", save_fmt='npy'){
 
   if(missing(e)){
-     stop("Please provide the gene expression value with option e, e.g. e=\"expression.txt\"") }
+     stop("Please provide the gene expression data file path to argument e, e.g. e=\"expression.txt\"") }
    else{ str1 <- paste("\'", e, "\'", sep = '') }
   
    if(missing(m)){
-     str2 <-  paste('None')
-     message("Pair file of motif edges is not provided, analysis continues with Pearson correlation matrix.") }
+     stop("Please provide the prior motif data file path to argument m, e.g. e=\"motif.txt\"") }
    else{ str2 <- paste("\'", m, "\'", sep = '') }
   
    if(missing(ppi)){

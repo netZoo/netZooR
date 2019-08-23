@@ -8,13 +8,16 @@ test_that("runLioness function works", {
   # test error message when empty inputs
   expect_error(runLioness())
   
+  # test error when not provide prior motif data
+  expect_error(testPanda1 <- runPanda(T4_expression_file_path))
+  
   # file path
   T4_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
   motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
   ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
   
   # test message when PPI is not provided
-  expect_message(testPanda2 <- runLioness(T4_expression_file_path,motif_file_path,rm_missing = TRUE, start_sample=1, end_sample=1),"")
+  expect_message(testPanda2 <- runLioness(T4_expression_file_path,motif_file_path,rm_missing = FALSE, start_sample=1, end_sample=1),"")
   
   # run LIONESS with T4 dataset for only sample 1s
   actual_T4lioness<- runLioness(T4_expression_file_path, motif_file_path,ppi_file_path, rm_missing = TRUE,start_sample=1, end_sample=1)
