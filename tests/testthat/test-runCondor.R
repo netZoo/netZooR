@@ -11,5 +11,9 @@ test_that("panda.to.condor.object function works", {
   # test panda.to.condor.object
   actual_T4condor.object <- panda.to.condor.object(actual_T4pandaNet)
   expect_equal(actual_T4condor.object$modularity, expected_T4condor.object$modularity)
+  
+  # test when threshold is invalid
+  expect_error(test1_condor.object <- panda.to.condor.object(actual_T4pandaNet,threshold=100))
+  expect_error(test2_condor.object <- panda.to.condor.object(actual_T4pandaNet,threshold=-100))
 })
 
