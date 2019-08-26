@@ -28,8 +28,8 @@
 #' control_net <- control_all_panda_result$panda
 #' 
 #' # Run CONDOR
-#' treated_condor_object <- runCondor(treated_net, threshold = 0)
-#' control_condor_object <- runCondor(control_net, threshold = 0)
+#' treated_condor_object <- panda.to.condor.object(treated_net, threshold = 0)
+#' control_condor_object <- panda.to.condor.object(control_net, threshold = 0)
 #' 
 #' # plot communities
 #' # package igraph and package viridisLite are already loaded with this package.
@@ -47,19 +47,19 @@
 
 #'
 
-runCondor <- function(df, threshold = m){
+panda.to.condor.object <- function(panda.net, threshold){
   
   # *** SELECT EDGE ***
   
   # if the threshold (cutoff) of edge-weight is undefined.
   if (missing(threshold)){
     
-    threshold <- calculateThreshold(df)
+    threshold <- calculateThreshold(panda.net)
     message("Using the midway of [median weight of non-prior edges] and [median weight of prior edges], 
             all weights mentioned above are transformationed with formula w'=ln(e^w+1) first")
     
     # transform the edge weight with formula w'=ln(e^w+1) to generate a new column of original data frame
-    newdf <- cbind(df,log(exp(df[,4])+1))
+    newdf <- cbind(panda.net,log(exp(panda.net[,4])+1))
     
     # rename the data frame and use cutoff to select edge-weights.
     colnames(newdf)[5] <- c("modifiedForce")
@@ -68,15 +68,15 @@ runCondor <- function(df, threshold = m){
   
   # if the threshold (cutoff) of edge-weight is defined. 
   # when the customed threshold is out of range, print out error message.
-   if (threshold > max(df[,4]) || threshold < min(df[,4]) ) {
-    stop(paste("Please provide the edge-weight threshold between ", min(df[,4])," and ", max(df[,4])))
+   if (threshold > max(panda.net[,4]) || threshold < min(panda.net[,4]) ) {
+    stop(paste("Please provide the edge-weight threshold between ", min(panda.net[,4])," and ", max(panda.net[,4])))
   }
   else {
-    newdf <- df[df[,4] >= threshold,-3]
+    newdf <- panda.net[panda.net[,4] >= threshold,-3]
   }
   
   
-  # *** RUN CONDOR ***
+  # *** create condor.object ***
   n_reg <- length(unique(newdf[,1]))
   n_tar <- length(unique(newdf[,2]))
   if(n_reg < n_tar) {
@@ -89,6 +89,7 @@ runCondor <- function(df, threshold = m){
 
   return(condor.object)
 }
+
 
 
 
