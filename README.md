@@ -2,12 +2,12 @@
 [![codecov](https://codecov.io/gh/netZoo/netZooR/branch/devel/graph/badge.svg)](https://codecov.io/gh/netZoo/netZooR)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-Linux[![LINUX](https://travis-ci-job-status.herokuapp.com/badge/netZoo/netZooM/master/linux)](https://travis-ci.org/netZoo/netZooR)
+Linux[![LINUX](https://travis-ci-job-status.herokuapp.com/badge/netZoo/netZooR/devel/linux)](https://travis-ci.org/netZoo/netZooR)
 
-Macos[![MAC](https://travis-ci-job-status.herokuapp.com/badge/netZoo/netZooM/master/macos)](https://travis-ci.org/netZoo/netZooR)
+Macos[![MAC](https://travis-ci-job-status.herokuapp.com/badge/netZoo/netZooR/devel/macos)](https://travis-ci.org/netZoo/netZooR)
 
 ## Description
-netZooR is a Python package of network methods.
+netZooR is a R package of network methods.
 
 ## Quick guide
 `git clone https://github.com/netZoo/netZooR.git` into your local disk.
