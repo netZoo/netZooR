@@ -1,5 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-travis_script.r
-requirements.txt
-.travis.yml
+travis_script\.r
+requirements\.txt
+^\.travis\.yml$
+UserGuidee\.md$
+CONDUCT\.md$
+^README\.Rmd$ 
