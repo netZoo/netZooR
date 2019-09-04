@@ -5,4 +5,5 @@ requirements\.txt
 ^\.travis\.yml$
 UserGuidee\.md$
 CONDUCT\.md$
-^README\.Rmd$ 
+^README\.Rmd$
+^LICENSE$
