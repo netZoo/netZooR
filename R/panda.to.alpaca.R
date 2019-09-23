@@ -43,14 +43,8 @@ panda.to.alpaca <- function(panda_net1, panda_net2, file.stem = "./alpaca", verb
   net <- merge(panda_net1, panda_net2, by=c("tf","gene"))
   # run ALPACA.
   alp <- alpaca(net, file.stem, verbose)
-  # if full differential modularity matrix has been written to a file, print out the location.
-  if(exists(file.stem)) {
-    return(message(paste("the ALPACA output located in", file.stem, sep="")))
+  # full differential modularity matrix has been written to a file, print out the location.
+  message(paste("the ALPACA output located in", file.stem, sep=""))
+  return(alp)
   }
   
-  # if not return the list of ALPACA output.
-  else{
-    return(alp)
-  }
-  
-}

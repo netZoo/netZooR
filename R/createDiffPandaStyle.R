@@ -1,3 +1,12 @@
+#' Create a Cytoscape visual style for two PANDA networks
+#'
+#'This function is able to create a Cytoscape visual style for two PANDA networks output.
+#' @param style.name Character string indicating the style name. Defaults to "Diff.PandaStyle"
+#'
+#' @return a visual style in Cytoscape Control Panel under "Style" button.
+#' @import RCy3
+#' @export
+
 createDiffPandaStyle <- function(style.name="Diff.PandaStyle"){
   
   # node properties

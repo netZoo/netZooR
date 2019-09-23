@@ -4,14 +4,13 @@
 
 # netZooR
 
-An R package to integrate [pypanda](https://github.com/davidvi/pypanda)--Python implementation of PANDA and LIONESS, R implementation of [CONDOR](https://github.com/jplatig/condor), R implementation of [ALPACA](https://github.com/meghapadi/ALPACA), and realated downsteaming analysis.
+netZoo is an R package which integrates [pypanda](https://github.com/aless80/pypanda)--Python implementation of PANDA and LIONESS, R implementation of [CONDOR](https://github.com/jplatig/condor), and R implementation of [ALPACA](https://github.com/meghapadi/ALPACA), and relative downsteaming analysis.
 
-**PANDA**(Passing Attributes between Networks for Data Assimilation) is a message-passing model to gene regulatory network reconstruction. It integrates multiple sources of biological data, including protein-protein interaction, gene expression, and sequence motif information, in order to reconstruct genome-wide, condition-specific regulatory networks.[[Glass et al. 2013]](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832)
+**PANDA**(Passing Attributes between Networks for Data Assimilation) is a message-passing model to gene regulatory network reconstruction. It integrates multiple sources of biological data, including protein-protein interaction, gene expression, and sequence motif information to reconstruct genome-wide, condition-specific regulatory networks.[[Glass et al. 2013]](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832)
 
-**LIONESS**(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks by applying linear interpolation to the predictions made by existing aggregate network inference 		approaches.[[LIONESS arxiv paper]](https://arxiv.org/abs/1505.06440)
+**LIONESS**(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks by applying linear interpolation to the predictions made by existing aggregate network inference approaches.[[LIONESS arxiv paper]](https://arxiv.org/abs/1505.06440)
 
-**CONDOR** (COmplex Network Description Of Regulators) implements methods for clustering biapartite networks
-and estimatiing the contribution of each node to its community's modularity.[[Platig et al. 2016]](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033)
+**CONDOR** (COmplex Network Description Of Regulators) implements methods for clustering biapartite networks and estimatiing the contribution of each node to its community's modularity.[[Platig et al. 2016]](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033)
 
 **ALPACA**(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules. [[Padi and Quackenbush 2018]](https://www.nature.com/articles/s41540-018-0052-5)
 
@@ -41,7 +40,7 @@ and estimatiing the contribution of each node to its community's modularity.[[Pl
 ## Getting Started
 
 ### Prerequisites
-Using this pacakage requires [**Python**](https://www.python.org/downloads/) 2.7, [**R**](https://cran.r-project.org/) (>= 3.3.3), [**Cytoscape**](https://cytoscape.org/) (>=3.6.1), [**GSEA**](http://software.broadinstitute.org/gsea/index.jsp), and **Internet access**.
+Using this pacakage requires [**Python**](https://www.python.org/downloads/) (>=3.6.0), [**R**](https://cran.r-project.org/) (>= 3.3.3), [**Cytoscape**](https://cytoscape.org/) (>=3.6.1), [**GSEA**](http://software.broadinstitute.org/gsea/index.jsp), and **Internet access**.
 There are also some Python packages required to apply Python implementation of PANDA and LIONESS.
 
 How to install packages in different platforms could be find [here](https://packaging.python.org/tutorials/installing-packages/). 
