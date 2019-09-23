@@ -48,4 +48,3 @@ panda.to.alpaca <- function(panda_net1, panda_net2, file.stem = "./alpaca", verb
   return(alp)
   }
   
-}
