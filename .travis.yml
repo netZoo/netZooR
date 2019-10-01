@@ -6,7 +6,6 @@ sudo: true
 cache: packages
 os:
 - osx
-- linux
 
 before_install:
 - pip install --user -r requirements.txt
