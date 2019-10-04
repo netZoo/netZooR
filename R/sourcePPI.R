@@ -4,7 +4,7 @@
 #'
 #' @param TF Data frame with one column indicating the TF of interest
 #' @param species.index Numeric vector indicating NCBI taxonomy identifiers 
-#' @param score_threshold Numeric vector indicating the threshold for the combined scores of the interactions.Default to 0.
+#' @param ... any dditional arguments passing to \code{\link[STRINGdb]}
 #'
 #' @examples
 #' # the example motif file
