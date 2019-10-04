@@ -7,11 +7,11 @@
 panda.to.condor.object(panda.net, threshold)
 }
 \arguments{
+\item{panda.net}{Data Frame indicating the result of PANDA regulatory network, created by \code{\link{runPanda}}}
+
 \item{threshold}{Numeric vector of the customered threshold to select edges. Default value is the the midpoint between 
 the median edge-weight of prior ( 3rd column "Motif" is 1.0) edges 
 and the median edge-weight of non-prior edges (3rd column "Motif" is 0.0) in PANDA network, see \code{\link{calculateThreshold}}.}
-
-\item{df}{Data Frame indicating the result of PANDA regulatory network, created by \code{\link{runPanda}}}
 }
 \value{
 a CONDOR object, see \code{\link[condor]{create.condor.object}}.
