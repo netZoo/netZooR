@@ -1,0 +1,12 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+<<<<<<< HEAD
+travis_script\.r
+requirements\.txt
+^\.travis\.yml$
+UserGuidee\.md$
+CONDUCT\.md$
+^README\.Rmd$
+^LICENSE$
+=======
+>>>>>>> monster/master
