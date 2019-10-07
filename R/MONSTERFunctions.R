@@ -12,7 +12,7 @@ setMethod("show","monsterAnalysis",function(object){print.monsterAnalysis(object
 #' @examples
 #' \donttest{
 #' data(yeast)
-#' monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
+#' monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=1)
 #' plot(monsterRes)
 #' }
 plot.monsterAnalysis <- function(x, ...){
@@ -29,7 +29,7 @@ plot.monsterAnalysis <- function(x, ...){
 #' @examples
 #' \donttest{
 #' data(yeast)
-#' monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
+#' monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=1)
 #' }
 print.monsterAnalysis <- function(x, ...){
   cat("MONSTER object\n")
@@ -74,7 +74,7 @@ print.monsterAnalysis <- function(x, ...){
 #' @examples
 #' data(yeast)
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=2)
+#' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 #' plot(monsterRes)
 monster <- function(expr, 
                     design, 
@@ -321,7 +321,7 @@ kabsch <- function(P,Q){
 #' @examples
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=1)
 #' data(monsterRes)
 #' hcl.heatmap.plot(monsterRes)
 hcl.heatmap.plot <- function(monsterObj, method="pearson"){
@@ -412,7 +412,7 @@ hcl.heatmap.plot <- function(monsterObj, method="pearson"){
 #' @examples
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=1)#' 
 #' data(monsterRes)
 #' # Color the nodes according to cluster membership
 #' clusters <- kmeans(slot(monsterRes, 'tm'),3)$cluster 
@@ -445,7 +445,7 @@ transitionPCAPlot <-    function(monsterObj,
 #' @examples
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=1)#' 
 #' data(monsterRes)
 #' transitionNetworkPlot(monsterRes)
 #' 
@@ -508,7 +508,7 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
 #' @examples
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=1)#' 
 #' data(monsterRes)
 #' dTFIPlot(monsterRes)
 dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA){
@@ -579,7 +579,7 @@ dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA)
 #' @examples
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=1)#' 
 #' data(monsterRes)
 #' calculate.tm.p.values(monsterRes)
 calculate.tm.p.values <- function(monsterObj, method="z-score"){
