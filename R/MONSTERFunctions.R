@@ -134,8 +134,8 @@ monster <- function(expr,
                              nullExprCases <- nullExpr[,design==1]
                              nullExprControls <- nullExpr[,design==0]
                              
-                             tmpNetCases <- monsterNI(motif, nullExprCases, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff)
-                             tmpNetControls <- monsterNI(motif, nullExprControls, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff)
+                             tmpNetCases <- monsterNI(motif, nullExprCases, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff= ni.coefficient.cutoff)
+                             tmpNetControls <- monsterNI(motif, nullExprControls, method=ni_method, regularization="none",score="none",ni.coefficient.cutoff= ni.coefficient.cutoff)
                              transitionMatrix <- transformation.matrix(
                                tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
                              print(paste("Finished running iteration", i))
