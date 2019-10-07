@@ -98,7 +98,7 @@ monster <- function(expr,
     userVar <- Sys.getenv(c("USER"))
     
     # set numCores for travis-ci build
-    if(userVar!="TRAVIS"){
+    if(userVar!="travis"){
       numCores <- min(numCores, numMaxCores)
     }else {
       numCores = 1
