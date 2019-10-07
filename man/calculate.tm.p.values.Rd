@@ -21,7 +21,7 @@ transition matrix given a set of null transition matrices
 \examples{
 # data(yeast)
 # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-# monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=1)#' 
+# monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 data(monsterRes)
 calculate.tm.p.values(monsterRes)
 }

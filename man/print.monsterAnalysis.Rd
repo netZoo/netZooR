@@ -20,6 +20,6 @@ summarizes the results of a MONSTER analysis
 \examples{
 \donttest{
 data(yeast)
-monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=1)
+monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
 }
 }
