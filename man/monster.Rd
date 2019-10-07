@@ -44,7 +44,7 @@ changes associated with phenotypic state transition.
 \examples{
 data(yeast)
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
-monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
+monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)
 plot(monsterRes)
 }
 \seealso{
