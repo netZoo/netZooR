@@ -22,7 +22,7 @@ This function uses igraph to plot the transition matrix as a network
 \examples{
 # data(yeast)
 # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-# monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+# monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=1)#' 
 data(monsterRes)
 transitionNetworkPlot(monsterRes)
 
