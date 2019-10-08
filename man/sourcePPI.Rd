@@ -11,7 +11,7 @@ sourcePPI(TF, species.index, ...)
 
 \item{species.index}{Numeric vector indicating NCBI taxonomy identifiers}
 
-\item{...}{any dditional arguments passing to \code{\link[STRINGdb]}}
+\item{...}{any dditional arguments passing to}
 }
 \value{
 A PPI data frame
