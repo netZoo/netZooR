@@ -11,7 +11,7 @@ sourcePPI(TF, species.index, ...)
 
 \item{species.index}{Numeric vector indicating NCBI taxonomy identifiers}
 
-\item{score_threshold}{Numeric vector indicating the threshold for the combined scores of the interactions.Default to 0.}
+\item{...}{any dditional arguments passing to}
 }
 \value{
 A PPI data frame
