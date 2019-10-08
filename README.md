@@ -14,7 +14,7 @@ netZooR is a R package of network methods.
 `git clone https://github.com/netZoo/netZooR.git` into your local disk.
 
 ## User guide
-Please refer to the [user guide](./vignettes/netZooR.md) for installation instructions.
+Please refer to the [user guide](./vignettes/netZooR.Rmd) for installation instructions.
 
 ## License
 The software is free and is licensed under the GNU General License v3.0, see the file [LICENSE](LICENSE) for details.
