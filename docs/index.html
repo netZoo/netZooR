@@ -69,27 +69,49 @@
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"></a>Description</h2>
-<p>netZooR is a R package of network methods.</p>
+<p>netZooR is an R package to construct,analyse and plot gene regulatory networks.</p>
 </div>
-<div id="quick-guide" class="section level2">
+<div id="features" class="section level2">
 <h2 class="hasAnchor">
-<a href="#quick-guide" class="anchor"></a>Quick guide</h2>
-<p><code>git clone https://github.com/netZoo/netZooR.git</code> into your local disk.</p>
+<a href="#features" class="anchor"></a>Features</h2>
+<p>netZooR currently integrates with:</p>
+<ul>
+<li><p><strong>PANDA</strong>(Passing Attributes between Networks for Data Assimilation)<a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832">[Glass et al. 2013]</a>: construct gene regulatory network from gene expression data, protein-protein interaction data, and transcription factor binding motifs (TFBMs) data.</p></li>
+<li><p><strong>CONDOR</strong>(COmplex Network Description Of Regulators)<a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033">[Platig et al. 2016]</a>: analyse bipartite community structure analysis of biological networks.</p></li>
+<li><p><strong>LIONESS</strong>(Linear Interpolation to Obtain Network Estimates for Single Samples)<a href="https://doi.org/10.1016/j.isci.2019.03.021">[Kuijjer et al. 2019]</a>: reconstruct single-sample gene regulatory networks.</p></li>
+<li><p><strong>ALPACA</strong>(ALtered Partitions Across Community Architectures)<a href="https://www.nature.com/articles/s41540-018-0052-5">[Padi and Quackenbush 2018]</a>: compare two networks and identify changes in modular structure.</p></li>
+<li><p><strong>SAMBAR</strong>(Subtyping Agglomerated Mutations By Annotation Relations)<a href="https://www.nature.com/articles/s41416-018-0109-7">[Kuijjer et al.]</a>: identify subtypes based on somatic mutation data.</p></li>
+<li><p>Source protein-protein interaction network from <a href="https://string-db.org/">STRINGdb</a> based on a list of protein of interest.</p></li>
+<li><p>Plot one PANDA network in <a href="https://cytoscape.org/">Cytoscape</a>.</p></li>
+<li><p>Plot two differential PANDA networks in Cytoscape.</p></li>
+</ul>
 </div>
-<div id="user-guide" class="section level2">
+<div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#user-guide" class="anchor"></a>User guide</h2>
-<p>Please refer to the <a href="./vignettes/netZooR.Rmd">user guide</a> for installation instructions.</p>
+<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(devtools)
+devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"netZoo/netZooR"</span>)<span class="st">`</span>
+<span class="dt">library(netZooR)</span></code></pre></div>
+</div>
+<div id="user-guide-tutorials" class="section level2">
+<h2 class="hasAnchor">
+<a href="#user-guide-tutorials" class="anchor"></a>User guide &amp; tutorials</h2>
+<p>Please refer to the top navigation bar <strong>Get started</strong> for basic usage and application cases.</p>
+</div>
+<div id="development" class="section level2">
+<h2 class="hasAnchor">
+<a href="#development" class="anchor"></a>Development</h2>
+<p>Contributions are welcome! Instruction of how to contribute netZooR repository can be found <a href="https://netzoo.github.io/contribute/contribute/">here</a>. The master branch on github should always be in good shape, so please to pull request to the <strong>devel</strong> branch.</p>
+</div>
+<div id="feedbackissues" class="section level2">
+<h2 class="hasAnchor">
+<a href="#feedbackissues" class="anchor"></a>Feedback/Issues</h2>
+<p>Please report any issue to the <a href="https://github.com/netZoo/netZooR/issues">issues page</a>.</p>
 </div>
 <div id="license" class="section level2">
 <h2 class="hasAnchor">
 <a href="#license" class="anchor"></a>License</h2>
 <p>The software is free and is licensed under the GNU General License v3.0, see the file <a href="LICENSE" class="uri">LICENSE</a> for details.</p>
-</div>
-<div id="feedbackissues" class="section level2">
-<h2 class="hasAnchor">
-<a href="#feedbackissues" class="anchor"></a>Feedback/Issues</h2>
-<p>Please report any issues to the <a href="https://github.com/netZoo/netZooR/issues">issues page</a>.</p>
 </div>
 <div id="code-of-conduct" class="section level2">
 <h2 class="hasAnchor">
