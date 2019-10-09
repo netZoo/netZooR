@@ -27,5 +27,6 @@ RoxygenNote: 6.1.1.9000
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    pkgdown,
 VignetteBuilder: knitr
