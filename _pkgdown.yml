@@ -3,20 +3,19 @@ reference:
 - title: Main functions
   desc:  main functions to run each algorithm
   contents:
-  - runPanda
+  - panda
   - create.condor.object
   - panda.to.condor.object
-  - runLioness
+  - lioness
   - alpaca
   - sambar
 - title: Plot functions
   desc: function to plot the networks and community structures.
   contents:
-  - createPandaStyle
-  - plotPANDAinCytoscape
-  - createDiffPandaStyle
+  - starts_with("create")
   - condor.plot.communities
   - condor.plot.heatmap
+  - starts_with("plot.")
 
 - title: CONDOR
   desc: All fucntions of CONDOR
@@ -26,33 +25,8 @@ reference:
 - title: ALPACA
   desc: All functions of ALPACA
   contents:
-  - CommunityStructureRotation
-  - DeltaZAnalysis.Louvain
-  - DeltaZAnalysis
-  - ExtractTopGenes
-  - GOtab.to.genes
-  - RotationAnalysis.Louvain
-  - RotationAnalysis
-  - TestNodeRank
-  - TopEnsembl.to.TopSym
-  - WBM.louvain
-  - alpaca
-  - computeDWBMmat.mscale
-  - computeWBMmat
-  - genlouvain
-  - go.to.genes
-  - list.to.go
-  - metanetwork
-  - node.to.gene
-  - simulateNetwork
-  - tidyconfig
+  - starts_with("alpaca")
 - title: SAMBAR 
   desc: All functions of SAMBAR
   contents:
-  - convertgmt
-  - corgenelength
-  - desparsify
-  - exon.size
-  - genes
-  - mut.ucec
-  - sambar
+  - starts_with("sambar")

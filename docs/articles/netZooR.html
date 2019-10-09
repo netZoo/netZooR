@@ -144,12 +144,12 @@ devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(netZooR)
 <span class="kw"><a href="https://rdrr.io/r/base/search.html">search</a></span>()</code></pre></div>
 <p>Access help pages for usage of six core functions.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><a href="../reference/runPanda.html">?runPanda
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?runPanda
 ?plotPanda
 ?runLioness
 ?plotLioness
 ?runCondor
-?runAlpaca</a></code></pre></div>
+?runAlpaca</code></pre></div>
 <p>Use example datasets within package to test this package.</p>
 <p>Refer to four input datasets files: one TB control expression dataset, one TB treated expression dataset, one motif sequence dataset, and one protein-protein interaction datasets in inst/extdat. All datasets are public data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">treated_expression_file_path &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"expr4.txt"</span>, <span class="dt">package =</span> <span class="st">"netZoo"</span>, <span class="dt">mustWork =</span> <span class="ot">TRUE</span>)
@@ -160,8 +160,8 @@ ppi_file_path &lt;-<span class="st"> </span><span class="kw"><a href="https://rd
 <h3 class="hasAnchor">
 <a href="#panda-and-plot-panda-network" class="anchor"></a>PANDA and plot PANDA network</h3>
 <p>Assign the paths of treated expression dataset, motif dataset, and ppi dataset above to flag <code>e</code>(refers to “expression dataset”), <code>m</code>(refers to “=motif dataset”), and <code>ppi</code>(refers to “PPI” dataset) respectively. Then set option <code>rm_missing</code> to <code>TRUE</code> to run <strong>PANDA</strong> to generate an aggregate network for treated. Repeat but alter the paths of treated expression dataset to control expression datasets to generate an aggregate network for control. vector <code>treated_all_panda_result</code> and vector <code>control_all_panda_result</code> below are large lists with three elements: the entire PANDA network, indegree (“to” nodes) nodes and score, outdegree (“from” nodes) nodes and score. Use <code>$panda</code>,<code>$indegree</code> and ‘$outdegree’ to access each item resepctively.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">treated_all_panda_result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/runPanda.html">runPanda</a></span>(<span class="dt">e =</span> treated_expression_file_path, <span class="dt">m =</span> motif_file_path, <span class="dt">ppi =</span> ppi_file_path, <span class="dt">rm_missing =</span> <span class="ot">TRUE</span> )
-control_all_panda_result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/runPanda.html">runPanda</a></span>(<span class="dt">e =</span> control_expression_file_path, <span class="dt">m =</span> motif_file_path, <span class="dt">ppi =</span> ppi_file_path, <span class="dt">rm_missing =</span> <span class="ot">TRUE</span> )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">treated_all_panda_result &lt;-<span class="st"> </span><span class="kw">runPanda</span>(<span class="dt">e =</span> treated_expression_file_path, <span class="dt">m =</span> motif_file_path, <span class="dt">ppi =</span> ppi_file_path, <span class="dt">rm_missing =</span> <span class="ot">TRUE</span> )
+control_all_panda_result &lt;-<span class="st"> </span><span class="kw">runPanda</span>(<span class="dt">e =</span> control_expression_file_path, <span class="dt">m =</span> motif_file_path, <span class="dt">ppi =</span> ppi_file_path, <span class="dt">rm_missing =</span> <span class="ot">TRUE</span> )</code></pre></div>
 <p>Use <code>$panda</code>to access the entire PANDA network.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">treated_net &lt;-<span class="st"> </span>treated_all_panda_result<span class="op">$</span>panda</code></pre></div>
 <p>Plot the 100 edge with the largest weight of two PANDA network. Besides, one message will be returned to indicate the location of output .png plot.</p>
@@ -180,11 +180,11 @@ control_all_panda_result &lt;-<span class="st"> </span><span class="kw"><a href=
 <h3 class="hasAnchor">
 <a href="#lioness-and-plot-lioness-network" class="anchor"></a>LIONESS and plot LIONESS network</h3>
 <p>The method how to run LIONESS is mostly idential with method how to run PANDA in this package, unless the return values of <code>runLioness</code> is a data frame where first two columns represent TFs (regulators) and Genes (targets) while the rest columns represent each sample. each cell filled with estimated score calculated by LIONESS.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">treated_lioness &lt;-<span class="st"> </span><span class="kw"><a href="../reference/runLioness.html">runLioness</a></span>(<span class="dt">e =</span> treated_expression_file_path, <span class="dt">m =</span> motif_file_path, <span class="dt">ppi =</span> ppi_file_path, <span class="dt">rm_missing =</span> <span class="ot">TRUE</span> )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">treated_lioness &lt;-<span class="st"> </span><span class="kw">runLioness</span>(<span class="dt">e =</span> treated_expression_file_path, <span class="dt">m =</span> motif_file_path, <span class="dt">ppi =</span> ppi_file_path, <span class="dt">rm_missing =</span> <span class="ot">TRUE</span> )</code></pre></div>
 <p>Plot LIONESS network should clarify which sample by 0-based index.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotLioness</span>(<span class="dt">col =</span> <span class="dv">0</span>, <span class="dt">top =</span> <span class="dv">100</span>, <span class="dt">file =</span> <span class="st">"treat_lioness_sample1_100.png"</span>)</code></pre></div>
 <p>Repeat with control.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">control_lioness &lt;-<span class="st"> </span><span class="kw"><a href="../reference/runLioness.html">runLioness</a></span>(<span class="dt">e =</span> control_expression_file_path, <span class="dt">m =</span> motif_file_path, <span class="dt">ppi =</span> ppi_file_path, <span class="dt">rm_missing =</span> <span class="ot">TRUE</span> )
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">control_lioness &lt;-<span class="st"> </span><span class="kw">runLioness</span>(<span class="dt">e =</span> control_expression_file_path, <span class="dt">m =</span> motif_file_path, <span class="dt">ppi =</span> ppi_file_path, <span class="dt">rm_missing =</span> <span class="ot">TRUE</span> )
 <span class="kw">plotLioness</span>(<span class="dt">col =</span> <span class="dv">0</span>, <span class="dt">top =</span> <span class="dv">100</span>, <span class="dt">file =</span> <span class="st">"control_lioness_sample1_100.png"</span>)</code></pre></div>
 </div>
 <div id="condor" class="section level3">
