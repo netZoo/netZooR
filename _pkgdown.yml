@@ -8,20 +8,34 @@ reference:
   - panda.to.condor.object
   - lioness
   - alpaca
+  - panda.to.alpaca
   - sambar
 - title: Plot functions
   desc: function to plot the networks and community structures.
   contents:
-  - starts_with("create")
+  - create.panda.style
+  - create.diff.panda.style
   - condor.plot.communities
   - condor.plot.heatmap
   - starts_with("plot.")
-
+- title: PANDA 
+  desc: All function of PANDA
+  contents:
+  - panda
+  - panda.to.condor.object
+  - panda.to.alpaca
+  - create.panda.style
+  - plot.panda.in.cytoscape
+  - create.diff.panda.style
 - title: CONDOR
   desc: All fucntions of CONDOR
   contents: 
   - starts_with("condor")
   - create.condor.object
+- title: LIONESS 
+  desc: All functions of lioness
+  contents: 
+  - lioness
 - title: ALPACA
   desc: All functions of ALPACA
   contents:

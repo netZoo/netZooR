@@ -7,7 +7,7 @@
 #' @import RCy3
 #' @export
 
-create.diff.pandaS.style <- function(style.name="Diff.PandaStyle"){
+create.diff.panda.style <- function(style.name="Diff.PandaStyle"){
   
   # node properties
   nodeShape <- mapVisualProperty('node shape','group','d',c("TF","Gene"),c("ELLIPSE","RECTANGLE"))
