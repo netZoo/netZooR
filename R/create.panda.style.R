@@ -7,7 +7,7 @@
 #' @import RCy3
 #' @export
 
-create.panda.style <- function(style.name="PandaStyle"){
+createPandaStyle <- function(style.name="PandaStyle"){
   
   # node properties
   nodeShape <- mapVisualProperty('node shape','group','d',c("TF","Gene"),c("ELLIPSE","RECTANGLE"))
