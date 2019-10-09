@@ -4,7 +4,7 @@
 #'
 #' @param TF Data frame with one column indicating the TF of interest
 #' @param species.index Numeric vector indicating NCBI taxonomy identifiers 
-#' @param ... any dditional arguments passing to \code{\link[STRINGdb]}
+#' @param ... any dditional arguments passing to
 #'
 #' @examples
 #' # the example motif file

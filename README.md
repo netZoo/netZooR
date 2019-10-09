@@ -1,7 +1,6 @@
 [![Build Status](https://travis-ci.org/netZoo/netZooR.svg?branch=devel)](https://travis-ci.org/netZoo/netZooR)
 [![codecov](https://codecov.io/gh/netZoo/netZooR/branch/devel/graph/badge.svg)](https://codecov.io/gh/netZoo/netZooR)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Documentation Status](https://readthedocs.org/projects/netzoor/badge/?version=latest)](https://netzoor.readthedocs.io/en/latest/?badge=latest)
 
 Linux[![LINUX](https://travis-ci-job-status.herokuapp.com/badge/netZoo/netZooR/devel/linux)](https://travis-ci.org/netZoo/netZooR)
 
@@ -14,7 +13,7 @@ netZooR is a R package of network methods.
 `git clone https://github.com/netZoo/netZooR.git` into your local disk.
 
 ## User guide
-Please refer to the [user guide](UserGuide.md) for installation instructions.
+Please refer to the [user guide](./vignettes/netZooR.Rmd) for installation instructions.
 
 ## License
 The software is free and is licensed under the GNU General License v3.0, see the file [LICENSE](LICENSE) for details.
