@@ -105,7 +105,7 @@ panda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
     panda_net[,2] <-paste('tar_', panda_net[,2], sep='')
     colnames(indegree_net)<- paste("tar_",colnames(indegree_net), sep='')
     colnames(outdegree_net)<- paste("reg_",colnames(outdegree_net), sep='')
-    message("Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node name between first two columns" )
+    message("Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node names between first two columns" )
   }
   
   # assign all three network into a list.
