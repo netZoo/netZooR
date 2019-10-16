@@ -10,6 +10,7 @@ Depends: R (>= 3.3.2),
 	 igraph,
 	 viridisLite, 
          STRINGdb,
+	 RCy3,
 Imports: GOstats,
          GO.db,
 	 org.Hs.eg.db,
@@ -19,7 +20,6 @@ Imports: GOstats,
 Remotes: jplatig/condor,
 	 bioc::3.9/GOstats,
 	 bioc::3.9/GO.db,
-	 bioc::3.9/RCy3,
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
