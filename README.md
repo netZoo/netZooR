@@ -43,8 +43,11 @@ Please refer to the top navigation bar **Get started** for basic usage and appli
 Contributions are welcome! Instruction of how to contribute netZooR repository can be found [here](https://netzoo.github.io/contribute/contribute/). 
 The master branch on github should always be in good shape, so please to pull request to the **devel** branch.
 
-## Feedback/Issues
-Please report any issue to the [issues page](https://github.com/netZoo/netZooR/issues).
+## Issues
+
+For **data.table** installation issue please refer to [issue #40](https://github.com/netZoo/netZooR/issues/40).
+
+Please report any further issue to the [issues page](https://github.com/netZoo/netZooR/issues).
 
 ## License
 The software is free and is licensed under the GNU General License v3.0, see the file [LICENSE](LICENSE) for details.
