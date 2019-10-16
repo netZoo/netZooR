@@ -1,52 +1,48 @@
-#' Run pypanda in R
+#' Run PANDA in R
 #' 
 #' \strong{PANDA}(Passing Attributes between Networks for Data Assimilation) is a message-passing model 
-#' to gene regulatory network reconstruction. It integrates multiple sources of biological data, 
-#' including protein-protein interaction, gene expression, and sequence motif information,
-#' in order to reconstruct genome-wide, condition-specific regulatory networks.
+#' to reconstruct gene regulatory network. It integrates multiple sources of biological data-including protein-protein interaction,
+#' gene expression data, and transccription factor binding motifs data-to reconstruct genome-wide, condition-specific regulatory networks.
 #' \href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832}{[(Glass et al. 2013)])}
-#' This function is able to run \href{https://github.com/aless80/pypanda}{pypanda} -- Python implementation of PANDA in R enviroment.
+#' This function is designed to run the a derived PANDA algorithm in Python from \href{https://github.com/netZoo/netZooPy}{netZooPy},
+#'  which is also a Python library of netZooR.
 #'
-#' @param e Character String indicatining the file path of expression values file, as each gene (row) by samples (columns) \emph{required}
-#' @param m Character String indicatining the file path of pair file of motif edges,
-#'          when not provided, analysis continues with Pearson correlation matrix. \emph{optional}
-#' @param ppi Character String indicatining the pair file path of Protein-Protein interaction dataset. \emph{optional}
-#' @param rm_missing Boolean indicatining whether to remove missing values. If TRUE, removes missing values.
-#'         if FALSE, keep missing values. THe default value is FALSE. \emph{optional}
+#' @param e Character string indicatining the file path of expression values file, with each gene (in row) by samples (in columns)
+#' @param m An optional character string indicatining the file path of pair file of a prior transcription factor binding motifs dataset.
+#'          When this argument is not provided, analysis will continue with Pearson correlation matrix.
+#' @param ppi An optional character string indicatining the file path of protein-protein interaction edge dataset.
+#'          Also this can be generated given a list of proteins of interest by \code{\link{source.PPI}}.
+#' @param rm_missing an optional boolean indicatining whether to remove genes and tfs not present in all input files. If TRUE, remove all unmatched tf and genes.
+#'         if FALSE, keep all tf and genes. The default value is FALSE.
 #'
-#' @return List of three items：
-#'  Use \code{$panda} to access the entire data frame of PANDA output network consisting of four columns: 
-#' "tf", "gene", "motif", and "force".
+#' @return A list of three items：
+#'          Use \code{$panda} to access the standard output of PANDA network in data.frame, which consists of four columns: 
+#'          "tf", "gene", "motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "force".
 #' 
-#' Use \code{$indegree} to access the data frame of indegree of PANDA network, consisting of two columns: "gene", "force".
+#'          Use \code{$indegree} to access the indegree of PANDA network in data.frame, consisting of two columns: "gene", "force".
 #' 
-#' Use \code{$outdegree} to access the data frame of outdegree of PANDA network, consisting of two columns: "tf", "force".
-#' 
-#' \strong{Note}: If there is any duplicate name of nodes in first two columns,
-#' prefix the content in regulator column with "reg_" and content in target column with"tar_"
-#' 
-#' Please re-name the colnames if needed.
+#'          Use \code{$outdegree} to access the outdegree of PANDA network in data.fra,e, consisting of two columns: "tf", "force".
 #' 
 #' @examples 
-#' # refer to four input datasets files in inst/extdat
+
+#' # take the treated TB dataset as example here.
+#' # refer to the datasets files path in inst/extdat
+#' 
 #' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
-#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
 #' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
 #' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' 
 #' # Run PANDA for treated and control network
 #' treated_all_panda_result <- panda(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
-#' control_all_panda_result <- panda(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
 #' 
 #' # access PANDA regulatory network
 #' treated_net <- treated_all_panda_result$panda
-#' control_net <- control_all_panda_result$panda
 #' 
-#' # access PANDA regulatory indegree network result
+#' # access PANDA regulatory indegree network.
 #' indegree_net <- treated_all_panda_result$indegree
 #' 
-#' # access PANDA regulatory outdegree network result
+#' # access PANDA regulatory outdegree networks
 #' outdegree_net <- treated_all_panda_result$outdegree
 #' 
 #' @import reticulate
@@ -109,7 +105,7 @@ panda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
     panda_net[,2] <-paste('tar_', panda_net[,2], sep='')
     colnames(indegree_net)<- paste("tar_",colnames(indegree_net), sep='')
     colnames(outdegree_net)<- paste("reg_",colnames(outdegree_net), sep='')
-    message("Rename the context of first two columns with prefix 'reg_' and 'tar_'" )
+    message("Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node name between first two columns" )
   }
   
   # assign all three network into a list.
