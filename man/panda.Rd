@@ -2,7 +2,7 @@
 % Please edit documentation in R/algorithm_functions.R
 \name{panda}
 \alias{panda}
-\title{Passing Messages between Biological Networks to Refine Predicted Interactions}
+\title{Run PANDA in R}
 \usage{
 panda(motif, expr = NULL, ppi = NULL, alpha = 0.1, hamming = 0.001,
   iter = NA, output = c("regulatory", "coexpression", "cooperative"),
@@ -12,44 +12,55 @@ panda(motif, expr = NULL, ppi = NULL, alpha = 0.1, hamming = 0.001,
   remove.missing.motif = FALSE, remove.missing.genes = FALSE)
 }
 \arguments{
-\item{motif}{A motif dataset, a data.frame, matrix or exprSet containing 3 columns.
-Each row describes an motif associated with a transcription factor (column 1) a
-gene (column 2) and a score (column 3) for the motif.}
+\item{e}{Character string indicatining the file path of expression values file, with each gene (in row) by samples (in columns)}
 
-\item{expr}{An expression dataset, as a genes (rows) by samples (columns) data.frame}
+\item{m}{An optional character string indicatining the file path of pair file of a prior transcription factor binding motifs dataset.
+When this argument is not provided, analysis will continue with Pearson correlation matrix.}
 
-\item{ppi}{A Protein-Protein interaction dataset, a data.frame containing 3 columns.
-Each row describes a protein-protein interaction between transcription factor 1(column 1),
-transcription factor 2 (column 2) and a score (column 3) for the interaction.}
+\item{ppi}{An optional character string indicatining the file path of protein-protein interaction edge dataset.
+Also this can be generated given a list of proteins of interest by \code{\link{source.PPI}}.}
 
-\item{alpha}{value to be used for update variable, alpha (default=0.1)}
+\item{rm_missing}{an optional boolean indicatining whether to remove genes and tfs not present in all input files. If TRUE, remove all unmatched tf and genes.
+if FALSE, keep all tf and genes. The default value is FALSE.}
+}
+\value{
+A list of three items：
+         Use \code{$panda} to access the standard output of PANDA network in data.frame, which consists of four columns: 
+         "tf", "gene", "motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "force".
 
-\item{hamming}{value at which to terminate the process based on hamming distance (default 10^-3)}
+         Use \code{$indegree} to access the indegree of PANDA network in data.frame, consisting of two columns: "gene", "force".
 
-\item{iter}{sets the maximum number of iterations PANDA can run before exiting.}
+         Use \code{$outdegree} to access the outdegree of PANDA network in data.fra,e, consisting of two columns: "tf", "force".
+}
+\description{
+\strong{PANDA}(Passing Attributes between Networks for Data Assimilation) is a message-passing model 
+to reconstruct gene regulatory network. It integrates multiple sources of biological data-including protein-protein interaction,
+gene expression data, and transccription factor binding motifs data-to reconstruct genome-wide, condition-specific regulatory networks.
+\href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832}{[(Glass et al. 2013)])}
+This function is designed to run the a derived PANDA algorithm in Python from \href{https://github.com/netZoo/netZooPy}{netZooPy},
+ which is also a Python library of netZooR.
+}
+\examples{
+# take the treated TB dataset as example here.
+# refer to the datasets files path in inst/extdat
 
-\item{output}{a vector containing which networks to return.  Options include "regulatory",
-"coregulatory", "cooperative".}
-
-\item{zScale}{Boolean to indicate use of z-scores in output.  False will use [0,1] scale.}
-
-\item{progress}{Boolean to indicate printing of output for algorithm progress.}
-
-\item{randomize}{method by which to randomize gene expression matrix.  Default "None".  Must
-be one of "None", "within.gene", "by.genes".  "within.gene" randomization scrambles each row
-of the gene expression matrix, "by.gene" scrambles gene labels.}
+treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
+motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
+ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 
 \item{cor.method}{Correlation method, default is "pearson".}
 
-\item{scale.by.present}{Boolean to indicate scaling of correlations by percentage of positive samples.}
+# Run PANDA for treated and control network
+treated_all_panda_result <- panda(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
 
-\item{edgelist}{Boolean to indicate if edge lists instead of matrices should be returned.}
+# access PANDA regulatory network
+treated_net <- treated_all_panda_result$panda
 
-\item{remove.missing.ppi}{Boolean to indicate whether TFs in the PPI but not in the motif data should be
-removed.}
+# access PANDA regulatory indegree network.
+indegree_net <- treated_all_panda_result$indegree
 
-\item{remove.missing.motif}{Boolean to indicate whether genes targeted in the motif data but not the
-expression data should be removed.}
+# access PANDA regulatory outdegree networks
+outdegree_net <- treated_all_panda_result$outdegree
 
 \item{remove.missing.genes}{Boolean to indicate whether genes in the expression data but lacking
 information from the motif prior should be removed.}
