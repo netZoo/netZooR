@@ -24,6 +24,7 @@ Imports: GOstats,
 	 utils,
 Remotes: bioc::3.9/GOstats,
 	 bioc::3.9/GO.db,
+	 bioc::3.9/RCy3,
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
