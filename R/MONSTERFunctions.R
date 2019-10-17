@@ -72,10 +72,12 @@ print.monsterAnalysis <- function(x, ...){
 #' @return An object of class "monsterAnalysis" containing results
 #' @seealso \code{\link{monsterAnalysis-class}}
 #' @examples
+#' \donttest{
 #' data(yeast)
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)
 #' plot(monsterRes)
+#' }
 monster <- function(expr, 
                     design, 
                     motif, 
@@ -126,7 +128,7 @@ monster <- function(expr,
   
   nullExpr <- expr
   transMatrices <- foreach(i=1:iters,
-                           .packages=c("netZooR","reshape2","penalized","MASS")) %dopar% {
+                           .packages=c("netZooR","reshape2","penalized","MASS")) %do% {
                              print(paste0("Running iteration ", i))
                              if(i!=1){
                                nullExpr[] <- expr[sample(seq_along(c(expr)))]
