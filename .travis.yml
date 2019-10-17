@@ -9,6 +9,10 @@ os:
 
 before_install:
 - pip install --user -r requirements.txt
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
+    export PATH="/usr/local/opt/llvm/bin:$PATH" &&
+    export LDFLAGS="-L/usr/local/opt/llvm/lib" &&
+    export CFLAGS="-I/usr/local/opt/llvm/include"; fi
 
 install:
 - Rscript travis_script.r
