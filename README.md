@@ -7,7 +7,7 @@ Linux[![LINUX](https://travis-ci-job-status.herokuapp.com/badge/netZoo/netZooR/d
 Macos[![MAC](https://travis-ci-job-status.herokuapp.com/badge/netZoo/netZooR/devel/macos)](https://travis-ci.org/netZoo/netZooR)
 
 ## Description
-netZooR is an R package to construct,analyse and plot gene regulatory networks.
+netZooR is an R package to construct, analyse and plot gene regulatory networks.
 
 ## Features
 
@@ -31,13 +31,15 @@ netZooR currently integrates with:
 ## Installation
 
 ```r
+# install.packages("devtools") 
 library(devtools)
-devtools::install_github("netZoo/netZooR")`
-library(netZooR)
+# install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
+devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
 ```
 
-## User guide & tutorials
+## Quick Starts & tutorials
 Please refer to the top navigation bar **Get started** for basic usage and application cases.
+Or use `browseVignettes("netZooR")` after installing package.
 
 ## Development
 Contributions are welcome! Instruction of how to contribute netZooR repository can be found [here](https://netzoo.github.io/contribute/contribute/). 
