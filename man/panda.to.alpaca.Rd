@@ -8,9 +8,9 @@ panda.to.alpaca(panda_net1, panda_net2, file.stem = "./alpaca",
   verbose = F)
 }
 \arguments{
-\item{panda_net1}{Data Frame indicating one entire network generate by \code{\link{runPanda}}}
+\item{panda_net1}{Data Frame indicating one entire network generate by \code{\link{panda}}}
 
-\item{panda_net2}{Data Frame indicating another entire network generate by \code{\link{runPanda}}}
+\item{panda_net2}{Data Frame indicating another entire network generate by \code{\link{panda}}}
 
 \item{file.stem}{The folder location and title under which all results will be stored.}
 
@@ -23,7 +23,7 @@ A string message showing the location of output file if file.stem is given,
 \description{
 \strong{ALPACA}(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules.
 \href{https://www.nature.com/articles/s41540-018-0052-5}{[(Padi and Quackenbush 2018)])}
-This function compares two networks generate by \code{\link{runPanda}} in this package and finds the sets of nodes that best characterize the change in modular structure.
+This function compares two networks generate by \code{\link{panda}} in this package and finds the sets of nodes that best characterize the change in modular structure.
 }
 \examples{
 # refer to four input datasets files in inst/extdat
@@ -34,8 +34,8 @@ ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", 
 
 
 # Run PANDA for treated and control network
-treated_panda_net <- runPanda(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )$panda
-control_panda_net <- runPanda(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )$panda
+treated_panda_net <- panda(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )$panda
+control_panda_net <- panda(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )$panda
  
 # Run ALPACA
 alpaca<- panda.to.alpaca(treated_panda_net, control_panda_net, "./TB", verbose=TRUE)

@@ -7,3 +7,8 @@ UserGuidee\.md$
 CONDUCT\.md$
 ^README\.Rmd$
 ^LICENSE$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^doc$
+^Meta$
