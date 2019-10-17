@@ -43,7 +43,7 @@ control_expression_file_path <- system.file("extdata", "expr10_matched.txt", pac
 motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
 ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 
-# Run PANDA algorithm
+# Run LIONESS algorithm
 control_lioness_result <- lioness(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE,start_sample=1, end_sample=2)
 
 }
