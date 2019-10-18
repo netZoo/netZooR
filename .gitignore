@@ -2,3 +2,7 @@
 .Rhistory
 Untitled.R
 .Rbuildignore
+inst/doc
+docs/
+doc
+Meta
