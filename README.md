@@ -38,7 +38,7 @@ devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
 ```
 
 ## Quick Starts & tutorials
-Please refer to the top navigation bar **Get started** for basic usage and application cases.
+Please refer to the top navigation bar **Articles/Quick-Starts** for basic usage and application cases.
 Or use `browseVignettes("netZooR")` after installing package.
 
 ## Development
