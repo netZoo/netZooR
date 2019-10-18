@@ -18,9 +18,38 @@ netZooR currently integrates with:
 
 * **LIONESS**(Linear Interpolation to Obtain Network Estimates for Single Samples)[[Kuijjer et al. 2019]](https://doi.org/10.1016/j.isci.2019.03.021): reconstruct single-sample gene regulatory networks.
 
+
+## Table of Contents
+* [Getting Started](#getting-started) 
+  * [Prerequisites](#prerequisites)
+  * [Installing](#installing)
+* [Data Resources](#Data-Resources)
+  * [PANDA-ready Motif mapping data](#PANDA-ready-Motif-mapping-data)
+  * [PPI](#PPI)
+* [Running the sample datasets](#running-the-sample-datasets)
+  * [PANDA and plot PANDA network](#panda-and-plot-panda-network)
+  * [Cytoscape Plotting](#Cytoscape-Plotting)
+  * [LIONESS and plot LIONESS network](#lioness-and-plot-lioness-network)
+  * [CONDOR](#condor)
+  * [ALPACA](#ALPACA)
+* [Downstream Analysis](#Downstream-Analysis)
+  * [Pre-ranked GSEA](#Pre-ranked-GSEA)
+* [Further information](#further-information)
+  * [Future Work](#future-work)
+  * [Note](#note)
+ 
+## ANIMALS in R
+* [PADNA]
+* [CONDOR]
+* [LIONESS]
+* [ALPACA]
+* [SAMBAR]
+* [MONSTER]
+
 * **ALPACA**(ALtered Partitions Across Community Architectures)[[Padi and Quackenbush 2018]](https://www.nature.com/articles/s41540-018-0052-5): compare two networks and identify changes in modular structure.
 
 * **SAMBAR**(Subtyping Agglomerated Mutations By Annotation Relations)[[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identify subtypes based on somatic mutation data.
+
 
 * **MONSTER**
 
