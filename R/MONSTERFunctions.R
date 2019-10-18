@@ -122,7 +122,7 @@ monster <- function(expr,
   
   nullExpr <- expr
   transMatrices <- foreach(i=1:iters,
-                           .packages=c("MONSTER","reshape2","penalized","MASS")) %do% {
+                           .packages=c("MONSTER","reshape2","penalized","MASS")) %dopar% {
                              print(paste0("Running iteration ", i))
                              if(i!=1){
                                nullExpr[] <- expr[sample(seq_along(c(expr)))]
@@ -132,6 +132,8 @@ monster <- function(expr,
                              
                              tmpNetCases <- monsterNI(motif, nullExprCases, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff=ni.coefficient.cutoff)
                              tmpNetControls <- monsterNI(motif, nullExprControls, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff=ni.coefficient.cutoff)
+                             # the result matrix has nan, replaced with zero to carry on the analysis
+                             # I am not sure if this makes sense but the function does not work otherwise ~ Marouen
                              tmpNetControls[is.na(tmpNetControls)] <- 0
                              tmpNetCases[is.na(tmpNetCases)] <- 0
                              transitionMatrix <- transformation.matrix(
