@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, and SAMBAR into one workflow. • netZooR</title>
+<title>Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR and MONSTER into one workflow. • netZooR</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, and SAMBAR into one workflow.">
+<script src="pkgdown.js"></script><meta property="og:title" content="Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR and MONSTER into one workflow.">
 <meta property="og:description" content="PANDA(Passing Attributes between Networks for Data Assimilation) is a message-passing model to gene regulatory network reconstruction. It integrates multiple sources of biological data, including protein-protein interaction, gene expression, and sequence motif information, in order to reconstruct genome-wide, condition-specific regulatory networks.[(Glass et al. 2013)]. LIONESS(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks by applying linear interpolation to the predictions made by existing aggregate network inference approaches. CONDOR(COmplex Network Description Of Regulators)is a bipartite community structure analysis tool of biological networks, especially eQTL networks, including a method for scoring nodes based on their modularity contribution.[(Platig et al. 2016). ALPACA(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules.[(Padi and Quackenbush 2018)]. This package integrates pypanda--the Python implementation of PANDA and LIONESS(https://github.com/davidvi/pypanda),the R implementation of CONDOR(https://github.com/jplatig/condor) and the R implementation of ALPACA (https://github.com/meghapadi/ALPACA) into one workflow. Each tool can be call in this package by one function, and the relevant output could be accessible in current R session for downstream analysis. ">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -54,6 +54,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+    </li>
+    <li>
       <a href="articles/Quick-Starts.html">Quick-Starts</a>
     </li>
   </ul>
@@ -90,6 +93,7 @@
 <li><p><strong>LIONESS</strong>(Linear Interpolation to Obtain Network Estimates for Single Samples)<a href="https://doi.org/10.1016/j.isci.2019.03.021">[Kuijjer et al. 2019]</a>: reconstruct single-sample gene regulatory networks.</p></li>
 <li><p><strong>ALPACA</strong>(ALtered Partitions Across Community Architectures)<a href="https://www.nature.com/articles/s41540-018-0052-5">[Padi and Quackenbush 2018]</a>: compare two networks and identify changes in modular structure.</p></li>
 <li><p><strong>SAMBAR</strong>(Subtyping Agglomerated Mutations By Annotation Relations)<a href="https://www.nature.com/articles/s41416-018-0109-7">[Kuijjer et al.]</a>: identify subtypes based on somatic mutation data.</p></li>
+<li><p><strong>MONSTER</strong></p></li>
 <li><p>Source protein-protein interaction network from <a href="https://string-db.org/">STRINGdb</a> based on a list of protein of interest.</p></li>
 <li><p>Plot one PANDA network in <a href="https://cytoscape.org/">Cytoscape</a>.</p></li>
 <li><p>Plot two differential PANDA networks in Cytoscape.</p></li>
@@ -106,7 +110,7 @@ devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/
 <div id="quick-starts-tutorials" class="section level2">
 <h2 class="hasAnchor">
 <a href="#quick-starts-tutorials" class="anchor"></a>Quick Starts &amp; tutorials</h2>
-<p>Please refer to the top navigation bar <strong>Get started</strong> for basic usage and application cases. Or use <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("netZooR")</a></code> after installing package.</p>
+<p>Please refer to the top navigation bar <strong>Articles</strong> for basic usage and application cases in <a href="https://netzoo.github.io/netZooR/">Documentation Website</a>. Or use <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("netZooR")</a></code> after installing package.</p>
 </div>
 <div id="development" class="section level2">
 <h2 class="hasAnchor">

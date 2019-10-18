@@ -22,6 +22,8 @@ netZooR currently integrates with:
 
 * **SAMBAR**(Subtyping Agglomerated Mutations By Annotation Relations)[[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identify subtypes based on somatic mutation data.
 
+* **MONSTER**
+
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
 
 * Plot one PANDA network in [Cytoscape](https://cytoscape.org/).
@@ -38,7 +40,7 @@ devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
 ```
 
 ## Quick Starts & tutorials
-Please refer to the top navigation bar **Get started** for basic usage and application cases.
+Please refer to the top navigation bar **Articles** for basic usage and application cases in [Documentation Website](https://netzoo.github.io/netZooR/).
 Or use `browseVignettes("netZooR")` after installing package.
 
 ## Development

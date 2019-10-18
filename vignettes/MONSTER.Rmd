@@ -2,12 +2,20 @@
 title: "An Introduction to the MONSTER Package"
 author: "Daniel Schlauch"
 date: "`r Sys.Date()`"
-output: BiocStyle::html_document
+output: rmarkdown::html_document
 vignette: >
-    %\VignetteIndexEntry{MONSTER Package}
+    %\VignetteIndexEntry{netZooR Package}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
 
 # Using MONSTER
 
@@ -35,7 +43,7 @@ devtools::install_github('QuackenbushLab/MONSTER')
 The package can then be loaded via
 
 ```{r, message=F}
-library(MONSTER)
+#library(MONSTER)
 ```
 
 ## Input files

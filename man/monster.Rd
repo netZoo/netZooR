@@ -5,7 +5,7 @@
 \title{MOdeling Network State Transitions from Expression and Regulatory data (MONSTER)}
 \usage{
 monster(expr, design, motif, nullPerms = 100, ni_method = "BERE",
-  numMaxCores = 1, outputDir = NA)
+  ni.coefficient.cutoff = NA, numMaxCores = 1, outputDir = NA)
 }
 \arguments{
 \item{expr}{Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet}
@@ -17,6 +17,9 @@ regulates a gene (column 2) with a defined strength (column 3), usually taken to
 
 \item{nullPerms}{number of random permutations to run (default 100).  Set to 0 to only 
 calculate observed transition matrix}
+
+\item{ni.coefficient.cutoff}{numeric to specify a p-value cutoff at the network
+inference step.  Default is NA, indicating inclusion of all coefficients.}
 
 \item{numMaxCores}{requires doParallel, foreach.  Runs MONSTER in parallel computing 
 environment.  Set to 1 to avoid parallelization.}
@@ -39,10 +42,12 @@ By examining the properties of the transition matrix, we can gain insight into r
 changes associated with phenotypic state transition.
 }
 \examples{
+\donttest{
 data(yeast)
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
 monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)
 plot(monsterRes)
+}
 }
 \seealso{
 \code{\link{monsterAnalysis-class}}
