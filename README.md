@@ -35,7 +35,14 @@ and estimatiing the contribution of each node to its community's modularity.[[Pl
   * [Future Work](#future-work)
   * [Note](#note)
  
-
+## ANIMALS in R
+* [PADNA]
+* [CONDOR]
+* [LIONESS]
+* [ALPACA]
+* [SAMBAR]
+* [MONSTER]
+<!-- * [SPIDER] -->
 
 ## Getting Started
 
