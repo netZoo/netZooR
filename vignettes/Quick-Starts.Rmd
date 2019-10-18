@@ -1,5 +1,7 @@
 ---
 title: "Quick-Starts"
+author: "Tian Wang"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{QuickStart}
