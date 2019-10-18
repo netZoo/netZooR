@@ -4,7 +4,7 @@
 \alias{plot.panda.in.cytoscape}
 \title{Plot PANDA network in Cytoscape}
 \usage{
-\method{plot}{panda.in.cytoscape}(panda.net, network.name = "PANDA")
+plot.panda.in.cytoscape(panda.net, network.name = "PANDA")
 }
 \arguments{
 \item{panda.net}{Character string indicating the input PANDA network in data frame structure type.}
