@@ -23,33 +23,10 @@ netZooR currently integrates with:
 
 * **LIONESS**(Linear Interpolation to Obtain Network Estimates for Single Samples)[[Kuijjer et al. 2019]](https://doi.org/10.1016/j.isci.2019.03.021): reconstruct single-sample gene regulatory networks.
 
-## Table of Contents
-* [Getting Started](#getting-started) 
-  * [Prerequisites](#prerequisites)
-  * [Installing](#installing)
-* [Data Resources](#Data-Resources)
-  * [PANDA-ready Motif mapping data](#PANDA-ready-Motif-mapping-data)
-  * [PPI](#PPI)
-* [Running the sample datasets](#running-the-sample-datasets)
-  * [PANDA and plot PANDA network](#panda-and-plot-panda-network)
-  * [Cytoscape Plotting](#Cytoscape-Plotting)
-  * [LIONESS and plot LIONESS network](#lioness-and-plot-lioness-network)
-  * [CONDOR](#condor)
-  * [ALPACA](#ALPACA)
-* [Downstream Analysis](#Downstream-Analysis)
-  * [Pre-ranked GSEA](#Pre-ranked-GSEA)
-* [Further information](#further-information)
-  * [Future Work](#future-work)
-  * [Note](#note)
- 
-## ANIMALS in R
-* [PADNA]
-* [CONDOR]
-* [LIONESS]
-* [ALPACA]
-* [SAMBAR]
-* [MONSTER]
-<!-- * [SPIDER] -->
+* **ALPACA**(ALtered Partitions Across Community Architectures)[[Padi and Quackenbush 2018]](https://www.nature.com/articles/s41540-018-0052-5): compare two networks and identify changes in modular structure.
+
+* **SAMBAR**(Subtyping Agglomerated Mutations By Annotation Relations)[[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identify subtypes based on somatic mutation data.
+
 
 * **MONSTER**
 
@@ -59,7 +36,7 @@ netZooR currently integrates with:
 
 * Plot two differential PANDA networks in Cytoscape.
 
-## Requirement, installation and basic configuration.
+## requirement and installation
 Using this pacakage requires [**Python**](https://www.python.org/downloads/) (3.X) and some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access**.
 
 Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/) installed.
@@ -69,19 +46,6 @@ Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/)
 library(devtools)
 # install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
 devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
-library(netZooR)
-```
-
-This package will invoke the Python in R environment through reticulate package.
-Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html).
-
-```r
-#check your Python configuration and the specific version of Python in use currently
-py_config()
-
-# reset to Python 3.X if necessary, like below:
-# use_python("/usr/local/bin/python3")
-
 ```
 
 ## Issues
