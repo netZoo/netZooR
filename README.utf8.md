@@ -36,7 +36,7 @@ netZooR currently integrates with:
 
 * Plot two differential PANDA networks in Cytoscape.
 
-## Requirement, installation and basic configuration.
+## requirement and installation
 Using this pacakage requires [**Python**](https://www.python.org/downloads/) (3.X) and some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access**.
 
 Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/) installed.
@@ -46,19 +46,6 @@ Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/)
 library(devtools)
 # install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
 devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
-library(netZooR)
-```
-
-This package will invoke the Python in R environment through reticulate package.
-Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html).
-
-```r
-#check your Python configuration and the specific version of Python in use currently
-py_config()
-
-# reset to Python 3.X if necessary, like below:
-# use_python("/usr/local/bin/python3")
-
 ```
 
 ## Issues
