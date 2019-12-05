@@ -43,6 +43,7 @@ Imports: GOstats,
 	 assertthat,
 	 tidyr,
 	 methods,
+	 AnnotationDbi,
 Remotes: bioc::3.9/GOstats,
 	 bioc::3.9/GO.db,
 License: GPL-3
