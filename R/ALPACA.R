@@ -135,7 +135,7 @@ alpaca.ExtractTopGenes <- function(module.result,set.lengths)
 #' @import Matrix
 #' @import GOstats
 #' @import org.Hs.eg.db
-#' @import GO.db
+#' @import AnnotationDbi
 #' @export
 #' 
 
@@ -887,7 +887,6 @@ alpaca.simulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,de
 #' @import Matrix
 #' @import GOstats
 #' @import org.Hs.eg.db
-#' @import GO.db
 #' @import AnnotationDbi
 #' @export
 #' 
