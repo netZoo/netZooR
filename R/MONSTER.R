@@ -1,7 +1,7 @@
 monsterAnalysis <- setClass("monsterAnalysis", slots=c("tm","nullTM","numGenes","numSamples"))
-setMethod("show","monsterAnalysis",function(object){print.monsterAnalysis(object)})
+setMethod("show","monsterAnalysis",function(object){monster.print.monsterAnalysis(object)})
 
-#' plot.monsterAnalysis
+#' monster.plot.monsterAnalysis
 #'
 #' plots the sum of squares of off diagonal mass (differential TF Involvement)
 #'
@@ -15,10 +15,10 @@ setMethod("show","monsterAnalysis",function(object){print.monsterAnalysis(object
 #' monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
 #' plot(monsterRes)
 #' }
-plot.monsterAnalysis <- function(x, ...){
-  dTFIPlot(x,...)
+monster.plot.monsterAnalysis <- function(x, ...){
+  monster.dTFIPlot(x,...)
 }
-#' print.monsterAnalysis
+#' monster.print.monsterAnalysis
 #'
 #' summarizes the results of a MONSTER analysis
 #'
@@ -31,7 +31,7 @@ plot.monsterAnalysis <- function(x, ...){
 #' data(yeast)
 #' monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
 #' }
-print.monsterAnalysis <- function(x, ...){
+monster.print.monsterAnalysis <- function(x, ...){
   cat("MONSTER object\n")
   cat(paste(x@numGenes, "genes\n"))
   cat(paste(x@numSamples[1],"baseline samples\n"))
@@ -89,7 +89,7 @@ monster <- function(expr,
                     outputDir=NA){
   
   # Data type checking
-  expr <- checkDataType(expr)
+  expr <- monster.checkDataType(expr)
   if(is.null(motif)){
     stop("motif may not be NULL")
   }
@@ -130,13 +130,13 @@ monster <- function(expr,
                              nullExprCases <- nullExpr[,design==1]
                              nullExprControls <- nullExpr[,design==0]
                              
-                             tmpNetCases <- monsterNI(motif, nullExprCases, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff=ni.coefficient.cutoff)
-                             tmpNetControls <- monsterNI(motif, nullExprControls, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff=ni.coefficient.cutoff)
+                             tmpNetCases <- monster.monsterNI(motif, nullExprCases, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff=ni.coefficient.cutoff)
+                             tmpNetControls <- monster.monsterNI(motif, nullExprControls, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff=ni.coefficient.cutoff)
                              # the result matrix has nan, replaced with zero to carry on the analysis
                              # I am not sure if this makes sense but the function does not work otherwise ~ Marouen
                              tmpNetControls[is.na(tmpNetControls)] <- 0
                              tmpNetCases[is.na(tmpNetCases)] <- 0
-                             transitionMatrix <- transformation.matrix(
+                             transitionMatrix <- monster.transformation.matrix(
                                tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
                              print(paste("Finished running iteration", i))
                              if (!is.na(outputDir)){
@@ -167,14 +167,14 @@ monster <- function(expr,
 #' @export
 #' @examples
 #' expr.matrix <- matrix(rnorm(2000),ncol=20)
-#' checkDataType(expr.matrix)
+#' monster.checkDataType(expr.matrix)
 #' #TRUE
 #' data(yeast)
 #' class(yeast$exp.cc)
-#' checkDataType(yeast$exp.cc)
+#' monster.checkDataType(yeast$exp.cc)
 #' #TRUE
 #' 
-checkDataType <- function(expr){
+monster.checkDataType <- function(expr){
   assert_that(is.data.frame(expr)||is.matrix(expr)||class(expr)=="ExpressionSet")
   if(class(expr)=="ExpressionSet"){
     if (requireNamespace("Biobase", quietly = TRUE)) {
@@ -209,10 +209,10 @@ globalVariables("i")
 #' @export
 #' @examples
 #' data(yeast)
-#' cc.net.1 <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
-#' cc.net.2 <- monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])
-#' transformation.matrix(cc.net.1, cc.net.2)
-transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize=FALSE, 
+#' cc.net.1 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
+#' cc.net.2 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])
+#' monster.transformation.matrix(cc.net.1, cc.net.2)
+monster.transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize=FALSE, 
                                   remove.diagonal=TRUE, method="ols"){
   if(is.list(network.1)&&is.list(network.2)){
     if(by.tfs){
@@ -330,8 +330,8 @@ kabsch <- function(P,Q){
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
 #' data(monsterRes)
-#' hcl.heatmap.plot(monsterRes)
-hcl.heatmap.plot <- function(monsterObj, method="pearson"){
+#' monster.hcl.heatmap.plot(monsterRes)
+monster.hcl.heatmap.plot <- function(monsterObj, method="pearson"){
   x <- monsterObj@tm
   if(method=="pearson"){
     dist.func <- function(y) as.dist(cor(y))
@@ -423,10 +423,10 @@ hcl.heatmap.plot <- function(monsterObj, method="pearson"){
 #' data(monsterRes)
 #' # Color the nodes according to cluster membership
 #' clusters <- kmeans(slot(monsterRes, 'tm'),3)$cluster 
-#' transitionPCAPlot(monsterRes, 
+#' monster.transitionPCAPlot(monsterRes, 
 #' title="PCA Plot of Transition - Cell Cycle vs Stress Response", 
 #' clusters=clusters)
-transitionPCAPlot <-    function(monsterObj, 
+monster.transitionPCAPlot <-    function(monsterObj, 
                                  title="PCA Plot of Transition", 
                                  clusters=1, alpha=1){
   tm.pca <- princomp(monsterObj@tm)
@@ -454,9 +454,9 @@ transitionPCAPlot <-    function(monsterObj,
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
-#' transitionNetworkPlot(monsterRes)
+#' monster.transitionNetworkPlot(monsterRes)
 #' 
-transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
+monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
   ## Calculate p-values for off-diagonals
   transitionSigmas <- function(tm.observed, tm.null){
     tm.null.mean <- apply(simplify2array(tm.null), 1:2, mean)
@@ -477,7 +477,7 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
   # adj.combined[,1] <- mappings[match(adj.combined[,1], mappings[,1]),2]
   # adj.combined[,2] <- mappings[match(adj.combined[,2], mappings[,1]),2]
   
-  dTFI_pVals_All <- 1-2*abs(.5-calculate.tm.p.values(monsterObj, 
+  dTFI_pVals_All <- 1-2*abs(.5-monster.calculate.tm.p.values(monsterObj, 
                                                      method="z-score"))
   topTFsIncluded <- names(sort(dTFI_pVals_All)[1:numTopTFs])
   topTFIndices <- 2>(is.na(match(adj.combined[,1],topTFsIncluded)) + 
@@ -517,8 +517,8 @@ transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
-#' dTFIPlot(monsterRes)
-dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA){
+#' monster.dTFIPlot(monsterRes)
+monster.dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA){
   if(is.na(plot.title)){
     plot.title <- "Differential TF Involvement"
   }
@@ -588,8 +588,8 @@ dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
-#' calculate.tm.p.values(monsterRes)
-calculate.tm.p.values <- function(monsterObj, method="z-score"){
+#' monster.calculate.tm.p.values(monsterRes)
+monster.calculate.tm.p.values <- function(monsterObj, method="z-score"){
   num.iterations <- length(monsterObj@nullTM)
   # Calculate the off-diagonal squared mass for each transition matrix
   null.SSODM <- lapply(monsterObj@nullTM,function(x){
@@ -645,9 +645,9 @@ globalVariables(c("Var1", "Var2","value","variable","xend","yend","y","Comp.1", 
 #' @importFrom reshape2 dcast
 #' @examples
 #' data(yeast)
-#' cc.net <- monsterNI(yeast$motif,yeast$exp.cc)
+#' cc.net <- monster.monsterNI(yeast$motif,yeast$exp.cc)
 
-monsterNI <- function (motif, expr.data, verbose = FALSE, randomize = "none", 
+monster.monsterNI <- function (motif, expr.data, verbose = FALSE, randomize = "none", 
                        method = "bere", ni.coefficient.cutoff = NA, alphaw = 1, 
                        regularization = "none", score = "motifincluded", cpp = FALSE) 
 {
@@ -808,7 +808,7 @@ monsterNI <- function (motif, expr.data, verbose = FALSE, randomize = "none",
 #' This function generates a complete bipartite network from 
 #' gene expression data and sequence motif data. This NI method
 #' serves as a default method for inferring bipartite networks
-#' in MONSTER.  Running bereFull can generate these networks
+#' in MONSTER.  Running monster.bereFull can generate these networks
 #' independently from the larger MONSTER method.
 #'
 #' @param motif.data A motif dataset, a data.frame, matrix or exprSet 
@@ -828,8 +828,8 @@ monsterNI <- function (motif, expr.data, verbose = FALSE, randomize = "none",
 #' @return An matrix or data.frame
 #' @examples
 #' data(yeast)
-#' monsterRes <- bereFull(yeast$motif, yeast$exp.cc, alpha=.5)
-bereFull <- function(motif.data, 
+#' monsterRes <- monster.bereFull(yeast$motif, yeast$exp.cc, alpha=.5)
+monster.bereFull <- function(motif.data, 
                      expr.data, 
                      alpha=.5, 
                      lambda=10, 
