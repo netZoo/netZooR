@@ -43,8 +43,6 @@ Imports: GOstats,
 	 assertthat,
 	 tidyr,
 	 methods,
-Remotes: bioc::3.9/GOstats,
-	 bioc::3.9/GO.db,
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
