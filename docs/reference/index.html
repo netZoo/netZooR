@@ -16,8 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -86,10 +86,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
+    </li>
+    <li>
+      <a href="../articles/ApplicationwithTBdataset.html">Application with TB dataset</a>
+    </li>
+    <li>
       <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
     </li>
     <li>
-      <a href="../articles/Quick-Starts.html">Quick-Starts</a>
+      <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
     </li>
   </ul>
 </li>
@@ -131,27 +137,33 @@
       <tr>
         
         <td>
-          <p><code><a href="panda.html">panda()</a></code> </p>
+          <p><code><a href="alpaca.CommunityStructureRotation.html">alpaca.CommunityStructureRotation()</a></code> </p>
         </td>
-        <td><p>Run PANDA in R</p></td>
+        <td><p>Comparing node community membership between two networks</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="create.condor.object.html">create.condor.object()</a></code> </p>
+          <p><code><a href="alpaca.DeltaZAnalysis.Louvain.html">alpaca.DeltaZAnalysis.Louvain()</a></code> </p>
         </td>
-        <td><p>Create list amenable to analysis using <code>condor</code> package.</p></td>
+        <td><p>Edge subtraction method (Louvain optimizaton)</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="panda.to.condor.object.html">panda.to.condor.object()</a></code> </p>
+          <p><code><a href="alpaca.DeltaZAnalysis.html">alpaca.DeltaZAnalysis()</a></code> </p>
         </td>
-        <td><p>Turn PANDA network into a CONDOR object</p></td>
+        <td><p>Edge subtraction method (CONDOR optimizaton)</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="lioness.html">lioness()</a></code> </p>
+          <p><code><a href="alpaca.ExtractTopGenes.html">alpaca.ExtractTopGenes()</a></code> </p>
         </td>
-        <td><p>Run python implementation of LIONESS</p></td>
+        <td><p>Extract core target genes in differential modules</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.GOtab.to.genes.html">alpaca.GOtab.to.genes()</a></code> </p>
+        </td>
+        <td><p>The top GO term associated genes in each module</p></td>
       </tr><tr>
         
         <td>
@@ -161,15 +173,329 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="alpaca.RotationAnalysis.Louvain.html">alpaca.RotationAnalysis.Louvain()</a></code> </p>
+        </td>
+        <td><p>Community comparison method (CONDOR optimizaton)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.RotationAnalysis.html">alpaca.RotationAnalysis()</a></code> </p>
+        </td>
+        <td><p>Community comparison method (CONDOR optimizaton)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.TestNodeRank.html">alpaca.TestNodeRank()</a></code> </p>
+        </td>
+        <td><p>Enrichment in ranked list</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.TopEnsembl.to.TopSym.html">alpaca.TopEnsembl.to.TopSym()</a></code> </p>
+        </td>
+        <td><p>Translating gene identifiers to gene symbols</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.WBM.louvain.html">alpaca.WBM.louvain()</a></code> </p>
+        </td>
+        <td><p>Generalized Louvain method for bipartite networks</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.computeDWBMmat.mscale.html">alpaca.computeDWBMmat.mscale()</a></code> </p>
+        </td>
+        <td><p>Differential modularity matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.computeWBMmat.html">alpaca.computeWBMmat()</a></code> </p>
+        </td>
+        <td><p>Compute modularity matrix for weighted bipartite network</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.genlouvain.html">alpaca.genlouvain()</a></code> </p>
+        </td>
+        <td><p>Generalized Louvain optimization</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.go.to.genes.html">alpaca.go.to.genes()</a></code> </p>
+        </td>
+        <td><p>Map GO terms to gene symbols</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.list.to.go.html">alpaca.list.to.go()</a></code> </p>
+        </td>
+        <td><p>GO term enrichment for a list of gene sets</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.metanetwork.html">alpaca.metanetwork()</a></code> </p>
+        </td>
+        <td><p>Create alpaca.metanetwork for Louvain optimization</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.node.to.gene.html">alpaca.node.to.gene()</a></code> </p>
+        </td>
+        <td><p>Remove tags from gene names</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.simulateNetwork.html">alpaca.simulateNetwork()</a></code> </p>
+        </td>
+        <td><p>Simulated networks</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.tidyconfig.html">alpaca.tidyconfig()</a></code> </p>
+        </td>
+        <td><p>Renumbering community membership vector</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.cluster.html">condor.cluster()</a></code> </p>
+        </td>
+        <td><p>Main clustering function for condor.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.core.enrich.html">condor.core.enrich()</a></code> </p>
+        </td>
+        <td><p>Compare qscore distribution of a subset of nodes to all other nodes.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.matrix.modularity.html">condor.matrix.modularity()</a></code> </p>
+        </td>
+        <td><p>Iteratively maximize bipartite modularity.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.modularity.max.html">condor.modularity.max()</a></code> </p>
+        </td>
+        <td><p>Iteratively maximize bipartite modularity.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.plot.communities.html">condor.plot.communities()</a></code> </p>
+        </td>
+        <td><p>Plot adjacency matrix with links grouped and colored by community</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.plot.heatmap.html">condor.plot.heatmap()</a></code> </p>
+        </td>
+        <td><p>Plot weighted adjacency matrix with links grouped by community</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.qscore.html">condor.qscore()</a></code> </p>
+        </td>
+        <td><p>Calculate Qscore for all nodes</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="create.condor.object.html">create.condor.object()</a></code> </p>
+        </td>
+        <td><p>Create list amenable to analysis using <code>condor</code> package.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="create.diff.panda.style.html">create.diff.panda.style()</a></code> </p>
+        </td>
+        <td><p>Create a Cytoscape visual style for two PANDA networks</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="create.panda.style.html">create.panda.style()</a></code> </p>
+        </td>
+        <td><p>Create a Cytoscape visual style for PANDA network</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exon.size.html">exon.size</a></code> </p>
+        </td>
+        <td><p>Gene length</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="genes.html">genes</a></code> </p>
+        </td>
+        <td><p>Example of a gene list</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lioness.html">lioness()</a></code> </p>
+        </td>
+        <td><p>Compute LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lioness.fast.html">lioness.fast()</a></code> </p>
+        </td>
+        <td><p>Run python implementation of LIONESS</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.html">monster()</a></code> </p>
+        </td>
+        <td><p>MOdeling Network State Transitions from Expression and Regulatory data (MONSTER)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.bereFull.html">monster.bereFull()</a></code> </p>
+        </td>
+        <td><p>Bipartite Edge Reconstruction from Expression data 
+(composite method with direct/indirect)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.calculate.tm.p.values.html">monster.calculate.tm.p.values()</a></code> </p>
+        </td>
+        <td><p>Calculate p-values for a tranformation matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.checkDataType.html">monster.checkDataType()</a></code> </p>
+        </td>
+        <td><p>Checks that data is something MONSTER can handle</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.dTFIPlot.html">monster.dTFIPlot()</a></code> </p>
+        </td>
+        <td><p>This function plots the Off diagonal mass of an 
+observed Transition Matrix compared to a set of null TMs</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.hcl.heatmap.plot.html">monster.hcl.heatmap.plot()</a></code> </p>
+        </td>
+        <td><p>Transformation matrix plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.monsterNI.html">monster.monsterNI()</a></code> </p>
+        </td>
+        <td><p>Bipartite Edge Reconstruction from Expression data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.plot.monsterAnalysis.html">monster.plot.monsterAnalysis()</a></code> </p>
+        </td>
+        <td><p>monster.plot.monsterAnalysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.print.monsterAnalysis.html">monster.print.monsterAnalysis()</a></code> </p>
+        </td>
+        <td><p>monster.print.monsterAnalysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.transformation.matrix.html">monster.transformation.matrix()</a></code> </p>
+        </td>
+        <td><p>Bi-partite network analysis tools</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.transitionNetworkPlot.html">monster.transitionNetworkPlot()</a></code> </p>
+        </td>
+        <td><p>This function uses igraph to plot the transition matrix as a network</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.transitionPCAPlot.html">monster.transitionPCAPlot()</a></code> </p>
+        </td>
+        <td><p>Principal Components plot of transformation matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monsterAnalysis-class.html">monsterAnalysis</a></code> </p>
+        </td>
+        <td><p>Class "monsterAnalysis" -- a list containing the transition matrix results from a monster analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monsterRes.html">monsterRes</a></code> </p>
+        </td>
+        <td><p>MONSTER results from example cell-cycle yeast transition</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mut.ucec.html">mut.ucec</a></code> </p>
+        </td>
+        <td><p>Example of mutation data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="panda.fast.html">panda.fast()</a></code> </p>
+        </td>
+        <td><p>Run PANDA in R</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="panda.to.alpaca.html">panda.to.alpaca()</a></code> </p>
         </td>
         <td><p>panda.to.alpaca</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="panda.to.condor.object.html">panda.to.condor.object()</a></code> </p>
+        </td>
+        <td><p>Turn PANDA network into a CONDOR object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.panda.in.cytoscape.html">plot(<i>&lt;panda.in.cytoscape&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot PANDA network in Cytoscape</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="sambar.html">sambar()</a></code> </p>
         </td>
         <td><p>Main SAMBAR function.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sambar.convertgmt.html">sambar.convertgmt()</a></code> </p>
+        </td>
+        <td><p>Convert .gmt files into a binary matrix.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sambar.corgenelength.html">sambar.corgenelength()</a></code> </p>
+        </td>
+        <td><p>Normalize gene mutation scores by gene length.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sambar.desparsify.html">sambar.desparsify()</a></code> </p>
+        </td>
+        <td><p>De-sparsify gene-level mutation scores into gene set-level mutation scores.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="small1976.html">small1976</a></code> </p>
+        </td>
+        <td><p>Pollinator-plant interactions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="source.PPI.html">source.PPI()</a></code> </p>
+        </td>
+        <td><p>Source the Protein-Protein interaction in STRING database</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yeast.html">yeast</a></code> </p>
+        </td>
+        <td><p>Toy data derived from three gene expression datasets and a mapping from transcription factors to genes.</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -219,21 +545,177 @@
       <tr>
         
         <td>
-          <p><code><a href="panda.html">panda()</a></code> </p>
+          <p><code><a href="alpaca.CommunityStructureRotation.html">alpaca.CommunityStructureRotation()</a></code> </p>
         </td>
-        <td><p>Run PANDA in R</p></td>
+        <td><p>Comparing node community membership between two networks</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="panda.to.condor.object.html">panda.to.condor.object()</a></code> </p>
+          <p><code><a href="alpaca.DeltaZAnalysis.Louvain.html">alpaca.DeltaZAnalysis.Louvain()</a></code> </p>
         </td>
-        <td><p>Turn PANDA network into a CONDOR object</p></td>
+        <td><p>Edge subtraction method (Louvain optimizaton)</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="panda.to.alpaca.html">panda.to.alpaca()</a></code> </p>
+          <p><code><a href="alpaca.DeltaZAnalysis.html">alpaca.DeltaZAnalysis()</a></code> </p>
         </td>
-        <td><p>panda.to.alpaca</p></td>
+        <td><p>Edge subtraction method (CONDOR optimizaton)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.ExtractTopGenes.html">alpaca.ExtractTopGenes()</a></code> </p>
+        </td>
+        <td><p>Extract core target genes in differential modules</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.GOtab.to.genes.html">alpaca.GOtab.to.genes()</a></code> </p>
+        </td>
+        <td><p>The top GO term associated genes in each module</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.html">alpaca()</a></code> </p>
+        </td>
+        <td><p>Main ALPACA function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.RotationAnalysis.Louvain.html">alpaca.RotationAnalysis.Louvain()</a></code> </p>
+        </td>
+        <td><p>Community comparison method (CONDOR optimizaton)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.RotationAnalysis.html">alpaca.RotationAnalysis()</a></code> </p>
+        </td>
+        <td><p>Community comparison method (CONDOR optimizaton)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.TestNodeRank.html">alpaca.TestNodeRank()</a></code> </p>
+        </td>
+        <td><p>Enrichment in ranked list</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.TopEnsembl.to.TopSym.html">alpaca.TopEnsembl.to.TopSym()</a></code> </p>
+        </td>
+        <td><p>Translating gene identifiers to gene symbols</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.WBM.louvain.html">alpaca.WBM.louvain()</a></code> </p>
+        </td>
+        <td><p>Generalized Louvain method for bipartite networks</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.computeDWBMmat.mscale.html">alpaca.computeDWBMmat.mscale()</a></code> </p>
+        </td>
+        <td><p>Differential modularity matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.computeWBMmat.html">alpaca.computeWBMmat()</a></code> </p>
+        </td>
+        <td><p>Compute modularity matrix for weighted bipartite network</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.genlouvain.html">alpaca.genlouvain()</a></code> </p>
+        </td>
+        <td><p>Generalized Louvain optimization</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.go.to.genes.html">alpaca.go.to.genes()</a></code> </p>
+        </td>
+        <td><p>Map GO terms to gene symbols</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.list.to.go.html">alpaca.list.to.go()</a></code> </p>
+        </td>
+        <td><p>GO term enrichment for a list of gene sets</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.metanetwork.html">alpaca.metanetwork()</a></code> </p>
+        </td>
+        <td><p>Create alpaca.metanetwork for Louvain optimization</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.node.to.gene.html">alpaca.node.to.gene()</a></code> </p>
+        </td>
+        <td><p>Remove tags from gene names</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.simulateNetwork.html">alpaca.simulateNetwork()</a></code> </p>
+        </td>
+        <td><p>Simulated networks</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpaca.tidyconfig.html">alpaca.tidyconfig()</a></code> </p>
+        </td>
+        <td><p>Renumbering community membership vector</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.cluster.html">condor.cluster()</a></code> </p>
+        </td>
+        <td><p>Main clustering function for condor.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.core.enrich.html">condor.core.enrich()</a></code> </p>
+        </td>
+        <td><p>Compare qscore distribution of a subset of nodes to all other nodes.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.matrix.modularity.html">condor.matrix.modularity()</a></code> </p>
+        </td>
+        <td><p>Iteratively maximize bipartite modularity.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.modularity.max.html">condor.modularity.max()</a></code> </p>
+        </td>
+        <td><p>Iteratively maximize bipartite modularity.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.plot.communities.html">condor.plot.communities()</a></code> </p>
+        </td>
+        <td><p>Plot adjacency matrix with links grouped and colored by community</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.plot.heatmap.html">condor.plot.heatmap()</a></code> </p>
+        </td>
+        <td><p>Plot weighted adjacency matrix with links grouped by community</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="condor.qscore.html">condor.qscore()</a></code> </p>
+        </td>
+        <td><p>Calculate Qscore for all nodes</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="create.condor.object.html">create.condor.object()</a></code> </p>
+        </td>
+        <td><p>Create list amenable to analysis using <code>condor</code> package.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="create.diff.panda.style.html">create.diff.panda.style()</a></code> </p>
+        </td>
+        <td><p>Create a Cytoscape visual style for two PANDA networks</p></td>
       </tr><tr>
         
         <td>
@@ -243,15 +725,185 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="exon.size.html">exon.size</a></code> </p>
+        </td>
+        <td><p>Gene length</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="genes.html">genes</a></code> </p>
+        </td>
+        <td><p>Example of a gene list</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lioness.html">lioness()</a></code> </p>
+        </td>
+        <td><p>Compute LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lioness.fast.html">lioness.fast()</a></code> </p>
+        </td>
+        <td><p>Run python implementation of LIONESS</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.html">monster()</a></code> </p>
+        </td>
+        <td><p>MOdeling Network State Transitions from Expression and Regulatory data (MONSTER)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.bereFull.html">monster.bereFull()</a></code> </p>
+        </td>
+        <td><p>Bipartite Edge Reconstruction from Expression data 
+(composite method with direct/indirect)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.calculate.tm.p.values.html">monster.calculate.tm.p.values()</a></code> </p>
+        </td>
+        <td><p>Calculate p-values for a tranformation matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.checkDataType.html">monster.checkDataType()</a></code> </p>
+        </td>
+        <td><p>Checks that data is something MONSTER can handle</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.dTFIPlot.html">monster.dTFIPlot()</a></code> </p>
+        </td>
+        <td><p>This function plots the Off diagonal mass of an 
+observed Transition Matrix compared to a set of null TMs</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.hcl.heatmap.plot.html">monster.hcl.heatmap.plot()</a></code> </p>
+        </td>
+        <td><p>Transformation matrix plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.monsterNI.html">monster.monsterNI()</a></code> </p>
+        </td>
+        <td><p>Bipartite Edge Reconstruction from Expression data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.plot.monsterAnalysis.html">monster.plot.monsterAnalysis()</a></code> </p>
+        </td>
+        <td><p>monster.plot.monsterAnalysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.print.monsterAnalysis.html">monster.print.monsterAnalysis()</a></code> </p>
+        </td>
+        <td><p>monster.print.monsterAnalysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.transformation.matrix.html">monster.transformation.matrix()</a></code> </p>
+        </td>
+        <td><p>Bi-partite network analysis tools</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.transitionNetworkPlot.html">monster.transitionNetworkPlot()</a></code> </p>
+        </td>
+        <td><p>This function uses igraph to plot the transition matrix as a network</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monster.transitionPCAPlot.html">monster.transitionPCAPlot()</a></code> </p>
+        </td>
+        <td><p>Principal Components plot of transformation matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monsterAnalysis-class.html">monsterAnalysis</a></code> </p>
+        </td>
+        <td><p>Class "monsterAnalysis" -- a list containing the transition matrix results from a monster analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monsterRes.html">monsterRes</a></code> </p>
+        </td>
+        <td><p>MONSTER results from example cell-cycle yeast transition</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mut.ucec.html">mut.ucec</a></code> </p>
+        </td>
+        <td><p>Example of mutation data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="panda.fast.html">panda.fast()</a></code> </p>
+        </td>
+        <td><p>Run PANDA in R</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="panda.to.alpaca.html">panda.to.alpaca()</a></code> </p>
+        </td>
+        <td><p>panda.to.alpaca</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="panda.to.condor.object.html">panda.to.condor.object()</a></code> </p>
+        </td>
+        <td><p>Turn PANDA network into a CONDOR object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="plot.panda.in.cytoscape.html">plot(<i>&lt;panda.in.cytoscape&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot PANDA network in Cytoscape</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="create.diff.panda.style.html">create.diff.panda.style()</a></code> </p>
+          <p><code><a href="sambar.html">sambar()</a></code> </p>
         </td>
-        <td><p>Create a Cytoscape visual style for two PANDA networks</p></td>
+        <td><p>Main SAMBAR function.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sambar.convertgmt.html">sambar.convertgmt()</a></code> </p>
+        </td>
+        <td><p>Convert .gmt files into a binary matrix.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sambar.corgenelength.html">sambar.corgenelength()</a></code> </p>
+        </td>
+        <td><p>Normalize gene mutation scores by gene length.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sambar.desparsify.html">sambar.desparsify()</a></code> </p>
+        </td>
+        <td><p>De-sparsify gene-level mutation scores into gene set-level mutation scores.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="small1976.html">small1976</a></code> </p>
+        </td>
+        <td><p>Pollinator-plant interactions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="source.PPI.html">source.PPI()</a></code> </p>
+        </td>
+        <td><p>Source the Protein-Protein interaction in STRING database</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="yeast.html">yeast</a></code> </p>
+        </td>
+        <td><p>Toy data derived from three gene expression datasets and a mapping from transcription factors to genes.</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -321,7 +973,7 @@
         <td>
           <p><code><a href="lioness.html">lioness()</a></code> </p>
         </td>
-        <td><p>Run python implementation of LIONESS</p></td>
+        <td><p>Compute LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples)</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -487,7 +1139,7 @@
     </table>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#section-main-functions">Main functions</a></li>

@@ -16,8 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -92,10 +92,16 @@ This function uses the result of PANDA algorithm as the input dataset to run CON
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
+    </li>
+    <li>
+      <a href="../articles/ApplicationwithTBdataset.html">Application with TB dataset</a>
+    </li>
+    <li>
       <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
     </li>
     <li>
-      <a href="../articles/Quick-Starts.html">Quick-Starts</a>
+      <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
     </li>
   </ul>
 </li>
@@ -137,7 +143,7 @@ This function uses the result of PANDA algorithm as the input dataset to run CON
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>panda.net</th>
-      <td><p>Data Frame indicating the result of PANDA regulatory network, created by <code><a href='panda.html'>panda</a></code></p></td>
+      <td><p>Data Frame indicating the result of PANDA regulatory network, created by <code><a href='panda.fast.html'>panda.fast</a></code></p></td>
     </tr>
     <tr>
       <th>threshold</th>
@@ -161,7 +167,7 @@ and the median edge-weight of non-prior edges (3rd column "Motif" is 0.0) in PAN
 
 
 <span class='co'># Run PANDA for treated and control network</span>
-<span class='no'>treated_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='panda.html'>panda</a></span>(<span class='kw'>e</span> <span class='kw'>=</span> <span class='no'>treated_expression_file_path</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )</div><div class='output co'>#&gt; <span class='message'>Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node names between first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA run...</span></div><div class='input'><span class='no'>control_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='panda.html'>panda</a></span>(<span class='kw'>e</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )</div><div class='output co'>#&gt; <span class='message'>Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node names between first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA run...</span></div><div class='input'>
+<span class='no'>treated_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='panda.fast.html'>panda.fast</a></span>(<span class='kw'>e</span> <span class='kw'>=</span> <span class='no'>treated_expression_file_path</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )</div><div class='output co'>#&gt; <span class='message'>Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node names between first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA run...</span></div><div class='input'><span class='no'>control_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='panda.fast.html'>panda.fast</a></span>(<span class='kw'>e</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )</div><div class='output co'>#&gt; <span class='message'>Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node names between first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA run...</span></div><div class='input'>
 <span class='co'># access PANDA regulatory network</span>
 <span class='no'>treated_net</span> <span class='kw'>&lt;-</span> <span class='no'>treated_all_panda_result</span>$<span class='no'>panda</span>
 <span class='no'>control_net</span> <span class='kw'>&lt;-</span> <span class='no'>control_all_panda_result</span>$<span class='no'>panda</span>
@@ -185,7 +191,7 @@ and the median edge-weight of non-prior edges (3rd column "Motif" is 0.0) in PAN
 
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

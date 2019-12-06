@@ -1,6 +1,7 @@
 ---
 title: "Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R"
 author: Deborah Weighill
+data: "2019-11-06"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ApplicationinGTExData}
@@ -44,8 +45,10 @@ Now we locate our ppi and motif priors. The ppi represents physical interactions
 Let's take a look at the priors:
 
 ```{r}
-ppi <- read.table("priors/ppi.txt")
-motif <- read.table("priors/motifTest.txt")
+motif_file_path <- system.file("extdata", "motifTest.txt", package = "netZooR", mustWork = TRUE)
+motif <- read.table(motif_file_path)
+ppi_file_path <- system.file("extdata", "ppi.txtt", package = "netZooR", mustWork = TRUE)
+ppi <- read.table(ppi_file_path)
 
 ppi[1:5,]
 motif[1:5,]
@@ -63,7 +66,8 @@ expr <- fread("expressionData/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm
 expr$Name<-sub("\\.[0-9]","", expr$Name)
 
 #load the sample ids of LCL samples
-lcl_samples <-fread("expressionData/LCL_samples.txt", header = FALSE, data.table=FALSE)
+LCL_samples_path <- system.file("extdata", "LCL_samples.txt", package = "netZooR", mustWork = TRUE)
+lcl_samples <-fread(LCL_samples_path, header = FALSE, data.table=FALSE)
 
 #select the columns of the expression matrix corresponding to the LCL samples.
 lcl_expr <- expr[,union("Name",intersect(c(lcl_samples[1:149,]),colnames(expr))), with=FALSE]
@@ -81,7 +85,7 @@ write.table(clean_data, file = "pandaExprLCL.txt", sep = "\t", col.names = FALSE
 Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior.
 
 ```{r}
-panda_results_LCL <- panda(e = "pandaExprLCL.txt" , m = "priors/motifTest.txt", ppi = "priors/ppi.txt", rm_missing = TRUE)
+panda_results_LCL <- panda(e = "pandaExprLCL.txt" , m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE)
 ```
 
 Let's take a look at the results. The output contains a list of three data frames:
@@ -108,7 +112,8 @@ outDegreeLCL
 
 ```{r}
 #load the sample ids of Whole Blood samples
-wblood_samples <-fread("expressionData/WholeBlood_samples.txt", header = FALSE, data.table=FALSE)
+wblood_samples_file_path <- system.file("extdata", "WholeBlood_samples.txt", package = "netZooR", mustWork = TRUE)
+wblood_samples <-fread(wblood_samples_file_path, header = FALSE, data.table=FALSE)
 
 #select the columns of the expression matrix corresponding to the LCL samples.
 wblood_expr <- expr[,union("Name",intersect(c(wblood_samples[1:149,]),colnames(expr))), with=FALSE]
@@ -123,7 +128,7 @@ clean_data_wb <- wblood_expr[zero_na_counts > 20,]
 write.table(clean_data, file = "pandaExprWholeBlood.txt", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 #run PANDA
-panda_results_wblood <- panda(e = "pandaExprWholeBlood.txt" , m = "priors/motifTest.txt", ppi = "priors/ppi.txt", rm_missing = TRUE)
+panda_results_wblood <- panda(e = "pandaExprWholeBlood.txt" , m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE)
 ```
 
 ```{r}
@@ -148,7 +153,7 @@ LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples) is
 Running LIONESS with netZoo is simple, and very similar to running PANDA:
 
 ```{r}
-lionessLCL <- lioness(e = "pandaExprLCL.txt" , m = "priors/motifTest.txt", ppi = "priors/ppi.txt", rm_missing = TRUE, save_fmt = "txt")
+lionessLCL <- lioness(e = "pandaExprLCL.txt" , m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE, save_fmt = "txt")
 ```
 
 The result is a data frame in which the first colum  contains TFs, the second column contains genes and each subsequent column contains the edge weight for that particular TF-gene pair in a particular sample.
