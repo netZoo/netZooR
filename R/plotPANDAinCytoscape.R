@@ -12,7 +12,7 @@
 #' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' # Run PANDA algorithm
-#' control_all_panda_result <- runPanda(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+#' control_all_panda_result <- panda.fast(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
 #' 
 #' # access PANDA regulatory network
 #' control_net <- control_all_panda_result$panda

@@ -33,19 +33,12 @@ corresponding to each of the N samples in the expression data set.\cr
 Compute LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples)
 }
 \examples{
-
-# refer to the input datasets files of control in inst/extdat as example
-control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
-motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
-ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
-
-# Run LIONESS algorithm
-control_lioness_result <- lioness(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE,start_sample=1, end_sample=2)
-
+data(pandaToyData)
+linonessRes <- lioness(pandaToyData$motif,
+    pandaToyData$expression[,1:20],pandaToyData$ppi,hamming=.1,progress=FALSE)
 }
 \references{
 Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.
 }
 \keyword{keywords}
-
