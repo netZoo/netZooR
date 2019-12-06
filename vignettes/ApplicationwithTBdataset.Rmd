@@ -1,10 +1,10 @@
 ---
-title: "Quick-Starts"
+title: "Application with TB dataset"
 author: "Tian Wang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{QuickStart}
+  %\VignetteIndexEntry{ApplicationwithTBdataset}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

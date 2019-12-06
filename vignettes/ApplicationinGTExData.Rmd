@@ -1,14 +1,21 @@
 ---
 title: "Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R"
 author: Deborah Weighill
-output:
-  html_notebook:
-    toc: true
-    theme: flatly
-    df_print: paged
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ApplicationinGTExData}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-___
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
 
 # Introduction
 In this vignette, we will demonstrate the functionalities of netZooR. 

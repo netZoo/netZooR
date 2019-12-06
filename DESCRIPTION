@@ -22,7 +22,7 @@ Depends: R (>= 3.3.2),
    pandaR
 Imports: RSQLite,
    GOstats,
-   GO.db (>= 3.8.0),
+   GO.db (>= 3.7.0),
 	 org.Hs.eg.db,
 	 reticulate,
 	 Matrix,
