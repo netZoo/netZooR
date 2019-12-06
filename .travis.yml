@@ -3,7 +3,6 @@
 language: R
 r: 
   - bioc-release
-  - oldrel
   - release
   - devel
 sudo: true
