@@ -27,11 +27,11 @@
 #' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' # Run LIONESS algorithm
-#' control_lioness_result <- lioness(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE,start_sample=1, end_sample=2)
+#' control_lioness_result <- lioness.fast(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE,start_sample=1, end_sample=2)
 #' 
 #' @import reticulate
 #' @export
-lioness <- function(e = expression, m = motif, ppi = ppi, rm_missing = FALSE, start_sample=1, end_sample="None", save_dir="lioness_output", save_fmt='npy'){
+lioness.fast <- function(e = expression, m = motif, ppi = ppi, rm_missing = FALSE, start_sample=1, end_sample="None", save_dir="lioness_output", save_fmt='npy'){
 
   if(missing(e)){
      stop("Please provide the gene expression data file path to argument e, e.g. e=\"expression.txt\"") }
@@ -98,6 +98,7 @@ lioness <- function(e = expression, m = motif, ppi = ppi, rm_missing = FALSE, st
 #' @importFrom matrixStats colSds
 #' @importFrom Biobase assayData
 #' @importFrom reshape melt.array
+#' @importFrom pandaR panda
 #' @export
 #' @return A list of length N, containing objects of class "panda" 
 #' corresponding to each of the N samples in the expression data set.\cr
@@ -111,7 +112,7 @@ lioness <- function(e = expression, m = motif, ppi = ppi, rm_missing = FALSE, st
 #' @references
 #' Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 #' Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.
-lionessR <- function(motif,expr,ppi=NULL, network.inference.method, ...){
+lioness <- function(motif,expr,ppi=NULL, network.inference.method, ...){
     N <- ncol(expr)
     fullnet <- panda(motif, expr, ppi, ...)
     lapply(seq_len(N), function(i){
