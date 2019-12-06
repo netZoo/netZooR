@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -99,13 +99,28 @@
 <li><p>Plot two differential PANDA networks in Cytoscape.</p></li>
 </ul>
 </div>
-<div id="installation" class="section level2">
+<div id="requirement-installation-and-basic-configuration-" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<a href="#requirement-installation-and-basic-configuration-" class="anchor"></a>Requirement, installation and basic configuration.</h2>
+<p>Using this pacakage requires <a href="https://www.python.org/downloads/"><strong>Python</strong></a> (3.X) and some <a href="#required-python-libraries">Python libraries</a>, <a href="https://cran.r-project.org/"><strong>R</strong></a> (&gt;= 3.3.3), and stable <strong>Internet access</strong>.</p>
+<p>Some plotting functions will require the <a href="https://cytoscape.org/"><strong>Cytoscape</strong></a> installed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools") </span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(devtools)
 <span class="co"># install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.</span>
-devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"netZoo/netZooR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"netZoo/netZooR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(netZooR)</code></pre></div>
+<p>This package will invoke the Python in R environment through reticulate package. Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. More details can be found <a href="https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html">here</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check your Python configuration and the specific version of Python in use currently</span>
+<span class="kw">py_config</span>()
+
+<span class="co"># reset to Python 3.X if necessary, like below:</span>
+<span class="co"># use_python("/usr/local/bin/python3")</span></code></pre></div>
+</div>
+<div id="issues" class="section level2">
+<h2 class="hasAnchor">
+<a href="#issues" class="anchor"></a>Issues</h2>
+<p>For <strong>data.table</strong> installation issue please refer to <a href="https://github.com/netZoo/netZooR/issues/40">issue #40</a>.</p>
+<p>Please report any further issue to the <a href="https://github.com/netZoo/netZooR/issues">issues page</a>.</p>
 </div>
 <div id="quick-starts-tutorials" class="section level2">
 <h2 class="hasAnchor">
@@ -116,12 +131,6 @@ devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/
 <h2 class="hasAnchor">
 <a href="#development" class="anchor"></a>Development</h2>
 <p>Contributions are welcome! Instruction of how to contribute netZooR repository can be found <a href="https://netzoo.github.io/contribute/contribute/">here</a>. The master branch on github should always be in good shape, so please to pull request to the <strong>devel</strong> branch.</p>
-</div>
-<div id="issues" class="section level2">
-<h2 class="hasAnchor">
-<a href="#issues" class="anchor"></a>Issues</h2>
-<p>For <strong>data.table</strong> installation issue please refer to <a href="https://github.com/netZoo/netZooR/issues/40">issue #40</a>.</p>
-<p>Please report any further issue to the <a href="https://github.com/netZoo/netZooR/issues">issues page</a>.</p>
 </div>
 <div id="license" class="section level2">
 <h2 class="hasAnchor">

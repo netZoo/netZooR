@@ -1,6 +1,6 @@
 Package: netZooR
 Title: Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR and MONSTER into one workflow.
-Version: 0.1.4
+Version: 0.1.5
 Date: 2019-06-13
 Authors@R: c(person("Tian", "Wang",
 			email = "twang@hsph.harvard.edu", role = c("aut", "cre")),
@@ -17,12 +17,12 @@ biocViews:
 Depends: R (>= 3.3.2),
 	 igraph,
 	 viridisLite, 
-         STRINGdb,
+   STRINGdb,
 	 RCy3,
-         pandaR
+   pandaR
 Imports: RSQLite,
-         GOstats,
-         GO.db (>= 3.8.0),
+   GOstats,
+   GO.db (>= 3.8.0),
 	 org.Hs.eg.db,
 	 reticulate,
 	 Matrix,
