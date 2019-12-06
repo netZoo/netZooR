@@ -48,6 +48,7 @@ netZooR is an R package which consists of five main algorithms and is able to co
     + [CONDOR Algorithm and plotting](#condor-algorithm-and-plotting)
     + [ALPACA Algorithm](#alpaca-algorithm)
     + [SAMBAR Algorithm](#sambar-algorithm)
+    + [MONSTER Algorithm](#monster-algorithm)
 * [More tutorials](#more-tutorials)
 * [Note](#note)
  
@@ -57,7 +58,7 @@ netZooR is an R package which consists of five main algorithms and is able to co
 
 ### Prerequisites
 
-Using this pacakage requires [**Python**](https://www.python.org/downloads/) (>=3.6.0) and some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access**.
+Using this pacakage requires [**Python**](https://www.python.org/downloads/) (3.X) and some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access**.
 
 Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/) installed.
 
@@ -109,6 +110,18 @@ Accessing the help pages for the  usage of core functions.
 ?alpaca
 ?panda.to.alpaca
 ?sambar
+```
+
+This package will invoke the Python in R environment through reticulate package.
+Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. 
+More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html)
+```{r}
+#check your Python configuration and the specific version of Python in use currently
+py_config()
+
+# reset to Python 3.X if necessary, like below:
+# use_python("/usr/local/bin/python3")
+
 ```
 
 Use example datasets within package to test this package.
@@ -185,6 +198,10 @@ alpaca<- panda.to.alpaca(treated_net, control_net, "./TB", verbose=TRUE)
 
 
 ### SAMBAR Algorithm
+
+(working in progress)
+
+### MONSTER Algorithm
 
 (working in progress)
 
