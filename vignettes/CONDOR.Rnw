@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage[margin=0.75in]{geometry}
+%\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\title{condor Vignette}
+%\author{John Platig}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\SweaveOpts{engine=R}
+%\VignetteIndexEntry{condor} 
+%\VignetteDepends{condor,igraph,gplots} 
+%\VignetteKeywords{condor} 
+%\VignettePackage{condor}
+%\VignetteEngine{Sweave}
+
+\maketitle
+
+
+\section{Introduction}
+COmplex Network Description Of Regulators (CONDOR) implements methods for clustering bipartite networks and estimating the contribution of each node to its community's modularity. For an application of this method to identify diesease-associated single nucleotide polymorphisms, see \url{http://arxiv.org/abs/1509.02816}.
+
+\section{Implementing the Bipartite Modularity Maximization}
+The code in \textbf{condor.modularity.max} is an implementation of the method described in Michael Barber's paper \textbf{Modularity and community detection in bipartite networks} (Phys. Rev. E 76, 066102 (2007)). A few general comments:
+\begin{itemize}
+\item Maximizing bipartite modularity is an NP-hard problem
+\item This method is heuristic and can depend on initial assignments of the nodes to communities
+\item For the implementation in \textbf{condor.cluster}, I use a non-bipartite community detection method from the \textbf{igraph} package to use as initial assignments of nodes to communities, which are then used in \textbf{condor.modularity.max}.
+\item Community structure is designed to cluster networks that form a giant connected component. All of the analysis in this package uses the giant connected component.
+\end{itemize}
+\section{Workflow}
+<<>>=
+library(condor)
+library(igraph)
+@
+\textbf{condor} works with an edgelist (\textbf{elist} in the code below) as its input. 
+<<>>=
+r = c(1,1,1,2,2,2,3,3,3,4,4);
+b = c(1,2,3,1,2,4,2,3,4,3,4);
+reds <- c("Alice","Sue","Janine","Mary")
+blues <- c("Bob","John","Ed","Hank")
+elist <- data.frame(red=reds[r], blue=blues[b])
+@
+In \textbf{elist}, notice all nodes of the same type--women and men in this case--appear in the same column together. This is a requirement. \textbf{create.condor.object} will throw an error if a node appears in both columns. 
+<<>>=
+condor.object <- create.condor.object(elist)
+@
+A condor.object is just a list. You can look at the different items using \textbf{names}
+<<>>=
+names(condor.object)
+@
+\textbf{condor.cluster} will cluster the nodes and produce the overall modularity along with two community membership \textbf{data.frames}:
+<<>>=
+condor.object <- condor.cluster(condor.object)
+print(condor.object$red.memb)
+print(condor.object$blue.memb)
+@
+Nodes in first community are {Alice, John, Bob, Sue}, nodes in second community are {Ed, Janine, Hank, Mary} based on the modularity maximization. Here's a picture:
+
+<<>>=
+gtoy = graph.edgelist(as.matrix(elist),directed=FALSE)
+set.graph.attribute(gtoy, "layout", layout.kamada.kawai(gtoy))
+V(gtoy)[c(reds,blues)]$color <- c(rep("red",4),rep("blue",4))
+@
+
+<<fig=TRUE>>=
+plot(gtoy,vertex.label.dist=2)
+@
+
+To get each node's modularity contribution (as a fraction of the community's modularity), run
+<<>>=
+condor.object <- condor.qscore(condor.object)
+@
+If you have a subset of nodes that you think are more likely to lie at the cores of your communities, you can test this using \textbf{condor.core.enrich}:
+
+<<fig=TRUE>>=
+q_women <- condor.object$qscores$red.qscore
+core_stats <- condor.core.enrich(test_nodes=c("Alice","Mary"),
+                                 q=q_women,perm=TRUE,plot.hist=TRUE)
+@
+
+\textbf{condor} also works on weighted bipartite networks. The package comes with a quantitative pollination network data set (Small 1976) taken from the NCEAS interaction webs data base, containing interactions between 13 plants and 34 pollinators.
+<<>>=
+data(small1976)
+condor.object <- create.condor.object(small1976)
+condor.object <- condor.cluster(condor.object, project=F)
+@
+
+<<fig=TRUE>>=
+condor.plot.heatmap(condor.object)
+@
+
+If you have questions, contact John Platig at \href{mailto:jplatig@jimmy.harvard.edu}{jplatig@jimmy.harvard.edu}
+
+\end{document}
