@@ -2,8 +2,8 @@ pandoc: 2.3.1
 pkgdown: 1.4.1.9000
 pkgdown_sha: 24ef1bbdec0de44fe11eb1d58b40dba961525d43
 articles:
+  ApplicationinGTExData: ApplicationinGTExData.html
+  ApplicationwithTBdataset: ApplicationwithTBdataset.html
   MONSTER: MONSTER.html
-  Quick-Starts: Quick-Starts.html
-  netZooR_vignette_v0.1: gtex_tutorial/netZooR_vignette_v0.1.html
   pandaR: pandaR.html
 
