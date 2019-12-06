@@ -20,7 +20,7 @@ Depends: R (>= 3.3.2),
 	 viridisLite, 
          STRINGdb,
 	 RCy3,
-	 reticulate,
+         pandaR
 Imports: GOstats,
          GO.db,
 	 org.Hs.eg.db,
