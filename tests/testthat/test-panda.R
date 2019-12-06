@@ -5,7 +5,7 @@ test_that("panda function works", {
   load("./testDataset.RData")
   
   # test error message when empty inputs
-  expect_error(panda())
+  expect_error(panda.fast())
   
   # file path
   T4_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
@@ -13,11 +13,11 @@ test_that("panda function works", {
   ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
   
   # test message when only expression data input
-  expect_message(testPanda1 <- panda(T4_expression_file_path))
+  expect_message(testPanda1 <- panda.fast(T4_expression_file_path))
   
   # test message when PPI is not provided
-  expect_message(testPanda2 <- panda(T4_expression_file_path,motif_file_path,rm_missing = TRUE),"")
-  actual_T4pandaList <- panda(T4_expression_file_path, motif_file_path,ppi_file_path)
+  expect_message(testPanda2 <- panda.fast(T4_expression_file_path,motif_file_path,rm_missing = TRUE),"")
+  actual_T4pandaList <- panda.fast(T4_expression_file_path, motif_file_path,ppi_file_path)
   
   # panda network compare
   actual_T4pandaNet <- actual_T4pandaList$panda
