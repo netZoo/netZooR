@@ -24,7 +24,7 @@ Depends: R (>= 3.3.2),
 Imports: GOstats,
          GO.db,
 	 org.Hs.eg.db,
-	 GOstats,
+	 reticulate,
 	 Matrix,
 	 gplots,
 	 nnet,
@@ -44,8 +44,6 @@ Imports: GOstats,
 	 assertthat,
 	 tidyr,
 	 methods,
-Remotes: bioc::3.9/GOstats,
-	 bioc::3.9/GO.db,
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
