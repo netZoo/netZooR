@@ -129,10 +129,10 @@ Refer to four input datasets files: one TB expression dataset control group , on
 
 ```{r}
 # retrieve the file path of these files
-treated_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZoo", mustWork = TRUE)
-control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZoo", mustWork = TRUE)
-motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
-ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZoo", mustWork = TRUE)
+treated_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZooR", mustWork = TRUE)
+control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZooR", mustWork = TRUE)
+motif_file_path <- system.file("extdata", "chip.txt", package = "netZooR", mustWork = TRUE)
+ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZooR", mustWork = TRUE)
 ```
 
 ### PANDA algorithm
