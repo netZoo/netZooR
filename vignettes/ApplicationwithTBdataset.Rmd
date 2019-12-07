@@ -1,8 +1,10 @@
 ---
-title: "Quick-Starts"
+title: "Application with TB dataset"
+author: "Tian Wang"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{QuickStart}
+  %\VignetteIndexEntry{ApplicationwithTBdataset}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -46,6 +48,7 @@ netZooR is an R package which consists of five main algorithms and is able to co
     + [CONDOR Algorithm and plotting](#condor-algorithm-and-plotting)
     + [ALPACA Algorithm](#alpaca-algorithm)
     + [SAMBAR Algorithm](#sambar-algorithm)
+    + [MONSTER Algorithm](#monster-algorithm)
 * [More tutorials](#more-tutorials)
 * [Note](#note)
  
@@ -55,7 +58,7 @@ netZooR is an R package which consists of five main algorithms and is able to co
 
 ### Prerequisites
 
-Using this pacakage requires [**Python**](https://www.python.org/downloads/) (>=3.6.0) and some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access**.
+Using this pacakage requires [**Python**](https://www.python.org/downloads/) (3.X) and some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access**.
 
 Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/) installed.
 
@@ -100,13 +103,25 @@ search()
 
 Accessing the help pages for the  usage of core functions.
 ```{r}
-?panda
+?panda.fast
 ?create.condor.object
 ?panda.to.condor.object
-?lioness
+?lioness.fast
 ?alpaca
 ?panda.to.alpaca
 ?sambar
+```
+
+This package will invoke the Python in R environment through reticulate package.
+Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. 
+More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html)
+```{r}
+#check your Python configuration and the specific version of Python in use currently
+py_config()
+
+# reset to Python 3.X if necessary, like below:
+# use_python("/usr/local/bin/python3")
+
 ```
 
 Use example datasets within package to test this package.
@@ -114,10 +129,10 @@ Refer to four input datasets files: one TB expression dataset control group , on
 
 ```{r}
 # retrieve the file path of these files
-treated_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZoo", mustWork = TRUE)
-control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZoo", mustWork = TRUE)
-motif_file_path <- system.file("extdata", "chip.txt", package = "netZoo", mustWork = TRUE)
-ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZoo", mustWork = TRUE)
+treated_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZooR", mustWork = TRUE)
+control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZooR", mustWork = TRUE)
+motif_file_path <- system.file("extdata", "chip.txt", package = "netZooR", mustWork = TRUE)
+ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZooR", mustWork = TRUE)
 ```
 
 ### PANDA algorithm
@@ -126,8 +141,8 @@ Assign the above file paths to flag `e`(refers to "expression dataset"), `m`(ref
 
 Repeat with control group. 
 ```{r}
-treated_all_panda_result <- panda(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
-control_all_panda_result <- panda(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+treated_all_panda_result <- panda.fast(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+control_all_panda_result <- panda.fast(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
 ```
 
 Vector `treated_all_panda_result` and vector `control_all_panda_result` below are large lists with three elements: the entire PANDA network, indegree ("to" nodes) nodes and score, outdegree ("from" nodes) nodes and score. Use `$panda`,`$indegree` and `$outdegree` to access each list item resepctively.
@@ -155,7 +170,7 @@ How to run LIONESS is mostly idential with method how to run PANDA in this packa
 ```{r}
 # Run LIONESS algorithm for the first two samples
 # removing start_sample and end_sample to generate whole LIONESS network with all samples.
-control_lioness_result <- lioness(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE, start_sample=1, end_sample=2)
+control_lioness_result <- lioness.fast(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE, start_sample=1, end_sample=2)
 ```
 
 ### CONDOR Algorithm and plotting
@@ -183,6 +198,10 @@ alpaca<- panda.to.alpaca(treated_net, control_net, "./TB", verbose=TRUE)
 
 
 ### SAMBAR Algorithm
+
+(working in progress)
+
+### MONSTER Algorithm
 
 (working in progress)
 

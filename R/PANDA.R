@@ -34,7 +34,7 @@
 #' 
 #' 
 #' # Run PANDA for treated and control network
-#' treated_all_panda_result <- panda(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+#' treated_all_panda_result <- panda.fast(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
 #' 
 #' # access PANDA regulatory network
 #' treated_net <- treated_all_panda_result$panda
@@ -50,7 +50,7 @@
 #'
 
 
-panda <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
+panda.fast <- function( e = expression, m = motif, ppi = ppi, rm_missing = FALSE){
   
   if(missing(e)){
     stop("Please provide the gene expression value with option e, e.g. e=\"expression.txt\"") }

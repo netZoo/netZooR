@@ -6,7 +6,7 @@ test_that("panda.to.condor.object function works", {
   T4_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
   motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
   ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
-  actual_T4pandaNet <- panda(T4_expression_file_path, motif_file_path,ppi_file_path)$panda
+  actual_T4pandaNet <- panda.fast(T4_expression_file_path, motif_file_path,ppi_file_path)$panda
   
   # test panda.to.condor.object
   actual_T4condor.object <- panda.to.condor.object(actual_T4pandaNet)

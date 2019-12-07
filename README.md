@@ -1,3 +1,4 @@
+
 [![Build Status](https://travis-ci.org/netZoo/netZooR.svg?branch=devel)](https://travis-ci.org/netZoo/netZooR)
 [![codecov](https://codecov.io/gh/netZoo/netZooR/branch/devel/graph/badge.svg)](https://codecov.io/gh/netZoo/netZooR)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -22,20 +23,46 @@ netZooR currently integrates with:
 
 * **SAMBAR**(Subtyping Agglomerated Mutations By Annotation Relations)[[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identify subtypes based on somatic mutation data.
 
+
+* **MONSTER**
+
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
 
 * Plot one PANDA network in [Cytoscape](https://cytoscape.org/).
 
 * Plot two differential PANDA networks in Cytoscape.
 
-## Installation
+## Requirement, installation and basic configuration.
+Using this pacakage requires [**Python**](https://www.python.org/downloads/) (3.X) and some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access**.
+
+Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/) installed.
 
 ```r
 # install.packages("devtools") 
 library(devtools)
 # install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
 devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
+library(netZooR)
 ```
+
+This package will invoke the Python in R environment through reticulate package.
+Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html).
+
+```r
+#check your Python configuration and the specific version of Python in use currently
+py_config()
+
+# reset to Python 3.X if necessary, like below:
+# use_python("/usr/local/bin/python3")
+
+```
+
+## Issues
+
+For **data.table** installation issue please refer to [issue #40](https://github.com/netZoo/netZooR/issues/40).
+
+Please report any further issue to the [issues page](https://github.com/netZoo/netZooR/issues).
+
 
 ## Quick Starts & tutorials
 Please refer to the top navigation bar **Articles/Quick-Starts** for basic usage and application cases.
@@ -45,11 +72,6 @@ Or use `browseVignettes("netZooR")` after installing package.
 Contributions are welcome! Instruction of how to contribute netZooR repository can be found [here](https://netzoo.github.io/contribute/contribute/). 
 The master branch on github should always be in good shape, so please to pull request to the **devel** branch.
 
-## Issues
-
-For **data.table** installation issue please refer to [issue #40](https://github.com/netZoo/netZooR/issues/40).
-
-Please report any further issue to the [issues page](https://github.com/netZoo/netZooR/issues).
 
 ## License
 The software is free and is licensed under the GNU General License v3.0, see the file [LICENSE](LICENSE) for details.
