@@ -21,14 +21,14 @@
 #' panda.net <- head(control_net[order(control_net$force,decreasing = TRUE),], 1000)
 #' 
 #' # run this function to create a network in Cytoscape.
-#' plot.panda.in.cytoscape(panda.net, network.name="PANDA")
+#' vis.panda.in.cytoscape(panda.net, network.name="PANDA")
 #' }
 #' @return NULL
 #' 
 #' @import RCy3
 #' @export 
 #' 
-plot.panda.in.cytoscape <- function(panda.net, network.name="PANDA"){
+vis.panda.in.cytoscape <- function(panda.net, network.name="PANDA"){
   # launch Cytoscape 3.6.1 or greater
   cytoscapePing ()
   cytoscapeVersionInfo ()

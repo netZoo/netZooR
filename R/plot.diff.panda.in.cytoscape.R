@@ -1,5 +1,21 @@
-
-plot.diff.panda.in.cytoscape <- function(net1,net2,network.name="DiffPANDAnetwork"){
+#' Plot two PANDA networsk in Cytoscape
+#'
+#'This function is able to modify PANDA network and plot in Cytoscape.
+#'
+#' @param net1 Character string indicating the input PANDA network in data frame structure type.
+#' @param net2 Character string indicating the another input PANDA network in data frame structure type.
+#' @param network.name Character string indicating the name of Cytoscape network. 
+#' @examples
+#' \dontrun{
+#' # run this function to create a network in Cytoscape.
+#' vis.diff.panda.in.cytoscape(panda.net1, panda.net1, network.name="diff.PANDA")
+#' }
+#' @return NULL
+#' 
+#' @import RCy3
+#' @export 
+#' 
+vis.diff.panda.in.cytoscape <- function(net1,net2,network.name="DiffPANDAnetwork"){
   # reshape PANDA networks
   merged.net <- merge(net1,net2,by=c("tf","gene"))
   # edge-weight differences
