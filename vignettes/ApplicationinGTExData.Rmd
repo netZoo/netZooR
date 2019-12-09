@@ -1,7 +1,7 @@
 ---
 title: "Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R"
 author: Deborah Weighill
-data: "2019-11-06"
+date: "2019-11-06"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ApplicationinGTExData}
