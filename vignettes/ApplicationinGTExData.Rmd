@@ -85,7 +85,7 @@ write.table(clean_data, file = "pandaExprLCL.txt", sep = "\t", col.names = FALSE
 Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior.
 
 ```{r}
-panda_results_LCL <- panda(e = "pandaExprLCL.txt" , m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE)
+panda_results_LCL <- panda.fast(e = "pandaExprLCL.txt" , m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE)
 ```
 
 Let's take a look at the results. The output contains a list of three data frames:
