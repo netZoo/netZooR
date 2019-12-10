@@ -3,9 +3,10 @@ reference:
 - title: Main functions
   desc:  main functions to run each algorithm
   contents:
-  - panda
+  - panda.fast
   - create.condor.object
   - panda.to.condor.object
+  - lioness.fast
   - lioness
   - alpaca
   - panda.to.alpaca
@@ -17,15 +18,17 @@ reference:
   - create.diff.panda.style
   - condor.plot.communities
   - condor.plot.heatmap
-  - starts_with("plot.")
+  - starts_with("vis.")
 - title: PANDA 
   desc: All function of PANDA
   contents:
-  - panda
+  - panda.fast
   - panda.to.condor.object
   - panda.to.alpaca
   - create.panda.style
-  - plot.panda.in.cytoscape
+  - vis.panda.in.cytoscape
+  - create.panda.style
+  - vis.diff.panda.in.cytoscape
   - create.diff.panda.style
 - title: CONDOR
   desc: All fucntions of CONDOR
@@ -35,6 +38,7 @@ reference:
 - title: LIONESS 
   desc: All functions of lioness
   contents: 
+  - lioness.fast
   - lioness
 - title: ALPACA
   desc: All functions of ALPACA
