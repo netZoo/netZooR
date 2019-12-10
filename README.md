@@ -45,6 +45,8 @@ devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
 library(netZooR)
 ```
 
+For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/).
+
 This package will invoke the Python in R environment through reticulate package.
 Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html).
 
@@ -64,8 +66,8 @@ For **data.table** installation issue please refer to [issue #40](https://github
 Please report any further issue to the [issues page](https://github.com/netZoo/netZooR/issues).
 
 
-## Quick Starts & tutorials
-Please refer to the top navigation bar **Articles/Quick-Starts** for basic usage and application cases.
+## Tutorials
+Please refer to the top navigation bar **Articles/** for basic usage and application cases.
 Or use `browseVignettes("netZooR")` after installing package.
 
 ## Development

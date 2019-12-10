@@ -11,6 +11,7 @@ reference:
   - alpaca
   - panda.to.alpaca
   - sambar
+  - monster
 - title: Plot functions
   desc: function to plot the networks and community structures.
   contents:
@@ -48,3 +49,7 @@ reference:
   desc: All functions of SAMBAR
   contents:
   - starts_with("sambar")
+- title: MONSTER
+  desc: All functions of monster
+  contents:
+  - starts_with("monster")
