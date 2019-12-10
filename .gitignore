@@ -2,8 +2,7 @@
 .Rhistory
 Untitled.R
 .Rbuildignore
-inst/doc
-docs/
+inst/doc/
 doc
 Meta
 .Rproj.user*
