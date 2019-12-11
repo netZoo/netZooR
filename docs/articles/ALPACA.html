@@ -100,8 +100,8 @@
 
 <p>We will show how ALPACA can find changes in modular structure between two simulated networks. The networks both have 20 regulator nodes and 80 target nodes. The baseline network consists of two groups that are strongly connected to each other, whereas the perturbed network has weaker connections between the two groups. The two groups consist of nodes {A1-A10,B1-B40} and {A11-A20,B41-B80}. Contrasting the two networks using ALPACA identifies these two groups as being the modules that best characterize the perturbation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(netZooR)
-
-simp.mat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span>(<span class="st">'Example_2comm.txt'</span>,<span class="dt">header=</span>T)
+example_file_path &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"Example_2comm.txt"</span>, <span class="dt">package =</span> <span class="st">"netZooR"</span>, <span class="dt">mustWork =</span> <span class="ot">TRUE</span>)
+simp.mat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span>(example_file_path,<span class="dt">header=</span>T)
 
 simp.alp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/alpaca.html">alpaca</a></span>(simp.mat,<span class="ot">NULL</span>,<span class="dt">verbose=</span>F)
 simp.alp2 &lt;-<span class="st"> </span>simp.alp[[<span class="dv">1</span>]]

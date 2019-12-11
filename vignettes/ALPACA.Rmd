@@ -21,8 +21,8 @@ We will show how ALPACA can find changes in modular structure between two simula
 
 ```{r,echo=TRUE,message=FALSE,warning=FALSE}
 library(netZooR)
-wblood_samples_file_path <- system.file("extdata", "Example_2comm.txt", package = "netZooR", mustWork = TRUE)
-simp.mat <- read.table('Example_2comm.txt',header=T)
+example_file_path <- system.file("extdata", "Example_2comm.txt", package = "netZooR", mustWork = TRUE)
+simp.mat <- read.table(example_file_path,header=T)
 
 simp.alp <- alpaca(simp.mat,NULL,verbose=F)
 simp.alp2 <- simp.alp[[1]]
