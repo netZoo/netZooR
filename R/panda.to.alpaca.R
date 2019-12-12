@@ -2,10 +2,10 @@
 #'
 #' \strong{ALPACA}(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules.
 #' \href{https://www.nature.com/articles/s41540-018-0052-5}{[(Padi and Quackenbush 2018)])}
-#' This function compares two networks generate by \code{\link{panda.fast}} in this package and finds the sets of nodes that best characterize the change in modular structure.
+#' This function compares two networks generate by \code{\link{panda.py}} in this package and finds the sets of nodes that best characterize the change in modular structure.
 #'
-#' @param panda_net1 Data Frame indicating one entire network generate by \code{\link{panda.fast}}
-#' @param panda_net2 Data Frame indicating another entire network generate by \code{\link{panda.fast}}
+#' @param panda_net1 Data Frame indicating one entire network generate by \code{\link{panda.py}}
+#' @param panda_net2 Data Frame indicating another entire network generate by \code{\link{panda.py}}
 #' @param file.stem The folder location and title under which all results will be stored.
 #' @param verbose Indicates whether the full differential modularity matrix should also be written to a file. Defaults to FALSE.
 #'
@@ -22,8 +22,8 @@
 #' 
 #' 
 #' # Run PANDA for treated and control network
-#' treated_panda_net <- panda.fast(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )$panda
-#' control_panda_net <- panda.fast(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )$panda
+#' treated_panda_net <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy",  rm_missing = TRUE )$panda
+#' control_panda_net <- panda.py(expr = control_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )$panda
 #'  
 #' # Run ALPACA
 #' alpaca<- panda.to.alpaca(treated_panda_net, control_panda_net, "./TB", verbose=TRUE)

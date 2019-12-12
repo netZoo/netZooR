@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>panda.to.alpaca — panda.to.alpaca • netZooR</title>
+<title>Run PANDA in R — panda.py • netZooR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,11 +32,14 @@
 
 
 
-<meta property="og:title" content="panda.to.alpaca — panda.to.alpaca" />
+<meta property="og:title" content="Run PANDA in R — panda.py" />
 
-<meta property="og:description" content="ALPACA(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules.
-[(Padi and Quackenbush 2018)])
-This function compares two networks generate by panda.py in this package and finds the sets of nodes that best characterize the change in modular structure." />
+<meta property="og:description" content="PANDA(Passing Attributes between Networks for Data Assimilation) is a message-passing model 
+to reconstruct gene regulatory network. It integrates multiple sources of biological data-including protein-protein interaction,
+gene expression data, and transccription factor binding motifs data-to reconstruct genome-wide, condition-specific regulatory networks.
+[(Glass et al. 2013)])
+This function is designed to run the a derived PANDA algorithm in Python implement &quot;netZooPy&quot; netZooPy,
+ which is also a Python library of netZooR." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,82 +130,83 @@ This function compares two networks generate by panda.py in this package and fin
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>panda.to.alpaca</h1>
+    <h1>Run PANDA in R</h1>
     
-    <div class="hidden name"><code>panda.to.alpaca.Rd</code></div>
+    <div class="hidden name"><code>panda.py.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><strong>ALPACA</strong>(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules.
-<a href='https://www.nature.com/articles/s41540-018-0052-5'>[(Padi and Quackenbush 2018)])</a>
-This function compares two networks generate by <code>panda.py</code> in this package and finds the sets of nodes that best characterize the change in modular structure.</p>
+    <p><strong>PANDA</strong>(Passing Attributes between Networks for Data Assimilation) is a message-passing model 
+to reconstruct gene regulatory network. It integrates multiple sources of biological data-including protein-protein interaction,
+gene expression data, and transccription factor binding motifs data-to reconstruct genome-wide, condition-specific regulatory networks.
+<a href='http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832'>[(Glass et al. 2013)])</a>
+This function is designed to run the a derived PANDA algorithm in Python implement "netZooPy" <a href='https://github.com/netZoo/netZooPy'>netZooPy</a>,
+ which is also a Python library of netZooR.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>panda.to.alpaca</span>(<span class='no'>panda_net1</span>, <span class='no'>panda_net2</span>, <span class='kw'>file.stem</span> <span class='kw'>=</span> <span class='st'>"./alpaca"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
+    <pre class="usage"><span class='fu'>panda.py</span>(<span class='no'>expr</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mode_process</span> <span class='kw'>=</span> <span class='st'>"union"</span>,
+  <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>panda_net1</th>
-      <td><p>Data Frame indicating one entire network generate by <code>panda.py</code></p></td>
+      <th>expr</th>
+      <td><p>Character string indicatining the file path of expression values file, with each gene (in row) by samples (in columns)</p></td>
     </tr>
     <tr>
-      <th>panda_net2</th>
-      <td><p>Data Frame indicating another entire network generate by <code>panda.py</code></p></td>
+      <th>motif</th>
+      <td><p>An optional character string indicatining the file path of pair file of a prior transcription factor binding motifs dataset.
+When this argument is not provided, analysis will continue with Pearson correlation matrix.</p></td>
     </tr>
     <tr>
-      <th>file.stem</th>
-      <td><p>The folder location and title under which all results will be stored.</p></td>
+      <th>ppi</th>
+      <td><p>An optional character string indicatining the file path of protein-protein interaction edge dataset.
+Also this can be generated given a list of proteins of interest by <code><a href='source.PPI.html'>source.PPI</a></code>.</p></td>
     </tr>
     <tr>
-      <th>verbose</th>
-      <td><p>Indicates whether the full differential modularity matrix should also be written to a file. Defaults to FALSE.</p></td>
+      <th>mode_process</th>
+      <td><p>An optional character to define the pre-processing of input dataset, options include "legacy" to the original behavior of PANDA in Python implement,
+"interaction" to constrain the TF and gene as interaction across all input datasets, and "union" to take TF union and gene union across all input datasets.
+The default value is "union".</p></td>
+    </tr>
+    <tr>
+      <th>rm_missing</th>
+      <td><p>When mode_process = "legacy", rm_missing is an optional boolean indicatining whether to remove genes and tfs not present in all input files. If TRUE, remove all unmatched tf and genes.
+if FALSE, keep all tf and genes. The default value is FALSE.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A string message showing the location of output file if file.stem is given, 
-       or a List where first element is the membership vector and second element is the contribution score of each node to its module's total differential modularity</p>
+    <p>A list of three items：
+         Use <code>$panda</code> to access the standard output of PANDA network in data.frame, which consists of four columns: 
+         "tf", "gene", "motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "force".</p>
+<p>Use <code>$indegree</code> to access the indegree of PANDA network in data.frame, consisting of two columns: "gene", "force".</p>
+<p>Use <code>$outdegree</code> to access the outdegree of PANDA network in data.fra,e, consisting of two columns: "tf", "force".</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># refer to four input datasets files in inst/extdat</span>
+    <pre class="examples"><div class='input'><span class='co'># take the treated TB dataset as example here.</span>
+<span class='co'># refer to the datasets files path in inst/extdat</span>
+
 <span class='no'>treated_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr4_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>control_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr10_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>motif_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"chip_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>ppi_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ppi_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 
 <span class='co'># Run PANDA for treated and control network</span>
-<span class='no'>treated_panda_net</span> <span class='kw'>&lt;-</span> <span class='fu'>panda.py</span>(<span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>treated_expression_file_path</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>mode_process</span><span class='kw'>=</span><span class='st'>"legacy"</span>,  <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )$<span class='no'>panda</span></div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-processing dataset and keep the matched tfs or genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node names between first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA run...</span></div><div class='input'><span class='no'>control_panda_net</span> <span class='kw'>&lt;-</span> <span class='fu'>panda.py</span>(<span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>mode_process</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )$<span class='no'>panda</span></div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-processing dataset and keep the matched tfs or genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node names between first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA run...</span></div><div class='input'>
-<span class='co'># Run ALPACA</span>
-<span class='no'>alpaca</span><span class='kw'>&lt;-</span> <span class='fu'>panda.to.alpaca</span>(<span class='no'>treated_panda_net</span>, <span class='no'>control_panda_net</span>, <span class='st'>"./TB"</span>, <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "Detecting communities in control network..."</div><div class='output co'>#&gt; <span class='message'>Weights detected. Building condor object with weighted edges.</span></div><div class='output co'>#&gt; [1] "modularity of projected graph 0.482467704493567"
-#&gt; [1] "Q = 0.49405163585898"
-#&gt; [1] "Q = 0.49405163585898"
-#&gt; [1] "Computing differential modularity matrix..."
-#&gt; [1] "Computing differential modules..."
-#&gt; [1] "Merging 2644 communities"
-#&gt; [1] 1
-#&gt; [1] 2
-#&gt; [1] 3
-#&gt; [1] "Merging 139 communities"
-#&gt; [1] 1
-#&gt; [1] 2
-#&gt; [1] 3
-#&gt; [1] 4
-#&gt; [1] 5
-#&gt; [1] "Merging 18 communities"
-#&gt; [1] 1
-#&gt; [1] 2
-#&gt; [1] "Merging 14 communities"
-#&gt; [1] 1
-#&gt; [1] "Computing node scores..."</div><div class='output co'>#&gt; <span class='message'>the ALPACA output located in./TB</span></div><div class='input'>
-</div></pre>
+<span class='no'>treated_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'>panda.py</span>(<span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>treated_expression_file_path</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>mode_process</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-processing dataset and keep the matched tfs or genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node names between first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA run...</span></div><div class='input'>
+<span class='co'># access PANDA regulatory network</span>
+<span class='no'>treated_net</span> <span class='kw'>&lt;-</span> <span class='no'>treated_all_panda_result</span>$<span class='no'>panda</span>
+
+<span class='co'># access PANDA regulatory indegree network.</span>
+<span class='no'>indegree_net</span> <span class='kw'>&lt;-</span> <span class='no'>treated_all_panda_result</span>$<span class='no'>indegree</span>
+
+<span class='co'># access PANDA regulatory outdegree networks</span>
+<span class='no'>outdegree_net</span> <span class='kw'>&lt;-</span> <span class='no'>treated_all_panda_result</span>$<span class='no'>outdegree</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
