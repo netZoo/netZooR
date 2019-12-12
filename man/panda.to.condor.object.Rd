@@ -7,7 +7,7 @@
 panda.to.condor.object(panda.net, threshold)
 }
 \arguments{
-\item{panda.net}{Data Frame indicating the result of PANDA regulatory network, created by \code{\link{panda.fast}}}
+\item{panda.net}{Data Frame indicating the result of PANDA regulatory network, created by \code{\link{panda.py}}}
 
 \item{threshold}{Numeric vector of the customered threshold to select edges. Default value is the the midpoint between 
 the median edge-weight of prior ( 3rd column "Motif" is 1.0) edges 
@@ -31,8 +31,8 @@ ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", 
 
 
 # Run PANDA for treated and control network
-treated_all_panda_result <- panda.fast(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
-control_all_panda_result <- panda.fast(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+treated_all_panda_result <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
+control_all_panda_result <- panda.py(expr = control_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
 
 # access PANDA regulatory network
 treated_net <- treated_all_panda_result$panda

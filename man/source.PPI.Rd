@@ -27,6 +27,6 @@ motif <- read.table(motif_file_path, sep="\\t")
 TF <-data.frame(motif[,1])
 # create PPI data frame
 PPI <- source.PPI(TF,species.index=83332, score_threshold=0)
-# write out locally then can be used in \\code{\\link{runPanda}}.
+# write out locally then can be used in \\code{\\link{panda.py}}.
 
 }

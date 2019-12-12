@@ -103,10 +103,10 @@ search()
 
 Accessing the help pages for the  usage of core functions.
 ```{r}
-?panda.fast
+?panda.py
 ?create.condor.object
 ?panda.to.condor.object
-?lioness.fast
+?lioness.py
 ?alpaca
 ?panda.to.alpaca
 ?sambar
@@ -141,8 +141,8 @@ Assign the above file paths to flag `e`(refers to "expression dataset"), `m`(ref
 
 Repeat with control group. 
 ```{r}
-treated_all_panda_result <- panda.fast(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
-control_all_panda_result <- panda.fast(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+treated_all_panda_result <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, ppi = ppi_file_path,mode_process="legacy",  rm_missing = TRUE )
+control_all_panda_result <- panda.py(expr = control_expression_file_path, motif = motif_file_path, ppi = ppi_file_path,mode_process="legacy",  rm_missing = TRUE )
 ```
 
 Vector `treated_all_panda_result` and vector `control_all_panda_result` below are large lists with three elements: the entire PANDA network, indegree ("to" nodes) nodes and score, outdegree ("from" nodes) nodes and score. Use `$panda`,`$indegree` and `$outdegree` to access each list item resepctively.
@@ -170,7 +170,7 @@ How to run LIONESS is mostly idential with method how to run PANDA in this packa
 ```{r}
 # Run LIONESS algorithm for the first two samples
 # removing start_sample and end_sample to generate whole LIONESS network with all samples.
-control_lioness_result <- lioness.fast(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE, start_sample=1, end_sample=2)
+control_lioness_result <- lioness.py(expr = control_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE, start_sample=1, end_sample=2)
 ```
 
 ### CONDOR Algorithm and plotting

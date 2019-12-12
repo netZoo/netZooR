@@ -3,12 +3,15 @@
 #' \strong{LIONESS}(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks.
 #'  \href{https://arxiv.org/abs/1505.06440}{[(LIONESS arxiv paper)])}.
 #'
-#' @param e Character string indicating the file path of expression values file, as each gene (row) by samples (columns) \emph{required}
-#' @param m Character string indicating the file path of pair file of motif edges,
+#' @param expr Character string indicating the file path of expression values file, as each gene (row) by samples (columns) \emph{required}
+#' @param motif Character string indicating the file path of pair file of motif edges,
 #'          when not provided, analysis continues with Pearson correlation matrix. \emph{optional}
 #' @param ppi Character string indicating the pair file path of Protein-Protein interaction dataset. \emph{optional}
-#' @param rm_missing Boolean indicating whether to remove missing values. If TRUE, removes missing values.
-#'         if FALSE, keep missing values. The default value is FALSE. \emph{optional}
+#' @param mode_process An optional character to define the pre-processing of input dataset, options include "legacy" to the original behavior of PANDA in Python implement,
+#'          "interaction" to constrain the TF and gene as interaction across all input datasets, and "union" to take TF union and gene union across all input datasets.
+#'          The default value is "union".
+#' @param rm_missing When mode_process = "legacy", rm_missing is an optional boolean indicatining whether to remove genes and tfs not present in all input files. If TRUE, remove all unmatched tf and genes.
+#'         if FALSE, keep all tf and genes. The default value is FALSE.
 #' @param start_sample Numeric indicating the start sample number, The default value is 1.
 #' @param end_sample Numeric indicating the start sample number, The default value is None. \emph{optional}
 #' @param save_dir Character string indicating the folder name of output lioness networks for each sample by defined.\emph{optional}
@@ -27,37 +30,53 @@
 #' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' # Run LIONESS algorithm
-#' control_lioness_result <- lioness.fast(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE,start_sample=1, end_sample=2)
+#' control_lioness_result <- lioness.py(expr = control_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE,start_sample=1, end_sample=2)
 #' 
 #' @import reticulate
 #' @export
-lioness.fast <- function(e = expression, m = motif, ppi = ppi, rm_missing = FALSE, start_sample=1, end_sample="None", save_dir="lioness_output", save_fmt='npy'){
+lioness.py <- function(expr = expression, motif = motif, ppi = ppi, mode_process="union", rm_missing = FALSE, start_sample=1, end_sample="None", save_dir="lioness_output", save_fmt='npy'){
 
-  if(missing(e)){
-     stop("Please provide the gene expression data file path to argument e, e.g. e=\"expression.txt\"") }
-   else{ str1 <- paste("\'", e, "\'", sep = '') }
+  if(missing(expr)){
+    stop("Please provide the gene expression value with option e, e.g. e=\"expression.txt\"") }
+  else{ expr.str <- paste("\'", expr, "\'", sep = '') }
   
-   if(missing(m)){
-     stop("Please provide the prior motif data file path to argument m, e.g. e=\"motif.txt\"") }
-   else{ str2 <- paste("\'", m, "\'", sep = '') }
+  if(is.null(motif)){
+    motif.str <-  paste('None')
+    message("prior motif network is not provided, analysis continues with Pearson correlation matrix.") }
+  else{ motif.str <- paste("\'", motif,"\'", sep = '') }
   
-   if(missing(ppi)){
-     str3 <- paste('None')
-     message("No PPI provided.") }
-   else{ str3 <- paste("\'", ppi, "\'", sep = '') }
+  if(is.null(ppi)){
+    ppi.str <- paste('None')
+    message("No PPI provided.") }
+  else{ ppi.str <- paste("\'", ppi, "\'", sep = '') }
   
-   if(rm_missing == FALSE | missing(e)){
-     str4 <- paste('False')
-     message("Not removing missing values ") }
-   else { str4 <- paste('True') }
+  # when pre-processing mode is legacy
+  if(mode_process == "legacy"){
+    
+    if(rm_missing == FALSE | missing(rm_missing)){
+      message("Use the legacy mode to pre-processing dataset and keep the unmatched tfs or genes")
+      arg.str <- "modeProcess ='legacy',remove_missing = False, keep_expression_matrix=True"}
+    else { 
+      message("Use the legacy mode to pre-processing dataset and keep the matched tfs or genes")
+      arg.str <- "modeProcess ='legacy',remove_missing = True, keep_expression_matrix=True"  }
+  }
+  if(mode_process == "union"){
+    arg.str <- "modeProcess ='union', keep_expression_matrix=True"
+  }
+  if(mode_process == "intersection"){
+    arg.str <- "modeProcess ='intersection', keep_expression_matrix=True"
+  }
   
-     str5 <- "keep_expression_matrix=True"
+  # source the pypanda from github raw website.
+  reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/panda.py",convert = TRUE)
+  
+  # invoke py code to create a Panda object
   
    # source the panda.py and lioness.py from GitHub raw website.
    reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/panda.py",convert = TRUE)
    reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/lioness.py",convert = TRUE)
    # run py code to create an instance named "p" of Panda Class
-   str <-  paste("panda_obj=Panda(", str1, ",", str2,",", str3, ",", "remove_missing=", str4, ",", str5, ")", sep ='')
+   str <-  paste("panda_obj=Panda(", expr.str, ",", motif.str,",", ppi.str, ",", arg.str, ")", sep ='')
    py_run_string(str,local = FALSE, convert = TRUE)
    # assign "panda_network" with the output PANDA network
    py_run_string("panda_network=pd.DataFrame(panda_obj.export_panda_results,columns=['tf','gene','motif','force'])",local = FALSE, convert = TRUE)

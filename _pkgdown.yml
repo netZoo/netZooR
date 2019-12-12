@@ -3,10 +3,10 @@ reference:
 - title: Main functions
   desc:  main functions to run each algorithm
   contents:
-  - panda.fast
+  - panda.py
   - create.condor.object
   - panda.to.condor.object
-  - lioness.fast
+  - lioness.py
   - lioness
   - alpaca
   - panda.to.alpaca
@@ -23,7 +23,7 @@ reference:
 - title: PANDA 
   desc: All function of PANDA
   contents:
-  - panda.fast
+  - panda.py
   - panda.to.condor.object
   - panda.to.alpaca
   - create.panda.style
@@ -39,7 +39,7 @@ reference:
 - title: LIONESS 
   desc: All functions of lioness
   contents: 
-  - lioness.fast
+  - lioness.py
   - lioness
 - title: ALPACA
   desc: All functions of ALPACA
