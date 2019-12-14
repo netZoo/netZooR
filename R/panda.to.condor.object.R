@@ -5,7 +5,7 @@
 #' \href{http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033}{[(Platig et al. 2016)])}
 #' This function uses the result of PANDA algorithm as the input dataset to run CONDOR algorithm. More about \href{https://github.com/jplatig/condor}{condor} package and usage.
 #'  
-#' @param panda.net Data Frame indicating the result of PANDA regulatory network, created by \code{\link{panda.fast}}
+#' @param panda.net Data Frame indicating the result of PANDA regulatory network, created by \code{\link{panda.py}}
 #' @param threshold Numeric vector of the customered threshold to select edges. Default value is the the midpoint between 
 #' the median edge-weight of prior ( 3rd column "Motif" is 1.0) edges 
 #' and the median edge-weight of non-prior edges (3rd column "Motif" is 0.0) in PANDA network, see \code{\link{calculateThreshold}}.
@@ -21,8 +21,8 @@
 #' 
 #' 
 #' # Run PANDA for treated and control network
-#' treated_all_panda_result <- panda.fast(e = treated_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
-#' control_all_panda_result <- panda.fast(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+#' treated_all_panda_result <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
+#' control_all_panda_result <- panda.py(expr = control_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
 #' 
 #' # access PANDA regulatory network
 #' treated_net <- treated_all_panda_result$panda

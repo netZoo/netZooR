@@ -85,7 +85,7 @@ write.table(clean_data, file = "pandaExprLCL.txt", sep = "\t", col.names = FALSE
 Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior.
 
 ```{r}
-panda_results_LCL <- panda.fast(e = "pandaExprLCL.txt" , m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE)
+panda_results_LCL <- panda.py(expr = "pandaExprLCL.txt" , motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE)
 ```
 
 Let's take a look at the results. The output contains a list of three data frames:
@@ -153,7 +153,7 @@ LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples) is
 Running LIONESS with netZoo is simple, and very similar to running PANDA:
 
 ```{r}
-lionessLCL <- lioness(e = "pandaExprLCL.txt" , m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE, save_fmt = "txt")
+lionessLCL <- lioness.py(expr = "pandaExprLCL.txt" , motif = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE, save_fmt = "txt")
 ```
 
 The result is a data frame in which the first colum  contains TFs, the second column contains genes and each subsequent column contains the edge weight for that particular TF-gene pair in a particular sample.

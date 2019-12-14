@@ -4,7 +4,7 @@
 \alias{create.panda.style}
 \title{Create a Cytoscape visual style for PANDA network}
 \usage{
-create.panda.style(style.name = "PandaStyle")
+create.panda.style(style_name = "PandaStyle")
 }
 \arguments{
 \item{style.name}{Character string indicating the style name. Defaults to "PandaStyle"}

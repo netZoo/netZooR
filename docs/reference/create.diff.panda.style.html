@@ -89,6 +89,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/ALPACA.html">Detecting differential modules using ALPACA</a>
+    </li>
+    <li>
       <a href="../articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
     <li>
@@ -96,6 +99,9 @@
     </li>
     <li>
       <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+    </li>
+    <li>
+      <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
       <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
@@ -130,14 +136,20 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>create.diff.panda.style</span>(<span class='kw'>style.name</span> <span class='kw'>=</span> <span class='st'>"Diff.PandaStyle"</span>)</pre>
+    <pre class="usage"><span class='fu'>create.diff.panda.style</span>(<span class='kw'>style_name</span> <span class='kw'>=</span> <span class='st'>"Diff.PandaStyle"</span>,
+  <span class='kw'>condition_name</span> <span class='kw'>=</span> <span class='st'>"cond.1"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>style.name</th>
+      <th>style_name</th>
       <td><p>Character string indicating the style name. Defaults to "Diff.PandaStyle"</p></td>
+    </tr>
+    <tr>
+      <th>condition_name</th>
+      <td><p>string vector indicating the same condition name used in <code>panda.diff.edges</code> and <code><a href='vis.diff.panda.in.cytoscape.html'>vis.diff.panda.in.cytoscape</a></code>,
+and all edges belong to this condition or phenotype will be represented as purple, otherwise, green.</p></td>
     </tr>
     </table>
     
