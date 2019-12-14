@@ -4,12 +4,12 @@
 \alias{vis.panda.in.cytoscape}
 \title{Plot PANDA network in Cytoscape}
 \usage{
-vis.panda.in.cytoscape(panda.net, network.name = "PANDA")
+vis.panda.in.cytoscape(panda.net, network_name = "PANDA")
 }
 \arguments{
 \item{panda.net}{Character string indicating the input PANDA network in data frame structure type.}
 
-\item{network.name}{Character string indicating the name of Cytoscape network.}
+\item{network_name}{Character string indicating the name of Cytoscape network.}
 }
 \description{
 This function is able to modify PANDA network and plot in Cytoscape.

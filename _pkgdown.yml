@@ -26,6 +26,7 @@ reference:
   - panda.py
   - panda.to.condor.object
   - panda.to.alpaca
+  - panda.diff.edges
   - create.panda.style
   - vis.panda.in.cytoscape
   - create.panda.style

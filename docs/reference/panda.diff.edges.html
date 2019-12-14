@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot two PANDA networsk in Cytoscape — vis.diff.panda.in.cytoscape • netZooR</title>
+<title>Identify differential edges in two PANDA networks — panda.diff.edges • netZooR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,12 @@
 
 
 
-<meta property="og:title" content="Plot two PANDA networsk in Cytoscape — vis.diff.panda.in.cytoscape" />
+<meta property="og:title" content="Identify differential edges in two PANDA networks — panda.diff.edges" />
 
-<meta property="og:description" content="This function is able to modify PANDA network and plot in Cytoscape." />
+<meta property="og:description" content="To determine the probability that an edge is “different” between the networks, 
+we first subtracted the z-score weight values estimated by PANDA for the two networks and then determined the value of the inverse cumulative distribution for this difference. 
+The product of these two probabilities represents the probability than an edge is both “supported” and “different.” 
+We select edges for which this combined probability is greater than a threshold probability (default value is 0.8)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -125,51 +128,58 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot two PANDA networsk in Cytoscape</h1>
+    <h1>Identify differential edges in two PANDA networks</h1>
     
-    <div class="hidden name"><code>vis.diff.panda.in.cytoscape.Rd</code></div>
+    <div class="hidden name"><code>panda.diff.edges.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function is able to modify PANDA network and plot in Cytoscape.</p>
+    <p>To determine the probability that an edge is “different” between the networks, 
+we first subtracted the z-score weight values estimated by PANDA for the two networks and then determined the value of the inverse cumulative distribution for this difference. 
+The product of these two probabilities represents the probability than an edge is both “supported” and “different.” 
+We select edges for which this combined probability is greater than a threshold probability (default value is 0.8).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>vis.diff.panda.in.cytoscape</span>(<span class='no'>merged_panda</span>, <span class='kw'>condition_name</span> <span class='kw'>=</span> <span class='st'>"cond.1"</span>,
-  <span class='kw'>network_name</span> <span class='kw'>=</span> <span class='st'>"diff.PANDA"</span>)</pre>
+    <pre class="usage"><span class='fu'>panda.diff.edges</span>(<span class='no'>net1</span>, <span class='no'>net2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+  <span class='kw'>condition_name</span> <span class='kw'>=</span> <span class='st'>"cond.1"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>merged_panda</th>
-      <td><p>vector indicating the merged PANDA networks in data frame structure type.</p></td>
+      <th>net1</th>
+      <td><p>vector indicating the PANDA networks of one condition or phenotype.</p></td>
+    </tr>
+    <tr>
+      <th>net2</th>
+      <td><p>vector indicating the PANDA networks of another compared condition orphenotype.</p></td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>numerical vector indicating a threshold probability to select select edges.</p></td>
     </tr>
     <tr>
       <th>condition_name</th>
-      <td><p>string vector indicating the same condition name used in <code>panda.diff.edges</code>.</p></td>
-    </tr>
-    <tr>
-      <th>network_name</th>
-      <td><p>Character string indicating the name of Cytoscape network.</p></td>
+      <td><p>string vector indicating the condition name of net1</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># run this function to create a network in Cytoscape.</span>
-<span class='fu'>vis.diff.panda.in.cytoscape</span>(<span class='no'>panda.net1</span>, <span class='no'>panda.net1</span>, <span class='kw'>network.name</span><span class='kw'>=</span><span class='st'>"diff.PANDA"</span>)
-}</div></pre>
+    <p>a data.frame with five columns: tf, gene, motif, force and defined condition name("T"in this column means egde belongs to first condition or phenotype,
+"F" means edge belongs to the second condition or phenotype)</p>
+    
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>

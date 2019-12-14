@@ -4,10 +4,14 @@
 \alias{create.diff.panda.style}
 \title{Create a Cytoscape visual style for two PANDA networks}
 \usage{
-create.diff.panda.style(style.name = "Diff.PandaStyle")
+create.diff.panda.style(style_name = "Diff.PandaStyle",
+  condition_name = "cond.1")
 }
 \arguments{
-\item{style.name}{Character string indicating the style name. Defaults to "Diff.PandaStyle"}
+\item{style_name}{Character string indicating the style name. Defaults to "Diff.PandaStyle"}
+
+\item{condition_name}{string vector indicating the same condition name used in \code{\link{panda.diff.edges}} and \code{\link{vis.diff.panda.in.cytoscape}},
+and all edges belong to this condition or phenotype will be represented as purple, otherwise, green.}
 }
 \value{
 a visual style in Cytoscape Control Panel under "Style" button.
