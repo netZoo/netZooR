@@ -2,9 +2,9 @@
 #'
 #'This function is able to modify PANDA network and plot in Cytoscape.
 #'
-#' @param net1 Character string indicating the input PANDA network in data frame structure type.
-#' @param net2 Character string indicating the another input PANDA network in data frame structure type.
-#' @param network.name Character string indicating the name of Cytoscape network. 
+#' @param merged_panda vector indicating the merged PANDA networks in data frame structure type.
+#' @param condition_name string vector indicating the same condition name used in \code{\link{panda.diff.edges}}. 
+#' @param network_name Character string indicating the name of Cytoscape network.
 #' @examples
 #' \dontrun{
 #' # run this function to create a network in Cytoscape.
@@ -15,45 +15,24 @@
 #' @import RCy3
 #' @export 
 #' 
-vis.diff.panda.in.cytoscape <- function(net1,net2,network.name="DiffPANDAnetwork"){
-  # reshape PANDA networks
-  merged.net <- merge(net1,net2,by=c("tf","gene"))
-  # edge-weight differences
-  merged.net$'x-y' <- merged.net$force.x-merged.net$force.y
-  merged.net$'y-x' <- merged.net$force.y-merged.net$force.x
-  # CDF
-  fnx <- ecdf(merged.net$force.x)
-  fny <- ecdf(merged.net$force.y)
-  fnxy <- ecdf(merged.net$'x-y')
-  fnyx <- ecdf(merged.net$'y-x')
-  sub.net1 <- merged.net[fnx(merged.net$force.x)*(fnxy(merged.net$'x-y'))>0.8,]
-  sub.net1$cond1 <- "1"
-  sub.net1 <- sub.net1[,c(1,2,3,4,9)]
-  colnames(sub.net1) <- c("tf","gene","motif","force","cond1")
-  sub.net2 <- merged.net[fny(merged.net$force.y)*(fnyx(merged.net$'y-x'))>0.8,]
-  sub.net2$cond1 <- "0"
-  sub.net2 <- sub.net2[,c(1,2,3,6,9)]
-  colnames(sub.net2) <- c("tf","gene","motif","force","cond1")
-  merge.sub.net <- rbind(sub.net1,sub.net2)
-  
-  # plot 
-  # launch Cytoscape 3.6.1 or greater
-  cytoscapePing ()
-  cytoscapeVersionInfo ()
-  
-  colnames(merge.sub.net) <- c("source","target","interaction","weight","cond.")
-  merge.sub.net$weight_transformed <- rank(merge.sub.net$weight)/length(merge.sub.net$weight)*10000
-  if(nrow(merge.sub.net)>6666){
-    message("The maximum network objects (nodes+edges) that Cytoscape could support varies in different memories.
-            0-20000 objects are suggested by 512M memory size for Cytoscape to view. 
-            For better view function in Cytoscape please reduce the size of PANDA network imported")
-  }
-  #create nodes arg for creating a cytoscape plot
-  panda_nodes <- data.frame(id=c(merge.sub.net$source,merge.sub.net$target), group=rep(c("TF","Gene"), each=nrow(merge.sub.net)),stringsAsFactors=FALSE)
-  # creat cytoscape from DataFrames
-  createNetworkFromDataFrames(nodes=panda_nodes,edges=merge.sub.net, title=network.name, collection="DataFrame Example")
 
-  
+vis.diff.panda.in.cytoscape <- function(merged_panda, condition_name = "cond.1", network_name="diff.PANDA"){
+# plot 
+# launch Cytoscape 3.6.1 or greater
+cytoscapePing ()
+cytoscapeVersionInfo ()
+
+colnames(merged_panda) <- c("source","target","motif","weight",condition_name)
+merged_panda$weight_transformed <- rank(merged_panda$weight)/length(merged_panda$weight)*10000
+if(nrow(merged_panda)>6666){
+  message("The maximum network objects (nodes+edges) that Cytoscape could support varies in different memories.
+          0-20000 objects are suggested by 512M memory size for Cytoscape to view. 
+          For better view function in Cytoscape please reduce the size of PANDA network imported")
 }
+#create nodes arg for creating a cytoscape plot
+panda_nodes <- data.frame(id=c(merged_panda$source,merged_panda$target), group=rep(c("TF","Gene"), each=nrow(merged_panda)),stringsAsFactors=FALSE)
+# creat cytoscape from DataFrames
+createNetworkFromDataFrames(nodes=panda_nodes,edges=merged_panda, title=network_name, collection="DataFrame Example")
 
+}
 

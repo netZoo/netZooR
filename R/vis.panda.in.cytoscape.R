@@ -3,7 +3,7 @@
 #'This function is able to modify PANDA network and plot in Cytoscape.
 #'
 #' @param panda.net Character string indicating the input PANDA network in data frame structure type.
-#' @param network.name Character string indicating the name of Cytoscape network. 
+#' @param network_name Character string indicating the name of Cytoscape network. 
 #' @examples
 #' \dontrun{
 #' # refer to the input datasets files of control TB dataset in inst/extdat as example
@@ -28,7 +28,7 @@
 #' @import RCy3
 #' @export 
 #' 
-vis.panda.in.cytoscape <- function(panda.net, network.name="PANDA"){
+vis.panda.in.cytoscape <- function(panda.net, network_name="PANDA"){
   # launch Cytoscape 3.6.1 or greater
   cytoscapePing ()
   cytoscapeVersionInfo ()
@@ -45,7 +45,7 @@ vis.panda.in.cytoscape <- function(panda.net, network.name="PANDA"){
   #create nodes arg for creating a cytoscape plot
   panda_nodes <- data.frame(id=c(panda.net$source,panda.net$target), group=rep(c("TF","Gene"), each=nrow(panda.net)),stringsAsFactors=FALSE)
   # creat cytoscape from DataFrames
-  createNetworkFromDataFrames(nodes=panda_nodes,edges=panda.net, title=network.name, collection="DataFrame Example")
+  createNetworkFromDataFrames(nodes=panda_nodes,edges=panda.net, title=network_name, collection="DataFrame Example")
   
 }
 

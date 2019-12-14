@@ -7,7 +7,7 @@
 #' @import RCy3
 #' @export
 
-create.panda.style <- function(style.name="PandaStyle"){
+create.panda.style <- function(style_name="PandaStyle"){
   
   # node properties
   nodeShape <- mapVisualProperty('node shape','group','d',c("TF","Gene"),c("ELLIPSE","RECTANGLE"))
@@ -28,7 +28,7 @@ create.panda.style <- function(style.name="PandaStyle"){
                  EDGE_TRANSPARENCY=255,
                  NODE_LABEL_POSITION="center")
   # create visual style working for PANDA network
-  createVisualStyle(style.name,defaults,list(nodeShape, nodeColor, nodeBorderColor,nodeLabel,
+  createVisualStyle(style_name,defaults,list(nodeShape, nodeColor, nodeBorderColor,nodeLabel,
                                            edgeLineType, edgeTargetArrowShape, edgeTargetArrowUnSelectedPaint,
                                            edgeWidth, edgeStrokeUnselectedPaint))
 
