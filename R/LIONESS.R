@@ -23,7 +23,7 @@
 
 #'
 #' @examples
-#'
+#'\dontrun{
 #' # refer to the input datasets files of control in inst/extdat as example
 #' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
 #' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
@@ -31,7 +31,7 @@
 #' 
 #' # Run LIONESS algorithm
 #' control_lioness_result <- lioness.py(expr = control_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE,start_sample=1, end_sample=2)
-#' 
+#'  }
 #' @import reticulate
 #' @export
 lioness.py <- function(expr = expression, motif = motif, ppi = ppi, mode_process="union", rm_missing = FALSE, start_sample=1, end_sample="None", save_dir="lioness_output", save_fmt='npy'){
