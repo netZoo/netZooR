@@ -7,9 +7,9 @@ sudo: true
 os:
 - osx
 before_install:
-- pip install --user -r numpy
-- pip install --user -r scipy
-- pip install --user -r pandas
+- pip3 install --user -r numpy
+- pip3 install --user -r scipy
+- pip3 install --user -r pandas
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
     export PATH="/usr/local/opt/llvm/bin:$PATH" &&
     export LDFLAGS="-L/usr/local/opt/llvm/lib" &&
