@@ -7,7 +7,7 @@ sudo: true
 cache: packages
 os:
 - osx
-
+- windows
 before_install:
 - pip install --user -r requirements.txt
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
