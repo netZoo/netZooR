@@ -160,7 +160,7 @@
 <span class='no'>ppi_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ppi_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># Run PANDA algorithm</span>
-<span class='no'>control_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='panda.fast.html'>panda.fast</a></span>(<span class='kw'>e</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )
+<span class='no'>control_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'>panda.fast</span>(<span class='kw'>e</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )
 
 <span class='co'># access PANDA regulatory network</span>
 <span class='no'>control_net</span> <span class='kw'>&lt;-</span> <span class='no'>control_all_panda_result</span>$<span class='no'>panda</span>
