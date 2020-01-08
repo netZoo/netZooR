@@ -6,6 +6,7 @@ r:
 sudo: true
 os:
 - osx
+- windows
 before_install:
 - pip3 install --user numpy scipy pandas
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
