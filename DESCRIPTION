@@ -47,6 +47,7 @@ Imports: Biobase,
    	 assertthat,
    	 tidyr,
    	 methods,
+	 AnnotationDbi,
 Remotes: jnpaulson/pandaR
 License: GPL-3
 Encoding: UTF-8

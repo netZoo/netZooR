@@ -444,6 +444,7 @@ alpaca.node.to.gene <- function(x){strsplit(x,split="_")[[1]][1]}
 #' @import Matrix
 #' @import GOstats
 #' @import org.Hs.eg.db
+#' @import AnnotationDbi
 #' @export
 #' 
 
@@ -887,6 +888,7 @@ alpaca.simulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,de
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @import GO.db
+#' @import AnnotationDbi
 #' @export
 #' 
 
