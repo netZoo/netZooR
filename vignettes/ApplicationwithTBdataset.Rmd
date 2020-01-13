@@ -1,7 +1,7 @@
 ---
 title: "Application with TB dataset"
 author: "Tian Wang"
-date: "`r Sys.Date()`"
+date: "2019-10-19"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ApplicationwithTBdataset}
