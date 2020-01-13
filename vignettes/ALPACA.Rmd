@@ -1,5 +1,7 @@
 ---
 title: "Detecting differential modules using ALPACA"
+author: Megha Padi
+date: "2017-10-19"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ALPACA}
