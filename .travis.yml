@@ -3,15 +3,15 @@
 language: R
 
 r: 
-- release
+  - release
 
 sudo: true
 - os: osx
-osx_image: xcode9.3
+  osx_image: xcode9.3
 
-before_install:
-- pip3 install --user numpy scipy pandas
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
+  before_install:
+  - pip3 install --user numpy scipy pandas
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
     export PATH="/usr/local/opt/llvm/bin:$PATH" &&
     export LDFLAGS="-L/usr/local/opt/llvm/lib" &&
     export CFLAGS="-I/usr/local/opt/llvm/include"; fi
