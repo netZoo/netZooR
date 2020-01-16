@@ -1,7 +1,7 @@
 ---
 title: "An Introduction to the MONSTER Package"
 author: "Daniel Schlauch"
-date: "`r Sys.Date()`"
+date: "2017-09-22"
 output: rmarkdown::html_document
 vignette: >
     %\VignetteIndexEntry{MONSTER}
