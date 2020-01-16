@@ -1,14 +1,15 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: r
+language: R
 r: 
-  - release
-
+- release
 sudo: true
-- os: osx
-  before_install:
-  - pip3 install --user numpy scipy pandas
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
+os:
+- osx
+
+before_install:
+- pip3 install --user numpy scipy pandas
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
     export PATH="/usr/local/opt/llvm/bin:$PATH" &&
     export LDFLAGS="-L/usr/local/opt/llvm/lib" &&
     export CFLAGS="-I/usr/local/opt/llvm/include"; fi
@@ -21,4 +22,4 @@ script:
 - travis_wait R CMD check *tar.gz --no-manual
 
 after_success:
-- Rscript -e 'devtools::install_github("r-lib/covr");library(covr);codecov()'
+  - Rscript -e 'devtools::install_github("r-lib/covr");library(covr);codecov()'
