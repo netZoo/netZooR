@@ -7,7 +7,7 @@ r:
 
 sudo: true
 - os: osx
-  osx_image: xcode9.3
+osx_image: xcode9.3
 
 before_install:
 - pip3 install --user numpy scipy pandas
