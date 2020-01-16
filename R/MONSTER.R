@@ -437,7 +437,7 @@ monster.transitionPCAPlot <-    function(monsterObj,
   ggplot(data = scores.pca, aes(x = Comp.1, y = Comp.2, label = node.names)) +
     geom_hline(yintercept = 0, colour = "gray65") +
     geom_vline(xintercept = 0, colour = "gray65") +
-    geom_text(size = odsm.scaled, alpha=alpha, color=clusters) +
+    geom_text(size = odsm.scaled, alpha=alpha, colour=unname(clusters))+
     ggtitle(title)
 }
 
