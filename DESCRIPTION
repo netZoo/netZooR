@@ -18,7 +18,8 @@ Depends: R (>= 3.3.2),
    	igraph,
    	viridisLite, 
    	STRINGdb,
-   	RCy3
+   	RCy3,
+	pandaR
 Imports: Biobase,
    	 matrixStats,
    	 RSQLite,
