@@ -20,7 +20,7 @@
 #'
 #' @return A list of three items：
 #'          Use \code{$panda} to access the standard output of PANDA network in data.frame, which consists of four columns: 
-#'          "tf", "gene", "motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "force".
+#'          "TF", "Gene", "Motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".
 #' 
 #'          Use \code{$indegree} to access the indegree of PANDA network in data.frame, consisting of two columns: "gene", "force".
 #' 
@@ -108,15 +108,23 @@ panda.py <- function( expr, motif=NULL, ppi=NULL, mode_process="union", rm_missi
   # 
   # assign the output into three data frames
   panda_net <- py$panda_network
-  # convert the character to numeric
+  
+  
+  # convert the factor to character & character to numeric
+  panda_net$tf <- as.character(panda_net$tf)
+  panda_net$gene <- as.character(panda_net$gene)
   panda_net$motif <- as.numeric(panda_net$motif)
   panda_net$force <- as.numeric(panda_net$force)
+  
+  # indegree network
   indegree_net <- py$indegree
-  indegree_net <- as.data.frame(cbind(Target = rownames(indegree_net), Target_Score=indegree_net$force))
+  indegree_net <- as.data.frame(cbind(Target = rownames(indegree_net), Target_Score = indegree_net$force), stringsAsFactors =F)
+  indegree_net$`Target_Score` <- as.numeric(indegree_net$`Target_Score`)
   
+  # outdegree network
   outdegree_net <- py$outdegree
-  outdegree_net <- as.data.frame(cbind(Regulator = rownames(outdegree_net), Regulator_Score=outdegree_net$force))
-  
+  outdegree_net <- as.data.frame(cbind(Regulator = rownames(outdegree_net), Regulator_Score = outdegree_net$force), stringsAsFactors =F)
+  outdegree_net$`Regulator_Score` <- as.numeric(outdegree_net$`Regulator_Score`)
   # rename the PANDA output colnames
   colnames(panda_net) <- c("TF","Gene","Motif","Score")
   
