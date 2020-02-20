@@ -20,7 +20,7 @@
 #'
 #' @return A list of three items：
 #'          Use \code{$panda} to access the standard output of PANDA network in data.frame, which consists of four columns: 
-#'          "tf", "gene", "motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "force".
+#'          "TF", "Gene", "Motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".
 #' 
 #'          Use \code{$indegree} to access the indegree of PANDA network in data.frame, consisting of two columns: "gene", "force".
 #' 
@@ -108,26 +108,37 @@ panda.py <- function( expr, motif=NULL, ppi=NULL, mode_process="union", rm_missi
   # 
   # assign the output into three data frames
   panda_net <- py$panda_network
-  # convert the character to numeric
+  
+  
+  # convert the factor to character & character to numeric
+  panda_net$tf <- as.character(panda_net$tf)
+  panda_net$gene <- as.character(panda_net$gene)
   panda_net$motif <- as.numeric(panda_net$motif)
   panda_net$force <- as.numeric(panda_net$force)
+  
+  # indegree network
   indegree_net <- py$indegree
-  # indegree_net$gene <- rownames(indegree_net)
-  # indegree_net <- indegree_net[,c(2,1)]
+  indegree_net <- as.data.frame(cbind(Target = rownames(indegree_net), Target_Score = indegree_net$force), stringsAsFactors =F)
+  indegree_net$`Target_Score` <- as.numeric(indegree_net$`Target_Score`)
+  
+  # outdegree network
   outdegree_net <- py$outdegree
+  outdegree_net <- as.data.frame(cbind(Regulator = rownames(outdegree_net), Regulator_Score = outdegree_net$force), stringsAsFactors =F)
+  outdegree_net$`Regulator_Score` <- as.numeric(outdegree_net$`Regulator_Score`)
+  # rename the PANDA output colnames
+  colnames(panda_net) <- c("TF","Gene","Motif","Score")
+  
   # check if there is duplicate name of nodes in first two columns
   # if true, prefix the content in regulator column with "reg_" and content in target column with"tar_"
-  
-  if( length(intersect(panda_net[, 1], panda_net[, 2]))>0){
-    panda_net[,1] <-paste('reg_', panda_net[,1], sep='')
-    panda_net[,2] <-paste('tar_', panda_net[,2], sep='')
-    colnames(indegree_net)<- paste("tar_",colnames(indegree_net), sep='')
-    colnames(outdegree_net)<- paste("reg_",colnames(outdegree_net), sep='')
-    message("Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node names between first two columns" )
+   
+  if( length(intersect(panda_net$Gene, panda_net$TF))>0){
+    panda_net$TF <- paste('reg_', panda_net$TF, sep='')
+    panda_net$Gene <- paste('tar_', panda_net$Gene, sep='')
+    message("Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between first two columns" )
   }
   output <- list("panda" = panda_net)
   # assign all three network into a list.
   output <- list("panda" = panda_net, "indegree" = indegree_net, "outdegree" = outdegree_net)
-  message ("...Finish PANDA run...")
+  message ("...Finish PANDA...")
   return(output)
 }

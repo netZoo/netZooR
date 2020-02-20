@@ -26,7 +26,7 @@ if FALSE, keep all tf and genes. The default value is FALSE.}
 \value{
 A list of three items：
          Use \code{$panda} to access the standard output of PANDA network in data.frame, which consists of four columns: 
-         "tf", "gene", "motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "force".
+         "TF", "Gene", "Motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".
 
          Use \code{$indegree} to access the indegree of PANDA network in data.frame, consisting of two columns: "gene", "force".
 
