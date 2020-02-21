@@ -33,7 +33,11 @@ vis.panda.in.cytoscape <- function(panda.net, network_name="PANDA"){
   cytoscapePing ()
   cytoscapeVersionInfo ()
   # change colnames of input PANDA network
-  colnames(panda.net) <- c("source","target","interaction","weight")
+  names(panda.net)[names(panda.net) == 'TF'] <- "source"
+  names(panda.net)[names(panda.net) == 'Gene'] <- "target"
+  names(panda.net)[names(panda.net) == 'Motif'] <- "interaction"
+  names(panda.net)[names(panda.net) == 'Score'] <- "weight"
+
   # convert the weight to the range between 0 to 10000.
   panda.net$weight_transformed <- rank(panda.net$weight)/length(panda.net$weight)*10000
   if(nrow(panda.net)>6666){

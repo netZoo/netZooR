@@ -8,7 +8,9 @@
 #' @examples
 #' \dontrun{
 #' # run this function to create a network in Cytoscape.
-#' vis.diff.panda.in.cytoscape(panda.net1, panda.net1, network.name="diff.PANDA")
+#' merged.panda <- vis.diff.panda.in.cytoscape(panda.net1, panda.net1, network.name="diff.PANDA")
+#' # then plot two PANDA network in Cytoscape.
+#' vis.diff.panda.in.cytoscape(merged.panda,condition_name = "cond.1", network_name="diff.PANDA" )
 #' }
 #' @return NULL
 #' 

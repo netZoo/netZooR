@@ -142,18 +142,18 @@ We select edges for which this combined probability is greater than a threshold 
     
     </div>
 
-    <pre class="usage"><span class='fu'>panda.diff.edges</span>(<span class='no'>net1</span>, <span class='no'>net2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+    <pre class="usage"><span class='fu'>panda.diff.edges</span>(<span class='no'>panda.net1</span>, <span class='no'>panda.net2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
   <span class='kw'>condition_name</span> <span class='kw'>=</span> <span class='st'>"cond.1"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>net1</th>
+      <th>panda.net1</th>
       <td><p>vector indicating the PANDA networks of one condition or phenotype.</p></td>
     </tr>
     <tr>
-      <th>net2</th>
+      <th>panda.net2</th>
       <td><p>vector indicating the PANDA networks of another compared condition orphenotype.</p></td>
     </tr>
     <tr>
@@ -168,7 +168,7 @@ We select edges for which this combined probability is greater than a threshold 
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data.frame with five columns: tf, gene, motif, force and defined condition name("T"in this column means egde belongs to first condition or phenotype,
+    <p>a data.frame with five columns: tf, gene, motif, Score and defined condition name("T"in this column means egde belongs to first condition or phenotype,
 "F" means edge belongs to the second condition or phenotype)</p>
     
 
