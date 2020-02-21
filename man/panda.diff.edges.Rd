@@ -4,20 +4,20 @@
 \alias{panda.diff.edges}
 \title{Identify differential edges in two PANDA networks}
 \usage{
-panda.diff.edges(net1, net2, threshold = 0.8,
+panda.diff.edges(panda.net1, panda.net2, threshold = 0.8,
   condition_name = "cond.1")
 }
 \arguments{
-\item{net1}{vector indicating the PANDA networks of one condition or phenotype.}
+\item{panda.net1}{vector indicating the PANDA networks of one condition or phenotype.}
 
-\item{net2}{vector indicating the PANDA networks of another compared condition orphenotype.}
+\item{panda.net2}{vector indicating the PANDA networks of another compared condition orphenotype.}
 
 \item{threshold}{numerical vector indicating a threshold probability to select select edges.}
 
 \item{condition_name}{string vector indicating the condition name of net1}
 }
 \value{
-a data.frame with five columns: tf, gene, motif, force and defined condition name("T"in this column means egde belongs to first condition or phenotype,
+a data.frame with five columns: tf, gene, motif, Score and defined condition name("T"in this column means egde belongs to first condition or phenotype,
 "F" means edge belongs to the second condition or phenotype)
 }
 \description{
