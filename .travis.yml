@@ -12,6 +12,9 @@ addons:
       - python3-pip
 
 before_install:
+- sudo apt-get update
+- sudo apt-get install python3.5
+- sudo apt-get install python3-pip
 - pip3 install --user numpy scipy pandas
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
     export PATH="/usr/local/opt/llvm/bin:$PATH" &&
