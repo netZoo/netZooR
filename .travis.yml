@@ -4,10 +4,12 @@ language: R
 r: 
 - release
 sudo: true
-os:
-- osx
-- linux
-  dist: trusty
+
+jobs:
+  include:
+    - os: linux
+      dist: trusty
+    - os: osx
 
 before_install:
 - pip3 install --user numpy scipy pandas
