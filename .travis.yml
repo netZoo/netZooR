@@ -5,7 +5,6 @@ r:
 - release
 sudo: true
 - dist: trusty
-- os: osx
 
 before_install:
 - pip3 install --user numpy scipy pandas
