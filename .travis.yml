@@ -4,7 +4,7 @@ sudo: true
 language: R
 r: 
 - release
-- dist: trusty
+dist: trusty
 addons:
   apt:
     packages:
