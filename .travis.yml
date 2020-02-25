@@ -5,7 +5,7 @@ language: R
 r: 
 - release
 os: linux
--dist: trusty
+- dist: trusty
 addons:
   apt:
     packages:
