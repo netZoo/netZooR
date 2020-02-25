@@ -4,7 +4,7 @@ language: R
 r: 
 - release
 sudo: true
-- dist: trusty
+dist: trusty
 
 before_install:
 - pip3 install --user numpy scipy pandas
