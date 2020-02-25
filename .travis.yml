@@ -5,11 +5,6 @@ language: R
 r: 
 - release
 dist: trusty
-addons:
-  apt:
-    packages:
-      - python3.5
-      - python3-pip
 
 before_install:
 - sudo apt-get update
