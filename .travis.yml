@@ -4,6 +4,7 @@ language: R
 r: 
 - release
 sudo: true
+os: linux
 dist: trusty
 
 before_install:
