@@ -5,7 +5,7 @@ language: R
 r: 
 - release
 os: linux
--dist: bionic
+-dist: trusty
 addons:
   apt:
     packages:
