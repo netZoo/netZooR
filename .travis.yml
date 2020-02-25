@@ -8,7 +8,6 @@ dist: trusty
 addons:
   apt:
     packages:
-      - "python3.6"
       - "python3-pip"
 
 before_install:
