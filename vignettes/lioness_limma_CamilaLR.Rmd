@@ -1,0 +1,192 @@
+---
+title: "Comparing LIONESS Regulatory Networks using limma"
+author: Camila Lopes-Ramos
+date: 2019-12-20
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{LionessApplicationinGTExData}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+# Introduction
+LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples) is a method for creating sample-specific networks. When applied to a PANDA regulatory network, the result is a set of gene regulatory networks, one for each sample in the gene expression dataset. More information on LIONESS can be found in the published paper: https://doi.org/10.1016/j.isci.2019.03.021  
+  
+In this vignette, we will compare LIONESS regulatory networks from 207 females and 238 males with colon cancer using RNA-Seq data from TCGA. We will compare the edge weights between females and males using a linear regression model and correcting for the covariates age, race, and disease stage, as available in the limma package. We will also compare the gene's in-degree (defined as the sum of the gene's incoming edge weights from all TFs in the network). Finally, we will perform gene set enrichment analysis to find the pathways enriched for genes differentially targeted by sex in colon cancer.
+
+## Install packages
+```{r eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("limma")
+BiocManager::install("fgsea")
+BiocManager::install("Biobase")
+install.packages("ggplot2")
+install.packages("igraph")
+```
+## Load packages
+```{r warning=FALSE, message=FALSE}
+library(limma)
+library(fgsea)
+library(ggplot2)
+library(Biobase)
+library(igraph)
+```
+
+
+# Load the data
+
+For the purposes of demonstrating the workflow, we will load only a subet of LIONESS networks. Our subset shows the edge weights for 50,000 edges (rows) by 445 samples (columns).
+Let's take a look at the networks:
+
+```{r}
+# Load a subset of LIONESS networks
+lioness <- read.delim("data/lioness_coloncancer_subset.txt",stringsAsFactors = F, check.names = F)
+head(lioness[,1:5])
+# Add row names as "TF_gene" and remove columns 1 and 2 with TF and gene name
+rownames(lioness) <- apply(lioness, 1, function(x){
+  paste(x[1], x[2], sep="_")
+})
+# Remove TF and gene columns
+lioness <- lioness[,-(1:2)]
+head(lioness[,1:5])
+
+# Load the complete gene in-degree (sum of all edge weights for each gene) and clinical data stored as an expression set 
+obj <- get(load(paste("data/inDegree_allEdges_coloncancer.rdata", sep="/")))
+# Clinical information
+pData(obj)[1:5,30:35]
+```
+
+# Compare the edge weights
+Compare the edge weights between males and females using linear regression model (limma package) and adjusting for covariates: stage, age, race.  
+
+## Run limma
+```{r}
+# Define the covariates
+gender <- factor(as.character(pData(obj)$gender),levels=c("MALE","FEMALE"))
+
+stage <- (as.character(pData(obj)$uicc_stage))
+stage[which(is.na(stage))] <- "NA"    
+stage <- as.factor(stage)
+
+race <- as.character(pData(obj)$race)
+race[which(is.na(race))] <- "NA"
+race <- as.factor(race)
+
+age <- as.numeric(pData(obj)$age_at_initial_pathologic_diagnosis)
+age[which(is.na(age))] <- mean(age,na.rm=TRUE)
+
+design = model.matrix(~ stage + race + age + gender)
+
+# Run limma
+fitGood = lmFit(as.matrix(lioness),design)
+fitGood = eBayes(fitGood)
+tb = topTable(fitGood,coef="genderFEMALE",number=Inf)
+head(tb)
+```
+## Visualize the top edges with differential weights by sex
+We select the top 50 edges with differential edge weights by sex and convert them into an igraph graph.data.frame object for visualization. We color edges red if they have higher coefficients in the female group, and blue if they have higher coefficients in the female group.
+
+```{r}
+toptable_edges <- t(matrix(unlist(c(strsplit(row.names(tb), "_"))),2))
+z <- cbind(toptable_edges[1:50,], tb$logFC[1:50])
+g <- graph.data.frame(z, directed=FALSE)
+E(g)$weight <- as.numeric(z[,3])
+E(g)$color[E(g)$weight<0] <- "blue"
+E(g)$color[E(g)$weight>0] <- "red"
+E(g)$weight <- 1
+
+par(mar=c(0,0,0,0))
+plot(g, vertex.label.cex=0.7, vertex.size=10,  vertex.label.font=3, edge.width=5*(abs(as.numeric(z[,3]))))
+```
+  
+# Compare gene's in-degree
+Compare the gene's in-degree between males and females using linear regression model (limma package) and adjusting for covariates: stage, age, race.
+
+## Run limma
+```{r}
+indegree <- assayData(obj)[["quantile"]]
+head(indegree[,1:3])
+# Use the same design matrix as before
+fitGood = lmFit(indegree,design)
+fitGood = eBayes(fitGood)
+tb_degree = topTable(fitGood,coef="genderFEMALE",number=Inf)
+head(tb_degree)
+# Save gene ranks
+indegree_rank <- setNames(object=tb_degree[,"t"], rownames(tb_degree))
+```
+
+# Gene Set Enrichment Analysis
+Well will use the fgsea package to perform gene set enrichment analysis. We need to point to a ranked gene list (for example the gene in-degree statistical difference (t value) between males and females), and a list of gene sets (or signatures) in gmt format to test for enrichment. The gene sets can be downloaded from MSigDB: http://software.broadinstitute.org/gsea/msigdb Same gene annotation should be used in the ranked gene list and gene sets.
+
+## Run fgsea
+```{r}
+gmt.file <- "data/c2.cp.kegg.v7.0.symbols.gmt"
+pathways <- gmtPathways(gmt.file)
+fgseaRes <- fgsea(pathways, indegree_rank, minSize=15, maxSize=500, nperm=1000)
+head(fgseaRes)
+# Subset to pathways with FDR < 0.05
+sig <- fgseaRes[fgseaRes$padj < 0.05,]
+# Top 10 pathways enriched in females
+sig$pathway[sig$NES > 0][1:10]
+# Top 10 pathways enriched in males
+sig$pathway[sig$NES < 0][1:10]
+```
+
+## Bubble plot of differentially targeted pathways
+Bubble plot of gene sets on y-axis and adjusted p-value (padj) on x-axis. Bubble size indicates the number of genes in each gene set, and bubble color indicates the normalized enrichment score (NES). Blue is for negative NES (enrichment of higher targeted genes in males), and red is for positive NES (enrichment of higher targeted genes in females).
+
+```{r}
+dat <- data.frame(fgseaRes)
+
+# Settings
+fdrcut <- 0.05 # FDR cut-off to use as output for significant signatures
+dencol_neg <- "blue" # bubble plot color for negative ES
+dencol_pos <- "red" # bubble plot color for positive ES
+signnamelength <- 4 # set to remove prefix from signature names (2 for "GO", 4 for "KEGG", 8 for "REACTOME")
+asp <- 3 # aspect ratio of bubble plot
+charcut <- 100 # cut signature name in heatmap to this nr of characters
+
+# Make signature names more readable
+a <- as.character(dat$pathway) # 'a' is a great variable name to substitute row names with something more readable
+for (j in 1:length(a)){
+  a[j] <- substr(a[j], signnamelength+2, nchar(a[j]))
+}
+a <- tolower(a) # convert to lower case (you may want to comment this out, it really depends on what signatures you are looking at, c6 signatures contain gene names, and converting those to lower case may be confusing)
+for (j in 1:length(a)){
+  if(nchar(a[j])>charcut) { a[j] <- paste(substr(a[j], 1, charcut), "...", sep=" ")}
+} # cut signature names that have more characters than charcut, and add "..."
+a <- gsub("_", " ", a)
+dat$NAME <- a
+
+# Determine what signatures to plot (based on FDR cut)
+dat2 <- dat[dat[,"padj"]<fdrcut,]
+dat2 <- dat2[order(dat2[,"padj"]),] 
+dat2$signature <- factor(dat2$NAME, rev(as.character(dat2$NAME)))
+# Determine what labels to color
+sign_neg <- which(dat2[,"NES"]<0)
+sign_pos <- which(dat2[,"NES"]>0)
+# Color labels
+signcol <- rep(NA, length(dat2$signature))
+signcol[sign_neg] <- dencol_neg # text color of negative signatures
+signcol[sign_pos] <- dencol_pos # text color of positive signatures
+signcol <- rev(signcol) # need to revert vector of colors, because ggplot starts plotting these from below
+
+# Plot bubble plot
+g<-ggplot(dat2, aes(x=padj,y=signature,size=size))
+g+geom_point(aes(fill=NES), shape=21, colour="white")+
+  theme_bw()+ # white background, needs to be placed before the "signcol" line
+  xlim(0,fdrcut)+
+  scale_size_area(max_size=10,guide="none")+
+  scale_fill_gradient2(low=dencol_neg, high=dencol_pos)+
+  theme(axis.text.y = element_text(colour=signcol))+
+  theme(aspect.ratio=asp, axis.title.y=element_blank()) # test aspect.ratio
+```
