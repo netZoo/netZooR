@@ -49,5 +49,5 @@ ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", 
 
 # Run LIONESS algorithm
 control_lioness_result <- lioness.py(expr = control_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE,start_sample=1, end_sample=2)
-
+ 
 }

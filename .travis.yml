@@ -4,12 +4,11 @@ language: R
 r: 
 - release
 sudo: true
-cache: packages
 os:
 - osx
 
 before_install:
-- pip install --user -r requirements.txt
+- pip3 install --user numpy scipy pandas
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
     export PATH="/usr/local/opt/llvm/bin:$PATH" &&
     export LDFLAGS="-L/usr/local/opt/llvm/lib" &&

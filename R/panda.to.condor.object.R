@@ -53,55 +53,41 @@ panda.to.condor.object <- function(panda.net, threshold){
   # if the threshold (cutoff) of edge-weight is undefined.
   if (missing(threshold)){
     
-    # transforming edge weights 
-    newdf <- cbind(panda.net[,c(1,2,3)],log(exp(panda.net[,4])+1))
-    # rename the colnames
-    colnames(newdf)[4] <- c("edge.Trans")
-    
-    # prior edges
-    Motif <- newdf[newdf[,3] == 1,]
-    # non-prior edges
-    nonMotif <- newdf[newdf[,3] == 0,]
+    # Add an additional column storing the transforming edge weights by formula w'=ln(e^w+1)
+    panda.trans <- data.frame(panda.net, Score_Trans=log(exp(panda.net$Score)+1))
     
     # the median of prior edges and non-prior edges
     # midway of these two medians.
-    threshold <- 1/2 * (summary(nonMotif[,4])[[3]] + summary(Motif[,4])[[3]])
+    threshold <- 1/2 * (median(panda.trans[panda.trans$Motif == 1,'Score_Trans']) + median(panda.trans[panda.trans$Motif == 0,'Score_Trans']))
   
-    message("Using the midway of [median weight of non-prior edges] and [median weight of prior edges], 
-            all weights mentioned above are transformationed with formula w'=ln(e^w+1) first")
-    
-    # transform the edge weight with formula w'=ln(e^w+1) to generate a new column of original data frame
-    newdf2 <- cbind(panda.net,log(exp(panda.net[,4])+1))
-    
-    # rename the data frame and use cutoff to select edge-weights.
-    colnames(newdf2)[5] <- c("modifiedForce")
-    newdf2 <- newdf2[newdf2$modifiedForce >= threshold,c(-3,-5)]
+    message("Using the mean of [median weight of non-prior edges] and [median weight of prior edges], 
+            all weights mentioned here are transformationed with formula w'=ln(e^w+1) from the original PANDA network edge weight")
+    # retain the TF, Gene and original Score columns
+    panda.trans <- panda.trans[panda.trans$Score_Trans >= threshold,c('TF',"Gene","Score")]
     }
   
-  # if the threshold (cutoff) of edge-weight is defined. 
+  # if the threshold (cutoff) of edge-weight is provided. 
   # when the customed threshold is out of range, print out error message.
-   if (threshold > max(panda.net[,4]) || threshold < min(panda.net[,4]) ) {
-    stop(paste("Please provide the edge-weight threshold between ", min(panda.net[,4])," and ", max(panda.net[,4])))
+   if (threshold > max(panda.net$Score) || threshold < min(panda.net$Score) ) {
+    stop(paste("Please provide the edge-weight threshold between ", min(panda.net$Score)," and ", max(panda.net$Score)))
   }
   else {
-    newdf2 <- panda.net[panda.net[,4] >= threshold,-3]
+    panda.trans <- panda.net[panda.net$Score >= threshold, c('TF',"Gene","Score")]
   }
   
   
   # *** create condor.object ***
-  n_reg <- length(unique(newdf2[,1]))
-  n_tar <- length(unique(newdf2[,2]))
+  n_reg <- length(unique(panda.trans$TF))
+  n_tar <- length(unique(panda.trans$Gene))
   if(n_reg < n_tar) {
-    
-    condor.object <- create.condor.object(newdf2[,c(2,1)])
-  } else { condor.object <- create.condor.object(newdf2[,c(1,2)])}
+    condor.object <- create.condor.object(panda.trans[,c("Gene","TF")])
+  } else { condor.object <- create.condor.object( panda.trans[,c("TF","Gene")] )}
   
   condor.object <- condor.cluster(condor.object, project=F)
   colnames(condor.object$edges)[c(1,2)] <- c ("red","blue")
 
   return(condor.object)
 }
-
 
 
 

@@ -71,7 +71,7 @@ This function is designed to run the a derived PANDA algorithm in Python impleme
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
       </span>
     </div>
 
@@ -94,22 +94,28 @@ This function is designed to run the a derived PANDA algorithm in Python impleme
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/ALPACA.html">Detecting differential modules using ALPACA</a>
+      <a href="../articles/ALPACA_MaghaP.html">Detecting differential modules using ALPACA</a>
     </li>
     <li>
-      <a href="../articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
+      <a href="../articles/ApplicationinGTExData_DeborahW.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
     <li>
-      <a href="../articles/ApplicationwithTBdataset.html">Application with TB dataset</a>
+      <a href="../articles/ApplicationwithTBdataset_TianW.html">Application with TB dataset</a>
     </li>
     <li>
-      <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+      <a href="../articles/MONSTER_DanielS.html">An Introduction to the MONSTER Package</a>
     </li>
     <li>
-      <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
+      <a href="../articles/SAMBAR_MariekeK.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
-      <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
+      <a href="../articles/lioness_limma_CamilaLR.html">Comparing LIONESS Regulatory Networks using limma</a>
+    </li>
+    <li>
+      <a href="../articles/pandaR_DanielS.html">An Introduction to the pandaR Package</a>
+    </li>
+    <li>
+      <a href="../articles/panda_CamilaLR.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
   </ul>
 </li>
@@ -183,7 +189,7 @@ if FALSE, keep all tf and genes. The default value is FALSE.</p></td>
 
     <p>A list of three items：
          Use <code>$panda</code> to access the standard output of PANDA network in data.frame, which consists of four columns: 
-         "tf", "gene", "motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "force".</p>
+         "TF", "Gene", "Motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".</p>
 <p>Use <code>$indegree</code> to access the indegree of PANDA network in data.frame, consisting of two columns: "gene", "force".</p>
 <p>Use <code>$outdegree</code> to access the outdegree of PANDA network in data.fra,e, consisting of two columns: "tf", "force".</p>
     
@@ -198,7 +204,7 @@ if FALSE, keep all tf and genes. The default value is FALSE.</p></td>
 
 
 <span class='co'># Run PANDA for treated and control network</span>
-<span class='no'>treated_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'>panda.py</span>(<span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>treated_expression_file_path</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>mode_process</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-processing dataset and keep the matched tfs or genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the context of first two columns with prefix 'reg_' and 'tar_', as there are some duplicate node names between first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA run...</span></div><div class='input'>
+<span class='no'>treated_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'>panda.py</span>(<span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>treated_expression_file_path</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>mode_process</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-processing dataset and keep the matched tfs or genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA...</span></div><div class='input'>
 <span class='co'># access PANDA regulatory network</span>
 <span class='no'>treated_net</span> <span class='kw'>&lt;-</span> <span class='no'>treated_all_panda_result</span>$<span class='no'>panda</span>
 

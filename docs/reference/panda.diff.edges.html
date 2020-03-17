@@ -69,7 +69,7 @@ We select edges for which this combined probability is greater than a threshold 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
       </span>
     </div>
 
@@ -92,22 +92,28 @@ We select edges for which this combined probability is greater than a threshold 
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/ALPACA.html">Detecting differential modules using ALPACA</a>
+      <a href="../articles/ALPACA_MaghaP.html">Detecting differential modules using ALPACA</a>
     </li>
     <li>
-      <a href="../articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
+      <a href="../articles/ApplicationinGTExData_DeborahW.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
     <li>
-      <a href="../articles/ApplicationwithTBdataset.html">Application with TB dataset</a>
+      <a href="../articles/ApplicationwithTBdataset_TianW.html">Application with TB dataset</a>
     </li>
     <li>
-      <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+      <a href="../articles/MONSTER_DanielS.html">An Introduction to the MONSTER Package</a>
     </li>
     <li>
-      <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
+      <a href="../articles/SAMBAR_MariekeK.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
-      <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
+      <a href="../articles/lioness_limma_CamilaLR.html">Comparing LIONESS Regulatory Networks using limma</a>
+    </li>
+    <li>
+      <a href="../articles/pandaR_DanielS.html">An Introduction to the pandaR Package</a>
+    </li>
+    <li>
+      <a href="../articles/panda_CamilaLR.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
   </ul>
 </li>
@@ -142,18 +148,18 @@ We select edges for which this combined probability is greater than a threshold 
     
     </div>
 
-    <pre class="usage"><span class='fu'>panda.diff.edges</span>(<span class='no'>net1</span>, <span class='no'>net2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+    <pre class="usage"><span class='fu'>panda.diff.edges</span>(<span class='no'>panda.net1</span>, <span class='no'>panda.net2</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
   <span class='kw'>condition_name</span> <span class='kw'>=</span> <span class='st'>"cond.1"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>net1</th>
+      <th>panda.net1</th>
       <td><p>vector indicating the PANDA networks of one condition or phenotype.</p></td>
     </tr>
     <tr>
-      <th>net2</th>
+      <th>panda.net2</th>
       <td><p>vector indicating the PANDA networks of another compared condition orphenotype.</p></td>
     </tr>
     <tr>
@@ -168,7 +174,7 @@ We select edges for which this combined probability is greater than a threshold 
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data.frame with five columns: tf, gene, motif, force and defined condition name("T"in this column means egde belongs to first condition or phenotype,
+    <p>a data.frame with five columns: tf, gene, motif, Score and defined condition name("T"in this column means egde belongs to first condition or phenotype,
 "F" means edge belongs to the second condition or phenotype)</p>
     
 
