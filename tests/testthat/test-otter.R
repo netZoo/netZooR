@@ -7,6 +7,6 @@ test_that("otter function works", {
    gt=as.matrix(read.csv('./test_otter.csv', header = FALSE))
 
    # Run OTTER algorithm
-   W <- otter(W, P, C)
+   W <- otter(W, P, C, Iter = 10)
    assert_that((all((as.integer(W*10**2)/10**2) == (as.integer(gt*10**2)/10**2))))  
 })
