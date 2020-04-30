@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7</span>
       </span>
     </div>
 
@@ -113,22 +113,22 @@
 <div id="install-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install-packages" class="anchor"></a>Install packages</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))
-    <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)
-BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"fgsea"</span>)
-<span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"reshape2"</span>)
-<span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"ggplot2"</span>)
-<span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(devtools)
-devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"netZoo/netZooR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"fgsea"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"reshape2"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(devtools)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"netZoo/netZooR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 </div>
 <div id="load-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-packages" class="anchor"></a>Load packages</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(netZooR)
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(fgsea)
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(reshape2)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(netZooR)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(fgsea)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(reshape2)</span></code></pre></div>
 </div>
 </div>
 <div id="panda" class="section level1">
@@ -145,47 +145,47 @@ devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/
 <a href="#building-a-panda-regulatory-network" class="anchor"></a>Building a PANDA regulatory network</h2>
 <p>Now we locate our ppi and motif priors. The ppi represents physical interactions between transcription factor proteins, and is an undirected network. The transcription factor motif prior represents putative regulation events where a transcription factor binds in the promotor of a gene to regulate its expression, as predicted by the presence of transcription factor binding motifs in the promotor region of the gene. The motif prior is thus a directed network linking transcription factors to their predicted gene targets. These are small example priors for the purposes of demonstrating this method. A complete set of priors by species can be downloaded from: <a href="https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resources" class="uri">https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resources</a></p>
 <p>Let’s take a look at the priors:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">motif &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/motif_subset.txt"</span>, <span class="dt">stringsAsFactors=</span>F, <span class="dt">header=</span>F)
-ppi &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/ppi_subset.txt"</span>, <span class="dt">stringsAsFactors=</span>F, <span class="dt">header=</span>F)
-
-ppi[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]
-motif[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>motif &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/motif_subset.txt"</span>, <span class="dt">stringsAsFactors=</span>F, <span class="dt">header=</span>F)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>ppi &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/ppi_subset.txt"</span>, <span class="dt">stringsAsFactors=</span>F, <span class="dt">header=</span>F)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>ppi[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]</span>
+<span id="cb3-5"><a href="#cb3-5"></a>motif[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]</span></code></pre></div>
 <p>Now we locate our expression data. As an example, we will use a subset of the GTEx version 7 RNA-Seq data, downloaded from <a href="https://gtexportal.org/home/datasets" class="uri">https://gtexportal.org/home/datasets</a>. We start with a subset of RNA-Seq data (tpm normalized) for 1,000 genes from 130 LCL cell line samples and 407 whole blood samples.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the GTEx expression matrix (tpm normalized expression)</span>
-exp &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/expression_tpm_lcl_blood_subset.txt"</span>, <span class="dt">stringsAsFactors =</span> F, <span class="dt">check.names =</span> F)
-<span class="co"># Log transform the tpm normalized expression</span>
-exp &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log2</a></span>(exp<span class="op">+</span><span class="dv">1</span>)
-
-<span class="co"># Determine the number of non-NA/non-zero rows in the expression data. This is to be able to ensure that PANDA will have enough values in the vectors to calculate pearson correlations between gene expression profiles in the construction of the gene co-expression prior.</span>
-zero_na_counts &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(exp, <span class="dt">MARGIN =</span> <span class="dv">1</span>, <span class="dt">FUN =</span> <span class="cf">function</span>(x) <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(x[(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(x) <span class="op">&amp;</span><span class="st"> </span>x<span class="op">!=</span><span class="dv">0</span>) ]))
-<span class="co"># Maintain only genes with at least 20 valid gene expression entries</span>
-exp &lt;-<span class="st"> </span>exp[zero_na_counts <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>,]
-
-<span class="co"># The set of genes in the expression, motif and ppi matrices must be the same</span>
-exp &lt;-<span class="st"> </span>exp[<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(exp) <span class="op">%in%</span><span class="st"> </span>motif<span class="op">$</span>V2,]
-motif_subset &lt;-<span class="st"> </span>motif[(motif<span class="op">$</span>V1 <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(exp)) <span class="op">&amp;</span><span class="st"> </span>(motif<span class="op">$</span>V2 <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(exp)),]
-ppi_subset &lt;-<span class="st"> </span>ppi[(ppi<span class="op">$</span>V1 <span class="op">%in%</span><span class="st"> </span>motif_subset<span class="op">$</span>V1) <span class="op">&amp;</span><span class="st"> </span>(ppi<span class="op">$</span>V2 <span class="op">%in%</span><span class="st"> </span>motif_subset<span class="op">$</span>V1),]
-
-<span class="co"># Load the sample ids of LCL samples</span>
-lcl_samples &lt;-<span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/LCL_samples.txt"</span>, <span class="dt">header =</span> <span class="ot">FALSE</span>, <span class="dt">stringsAsFactors =</span> F)
-<span class="co"># Select the columns of the expression matrix corresponding to the LCL samples</span>
-lcl_exp &lt;-<span class="st"> </span>exp[,<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(exp) <span class="op">%in%</span><span class="st"> </span>lcl_samples[,<span class="dv">1</span>]]
-
-<span class="co"># Load the sample ids of whole blood samples</span>
-wb_samples &lt;-<span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/WholeBlood_samples.txt"</span>, <span class="dt">header =</span> <span class="ot">FALSE</span>, <span class="dt">stringsAsFactors =</span> F)
-<span class="co"># Select the columns of the expression matrix corresponding to the whole blood samples</span>
-wb_exp &lt;-<span class="st"> </span>exp[,<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(exp) <span class="op">%in%</span><span class="st"> </span>wb_samples[,<span class="dv">1</span>]]</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Load the GTEx expression matrix (tpm normalized expression)</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>exp &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/expression_tpm_lcl_blood_subset.txt"</span>, <span class="dt">stringsAsFactors =</span> F, <span class="dt">check.names =</span> F)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># Log transform the tpm normalized expression</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>exp &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log2</a></span>(exp<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Determine the number of non-NA/non-zero rows in the expression data. This is to be able to ensure that PANDA will have enough values in the vectors to calculate pearson correlations between gene expression profiles in the construction of the gene co-expression prior.</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>zero_na_counts &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(exp, <span class="dt">MARGIN =</span> <span class="dv">1</span>, <span class="dt">FUN =</span> <span class="cf">function</span>(x) <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(x[(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(x) <span class="op">&amp;</span><span class="st"> </span>x<span class="op">!=</span><span class="dv">0</span>) ]))</span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co"># Maintain only genes with at least 20 valid gene expression entries</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>exp &lt;-<span class="st"> </span>exp[zero_na_counts <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>,]</span>
+<span id="cb4-10"><a href="#cb4-10"></a></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co"># The set of genes in the expression, motif and ppi matrices must be the same</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a>exp &lt;-<span class="st"> </span>exp[<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(exp) <span class="op">%in%</span><span class="st"> </span>motif<span class="op">$</span>V2,]</span>
+<span id="cb4-13"><a href="#cb4-13"></a>motif_subset &lt;-<span class="st"> </span>motif[(motif<span class="op">$</span>V1 <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(exp)) <span class="op">&amp;</span><span class="st"> </span>(motif<span class="op">$</span>V2 <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(exp)),]</span>
+<span id="cb4-14"><a href="#cb4-14"></a>ppi_subset &lt;-<span class="st"> </span>ppi[(ppi<span class="op">$</span>V1 <span class="op">%in%</span><span class="st"> </span>motif_subset<span class="op">$</span>V1) <span class="op">&amp;</span><span class="st"> </span>(ppi<span class="op">$</span>V2 <span class="op">%in%</span><span class="st"> </span>motif_subset<span class="op">$</span>V1),]</span>
+<span id="cb4-15"><a href="#cb4-15"></a></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co"># Load the sample ids of LCL samples</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a>lcl_samples &lt;-<span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/LCL_samples.txt"</span>, <span class="dt">header =</span> <span class="ot">FALSE</span>, <span class="dt">stringsAsFactors =</span> F)</span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co"># Select the columns of the expression matrix corresponding to the LCL samples</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a>lcl_exp &lt;-<span class="st"> </span>exp[,<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(exp) <span class="op">%in%</span><span class="st"> </span>lcl_samples[,<span class="dv">1</span>]]</span>
+<span id="cb4-20"><a href="#cb4-20"></a></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co"># Load the sample ids of whole blood samples</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a>wb_samples &lt;-<span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/WholeBlood_samples.txt"</span>, <span class="dt">header =</span> <span class="ot">FALSE</span>, <span class="dt">stringsAsFactors =</span> F)</span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="co"># Select the columns of the expression matrix corresponding to the whole blood samples</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a>wb_exp &lt;-<span class="st"> </span>exp[,<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(exp) <span class="op">%in%</span><span class="st"> </span>wb_samples[,<span class="dv">1</span>]]</span></code></pre></div>
 <p>Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior. We will point to the same motif and ppi priors for each PANDA run, which represents the initial putative regulatory information. We then point to the expression matrix correspoding to the LCL samples to generate the LCL regulatory network, and to the expression matrix corresponding to the whole blood samples to generate the whole blood regulatory network.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pandaLCL &lt;-<span class="st"> </span><span class="kw">panda</span>(motif_subset, lcl_exp, ppi_subset)
-pandaWB &lt;-<span class="st"> </span><span class="kw">panda</span>(motif_subset, wb_exp, ppi_subset)
-
-pandaLCL
-pandaWB</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>pandaLCL &lt;-<span class="st"> </span><span class="kw">panda</span>(motif_subset, lcl_exp, ppi_subset)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>pandaWB &lt;-<span class="st"> </span><span class="kw">panda</span>(motif_subset, wb_exp, ppi_subset)</span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a>pandaLCL</span>
+<span id="cb5-5"><a href="#cb5-5"></a>pandaWB</span></code></pre></div>
 <p>The regulatory network (bipartite graph) with edge weights representing the “likelihood” that a transcription factor binds the promotor of and regulates the expression of a gene.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The bipartite regulatory network (transcription factors as rows and target genes as columns)</span>
-regNetLCL &lt;-<span class="st"> </span>pandaLCL<span class="op">@</span>regNet
-regNetLCL[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]
-regNetWB &lt;-<span class="st"> </span>pandaWB<span class="op">@</span>regNet</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># The bipartite regulatory network (transcription factors as rows and target genes as columns)</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>regNetLCL &lt;-<span class="st"> </span>pandaLCL<span class="op">@</span>regNet</span>
+<span id="cb6-3"><a href="#cb6-3"></a>regNetLCL[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
+<span id="cb6-4"><a href="#cb6-4"></a>regNetWB &lt;-<span class="st"> </span>pandaWB<span class="op">@</span>regNet</span></code></pre></div>
 </div>
 </div>
 <div id="visualizing-networks-in-cytoscape" class="section level1">
@@ -195,50 +195,50 @@ regNetWB &lt;-<span class="st"> </span>pandaWB<span class="op">@</span>regNet</c
 <div id="preparing-data-to-plot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#preparing-data-to-plot" class="anchor"></a>Preparing data to plot</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We will use the function vis.panda.in.cytoscape to plot a set of nodes and edges on Cytoscape. The input for this function is a data.frame of edges to plot with 4 columns: "tf", "gene", "motif" (TF motif present or not on gene promoter), "force" (edge weight calculated by PANDA).</span>
-lcl_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(pandaLCL<span class="op">@</span>regNet)
-wb_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(pandaWB<span class="op">@</span>regNet)
-lcl_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="st">"tf"</span>=<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(lcl_vis[,<span class="dv">1</span>]),<span class="st">"gene"</span>=<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(lcl_vis[,<span class="dv">2</span>]),<span class="st">"motif"</span>=<span class="ot">NA</span>,<span class="st">"force"</span>=<span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(lcl_vis[,<span class="dv">3</span>]),<span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-wb_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="st">"tf"</span>=<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(wb_vis[,<span class="dv">1</span>]),<span class="st">"gene"</span>=<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(wb_vis[,<span class="dv">2</span>]),<span class="st">"motif"</span>=<span class="ot">NA</span>,<span class="st">"force"</span>=<span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(wb_vis[,<span class="dv">3</span>]),<span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(lcl_vis)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># We will use the function vis.panda.in.cytoscape to plot a set of nodes and edges on Cytoscape. The input for this function is a data.frame of edges to plot with 4 columns: "tf", "gene", "motif" (TF motif present or not on gene promoter), "force" (edge weight calculated by PANDA).</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>lcl_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(pandaLCL<span class="op">@</span>regNet)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>wb_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(pandaWB<span class="op">@</span>regNet)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>lcl_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="st">"tf"</span>=<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(lcl_vis[,<span class="dv">1</span>]),<span class="st">"gene"</span>=<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(lcl_vis[,<span class="dv">2</span>]),<span class="st">"motif"</span>=<span class="ot">NA</span>,<span class="st">"force"</span>=<span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(lcl_vis[,<span class="dv">3</span>]),<span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>wb_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="st">"tf"</span>=<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(wb_vis[,<span class="dv">1</span>]),<span class="st">"gene"</span>=<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(wb_vis[,<span class="dv">2</span>]),<span class="st">"motif"</span>=<span class="ot">NA</span>,<span class="st">"force"</span>=<span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(wb_vis[,<span class="dv">3</span>]),<span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(lcl_vis)</span></code></pre></div>
 </div>
 <div id="plot-the-200-highest-edge-weights" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-the-200-highest-edge-weights" class="anchor"></a>Plot the 200 highest edge weights</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n=<span class="dv">200</span> <span class="co"># number of edges to plot </span>
-top &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(lcl_vis<span class="op">$</span>force,<span class="dt">decreasing=</span>T)[<span class="dv">1</span><span class="op">:</span>n]
-lcl_vis_top &lt;-<span class="st"> </span>lcl_vis[top,]
-<span class="co"># Plot in cytoscape (open the cytoscape software before running this command)</span>
-<span class="kw"><a href="../reference/vis.panda.in.cytoscape.html">vis.panda.in.cytoscape</a></span>(lcl_vis_top, <span class="dt">network_name=</span><span class="st">"LCL"</span>)
-<span class="co"># Here we will load a customized visual style for our network, in which TF nodes are orange circles, target gene nodes are blue squares, and edges shade and width are the edge weight (likelyhood of regulatory interaction between the TF and gene). You can further customize the network style directly from Cytoscape.</span>
-<span class="kw"><a href="../reference/create.panda.style.html">create.panda.style</a></span>(<span class="dt">style_name=</span><span class="st">"PandaStyle"</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>n=<span class="dv">200</span> <span class="co"># number of edges to plot </span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>top &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(lcl_vis<span class="op">$</span>force,<span class="dt">decreasing=</span>T)[<span class="dv">1</span><span class="op">:</span>n]</span>
+<span id="cb8-3"><a href="#cb8-3"></a>lcl_vis_top &lt;-<span class="st"> </span>lcl_vis[top,]</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co"># Plot in cytoscape (open the cytoscape software before running this command)</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="kw"><a href="../reference/vis.panda.in.cytoscape.html">vis.panda.in.cytoscape</a></span>(lcl_vis_top, <span class="dt">network_name=</span><span class="st">"LCL"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co"># Here we will load a customized visual style for our network, in which TF nodes are orange circles, target gene nodes are blue squares, and edges shade and width are the edge weight (likelyhood of regulatory interaction between the TF and gene). You can further customize the network style directly from Cytoscape.</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="kw"><a href="../reference/create.panda.style.html">create.panda.style</a></span>(<span class="dt">style_name=</span><span class="st">"PandaStyle"</span>)</span></code></pre></div>
 </div>
 <div id="plot-the-top-differential-edges-betwen-lcl-and-wb" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-the-top-differential-edges-betwen-lcl-and-wb" class="anchor"></a>Plot the top differential edges betwen LCL and WB</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Select the top differential edge weights betweeen LCL and whole blood</span>
-diffRes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/panda.diff.edges.html">panda.diff.edges</a></span>(lcl_vis, wb_vis, <span class="dt">condition_name=</span><span class="st">"LCL"</span>)
-<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(diffRes)
-<span class="co"># Number of differential edges is:</span>
-<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(diffRes)
-
-<span class="co"># Select the top differential edges higher in LCL to plot in Cytoscape</span>
-n=<span class="dv">200</span> <span class="co"># number of edges to select from each condition</span>
-diffResLCL &lt;-<span class="st"> </span>diffRes[diffRes<span class="op">$</span>LCL<span class="op">==</span><span class="st">"T"</span>,]
-diffResLCL &lt;-<span class="st"> </span>diffResLCL[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(diffResLCL<span class="op">$</span>force,<span class="dt">decreasing=</span><span class="ot">TRUE</span>),][<span class="dv">1</span><span class="op">:</span>n,]
-
-<span class="co"># Select the top differential edges higher in whole blood to plot in Cytoscape</span>
-diffResWB &lt;-<span class="st"> </span>diffRes[diffRes<span class="op">$</span>LCL<span class="op">==</span><span class="st">"F"</span>,]
-diffResWB &lt;-<span class="st"> </span>diffResWB[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(diffResWB<span class="op">$</span>force,<span class="dt">decreasing=</span><span class="ot">TRUE</span>),][<span class="dv">1</span><span class="op">:</span>n,]
-
-<span class="co"># Combine top differential edges in LCL and WB to plot in Cytoscape</span>
-diffRes_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(diffResLCL, diffResWB)
-
-<span class="co"># Plot the network</span>
-<span class="co"># Purple edges indicate higher edge weight in the defined "condition_name" parameter (LCL in our example), and green edges indicate higher edge weight in the other condition (whole blood in our example).</span>
-<span class="kw"><a href="../reference/vis.diff.panda.in.cytoscape.html">vis.diff.panda.in.cytoscape</a></span>(diffRes_vis, <span class="dt">condition_name =</span> <span class="st">"LCL"</span>, <span class="dt">network_name=</span><span class="st">"diff.PANDA"</span>)
-<span class="co"># Apply the style to the network</span>
-<span class="kw"><a href="../reference/create.diff.panda.style.html">create.diff.panda.style</a></span>(<span class="dt">style_name=</span><span class="st">"Diff.PandaStyle"</span>, <span class="dt">condition_name=</span><span class="st">"LCL"</span>)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Select the top differential edge weights betweeen LCL and whole blood</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>diffRes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/panda.diff.edges.html">panda.diff.edges</a></span>(lcl_vis, wb_vis, <span class="dt">condition_name=</span><span class="st">"LCL"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(diffRes)</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># Number of differential edges is:</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(diffRes)</span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co"># Select the top differential edges higher in LCL to plot in Cytoscape</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>n=<span class="dv">200</span> <span class="co"># number of edges to select from each condition</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a>diffResLCL &lt;-<span class="st"> </span>diffRes[diffRes<span class="op">$</span>LCL<span class="op">==</span><span class="st">"T"</span>,]</span>
+<span id="cb9-10"><a href="#cb9-10"></a>diffResLCL &lt;-<span class="st"> </span>diffResLCL[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(diffResLCL<span class="op">$</span>force,<span class="dt">decreasing=</span><span class="ot">TRUE</span>),][<span class="dv">1</span><span class="op">:</span>n,]</span>
+<span id="cb9-11"><a href="#cb9-11"></a></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co"># Select the top differential edges higher in whole blood to plot in Cytoscape</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a>diffResWB &lt;-<span class="st"> </span>diffRes[diffRes<span class="op">$</span>LCL<span class="op">==</span><span class="st">"F"</span>,]</span>
+<span id="cb9-14"><a href="#cb9-14"></a>diffResWB &lt;-<span class="st"> </span>diffResWB[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(diffResWB<span class="op">$</span>force,<span class="dt">decreasing=</span><span class="ot">TRUE</span>),][<span class="dv">1</span><span class="op">:</span>n,]</span>
+<span id="cb9-15"><a href="#cb9-15"></a></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="co"># Combine top differential edges in LCL and WB to plot in Cytoscape</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a>diffRes_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(diffResLCL, diffResWB)</span>
+<span id="cb9-18"><a href="#cb9-18"></a></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="co"># Plot the network</span></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co"># Purple edges indicate higher edge weight in the defined "condition_name" parameter (LCL in our example), and green edges indicate higher edge weight in the other condition (whole blood in our example).</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="kw"><a href="../reference/vis.diff.panda.in.cytoscape.html">vis.diff.panda.in.cytoscape</a></span>(diffRes_vis, <span class="dt">condition_name =</span> <span class="st">"LCL"</span>, <span class="dt">network_name=</span><span class="st">"diff.PANDA"</span>)</span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="co"># Apply the style to the network</span></span>
+<span id="cb9-23"><a href="#cb9-23"></a><span class="kw"><a href="../reference/create.diff.panda.style.html">create.diff.panda.style</a></span>(<span class="dt">style_name=</span><span class="st">"Diff.PandaStyle"</span>, <span class="dt">condition_name=</span><span class="st">"LCL"</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="calculating-degree" class="section level1">
@@ -248,15 +248,15 @@ diffRes_vis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr
 <li>out-degrees of TFs: sum of the weights of outbound edges around a TF</li>
 <li>in-degrees of genes: sum of the weights of inbound edges around a gene</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lcl_outdegree &lt;-<span class="st"> </span><span class="kw">calcDegree</span>(pandaLCL, <span class="dt">type=</span><span class="st">"tf"</span>)
-wb_outdegree &lt;-<span class="st"> </span><span class="kw">calcDegree</span>(pandaWB, <span class="dt">type=</span><span class="st">"tf"</span>)
-
-lcl_indegree &lt;-<span class="st"> </span><span class="kw">calcDegree</span>(pandaLCL, <span class="dt">type=</span><span class="st">"gene"</span>)
-wb_indegree &lt;-<span class="st"> </span><span class="kw">calcDegree</span>(pandaWB, <span class="dt">type=</span><span class="st">"gene"</span>)
-
-<span class="co"># Calculate the gene in-degree difference for two different panda regulatory networks (LCL minus whole blood)</span>
-degreeDiff &lt;-<span class="st"> </span><span class="kw">calcDegreeDifference</span>(pandaLCL, pandaWB, <span class="dt">type=</span><span class="st">"gene"</span>)
-<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(degreeDiff)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>lcl_outdegree &lt;-<span class="st"> </span><span class="kw">calcDegree</span>(pandaLCL, <span class="dt">type=</span><span class="st">"tf"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>wb_outdegree &lt;-<span class="st"> </span><span class="kw">calcDegree</span>(pandaWB, <span class="dt">type=</span><span class="st">"tf"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4"></a>lcl_indegree &lt;-<span class="st"> </span><span class="kw">calcDegree</span>(pandaLCL, <span class="dt">type=</span><span class="st">"gene"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5"></a>wb_indegree &lt;-<span class="st"> </span><span class="kw">calcDegree</span>(pandaWB, <span class="dt">type=</span><span class="st">"gene"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6"></a></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co"># Calculate the gene in-degree difference for two different panda regulatory networks (LCL minus whole blood)</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>degreeDiff &lt;-<span class="st"> </span><span class="kw">calcDegreeDifference</span>(pandaLCL, pandaWB, <span class="dt">type=</span><span class="st">"gene"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(degreeDiff)</span></code></pre></div>
 </div>
 <div id="gene-set-enrichment-analysis" class="section level1">
 <h1 class="hasAnchor">
@@ -265,89 +265,93 @@ degreeDiff &lt;-<span class="st"> </span><span class="kw">calcDegreeDifference</
 <div id="run-fgsea" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-fgsea" class="anchor"></a>Run fgsea</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gmt.file &lt;-<span class="st"> "data/c2.cp.kegg.v7.0.symbols.gmt"</span>
-pathways &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/fgsea/man/gmtPathways.html">gmtPathways</a></span>(gmt.file)
-<span class="co"># To retrieve biological-relevant processes, we will load and use the complete ranked gene list (27,175 genes) calculated from the complete network instead of the 1,000 subset genes we used in this tutorial example to build PANDA networks within a very short run time.</span>
-degreeDiff_all &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/lclWB_indegreeDifference.rnk"</span>,<span class="dt">stringsAsFactors =</span> F,<span class="dt">header=</span>F)
-degreeDiff_all &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span>(degreeDiff_all[,<span class="dv">2</span>], degreeDiff_all[,<span class="dv">1</span>])
-fgseaRes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span>(pathways, degreeDiff_all, <span class="dt">minSize=</span><span class="dv">15</span>, <span class="dt">maxSize=</span><span class="dv">500</span>, <span class="dt">nperm=</span><span class="dv">1000</span>)
-<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(fgseaRes)
-<span class="co"># Subset to pathways with FDR &lt; 0.05</span>
-sig &lt;-<span class="st"> </span>fgseaRes[fgseaRes<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>,]
-<span class="co"># Get the top 10 significant pathways enriched for genes having lower targeting in LCLs  </span>
-sig[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(sig<span class="op">$</span>NES)[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],]</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>gmt.file &lt;-<span class="st"> "data/c2.cp.kegg.v7.0.symbols.gmt"</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>pathways &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/fgsea/man/gmtPathways.html">gmtPathways</a></span>(gmt.file)</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co"># To retrieve biological-relevant processes, we will load and use the complete ranked gene list (27,175 genes) calculated from the complete network instead of the 1,000 subset genes we used in this tutorial example to build PANDA networks within a very short run time.</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>degreeDiff_all &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/lclWB_indegreeDifference.rnk"</span>,<span class="dt">stringsAsFactors =</span> F,<span class="dt">header=</span>F)</span>
+<span id="cb11-5"><a href="#cb11-5"></a>degreeDiff_all &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span>(degreeDiff_all[,<span class="dv">2</span>], degreeDiff_all[,<span class="dv">1</span>])</span>
+<span id="cb11-6"><a href="#cb11-6"></a>fgseaRes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span>(pathways, degreeDiff_all, <span class="dt">minSize=</span><span class="dv">15</span>, <span class="dt">maxSize=</span><span class="dv">500</span>, <span class="dt">nperm=</span><span class="dv">1000</span>)</span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(fgseaRes)</span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co"># Subset to pathways with FDR &lt; 0.05</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a>sig &lt;-<span class="st"> </span>fgseaRes[fgseaRes<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>,]</span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co"># Get the top 10 significant pathways enriched for genes having lower targeting in LCLs  </span></span>
+<span id="cb11-11"><a href="#cb11-11"></a>sig[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(sig<span class="op">$</span>NES)[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],]</span></code></pre></div>
 </div>
 <div id="bubble-plot-of-top-differentially-targeted-pathways" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bubble-plot-of-top-differentially-targeted-pathways" class="anchor"></a>Bubble plot of top differentially targeted pathways</h2>
 <p>Bubble plot of gene sets (KEGG pathways) on y-axis and adjusted p-value (padj) on x-axis. Bubble size indicates the number of genes in each gene set, and bubble color indicates the normalized enrichment score (NES). Blue is for negative NES (enrichment of higher targeted genes in whole blood), and red is for positive NES (enrichment of higher targeted genes in LCL).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(fgseaRes)
-
-<span class="co"># Settings</span>
-fdrcut &lt;-<span class="st"> </span><span class="fl">0.05</span> <span class="co"># FDR cut-off to use as output for significant signatures</span>
-dencol_neg &lt;-<span class="st"> "blue"</span> <span class="co"># bubble plot color for negative ES</span>
-dencol_pos &lt;-<span class="st"> "red"</span> <span class="co"># bubble plot color for positive ES</span>
-signnamelength &lt;-<span class="st"> </span><span class="dv">4</span> <span class="co"># set to remove prefix from signature names (2 for "GO", 4 for "KEGG", 8 for "REACTOME")</span>
-asp &lt;-<span class="st"> </span><span class="dv">3</span> <span class="co"># aspect ratio of bubble plot</span>
-charcut &lt;-<span class="st"> </span><span class="dv">100</span> <span class="co"># cut signature name in heatmap to this nr of characters</span>
-
-<span class="co"># Make signature names more readable</span>
-a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(dat<span class="op">$</span>pathway) <span class="co"># 'a' is a great variable name to substitute row names with something more readable</span>
-<span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(a)){
-  a[j] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(a[j], signnamelength<span class="op">+</span><span class="dv">2</span>, <span class="kw"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span>(a[j]))
-}
-a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span>(a) <span class="co"># convert to lower case (you may want to comment this out, it really depends on what signatures you are looking at, c6 signatures contain gene names, and converting those to lower case may be confusing)</span>
-<span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(a)){
-  <span class="cf">if</span>(<span class="kw"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span>(a[j])<span class="op">&gt;</span>charcut) { a[j] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(a[j], <span class="dv">1</span>, charcut), <span class="st">"..."</span>, <span class="dt">sep=</span><span class="st">" "</span>)}
-} <span class="co"># cut signature names that have more characters than charcut, and add "..."</span>
-a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span>(<span class="st">"_"</span>, <span class="st">" "</span>, a)
-dat<span class="op">$</span>NAME &lt;-<span class="st"> </span>a
-
-<span class="co"># Determine what signatures to plot (based on FDR cut)</span>
-dat2 &lt;-<span class="st"> </span>dat[dat[,<span class="st">"padj"</span>]<span class="op">&lt;</span>fdrcut,]
-dat2 &lt;-<span class="st"> </span>dat2[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(dat2[,<span class="st">"padj"</span>]),] 
-dat2<span class="op">$</span>signature &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(dat2<span class="op">$</span>NAME, <span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(dat2<span class="op">$</span>NAME)))
-<span class="co"># Determine what labels to color</span>
-sign_neg &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(dat2[,<span class="st">"NES"</span>]<span class="op">&lt;</span><span class="dv">0</span>)
-sign_pos &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(dat2[,<span class="st">"NES"</span>]<span class="op">&gt;</span><span class="dv">0</span>)
-<span class="co"># Color labels</span>
-signcol &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="ot">NA</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(dat2<span class="op">$</span>signature))
-signcol[sign_neg] &lt;-<span class="st"> </span>dencol_neg <span class="co"># text color of negative signatures</span>
-signcol[sign_pos] &lt;-<span class="st"> </span>dencol_pos <span class="co"># text color of positive signatures</span>
-signcol &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(signcol) <span class="co"># need to revert vector of colors, because ggplot starts plotting these from below</span>
-
-<span class="co"># Plot bubble plot</span>
-g&lt;-<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(dat2, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x=</span>padj,<span class="dt">y=</span>signature,<span class="dt">size=</span>size))
-g<span class="op">+</span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">fill=</span>NES), <span class="dt">shape=</span><span class="dv">21</span>, <span class="dt">colour=</span><span class="st">"white"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()<span class="op">+</span><span class="st"> </span><span class="co"># white background, needs to be placed before the "signcol" line</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span>(<span class="dv">0</span>,fdrcut)<span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span>(<span class="dt">max_size=</span><span class="dv">10</span>,<span class="dt">guide=</span><span class="st">"none"</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient2</a></span>(<span class="dt">low=</span>dencol_neg, <span class="dt">high=</span>dencol_pos)<span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">axis.text.y =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(<span class="dt">colour=</span>signcol))<span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio=</span>asp, <span class="dt">axis.title.y=</span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>()) <span class="co"># test aspect.ratio</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>dat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(fgseaRes)</span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="co"># Settings</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>fdrcut &lt;-<span class="st"> </span><span class="fl">0.05</span> <span class="co"># FDR cut-off to use as output for significant signatures</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>dencol_neg &lt;-<span class="st"> "blue"</span> <span class="co"># bubble plot color for negative ES</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>dencol_pos &lt;-<span class="st"> "red"</span> <span class="co"># bubble plot color for positive ES</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>signnamelength &lt;-<span class="st"> </span><span class="dv">4</span> <span class="co"># set to remove prefix from signature names (2 for "GO", 4 for "KEGG", 8 for "REACTOME")</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>asp &lt;-<span class="st"> </span><span class="dv">3</span> <span class="co"># aspect ratio of bubble plot</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a>charcut &lt;-<span class="st"> </span><span class="dv">100</span> <span class="co"># cut signature name in heatmap to this nr of characters</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="co"># Make signature names more readable</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a>a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(dat<span class="op">$</span>pathway) <span class="co"># 'a' is a great variable name to substitute row names with something more readable</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(a)){</span>
+<span id="cb12-14"><a href="#cb12-14"></a>  a[j] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(a[j], signnamelength<span class="op">+</span><span class="dv">2</span>, <span class="kw"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span>(a[j]))</span>
+<span id="cb12-15"><a href="#cb12-15"></a>}</span>
+<span id="cb12-16"><a href="#cb12-16"></a>a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span>(a) <span class="co"># convert to lower case (you may want to comment this out, it really depends on what signatures you are looking at, c6 signatures contain gene names, and converting those to lower case may be confusing)</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(a)){</span>
+<span id="cb12-18"><a href="#cb12-18"></a>  <span class="cf">if</span>(<span class="kw"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span>(a[j])<span class="op">&gt;</span>charcut) { a[j] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(a[j], <span class="dv">1</span>, charcut), <span class="st">"..."</span>, <span class="dt">sep=</span><span class="st">" "</span>)}</span>
+<span id="cb12-19"><a href="#cb12-19"></a>} <span class="co"># cut signature names that have more characters than charcut, and add "..."</span></span>
+<span id="cb12-20"><a href="#cb12-20"></a>a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span>(<span class="st">"_"</span>, <span class="st">" "</span>, a)</span>
+<span id="cb12-21"><a href="#cb12-21"></a>dat<span class="op">$</span>NAME &lt;-<span class="st"> </span>a</span>
+<span id="cb12-22"><a href="#cb12-22"></a></span>
+<span id="cb12-23"><a href="#cb12-23"></a><span class="co"># Determine what signatures to plot (based on FDR cut)</span></span>
+<span id="cb12-24"><a href="#cb12-24"></a>dat2 &lt;-<span class="st"> </span>dat[dat[,<span class="st">"padj"</span>]<span class="op">&lt;</span>fdrcut,]</span>
+<span id="cb12-25"><a href="#cb12-25"></a>dat2 &lt;-<span class="st"> </span>dat2[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(dat2[,<span class="st">"padj"</span>]),] </span>
+<span id="cb12-26"><a href="#cb12-26"></a>dat2<span class="op">$</span>signature &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(dat2<span class="op">$</span>NAME, <span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(dat2<span class="op">$</span>NAME)))</span>
+<span id="cb12-27"><a href="#cb12-27"></a><span class="co"># Determine what labels to color</span></span>
+<span id="cb12-28"><a href="#cb12-28"></a>sign_neg &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(dat2[,<span class="st">"NES"</span>]<span class="op">&lt;</span><span class="dv">0</span>)</span>
+<span id="cb12-29"><a href="#cb12-29"></a>sign_pos &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(dat2[,<span class="st">"NES"</span>]<span class="op">&gt;</span><span class="dv">0</span>)</span>
+<span id="cb12-30"><a href="#cb12-30"></a><span class="co"># Color labels</span></span>
+<span id="cb12-31"><a href="#cb12-31"></a>signcol &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="ot">NA</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(dat2<span class="op">$</span>signature))</span>
+<span id="cb12-32"><a href="#cb12-32"></a>signcol[sign_neg] &lt;-<span class="st"> </span>dencol_neg <span class="co"># text color of negative signatures</span></span>
+<span id="cb12-33"><a href="#cb12-33"></a>signcol[sign_pos] &lt;-<span class="st"> </span>dencol_pos <span class="co"># text color of positive signatures</span></span>
+<span id="cb12-34"><a href="#cb12-34"></a>signcol &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(signcol) <span class="co"># need to revert vector of colors, because ggplot starts plotting these from below</span></span>
+<span id="cb12-35"><a href="#cb12-35"></a></span>
+<span id="cb12-36"><a href="#cb12-36"></a><span class="co"># Plot bubble plot</span></span>
+<span id="cb12-37"><a href="#cb12-37"></a>g&lt;-<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(dat2, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x=</span>padj,<span class="dt">y=</span>signature,<span class="dt">size=</span>size))</span>
+<span id="cb12-38"><a href="#cb12-38"></a>g<span class="op">+</span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">fill=</span>NES), <span class="dt">shape=</span><span class="dv">21</span>, <span class="dt">colour=</span><span class="st">"white"</span>)<span class="op">+</span></span>
+<span id="cb12-39"><a href="#cb12-39"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()<span class="op">+</span><span class="st"> </span><span class="co"># white background, needs to be placed before the "signcol" line</span></span>
+<span id="cb12-40"><a href="#cb12-40"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span>(<span class="dv">0</span>,fdrcut)<span class="op">+</span></span>
+<span id="cb12-41"><a href="#cb12-41"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span>(<span class="dt">max_size=</span><span class="dv">10</span>,<span class="dt">guide=</span><span class="st">"none"</span>)<span class="op">+</span></span>
+<span id="cb12-42"><a href="#cb12-42"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient2</a></span>(<span class="dt">low=</span>dencol_neg, <span class="dt">high=</span>dencol_pos)<span class="op">+</span></span>
+<span id="cb12-43"><a href="#cb12-43"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">axis.text.y =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(<span class="dt">colour=</span>signcol))<span class="op">+</span></span>
+<span id="cb12-44"><a href="#cb12-44"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio=</span>asp, <span class="dt">axis.title.y=</span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>()) <span class="co"># test aspect.ratio</span></span></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li>
-<a href="#introduction">Introduction</a><ul class="nav nav-pills nav-stacked">
+<a href="#introduction">Introduction</a>
+      <ul class="nav nav-pills nav-stacked">
 <li><a href="#install-packages">Install packages</a></li>
       <li><a href="#load-packages">Load packages</a></li>
       </ul>
 </li>
       <li>
-<a href="#panda">PANDA</a><ul class="nav nav-pills nav-stacked">
+<a href="#panda">PANDA</a>
+      <ul class="nav nav-pills nav-stacked">
 <li><a href="#panda-overview">PANDA Overview</a></li>
       <li><a href="#building-a-panda-regulatory-network">Building a PANDA regulatory network</a></li>
       </ul>
 </li>
       <li>
-<a href="#visualizing-networks-in-cytoscape">Visualizing networks in Cytoscape</a><ul class="nav nav-pills nav-stacked">
+<a href="#visualizing-networks-in-cytoscape">Visualizing networks in Cytoscape</a>
+      <ul class="nav nav-pills nav-stacked">
 <li><a href="#preparing-data-to-plot">Preparing data to plot</a></li>
       <li><a href="#plot-the-200-highest-edge-weights">Plot the 200 highest edge weights</a></li>
       <li><a href="#plot-the-top-differential-edges-betwen-lcl-and-wb">Plot the top differential edges betwen LCL and WB</a></li>
@@ -355,7 +359,8 @@ g<span class="op">+</span><span class="kw"><a href="https://ggplot2.tidyverse.or
 </li>
       <li><a href="#calculating-degree">Calculating degree</a></li>
       <li>
-<a href="#gene-set-enrichment-analysis">Gene Set Enrichment Analysis</a><ul class="nav nav-pills nav-stacked">
+<a href="#gene-set-enrichment-analysis">Gene Set Enrichment Analysis</a>
+      <ul class="nav nav-pills nav-stacked">
 <li><a href="#run-fgsea">Run fgsea</a></li>
       <li><a href="#bubble-plot-of-top-differentially-targeted-pathways">Bubble plot of top differentially targeted pathways</a></li>
       </ul>

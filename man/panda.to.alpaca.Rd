@@ -4,8 +4,7 @@
 \alias{panda.to.alpaca}
 \title{panda.to.alpaca}
 \usage{
-panda.to.alpaca(panda_net1, panda_net2, file.stem = "./alpaca",
-  verbose = F)
+panda.to.alpaca(panda_net1, panda_net2, file.stem = "./alpaca", verbose = F)
 }
 \arguments{
 \item{panda_net1}{Data Frame indicating one entire network generate by \code{\link{panda.py}}}

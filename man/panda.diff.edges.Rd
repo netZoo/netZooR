@@ -4,8 +4,12 @@
 \alias{panda.diff.edges}
 \title{Identify differential edges in two PANDA networks}
 \usage{
-panda.diff.edges(panda.net1, panda.net2, threshold = 0.8,
-  condition_name = "cond.1")
+panda.diff.edges(
+  panda.net1,
+  panda.net2,
+  threshold = 0.8,
+  condition_name = "cond.1"
+)
 }
 \arguments{
 \item{panda.net1}{vector indicating the PANDA networks of one condition or phenotype.}

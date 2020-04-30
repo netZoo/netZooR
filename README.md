@@ -23,10 +23,9 @@ netZooR currently integrates with:
 
 * **SAMBAR**(Subtyping Agglomerated Mutations By Annotation Relations)[[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identify subtypes based on somatic mutation data.
 
-
 * **MONSTER**(Modeling Network State Transitions from Expression and Regulatory data)[[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infer transcription factor drivers of cell state conditions at the gene regulatory network level.
 
-
+* **OTTER**(Optimization to Estimate Regulation) - In preparation: Models gene regulation estimation as a graph matrching problem
 
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
 
@@ -35,9 +34,12 @@ netZooR currently integrates with:
 * Plot two differential PANDA networks in Cytoscape.
 
 ## Requirement, installation and basic configuration.
-Using this pacakage requires [**Python**](https://www.python.org/downloads/) (3.X) and some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access**.
 
-Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/) installed.
+- netZooR is compatible with R (>= 3.3.3) including R (>= 4.0).
+
+- To use `panda.py` and `lioness.py` functions, [**Python**](https://www.python.org/downloads/) (3.X) is required with some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access** for the package `reticulate` to properly link the R wrapper to the Python code for those two functions.
+
+- Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/) to be installed.
 
 ```r
 # install.packages("devtools") 
@@ -84,7 +86,10 @@ devtools::document()
 devtools::build_vignettes()
 # build documentation website
 pkgdown::build_site()
-# devtools::build()
+
+# Install and build the package using devtools
+devtools::install() # To install the dependecies
+devtools::build() # To build the package
 
 # CMD check, if passed all tests here, it means this package is ready to pull request to the devel branch. Otherwise, fix the bug before pulling request.
 devtools::check()

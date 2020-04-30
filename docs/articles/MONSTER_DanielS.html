@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7</span>
       </span>
     </div>
 
@@ -115,13 +115,13 @@
 <h2 class="hasAnchor">
 <a href="#installing-monster" class="anchor"></a>Installing MONSTER</h2>
 <p>This package is available from Bioconductor.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span>(<span class="st">"http://www.bioconductor.org/biocLite.R"</span>)
-<span class="kw">biocLite</span>(<span class="st">"MONSTER"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span>(<span class="st">"http://www.bioconductor.org/biocLite.R"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">biocLite</span>(<span class="st">"MONSTER"</span>)</span></code></pre></div>
 <p>The development version of MONSTER can be installed from Github using the <code>devtools</code> package</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'devtools'</span>)
-devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">'QuackenbushLab/MONSTER'</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'devtools'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">'QuackenbushLab/MONSTER'</span>)</span></code></pre></div>
 <p>The package can then be loaded via</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#library(MONSTER)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#library(MONSTER)</span></span></code></pre></div>
 </div>
 <div id="input-files" class="section level2">
 <h2 class="hasAnchor">
@@ -129,10 +129,10 @@ devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/
 <p>In this demo, we use the included Yeast dataset, containing three separate Yeast datasets, and a sequence motif object. The <code>yeast</code> dataset includes three separate experimental designs each involving microarray assays of 2555 genes of yeast (Saccharomyces cerevisiae). <code>yeast$exp.ko</code> is a set of 106 gene expression samples of following a number of gene knockouts. <code>yeast$exp.cc</code> is a set of 50 gene expression samples taken sets of two across 25 timepoints spanning the cellular cycle. <code>yeast$exp.sr</code> is a set of 173 gene expression samples collected under conditions of stress such as heat shock. Each expression dataset has been normalized and scaled.</p>
 <p>In this tutorial, we will run <code>monster</code> to identify suspected TF drivers of the change from the early cell cycle to late cell cycle.</p>
 <p>First, we load the data included in the <code>MONSTER</code> package</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(yeast)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(yeast)</span></code></pre></div>
 <p>Next, we create our design vector indicating to which group each sample belongs. This vector must contain only 0’s and 1’s (NAs allowed).</p>
 <p>In this example we are running the analysis on the first 10 timepoints compared to the last 10 timepoints, ignoring the middle 5 for the purposes of simplicity in this tutorial. Each timepoint contains two samples.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">design &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">0</span>,<span class="dv">20</span>),<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="ot">NA</span>,<span class="dv">10</span>),<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">1</span>,<span class="dv">20</span>))</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>design &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">0</span>,<span class="dv">20</span>),<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="ot">NA</span>,<span class="dv">10</span>),<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">1</span>,<span class="dv">20</span>))</span></code></pre></div>
 <p>The main method in MONSTER is the <code>monster</code> function. This function has three required arguments,</p>
 <ul>
 <li>A gene expression matrix, <code>yeast$exp.cc</code>
@@ -144,7 +144,7 @@ devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/
 </ul>
 <p>The gene expression argument may be a <code>matrix</code>, a <code>data.frame</code> or an <code>ExpressionSet</code>. In this example, <code>yeast$exp.cc</code> is a <code>data.frame</code> consisting of 2555 rows and 50 columns.</p>
 <p>The first five rows and columns can be seen</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yeast<span class="op">$</span>exp.cc[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>yeast<span class="op">$</span>exp.cc[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span></code></pre></div>
 <p>The motif mapping data.frame tells the MONSTER algorithm which genes contain likely transcription factor binding sites in the vicinity of their promoter. This serves as the regulatory prior and informs the initial network inference method by supplying a partial list of TF targeting.</p>
 <p>This data.frame contains 3 columns, where each row is a specific edge in the prior network.</p>
 <ul>
@@ -154,17 +154,17 @@ devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/
 </ul>
 <p>The set of unique TFs in column 1 and unique genes in column 2 serve to determine the set of TFs and genes that are used in the downstream analysis.</p>
 <p>The first five rows and columns of the example motif <code>data.frame</code> can be seen</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yeast<span class="op">$</span>motif[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>yeast<span class="op">$</span>motif[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]</span></code></pre></div>
 <p>MONSTER tests the statistical significance of its results by permuting the samples <code>n</code> times and rerunning the analysis for each permutation. By default, the number of permutations is set to be 100 and can be manually set via the argument <code>nullPerms</code>.</p>
 <p>Monster is optimized to run on multiple cores, if available. We can specify the maximum number of cores which are available to run the algorithm. If <code>numMaxCores</code> unspecified, MONSTER will check available resources and run on all but four of the available cores.</p>
 </div>
 <div id="running-monster" class="section level2">
 <h2 class="hasAnchor">
 <a href="#running-monster" class="anchor"></a>Running MONSTER</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yeast<span class="op">$</span>exp.cc[<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(yeast<span class="op">$</span>exp.cc)] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(yeast<span class="op">$</span>exp.cc),<span class="dt">na.rm=</span>T)
-monsterRes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/monster.html">monster</a></span>(yeast<span class="op">$</span>exp.cc, design, yeast<span class="op">$</span>motif, <span class="dt">nullPerms=</span><span class="dv">100</span>, <span class="dt">numMaxCores=</span><span class="dv">4</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>yeast<span class="op">$</span>exp.cc[<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(yeast<span class="op">$</span>exp.cc)] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(yeast<span class="op">$</span>exp.cc),<span class="dt">na.rm=</span>T)</span>
+<span id="cb8-2"><a href="#cb8-2"></a>monsterRes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/monster.html">monster</a></span>(yeast<span class="op">$</span>exp.cc, design, yeast<span class="op">$</span>motif, <span class="dt">nullPerms=</span><span class="dv">100</span>, <span class="dt">numMaxCores=</span><span class="dv">4</span>)</span></code></pre></div>
 <p>We can print the details of the analysis result</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">monsterRes</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>monsterRes</span></code></pre></div>
 <p>In addition to the three required arguments, we have specified that we will compute 100 randomized runs of the analysis to estimate our result’s statistical signficance. MONSTER makes use of parallelization, and we have specified that 4 cores will be used in this analysis to reduce computation time.</p>
 <p>Our result comes in the form of a monster object, <code>monsterRes</code>, which contains the estimated transition matrix as well as the transition matrices from the 100 null transitions.</p>
 </div>
@@ -175,52 +175,54 @@ monsterRes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 <hr>
 <p>The main plot function is the dTFI plot, utilizing the <code>ggplot</code> library. Of interest is the degree to which the observed transition matrix differs from those obtained via random premutations of the samples. We quantify this difference via differential TF Involvement, <span class="math inline">\(dTFI\)</span>, defined as the sum of squared off-diagonal elements in each column of the transition matrix, <span class="math display">\[\hat{dTFI_{j}}=\frac{\sum_{i=1}^{m}I\left(i\ne j\right)\hat{\tau}_{i,j}^{2}}{\sum_{i=1}^{m}\hat{\tau}_{i,j}^{2}}\]</span></p>
 <p>We can view the <span class="math inline">\(dTFI\)</span> with the generic <code>plot</code> function</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(monsterRes)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(monsterRes)</span></code></pre></div>
 <p>In this plot, we have the <span class="math inline">\(dTFI\)</span> for each transcription factor along the x-axis. The observed values are shown in red and the null values are shown in blue.</p>
 <p>Due to the complex nature of the structure of gene regulatory networks, it is not uncommon to see transcription factors which exhibit a high degree of transitional change, but which is not statistically significant due to the high variability of that particular TF (e.g. YDR463W). Conversely, some TFs show weak changes, but those changes are large compared to the changes observed in null transitions (e.g. YKL062W). Ideally, we are most interested in TFs which demonstrate large changes in targetting pattern which is found to be strongly significant (e.g. YJL056C).</p>
 <p>Adding the argument <code>sort.by.sig=TRUE</code>, sorts the x-axis so that the most significant transcription factors are on the left.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(monsterRes, <span class="dt">rescale=</span><span class="ot">TRUE</span>)</code></pre></div>
-<p>Our top hit here is YDL056W, which reassuringly is established in the literature as being involved in regulation of cell cycle progression from G1 to S phase [Koch C, et al. (1993)]</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(monsterRes, <span class="dt">rescale=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<p>Our top hit here is YDL056W, which reassuringly is established in the literature as being involved in regulation of cell cycle progression from G1 to S phase [Koch C, et al. (1993)]</p>
 <hr>
 <p>The dTFI plot focuses primarily on individual transcription factors which have systematically changed their targetting patterns between groups. To dive further into the mechanisms, we may be specifically interested in which TFs are acquiring the targetting signatures of which other TFs. We can visualize the transition matrix in a number of ways using MONSTER.</p>
 <p>First, using the package <code>gplots</code>, we can simply plot the transition matrix. The <code>heatmap.2</code> function will show the <span class="math inline">\(m\times m\)</span> transition matrix in the form of a square heatmap with <span class="math inline">\(m\)</span> being the number of transcription factors. Intuitively, this is the operator, <span class="math inline">\(\textbf{T}\)</span>, on which we transform gene regulatory network <span class="math inline">\(\textbf{A}\)</span> (The first 10 timepoints in the Yeast Cell Cycle) to network <span class="math inline">\(\textbf{B}\)</span> (The last 10 timepoints in the Yeast Cell Cycle) via the equation <span class="math display">\[\textbf{B}=\textbf{AT} + \textbf{E}\]</span> where <span class="math inline">\(\textbf{E}\)</span> is the <span class="math inline">\(p\times m\)</span> error matrix which we are minimizing.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(gplots)
-<span class="kw"><a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html">heatmap.2</a></span>(<span class="kw">slot</span>(monsterRes, <span class="st">'tm'</span>), <span class="dt">col =</span> <span class="st">"bluered"</span>,
-<span class="dt">density.info=</span><span class="st">"none"</span>,  
-<span class="dt">trace=</span><span class="st">"none"</span>, 
-<span class="dt">dendrogram=</span><span class="st">'none'</span>,     
-<span class="dt">Rowv=</span><span class="ot">FALSE</span>,
-<span class="dt">Colv=</span><span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(gplots)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw"><a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html">heatmap.2</a></span>(<span class="kw">slot</span>(monsterRes, <span class="st">'tm'</span>), <span class="dt">col =</span> <span class="st">"bluered"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="dt">density.info=</span><span class="st">"none"</span>,  </span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="dt">trace=</span><span class="st">"none"</span>, </span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="dt">dendrogram=</span><span class="st">'none'</span>,     </span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="dt">Rowv=</span><span class="ot">FALSE</span>,</span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="dt">Colv=</span><span class="ot">FALSE</span>)</span></code></pre></div>
 <p>In examining this heatmap, we are interested in strong deviations from the identity matrix. The diagonal is removed for visualization purposes. We can see that the cell cycle change is strong driven by a handful of transcription factors. Specifically, YBL005W, YLR228C, YLR451W and YML0051W.</p>
 <p>This transition may also be depicted as a graph, displaying the gain or loss of features between transcription factors. Recall, that a large deviation from zero off of the diagonal indicates that the targetting pattern of one transcription factor is being “transferred” to another transcription factor as we move from the initial state to the final state.</p>
 <p><code>MONSTER</code> contains the function <code>transitionNetworkPlot</code> to makes use of the <code>igraph</code> package to display the transition in network states. Since this graph is complete with negative edgeweights allowed, the argument <code>numEdges=20</code> (default is 100 edges) is used to specify the number of top transitions to display.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">transitionNetworkPlot</span>(monsterRes, <span class="dt">numEdges=</span><span class="dv">20</span>)</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">transitionNetworkPlot</span>(monsterRes, <span class="dt">numEdges=</span><span class="dv">20</span>)</span></code></pre></div>
 <p>A network visualization of the strongest 20 transitions identified based on the transition matrix above. Arrows indicate a change in edges from a transcription factor in the network of the first 10 timepoints in the Yeast Cell Cycle to resemble those of a transcription factor in the last 10 timepoints in the Yeast Cell Cycle. Edges are sized according to the magnitude of the transition and nodes (TFs) are sized by the dTFI for that TF. The gain of targeting features is indicated by the color blue while the loss of features is indicated by red.</p>
 <p>Furthermore, we are often interested in correlated targetting pattern sharing. To find clusters of transcription factor transitions, we can plot the set of TFs onto the first two principal components taken from the transition matrix.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">    <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(ggplot2)
-    tm.pca &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/princomp.html">princomp</a></span>(<span class="kw">slot</span>(monsterRes, <span class="st">'tm'</span>))
-    odsm &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="kw">slot</span>(monsterRes, <span class="st">'tm'</span>),<span class="dv">2</span>,<span class="cf">function</span>(x){<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(x)<span class="op">%*%</span>x})
-    odsm.scaled &lt;-<span class="st"> </span>(odsm<span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(odsm))<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(odsm)<span class="op">+</span><span class="dv">4</span>
-    scores.pca &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(tm.pca<span class="op">$</span>scores)
-    scores.pca &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(scores.pca,<span class="st">'node.names'</span>=<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(scores.pca))
-    <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="dt">data =</span> scores.pca, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> Comp.<span class="dv">1</span>, <span class="dt">y =</span> Comp.<span class="dv">2</span>, <span class="dt">label =</span> node.names)) <span class="op">+</span>
-<span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">colour =</span> <span class="st">"gray65"</span>) <span class="op">+</span>
-<span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">colour =</span> <span class="st">"gray65"</span>) <span class="op">+</span>
-<span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span>(<span class="dt">size =</span> odsm.scaled) <span class="op">+</span>
-<span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/expand_limits.html">expand_limits</a></span>(<span class="dt">x=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span>.<span class="dv">6</span>,.<span class="dv">7</span>))<span class="op">+</span>
-<span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"PCA of transitions of Cell Cycle Transcription Factors in Yeast"</span>)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>    <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(ggplot2)</span>
+<span id="cb14-2"><a href="#cb14-2"></a>    tm.pca &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/princomp.html">princomp</a></span>(<span class="kw">slot</span>(monsterRes, <span class="st">'tm'</span>))</span>
+<span id="cb14-3"><a href="#cb14-3"></a>    odsm &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="kw">slot</span>(monsterRes, <span class="st">'tm'</span>),<span class="dv">2</span>,<span class="cf">function</span>(x){<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(x)<span class="op">%*%</span>x})</span>
+<span id="cb14-4"><a href="#cb14-4"></a>    odsm.scaled &lt;-<span class="st"> </span>(odsm<span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(odsm))<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(odsm)<span class="op">+</span><span class="dv">4</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>    scores.pca &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(tm.pca<span class="op">$</span>scores)</span>
+<span id="cb14-6"><a href="#cb14-6"></a>    scores.pca &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(scores.pca,<span class="st">'node.names'</span>=<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(scores.pca))</span>
+<span id="cb14-7"><a href="#cb14-7"></a>    <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="dt">data =</span> scores.pca, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> Comp<span class="fl">.1</span>, <span class="dt">y =</span> Comp<span class="fl">.2</span>, <span class="dt">label =</span> node.names)) <span class="op">+</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">colour =</span> <span class="st">"gray65"</span>) <span class="op">+</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">colour =</span> <span class="st">"gray65"</span>) <span class="op">+</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span>(<span class="dt">size =</span> odsm.scaled) <span class="op">+</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/expand_limits.html">expand_limits</a></span>(<span class="dt">x=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span>.<span class="dv">6</span>,.<span class="dv">7</span>))<span class="op">+</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a><span class="st">        </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"PCA of transitions of Cell Cycle Transcription Factors in Yeast"</span>)</span></code></pre></div>
 <p>The above plot can also be achieved using the included <code>MONSTER</code> function, <code>transitionPCAPlot(monsterRes)</code>.</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li>
-<a href="#using-monster">Using MONSTER</a><ul class="nav nav-pills nav-stacked">
+<a href="#using-monster">Using MONSTER</a>
+      <ul class="nav nav-pills nav-stacked">
 <li><a href="#installing-monster">Installing MONSTER</a></li>
       <li><a href="#input-files">Input files</a></li>
       <li><a href="#running-monster">Running MONSTER</a></li>
