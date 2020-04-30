@@ -5,8 +5,13 @@
 \title{Bipartite Edge Reconstruction from Expression data 
 (composite method with direct/indirect)}
 \usage{
-monster.bereFull(motif.data, expr.data, alpha = 0.5, lambda = 10,
-  score = "motifincluded")
+monster.bereFull(
+  motif.data,
+  expr.data,
+  alpha = 0.5,
+  lambda = 10,
+  score = "motifincluded"
+)
 }
 \arguments{
 \item{motif.data}{A motif dataset, a data.frame, matrix or exprSet 

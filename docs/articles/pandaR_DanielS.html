@@ -115,7 +115,7 @@
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>An example dataset derived from a subset of stress-induced Yeast is available by running</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pandaR)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pandaR)</span></code></pre></div>
 <pre><code>## Loading required package: Biobase</code></pre>
 <pre><code>## Loading required package: BiocGenerics</code></pre>
 <pre><code>## Loading required package: parallel</code></pre>
@@ -131,23 +131,21 @@
 ##     IQR, mad, sd, var, xtabs</code></pre>
 <pre><code>## The following objects are masked from 'package:base':
 ## 
-##     anyDuplicated, append, as.data.frame, basename, cbind,
-##     colMeans, colnames, colSums, dirname, do.call, duplicated,
-##     eval, evalq, Filter, Find, get, grep, grepl, intersect,
-##     is.unsorted, lapply, lengths, Map, mapply, match, mget, order,
-##     paste, pmax, pmax.int, pmin, pmin.int, Position, rank, rbind,
-##     Reduce, rowMeans, rownames, rowSums, sapply, setdiff, sort,
-##     table, tapply, union, unique, unsplit, which, which.max,
-##     which.min</code></pre>
+##     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+##     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+##     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+##     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+##     union, unique, unsplit, which, which.max, which.min</code></pre>
 <pre><code>## Welcome to Bioconductor
 ## 
 ##     Vignettes contain introductory material; view with
 ##     'browseVignettes()'. To cite Bioconductor, see
 ##     'citation("Biobase")', and for packages 'citation("pkgname")'.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(pandaToyData)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(pandaToyData)</span></code></pre></div>
 <p><strong>pandaToyData</strong> is a list containing a regulatory structure derived from sequence motif analysis, protein-protein interaction data and a gene expression. The primary function in pandaR is called with</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pandaResult &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span>(pandaToyData<span class="op">$</span>motif, pandaToyData<span class="op">$</span>expression, pandaToyData<span class="op">$</span>ppi)
-pandaResult</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>pandaResult &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span>(pandaToyData<span class="op">$</span>motif, pandaToyData<span class="op">$</span>expression, pandaToyData<span class="op">$</span>ppi)</span>
+<span id="cb11-2"><a href="#cb11-2"></a>pandaResult</span></code></pre></div>
 <pre><code>## PANDA network for1000genes and87transcription factors.</code></pre>
 <pre><code>## 
 ## Slots:</code></pre>
@@ -157,17 +155,16 @@ pandaResult</code></pre></div>
 <pre><code>## Regulatory graph contains 87000 edges.</code></pre>
 <pre><code>## Regulatory graph is complete.</code></pre>
 <p>Where <strong>pandaResult</strong> is a ‘panda’ object which contains <strong>data.frame</strong>s describing the complete bipartite gene regulatory network as well as complete networks for gene coregulation and transcription factor cooperation. Due to completeness, edgeweights for the regulatory network are reported for all <em>m</em>x<em>n</em> possible TF-gene edges. The distribution of these edge weights for these networks has approximate mean 0 and standard deviation 1. The edges are therefore best interpreted in a relative sense. Strongly positive values indicative of relatively larger amounts of evidence in favor a regulatory mechanism and conversely, smaller or negative values can be interpreted as lacking evidence of a shared biological role. It is naturally of interest to specify a high edge weight subset of the complete network to investigate as a set of present/absent edges. This is easily performed by using the <strong>topedges</strong> function. A network containing the top 1000 edge scores as binary edges can be obtained by:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">topNet &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/topedges.html">topedges</a></span>(pandaResult, <span class="dv">1000</span>)</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>topNet &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/topedges.html">topedges</a></span>(pandaResult, <span class="dv">1000</span>)</span></code></pre></div>
 <p>Users may then examine the genes targeted by a transcription factor of interest.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/targetedGenes.html">targetedGenes</a></span>(topNet, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"AR"</span>))</code></pre></div>
-<pre><code>##  [1] "AKAP10"       "CNDP2"        "CRHR1"        "HNRNPD"      
-##  [5] "KIAA0652"     "LOC100093631" "LOC100128811" "PRR15"       
-##  [9] "TCF4"         "TCP11L2"      "TMPRSS11B"    "VCX3B"       
-## [13] "WDR4"</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/targetedGenes.html">targetedGenes</a></span>(topNet, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"AR"</span>))</span></code></pre></div>
+<pre><code>##  [1] "AKAP10"       "CNDP2"        "CRHR1"        "HNRNPD"       "KIAA0652"    
+##  [6] "LOC100093631" "LOC100128811" "PRR15"        "TCF4"         "TCP11L2"     
+## [11] "TMPRSS11B"    "VCX3B"        "WDR4"</code></pre>
 <p>The network can be further simplified by focusing only on transcription factors on interest and the genes that they are found to regulate. The <strong>subnetwork</strong> method serves this function</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">topSubnet &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/subnetwork.html">subnetwork</a></span>(topNet, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"AR"</span>,<span class="st">"ARID3A"</span>,<span class="st">"ELK1"</span>))</code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>topSubnet &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/subnetwork.html">subnetwork</a></span>(topNet, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"AR"</span>,<span class="st">"ARID3A"</span>,<span class="st">"ELK1"</span>))</span></code></pre></div>
 <p>Existing R packages, such as igraph, can be used to visualize the results</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/plotGraph.html">plotGraph</a></span>(topSubnet)</code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/plotGraph.html">plotGraph</a></span>(topSubnet)</span></code></pre></div>
 <p><img src="pandaR_DanielS_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div id="comparing-state-specific-panda-networks" class="section level2">
@@ -181,11 +178,10 @@ pandaResult</code></pre></div>
 <em>plotZbyTF</em> - Plot Z by TF outdegree quartiles</li>
 </ul>
 <p>We can compare how parameter choices effect the Z-score estimation between two PANDA runs. Additionally, we can compare two phenotypes:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">panda.res1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/with.html">with</a></span>(pandaToyData, <span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span>(motif, expression, ppi, <span class="dt">hamming=</span><span class="dv">1</span>))
-panda.res2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/with.html">with</a></span>(pandaToyData, <span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span>(motif, expression <span class="op">+</span><span class="st"> </span>
-<span class="st">                   </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/prod.html">prod</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(expression)),<span class="dt">sd=</span><span class="dv">5</span>), ppi, <span class="dt">hamming=</span><span class="dv">1</span>))
-<span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/plotZ.html">plotZ</a></span>(panda.res1, panda.res2,<span class="dt">addLine=</span><span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## Warning: package 'hexbin' was built under R version 3.5.2</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>panda.res1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/with.html">with</a></span>(pandaToyData, <span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span>(motif, expression, ppi, <span class="dt">hamming=</span><span class="dv">1</span>))</span>
+<span id="cb24-2"><a href="#cb24-2"></a>panda.res2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/with.html">with</a></span>(pandaToyData, <span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span>(motif, expression <span class="op">+</span><span class="st"> </span></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="st">                   </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/prod.html">prod</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(expression)),<span class="dt">sd=</span><span class="dv">5</span>), ppi, <span class="dt">hamming=</span><span class="dv">1</span>))</span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/plotZ.html">plotZ</a></span>(panda.res1, panda.res2,<span class="dt">addLine=</span><span class="ot">FALSE</span>)</span></code></pre></div>
 <p><img src="pandaR_DanielS_files/figure-html/plotZ-1.png" width="700"></p>
 <p>Other comparisons are underway…</p>
 </div>
@@ -197,14 +193,13 @@ panda.res2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.
 <div id="session-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()</code></pre></div>
-<pre><code>## R version 3.5.1 (2018-07-02)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS  10.14.6
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()</span></code></pre></div>
+<pre><code>## R version 3.6.2 (2019-12-12)
+## Platform: x86_64-apple-darwin18.7.0 (64-bit)
+## Running under: macOS Mojave 10.14.6
 ## 
 ## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## BLAS/LAPACK: /usr/local/Cellar/openblas/0.3.7/lib/libopenblasp-r0.3.7.dylib
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -214,36 +209,30 @@ panda.res2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.
 ## [8] base     
 ## 
 ## other attached packages:
-## [1] hexbin_1.27.3       pandaR_1.19.3       Biobase_2.42.0     
-## [4] BiocGenerics_0.28.0
+## [1] pandaR_1.19.4       Biobase_2.44.0      BiocGenerics_0.30.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.1         compiler_3.5.1     pillar_1.3.1      
-##  [4] plyr_1.8.4         tools_3.5.1        digest_0.6.18     
-##  [7] evaluate_0.13      memoise_1.1.0      tibble_2.1.1      
-## [10] gtable_0.2.0       lattice_0.20-38    pkgconfig_2.0.2   
-## [13] rlang_0.4.0        igraph_1.2.4       rstudioapi_0.8    
-## [16] yaml_2.2.0         pkgdown_1.4.1.9000 xfun_0.4          
-## [19] dplyr_0.8.1        stringr_1.4.0      knitr_1.21        
-## [22] desc_1.2.0         fs_1.3.1           tidyselect_0.2.5  
-## [25] rprojroot_1.3-2    grid_3.5.1         reshape_0.8.8     
-## [28] glue_1.3.1         R6_2.4.0           rmarkdown_1.11    
-## [31] purrr_0.2.5        ggplot2_3.1.0      magrittr_1.5      
-## [34] matrixStats_0.54.0 backports_1.1.3    scales_1.0.0      
-## [37] htmltools_0.3.6    MASS_7.3-51.4      RUnit_0.4.32      
-## [40] assertthat_0.2.1   colorspace_1.4-0   labeling_0.3      
-## [43] stringi_1.2.4      lazyeval_0.2.1     munsell_0.5.0     
-## [46] crayon_1.3.4</code></pre>
-</div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+##  [1] Rcpp_1.0.3         plyr_1.8.5         compiler_3.6.2     pillar_1.4.3      
+##  [5] tools_3.6.2        digest_0.6.23      evaluate_0.14      memoise_1.1.0     
+##  [9] lifecycle_0.1.0    tibble_2.1.3       gtable_0.3.0       lattice_0.20-38   
+## [13] pkgconfig_2.0.3    rlang_0.4.4        igraph_1.2.4.2     rstudioapi_0.11   
+## [17] yaml_2.2.1         hexbin_1.28.1      pkgdown_1.4.1.9000 xfun_0.12         
+## [21] dplyr_0.8.4        stringr_1.4.0      knitr_1.28         desc_1.2.0        
+## [25] fs_1.3.1           tidyselect_1.0.0   rprojroot_1.3-2    grid_3.6.2        
+## [29] reshape_0.8.8      glue_1.3.1         R6_2.4.1           rmarkdown_2.1     
+## [33] farver_2.0.3       purrr_0.3.3        ggplot2_3.2.1      magrittr_1.5      
+## [37] matrixStats_0.55.0 backports_1.1.5    scales_1.1.0       htmltools_0.4.0   
+## [41] MASS_7.3-51.5      RUnit_0.4.32       assertthat_0.2.1   colorspace_1.4-1  
+## [45] labeling_0.3       stringi_1.4.5      lazyeval_0.2.2     munsell_0.5.0     
+## [49] crayon_1.3.4</code></pre>
+<p>##References</p>
 <p>Glass K, Huttenhower C, Quackenbush J, Yuan GC. Passing Messages Between Biological Networks to Refine Predicted Interactions, <em>PLoS One</em>, 2013 May 31;8(5):e64832</p>
 <p>Glass K, Quackenbush J, Silverman EK, Celli B, Rennard S, Yuan GC and DeMeo DL. Sexually-dimorphic targeting of functionally-related genes in COPD, <em>BMC Systems Biology</em>, 2014 Nov 28; <strong>8</strong>:118</p>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -253,7 +242,6 @@ panda.res2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.
       <li><a href="#comparing-state-specific-panda-networks">Comparing state-specific PANDA networks</a></li>
       <li><a href="#other-helpful-functions">Other helpful functions</a></li>
       <li><a href="#session-information">Session information</a></li>
-      <li><a href="#references">References</a></li>
       </ul>
 </div>
       </div>

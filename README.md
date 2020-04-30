@@ -23,10 +23,9 @@ netZooR currently integrates with:
 
 * **SAMBAR**(Subtyping Agglomerated Mutations By Annotation Relations)[[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identify subtypes based on somatic mutation data.
 
-
 * **MONSTER**(Modeling Network State Transitions from Expression and Regulatory data)[[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infer transcription factor drivers of cell state conditions at the gene regulatory network level.
 
-
+* **OTTER**(Optimization to Estimate Regulation) - In preparation: Models gene regulation estimation as a graph matrching problem
 
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
 
@@ -85,6 +84,10 @@ devtools::build_vignettes()
 # build documentation website
 pkgdown::build_site()
 # devtools::build()
+
+# Install and build the package using devtools
+devtools::build()
+devtools::install()
 
 # CMD check, if passed all tests here, it means this package is ready to pull request to the devel branch. Otherwise, fix the bug before pulling request.
 devtools::check()

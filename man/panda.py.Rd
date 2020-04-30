@@ -4,8 +4,13 @@
 \alias{panda.py}
 \title{Run PANDA in R}
 \usage{
-panda.py(expr, motif = NULL, ppi = NULL, mode_process = "union",
-  rm_missing = FALSE)
+panda.py(
+  expr,
+  motif = NULL,
+  ppi = NULL,
+  mode_process = "union",
+  rm_missing = FALSE
+)
 }
 \arguments{
 \item{expr}{Character string indicatining the file path of expression values file, with each gene (in row) by samples (in columns)}

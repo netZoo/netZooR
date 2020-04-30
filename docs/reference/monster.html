@@ -8,11 +8,13 @@
 
 <title>MOdeling Network State Transitions from Expression and Regulatory data (MONSTER) — monster • netZooR</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,8 +34,8 @@
 
 
 
-<meta property="og:title" content="MOdeling Network State Transitions from Expression and Regulatory data (MONSTER) — monster" />
 
+<meta property="og:title" content="MOdeling Network State Transitions from Expression and Regulatory data (MONSTER) — monster" />
 <meta property="og:description" content="This function runs the MONSTER algorithm.  Biological states are characterized by distinct patterns 
 of gene expression that reflect each phenotype's active cellular processes. 
 Driving these phenotypes are gene regulatory networks in which transcriptions factors control 
@@ -44,6 +46,7 @@ regulatory networks and then estimates a &quot;transition matrix&quot; that conv
 By examining the properties of the transition matrix, we can gain insight into regulatory 
 changes associated with phenotypic state transition." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -123,7 +126,6 @@ changes associated with phenotypic state transition." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -145,7 +147,6 @@ changes associated with phenotypic state transition." />
     </div>
 
     <div class="ref-description">
-    
     <p>This function runs the MONSTER algorithm.  Biological states are characterized by distinct patterns 
 of gene expression that reflect each phenotype's active cellular processes. 
 Driving these phenotypes are gene regulatory networks in which transcriptions factors control 
@@ -155,12 +156,19 @@ MONSTER is an approach to understanding these transitions. MONSTER models phenot
 regulatory networks and then estimates a "transition matrix" that converts one state to another. 
 By examining the properties of the transition matrix, we can gain insight into regulatory 
 changes associated with phenotypic state transition.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>monster</span>(<span class='no'>expr</span>, <span class='no'>design</span>, <span class='no'>motif</span>, <span class='kw'>nullPerms</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>ni_method</span> <span class='kw'>=</span> <span class='st'>"BERE"</span>,
-  <span class='kw'>ni.coefficient.cutoff</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>numMaxCores</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>outputDir</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>monster</span>(
+  <span class='no'>expr</span>,
+  <span class='no'>design</span>,
+  <span class='no'>motif</span>,
+  <span class='kw'>nullPerms</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>ni_method</span> <span class='kw'>=</span> <span class='st'>"BERE"</span>,
+  <span class='kw'>ni.coefficient.cutoff</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>numMaxCores</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>outputDir</span> <span class='kw'>=</span> <span class='fl'>NA</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -198,15 +206,13 @@ environment.  Set to 1 to avoid parallelization.</p></td>
 which to save MONSTER results, default is NA and results are not saved.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class "monsterAnalysis" containing results</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='monsterAnalysis-class.html'>monsterAnalysis-class</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
@@ -214,18 +220,15 @@ which to save MONSTER results, default is NA and results are not saved.</p></td>
 <span class='no'>design</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>,<span class='fl'>20</span>),<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>NA</span>,<span class='fl'>10</span>),<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>,<span class='fl'>20</span>))
 <span class='no'>monsterRes</span> <span class='kw'>&lt;-</span> <span class='fu'>monster</span>(<span class='no'>yeast</span>$<span class='no'>exp.cc</span>[<span class='fl'>1</span>:<span class='fl'>500</span>,], <span class='no'>design</span>, <span class='no'>yeast</span>$<span class='no'>motif</span>, <span class='kw'>nullPerms</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>numMaxCores</span><span class='kw'>=</span><span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] "Running null permutations in parallel"
 #&gt; [1] "4 cores used"
-#&gt; [1] "11 network transitions to be estimated"</div><div class='output co'>#&gt; <span class='error'>Error in e$fun(obj, substitute(ex), parent.frame(), e$data): worker initialization failed: there is no package called ‘MONSTER’</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>monsterRes</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'># }
+#&gt; [1] "11 network transitions to be estimated"</div><div class='output co'>#&gt; <span class='error'>Error in {    print(paste0("Running iteration ", i))    if (i != 1) {        nullExpr[] &lt;- expr[sample(seq_along(c(expr)))]    }    nullExprCases &lt;- nullExpr[, design == 1]    nullExprControls &lt;- nullExpr[, design == 0]    tmpNetCases &lt;- monster.monsterNI(motif, nullExprCases, method = ni_method,         regularization = "none", score = "none", ni.coefficient.cutoff = ni.coefficient.cutoff)    tmpNetControls &lt;- monster.monsterNI(motif, nullExprControls,         method = ni_method, regularization = "none", score = "none",         ni.coefficient.cutoff = ni.coefficient.cutoff)    tmpNetControls[is.na(tmpNetControls)] &lt;- 0    tmpNetCases[is.na(tmpNetCases)] &lt;- 0    transitionMatrix &lt;- monster.transformation.matrix(tmpNetControls,         tmpNetCases, remove.diagonal = TRUE, method = "ols")    print(paste("Finished running iteration", i))    if (!is.na(outputDir)) {        saveRDS(transitionMatrix, file.path(outputDir, "tms",             paste0("tm_", i, ".rds")))    }    transitionMatrix}: task 1 failed - "could not find function "monster.monsterNI""</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>monsterRes</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

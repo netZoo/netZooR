@@ -6,7 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Run python implementation of LIONESS — lioness.py • netZooR</title>
+<title>Description:
+              OTTER infers gene regulatory networks using TF DNA binding
+              motif (W), TF PPI (P), and gene coexpression (C) through 
+              minimzing the following objective:
+                                 min f(W) 
+              with f(W) = (1-lambda)*||WW' - P||^2 + lambda*||W'W - C||^2 + (gamma/2)*||W||^2 — otter • netZooR</title>
 
 
 <!-- jquery -->
@@ -35,9 +40,13 @@
 
 
 
-<meta property="og:title" content="Run python implementation of LIONESS — lioness.py" />
-<meta property="og:description" content="LIONESS(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks.
- [(LIONESS arxiv paper)])." />
+<meta property="og:title" content="Description:
+              OTTER infers gene regulatory networks using TF DNA binding
+              motif (W), TF PPI (P), and gene coexpression (C) through 
+              minimzing the following objective:
+                                 min f(W) 
+              with f(W) = (1-lambda)*||WW' - P||^2 + lambda*||W'W - C||^2 + (gamma/2)*||W||^2 — otter" />
+<meta property="og:description" content="Inputs:" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -134,91 +143,81 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Run python implementation of LIONESS</h1>
+    <h1>Description:
+              OTTER infers gene regulatory networks using TF DNA binding
+              motif (W), TF PPI (P), and gene coexpression (C) through 
+              minimzing the following objective:
+                                 min f(W) 
+              with f(W) = (1-lambda)*||WW' - P||^2 + lambda*||W'W - C||^2 + (gamma/2)*||W||^2</h1>
     
-    <div class="hidden name"><code>lioness.py.Rd</code></div>
+    <div class="hidden name"><code>otter.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><strong>LIONESS</strong>(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks.
- <a href='https://arxiv.org/abs/1505.06440'>[(LIONESS arxiv paper)])</a>.</p>
+    <p>Inputs:</p>
     </div>
 
-    <pre class="usage"><span class='fu'>lioness.py</span>(
-  <span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>expression</span>,
-  <span class='kw'>motif</span> <span class='kw'>=</span> <span class='no'>motif</span>,
-  <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi</span>,
-  <span class='kw'>mode_process</span> <span class='kw'>=</span> <span class='st'>"union"</span>,
-  <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>start_sample</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>end_sample</span> <span class='kw'>=</span> <span class='st'>"None"</span>,
-  <span class='kw'>save_dir</span> <span class='kw'>=</span> <span class='st'>"lioness_output"</span>,
-  <span class='kw'>save_fmt</span> <span class='kw'>=</span> <span class='st'>"npy"</span>
+    <pre class="usage"><span class='fu'>otter</span>(
+  <span class='no'>W</span>,
+  <span class='no'>P</span>,
+  <span class='no'>C</span>,
+  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0.0035</span>,
+  <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='fl'>0.335</span>,
+  <span class='kw'>Iter</span> <span class='kw'>=</span> <span class='fl'>300</span>,
+  <span class='kw'>eta</span> <span class='kw'>=</span> <span class='fl'>1e-05</span>,
+  <span class='kw'>bexp</span> <span class='kw'>=</span> <span class='fl'>1</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>expr</th>
-      <td><p>Character string indicating the file path of expression values file, as each gene (row) by samples (columns) <em>required</em></p></td>
+      <th>W</th>
+      <td><p>: TF-gene regulatory network based on TF motifs as a
+matrix of size (t,g), g=number of genes, t=number of TFs</p></td>
     </tr>
     <tr>
-      <th>motif</th>
-      <td><p>Character string indicating the file path of pair file of motif edges,
-when not provided, analysis continues with Pearson correlation matrix. <em>optional</em></p></td>
+      <th>P</th>
+      <td><p>: TF-TF protein interaction network as a matrix of size (t,t)</p></td>
     </tr>
     <tr>
-      <th>ppi</th>
-      <td><p>Character string indicating the pair file path of Protein-Protein interaction dataset. <em>optional</em></p></td>
+      <th>C</th>
+      <td><p>: gene coexpression as a matrix of size (g,g)</p></td>
     </tr>
     <tr>
-      <th>mode_process</th>
-      <td><p>An optional character to define the pre-processing of input dataset, options include "legacy" to the original behavior of PANDA in Python implement,
-"interaction" to constrain the TF and gene as interaction across all input datasets, and "union" to take TF union and gene union across all input datasets.
-The default value is "union".</p></td>
+      <th>gamma</th>
+      <td><p>: regularization parameter</p></td>
     </tr>
     <tr>
-      <th>rm_missing</th>
-      <td><p>When mode_process = "legacy", rm_missing is an optional boolean indicatining whether to remove genes and tfs not present in all input files. If TRUE, remove all unmatched tf and genes.
-if FALSE, keep all tf and genes. The default value is FALSE.</p></td>
+      <th>Iter</th>
+      <td><p>: number of iterations of the algorithm</p></td>
     </tr>
     <tr>
-      <th>start_sample</th>
-      <td><p>Numeric indicating the start sample number, The default value is 1.</p></td>
+      <th>eta</th>
+      <td><p>: learning rate</p></td>
     </tr>
     <tr>
-      <th>end_sample</th>
-      <td><p>Numeric indicating the start sample number, The default value is None. <em>optional</em></p></td>
+      <th>bexp</th>
+      <td><p>: exponent influencing learning rate (higher means smaller)</p>
+<p>Outputs:</p></td>
     </tr>
     <tr>
-      <th>save_dir</th>
-      <td><p>Character string indicating the folder name of output lioness networks for each sample by defined.<em>optional</em>
-The default is a folder named "lioness_output" under current working directory.</p></td>
-    </tr>
-    <tr>
-      <th>save_fmt</th>
-      <td><p>Character string indicating the format of lioness network of each sample. The dafault is "npy". The option is txt, npy, or mat.</p></td>
+      <th>lambda:</th>
+      <td><p>tuning parameter in [0,1] (higher gives more weight to C)</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with columns representing each sample, rows representing the regulator-target pair in PANDA network generated by <code>runPanda</code>. 
-        Each cell filled with the related score, representing the estimated contribution of a sample to the aggregate network.</p>
+    <p>W    : Predicted TF-gene complete regulatory network as an adjacency matrix of size (t,g).</p>
+<p>Authors: 
+              Rebekka Burkholz 4/2020</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'># refer to the input datasets files of control in inst/extdat as example</span>
-<span class='no'>control_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr10_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>motif_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"chip_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>ppi_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ppi_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='co'># Run LIONESS algorithm</span>
-<span class='no'>control_lioness_result</span> <span class='kw'>&lt;-</span> <span class='fu'>lioness.py</span>(<span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>mode_process</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,<span class='kw'>start_sample</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>end_sample</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-processing dataset and keep the matched tfs or genes</span></div><div class='output co'>#&gt; <span class='error'>Error in py_run_file_impl(file, local, convert): ModuleNotFoundError: No module named 'pandas'</span>
-#&gt; <span class='error'></span>
-#&gt; <span class='error'>Detailed traceback: </span>
-#&gt; <span class='error'>  File "&lt;string&gt;", line 5, in &lt;module&gt;</span></div><div class='input'> 
+<span class='no'>W</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='st'>'netZooR/data/w.csv'</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file 'netZooR/data/w.csv': No such file or directory</span></div><div class='output co'>#&gt; <span class='error'>Error in file(file, "rt"): cannot open the connection</span></div><div class='input'><span class='no'>C</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='st'>'netZooR/data/c.csv'</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file 'netZooR/data/c.csv': No such file or directory</span></div><div class='output co'>#&gt; <span class='error'>Error in file(file, "rt"): cannot open the connection</span></div><div class='input'><span class='no'>P</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='st'>'netZooR/data/p.csv'</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file 'netZooR/data/p.csv': No such file or directory</span></div><div class='output co'>#&gt; <span class='error'>Error in file(file, "rt"): cannot open the connection</span></div><div class='input'><span class='no'>gt</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='st'>'netZooR/data/test_otter.csv'</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file 'netZooR/data/test_otter.csv': No such file or directory</span></div><div class='output co'>#&gt; <span class='error'>Error in file(file, "rt"): cannot open the connection</span></div><div class='input'>
+<span class='co'># Run OTTER algorithm</span>
+<span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='fu'>otter</span>(<span class='no'>W</span>, <span class='no'>P</span>, <span class='no'>C</span>)</div><div class='output co'>#&gt; <span class='error'>Error in otter(W, P, C): object 'W' not found</span></div><div class='input'><span class='fu'>assert_that</span>((<span class='fu'><a href='https://rdrr.io/r/base/all.html'>all</a></span>((<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>W</span>*<span class='fl'>10</span>**<span class='fl'>2</span>)/<span class='fl'>10</span>**<span class='fl'>2</span>) <span class='kw'>==</span> (<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='no'>gt</span>*<span class='fl'>10</span>**<span class='fl'>2</span>)/<span class='fl'>10</span>**<span class='fl'>2</span>))))</div><div class='output co'>#&gt; <span class='error'>Error in assert_that((all((as.integer(W * 10^2)/10^2) == (as.integer(gt *     10^2)/10^2)))): could not find function "assert_that"</span></div><div class='input'> 
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

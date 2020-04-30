@@ -22,7 +22,7 @@
 
 source.PPI <- function(TF, species.index, ...){
   # creat a new STRINGdb class.
-  string_db=STRINGdb$new(version="11",species=species.index,...)
+  string_db=STRINGdb$new(version="10",species=species.index,...)
   # change the colname to "TF"
   colnames(TF) <- c("TF")
   # map the TF to STRINGdb dataset
