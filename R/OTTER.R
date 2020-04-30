@@ -1,3 +1,4 @@
+#' Run OTTER in R
 #' 
 #' Description:
 #'               OTTER infers gene regulatory networks using TF DNA binding
@@ -24,11 +25,11 @@
 #'               Rebekka Burkholz 4/2020
 #'
 #' @examples
-#'
-#' W=as.matrix(read.csv('netZooR/data/w.csv', header = FALSE))
-#' C=as.matrix(read.csv('netZooR/data/c.csv', header = FALSE))
-#' P=as.matrix(read.csv('netZooR/data/p.csv', header = FALSE))
-#' gt=as.matrix(read.csv('netZooR/data/test_otter.csv', header = FALSE))
+#' getwd()
+#' W=as.matrix(read.csv('data/w.csv', header = FALSE))
+#' C=as.matrix(read.csv('data/c.csv', header = FALSE))
+#' P=as.matrix(read.csv('data/p.csv', header = FALSE))
+#' gt=as.matrix(read.csv('data/test_otter.csv', header = FALSE))
 #'
 #' # Run OTTER algorithm
 #' W <- otter(W, P, C)
