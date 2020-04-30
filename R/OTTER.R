@@ -26,10 +26,10 @@
 #'
 #' @examples
 #' getwd()
-#' W=as.matrix(read.csv('data/w.csv', header = FALSE))
-#' C=as.matrix(read.csv('data/c.csv', header = FALSE))
-#' P=as.matrix(read.csv('data/p.csv', header = FALSE))
-#' gt=as.matrix(read.csv('data/test_otter.csv', header = FALSE))
+#' W=as.matrix(read.csv('../data/w.csv', header = FALSE))
+#' C=as.matrix(read.csv('../data/c.csv', header = FALSE))
+#' P=as.matrix(read.csv('../data/p.csv', header = FALSE))
+#' gt=as.matrix(read.csv('../data/test_otter.csv', header = FALSE))
 #'
 #' # Run OTTER algorithm
 #' W <- otter(W, P, C)
