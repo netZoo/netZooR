@@ -2,12 +2,7 @@
 % Please edit documentation in R/OTTER.R
 \name{otter}
 \alias{otter}
-\title{Description:
-              OTTER infers gene regulatory networks using TF DNA binding
-              motif (W), TF PPI (P), and gene coexpression (C) through 
-              minimzing the following objective:
-                                 min f(W) 
-              with f(W) = (1-lambda)*||WW' - P||^2 + lambda*||W'W - C||^2 + (gamma/2)*||W||^2}
+\title{Run OTTER in R}
 \usage{
 otter(
   W,
@@ -47,14 +42,22 @@ Authors:
               Rebekka Burkholz 4/2020
 }
 \description{
+Description:
+              OTTER infers gene regulatory networks using TF DNA binding
+              motif (W), TF PPI (P), and gene coexpression (C) through 
+              minimzing the following objective:
+                                 min f(W) 
+              with f(W) = (1-lambda)*||WW' - P||^2 + lambda*||W'W - C||^2 + (gamma/2)*||W||^2
+}
+\details{
 Inputs:
 }
 \examples{
-
-W=as.matrix(read.csv('netZooR/data/w.csv', header = FALSE))
-C=as.matrix(read.csv('netZooR/data/c.csv', header = FALSE))
-P=as.matrix(read.csv('netZooR/data/p.csv', header = FALSE))
-gt=as.matrix(read.csv('netZooR/data/test_otter.csv', header = FALSE))
+getwd()
+W=as.matrix(read.csv('data/w.csv', header = FALSE))
+C=as.matrix(read.csv('data/c.csv', header = FALSE))
+P=as.matrix(read.csv('data/p.csv', header = FALSE))
+gt=as.matrix(read.csv('data/test_otter.csv', header = FALSE))
 
 # Run OTTER algorithm
 W <- otter(W, P, C)
