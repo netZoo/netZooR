@@ -25,15 +25,13 @@
 #'               Rebekka Burkholz 4/2020
 #'
 #' @examples
-#' getwd()
-#' W=as.matrix(read.csv('../data/w.csv', header = FALSE))
-#' C=as.matrix(read.csv('../data/c.csv', header = FALSE))
-#' P=as.matrix(read.csv('../data/p.csv', header = FALSE))
-#' gt=as.matrix(read.csv('../data/test_otter.csv', header = FALSE))
+#'
+#' W=matrix(rexp(100, rate=.1), ncol=10)
+#' C=matrix(rexp(100, rate=.1), ncol=10)
+#' P=matrix(rexp(100, rate=.1), ncol=10)
 #'
 #' # Run OTTER algorithm
 #' W <- otter(W, P, C)
-#' assert_that((all((as.integer(W*10**2)/10**2) == (as.integer(gt*10**2)/10**2))))
 #'  
 #' @export
 

@@ -172,8 +172,11 @@
 <span class='co'># create a TF data frame with one column</span>
 <span class='no'>TF</span> <span class='kw'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='no'>motif</span>[,<span class='fl'>1</span>])
 <span class='co'># create PPI data frame</span>
-<span class='no'>PPI</span> <span class='kw'>&lt;-</span> <span class='fu'>source.PPI</span>(<span class='no'>TF</span>,<span class='kw'>species.index</span><span class='kw'>=</span><span class='fl'>83332</span>, <span class='kw'>score_threshold</span><span class='kw'>=</span><span class='fl'>0</span>)
-<span class='co'># write out locally then can be used in \code{\link{panda.py}}.</span></div></pre>
+<span class='no'>PPI</span> <span class='kw'>&lt;-</span> <span class='fu'>source.PPI</span>(<span class='no'>TF</span>,<span class='kw'>species.index</span><span class='kw'>=</span><span class='fl'>83332</span>, <span class='kw'>score_threshold</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; ERROR: The version  11.0 is not valid. 
+#&gt; Please use one of the following versions:
+#&gt; 9_05, 9_1, 10</div><div class='output co'>#&gt; <span class='error'>Error in .Object$initialize(...): </span></div><div class='input'># write out locally then can be used in \code{\link{panda.py}}.
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>

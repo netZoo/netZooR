@@ -4,7 +4,9 @@
 \name{exon.size}
 \alias{exon.size}
 \title{Gene length}
-\format{A integer vector of size 23459, with gene symbols as names}
+\format{
+A integer vector of size 23459, with gene symbols as names
+}
 \usage{
 data(exon.size)
 }
