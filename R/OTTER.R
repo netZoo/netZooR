@@ -1,14 +1,42 @@
+#' 
+#' Description:
+#'               OTTER infers gene regulatory networks using TF DNA binding
+#'               motif (W), TF PPI (P), and gene coexpression (C) through 
+#'               minimzing the following objective:
+#'                                  min f(W) 
+#'               with f(W) = (1-lambda)*||WW' - P||^2 + lambda*||W'W - C||^2 + (gamma/2)*||W||^2
+#'
+#' Inputs:
+#' @param W     : TF-gene regulatory network based on TF motifs as a
+#'                       matrix of size (t,g), g=number of genes, t=number of TFs
+#' @param P     : TF-TF protein interaction network as a matrix of size (t,t)
+#' @param C     : gene coexpression as a matrix of size (g,g) 
+#' @param lambda: tuning parameter in [0,1] (higher gives more weight to C)
+#' @param gamma : regularization parameter
+#' @param Iter  : number of iterations of the algorithm
+#' @param eta   : learning rate
+#' @param bexp  : exponent influencing learning rate (higher means smaller)
+#'
+#' Outputs:
+#' @return W    : Predicted TF-gene complete regulatory network as an adjacency matrix of size (t,g).
+#'
+#' Authors: 
+#'               Rebekka Burkholz 4/2020
+#'
+#' @examples
+#'
+#' W=as.matrix(read.csv('netZooR/data/w.csv', header = FALSE))
+#' C=as.matrix(read.csv('netZooR/data/c.csv', header = FALSE))
+#' P=as.matrix(read.csv('netZooR/data/p.csv', header = FALSE))
+#' gt=as.matrix(read.csv('netZooR/data/test_otter.csv', header = FALSE))
+#'
+#' # Run OTTER algorithm
+#' W <- otter(W, P, C)
+#' assert_that((all((as.integer(W*10**2)/10**2) == (as.integer(gt*10**2)/10**2))))
+#'  
+#' @export
 
 otter <- function(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 300, eta = 0.00001, bexp = 1){
-  #W: prior gene regulatory matrix
-  #P: ppi matrix
-  #C: correlation matrix
-  #lambda: tuning parameter 
-  #gamma: regularization parameter
-  #Iter: number of total iterations
-  #eta: learning rate
-  #bexp: exponent influencing the learning rate
-  
   #ADAM parameters
   b1 <- 0.9
   b2 <- 0.999
