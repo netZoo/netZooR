@@ -8,24 +8,24 @@ Linux[![LINUX](https://travis-ci-job-status.herokuapp.com/badge/netZoo/netZooR/d
 Macos[![MAC](https://travis-ci-job-status.herokuapp.com/badge/netZoo/netZooR/devel/macos)](https://travis-ci.org/netZoo/netZooR)
 
 ## Description
-netZooR is an R package to construct, analyse and plot gene regulatory networks.
+netZooR is an R package to reconstruct, analyse and plot biological networks.
 
 ## Features
 
 netZooR currently integrates with:
-* **PANDA**(Passing Attributes between Networks for Data Assimilation)[[Glass et al. 2013]](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832): construct gene regulatory network from gene expression data, protein-protein interaction data, and transcription factor binding motifs (TFBMs) data.
+* **PANDA**(Passing Attributes between Networks for Data Assimilation)[[Glass et al. 2013]](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832): constructs gene regulatory network from gene expression data, protein-protein interaction data, and transcription factor binding motifs (TFBMs) data.
 
-* **CONDOR**(COmplex Network Description Of Regulators)[[Platig et al. 2016]](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033): analyse bipartite community structure analysis of biological networks.
+* **CONDOR**(COmplex Network Description Of Regulators)[[Platig et al. 2016]](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033): analyses bipartite community structure analysis of biological networks.
 
-* **LIONESS**(Linear Interpolation to Obtain Network Estimates for Single Samples)[[Kuijjer et al. 2019]](https://doi.org/10.1016/j.isci.2019.03.021): reconstruct single-sample gene regulatory networks.
+* **LIONESS**(Linear Interpolation to Obtain Network Estimates for Single Samples)[[Kuijjer et al. 2019]](https://doi.org/10.1016/j.isci.2019.03.021): reconstructs single-sample gene regulatory networks.
 
-* **ALPACA**(ALtered Partitions Across Community Architectures)[[Padi and Quackenbush 2018]](https://www.nature.com/articles/s41540-018-0052-5): compare two networks and identify changes in modular structure.
+* **ALPACA**(ALtered Partitions Across Community Architectures)[[Padi and Quackenbush 2018]](https://www.nature.com/articles/s41540-018-0052-5): compares two networks and identify changes in modular structure.
 
-* **SAMBAR**(Subtyping Agglomerated Mutations By Annotation Relations)[[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identify subtypes based on somatic mutation data.
+* **SAMBAR**(Subtyping Agglomerated Mutations By Annotation Relations)[[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identifies subtypes based on somatic mutation data.
 
-* **MONSTER**(Modeling Network State Transitions from Expression and Regulatory data)[[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infer transcription factor drivers of cell state conditions at the gene regulatory network level.
+* **MONSTER**(Modeling Network State Transitions from Expression and Regulatory data)[[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infers transcription factor which drivers of cell state conditions at the gene regulatory network level.
 
-* **OTTER**(Optimization to Estimate Regulation) - In preparation: Models gene regulation estimation as a graph matrching problem
+* **OTTER**(Optimization to Estimate Regulation) [publication in preparation]: models gene regulation estimation as a graph matrching problem
 
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
 
