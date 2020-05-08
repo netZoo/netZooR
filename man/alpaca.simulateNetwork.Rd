@@ -4,13 +4,8 @@
 \alias{alpaca.simulateNetwork}
 \title{Simulated networks}
 \usage{
-alpaca.simulateNetwork(
-  comm.sizes,
-  edge.mat,
-  num.module,
-  size.module,
-  dens.module
-)
+alpaca.simulateNetwork(comm.sizes, edge.mat, num.module, size.module,
+  dens.module)
 }
 \arguments{
 \item{comm.sizes}{A two-column matrix indicating the number of "from" nodes (left column) and number of "to" nodes (right column) in each community (row).}

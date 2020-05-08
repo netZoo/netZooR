@@ -4,11 +4,8 @@
 \alias{vis.diff.panda.in.cytoscape}
 \title{Plot two PANDA networsk in Cytoscape}
 \usage{
-vis.diff.panda.in.cytoscape(
-  merged_panda,
-  condition_name = "cond.1",
-  network_name = "diff.PANDA"
-)
+vis.diff.panda.in.cytoscape(merged_panda, condition_name = "cond.1",
+  network_name = "diff.PANDA")
 }
 \arguments{
 \item{merged_panda}{vector indicating the merged PANDA networks in data frame structure type.}

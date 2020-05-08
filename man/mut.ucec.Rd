@@ -4,9 +4,7 @@
 \name{mut.ucec}
 \alias{mut.ucec}
 \title{Example of mutation data}
-\format{
-A table with 248 rows and 19754 columns
-}
+\format{A table with 248 rows and 19754 columns}
 \usage{
 data(mut.ucec)
 }

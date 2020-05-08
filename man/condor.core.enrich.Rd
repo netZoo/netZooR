@@ -4,13 +4,8 @@
 \alias{condor.core.enrich}
 \title{Compare qscore distribution of a subset of nodes to all other nodes.}
 \usage{
-condor.core.enrich(
-  test_nodes,
-  q,
-  perm = FALSE,
-  plot.hist = FALSE,
-  nsamp = 1000
-)
+condor.core.enrich(test_nodes, q, perm = FALSE, plot.hist = FALSE,
+  nsamp = 1000)
 }
 \arguments{
 \item{test_nodes}{is a list containing the subset of nodes (of one node class

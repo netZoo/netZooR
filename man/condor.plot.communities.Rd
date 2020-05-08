@@ -4,13 +4,8 @@
 \alias{condor.plot.communities}
 \title{Plot adjacency matrix with links grouped and colored by community}
 \usage{
-condor.plot.communities(
-  condor.object,
-  color_list,
-  point.size = 0.01,
-  xlab = "SNP",
-  ylab = "Gene"
-)
+condor.plot.communities(condor.object, color_list, point.size = 0.01,
+  xlab = "SNP", ylab = "Gene")
 }
 \arguments{
 \item{condor.object}{output of either \code{\link{condor.cluster}} or 
