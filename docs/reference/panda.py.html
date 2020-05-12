@@ -35,10 +35,10 @@
 <meta property="og:title" content="Run PANDA in R — panda.py" />
 
 <meta property="og:description" content="PANDA(Passing Attributes between Networks for Data Assimilation) is a message-passing model 
-to reconstruct gene regulatory network. It integrates multiple sources of biological data-including protein-protein interaction,
-gene expression data, and transccription factor binding motifs data-to reconstruct genome-wide, condition-specific regulatory networks.
+to reconstruct gene regulatory network, which integrates multiple sources of biological data-including protein-protein interaction data,
+gene expression data, and transcription factor binding motifs data to reconstruct genome-wide, condition-specific regulatory networks.
 [(Glass et al. 2013)])
-This function is designed to run the a derived PANDA algorithm in Python implement &quot;netZooPy&quot; netZooPy,
+This function is designed to run the a derived PANDA implement in Python &quot;netZooPy&quot; netZooPy,
  which is also a Python library of netZooR." />
 <meta name="twitter:card" content="summary" />
 
@@ -71,7 +71,7 @@ This function is designed to run the a derived PANDA algorithm in Python impleme
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7</span>
       </span>
     </div>
 
@@ -144,10 +144,10 @@ This function is designed to run the a derived PANDA algorithm in Python impleme
     <div class="ref-description">
     
     <p><strong>PANDA</strong>(Passing Attributes between Networks for Data Assimilation) is a message-passing model 
-to reconstruct gene regulatory network. It integrates multiple sources of biological data-including protein-protein interaction,
-gene expression data, and transccription factor binding motifs data-to reconstruct genome-wide, condition-specific regulatory networks.
+to reconstruct gene regulatory network, which integrates multiple sources of biological data-including protein-protein interaction data,
+gene expression data, and transcription factor binding motifs data to reconstruct genome-wide, condition-specific regulatory networks.
 <a href='http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832'>[(Glass et al. 2013)])</a>
-This function is designed to run the a derived PANDA algorithm in Python implement "netZooPy" <a href='https://github.com/netZoo/netZooPy'>netZooPy</a>,
+This function is designed to run the a derived PANDA implement in Python "netZooPy" <a href='https://github.com/netZoo/netZooPy'>netZooPy</a>,
  which is also a Python library of netZooR.</p>
     
     </div>
@@ -160,17 +160,17 @@ This function is designed to run the a derived PANDA algorithm in Python impleme
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>expr</th>
-      <td><p>Character string indicatining the file path of expression values file, with each gene (in row) by samples (in columns)</p></td>
+      <td><p>Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).</p></td>
     </tr>
     <tr>
       <th>motif</th>
-      <td><p>An optional character string indicatining the file path of pair file of a prior transcription factor binding motifs dataset.
+      <td><p>An optional character string indicating the file path of a prior transcription factor binding motifs dataset.
 When this argument is not provided, analysis will continue with Pearson correlation matrix.</p></td>
     </tr>
     <tr>
       <th>ppi</th>
-      <td><p>An optional character string indicatining the file path of protein-protein interaction edge dataset.
-Also this can be generated given a list of proteins of interest by <code><a href='source.PPI.html'>source.PPI</a></code>.</p></td>
+      <td><p>An optional character string indicating the file path of protein-protein interaction edge dataset.
+Also, this can be generated with a list of proteins of interest by <code><a href='source.PPI.html'>source.PPI</a></code>.</p></td>
     </tr>
     <tr>
       <th>mode_process</th>
@@ -180,7 +180,7 @@ The default value is "union".</p></td>
     </tr>
     <tr>
       <th>rm_missing</th>
-      <td><p>When mode_process = "legacy", rm_missing is an optional boolean indicatining whether to remove genes and tfs not present in all input files. If TRUE, remove all unmatched tf and genes.
+      <td><p>When mode_process = "legacy", rm_missing is an optional boolean indicating whether to remove genes and TFs not present in all input files. If TRUE, remove all unmatched TF and genes.
 if FALSE, keep all tf and genes. The default value is FALSE.</p></td>
     </tr>
     </table>
@@ -188,10 +188,10 @@ if FALSE, keep all tf and genes. The default value is FALSE.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list of three items：
-         Use <code>$panda</code> to access the standard output of PANDA network in data.frame, which consists of four columns: 
-         "TF", "Gene", "Motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".</p>
-<p>Use <code>$indegree</code> to access the indegree of PANDA network in data.frame, consisting of two columns: "gene", "force".</p>
-<p>Use <code>$outdegree</code> to access the outdegree of PANDA network in data.fra,e, consisting of two columns: "tf", "force".</p>
+         Use <code>$panda</code> to access the standard output of PANDA as data frame, which consists of four columns: 
+         "TF", "Gene", "Motif" using 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".</p>
+<p>Use <code>$indegree</code> to access the indegree of PANDA network as data frame, which consists of two columns: "Gene", "Score".</p>
+<p>Use <code>$outdegree</code> to access the outdegree of PANDA network as data frame, which consists of two columns: "TF", "Score".</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -230,7 +230,7 @@ if FALSE, keep all tf and genes. The default value is FALSE.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tian Wang, John Platig, Marieke Kuijjer, Magha Padi.</p>
+  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz.</p>
 </div>
 
 <div class="pkgdown">

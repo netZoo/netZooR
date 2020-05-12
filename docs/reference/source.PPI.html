@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7</span>
       </span>
     </div>
 
@@ -142,18 +142,22 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>source.PPI</span>(<span class='no'>TF</span>, <span class='no'>species.index</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>source.PPI</span>(<span class='no'>TF</span>, <span class='kw'>STRING.version</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='no'>species.index</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>TF</th>
-      <td><p>Data frame with one column indicating the TF of interest</p></td>
+      <td><p>a data frame with one column indicating the TF of interest</p></td>
+    </tr>
+    <tr>
+      <th>STRING.version</th>
+      <td><p>a numeric vector indicating the STRING version. Default valuve is 10</p></td>
     </tr>
     <tr>
       <th>species.index</th>
-      <td><p>Numeric vector indicating NCBI taxonomy identifiers</p></td>
+      <td><p>a numeric vector indicating NCBI taxonomy identifiers</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -172,8 +176,10 @@
 <span class='no'>motif</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></span>(<span class='no'>motif_file_path</span>, <span class='kw'>sep</span><span class='kw'>=</span><span class='st'>"\t"</span>)
 <span class='co'># create a TF data frame with one column</span>
 <span class='no'>TF</span> <span class='kw'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='no'>motif</span>[,<span class='fl'>1</span>])
-<span class='co'># create PPI data frame</span>
-<span class='no'>PPI</span> <span class='kw'>&lt;-</span> <span class='fu'>source.PPI</span>(<span class='no'>TF</span>,<span class='kw'>species.index</span><span class='kw'>=</span><span class='fl'>83332</span>, <span class='kw'>score_threshold</span><span class='kw'>=</span><span class='fl'>0</span>)
+<span class='co'># create PPI data frame by searching in STRING version 10 and specifying specie to "Mycobacterium tuberculosis H37Rv".</span>
+<span class='co'># STRING verison 11 is only accessible to R 4.0.</span>
+<span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/Version.html'>R.Version</a></span>()$<span class='no'>major</span><span class='kw'>==</span><span class='st'>"3"</span>){<span class='no'>PPI</span> <span class='kw'>&lt;-</span> <span class='fu'>source.PPI</span>(<span class='no'>TF</span>, <span class='kw'>STRING.version</span><span class='kw'>=</span><span class='st'>"10"</span>, <span class='kw'>species.index</span><span class='kw'>=</span><span class='fl'>83332</span>, <span class='kw'>score_threshold</span><span class='kw'>=</span><span class='fl'>0</span>)}
+<span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/Version.html'>R.Version</a></span>()$<span class='no'>major</span><span class='kw'>==</span><span class='st'>"4"</span>){<span class='no'>PPI</span> <span class='kw'>&lt;-</span> <span class='fu'>source.PPI</span>(<span class='no'>TF</span>, <span class='kw'>STRING.version</span><span class='kw'>=</span><span class='st'>"11"</span>, <span class='kw'>species.index</span><span class='kw'>=</span><span class='fl'>83332</span>, <span class='kw'>score_threshold</span><span class='kw'>=</span><span class='fl'>0</span>)}
 <span class='co'># write out locally then can be used in \code{\link{panda.py}}.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -192,7 +198,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tian Wang, John Platig, Marieke Kuijjer, Magha Padi.</p>
+  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz.</p>
 </div>
 
 <div class="pkgdown">
