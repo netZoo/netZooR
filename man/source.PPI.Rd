@@ -4,12 +4,14 @@
 \alias{source.PPI}
 \title{Source the Protein-Protein interaction in STRING database}
 \usage{
-source.PPI(TF, species.index, ...)
+source.PPI(TF, STRING.version = 10, species.index, ...)
 }
 \arguments{
-\item{TF}{Data frame with one column indicating the TF of interest}
+\item{TF}{a data frame with one column indicating the TF of interest}
 
-\item{species.index}{Numeric vector indicating NCBI taxonomy identifiers}
+\item{STRING.version}{a numeric vector indicating the STRING version. Default valuve is 10}
+
+\item{species.index}{a numeric vector indicating NCBI taxonomy identifiers}
 
 \item{...}{any dditional arguments passing to}
 }
@@ -22,11 +24,13 @@ This function is able to use a list of Transcription Factors(TF) of interest to 
 \examples{
 # the example motif file
 motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
-motif <- read.table(motif_file_path, sep="\t")
+motif <- read.table(motif_file_path, sep="\\t")
 # create a TF data frame with one column
 TF <-data.frame(motif[,1])
-# create PPI data frame
-PPI <- source.PPI(TF,species.index=83332, score_threshold=0)
-# write out locally then can be used in \code{\link{panda.py}}.
+# create PPI data frame by searching in STRING version 10 and specifying specie to "Mycobacterium tuberculosis H37Rv".
+# STRING verison 11 is only accessible to R 4.0.
+if(R.Version()$major=="3"){PPI <- source.PPI(TF, STRING.version="10", species.index=83332, score_threshold=0)}
+if(R.Version()$major=="4"){PPI <- source.PPI(TF, STRING.version="11", species.index=83332, score_threshold=0)}
+# write out locally then can be used in \\code{\\link{panda.py}}.
 
 }

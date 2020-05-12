@@ -1,30 +1,30 @@
 #' Run PANDA in R
 #' 
 #' \strong{PANDA}(Passing Attributes between Networks for Data Assimilation) is a message-passing model 
-#' to reconstruct gene regulatory network. It integrates multiple sources of biological data-including protein-protein interaction,
-#' gene expression data, and transccription factor binding motifs data-to reconstruct genome-wide, condition-specific regulatory networks.
+#' to reconstruct gene regulatory network, which integrates multiple sources of biological data-including protein-protein interaction data,
+#' gene expression data, and transcription factor binding motifs data to reconstruct genome-wide, condition-specific regulatory networks.
 #' \href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832}{[(Glass et al. 2013)])}
-#' This function is designed to run the a derived PANDA algorithm in Python implement "netZooPy" \href{https://github.com/netZoo/netZooPy}{netZooPy},
+#' This function is designed to run the a derived PANDA implement in Python "netZooPy" \href{https://github.com/netZoo/netZooPy}{netZooPy},
 #'  which is also a Python library of netZooR.
 #'
-#' @param expr Character string indicatining the file path of expression values file, with each gene (in row) by samples (in columns)
-#' @param motif An optional character string indicatining the file path of pair file of a prior transcription factor binding motifs dataset.
+#' @param expr Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).
+#' @param motif An optional character string indicating the file path of a prior transcription factor binding motifs dataset.
 #'          When this argument is not provided, analysis will continue with Pearson correlation matrix.
-#' @param ppi An optional character string indicatining the file path of protein-protein interaction edge dataset.
-#'          Also this can be generated given a list of proteins of interest by \code{\link{source.PPI}}.
+#' @param ppi An optional character string indicating the file path of protein-protein interaction edge dataset.
+#'          Also, this can be generated with a list of proteins of interest by \code{\link{source.PPI}}.
 #' @param mode_process An optional character to define the pre-processing of input dataset, options include "legacy" to the original behavior of PANDA in Python implement,
 #'          "interaction" to constrain the TF and gene as interaction across all input datasets, and "union" to take TF union and gene union across all input datasets.
 #'          The default value is "union".
-#' @param rm_missing When mode_process = "legacy", rm_missing is an optional boolean indicatining whether to remove genes and tfs not present in all input files. If TRUE, remove all unmatched tf and genes.
+#' @param rm_missing When mode_process = "legacy", rm_missing is an optional boolean indicating whether to remove genes and TFs not present in all input files. If TRUE, remove all unmatched TF and genes.
 #'         if FALSE, keep all tf and genes. The default value is FALSE.
 #'
 #' @return A list of three items：
-#'          Use \code{$panda} to access the standard output of PANDA network in data.frame, which consists of four columns: 
-#'          "TF", "Gene", "Motif" 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".
+#'          Use \code{$panda} to access the standard output of PANDA as data frame, which consists of four columns: 
+#'          "TF", "Gene", "Motif" using 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".
 #' 
-#'          Use \code{$indegree} to access the indegree of PANDA network in data.frame, consisting of two columns: "gene", "force".
+#'          Use \code{$indegree} to access the indegree of PANDA network as data frame, which consists of two columns: "Gene", "Score".
 #' 
-#'          Use \code{$outdegree} to access the outdegree of PANDA network in data.fra,e, consisting of two columns: "tf", "force".
+#'          Use \code{$outdegree} to access the outdegree of PANDA network as data frame, which consists of two columns: "TF", "Score".
 #' 
 #' @examples 
 
@@ -130,7 +130,7 @@ panda.py <- function( expr, motif=NULL, ppi=NULL, mode_process="union", rm_missi
   
   # check if there is duplicate name of nodes in first two columns
   # if true, prefix the content in regulator column with "reg_" and content in target column with"tar_"
-   
+  
   if( length(intersect(panda_net$Gene, panda_net$TF))>0){
     panda_net$TF <- paste('reg_', panda_net$TF, sep='')
     panda_net$Gene <- paste('tar_', panda_net$Gene, sep='')

@@ -12,6 +12,7 @@ reference:
   - panda.to.alpaca
   - sambar
   - monster
+  - otter
 - title: Plot functions
   desc: function to plot the networks and community structures.
   contents:
@@ -38,7 +39,7 @@ reference:
   - starts_with("condor")
   - create.condor.object
 - title: LIONESS 
-  desc: All functions of lioness
+  desc: All functions of LIONESS
   contents: 
   - lioness.py
   - lioness
@@ -51,6 +52,10 @@ reference:
   contents:
   - starts_with("sambar")
 - title: MONSTER
-  desc: All functions of monster
+  desc: All functions of MONSTER
   contents:
   - starts_with("monster")
+- title: OTTER
+  desc: All functions of OTTER
+  contents:
+  - starts_with("otter")

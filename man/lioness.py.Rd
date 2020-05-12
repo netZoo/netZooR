@@ -4,17 +4,9 @@
 \alias{lioness.py}
 \title{Run python implementation of LIONESS}
 \usage{
-lioness.py(
-  expr = expression,
-  motif = motif,
-  ppi = ppi,
-  mode_process = "union",
-  rm_missing = FALSE,
-  start_sample = 1,
-  end_sample = "None",
-  save_dir = "lioness_output",
-  save_fmt = "npy"
-)
+lioness.py(expr = expression, motif = motif, ppi = ppi,
+  mode_process = "union", rm_missing = FALSE, start_sample = 1,
+  end_sample = "None", save_dir = "lioness_output", save_fmt = "npy")
 }
 \arguments{
 \item{expr}{Character string indicating the file path of expression values file, as each gene (row) by samples (columns) \emph{required}}

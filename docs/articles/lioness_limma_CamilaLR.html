@@ -113,43 +113,43 @@
 <div id="install-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install-packages" class="anchor"></a>Install packages</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb1-2"><a href="#cb1-2"></a>    <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"limma"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"fgsea"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a>BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"Biobase"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"ggplot2"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"igraph"</span>)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))
+    <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)
+BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"limma"</span>)
+BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"fgsea"</span>)
+BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"Biobase"</span>)
+<span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"ggplot2"</span>)
+<span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"igraph"</span>)</code></pre></div>
 </div>
 <div id="load-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-packages" class="anchor"></a>Load packages</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(limma)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(fgsea)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(Biobase)</span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(igraph)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(limma)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(fgsea)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(Biobase)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(igraph)</code></pre></div>
 </div>
 </div>
 <div id="load-the-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#load-the-data" class="anchor"></a>Load the data</h1>
 <p>For the purposes of demonstrating the workflow, we will load only a subet of LIONESS networks. Our subset shows the edge weights for 50,000 edges (rows) by 445 samples (columns). Let’s take a look at the networks:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Load a subset of LIONESS networks</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>lioness &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/lioness_coloncancer_subset.txt"</span>,<span class="dt">stringsAsFactors =</span> F, <span class="dt">check.names =</span> F)</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(lioness[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># Add row names as "TF_gene" and remove columns 1 and 2 with TF and gene name</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(lioness) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(lioness, <span class="dv">1</span>, <span class="cf">function</span>(x){</span>
-<span id="cb3-6"><a href="#cb3-6"></a>  <span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(x[<span class="dv">1</span>], x[<span class="dv">2</span>], <span class="dt">sep=</span><span class="st">"_"</span>)</span>
-<span id="cb3-7"><a href="#cb3-7"></a>})</span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># Remove TF and gene columns</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a>lioness &lt;-<span class="st"> </span>lioness[,<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)]</span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(lioness[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</span>
-<span id="cb3-11"><a href="#cb3-11"></a></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># Load the complete gene in-degree (sum of all edge weights for each gene) and clinical data stored as an expression set </span></span>
-<span id="cb3-13"><a href="#cb3-13"></a>obj &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/get.html">get</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"data/inDegree_allEdges_coloncancer.rdata"</span>, <span class="dt">sep=</span><span class="st">"/"</span>)))</span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># Clinical information</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span>(obj)[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">30</span><span class="op">:</span><span class="dv">35</span>]</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load a subset of LIONESS networks</span>
+lioness &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span>(<span class="st">"data/lioness_coloncancer_subset.txt"</span>,<span class="dt">stringsAsFactors =</span> F, <span class="dt">check.names =</span> F)
+<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(lioness[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])
+<span class="co"># Add row names as "TF_gene" and remove columns 1 and 2 with TF and gene name</span>
+<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(lioness) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(lioness, <span class="dv">1</span>, <span class="cf">function</span>(x){
+  <span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(x[<span class="dv">1</span>], x[<span class="dv">2</span>], <span class="dt">sep=</span><span class="st">"_"</span>)
+})
+<span class="co"># Remove TF and gene columns</span>
+lioness &lt;-<span class="st"> </span>lioness[,<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)]
+<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(lioness[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])
+
+<span class="co"># Load the complete gene in-degree (sum of all edge weights for each gene) and clinical data stored as an expression set </span>
+obj &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/get.html">get</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"data/inDegree_allEdges_coloncancer.rdata"</span>, <span class="dt">sep=</span><span class="st">"/"</span>)))
+<span class="co"># Clinical information</span>
+<span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span>(obj)[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">30</span><span class="op">:</span><span class="dv">35</span>]</code></pre></div>
 </div>
 <div id="compare-the-edge-weights" class="section level1">
 <h1 class="hasAnchor">
@@ -158,42 +158,42 @@
 <div id="run-limma" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-limma" class="anchor"></a>Run limma</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Define the covariates</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>gender &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span>(obj)<span class="op">$</span>gender),<span class="dt">levels=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"MALE"</span>,<span class="st">"FEMALE"</span>))</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a>stage &lt;-<span class="st"> </span>(<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span>(obj)<span class="op">$</span>uicc_stage))</span>
-<span id="cb4-5"><a href="#cb4-5"></a>stage[<span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(stage))] &lt;-<span class="st"> "NA"</span>    </span>
-<span id="cb4-6"><a href="#cb4-6"></a>stage &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(stage)</span>
-<span id="cb4-7"><a href="#cb4-7"></a></span>
-<span id="cb4-8"><a href="#cb4-8"></a>race &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span>(obj)<span class="op">$</span>race)</span>
-<span id="cb4-9"><a href="#cb4-9"></a>race[<span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(race))] &lt;-<span class="st"> "NA"</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a>race &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(race)</span>
-<span id="cb4-11"><a href="#cb4-11"></a></span>
-<span id="cb4-12"><a href="#cb4-12"></a>age &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span>(obj)<span class="op">$</span>age_at_initial_pathologic_diagnosis)</span>
-<span id="cb4-13"><a href="#cb4-13"></a>age[<span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(age))] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(age,<span class="dt">na.rm=</span><span class="ot">TRUE</span>)</span>
-<span id="cb4-14"><a href="#cb4-14"></a></span>
-<span id="cb4-15"><a href="#cb4-15"></a>design =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(<span class="op">~</span><span class="st"> </span>stage <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender)</span>
-<span id="cb4-16"><a href="#cb4-16"></a></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co"># Run limma</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a>fitGood =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/lmFit.html">lmFit</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(lioness),design)</span>
-<span id="cb4-19"><a href="#cb4-19"></a>fitGood =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/ebayes.html">eBayes</a></span>(fitGood)</span>
-<span id="cb4-20"><a href="#cb4-20"></a>tb =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/toptable.html">topTable</a></span>(fitGood,<span class="dt">coef=</span><span class="st">"genderFEMALE"</span>,<span class="dt">number=</span><span class="ot">Inf</span>)</span>
-<span id="cb4-21"><a href="#cb4-21"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(tb)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define the covariates</span>
+gender &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span>(obj)<span class="op">$</span>gender),<span class="dt">levels=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"MALE"</span>,<span class="st">"FEMALE"</span>))
+
+stage &lt;-<span class="st"> </span>(<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span>(obj)<span class="op">$</span>uicc_stage))
+stage[<span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(stage))] &lt;-<span class="st"> "NA"</span>    
+stage &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(stage)
+
+race &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span>(obj)<span class="op">$</span>race)
+race[<span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(race))] &lt;-<span class="st"> "NA"</span>
+race &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(race)
+
+age &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span>(obj)<span class="op">$</span>age_at_initial_pathologic_diagnosis)
+age[<span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(age))] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(age,<span class="dt">na.rm=</span><span class="ot">TRUE</span>)
+
+design =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(<span class="op">~</span><span class="st"> </span>stage <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender)
+
+<span class="co"># Run limma</span>
+fitGood =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/lmFit.html">lmFit</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(lioness),design)
+fitGood =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/ebayes.html">eBayes</a></span>(fitGood)
+tb =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/toptable.html">topTable</a></span>(fitGood,<span class="dt">coef=</span><span class="st">"genderFEMALE"</span>,<span class="dt">number=</span><span class="ot">Inf</span>)
+<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(tb)</code></pre></div>
 </div>
 <div id="visualize-the-top-edges-with-differential-weights-by-sex" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualize-the-top-edges-with-differential-weights-by-sex" class="anchor"></a>Visualize the top edges with differential weights by sex</h2>
 <p>We select the top 50 edges with differential edge weights by sex and convert them into an igraph graph.data.frame object for visualization. We color edges red if they have higher coefficients in the female group, and blue if they have higher coefficients in the female group.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>toptable_edges &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(tb), <span class="st">"_"</span>))),<span class="dv">2</span>))</span>
-<span id="cb5-2"><a href="#cb5-2"></a>z &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/cbind.html">cbind</a></span>(toptable_edges[<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>,], tb<span class="op">$</span>logFC[<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>])</span>
-<span id="cb5-3"><a href="#cb5-3"></a>g &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html">graph.data.frame</a></span>(z, <span class="dt">directed=</span><span class="ot">FALSE</span>)</span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>weight &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(z[,<span class="dv">3</span>])</span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>color[<span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>weight<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> "blue"</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>color[<span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>weight<span class="op">&gt;</span><span class="dv">0</span>] &lt;-<span class="st"> "red"</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>weight &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="kw"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="dt">mar=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(g, <span class="dt">vertex.label.cex=</span><span class="fl">0.7</span>, <span class="dt">vertex.size=</span><span class="dv">10</span>,  <span class="dt">vertex.label.font=</span><span class="dv">3</span>, <span class="dt">edge.width=</span><span class="dv">5</span><span class="op">*</span>(<span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(z[,<span class="dv">3</span>]))))</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">toptable_edges &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(tb), <span class="st">"_"</span>))),<span class="dv">2</span>))
+z &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/cbind.html">cbind</a></span>(toptable_edges[<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>,], tb<span class="op">$</span>logFC[<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>])
+g &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html">graph.data.frame</a></span>(z, <span class="dt">directed=</span><span class="ot">FALSE</span>)
+<span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>weight &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(z[,<span class="dv">3</span>])
+<span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>color[<span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>weight<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> "blue"</span>
+<span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>color[<span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>weight<span class="op">&gt;</span><span class="dv">0</span>] &lt;-<span class="st"> "red"</span>
+<span class="kw"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span>(g)<span class="op">$</span>weight &lt;-<span class="st"> </span><span class="dv">1</span>
+
+<span class="kw"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="dt">mar=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))
+<span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(g, <span class="dt">vertex.label.cex=</span><span class="fl">0.7</span>, <span class="dt">vertex.size=</span><span class="dv">10</span>,  <span class="dt">vertex.label.font=</span><span class="dv">3</span>, <span class="dt">edge.width=</span><span class="dv">5</span><span class="op">*</span>(<span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(z[,<span class="dv">3</span>]))))</code></pre></div>
 </div>
 </div>
 <div id="compare-genes-in-degree" class="section level1">
@@ -203,15 +203,15 @@
 <div id="run-limma-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-limma-1" class="anchor"></a>Run limma</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>indegree &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/assayData.html">assayData</a></span>(obj)[[<span class="st">"quantile"</span>]]</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(indegree[,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co"># Use the same design matrix as before</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>fitGood =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/lmFit.html">lmFit</a></span>(indegree,design)</span>
-<span id="cb6-5"><a href="#cb6-5"></a>fitGood =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/ebayes.html">eBayes</a></span>(fitGood)</span>
-<span id="cb6-6"><a href="#cb6-6"></a>tb_degree =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/toptable.html">topTable</a></span>(fitGood,<span class="dt">coef=</span><span class="st">"genderFEMALE"</span>,<span class="dt">number=</span><span class="ot">Inf</span>)</span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(tb_degree)</span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co"># Save gene ranks</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a>indegree_rank &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span>(<span class="dt">object=</span>tb_degree[,<span class="st">"t"</span>], <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(tb_degree))</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">indegree &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biobase/man/assayData.html">assayData</a></span>(obj)[[<span class="st">"quantile"</span>]]
+<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(indegree[,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])
+<span class="co"># Use the same design matrix as before</span>
+fitGood =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/lmFit.html">lmFit</a></span>(indegree,design)
+fitGood =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/ebayes.html">eBayes</a></span>(fitGood)
+tb_degree =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/limma/man/toptable.html">topTable</a></span>(fitGood,<span class="dt">coef=</span><span class="st">"genderFEMALE"</span>,<span class="dt">number=</span><span class="ot">Inf</span>)
+<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(tb_degree)
+<span class="co"># Save gene ranks</span>
+indegree_rank &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span>(<span class="dt">object=</span>tb_degree[,<span class="st">"t"</span>], <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(tb_degree))</code></pre></div>
 </div>
 </div>
 <div id="gene-set-enrichment-analysis" class="section level1">
@@ -221,99 +221,94 @@
 <div id="run-fgsea" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-fgsea" class="anchor"></a>Run fgsea</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>gmt.file &lt;-<span class="st"> "data/c2.cp.kegg.v7.0.symbols.gmt"</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>pathways &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/fgsea/man/gmtPathways.html">gmtPathways</a></span>(gmt.file)</span>
-<span id="cb7-3"><a href="#cb7-3"></a>fgseaRes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span>(pathways, indegree_rank, <span class="dt">minSize=</span><span class="dv">15</span>, <span class="dt">maxSize=</span><span class="dv">500</span>, <span class="dt">nperm=</span><span class="dv">1000</span>)</span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(fgseaRes)</span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co"># Subset to pathways with FDR &lt; 0.05</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a>sig &lt;-<span class="st"> </span>fgseaRes[fgseaRes<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>,]</span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># Top 10 pathways enriched in females</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>sig<span class="op">$</span>pathway[sig<span class="op">$</span>NES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>][<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co"># Top 10 pathways enriched in males</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a>sig<span class="op">$</span>pathway[sig<span class="op">$</span>NES <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>][<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gmt.file &lt;-<span class="st"> "data/c2.cp.kegg.v7.0.symbols.gmt"</span>
+pathways &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/fgsea/man/gmtPathways.html">gmtPathways</a></span>(gmt.file)
+fgseaRes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span>(pathways, indegree_rank, <span class="dt">minSize=</span><span class="dv">15</span>, <span class="dt">maxSize=</span><span class="dv">500</span>, <span class="dt">nperm=</span><span class="dv">1000</span>)
+<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(fgseaRes)
+<span class="co"># Subset to pathways with FDR &lt; 0.05</span>
+sig &lt;-<span class="st"> </span>fgseaRes[fgseaRes<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>,]
+<span class="co"># Top 10 pathways enriched in females</span>
+sig<span class="op">$</span>pathway[sig<span class="op">$</span>NES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>][<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]
+<span class="co"># Top 10 pathways enriched in males</span>
+sig<span class="op">$</span>pathway[sig<span class="op">$</span>NES <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>][<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
 </div>
 <div id="bubble-plot-of-differentially-targeted-pathways" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bubble-plot-of-differentially-targeted-pathways" class="anchor"></a>Bubble plot of differentially targeted pathways</h2>
 <p>Bubble plot of gene sets on y-axis and adjusted p-value (padj) on x-axis. Bubble size indicates the number of genes in each gene set, and bubble color indicates the normalized enrichment score (NES). Blue is for negative NES (enrichment of higher targeted genes in males), and red is for positive NES (enrichment of higher targeted genes in females).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>dat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(fgseaRes)</span>
-<span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># Settings</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>fdrcut &lt;-<span class="st"> </span><span class="fl">0.05</span> <span class="co"># FDR cut-off to use as output for significant signatures</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>dencol_neg &lt;-<span class="st"> "blue"</span> <span class="co"># bubble plot color for negative ES</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a>dencol_pos &lt;-<span class="st"> "red"</span> <span class="co"># bubble plot color for positive ES</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a>signnamelength &lt;-<span class="st"> </span><span class="dv">4</span> <span class="co"># set to remove prefix from signature names (2 for "GO", 4 for "KEGG", 8 for "REACTOME")</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a>asp &lt;-<span class="st"> </span><span class="dv">3</span> <span class="co"># aspect ratio of bubble plot</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a>charcut &lt;-<span class="st"> </span><span class="dv">100</span> <span class="co"># cut signature name in heatmap to this nr of characters</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co"># Make signature names more readable</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a>a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(dat<span class="op">$</span>pathway) <span class="co"># 'a' is a great variable name to substitute row names with something more readable</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(a)){</span>
-<span id="cb8-14"><a href="#cb8-14"></a>  a[j] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(a[j], signnamelength<span class="op">+</span><span class="dv">2</span>, <span class="kw"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span>(a[j]))</span>
-<span id="cb8-15"><a href="#cb8-15"></a>}</span>
-<span id="cb8-16"><a href="#cb8-16"></a>a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span>(a) <span class="co"># convert to lower case (you may want to comment this out, it really depends on what signatures you are looking at, c6 signatures contain gene names, and converting those to lower case may be confusing)</span></span>
-<span id="cb8-17"><a href="#cb8-17"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(a)){</span>
-<span id="cb8-18"><a href="#cb8-18"></a>  <span class="cf">if</span>(<span class="kw"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span>(a[j])<span class="op">&gt;</span>charcut) { a[j] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(a[j], <span class="dv">1</span>, charcut), <span class="st">"..."</span>, <span class="dt">sep=</span><span class="st">" "</span>)}</span>
-<span id="cb8-19"><a href="#cb8-19"></a>} <span class="co"># cut signature names that have more characters than charcut, and add "..."</span></span>
-<span id="cb8-20"><a href="#cb8-20"></a>a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span>(<span class="st">"_"</span>, <span class="st">" "</span>, a)</span>
-<span id="cb8-21"><a href="#cb8-21"></a>dat<span class="op">$</span>NAME &lt;-<span class="st"> </span>a</span>
-<span id="cb8-22"><a href="#cb8-22"></a></span>
-<span id="cb8-23"><a href="#cb8-23"></a><span class="co"># Determine what signatures to plot (based on FDR cut)</span></span>
-<span id="cb8-24"><a href="#cb8-24"></a>dat2 &lt;-<span class="st"> </span>dat[dat[,<span class="st">"padj"</span>]<span class="op">&lt;</span>fdrcut,]</span>
-<span id="cb8-25"><a href="#cb8-25"></a>dat2 &lt;-<span class="st"> </span>dat2[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(dat2[,<span class="st">"padj"</span>]),] </span>
-<span id="cb8-26"><a href="#cb8-26"></a>dat2<span class="op">$</span>signature &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(dat2<span class="op">$</span>NAME, <span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(dat2<span class="op">$</span>NAME)))</span>
-<span id="cb8-27"><a href="#cb8-27"></a><span class="co"># Determine what labels to color</span></span>
-<span id="cb8-28"><a href="#cb8-28"></a>sign_neg &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(dat2[,<span class="st">"NES"</span>]<span class="op">&lt;</span><span class="dv">0</span>)</span>
-<span id="cb8-29"><a href="#cb8-29"></a>sign_pos &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(dat2[,<span class="st">"NES"</span>]<span class="op">&gt;</span><span class="dv">0</span>)</span>
-<span id="cb8-30"><a href="#cb8-30"></a><span class="co"># Color labels</span></span>
-<span id="cb8-31"><a href="#cb8-31"></a>signcol &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="ot">NA</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(dat2<span class="op">$</span>signature))</span>
-<span id="cb8-32"><a href="#cb8-32"></a>signcol[sign_neg] &lt;-<span class="st"> </span>dencol_neg <span class="co"># text color of negative signatures</span></span>
-<span id="cb8-33"><a href="#cb8-33"></a>signcol[sign_pos] &lt;-<span class="st"> </span>dencol_pos <span class="co"># text color of positive signatures</span></span>
-<span id="cb8-34"><a href="#cb8-34"></a>signcol &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(signcol) <span class="co"># need to revert vector of colors, because ggplot starts plotting these from below</span></span>
-<span id="cb8-35"><a href="#cb8-35"></a></span>
-<span id="cb8-36"><a href="#cb8-36"></a><span class="co"># Plot bubble plot</span></span>
-<span id="cb8-37"><a href="#cb8-37"></a>g&lt;-<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(dat2, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x=</span>padj,<span class="dt">y=</span>signature,<span class="dt">size=</span>size))</span>
-<span id="cb8-38"><a href="#cb8-38"></a>g<span class="op">+</span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">fill=</span>NES), <span class="dt">shape=</span><span class="dv">21</span>, <span class="dt">colour=</span><span class="st">"white"</span>)<span class="op">+</span></span>
-<span id="cb8-39"><a href="#cb8-39"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()<span class="op">+</span><span class="st"> </span><span class="co"># white background, needs to be placed before the "signcol" line</span></span>
-<span id="cb8-40"><a href="#cb8-40"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span>(<span class="dv">0</span>,fdrcut)<span class="op">+</span></span>
-<span id="cb8-41"><a href="#cb8-41"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span>(<span class="dt">max_size=</span><span class="dv">10</span>,<span class="dt">guide=</span><span class="st">"none"</span>)<span class="op">+</span></span>
-<span id="cb8-42"><a href="#cb8-42"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient2</a></span>(<span class="dt">low=</span>dencol_neg, <span class="dt">high=</span>dencol_pos)<span class="op">+</span></span>
-<span id="cb8-43"><a href="#cb8-43"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">axis.text.y =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(<span class="dt">colour=</span>signcol))<span class="op">+</span></span>
-<span id="cb8-44"><a href="#cb8-44"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio=</span>asp, <span class="dt">axis.title.y=</span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>()) <span class="co"># test aspect.ratio</span></span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(fgseaRes)
+
+<span class="co"># Settings</span>
+fdrcut &lt;-<span class="st"> </span><span class="fl">0.05</span> <span class="co"># FDR cut-off to use as output for significant signatures</span>
+dencol_neg &lt;-<span class="st"> "blue"</span> <span class="co"># bubble plot color for negative ES</span>
+dencol_pos &lt;-<span class="st"> "red"</span> <span class="co"># bubble plot color for positive ES</span>
+signnamelength &lt;-<span class="st"> </span><span class="dv">4</span> <span class="co"># set to remove prefix from signature names (2 for "GO", 4 for "KEGG", 8 for "REACTOME")</span>
+asp &lt;-<span class="st"> </span><span class="dv">3</span> <span class="co"># aspect ratio of bubble plot</span>
+charcut &lt;-<span class="st"> </span><span class="dv">100</span> <span class="co"># cut signature name in heatmap to this nr of characters</span>
+
+<span class="co"># Make signature names more readable</span>
+a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(dat<span class="op">$</span>pathway) <span class="co"># 'a' is a great variable name to substitute row names with something more readable</span>
+<span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(a)){
+  a[j] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(a[j], signnamelength<span class="op">+</span><span class="dv">2</span>, <span class="kw"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span>(a[j]))
+}
+a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span>(a) <span class="co"># convert to lower case (you may want to comment this out, it really depends on what signatures you are looking at, c6 signatures contain gene names, and converting those to lower case may be confusing)</span>
+<span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(a)){
+  <span class="cf">if</span>(<span class="kw"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span>(a[j])<span class="op">&gt;</span>charcut) { a[j] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(a[j], <span class="dv">1</span>, charcut), <span class="st">"..."</span>, <span class="dt">sep=</span><span class="st">" "</span>)}
+} <span class="co"># cut signature names that have more characters than charcut, and add "..."</span>
+a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span>(<span class="st">"_"</span>, <span class="st">" "</span>, a)
+dat<span class="op">$</span>NAME &lt;-<span class="st"> </span>a
+
+<span class="co"># Determine what signatures to plot (based on FDR cut)</span>
+dat2 &lt;-<span class="st"> </span>dat[dat[,<span class="st">"padj"</span>]<span class="op">&lt;</span>fdrcut,]
+dat2 &lt;-<span class="st"> </span>dat2[<span class="kw"><a href="https://rdrr.io/r/base/order.html">order</a></span>(dat2[,<span class="st">"padj"</span>]),] 
+dat2<span class="op">$</span>signature &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(dat2<span class="op">$</span>NAME, <span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(dat2<span class="op">$</span>NAME)))
+<span class="co"># Determine what labels to color</span>
+sign_neg &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(dat2[,<span class="st">"NES"</span>]<span class="op">&lt;</span><span class="dv">0</span>)
+sign_pos &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(dat2[,<span class="st">"NES"</span>]<span class="op">&gt;</span><span class="dv">0</span>)
+<span class="co"># Color labels</span>
+signcol &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="ot">NA</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(dat2<span class="op">$</span>signature))
+signcol[sign_neg] &lt;-<span class="st"> </span>dencol_neg <span class="co"># text color of negative signatures</span>
+signcol[sign_pos] &lt;-<span class="st"> </span>dencol_pos <span class="co"># text color of positive signatures</span>
+signcol &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(signcol) <span class="co"># need to revert vector of colors, because ggplot starts plotting these from below</span>
+
+<span class="co"># Plot bubble plot</span>
+g&lt;-<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(dat2, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x=</span>padj,<span class="dt">y=</span>signature,<span class="dt">size=</span>size))
+g<span class="op">+</span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">fill=</span>NES), <span class="dt">shape=</span><span class="dv">21</span>, <span class="dt">colour=</span><span class="st">"white"</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()<span class="op">+</span><span class="st"> </span><span class="co"># white background, needs to be placed before the "signcol" line</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span>(<span class="dv">0</span>,fdrcut)<span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span>(<span class="dt">max_size=</span><span class="dv">10</span>,<span class="dt">guide=</span><span class="st">"none"</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient2</a></span>(<span class="dt">low=</span>dencol_neg, <span class="dt">high=</span>dencol_pos)<span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">axis.text.y =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(<span class="dt">colour=</span>signcol))<span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">aspect.ratio=</span>asp, <span class="dt">axis.title.y=</span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>()) <span class="co"># test aspect.ratio</span></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li>
-<a href="#introduction">Introduction</a>
-      <ul class="nav nav-pills nav-stacked">
+<a href="#introduction">Introduction</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#install-packages">Install packages</a></li>
       <li><a href="#load-packages">Load packages</a></li>
       </ul>
 </li>
       <li><a href="#load-the-data">Load the data</a></li>
       <li>
-<a href="#compare-the-edge-weights">Compare the edge weights</a>
-      <ul class="nav nav-pills nav-stacked">
+<a href="#compare-the-edge-weights">Compare the edge weights</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#run-limma">Run limma</a></li>
       <li><a href="#visualize-the-top-edges-with-differential-weights-by-sex">Visualize the top edges with differential weights by sex</a></li>
       </ul>
 </li>
       <li>
-<a href="#compare-genes-in-degree">Compare gene’s in-degree</a>
-      <ul class="nav nav-pills nav-stacked">
+<a href="#compare-genes-in-degree">Compare gene’s in-degree</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#run-limma-1">Run limma</a></li>
       </ul>
 </li>
       <li>
-<a href="#gene-set-enrichment-analysis">Gene Set Enrichment Analysis</a>
-      <ul class="nav nav-pills nav-stacked">
+<a href="#gene-set-enrichment-analysis">Gene Set Enrichment Analysis</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#run-fgsea">Run fgsea</a></li>
       <li><a href="#bubble-plot-of-differentially-targeted-pathways">Bubble plot of differentially targeted pathways</a></li>
       </ul>
@@ -327,7 +322,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Tian Wang, John Platig, Marieke Kuijjer, Magha Padi.</p>
+  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz.</p>
 </div>
 
 <div class="pkgdown">

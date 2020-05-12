@@ -5,12 +5,8 @@
 \title{This function plots the Off diagonal mass of an 
 observed Transition Matrix compared to a set of null TMs}
 \usage{
-monster.dTFIPlot(
-  monsterObj,
-  rescale = FALSE,
-  plot.title = NA,
-  highlight.tfs = NA
-)
+monster.dTFIPlot(monsterObj, rescale = FALSE, plot.title = NA,
+  highlight.tfs = NA)
 }
 \arguments{
 \item{monsterObj}{monsterAnalysis Object}
