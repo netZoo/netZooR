@@ -33,13 +33,20 @@ netZooR currently integrates with:
 
 * Plot two differential PANDA networks in Cytoscape.
 
-## Requirement, installation and basic configuration.
+## Requirements, installation and basic configuration.
 
-- netZooR is compatible with R (>= 3.3.3) including R (>= 4.0).
+- netZooR is compatible with R (>= 3.3.3) including R (>= 4.0),  click [here](https://www.r-project.org/) for more installation details.
 
-- To use `panda.py` and `lioness.py` functions, [**Python**](https://www.python.org/downloads/) (3.X) is required with some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access** for the package `reticulate` to properly link the R wrapper to the Python code for those two functions.
+- To use two main tools PANDA and LIONESS, there are two options: 
+  1. use functions: `panda.py()` and `lioness.py()` by invoking two Python implementations in [netZooPy]((https://github.com/netZoo/netZooPy/tree/netZoo)), respectively. This way is recommended if the user requires speedy computering in building gene regulatory networks. In order to pratice invoking Python scripts, there are some requirements to meet before using netZooR:
+    a) [**Python**](https://www.python.org/downloads/) (>= 3.5.0) installed;
+    b) Python libraries [pandas](https://pandas.pydata.org/), [numpy](https://numpy.org/), and [scipy](https://www.scipy.org/) installed;
+    c) stable Internet access as package `reticulate` will link the R wrapper to the Python scripts located [here](https://github.com/netZoo/netZooPy/tree/netZoo) for those two methods.
 
-- Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/) to be installed.
+  2. use function: `panda()` in [pandaR](https://github.com/jnpaulson/pandaR) package and `lioness()` for R implementations of methods PANDA and LIONESS, respectively. This way is recommended when above requirements for 1) can not be met or constructing small scale networks.
+
+
+- Most of plotting function can be realized by functions in [igraph](https://igraph.org/redirect.html), which will be loaded with netZooR through `library(netZooR)`. Some plotting functions like `vis.panda.in.cytoscape()` and `vis.diff.panda.in.cytoscape()` are able to plot interactive PANDA networks in [Cytoscape](https://cytoscape.org/), but installation of Cytoscape is required before using these plotting functions.
 
 ```r
 # install.packages("devtools") 
@@ -51,8 +58,8 @@ library(netZooR)
 
 For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/).
 
-This package will invoke the Python in R environment through reticulate package.
-Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html).
+This package will invoke Python programming language in R environment through [reticulate](https://rstudio.github.io/reticulate/) package, by default setting there is no additional configuration needed.
+Configuring which version of Python to use , here in netZooR, Python 3.X is required. More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html).
 
 ```r
 #check your Python configuration and the specific version of Python in use currently
