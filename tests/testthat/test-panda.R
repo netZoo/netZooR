@@ -1,8 +1,7 @@
 context("test PANDA result")
 
 test_that("panda function works", {
-  
-  load("./testDataset.RData")
+
   
   # test 1: check test error message when empty inputs
   expect_error(panda.py())
