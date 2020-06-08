@@ -21,5 +21,9 @@ script:
 - travis_wait R CMD build .
 - travis_wait R CMD check *tar.gz --no-manual
 
+after_failure:
+- Rscript -e 'readLines("/home/travis/build/repo/netZooR/netZooR.Rcheck/00check.log")'
+
+
 after_success:
   - Rscript -e 'devtools::install_github("r-lib/covr");library(covr);codecov()'
