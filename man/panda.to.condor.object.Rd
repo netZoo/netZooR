@@ -31,8 +31,8 @@ ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", 
 
 
 # Run PANDA for treated and control network
-treated_all_panda_result <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
-control_all_panda_result <- panda.py(expr = control_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
+treated_all_panda_result <- panda.py(expr_file = treated_expression_file_path, motif_file= motif_file_path, ppi_file = ppi_file_path, modeProcess="legacy", remove_missing = TRUE )
+control_all_panda_result <- panda.py(expr_file = control_expression_file_path, motif_file= motif_file_path, ppi_file= ppi_file_path, modeProcess="legacy", remove_missing = TRUE )
 
 # access PANDA regulatory network
 treated_net <- treated_all_panda_result$panda

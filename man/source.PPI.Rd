@@ -13,10 +13,10 @@ source.PPI(TF, STRING.version = 10, species.index, ...)
 
 \item{species.index}{a numeric vector indicating NCBI taxonomy identifiers}
 
-\item{...}{any dditional arguments passing to}
+\item{...}{any dditional arguments passed to}
 }
 \value{
-A PPI data frame
+A PPI data.frame which contains two columns: "from" and "to" indicating the direction of protein-protein interaction.
 }
 \description{
 This function is able to use a list of Transcription Factors(TF) of interest to source the Protein-Protein interactions (PPI)in STRING database
@@ -27,6 +27,7 @@ motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR
 motif <- read.table(motif_file_path, sep="\\t")
 # create a TF data frame with one column
 TF <-data.frame(motif[,1])
+
 # create PPI data frame by searching in STRING version 10 and specifying specie to "Mycobacterium tuberculosis H37Rv".
 # STRING verison 11 is only accessible to R 4.0.
 if(R.Version()$major=="3"){PPI <- source.PPI(TF, STRING.version="10", species.index=83332, score_threshold=0)}

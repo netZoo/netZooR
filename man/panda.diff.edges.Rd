@@ -17,12 +17,32 @@ panda.diff.edges(panda.net1, panda.net2, threshold = 0.8,
 \item{condition_name}{string vector indicating the condition name of net1}
 }
 \value{
-a data.frame with five columns: tf, gene, motif, Score and defined condition name("T"in this column means egde belongs to first condition or phenotype,
-"F" means edge belongs to the second condition or phenotype)
+a data.frame with five columns: tf, gene, motif, Score and defined condition name(the row with "T" in this column means this egde belongs to first condition or phenotype,
+"F" means this edge belongs to the second condition or phenotype)
 }
 \description{
 To determine the probability that an edge is “different” between the networks, 
 we first subtracted the z-score weight values estimated by PANDA for the two networks and then determined the value of the inverse cumulative distribution for this difference. 
 The product of these two probabilities represents the probability than an edge is both “supported” and “different.” 
 We select edges for which this combined probability is greater than a threshold probability (default value is 0.8).
+}
+\examples{
+
+# refer to four input datasets files in inst/extdat
+treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
+control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
+ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
+
+
+# Run PANDA for treated and control network
+treated_all_panda_result <- panda.py(expr_file = treated_expression_file_path, motif_file= motif_file_path, ppi_file = ppi_file_path, modeProcess="legacy", remove_missing = TRUE )
+control_all_panda_result <- panda.py(expr_file = control_expression_file_path, motif_file= motif_file_path, ppi_file= ppi_file_path, modeProcess="legacy", remove_missing = TRUE )
+
+# access PANDA regulatory network
+treated_net <- treated_all_panda_result$panda
+control_net <- control_all_panda_result$panda
+
+merged.panda <- panda.diff.edges(treated_net, control_net, condition_name="treated")
+
 }

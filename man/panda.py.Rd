@@ -2,26 +2,35 @@
 % Please edit documentation in R/PANDA.R
 \name{panda.py}
 \alias{panda.py}
-\title{Run PANDA in R}
+\title{Run Python implementation PANDA in R}
 \usage{
-panda.py(expr, motif = NULL, ppi = NULL, mode_process = "union",
-  rm_missing = FALSE)
+panda.py(expr_file, motif_file = NULL, ppi_file = NULL,
+  computing = "cpu", precision = "double", save_memory = FALSE,
+  save_tmp = TRUE, keep_expression_matrix = FALSE,
+  modeProcess = "union", remove_missing = FALSE)
 }
 \arguments{
-\item{expr}{Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).}
+\item{expr_file}{Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).}
 
-\item{motif}{An optional character string indicating the file path of a prior transcription factor binding motifs dataset.
+\item{motif_file}{An optional character string indicating the file path of a prior transcription factor binding motifs dataset.
 When this argument is not provided, analysis will continue with Pearson correlation matrix.}
 
-\item{ppi}{An optional character string indicating the file path of protein-protein interaction edge dataset.
+\item{ppi_file}{An optional character string indicating the file path of protein-protein interaction edge dataset.
 Also, this can be generated with a list of proteins of interest by \code{\link{source.PPI}}.}
 
-\item{mode_process}{An optional character to define the pre-processing of input dataset, options include "legacy" to the original behavior of PANDA in Python implement,
-"interaction" to constrain the TF and gene as interaction across all input datasets, and "union" to take TF union and gene union across all input datasets.
-The default value is "union".}
+\item{computing}{'cpu' uses Central Processing Unit (CPU) to run PANDA; 'gpu' use the Graphical Processing Unit (GPU) to run PANDA. The default value is "cpu".}
 
-\item{rm_missing}{When mode_process = "legacy", rm_missing is an optional boolean indicating whether to remove genes and TFs not present in all input files. If TRUE, remove all unmatched TF and genes.
-if FALSE, keep all tf and genes. The default value is FALSE.}
+\item{precision}{'double' computes the regulatory network in double precision (15 decimal digits); 'single' computes the regulatory network in single precision (7 decimal digits) which is fastaer, requires half the memory but less accurate. The default value is 'double'.}
+
+\item{save_memory}{'TRUE' removes temporary results from memory. The result network is weighted adjacency matrix of size (nTFs, nGenes); 'FALSE' keeps the temporary files in memory. The result network has 4 columns in the form gene - TF - weight in motif prior - PANDA edge. PANDA indegree/outdegree of panda network, only if save_memory = FALSE. The default value is 'FALSE'.}
+
+\item{save_tmp}{'TRUE' saves middle data like expression matrix and normalized networks; 'FALSE' deletes the middle data. The default value is 'TURE'.}
+
+\item{keep_expression_matrix}{'TRUE' keeps the input expression matrix as an attribute in the result Panda object.'FALSE' deletes the expression matrix attribute in the Panda object. The default value is 'FALSE'.}
+
+\item{modeProcess}{'legacy' refers to the processing mode in netZooPy<=0.5, 'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros; 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes. Default values is 'union'.}
+
+\item{remove_missing}{Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is 'FALSE'.}
 }
 \value{
 A list of three items：
@@ -37,8 +46,7 @@ A list of three items：
 to reconstruct gene regulatory network, which integrates multiple sources of biological data-including protein-protein interaction data,
 gene expression data, and transcription factor binding motifs data to reconstruct genome-wide, condition-specific regulatory networks.
 \href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832}{[(Glass et al. 2013)])}
-This function is designed to run the a derived PANDA implement in Python "netZooPy" \href{https://github.com/netZoo/netZooPy}{netZooPy},
- which is also a Python library of netZooR.
+This function is designed to run the a derived PANDA implementation in Python Library "netZooPy" \href{https://github.com/netZoo/netZooPy}{netZooPy}.
 }
 \examples{
 # take the treated TB dataset as example here.
@@ -50,7 +58,7 @@ ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", 
 
 
 # Run PANDA for treated and control network
-treated_all_panda_result <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
+treated_all_panda_result <- panda.py(expr_file = treated_expression_file_path, motif_file = motif_file_path, ppi_file = ppi_file_path, modeProcess="legacy", remove_missing = TRUE )
 
 # access PANDA regulatory network
 treated_net <- treated_all_panda_result$panda
