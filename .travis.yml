@@ -16,7 +16,7 @@ before_install:
 
 install:
 - Rscript travis_script.r
-- travis_wait 30 mvn install
+
 
 script:
 - R CMD build .
