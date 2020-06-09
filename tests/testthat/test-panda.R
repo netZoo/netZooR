@@ -48,36 +48,27 @@ test_that("panda function works", {
   
   
   
-  # test 16: check if PANDA result is correct when processMode = union, precision = single
+  # test 16: check if PANDA result is correct when processMode = union and save_memory =F ,and the rest arguments are opposite to the default values: 
+  # precision="single",save_memory = F, save_tmp=F, keep_expression_matrix = T, modeProcess = 'union'
   
-  test2Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path,precision = "single")$panda
+  test2Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path,precision = "single", save_memory = F, save_tmp = F,keep_expression_matrix = TRUE,modeProcess = "union" )$panda
   expect_equal(test2Panda[1,4],-0.2321256, tolerance=1e-5)
   
   # test 17: check if PANDA result is correct when save_memory = TRUE:
   
   #test3Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path,save_memory = T)$panda
   
-  # test 18: save_tmp=FALSE
+  # test 18：when processMode = interaction
+  test4Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "intersection")$panda
+  expect_equal(test4Panda[1,4],-0.26648627625773935,tolerance=1e-7)
   
-  test4Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path,save_tmp = F)$panda
-  expect_equal(test4Panda[1,4],-0.23212458160041557,tolerance=1e-7)
+  # test 19: when processMode = legacy, remove_missing=FALSE
+  test5Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = FALSE)$panda
+  expect_equal(test5Panda[1,4],-0.06200149888611282,tolerance=1e-7)
   
-  # test 19: keep_expression_matrix = TRUE
-  
-  test5Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path, keep_expression_matrix = TRUE)$panda
-  expect_equal(test5Panda[1,4],-0.23212458160041557,tolerance=1e-7)
-
-  # test 20：when processMode = interaction
-  test6Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "intersection")$panda
-  expect_equal(test6Panda[1,4],-0.26648627625773935,tolerance=1e-7)
-  
-  # test 21: when processMode = legacy, remove_missing=FALSE
-  test7Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = FALSE)$panda
-  expect_equal(test7Panda[1,4],-0.06200149888611282,tolerance=1e-7)
-  
-  # test 22: when processMode = legacy, remove_missing=TRUE
-  test8Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = TRUE)$panda
-  expect_equal(test8Panda[1,4],-0.11907165898368743,tolerance=1e-7)
+  # test 20: when processMode = legacy, remove_missing=TRUE
+  test6Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = TRUE)$panda
+  expect_equal(test6Panda[1,4],-0.11907165898368743,tolerance=1e-7)
   
 
 })
