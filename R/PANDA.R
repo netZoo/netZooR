@@ -21,13 +21,15 @@
 #' @param modeProcess 'legacy' refers to the processing mode in netZooPy<=0.5, 'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros; 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes. Default values is 'union'.
 #' @param remove_missing Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is 'FALSE'.
 #' 
-#' @return A list of three items：
+#' @return When save_memory=FALSE(default), this function will return a list of three items：
 #'          Use \code{$panda} to access the standard output of PANDA as data frame, which consists of four columns: 
 #'          "TF", "Gene", "Motif" using 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".
 #' 
 #'          Use \code{$indegree} to access the indegree of PANDA network as data frame, which consists of two columns: "Gene", "Score".
 #' 
 #'          Use \code{$outdegree} to access the outdegree of PANDA network as data frame, which consists of two columns: "TF", "Score".
+#'          
+#'          When save_memory=TRUE, this function will return a weigheted adjacency matirx of size (nTFs, nGenes), use \code{$WAMpanda} to access.
 #' 
 #' @examples 
 
@@ -65,12 +67,12 @@ panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu",
   if(is.null(motif_file)){
     motif.str <- 'None'
     message("The prior motif network is not provided, so analysis continues with Pearson correlation matrix and gene coexpression mastrix is returned as a result network") 
-    } else{ motif.str <- paste("\'", motif_file,"\'", sep = '') }
+  } else{ motif.str <- paste("\'", motif_file,"\'", sep = '') }
   
   if(is.null(ppi_file)){
     ppi.str <- 'None'
     message("No protein-protein interaction network provided.")
-   } else{ ppi.str <- paste("\'", ppi_file, "\'", sep = '') }
+  } else{ ppi.str <- paste("\'", ppi_file, "\'", sep = '') }
   
   # computing variable
   if(computing=="gpu"){
@@ -96,14 +98,14 @@ panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu",
   if(keep_expression_matrix==TRUE){
     keepexpression.str <- "keep_expression_matrix=True"
   } else{ keepexpression.str <- "keep_expression_matrix=False" }
-
+  
   # when pre-processing mode is legacy
   if(modeProcess == "legacy"){
     
     if(remove_missing == TRUE){
       message("Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes")
       mode.str <- "modeProcess ='legacy', remove_missing = True"  
-      } else{ message("Use the legacy mode (netZooPy version <= 0.5) to pre-process the input dataset and keep all the unmatched TFs or Genes")
+    } else{ message("Use the legacy mode (netZooPy version <= 0.5) to pre-process the input dataset and keep all the unmatched TFs or Genes")
       mode.str <- "modeProcess ='legacy', remove_missing = False"}
   }
   
@@ -121,47 +123,56 @@ panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu",
   
   # invoke Python script to create a Panda object
   obj.str <-  paste("panda_obj=Panda(", expr.str, ",", motif.str,",", ppi.str, ",", computing.str, ",", precision.str, ",", savememory.str, ",", savetmp.str, "," , keepexpression.str, ",",  mode.str, ")", sep ='')
-
+  
   # run Python code
   py_run_string(obj.str)
   # run PAMDA
-  py_run_string("panda_network=panda_obj.export_panda_results",local = FALSE, convert = TRUE)
-  # convert python object to R verctor
-  panda_net <- py$panda_network
-  
-  # re-assign data type
-  panda_net$tf <- as.character(panda_net$tf)
-  panda_net$gene <- as.character(panda_net$gene)
-  panda_net$motif <- as.numeric(panda_net$motif)
-  panda_net$force <- as.numeric(panda_net$force)
-  # adjust column order
-  panda_net <- panda_net[,c("tf","gene","motif","force")]
-  # rename the PANDA output colnames
-  colnames(panda_net) <- c("TF","Gene","Motif","Score")
-  
-  
-  # in-degree of panda network
-  py_run_string(paste("indegree=panda_obj.return_panda_indegree()"))
-  indegree_net <- py$indegree
-  indegree_net <- as.data.frame(cbind(Target = rownames(indegree_net), Target_Score = indegree_net$force), stringsAsFactors =F)
-  indegree_net$`Target_Score` <- as.numeric(indegree_net$`Target_Score`)
-  
-  # out-degree of panda netwook
-  py_run_string(paste("outdegree=panda_obj.return_panda_outdegree()"))
-  outdegree_net <- py$outdegree
-  outdegree_net <- as.data.frame(cbind(Regulator = rownames(outdegree_net), Regulator_Score = outdegree_net$force), stringsAsFactors =F)
-  outdegree_net$`Regulator_Score` <- as.numeric(outdegree_net$`Regulator_Score`)
-  
-  if( length(intersect(panda_net$Gene, panda_net$TF))>0){
-    panda_net$TF <- paste('reg_', panda_net$TF, sep='')
-    panda_net$Gene <- paste('tar_', panda_net$Gene, sep='')
-    message("Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns" )
+  if(save_memory == F){
+    
+    py_run_string("panda_network=panda_obj.export_panda_results",local = FALSE, convert = TRUE)
+    # convert python object to R vector
+    panda_net <- py$panda_network
+    
+    # re-assign data type
+    panda_net$tf <- as.character(panda_net$tf)
+    panda_net$gene <- as.character(panda_net$gene)
+    panda_net$motif <- as.numeric(panda_net$motif)
+    panda_net$force <- as.numeric(panda_net$force)
+    # adjust column order
+    panda_net <- panda_net[,c("tf","gene","motif","force")]
+    # rename the PANDA output colnames
+    colnames(panda_net) <- c("TF","Gene","Motif","Score")
+    
+    
+    # in-degree of panda network
+    py_run_string(paste("indegree=panda_obj.return_panda_indegree()"))
+    indegree_net <- py$indegree
+    indegree_net <- as.data.frame(cbind(Target = rownames(indegree_net), Target_Score = indegree_net$force), stringsAsFactors =F)
+    indegree_net$`Target_Score` <- as.numeric(indegree_net$`Target_Score`)
+    
+    # out-degree of panda netwook
+    py_run_string(paste("outdegree=panda_obj.return_panda_outdegree()"))
+    outdegree_net <- py$outdegree
+    outdegree_net <- as.data.frame(cbind(Regulator = rownames(outdegree_net), Regulator_Score = outdegree_net$force), stringsAsFactors =F)
+    outdegree_net$`Regulator_Score` <- as.numeric(outdegree_net$`Regulator_Score`)
+    
+    if( length(intersect(panda_net$Gene, panda_net$TF))>0){
+      panda_net$TF <- paste('reg_', panda_net$TF, sep='')
+      panda_net$Gene <- paste('tar_', panda_net$Gene, sep='')
+      message("Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns" )
+    }
+    
+    output <- list("panda" = panda_net, "indegree" = indegree_net, "outdegree" = outdegree_net)
+    
+    
+  } else{ py_run_string("panda_network=panda_obj.panda_network",local = FALSE, convert = TRUE) 
+    panda_net <- py$panda_network
+    # weighted adjacency matrix of PANDA network 
+    output <- list("WAMpanda" = panda_net)
   }
   
-  output <- list("panda" = panda_net, "indegree" = indegree_net, "outdegree" = outdegree_net)
   message ("...Finish PANDA...")
   return(output)
 }  
-  
 
 

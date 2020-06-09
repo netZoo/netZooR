@@ -56,7 +56,8 @@ test_that("panda function works", {
   
   # test 17: check if PANDA result is correct when save_memory = TRUE:
   
-  #test3Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path,save_memory = T)$panda
+  test3Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path,save_memory = T)$WAMpanda
+  expect_equal(test3Panda[1,1],-0.23212458160041557,tolerance=1e-7)
   
   # test 18：when processMode = interaction
   test4Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "intersection")$panda

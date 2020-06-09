@@ -33,13 +33,15 @@ Also, this can be generated with a list of proteins of interest by \code{\link{s
 \item{remove_missing}{Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is 'FALSE'.}
 }
 \value{
-A list of three items：
+When save_memory=FALSE(default), this function will return a list of three items：
          Use \code{$panda} to access the standard output of PANDA as data frame, which consists of four columns: 
          "TF", "Gene", "Motif" using 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".
 
          Use \code{$indegree} to access the indegree of PANDA network as data frame, which consists of two columns: "Gene", "Score".
 
          Use \code{$outdegree} to access the outdegree of PANDA network as data frame, which consists of two columns: "TF", "Score".
+         
+         When save_memory=TRUE, this function will return a weigheted adjacency matirx of size (nTFs, nGenes), use \code{$WAMpanda} to access.
 }
 \description{
 \strong{PANDA}(Passing Attributes between Networks for Data Assimilation) is a message-passing model 
