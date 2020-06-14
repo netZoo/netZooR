@@ -55,7 +55,6 @@ library(devtools)
 devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
 library(netZooR)
 ```
-
 For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/).
 
 This package will invoke Python programming language in R environment through [reticulate](https://rstudio.github.io/reticulate/) package, by default setting there is no additional configuration needed.
