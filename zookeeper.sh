@@ -1,3 +1,3 @@
 pip3 install --user numpy scipy pandas
 
-sudo Rscript travis_script.r
+Rscript travis_script.r
