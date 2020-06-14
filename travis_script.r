@@ -1,4 +1,4 @@
-#install.packages("devtools") #Only in TRAVIS
+install.packages("devtools", dep=T)
 library(devtools)
 
 update.packages(ask = FALSE, checkBuilt = TRUE)
