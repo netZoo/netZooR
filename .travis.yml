@@ -2,7 +2,8 @@
 
 language: R
 r: 
-- release
+- oldrel
+
 sudo: true
 os:
 - osx
