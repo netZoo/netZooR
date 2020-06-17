@@ -160,37 +160,37 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>W</th>
-      <td><p>: TF-gene regulatory network based on TF motifs as a
+      <td><p>TF-gene regulatory network based on TF motifs as a
 matrix of size (t,g), g=number of genes, t=number of TFs</p></td>
     </tr>
     <tr>
       <th>P</th>
-      <td><p>: TF-TF protein interaction network as a matrix of size (t,t)</p></td>
+      <td><p>TF-TF protein interaction network as a matrix of size (t,t)</p></td>
     </tr>
     <tr>
       <th>C</th>
-      <td><p>: gene coexpression as a matrix of size (g,g)</p></td>
+      <td><p>gene coexpression as a matrix of size (g,g)</p></td>
+    </tr>
+    <tr>
+      <th>lambda</th>
+      <td><p>tuning parameter in [0,1] (higher gives more weight to C)</p></td>
     </tr>
     <tr>
       <th>gamma</th>
-      <td><p>: regularization parameter</p></td>
+      <td><p>regularization parameter</p></td>
     </tr>
     <tr>
       <th>Iter</th>
-      <td><p>: number of iterations of the algorithm</p></td>
+      <td><p>number of iterations of the algorithm</p></td>
     </tr>
     <tr>
       <th>eta</th>
-      <td><p>: learning rate</p></td>
+      <td><p>learning rate</p></td>
     </tr>
     <tr>
       <th>bexp</th>
-      <td><p>: exponent influencing learning rate (higher means smaller)</p>
+      <td><p>exponent influencing learning rate (higher means smaller)</p>
 <p>Outputs:</p></td>
-    </tr>
-    <tr>
-      <th>lambda:</th>
-      <td><p>tuning parameter in [0,1] (higher gives more weight to C)</p></td>
     </tr>
     </table>
     

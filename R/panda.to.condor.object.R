@@ -8,21 +8,25 @@
 #' @param panda.net Data Frame indicating the result of PANDA regulatory network, created by \code{\link{panda.py}}
 #' @param threshold Numeric vector of the customered threshold to select edges. Default value is the the midpoint between 
 #' the median edge-weight of prior ( 3rd column "Motif" is 1.0) edges 
-#' and the median edge-weight of non-prior edges (3rd column "Motif" is 0.0) in PANDA network, see \code{\link{calculateThreshold}}.
+#' and the median edge-weight of non-prior edges (3rd column "Motif" is 0.0) in PANDA network.
 #' 
-#' @return a CONDOR object, see \code{\link[condor]{create.condor.object}}.
+#' @return a CONDOR object, see \code{\link{create.condor.object}}.
 #' @import viridisLite
 #' @examples 
 #' # refer to four input datasets files in inst/extdat
-#' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
-#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+#' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", 
+#' package = "netZooR", mustWork = TRUE)
 #' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
 #' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' 
 #' # Run PANDA for treated and control network
-#' treated_all_panda_result <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
-#' control_all_panda_result <- panda.py(expr = control_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
+#' treated_all_panda_result <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, 
+#' ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
+#' control_all_panda_result <- panda.py(expr = control_expression_file_path, motif = motif_file_path, 
+#' ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
 #' 
 #' # access PANDA regulatory network
 #' treated_net <- treated_all_panda_result$panda
@@ -34,14 +38,18 @@
 #' 
 #' # plot communities
 #' # package igraph and package viridisLite are already loaded with this package.
-#' 
+#' library(viridisLite)
 #' treated_color_num <- max(treated_condor_object$red.memb$com)
-#' treated_color <- viridis(treated_color_num, alpha = 1, begin = 0, end = 1, direction = 1, option = "D")
-#' condor.plot.communities(treated_condor_object, color_list=treated_color, point.size=0.04, xlab="Target", ylab="Regulator")
+#' treated_color <- viridis(treated_color_num, alpha = 1, begin = 0, end = 1, 
+#' direction = 1, option = "D")
+#' condor.plot.communities(treated_condor_object, color_list=treated_color, 
+#' point.size=0.04, xlab="Target", ylab="Regulator")
 #' 
 #' control_color_num <- max(control_condor_object$red.memb$com)
-#' control_color <- viridis(control_color_num, alpha = 1, begin = 0, end = 1, direction = 1, option = "D")
-#' condor.plot.communities(control_condor_object, color_list=control_color , point.size=0.04, xlab="Target", ylab="Regulator")
+#' control_color <- viridis(control_color_num, alpha = 1, begin = 0, end = 1, 
+#' direction = 1, option = "D")
+#' condor.plot.communities(control_condor_object, color_list=control_color , 
+#' point.size=0.04, xlab="Target", ylab="Regulator")
 #' 
 #' 
 #' @export

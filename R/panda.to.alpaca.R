@@ -15,15 +15,19 @@
 #'
 #' @examples
 #' # refer to four input datasets files in inst/extdat
-#' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
-#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+#' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", 
+#' package = "netZooR", mustWork = TRUE)
 #' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
 #' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' 
 #' # Run PANDA for treated and control network
-#' treated_panda_net <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy",  rm_missing = TRUE )$panda
-#' control_panda_net <- panda.py(expr = control_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )$panda
+#' treated_panda_net <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, 
+#' ppi = ppi_file_path, mode_process="legacy",  rm_missing = TRUE )$panda
+#' control_panda_net <- panda.py(expr = control_expression_file_path, motif = motif_file_path, 
+#' ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )$panda
 #'  
 #' # Run ALPACA
 #' alpaca<- panda.to.alpaca(treated_panda_net, control_panda_net, "./TB", verbose=TRUE)

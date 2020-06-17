@@ -4,7 +4,7 @@
 \alias{sambar.convertgmt}
 \title{Convert .gmt files into a binary matrix.}
 \usage{
-sambar.convertgmt(signature, cagenes, ...)
+sambar.convertgmt(signature, cagenes)
 }
 \arguments{
 \item{signature}{A file containing gene sets (signatures) in .gmt format. These gene sets will be used to de-sparsify the gene-level mutation scores.}

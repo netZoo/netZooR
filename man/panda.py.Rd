@@ -44,13 +44,15 @@ This function is designed to run the a derived PANDA implement in Python "netZoo
 # take the treated TB dataset as example here.
 # refer to the datasets files path in inst/extdat
 
-treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
+treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", 
+package = "netZooR", mustWork = TRUE)
 motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
 ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 
 
 # Run PANDA for treated and control network
-treated_all_panda_result <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
+treated_all_panda_result <- panda.py(expr = treated_expression_file_path, motif = motif_file_path, 
+ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
 
 # access PANDA regulatory network
 treated_net <- treated_all_panda_result$panda
