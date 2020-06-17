@@ -165,10 +165,10 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># run this function to create a network in Cytoscape.</span>
-<span class='no'>merged.panda</span> <span class='kw'>&lt;-</span> <span class='fu'>vis.diff.panda.in.cytoscape</span>(<span class='no'>panda.net1</span>, <span class='no'>panda.net1</span>, <span class='kw'>network.name</span><span class='kw'>=</span><span class='st'>"diff.PANDA"</span>)
+<span class='co'># create a merged PANDA network from two conditions by running \code{\link{panda.diff.edges}}</span>
+<span class='no'>merged.panda</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='panda.diff.edges.html'>panda.diff.edges</a></span>(<span class='no'>panda.net1</span>, <span class='no'>panda.net2</span>, <span class='kw'>condition_name</span><span class='kw'>=</span><span class='st'>"condition1"</span>)
 <span class='co'># then plot two PANDA network in Cytoscape.</span>
-<span class='fu'>vis.diff.panda.in.cytoscape</span>(<span class='no'>merged.panda</span>,<span class='kw'>condition_name</span> <span class='kw'>=</span> <span class='st'>"cond.1"</span>, <span class='kw'>network_name</span><span class='kw'>=</span><span class='st'>"diff.PANDA"</span> )
+<span class='fu'>vis.diff.panda.in.cytoscape</span>(<span class='no'>merged.panda</span>,<span class='kw'>condition_name</span> <span class='kw'>=</span> <span class='st'>"condition1"</span>, <span class='kw'>network_name</span><span class='kw'>=</span><span class='st'>"diff.PANDA"</span> )
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

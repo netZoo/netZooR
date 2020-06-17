@@ -23,15 +23,10 @@ matrix of size (t,g), g=number of genes, t=number of TFs}
 
 \item{eta}{learning rate}
 
-\item{bexp}{exponent influencing learning rate (higher means smaller)
-
-Outputs:}
+\item{bexp}{exponent influencing learning rate (higher means smaller)}
 }
 \value{
 W    : Predicted TF-gene complete regulatory network as an adjacency matrix of size (t,g).
-
-Authors: 
-              Rebekka Burkholz 4/2020
 }
 \description{
 Description:
@@ -40,9 +35,9 @@ Description:
               minimzing the following objective:
                                  min f(W) 
               with f(W) = (1-lambda)*||WW' - P||^2 + lambda*||W'W - C||^2 + (gamma/2)*||W||^2
-}
-\details{
-Inputs:
+              
+Authors: 
+              Rebekka Burkholz 4/2020
 }
 \examples{
 

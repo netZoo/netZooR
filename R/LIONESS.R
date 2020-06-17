@@ -3,18 +3,23 @@
 #' \strong{LIONESS}(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks.
 #'  \href{https://arxiv.org/abs/1505.06440}{[(LIONESS arxiv paper)])}.
 #'
-#' @param expr Character string indicating the file path of expression values file, as each gene (row) by samples (columns) \emph{required}
-#' @param motif Character string indicating the file path of pair file of motif edges,
-#'          when not provided, analysis continues with Pearson correlation matrix. \emph{optional}
-#' @param ppi Character string indicating the pair file path of Protein-Protein interaction dataset. \emph{optional}
-#' @param mode_process An optional character to define the pre-processing of input dataset, options include "legacy" to the original behavior of PANDA in Python implement,
-#'          "interaction" to constrain the TF and gene as interaction across all input datasets, and "union" to take TF union and gene union across all input datasets.
-#'          The default value is "union".
-#' @param rm_missing When mode_process = "legacy", rm_missing is an optional boolean indicatining whether to remove genes and tfs not present in all input files. If TRUE, remove all unmatched tf and genes.
-#'         if FALSE, keep all tf and genes. The default value is FALSE.
+#' @param expr_file Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).
+#' @param motif_file An optional character string indicating the file path of a prior transcription factor binding motifs dataset.
+#'          When this argument is not provided, analysis will continue with Pearson correlation matrix.
+#' @param ppi_file An optional character string indicating the file path of protein-protein interaction edge dataset.
+#'          Also, this can be generated with a list of proteins of interest by \code{\link{source.PPI}}.
+#'          
+#' @param computing 'cpu' uses Central Processing Unit (CPU) to run PANDA; 'gpu' use the Graphical Processing Unit (GPU) to run PANDA. The default value is "cpu".
+#' 
+#' @param precision 'double' computes the regulatory network in double precision (15 decimal digits); 'single' computes the regulatory network in single precision (7 decimal digits) which is fastaer, requires half the memory but less accurate. The default value is 'double'. 
+#' @param save_memory 'TRUE' removes temporary results from memory. The result network is weighted adjacency matrix of size (nTFs, nGenes); 'FALSE' keeps the temporary files in memory. The result network has 4 columns in the form gene - TF - weight in motif prior - PANDA edge. PANDA indegree/outdegree of panda network, only if save_memory = FALSE. The default value is 'FALSE'.
+#' @param save_tmp 'TRUE' saves middle data like expression matrix and normalized networks; 'FALSE' deletes the middle data. The default value is 'TURE'.
+#' @param modeProcess 'legacy' refers to the processing mode in netZooPy<=0.5, 'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros; 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes. Default values is 'union'.
+#' @param remove_missing Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is FALSE.
+#' 
 #' @param start_sample Numeric indicating the start sample number, The default value is 1.
-#' @param end_sample Numeric indicating the start sample number, The default value is None. \emph{optional}
-#' @param save_dir Character string indicating the folder name of output lioness networks for each sample by defined.\emph{optional}
+#' @param end_sample Numeric indicating the end sample number. The default value is 'None' meaning no end sample, i.e. print out all samples.
+#' @param save_dir Character string indicating the folder name of output lioness networks for each sample by defined.
 #'        The default is a folder named "lioness_output" under current working directory.
 #' @param save_fmt Character string indicating the format of lioness network of each sample. The dafault is "npy". The option is txt, npy, or mat.
 #'
@@ -31,69 +36,100 @@
 #' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' # Run LIONESS algorithm
-#' control_lioness_result <- lioness.py(expr = control_expression_file_path, motif = motif_file_path, 
-#' ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE,start_sample=1, end_sample=2)
+#' control_lioness_result <- lioness.py(expr_file = control_expression_file_path, 
+#' motif_file = motif_file_path, ppi_file = ppi_file_path, 
+#' modeProcess="union",start_sample=1, end_sample=2)
 #'  
 #' @import reticulate
 #' @export
-lioness.py <- function(expr = expression, motif = motif, ppi = ppi, mode_process="union", rm_missing = FALSE, start_sample=1, end_sample="None", save_dir="lioness_output", save_fmt='npy'){
+lioness.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, modeProcess="union", remove_missing=FALSE, start_sample=1, end_sample="None", save_dir="lioness_output", save_fmt='npy'){
 
-  if(missing(expr)){
+  if(missing(expr_file)){
     stop("Please provide the gene expression value with option e, e.g. e=\"expression.txt\"") }
-  else{ expr.str <- paste("\'", expr, "\'", sep = '') }
+  else{ expr.str <- paste("\'", expr_file, "\'", sep = '') }
   
-  if(is.null(motif)){
-    motif.str <-  paste('None')
-    message("prior motif network is not provided, analysis continues with Pearson correlation matrix.") }
-  else{ motif.str <- paste("\'", motif,"\'", sep = '') }
+  if(is.null(motif_file)){
+    motif.str <- 'None'
+    message("Prior motif network is not provided, analysis continues with Pearson correlation matrix.") }
+  else{ motif.str <- paste("\'", motif_file,"\'", sep = '') }
   
-  if(is.null(ppi)){
-    ppi.str <- paste('None')
+  if(is.null(ppi_file)){
+    ppi.str <- 'None'
     message("No PPI provided.") }
-  else{ ppi.str <- paste("\'", ppi, "\'", sep = '') }
+  else{ ppi.str <- paste("\'", ppi_file, "\'", sep = '') }
   
+  # computing variable
+  if(computing=="gpu"){
+    computing.str <- "computing='gpu'"
+  } else{ computing.str <- "computing='cpu'"}
+  
+  # precision variable
+  if(precision == "single" ){
+    precision.str <- "precision='single'"
+  } else{ precision.str <- "precision='double'"}
+  
+  # save_memory variable
+  if(save_memory==TRUE){
+    savememory.str <- "save_memory= True"
+  } else{ savememory.str <- "save_memory=False" }
+  
+  # save_tmp variable
+  if(save_tmp==FALSE){
+    savetmp.str <- "save_tmp= False"
+  } else{ savetmp.str <- "save_tmp=True" }
+  
+
   # when pre-processing mode is legacy
-  if(mode_process == "legacy"){
+  if(modeProcess == "legacy"){
     
-    if(rm_missing == FALSE | missing(rm_missing)){
-      message("Use the legacy mode to pre-processing dataset and keep the unmatched tfs or genes")
-      arg.str <- "modeProcess ='legacy',remove_missing = False, keep_expression_matrix=True"}
-    else { 
-      message("Use the legacy mode to pre-processing dataset and keep the matched tfs or genes")
-      arg.str <- "modeProcess ='legacy',remove_missing = True, keep_expression_matrix=True"  }
-  }
-  if(mode_process == "union"){
-    arg.str <- "modeProcess ='union', keep_expression_matrix=True"
-  }
-  if(mode_process == "intersection"){
-    arg.str <- "modeProcess ='intersection', keep_expression_matrix=True"
+    if(remove_missing == TRUE){
+      message("Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes")
+      mode.str <- "modeProcess ='legacy', remove_missing = True"  
+    } else{ message("Use the legacy mode (netZooPy version <= 0.5) to pre-process the input dataset and keep all the unmatched TFs or Genes")
+      mode.str <- "modeProcess ='legacy', remove_missing = False"}
   }
   
-  # source the pypanda from github raw website.
-  reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/panda.py",convert = TRUE)
+  # when pre-processing mode is union
+  else if(modeProcess == "union"){
+    mode.str <- "modeProcess ='union'"
+  }
   
-  # invoke py code to create a Panda object
+  else if(modeProcess == "intersection"){
+    mode.str <- "modeProcess ='intersection'"
+  }
   
+
    # source the panda.py and lioness.py from GitHub raw website.
    reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/panda.py",convert = TRUE)
    reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/lioness.py",convert = TRUE)
-   # run py code to create an instance named "p" of Panda Class
-   str <-  paste("panda_obj=Panda(", expr.str, ",", motif.str,",", ppi.str, ",", arg.str, ")", sep ='')
-   py_run_string(str,local = FALSE, convert = TRUE)
+   # run py code to create an instance named "panda_ob" of Panda Class
+   pandaObj.str <-  paste("panda_obj=Panda(", expr.str, ",", motif.str,",", ppi.str, ",", computing.str, ",", precision.str, ",", savememory.str, ",", savetmp.str, "," , "keep_expression_matrix=True", ",",  mode.str, ")", sep ='')
+   py_run_string(pandaObj.str,local = FALSE, convert = TRUE)
+   
    # assign "panda_network" with the output PANDA network
-   py_run_string("panda_network=pd.DataFrame(panda_obj.export_panda_results,columns=['tf','gene','motif','force'])",local = FALSE, convert = TRUE)
+   py_run_string("panda_network=panda_obj.export_panda_results",local = FALSE, convert = TRUE)
    panda_net <- py$panda_network
-  
-   if( length(intersect(panda_net[, 1], panda_net[, 2]))>0){
-     panda_net[,1] <-paste('reg_', panda_net[,1], sep='')
-     panda_net[,2] <-paste('tar_', panda_net[,2], sep='')
-     message("Rename the context of first two columns with prefix 'reg_' and 'tar_'" )
+   
+   # re-assign data type of cloumn.
+   panda_net$tf <- as.character(panda_net$tf)
+   panda_net$gene <- as.character(panda_net$gene)
+   
+   # rename first two columns
+   names(panda_net)[names(panda_net) == "tf"] <- "TF"
+   names(panda_net)[names(panda_net) == "gene"] <- "gene"
+   
+   if( length(intersect(panda_net$Gene, panda_net$tf))>0){
+     panda_net$TF <- paste('reg_', panda_net$TF, sep='')
+     panda_net$Gene <- paste('tar_', panda_net$Gene, sep='')
+     message("Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns" )
    }
-  
+   
    # create an instance named "lioness_obj" of Lioness Class.
-   py_run_string(paste("lioness_obj = Lioness(panda_obj", " , " , "start=", start_sample," , ", "end=" ,end_sample, " , " ,"save_dir='", save_dir, "' , " , "save_fmt='" , save_fmt, "' )",sep = "" ))
+   py_run_string(paste("lioness_obj = Lioness(panda_obj", " , " , "computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample, " , " ,"save_dir='", save_dir, "' , " , "save_fmt='" , save_fmt, "' )",sep = "" ))
+   
    # retrieve the "total_lioness_network" attribute of instance "lionesss_obj"
-   py_run_string(paste("lioness_network = lioness_obj.total_lioness_network"))
+   py_run_string("lioness_network = lioness_obj.export_lioness_results",local = FALSE, convert = TRUE)
+   
    # convert the python varible "lionesss_network" to a data.frame in R enviroment.
    lioness_net <- py$lioness_network
    # cbind the first two columns of PANDA output with LIONESS output.

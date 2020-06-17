@@ -13,10 +13,10 @@ source.PPI(TF, STRING.version = 10, species.index, ...)
 
 \item{species.index}{a numeric vector indicating NCBI taxonomy identifiers}
 
-\item{...}{any dditional arguments passing to}
+\item{...}{any dditional arguments passed to}
 }
 \value{
-A PPI data frame
+A PPI data.frame which contains two columns: "from" and "to" indicating the direction of protein-protein interaction.
 }
 \description{
 This function is able to use a list of Transcription Factors(TF) of interest to source the Protein-Protein interactions (PPI)in STRING database

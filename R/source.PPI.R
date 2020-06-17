@@ -5,7 +5,7 @@
 #' @param TF a data frame with one column indicating the TF of interest
 #' @param STRING.version a numeric vector indicating the STRING version. Default valuve is 10
 #' @param species.index a numeric vector indicating NCBI taxonomy identifiers 
-#' @param ... any dditional arguments passing to
+#' @param ... any dditional arguments passed to
 #'
 #' @examples
 #' # the example motif file
@@ -22,7 +22,7 @@
 #' species.index=83332, score_threshold=0)}
 #' # write out locally then can be used in \code{\link{panda.py}}.
 #' 
-#' @return A PPI data frame
+#' @return A PPI data.frame which contains two columns: "from" and "to" indicating the direction of protein-protein interaction.
 #' @import STRINGdb
 #' @export
 

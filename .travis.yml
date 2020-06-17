@@ -18,9 +18,10 @@ before_install:
 install:
 - Rscript travis_script.r
 
+
 script:
-- travis_wait R CMD build .
-- travis_wait R CMD check *tar.gz --no-manual
+- travis_wait 40 R CMD build .
+- travis_wait 40 R CMD check *tar.gz --no-manual
 
 after_success:
-  - Rscript -e 'devtools::install_github("r-lib/covr");library(covr);codecov()'
+  - travis_wait Rscript -e 'devtools::install_github("r-lib/covr");library(covr);codecov()'
