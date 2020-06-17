@@ -2,7 +2,7 @@
 
 language: R
 r: 
-- oldrel
+- bioc-devel
 
 sudo: true
 os:
