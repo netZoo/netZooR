@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
       </span>
     </div>
 
@@ -118,13 +118,23 @@
 <li><p>Plot two differential PANDA networks in Cytoscape.</p></li>
 </ul>
 </div>
-<div id="requirement-installation-and-basic-configuration-" class="section level2">
+<div id="requirements-installation-and-basic-configuration-" class="section level2">
 <h2 class="hasAnchor">
-<a href="#requirement-installation-and-basic-configuration-" class="anchor"></a>Requirement, installation and basic configuration.</h2>
+<a href="#requirements-installation-and-basic-configuration-" class="anchor"></a>Requirements, installation and basic configuration.</h2>
 <ul>
-<li><p>netZooR is compatible with R (&gt;= 3.3.3) including R (&gt;= 4.0).</p></li>
-<li><p>To use <code>panda.py</code> and <code>lioness.py</code> functions, <a href="https://www.python.org/downloads/"><strong>Python</strong></a> (3.X) is required with some <a href="#required-python-libraries">Python libraries</a>, <a href="https://cran.r-project.org/"><strong>R</strong></a> (&gt;= 3.3.3), and stable <strong>Internet access</strong> for the package <code>reticulate</code> to properly link the R wrapper to the Python code for those two functions.</p></li>
-<li><p>Some plotting functions will require the <a href="https://cytoscape.org/"><strong>Cytoscape</strong></a> to be installed.</p></li>
+<li><p>netZooR is compatible with R (&gt;= 3.3.3) including R (&gt;= 4.0), click <a href="https://www.r-project.org/">here</a> for more installation details.</p></li>
+<li>To use two main tools PANDA and LIONESS, there are two options:</li>
+</ul>
+<ol>
+<li>use functions: <code><a href="reference/panda.py.html">panda.py()</a></code> and <code><a href="reference/lioness.py.html">lioness.py()</a></code> by invoking two Python implementations in <a href="(https://github.com/netZoo/netZooPy/tree/netZoo)">netZooPy</a>, respectively. This way is recommended if the user requires speedy computering in building gene regulatory networks. In order to pratice invoking Python scripts, there are some requirements to meet before using netZooR:
+a) <a href="https://www.python.org/downloads/"><strong>Python</strong></a> (&gt;= 3.5.0) installed;
+b) Python libraries <a href="https://pandas.pydata.org/">pandas</a>, <a href="https://numpy.org/">numpy</a>, and <a href="https://www.scipy.org/">scipy</a> installed;
+<p>c) stable Internet access as package <code>reticulate</code> will link the R wrapper to the Python scripts located <a href="https://github.com/netZoo/netZooPy/tree/netZoo">here</a> for those two methods.</p>
+</li>
+<li><p>use function: <code>panda()</code> in <a href="https://github.com/jnpaulson/pandaR">pandaR</a> package and <code><a href="reference/lioness.html">lioness()</a></code> for R implementations of methods PANDA and LIONESS, respectively. This way is recommended when above requirements for 1) can not be met or constructing small scale networks.</p></li>
+</ol>
+<ul>
+<li>Most of plotting function can be realized by functions in <a href="https://igraph.org/redirect.html">igraph</a>, which will be loaded with netZooR through <code><a href="https://rdrr.io/r/base/library.html">library(netZooR)</a></code>. Some plotting functions like <code><a href="reference/vis.panda.in.cytoscape.html">vis.panda.in.cytoscape()</a></code> and <code><a href="reference/vis.diff.panda.in.cytoscape.html">vis.diff.panda.in.cytoscape()</a></code> are able to plot interactive PANDA networks in <a href="https://cytoscape.org/">Cytoscape</a>, but installation of Cytoscape is required before using these plotting functions.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools") </span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(devtools)
@@ -132,7 +142,7 @@
 devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"netZoo/netZooR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(netZooR)</code></pre></div>
 <p>For more details please refer to the <a href="https://netzoo.github.io/netZooR/">documentation website</a>.</p>
-<p>This package will invoke the Python in R environment through reticulate package. Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. More details can be found <a href="https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html">here</a>.</p>
+<p>This package will invoke Python programming language in R environment through <a href="https://rstudio.github.io/reticulate/">reticulate</a> package, by default setting there is no additional configuration needed. Configuring which version of Python to use , here in netZooR, Python 3.X is required. More details can be found <a href="https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html">here</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check your Python configuration and the specific version of Python in use currently</span>
 <span class="kw">py_config</span>()
 
