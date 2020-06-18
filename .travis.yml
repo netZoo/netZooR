@@ -16,5 +16,5 @@ script:
 
 after_success:
 - echo $CODECOV_TOKEN
-- Rscript -e 'library(covr);codecov(token=Sys.getenv("CODECOV_TOKEN"))'
+- Rscript -e 'library(covr);codecov(token="eb271df0-06bb-49bb-9b4a-2d250baf2328")'
 - bash <(curl -s https://codecov.io/bash) -f "!*.lst"
