@@ -15,5 +15,6 @@ script:
 - R CMD check *tar.gz --no-manual
 
 after_success:
+- echo $CODECOV_TOKEN
 - Rscript -e 'library(covr);codecov(token=Sys.getenv("CODECOV_TOKEN"))'
 - bash <(curl -s https://codecov.io/bash) -f "!*.lst"
