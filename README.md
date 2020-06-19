@@ -4,7 +4,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <a href="https://netzoo.github.io/netZooR/"><img src="https://img.shields.io/badge/docs-passing-green"></a>
 
-Ubuntu 18.04: [![Build Status](http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04)](http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/)
+R4.01@Ubuntu 18.04: [![Build Status](http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04)](http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/)
 
 ## Description
 netZooR is an R package to reconstruct, analyse and plot biological networks.
