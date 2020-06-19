@@ -5,7 +5,7 @@
 
 Linux[![LINUX](https://travis-ci-job-status.herokuapp.com/badge/netZoo/netZooR/devel/linux)](https://travis-ci.org/netZoo/netZooR)
 
-Macos[![MAC](https://travis-ci-job-status.herokuapp.com/badge/netZoo/netZooR/devel/macos)](https://travis-ci.org/netZoo/netZooR)
+Macos: tests are under construction.
 
 ## Description
 netZooR is an R package to reconstruct, analyse and plot biological networks.
