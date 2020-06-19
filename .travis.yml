@@ -15,4 +15,4 @@ script:
 - R CMD check *tar.gz --no-manual
 
 after_success:
-  - Rscript -e 'library(covr);fileName <- 'token.txt';token=readChar(fileName, file.info(fileName)$size);token=gsub("[\r\n]", "", token);codecov(token=token)'
+- Rscript -e 'library(covr);fileName <- 'token.txt';token=readChar(fileName, file.info(fileName)$size);token=gsub("[\r\n]", "", token);codecov(token=token)'
