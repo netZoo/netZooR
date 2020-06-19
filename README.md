@@ -4,7 +4,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <a href="https://netzoo.github.io/netZooR/"><img src="https://img.shields.io/badge/docs-passing-green"></a>
 
-Linux <a href="http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/"><img src="http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/badge?icon.."></a>
+Linux [![Build Status](http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04)](http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/)
 
 Macos: tests are under construction.
 
