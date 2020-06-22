@@ -22,12 +22,12 @@ test_that("panda function works", {
   # computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE
   test1 <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path)
   test1Panda <- test1$panda
-  # test 5-8: check data type in PANDA network
-  expect_equal(class(test1Panda$TF), "character")
-  expect_equal(class(test1Panda$Gene), "character")
-  expect_equal(class(test1Panda$Motif), "numeric")
-  expect_equal(class(test1Panda$Score), "numeric")
-  
+  # # test 5-8: check data type in PANDA network
+  # expect_equal(class(test1Panda$TF), "character")
+  # expect_equal(class(test1Panda$Gene), "character")
+  # expect_equal(class(test1Panda$Motif), "numeric")
+  # expect_equal(class(test1Panda$Score), "numeric")
+  # 
   # test 9: check if PANDA result is correct when processMode = union, precision = double
   # 
   expect_equal(test1Panda[1,4],-0.23212458160041557,tolerance=1e-7)
