@@ -6,23 +6,22 @@
 #'               minimzing the following objective:
 #'                                  min f(W) 
 #'               with f(W) = (1-lambda)*||WW' - P||^2 + lambda*||W'W - C||^2 + (gamma/2)*||W||^2
+#'               
+#' Authors: 
+#'               Rebekka Burkholz 4/2020               
 #'
-#' Inputs:
-#' @param W     : TF-gene regulatory network based on TF motifs as a
+#' @param W TF-gene regulatory network based on TF motifs as a
 #'                       matrix of size (t,g), g=number of genes, t=number of TFs
-#' @param P     : TF-TF protein interaction network as a matrix of size (t,t)
-#' @param C     : gene coexpression as a matrix of size (g,g) 
-#' @param lambda: tuning parameter in [0,1] (higher gives more weight to C)
-#' @param gamma : regularization parameter
-#' @param Iter  : number of iterations of the algorithm
-#' @param eta   : learning rate
-#' @param bexp  : exponent influencing learning rate (higher means smaller)
+#' @param P TF-TF protein interaction network as a matrix of size (t,t)
+#' @param C gene coexpression as a matrix of size (g,g) 
+#' @param lambda tuning parameter in [0,1] (higher gives more weight to C)
+#' @param gamma regularization parameter
+#' @param Iter number of iterations of the algorithm
+#' @param eta learning rate
+#' @param bexp exponent influencing learning rate (higher means smaller)
 #'
-#' Outputs:
 #' @return W    : Predicted TF-gene complete regulatory network as an adjacency matrix of size (t,g).
 #'
-#' Authors: 
-#'               Rebekka Burkholz 4/2020
 #'
 #' @examples
 #'

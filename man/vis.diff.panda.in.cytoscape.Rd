@@ -19,9 +19,9 @@ This function is able to modify PANDA network and plot in Cytoscape.
 }
 \examples{
 \dontrun{
-# run this function to create a network in Cytoscape.
-merged.panda <- vis.diff.panda.in.cytoscape(panda.net1, panda.net1, network.name="diff.PANDA")
+# create a merged PANDA network from two conditions by running \\code{\\link{panda.diff.edges}}
+merged.panda <- panda.diff.edges(panda.net1, panda.net2, condition_name="condition1")
 # then plot two PANDA network in Cytoscape.
-vis.diff.panda.in.cytoscape(merged.panda,condition_name = "cond.1", network_name="diff.PANDA" )
+vis.diff.panda.in.cytoscape(merged.panda,condition_name = "condition1", network_name="diff.PANDA" )
 }
 }

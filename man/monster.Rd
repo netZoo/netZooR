@@ -4,7 +4,7 @@
 \alias{monster}
 \title{MOdeling Network State Transitions from Expression and Regulatory data (MONSTER)}
 \usage{
-monster(expr, design, motif, nullPerms = 100, ni_method = "BERE",
+monster(expr, design, motif, nullPerms = 100, ni_method = "bere",
   ni.coefficient.cutoff = NA, numMaxCores = 1, outputDir = NA)
 }
 \arguments{
@@ -17,6 +17,8 @@ regulates a gene (column 2) with a defined strength (column 3), usually taken to
 
 \item{nullPerms}{number of random permutations to run (default 100).  Set to 0 to only 
 calculate observed transition matrix}
+
+\item{ni_method}{String to indicate algorithm method.  Must be one of "bere","pearson","cd","lda", or "wcd". Default is "bere"}
 
 \item{ni.coefficient.cutoff}{numeric to specify a p-value cutoff at the network
 inference step.  Default is NA, indicating inclusion of all coefficients.}
@@ -48,7 +50,4 @@ design <- c(rep(0,20),rep(NA,10),rep(1,20))
 monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)
 plot(monsterRes)
 }
-}
-\seealso{
-\code{\link{monsterAnalysis-class}}
 }

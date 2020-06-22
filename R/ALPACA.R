@@ -8,6 +8,7 @@
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its module's total differential modularity
 #' @import igraph
 #' @import Matrix
+#' @importFrom utils write.table
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
@@ -192,6 +193,7 @@ alpaca.TopEnsembl.to.TopSym <- function(mod.top,annot.vec)
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its community's modularity in the final edge-subtracted network
 #' @import igraph
 #' @import Matrix
+#' @importFrom utils write.table
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
@@ -236,6 +238,7 @@ alpaca.DeltaZAnalysis <- function(net.table,file.stem)
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its community's modularity in the final edge-subtracted network
 #' @import igraph
 #' @import Matrix
+#' @importFrom utils write.table
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @export
@@ -677,7 +680,6 @@ alpaca.metanetwork <- function(J,S)
 #' Renumbering community membership vector
 #'
 #' This is a helper function alpaca.genlouvain. It re-numbers the communities so that they run from 1 to N increasing through the vector.
-#' @param J The modularity matrix
 #' @param S The community membership vector derived from the previous round of agglomeration.
 #'  
 #' @return The renumbered membership vector.
@@ -887,6 +889,7 @@ alpaca.simulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,de
 #' @import GOstats
 #' @import org.Hs.eg.db
 #' @import GO.db
+#' @import AnnotationDbi
 #' @export
 #' 
 

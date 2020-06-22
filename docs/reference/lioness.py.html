@@ -144,36 +144,52 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>lioness.py</span>(<span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>expression</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='no'>motif</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi</span>,
-  <span class='kw'>mode_process</span> <span class='kw'>=</span> <span class='st'>"union"</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>start_sample</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>end_sample</span> <span class='kw'>=</span> <span class='st'>"None"</span>, <span class='kw'>save_dir</span> <span class='kw'>=</span> <span class='st'>"lioness_output"</span>, <span class='kw'>save_fmt</span> <span class='kw'>=</span> <span class='st'>"npy"</span>)</pre>
+    <pre class="usage"><span class='fu'>lioness.py</span>(<span class='no'>expr_file</span>, <span class='kw'>motif_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ppi_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>computing</span> <span class='kw'>=</span> <span class='st'>"cpu"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='st'>"double"</span>, <span class='kw'>save_memory</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>save_tmp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>modeProcess</span> <span class='kw'>=</span> <span class='st'>"union"</span>, <span class='kw'>remove_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>start_sample</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>end_sample</span> <span class='kw'>=</span> <span class='st'>"None"</span>, <span class='kw'>save_dir</span> <span class='kw'>=</span> <span class='st'>"lioness_output"</span>,
+  <span class='kw'>save_fmt</span> <span class='kw'>=</span> <span class='st'>"npy"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>expr</th>
-      <td><p>Character string indicating the file path of expression values file, as each gene (row) by samples (columns) <em>required</em></p></td>
+      <th>expr_file</th>
+      <td><p>Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).</p></td>
     </tr>
     <tr>
-      <th>motif</th>
-      <td><p>Character string indicating the file path of pair file of motif edges,
-when not provided, analysis continues with Pearson correlation matrix. <em>optional</em></p></td>
+      <th>motif_file</th>
+      <td><p>An optional character string indicating the file path of a prior transcription factor binding motifs dataset.
+When this argument is not provided, analysis will continue with Pearson correlation matrix.</p></td>
     </tr>
     <tr>
-      <th>ppi</th>
-      <td><p>Character string indicating the pair file path of Protein-Protein interaction dataset. <em>optional</em></p></td>
+      <th>ppi_file</th>
+      <td><p>An optional character string indicating the file path of protein-protein interaction edge dataset.
+Also, this can be generated with a list of proteins of interest by <code><a href='source.PPI.html'>source.PPI</a></code>.</p></td>
     </tr>
     <tr>
-      <th>mode_process</th>
-      <td><p>An optional character to define the pre-processing of input dataset, options include "legacy" to the original behavior of PANDA in Python implement,
-"interaction" to constrain the TF and gene as interaction across all input datasets, and "union" to take TF union and gene union across all input datasets.
-The default value is "union".</p></td>
+      <th>computing</th>
+      <td><p>'cpu' uses Central Processing Unit (CPU) to run PANDA; 'gpu' use the Graphical Processing Unit (GPU) to run PANDA. The default value is "cpu".</p></td>
     </tr>
     <tr>
-      <th>rm_missing</th>
-      <td><p>When mode_process = "legacy", rm_missing is an optional boolean indicatining whether to remove genes and tfs not present in all input files. If TRUE, remove all unmatched tf and genes.
-if FALSE, keep all tf and genes. The default value is FALSE.</p></td>
+      <th>precision</th>
+      <td><p>'double' computes the regulatory network in double precision (15 decimal digits); 'single' computes the regulatory network in single precision (7 decimal digits) which is fastaer, requires half the memory but less accurate. The default value is 'double'.</p></td>
+    </tr>
+    <tr>
+      <th>save_memory</th>
+      <td><p>'TRUE' removes temporary results from memory. The result network is weighted adjacency matrix of size (nTFs, nGenes); 'FALSE' keeps the temporary files in memory. The result network has 4 columns in the form gene - TF - weight in motif prior - PANDA edge. PANDA indegree/outdegree of panda network, only if save_memory = FALSE. The default value is 'FALSE'.</p></td>
+    </tr>
+    <tr>
+      <th>save_tmp</th>
+      <td><p>'TRUE' saves middle data like expression matrix and normalized networks; 'FALSE' deletes the middle data. The default value is 'TURE'.</p></td>
+    </tr>
+    <tr>
+      <th>modeProcess</th>
+      <td><p>'legacy' refers to the processing mode in netZooPy&lt;=0.5, 'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros; 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes. Default values is 'union'.</p></td>
+    </tr>
+    <tr>
+      <th>remove_missing</th>
+      <td><p>Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is FALSE.</p></td>
     </tr>
     <tr>
       <th>start_sample</th>
@@ -181,11 +197,11 @@ if FALSE, keep all tf and genes. The default value is FALSE.</p></td>
     </tr>
     <tr>
       <th>end_sample</th>
-      <td><p>Numeric indicating the start sample number, The default value is None. <em>optional</em></p></td>
+      <td><p>Numeric indicating the end sample number. The default value is 'None' meaning no end sample, i.e. print out all samples.</p></td>
     </tr>
     <tr>
       <th>save_dir</th>
-      <td><p>Character string indicating the folder name of output lioness networks for each sample by defined.<em>optional</em>
+      <td><p>Character string indicating the folder name of output lioness networks for each sample by defined.
 The default is a folder named "lioness_output" under current working directory.</p></td>
     </tr>
     <tr>
@@ -196,20 +212,22 @@ The default is a folder named "lioness_output" under current working directory.<
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with columns representing each sample, rows representing the regulator-target pair in PANDA network generated by <code>runPanda</code>. 
+    <p>A data frame with columns representing each sample, rows representing the regulator-target pair in PANDA network generated by <code><a href='panda.py.html'>panda.py</a></code>. 
         Each cell filled with the related score, representing the estimated contribution of a sample to the aggregate network.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># refer to the input datasets files of control in inst/extdat as example</span>
-<span class='no'>control_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr10_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>control_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr10_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>,
+<span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>motif_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"chip_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>ppi_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ppi_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># Run LIONESS algorithm</span>
-<span class='no'>control_lioness_result</span> <span class='kw'>&lt;-</span> <span class='fu'>lioness.py</span>(<span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>mode_process</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,<span class='kw'>start_sample</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>end_sample</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-processing dataset and keep the matched tfs or genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the context of first two columns with prefix 'reg_' and 'tar_'</span></div><div class='input'> 
-</div></pre>
+<span class='no'>control_lioness_result</span> <span class='kw'>&lt;-</span> <span class='fu'>lioness.py</span>(<span class='kw'>expr_file</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>,
+<span class='kw'>motif_file</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi_file</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>,
+<span class='kw'>modeProcess</span><span class='kw'>=</span><span class='st'>"union"</span>,<span class='kw'>start_sample</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>end_sample</span><span class='kw'>=</span><span class='fl'>2</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>

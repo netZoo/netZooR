@@ -8,30 +8,25 @@ otter(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 300,
   eta = 1e-05, bexp = 1)
 }
 \arguments{
-\item{W}{: TF-gene regulatory network based on TF motifs as a
+\item{W}{TF-gene regulatory network based on TF motifs as a
 matrix of size (t,g), g=number of genes, t=number of TFs}
 
-\item{P}{: TF-TF protein interaction network as a matrix of size (t,t)}
+\item{P}{TF-TF protein interaction network as a matrix of size (t,t)}
 
-\item{C}{: gene coexpression as a matrix of size (g,g)}
+\item{C}{gene coexpression as a matrix of size (g,g)}
 
-\item{gamma}{: regularization parameter}
+\item{lambda}{tuning parameter in [0,1] (higher gives more weight to C)}
 
-\item{Iter}{: number of iterations of the algorithm}
+\item{gamma}{regularization parameter}
 
-\item{eta}{: learning rate}
+\item{Iter}{number of iterations of the algorithm}
 
-\item{bexp}{: exponent influencing learning rate (higher means smaller)
+\item{eta}{learning rate}
 
-Outputs:}
-
-\item{lambda:}{tuning parameter in [0,1] (higher gives more weight to C)}
+\item{bexp}{exponent influencing learning rate (higher means smaller)}
 }
 \value{
 W    : Predicted TF-gene complete regulatory network as an adjacency matrix of size (t,g).
-
-Authors: 
-              Rebekka Burkholz 4/2020
 }
 \description{
 Description:
@@ -40,9 +35,9 @@ Description:
               minimzing the following objective:
                                  min f(W) 
               with f(W) = (1-lambda)*||WW' - P||^2 + lambda*||W'W - C||^2 + (gamma/2)*||W||^2
-}
-\details{
-Inputs:
+              
+Authors: 
+              Rebekka Burkholz 4/2020
 }
 \examples{
 

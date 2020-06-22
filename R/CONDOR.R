@@ -737,6 +737,7 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,
 #' color_list=c("darkgreen","darkorange"),point.size=2,
 #' xlab="Women",ylab="Men")
 #' @import data.table
+#' @importFrom graphics axis box hist mtext par plot points rect
 #' @export
 #'  
 condor.plot.communities = function(condor.object,color_list,point.size=0.01,
@@ -846,7 +847,7 @@ condor.plot.heatmap = function(condor.object, main="", xlab="blues", ylab="reds"
   heatmap.2(adj, Rowv=FALSE, Colv=FALSE, dendrogram="none", keysize=1.25,
             col=colorpanel(10, "white", "black"), scale="none",
             key=TRUE, symkey=FALSE, density.info="none", trace="none",
-            main=main, sepcol="#DDDDDD", colsep=colsep, rowsep=rowsep,
+            main=main, sepcolor ="#DDDDDD", colsep=colsep, rowsep=rowsep,
             sepwidth = c(0.025, 0.025), ylab=ylab, xlab=xlab, margins=c(3,3),
             labCol=labCol, labRow=labRow, offsetRow=0, offsetCol=0,
             breaks=sort(c(0.1,seq(0, max(adj),length.out=10))))
@@ -1039,3 +1040,5 @@ max.component = function(g){
 #' @usage data(small1976)
 #' @format A data frame with 442 rows and 3 variables
 NULL
+
+globalVariables(c('SNP','blue.memb',"G", "bindx", "blue.com.size","gene",  "red.com.size","red.memb", "rindx"))
