@@ -32,28 +32,28 @@ test_that("panda function works", {
   # 
   expect_equal(test1Panda[1,4],-0.23212458160041557,tolerance=1e-7)
   
-  # test 10-12: check if PANDA indegree network is correct
-  test1Indegree <- test1$indegree
+  # # test 10-12: check if PANDA indegree network is correct
+  # test1Indegree <- test1$indegree
+  # 
+  # expect_equal(class(test1Indegree$`Target`), "character")
+  # expect_equal(class(test1Indegree$`Target_Score`), "numeric")
+  # expect_equal(test1Indegree[1,2], -272.9487716751912,tolerance=1e-7)
+  # 
+  # # test 13-15: check if PANDA outdegree network is correct
+  # test1Outdegree <- test1$outdegree
+  # 
+  # expect_equal(class(test1Outdegree$`Regulator`), "character")
+  # expect_equal(class(test1Outdegree$`Regulator_Score`), "numeric")
+  # expect_equal(test1Outdegree[1,2], -567.4816444521832,tolerance=1e-7)
+  # 
+  # 
   
-  expect_equal(class(test1Indegree$`Target`), "character")
-  expect_equal(class(test1Indegree$`Target_Score`), "numeric")
-  expect_equal(test1Indegree[1,2], -272.9487716751912,tolerance=1e-7)
-  
-  # test 13-15: check if PANDA outdegree network is correct
-  test1Outdegree <- test1$outdegree
-  
-  expect_equal(class(test1Outdegree$`Regulator`), "character")
-  expect_equal(class(test1Outdegree$`Regulator_Score`), "numeric")
-  expect_equal(test1Outdegree[1,2], -567.4816444521832,tolerance=1e-7)
-  
-  
-  
-  # test 16: check if PANDA result is correct when processMode = union and save_memory =F ,and the rest arguments are opposite to the default values: 
-  # precision="single",save_memory = F, save_tmp=F, keep_expression_matrix = T, modeProcess = 'union'
-  
-  test2Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path,precision = "single", save_memory = F, save_tmp = F,keep_expression_matrix = TRUE,modeProcess = "union" )$panda
-  expect_equal(test2Panda[1,4],-0.2321256, tolerance=1e-5)
-  
+  # # test 16: check if PANDA result is correct when processMode = union and save_memory =F ,and the rest arguments are opposite to the default values: 
+  # # precision="single",save_memory = F, save_tmp=F, keep_expression_matrix = T, modeProcess = 'union'
+  # 
+  # test2Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path,precision = "single", save_memory = F, save_tmp = F,keep_expression_matrix = TRUE,modeProcess = "union" )$panda
+  # expect_equal(test2Panda[1,4],-0.2321256, tolerance=1e-5)
+  # 
   # # test 17: check if PANDA result is correct when save_memory = TRUE:
   # 
   # test3Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path,save_memory = T)$WAMpanda
