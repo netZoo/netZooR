@@ -19,6 +19,7 @@ Depends: R (>= 3.3),
    	 igraph,
 	 reticulate,
 	 pandaR,
+biocViews:
 Imports: RCy3,
 	 viridisLite, 
    	 STRINGdb,
