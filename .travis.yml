@@ -1,13 +1,3 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
-language: R
-r: 
-- bioc-release
-
-sudo: true
-os:
-- osx
-
 before_install:
 - pip3 install --user numpy scipy pandas
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm &&
@@ -18,10 +8,9 @@ before_install:
 install:
 - Rscript travis_script.r
 
-
 script:
-- travis_wait 40 R CMD build .
-- travis_wait 40 R CMD check *tar.gz --no-manual
+- R CMD build .
+- R CMD check *tar.gz --no-manual
 
 after_success:
-  - travis_wait Rscript -e 'devtools::install_github("r-lib/covr");library(covr);codecov()'
+- Rscript coverZoo.r
