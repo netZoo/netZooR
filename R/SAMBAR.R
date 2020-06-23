@@ -142,10 +142,10 @@ NULL
 #' @param cangenes A vector of genes, for example of cancer-associated genes. This will be used to subset the gene-level mutation data to.
 #' @param kmin The minimum number of subtypes the user wants to assess. Defaults to 2.
 #' @param kmax The maximum number of subtypes the user wants to assess. Defaults to 4.
+#' @rawNamespace import(vegan, except=diversity)
+#' @rawNamespace import(stats, except= c(cov2cor,decompose,toeplitz,lowess,update,spectrum))
 #' @return A list of samples and the subtypes to which these samples are assigned, for each k.
 #' @export
-#
-# dependencies: vegan, stats
 sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package = "SAMBAR", mustWork = TRUE), cangenes=genes, kmin=2, kmax=4){
   
   # convert gmt file to binary matrix, subset to cancer-associated genes
