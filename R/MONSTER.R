@@ -325,7 +325,7 @@ kabsch <- function(P,Q){
 #' @export
 #' @import ggplot2
 #' @import grid
-#' @import stats
+#' @rawNamespace import(stats, except= c(cov2cor,decompose,toeplitz,lowess,update,spectrum))
 #' @return ggplot2 object for transition matrix heatmap
 #' @examples
 #' # data(yeast)
