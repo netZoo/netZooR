@@ -12,3 +12,4 @@ CONDUCT\.md$
 ^pkgdown$
 ^doc$
 ^Meta$
+coverZoo.r
