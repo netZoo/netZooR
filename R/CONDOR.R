@@ -151,6 +151,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory
 #' @note \code{\link[stats]{ks.test}} and \code{\link[stats]{wilcox.test}}
 #' will throw warnings due to the presence of ties, so the p-values will be 
 #' approximate. See those functions for further details.
+#' @rawNamespace import(stats, except= c(cov2cor,decompose,toeplitz,lowess,update,spectrum))
 #' @examples
 #' r = c(1,1,1,2,2,2,3,3,3,4,4);
 #' b = c(1,2,3,1,2,4,2,3,4,3,4);
@@ -736,7 +737,7 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,
 #' condor.plot.communities(condor.object,
 #' color_list=c("darkgreen","darkorange"),point.size=2,
 #' xlab="Women",ylab="Men")
-#' @import data.table
+#' @rawNamespace import(data.table, except= c(dcast,melt))
 #' @importFrom graphics axis box hist mtext par plot points rect
 #' @export
 #'  
