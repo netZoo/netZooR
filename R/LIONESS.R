@@ -12,7 +12,6 @@
 #' @param computing 'cpu' uses Central Processing Unit (CPU) to run PANDA; 'gpu' use the Graphical Processing Unit (GPU) to run PANDA. The default value is "cpu".
 #' 
 #' @param precision 'double' computes the regulatory network in double precision (15 decimal digits); 'single' computes the regulatory network in single precision (7 decimal digits) which is fastaer, requires half the memory but less accurate. The default value is 'double'. 
-#' @param save_memory 'TRUE' removes temporary results from memory. The result network is weighted adjacency matrix of size (nTFs, nGenes); 'FALSE' keeps the temporary files in memory. The result network has 4 columns in the form gene - TF - weight in motif prior - PANDA edge. PANDA indegree/outdegree of panda network, only if save_memory = FALSE. The default value is 'FALSE'.
 #' @param save_tmp 'TRUE' saves middle data like expression matrix and normalized networks; 'FALSE' deletes the middle data. The default value is 'TURE'.
 #' @param modeProcess 'legacy' refers to the processing mode in netZooPy<=0.5, 'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros; 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes. Default values is 'union'.
 #' @param remove_missing Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is FALSE.
@@ -42,7 +41,7 @@
 #'  
 #' @import reticulate
 #' @export
-lioness.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, modeProcess="union", remove_missing=FALSE, start_sample=1, end_sample="None", save_dir="lioness_output", save_fmt='npy'){
+lioness.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double", save_tmp=TRUE, modeProcess="union", remove_missing=FALSE, start_sample=1, end_sample="None", save_dir="lioness_output", save_fmt='npy'){
 
   if(missing(expr_file)){
     stop("Please provide the gene expression value with option e, e.g. e=\"expression.txt\"") }
@@ -68,10 +67,8 @@ lioness.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu
     precision.str <- "precision='single'"
   } else{ precision.str <- "precision='double'"}
   
-  # save_memory variable
-  if(save_memory==TRUE){
-    savememory.str <- "save_memory= True"
-  } else{ savememory.str <- "save_memory=False" }
+  # save_memory variable always is "save_memory=False" 
+  savememory.str <- "save_memory=False" 
   
   # save_tmp variable
   if(save_tmp==FALSE){

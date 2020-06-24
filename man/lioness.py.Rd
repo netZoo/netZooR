@@ -5,10 +5,9 @@
 \title{Run python implementation of LIONESS}
 \usage{
 lioness.py(expr_file, motif_file = NULL, ppi_file = NULL,
-  computing = "cpu", precision = "double", save_memory = FALSE,
-  save_tmp = TRUE, modeProcess = "union", remove_missing = FALSE,
-  start_sample = 1, end_sample = "None", save_dir = "lioness_output",
-  save_fmt = "npy")
+  computing = "cpu", precision = "double", save_tmp = TRUE,
+  modeProcess = "union", remove_missing = FALSE, start_sample = 1,
+  end_sample = "None", save_dir = "lioness_output", save_fmt = "npy")
 }
 \arguments{
 \item{expr_file}{Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).}
@@ -22,8 +21,6 @@ Also, this can be generated with a list of proteins of interest by \code{\link{s
 \item{computing}{'cpu' uses Central Processing Unit (CPU) to run PANDA; 'gpu' use the Graphical Processing Unit (GPU) to run PANDA. The default value is "cpu".}
 
 \item{precision}{'double' computes the regulatory network in double precision (15 decimal digits); 'single' computes the regulatory network in single precision (7 decimal digits) which is fastaer, requires half the memory but less accurate. The default value is 'double'.}
-
-\item{save_memory}{'TRUE' removes temporary results from memory. The result network is weighted adjacency matrix of size (nTFs, nGenes); 'FALSE' keeps the temporary files in memory. The result network has 4 columns in the form gene - TF - weight in motif prior - PANDA edge. PANDA indegree/outdegree of panda network, only if save_memory = FALSE. The default value is 'FALSE'.}
 
 \item{save_tmp}{'TRUE' saves middle data like expression matrix and normalized networks; 'FALSE' deletes the middle data. The default value is 'TURE'.}
 

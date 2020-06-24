@@ -26,11 +26,11 @@
 #' @import STRINGdb
 #' @export
 
-source.PPI <- function(TF, STRING.version=10, species.index, ...){
+source.PPI <- function(TF, STRING.version="10", species.index, ...){
   # creat a new STRINGdb class.
   string_db=STRINGdb$new(version=STRING.version, species=as.numeric(species.index),...)
   # change the colname to "TF"
-  colnames(TF) <- c("TF")
+  colnames(TF) <- "TF"
   # map the TF to STRINGdb dataset
   TF_mapped <-  string_db$map(TF,"TF",removeUnmappedRows=F)
   # collect the interactions between the TF of interest

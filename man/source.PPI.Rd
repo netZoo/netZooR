@@ -4,7 +4,7 @@
 \alias{source.PPI}
 \title{Source the Protein-Protein interaction in STRING database}
 \usage{
-source.PPI(TF, STRING.version = 10, species.index, ...)
+source.PPI(TF, STRING.version = "10", species.index, ...)
 }
 \arguments{
 \item{TF}{a data frame with one column indicating the TF of interest}
