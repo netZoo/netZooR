@@ -16,6 +16,10 @@ test_that("CONDOR functions work", {
   
   condor.object <- condor.cluster(condor.object,project = F)
   
+  # check project=T when clustering
+  
+  expect_error(condor.cluster(condor.object,project = T),NA)
+  
   # check modularity
   expect_equal(condor.object$modularity,as.numeric(c("0.231404958677686","0.231404958677686")),tolerance=1e-7)
   
@@ -60,4 +64,6 @@ test_that("CONDOR functions work", {
                                        point.size=2, xlab="Women",ylab="Men"),NA)
 
   graphics.off()
+  
+ 
 })
