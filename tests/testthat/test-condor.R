@@ -32,8 +32,9 @@ test_that("CONDOR functions work", {
   expect_equal(condor.object$qscores$red.qscore, q_women)
   
   # check condor.core.enrich
-  out <- suppressWarnings(condor.core.enrich(c("Alice","Mary"),q=q_women,perm=T,plot.hist=F))
+  out <- suppressWarnings(condor.core.enrich(c("Alice","Mary"),q=q_women,perm=T,plot.hist=T))
   expect_equal(out$analytical.pvals[1,1],0.6065307, tolerance=1e-7)
+  graphics.off()
   
   # check matrix modularity
   condor.object2<- create.condor.object(elist)
