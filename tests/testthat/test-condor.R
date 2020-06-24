@@ -40,30 +40,40 @@ test_that("CONDOR functions work", {
   expect_equal(out$analytical.pvals[1,1],0.6065307, tolerance=1e-7)
   graphics.off()
   
-  # check matrix modularity
+  # create a new condor.object aka condor.object2 for following tests:
   condor.object2<- create.condor.object(elist)
+  
+  # randomly assign blues to their own community
   T0 <- data.frame(nodes=blues,coms=1:4)
-  condor.object2 <- condor.matrix.modularity(condor.object2,T0=T0)
-  expect_equal(condor.object2$modularity,as.numeric(c("0.198347107438017","0.231404958677686","0.231404958677686"),tolerance=1e-7))
   
-   # check heatmap
- 
-  # data("small1976")
-  # condor.object3 <- create.condor.object(small1976)
-  # condor.object3 <- condor.cluster(condor.object3, project=FALSE)
-  # par(mar=c(1,1,1,1))
-  # expect_error(condor.plot.heatmap(condor.object3),NA)
-  # graphics.off()
- 
+  # check matrix modularity
+  condor.object3 <- condor.matrix.modularity(condor.object2,T0=T0)
+  expect_equal(condor.object3$modularity,as.numeric(c("0.198347107438017","0.231404958677686","0.231404958677686"),tolerance=1e-7))
   
+  # check condor.modularity.max
+  condor.object4 <- condor.modularity.max(condor.object2,T0=T0)
+  expect_equal(condor.object4$modularity,as.numeric(c("0.140495867768595","0.140495867768595"),tolerance=1e-7))
   
-  # check community
-  condor.object4 <- create.condor.object(elist)
-  condor.object4 <- condor.cluster(condor.object4,project = F)
-  expect_error(condor.plot.communities(condor.object4,color_list=c("darkgreen","darkorange"),
+
+  
+  # check community plot
+  condor.object5 <- condor.cluster(condor.object2,project = F)
+  expect_error(condor.plot.communities(condor.object5,color_list=c("darkgreen","darkorange"),
                                        point.size=2, xlab="Women",ylab="Men"),NA)
 
   graphics.off()
+  
+  
+  # check heatmap
+  
+  # data("small1976")
+  # condor.object6 <- create.condor.object(small1976)
+  # condor.object6 <- condor.cluster(condor.object6, project=FALSE)
+  # par(mar=c(1,1,1,1))
+  # expect_error(condor.plot.heatmap(condor.object6),NA)
+  # graphics.off()
+  
+  
   
  
 })
