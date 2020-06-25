@@ -38,7 +38,7 @@ To run SAMBAR with default settings on these data:
 `subtypes <- sambar()`
 
 Or:
-`subtypes <- sambar(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package="SAMBAR", mustWork=TRUE), cangenes=genes, kmin=2, kmax=4)`
+`subtypes <- sambar(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package="netZooR", mustWork=TRUE), cangenes=genes, kmin=2, kmax=4)`
 
 This will run SAMBAR on the UCEC mutation data, using desparsification on cancer-associated genes based on the MSigDb "Hallmark" gene sets. It will return a list of samples belonging to $k=2-4$ subtypes.
 

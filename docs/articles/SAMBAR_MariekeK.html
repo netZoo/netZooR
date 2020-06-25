@@ -116,7 +116,7 @@
 <a href="#example-subtyping-uterine-corpus-endometrial-carcinoma" class="anchor"></a>Example: Subtyping Uterine Corpus Endometrial Carcinoma</h2>
 <p>As an example, we’ve added mutation data of Uterine Corpus Endometrial Carcinoma (UCEC) primary tumor samples, obtained from The Cancer Genome Atlas, to this package in <code><a href="https://rdrr.io/r/utils/data.html">data(mut.ucec)</a></code>. We’ve also added gene lengths (the number of non-overlapping exonic base pairs) for 23,459 genes (hg19) in <code><a href="https://rdrr.io/r/utils/data.html">data(exon.size)</a></code>. We’ve added a list of cancer-associated genes in <code><a href="https://rdrr.io/r/utils/data.html">data(gene)</a></code>. Finally, the package includes a .gmt file that contains Hallmarks pathways from MSigDb.</p>
 <p>To run SAMBAR with default settings on these data: <code>subtypes &lt;- sambar()</code></p>
-<p>Or: <code>subtypes &lt;- sambar(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package="SAMBAR", mustWork=TRUE), cangenes=genes, kmin=2, kmax=4)</code></p>
+<p>Or: <code>subtypes &lt;- sambar(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package="netZooR", mustWork=TRUE), cangenes=genes, kmin=2, kmax=4)</code></p>
 <p>This will run SAMBAR on the UCEC mutation data, using desparsification on cancer-associated genes based on the MSigDb “Hallmark” gene sets. It will return a list of samples belonging to <span class="math inline">\(k=2-4\)</span> subtypes.</p>
 <p>Instead of using the default signatureset, you can download any .gmt file from MSigDb and add the path to this file in <code>signatureset=PATH_TO_FILE</code>.</p>
 </div>
