@@ -145,10 +145,9 @@
     </div>
 
     <pre class="usage"><span class='fu'>lioness.py</span>(<span class='no'>expr_file</span>, <span class='kw'>motif_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ppi_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>computing</span> <span class='kw'>=</span> <span class='st'>"cpu"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='st'>"double"</span>, <span class='kw'>save_memory</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>save_tmp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>modeProcess</span> <span class='kw'>=</span> <span class='st'>"union"</span>, <span class='kw'>remove_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>start_sample</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>end_sample</span> <span class='kw'>=</span> <span class='st'>"None"</span>, <span class='kw'>save_dir</span> <span class='kw'>=</span> <span class='st'>"lioness_output"</span>,
-  <span class='kw'>save_fmt</span> <span class='kw'>=</span> <span class='st'>"npy"</span>)</pre>
+  <span class='kw'>computing</span> <span class='kw'>=</span> <span class='st'>"cpu"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='st'>"double"</span>, <span class='kw'>save_tmp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>modeProcess</span> <span class='kw'>=</span> <span class='st'>"union"</span>, <span class='kw'>remove_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>start_sample</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>end_sample</span> <span class='kw'>=</span> <span class='st'>"None"</span>, <span class='kw'>save_dir</span> <span class='kw'>=</span> <span class='st'>"lioness_output"</span>, <span class='kw'>save_fmt</span> <span class='kw'>=</span> <span class='st'>"npy"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,10 +173,6 @@ Also, this can be generated with a list of proteins of interest by <code><a href
     <tr>
       <th>precision</th>
       <td><p>'double' computes the regulatory network in double precision (15 decimal digits); 'single' computes the regulatory network in single precision (7 decimal digits) which is fastaer, requires half the memory but less accurate. The default value is 'double'.</p></td>
-    </tr>
-    <tr>
-      <th>save_memory</th>
-      <td><p>'TRUE' removes temporary results from memory. The result network is weighted adjacency matrix of size (nTFs, nGenes); 'FALSE' keeps the temporary files in memory. The result network has 4 columns in the form gene - TF - weight in motif prior - PANDA edge. PANDA indegree/outdegree of panda network, only if save_memory = FALSE. The default value is 'FALSE'.</p></td>
     </tr>
     <tr>
       <th>save_tmp</th>
