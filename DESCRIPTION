@@ -59,4 +59,4 @@ Suggests:
     rmarkdown,
     pkgdown,
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1.9000
+RoxygenNote: 7.1.0

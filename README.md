@@ -86,6 +86,7 @@ After adding new features or debugging, please re-build package and run CDM chec
 library(devtools)
 library(pkgdown)
 # document the description of function
+# setwd('path/to/netZooR/root') # Set the working directory to netZooR root
 devtools::document()
 # build vignettes
 devtools::build_vignettes()
