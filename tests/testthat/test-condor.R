@@ -66,12 +66,12 @@ test_that("CONDOR functions work", {
   
   # check heatmap
   
-  # data("small1976")
-  # condor.object6 <- create.condor.object(small1976)
-  # condor.object6 <- condor.cluster(condor.object6, project=FALSE)
-  # par(mar=c(1,1,1,1))
-  # expect_error(condor.plot.heatmap(condor.object6),NA)
-  # graphics.off()
+   data("small1976")
+   condor.object6 <- create.condor.object(small1976)
+   condor.object6 <- condor.cluster(condor.object6, project=FALSE)
+   par(mar=c(1,1,1,1))
+   expect_error(condor.plot.heatmap(condor.object6),NA)
+   graphics.off()
   
   
   
