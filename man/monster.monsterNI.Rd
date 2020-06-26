@@ -4,10 +4,18 @@
 \alias{monster.monsterNI}
 \title{Bipartite Edge Reconstruction from Expression data}
 \usage{
-monster.monsterNI(motif, expr.data, verbose = FALSE,
-  randomize = "none", method = "bere", ni.coefficient.cutoff = NA,
-  alphaw = 1, regularization = "none", score = "motifincluded",
-  cpp = FALSE)
+monster.monsterNI(
+  motif,
+  expr.data,
+  verbose = FALSE,
+  randomize = "none",
+  method = "bere",
+  ni.coefficient.cutoff = NA,
+  alphaw = 1,
+  regularization = "none",
+  score = "motifincluded",
+  cpp = FALSE
+)
 }
 \arguments{
 \item{motif}{A motif dataset, a data.frame, matrix or exprSet containing 
