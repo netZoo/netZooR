@@ -55,7 +55,7 @@ otter <- function(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 32, eta = 0.00
   m <- matrix(data = 0, nrow = nTF, ncol = nGenes)
   v <- m 
   for(i in 1:Iter){
-    grad <- W%*%t(W)%*%W -P%*%W - W%*%C  
+    grad <- W%*%t(W)%*%W + P%*%W + W%*%C  
     m <- b1*m + (4*(1-b1))*grad
     v <- b2*v + (16*(1-b2))*grad^2 
     b1t <- b1t*b1
