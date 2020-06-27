@@ -43,13 +43,15 @@ otter <- function(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 32, eta = 0.00
   dW <- dim(W)
   nTF <- dW[1]
   nGenes <- dW[2]
+  C <- C/sum(diag(C))
   P <- P+2.2
   P <- P/sum(diag(P))
   W <- P%*%W
-  P <- P*(1-lambda)
-  C <- C*(lambda/sum(diag(C)))
   W <- W/sum(diag(W%*%t(W)))
-  P = P - gamma*diag(nTF)
+  
+  P <- -P*(1-lambda) + gamma*diag(nTF)
+  C <- -C*lambda
+  
   m <- matrix(data = 0, nrow = nTF, ncol = nGenes)
   v <- m 
   for(i in 1:Iter){
