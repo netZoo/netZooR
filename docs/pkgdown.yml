@@ -1,6 +1,6 @@
-pandoc: 2.8.1
-pkgdown: 1.5.1
-pkgdown_sha: ~
+pandoc: 1.19.2.1
+pkgdown: 1.4.1.9000
+pkgdown_sha: 24ef1bbdec0de44fe11eb1d58b40dba961525d43
 articles:
   ALPACA_MaghaP: ALPACA_MaghaP.html
   ApplicationinGTExData_DeborahW: ApplicationinGTExData_DeborahW.html
@@ -10,5 +10,4 @@ articles:
   lioness_limma_CamilaLR: lioness_limma_CamilaLR.html
   pandaR_DanielS: pandaR_DanielS.html
   panda_CamilaLR: panda_CamilaLR.html
-last_built: 2020-06-27T02:15Z
 

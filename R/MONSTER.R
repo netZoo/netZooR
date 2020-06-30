@@ -124,7 +124,7 @@ monster <- function(expr,
   
   nullExpr <- expr
   transMatrices <- foreach(i=1:iters,
-                           .packages=c("MONSTER","reshape2","penalized","MASS")) %dopar% {
+                           .packages=c("netZooR","reshape2","penalized","MASS")) %dopar% {
                              print(paste0("Running iteration ", i))
                              if(i!=1){
                                nullExpr[] <- expr[sample(seq_along(c(expr)))]
@@ -721,7 +721,7 @@ monster.monsterNI <- function (motif, expr.data, verbose = FALSE, randomize = "n
   if (verbose) 
     print("Main calculation")
   result <- NULL
-  if (method == "BERE") {
+  if (method == "bere") {
     expr.data <- data.frame(expr.data)
     tfdcast <- dcast(motif, TF ~ GENE, fill = 0)
     rownames(tfdcast) <- tfdcast[, 1]

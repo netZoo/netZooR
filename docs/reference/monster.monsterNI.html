@@ -144,10 +144,18 @@ gene expression data and sequence motif data</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>monster.monsterNI</span>(<span class='no'>motif</span>, <span class='no'>expr.data</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>randomize</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bere"</span>, <span class='kw'>ni.coefficient.cutoff</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>alphaw</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>regularization</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='st'>"motifincluded"</span>,
-  <span class='kw'>cpp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>monster.monsterNI</span>(
+  <span class='no'>motif</span>,
+  <span class='no'>expr.data</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>randomize</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bere"</span>,
+  <span class='kw'>ni.coefficient.cutoff</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>alphaw</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>regularization</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
+  <span class='kw'>score</span> <span class='kw'>=</span> <span class='st'>"motifincluded"</span>,
+  <span class='kw'>cpp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,8 +215,8 @@ readded upon completion of the algorithm</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>yeast</span>)
-<span class='no'>cc.net</span> <span class='kw'>&lt;-</span> <span class='fu'>monster.monsterNI</span>(<span class='no'>yeast</span>$<span class='no'>motif</span>,<span class='no'>yeast</span>$<span class='no'>exp.cc</span>)</div><div class='output co'>#&gt; Time difference of 1.197175 secs
-#&gt; Time difference of 0.525851 secs</div></pre>
+<span class='no'>cc.net</span> <span class='kw'>&lt;-</span> <span class='fu'>monster.monsterNI</span>(<span class='no'>yeast</span>$<span class='no'>motif</span>,<span class='no'>yeast</span>$<span class='no'>exp.cc</span>)</div><div class='output co'>#&gt; Time difference of 1.157392 secs
+#&gt; .......................</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ..........</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ....................</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>

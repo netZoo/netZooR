@@ -8,29 +8,23 @@
 
 <title>Plot adjacency matrix with links grouped and colored by community — condor.plot.communities • netZooR</title>
 
-
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
-
-<!-- bootstrap-toc -->
-<link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,12 +32,12 @@
 
 
 
-
 <meta property="og:title" content="Plot adjacency matrix with links grouped and colored by community — condor.plot.communities" />
+
 <meta property="og:description" content="This function will generate the network link 'heatmap' with colored dots
 representing within-community links and black dots between-community 
 links" />
-
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -60,7 +54,7 @@ links" />
 
   </head>
 
-  <body data-spy="scroll" data-target="#toc">
+  <body>
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -123,6 +117,7 @@ links" />
   </ul>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -144,9 +139,11 @@ links" />
     </div>
 
     <div class="ref-description">
+    
     <p>This function will generate the network link 'heatmap' with colored dots
 representing within-community links and black dots between-community 
 links</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>condor.plot.communities</span>(
@@ -156,7 +153,7 @@ links</p>
   <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"SNP"</span>,
   <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Gene"</span>
 )</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -168,13 +165,13 @@ links</p>
     <tr>
       <th>color_list</th>
       <td><p>vector of colors accepted by <code>col</code> inside the 
-<code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></code> function. There must be as many colors as 
+<code><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></code> function. There must be as many colors as 
 communities.</p></td>
     </tr>
     <tr>
       <th>point.size</th>
       <td><p>passed to <code>cex</code> in the 
-<code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></code></p></td>
+<code><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></code></p></td>
     </tr>
     <tr>
       <th>xlab</th>
@@ -185,18 +182,21 @@ communities.</p></td>
       <td><p>y axis label</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>produces a <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></code> output.</p>
+    <p>produces a <code><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></code> output.</p>
+    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>For the condor paper <a href='http://arxiv.org/abs/1509.02816'>http://arxiv.org/abs/1509.02816</a>, I used
   35 colors from the "Tarnish" palette with "hard" clustering</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p><a href='http://tools.medialab.sciences-po.fr/iwanthue/'>http://tools.medialab.sciences-po.fr/iwanthue/</a> for 
  a nice color generator at</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>4</span>);
@@ -207,17 +207,27 @@ communities.</p></td>
 <span class='no'>condor.object</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create.condor.object.html'>create.condor.object</a></span>(<span class='no'>elist</span>)
 <span class='no'>condor.object</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='condor.cluster.html'>condor.cluster</a></span>(<span class='no'>condor.object</span>)</div><div class='output co'>#&gt; [1] "modularity of projected graph 0"
 #&gt; [1] "Q = 0"
+#&gt; [1] "Q = 0.132231404958678"
 #&gt; [1] "Q = 0.198347107438017"
 #&gt; [1] "Q = 0.231404958677686"
 #&gt; [1] "Q = 0.231404958677686"</div><div class='input'><span class='fu'>condor.plot.communities</span>(<span class='no'>condor.object</span>,
 <span class='kw'>color_list</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"darkgreen"</span>,<span class='st'>"darkorange"</span>),<span class='kw'>point.size</span><span class='kw'>=</span><span class='fl'>2</span>,
-<span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Women"</span>,<span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"Men"</span>)</div><div class='output co'>#&gt; [1] "warning: empty levels in SNP column. This may cause silent issues with plotting."
-#&gt; [1] "Warning! not all nodes in block!"</div><div class='img'><img src='condor.plot.communities-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Women"</span>,<span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"Men"</span>)</div><div class='img'><img src='condor.plot.communities-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <nav id="toc" data-toggle="toc" class="sticky-top">
-      <h2 data-toc-skip>Contents</h2>
-    </nav>
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
+
+      <li><a href="#references">References</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 
@@ -228,7 +238,7 @@ communities.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>
