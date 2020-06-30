@@ -4,11 +4,8 @@
 \alias{vis.diff.panda.in.cytoscape}
 \title{Plot two PANDA networsk in Cytoscape}
 \usage{
-vis.diff.panda.in.cytoscape(
-  merged_panda,
-  condition_name = "cond.1",
-  network_name = "diff.PANDA"
-)
+vis.diff.panda.in.cytoscape(merged_panda, condition_name = "cond.1",
+  network_name = "diff.PANDA")
 }
 \arguments{
 \item{merged_panda}{vector indicating the merged PANDA networks in data frame structure type.}
@@ -22,7 +19,7 @@ This function is able to modify PANDA network and plot in Cytoscape.
 }
 \examples{
 \dontrun{
-# create a merged PANDA network from two conditions by running \code{\link{panda.diff.edges}}
+# create a merged PANDA network from two conditions by running \\code{\\link{panda.diff.edges}}
 merged.panda <- panda.diff.edges(panda.net1, panda.net2, condition_name="condition1")
 # then plot two PANDA network in Cytoscape.
 vis.diff.panda.in.cytoscape(merged.panda,condition_name = "condition1", network_name="diff.PANDA" )

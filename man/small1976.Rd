@@ -4,9 +4,7 @@
 \name{small1976}
 \alias{small1976}
 \title{Pollinator-plant interactions}
-\format{
-A data frame with 442 rows and 3 variables
-}
+\format{A data frame with 442 rows and 3 variables}
 \usage{
 data(small1976)
 }

@@ -4,9 +4,7 @@
 \name{genes}
 \alias{genes}
 \title{Example of a gene list}
-\format{
-A character vector of length 2352
-}
+\format{A character vector of length 2352}
 \usage{
 data(genes)
 }

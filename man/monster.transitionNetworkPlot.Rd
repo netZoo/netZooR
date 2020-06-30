@@ -4,7 +4,8 @@
 \alias{monster.transitionNetworkPlot}
 \title{This function uses igraph to plot the transition matrix as a network}
 \usage{
-monster.transitionNetworkPlot(monsterObj, numEdges = 100, numTopTFs = 10)
+monster.transitionNetworkPlot(monsterObj, numEdges = 100,
+  numTopTFs = 10)
 }
 \arguments{
 \item{monsterObj}{monsterAnalysis Object}

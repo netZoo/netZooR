@@ -210,10 +210,12 @@ globalVariables("i")
 #' @importFrom reshape2 melt
 #' @export
 #' @examples
+#' \donttest{
 #' data(yeast)
 #' cc.net.1 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
 #' cc.net.2 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])
 #' monster.transformation.matrix(cc.net.1, cc.net.2)
+#' }
 monster.transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize=FALSE, 
                                   remove.diagonal=TRUE, method="ols"){
   if(is.list(network.1)&&is.list(network.2)){
