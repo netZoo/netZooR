@@ -12,7 +12,7 @@
 #'                       matrix of size (t,g), g=number of genes, t=number of TFs
 #' @param P     : TF-TF protein interaction network as a matrix of size (t,t)
 #' @param C     : gene coexpression as a matrix of size (g,g) 
-#' @param lambda: tuning parameter in [0,1] (higher gives more weight to C)
+#' @param lambda : tuning parameter in [0,1] (higher gives more weight to C)
 #' @param gamma : regularization parameter
 #' @param Iter  : number of iterations of the algorithm
 #' @param eta   : learning rate

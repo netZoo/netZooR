@@ -152,16 +152,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>otter</span>(
-  <span class='no'>W</span>,
-  <span class='no'>P</span>,
-  <span class='no'>C</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0.0035</span>,
-  <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='fl'>0.335</span>,
-  <span class='kw'>Iter</span> <span class='kw'>=</span> <span class='fl'>32</span>,
-  <span class='kw'>eta</span> <span class='kw'>=</span> <span class='fl'>1e-05</span>,
-  <span class='kw'>bexp</span> <span class='kw'>=</span> <span class='fl'>1</span>
-)</pre>
+    <pre class="usage"><span class='fu'>otter</span>(<span class='no'>W</span>, <span class='no'>P</span>, <span class='no'>C</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0.0035</span>, <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='fl'>0.335</span>, <span class='kw'>Iter</span> <span class='kw'>=</span> <span class='fl'>32</span>,
+  <span class='kw'>eta</span> <span class='kw'>=</span> <span class='fl'>1e-05</span>, <span class='kw'>bexp</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,6 +172,10 @@ matrix of size (t,g), g=number of genes, t=number of TFs</p></td>
       <td><p>: gene coexpression as a matrix of size (g,g)</p></td>
     </tr>
     <tr>
+      <th>lambda</th>
+      <td><p>: tuning parameter in [0,1] (higher gives more weight to C)</p></td>
+    </tr>
+    <tr>
       <th>gamma</th>
       <td><p>: regularization parameter</p></td>
     </tr>
@@ -195,10 +191,6 @@ matrix of size (t,g), g=number of genes, t=number of TFs</p></td>
       <th>bexp</th>
       <td><p>: exponent influencing learning rate (higher means smaller)</p>
 <p>Outputs:</p></td>
-    </tr>
-    <tr>
-      <th>lambda:</th>
-      <td><p>tuning parameter in [0,1] (higher gives more weight to C)</p></td>
     </tr>
     </table>
     
