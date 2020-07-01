@@ -57,7 +57,7 @@ test_that("MONSTER function works", {
   
   # Bipartite Edge Reconstruction from Expression data (composite method with direct/indirect)
   monsterRes_bereFull<- monster.bereFull(yeast$motif, yeast$exp.cc, alpha=.5)
-  expect_equal(monsterRes_bereFull[1,1], 105770, tolerance=1e-7)
+  expect_equal(monsterRes_bereFull[1,1], 105346.5, tolerance=1e-7)
   
   # summarizes the results of a MONSTER analysis
   expect_error(monster.print.monsterAnalysis(monsterRes),NA)
