@@ -10,7 +10,7 @@ setMethod("show","monsterAnalysis",function(object){monster.print.monsterAnalysi
 #' @export
 #' @return Plot of the dTFI for each TF against null distribution
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(yeast)
 #' monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),
 #' yeast$motif, nullPerms=10, numMaxCores=4)
@@ -28,7 +28,7 @@ monster.plot.monsterAnalysis <- function(x, ...){
 #' @export
 #' @return Description of transition matrices in object
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(yeast)
 #' monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
 #' }
@@ -74,7 +74,7 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' @return An object of class "monsterAnalysis" containing results
 #' 
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(yeast)
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)
@@ -210,7 +210,7 @@ globalVariables("i")
 #' @importFrom reshape2 melt
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(yeast)
 #' cc.net.1 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
 #' cc.net.2 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])

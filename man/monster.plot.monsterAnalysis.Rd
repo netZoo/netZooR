@@ -18,7 +18,7 @@ Plot of the dTFI for each TF against null distribution
 plots the sum of squares of off diagonal mass (differential TF Involvement)
 }
 \examples{
-\donttest{
+\dontrun{
 data(yeast)
 monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),
 yeast$motif, nullPerms=10, numMaxCores=4)
