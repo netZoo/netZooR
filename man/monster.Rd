@@ -44,7 +44,7 @@ By examining the properties of the transition matrix, we can gain insight into r
 changes associated with phenotypic state transition.
 }
 \examples{
-\dontrun{
+\donttest{
 data(yeast)
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
 monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)

@@ -18,7 +18,7 @@ Description of transition matrices in object
 summarizes the results of a MONSTER analysis
 }
 \examples{
-\dontrun{
+\donttest{
 data(yeast)
 monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
 }
