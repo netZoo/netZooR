@@ -4,13 +4,8 @@
 \alias{condor.cluster}
 \title{Main clustering function for condor.}
 \usage{
-condor.cluster(
-  condor.object,
-  cs.method = "LCS",
-  project = TRUE,
-  low.memory = FALSE,
-  deltaQmin = "default"
-)
+condor.cluster(condor.object, cs.method = "LCS", project = TRUE,
+  low.memory = FALSE, deltaQmin = "default")
 }
 \arguments{
 \item{condor.object}{Output of make.condor.object. This function uses 

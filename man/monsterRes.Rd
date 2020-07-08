@@ -4,9 +4,7 @@
 \name{monsterRes}
 \alias{monsterRes}
 \title{MONSTER results from example cell-cycle yeast transition}
-\format{
-MONSTER obj
-}
+\format{MONSTER obj}
 \usage{
 data(monsterRes)
 }

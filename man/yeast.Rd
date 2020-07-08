@@ -4,9 +4,7 @@
 \name{yeast}
 \alias{yeast}
 \title{Toy data derived from three gene expression datasets and a mapping from transcription factors to genes.}
-\format{
-A list containing 4 data.frames
-}
+\format{A list containing 4 data.frames}
 \usage{
 data(yeast)
 }

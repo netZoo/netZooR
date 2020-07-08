@@ -4,7 +4,8 @@
 \alias{condor.plot.heatmap}
 \title{Plot weighted adjacency matrix with links grouped by community}
 \usage{
-condor.plot.heatmap(condor.object, main = "", xlab = "blues", ylab = "reds")
+condor.plot.heatmap(condor.object, main = "", xlab = "blues",
+  ylab = "reds")
 }
 \arguments{
 \item{condor.object}{output of either \code{\link{condor.cluster}} or 

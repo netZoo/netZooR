@@ -4,12 +4,8 @@
 \alias{condor.modularity.max}
 \title{Iteratively maximize bipartite modularity.}
 \usage{
-condor.modularity.max(
-  condor.object,
-  T0 = cbind(1:q, rep(1, q)),
-  weights = 1,
-  deltaQmin = "default"
-)
+condor.modularity.max(condor.object, T0 = cbind(1:q, rep(1, q)),
+  weights = 1, deltaQmin = "default")
 }
 \arguments{
 \item{condor.object}{is a list created by 

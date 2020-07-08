@@ -4,12 +4,8 @@
 \alias{monster.transitionPCAPlot}
 \title{Principal Components plot of transformation matrix}
 \usage{
-monster.transitionPCAPlot(
-  monsterObj,
-  title = "PCA Plot of Transition",
-  clusters = 1,
-  alpha = 1
-)
+monster.transitionPCAPlot(monsterObj, title = "PCA Plot of Transition",
+  clusters = 1, alpha = 1)
 }
 \arguments{
 \item{monsterObj}{a monsterAnalysis object resulting from a monster analysis}

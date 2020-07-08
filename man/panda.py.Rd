@@ -4,18 +4,10 @@
 \alias{panda.py}
 \title{Run Python implementation PANDA in R}
 \usage{
-panda.py(
-  expr_file,
-  motif_file = NULL,
-  ppi_file = NULL,
-  computing = "cpu",
-  precision = "double",
-  save_memory = FALSE,
-  save_tmp = TRUE,
-  keep_expression_matrix = FALSE,
-  modeProcess = "union",
-  remove_missing = FALSE
-)
+panda.py(expr_file, motif_file = NULL, ppi_file = NULL,
+  computing = "cpu", precision = "double", save_memory = FALSE,
+  save_tmp = TRUE, keep_expression_matrix = FALSE,
+  modeProcess = "union", remove_missing = FALSE)
 }
 \arguments{
 \item{expr_file}{Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).}
