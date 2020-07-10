@@ -147,7 +147,8 @@
     <pre class="usage"><span class='fu'>lioness.py</span>(<span class='no'>expr_file</span>, <span class='kw'>motif_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ppi_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>computing</span> <span class='kw'>=</span> <span class='st'>"cpu"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='st'>"double"</span>, <span class='kw'>save_tmp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>modeProcess</span> <span class='kw'>=</span> <span class='st'>"union"</span>, <span class='kw'>remove_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>start_sample</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>end_sample</span> <span class='kw'>=</span> <span class='st'>"None"</span>, <span class='kw'>save_dir</span> <span class='kw'>=</span> <span class='st'>"lioness_output"</span>, <span class='kw'>save_fmt</span> <span class='kw'>=</span> <span class='st'>"npy"</span>)</pre>
+  <span class='kw'>end_sample</span> <span class='kw'>=</span> <span class='st'>"None"</span>, <span class='kw'>save_single_network</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>save_dir</span> <span class='kw'>=</span> <span class='st'>"lioness_output"</span>, <span class='kw'>save_fmt</span> <span class='kw'>=</span> <span class='st'>"npy"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,13 +196,17 @@ Also, this can be generated with a list of proteins of interest by <code><a href
       <td><p>Numeric indicating the end sample number. The default value is 'None' meaning no end sample, i.e. print out all samples.</p></td>
     </tr>
     <tr>
+      <th>save_single_network</th>
+      <td><p>Boolean vector, "TRUE" wirtes out the single network in npy/txt/mat formats, directory and format are specifics by params "save_dir" and "save_fmt". The default value is 'FALSE'</p></td>
+    </tr>
+    <tr>
       <th>save_dir</th>
       <td><p>Character string indicating the folder name of output lioness networks for each sample by defined.
-The default is a folder named "lioness_output" under current working directory.</p></td>
+The default is a folder named "lioness_output" under current working directory. This paramter is valid only when save_single_network = TRUE.</p></td>
     </tr>
     <tr>
       <th>save_fmt</th>
-      <td><p>Character string indicating the format of lioness network of each sample. The dafault is "npy". The option is txt, npy, or mat.</p></td>
+      <td><p>Character string indicating the format of lioness network of each sample. The dafault is "npy". The option is txt, npy, or mat. This paramter is valid only when save_single_network = TRUE.</p></td>
     </tr>
     </table>
     
