@@ -25,20 +25,19 @@ test_that("lioness.py() function works", {
   expect_equal(test1Lioness[1,3],3.522611792827966, tolerance=1e-7)
   
   # test 5: check if LIONESS result is correct when arguments set as following:
-  # i.e computing = "cpu", save_memory =T , precision="single", save_tmp=F, keep_expression_matrix = T, modeProcess = 'intersection',remove_missing=FALSE, start_sample=1, end_sample=1, save_single_network=FALSE， save_dir="lioness_output", save_fmt='txt'
+  # i.e computing = "cpu", save_memory =T , precision="single", save_tmp=F, keep_expression_matrix = T, modeProcess = 'intersection',remove_missing=FALSE, start_sample=1, end_sample=1, save_single_network=FALSE
   test2Lioness <- lioness.py(T4_expression_file_path, motif_file_path,ppi_file_path,precision = "single", save_tmp = F, modeProcess = "intersection", 
-                             remove_missing=FALSE, start_sample=1, end_sample=1, save_single_network=TRUE, save_dir="lioness_output", save_fmt='npy')
+                             remove_missing=FALSE, start_sample=1, end_sample=1, save_single_network=FALSE)
   expect_equal(test2Lioness[1,3],-6.261896133422852, tolerance=1e-7)
   
   # test 6: when processMode = legacy, remove_missing=FALSE
-  test3Lioness <- lioness.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = FALSE,start_sample=1, end_sample=1, save_single_network=TRUE, save_dir="lioness_output", save_fmt='txt')
+  test3Lioness <- lioness.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = FALSE,start_sample=1, end_sample=1, save_single_network=FALSE)
   expect_equal(test3Lioness[1,3],-9.161871814932276,tolerance=1e-7)
   
   # test 18: when processMode = legacy, remove_missing=TRUE
-  test4Lioness <- lioness.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = TRUE,start_sample=1, end_sample=1, save_single_network=TRUE, save_dir="lioness_output", save_fmt='mat')
+  test4Lioness <- lioness.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = TRUE,start_sample=1, end_sample=1, save_single_network=FALSE)
   expect_equal(test4Lioness[1,3],-17.75603026987701,tolerance=1e-7)
   
-  system(paste0("rm -r ", "./lioness_output"))
   
 })
 
