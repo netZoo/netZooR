@@ -20,7 +20,7 @@ test_that("panda function works", {
 
   # test 4: when all arguments are default
   # computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE
-   test1 <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path)
+   test1 <- panda.py(T4_expression_file_path, motif_file_path, ppi_file_path)
    test1Panda <- test1$panda
    # test 5-8: check data type in PANDA network
    expect_equal(class(test1Panda$TF), "character")
