@@ -26,7 +26,7 @@ test_that("panda function works", {
    #expect_equal(class(test1Panda$TF), "character")
    #expect_equal(class(test1Panda$Gene), "character")
    #expect_equal(class(test1Panda$Motif), "numeric")
-   3expect_equal(class(test1Panda$Score), "numeric")
+   #expect_equal(class(test1Panda$Score), "numeric")
   
   # test 9: check if PANDA result is correct 
    #expect_equal(test1Panda[1,4],-0.23212458160041557,tolerance=1e-7)
