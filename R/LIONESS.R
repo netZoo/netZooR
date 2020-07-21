@@ -114,9 +114,9 @@ lioness.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu
    
    # rename first two columns
    names(panda_net)[names(panda_net) == "tf"] <- "TF"
-   names(panda_net)[names(panda_net) == "gene"] <- "gene"
+   names(panda_net)[names(panda_net) == "gene"] <- "Gene"
    
-   if( length(intersect(panda_net$Gene, panda_net$tf))>0){
+   if( length(intersect(panda_net$Gene, panda_net$TF))>0){
      panda_net$TF <- paste('reg_', panda_net$TF, sep='')
      panda_net$Gene <- paste('tar_', panda_net$Gene, sep='')
      message("Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns" )
@@ -134,7 +134,7 @@ lioness.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu
    # convert the python varible "lionesss_network" to a data.frame in R enviroment.
    lioness_net <- py$lioness_network
    # cbind the first two columns of PANDA output with LIONESS output.
-   lioness_output <- cbind(panda_net[,c(1,2)], lioness_net)
+   lioness_output <- cbind(panda_net[,c("TF","Gene")], lioness_net)
    return(lioness_output)
 }
 

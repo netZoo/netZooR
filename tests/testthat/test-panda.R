@@ -20,8 +20,8 @@ test_that("panda function works", {
 
   # test 4: when all arguments are default
   # computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE
-   test1List <- panda.py(T4_expression_file_path, motif_file_path, ppi_file_path,computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union")
-   test1Panda <- test1List$panda
+   test1Panda<- panda.py(T4_expression_file_path, motif_file_path, ppi_file_path)$panda
+
    # test 5-8: check data type in PANDA network
    expect_equal(class(test1Panda$TF), "character")
    expect_equal(class(test1Panda$Gene), "character")
@@ -32,14 +32,14 @@ test_that("panda function works", {
    expect_equal(test1Panda[1,4],-0.23212458160041557,tolerance=1e-7)
 
    # test 10-12: check if PANDA indegree network is correct
-   test1Indegree <- test1List$indegree
+   test1Indegree <- panda.py(T4_expression_file_path, motif_file_path, ppi_file_path)$indegree
   
    expect_equal(class(test1Indegree$`Target`), "character")
    expect_equal(class(test1Indegree$`Target_Score`), "numeric")
    expect_equal(test1Indegree[1,2], -272.9487716751912,tolerance=1e-7)
   
    # test 13-15: check if PANDA outdegree network is correct
-   test1Outdegree <- test1List$outdegree
+   test1Outdegree <- panda.py(T4_expression_file_path, motif_file_path, ppi_file_path)$outdegree
   
    expect_equal(class(test1Outdegree$`Regulator`), "character")
    expect_equal(class(test1Outdegree$`Regulator_Score`), "numeric")
