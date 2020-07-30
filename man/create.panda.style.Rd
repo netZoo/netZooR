@@ -7,10 +7,10 @@
 create.panda.style(style_name = "PandaStyle")
 }
 \arguments{
-\item{style.name}{Character string indicating the style name. Defaults to "PandaStyle"}
+\item{style_name}{Character string indicating the style name. Defaults to "PandaStyle"}
 }
 \value{
-a visual style in Cytoscape Control Panel under "Style" button.
+A visual style in Cytoscape Control Panel under "Style" button.
 }
 \description{
 This function is able to create a Cytoscape visual style for any PANDA network output.

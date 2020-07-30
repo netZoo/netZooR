@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -190,7 +190,7 @@ devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/
 <a href="#ppi" class="anchor"></a>PPI</h3>
 <p>This package includes a function <code>source.PPI</code> may source a Protein-Protein Interactions (PPI) througt STRING database given a list of proteins of interest. The <a href="http://www.bioconductor.org/packages/release/bioc/html/STRINGdb.html">STRINGdb</a> is already loaded while loading netZooR.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># TF is a data frame with single column filled with TFs of Mycobacterium tuberculosis H37Rv.</span>
-PPI &lt;-<span class="st"> </span><span class="kw"><a href="../reference/source.PPI.html">source.PPI</a></span>(TF, <span class="dt">species.index=</span><span class="dv">83332</span>, <span class="dt">score_threshold=</span><span class="dv">0</span>)</code></pre></div>
+<span class="co"># PPI &lt;- source.PPI(TF, species.index=83332, score_threshold=0)</span></code></pre></div>
 </div>
 </div>
 <div id="running-the-sample-tb-datasets" class="section level2">
@@ -198,7 +198,7 @@ PPI &lt;-<span class="st"> </span><span class="kw"><a href="../reference/source.
 <a href="#running-the-sample-tb-datasets" class="anchor"></a>Running the sample TB datasets</h2>
 <p>Use search() to check all loaded package currently.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(netZooR)
-<span class="kw"><a href="https://rdrr.io/r/base/search.html">search</a></span>()</code></pre></div>
+<span class="co"># search()</span></code></pre></div>
 <p>Accessing the help pages for the usage of core functions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><a href="../reference/panda.py.html">?panda.py
 ?create.condor.object

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Run PANDA in R — panda.py • netZooR</title>
+<title>Run Python implementation PANDA in R — panda.py • netZooR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,14 +32,13 @@
 
 
 
-<meta property="og:title" content="Run PANDA in R — panda.py" />
+<meta property="og:title" content="Run Python implementation PANDA in R — panda.py" />
 
 <meta property="og:description" content="PANDA(Passing Attributes between Networks for Data Assimilation) is a message-passing model 
 to reconstruct gene regulatory network, which integrates multiple sources of biological data-including protein-protein interaction data,
 gene expression data, and transcription factor binding motifs data to reconstruct genome-wide, condition-specific regulatory networks.
 [(Glass et al. 2013)])
-This function is designed to run the a derived PANDA implement in Python &quot;netZooPy&quot; netZooPy,
- which is also a Python library of netZooR." />
+This function is designed to run the a derived PANDA implementation in Python Library &quot;netZooPy&quot; netZooPy." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -71,7 +70,7 @@ This function is designed to run the a derived PANDA implement in Python &quot;n
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -136,7 +135,7 @@ This function is designed to run the a derived PANDA implement in Python &quot;n
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Run PANDA in R</h1>
+    <h1>Run Python implementation PANDA in R</h1>
     
     <div class="hidden name"><code>panda.py.Rd</code></div>
     </div>
@@ -147,64 +146,88 @@ This function is designed to run the a derived PANDA implement in Python &quot;n
 to reconstruct gene regulatory network, which integrates multiple sources of biological data-including protein-protein interaction data,
 gene expression data, and transcription factor binding motifs data to reconstruct genome-wide, condition-specific regulatory networks.
 <a href='http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832'>[(Glass et al. 2013)])</a>
-This function is designed to run the a derived PANDA implement in Python "netZooPy" <a href='https://github.com/netZoo/netZooPy'>netZooPy</a>,
- which is also a Python library of netZooR.</p>
+This function is designed to run the a derived PANDA implementation in Python Library "netZooPy" <a href='https://github.com/netZoo/netZooPy'>netZooPy</a>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>panda.py</span>(<span class='no'>expr</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mode_process</span> <span class='kw'>=</span> <span class='st'>"union"</span>,
-  <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>panda.py</span>(<span class='no'>expr_file</span>, <span class='kw'>motif_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ppi_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>computing</span> <span class='kw'>=</span> <span class='st'>"cpu"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='st'>"double"</span>, <span class='kw'>save_memory</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>save_tmp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>keep_expression_matrix</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>modeProcess</span> <span class='kw'>=</span> <span class='st'>"union"</span>, <span class='kw'>remove_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>expr</th>
+      <th>expr_file</th>
       <td><p>Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).</p></td>
     </tr>
     <tr>
-      <th>motif</th>
+      <th>motif_file</th>
       <td><p>An optional character string indicating the file path of a prior transcription factor binding motifs dataset.
 When this argument is not provided, analysis will continue with Pearson correlation matrix.</p></td>
     </tr>
     <tr>
-      <th>ppi</th>
+      <th>ppi_file</th>
       <td><p>An optional character string indicating the file path of protein-protein interaction edge dataset.
 Also, this can be generated with a list of proteins of interest by <code><a href='source.PPI.html'>source.PPI</a></code>.</p></td>
     </tr>
     <tr>
-      <th>mode_process</th>
-      <td><p>An optional character to define the pre-processing of input dataset, options include "legacy" to the original behavior of PANDA in Python implement,
-"interaction" to constrain the TF and gene as interaction across all input datasets, and "union" to take TF union and gene union across all input datasets.
-The default value is "union".</p></td>
+      <th>computing</th>
+      <td><p>'cpu' uses Central Processing Unit (CPU) to run PANDA; 'gpu' use the Graphical Processing Unit (GPU) to run PANDA. The default value is "cpu".</p></td>
     </tr>
     <tr>
-      <th>rm_missing</th>
-      <td><p>When mode_process = "legacy", rm_missing is an optional boolean indicating whether to remove genes and TFs not present in all input files. If TRUE, remove all unmatched TF and genes.
-if FALSE, keep all tf and genes. The default value is FALSE.</p></td>
+      <th>precision</th>
+      <td><p>'double' computes the regulatory network in double precision (15 decimal digits); 'single' computes the regulatory network in single precision (7 decimal digits) which is fastaer, requires half the memory but less accurate. The default value is 'double'.</p></td>
+    </tr>
+    <tr>
+      <th>save_memory</th>
+      <td><p>'TRUE' removes temporary results from memory. The result network is weighted adjacency matrix of size (nTFs, nGenes); 'FALSE' keeps the temporary files in memory. The result network has 4 columns in the form gene - TF - weight in motif prior - PANDA edge. PANDA indegree/outdegree of panda network, only if save_memory = FALSE. The default value is 'FALSE'.</p></td>
+    </tr>
+    <tr>
+      <th>save_tmp</th>
+      <td><p>'TRUE' saves middle data like expression matrix and normalized networks; 'FALSE' deletes the middle data. The default value is 'TURE'.</p></td>
+    </tr>
+    <tr>
+      <th>keep_expression_matrix</th>
+      <td><p>'TRUE' keeps the input expression matrix as an attribute in the result Panda object.'FALSE' deletes the expression matrix attribute in the Panda object. The default value is 'FALSE'.</p></td>
+    </tr>
+    <tr>
+      <th>modeProcess</th>
+      <td><p>'legacy' refers to the processing mode in netZooPy&lt;=0.5, 'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros; 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes. Default values is 'union'.</p></td>
+    </tr>
+    <tr>
+      <th>remove_missing</th>
+      <td><p>Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is 'FALSE'.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of three items：
+    <p>When save_memory=FALSE(default), this function will return a list of three items：
          Use <code>$panda</code> to access the standard output of PANDA as data frame, which consists of four columns: 
          "TF", "Gene", "Motif" using 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".</p>
 <p>Use <code>$indegree</code> to access the indegree of PANDA network as data frame, which consists of two columns: "Gene", "Score".</p>
-<p>Use <code>$outdegree</code> to access the outdegree of PANDA network as data frame, which consists of two columns: "TF", "Score".</p>
+<p>Use <code>$outdegree</code> to access the outdegree of PANDA network as data frame, which consists of two columns: "TF", "Score".</p>         
+<p>When save_memory=TRUE, this function will return a weigheted adjacency matirx of size (nTFs, nGenes), use <code>$WAMpanda</code> to access.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># take the treated TB dataset as example here.</span>
 <span class='co'># refer to the datasets files path in inst/extdat</span>
 
-<span class='no'>treated_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr4_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>treated_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr4_matched.txt"</span>,
+<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>treated_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr4_matched.txt"</span>,
+ <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>motif_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"chip_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>ppi_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ppi_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 
 <span class='co'># Run PANDA for treated and control network</span>
-<span class='no'>treated_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'>panda.py</span>(<span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>treated_expression_file_path</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>mode_process</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-processing dataset and keep the matched tfs or genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA...</span></div><div class='input'>
+<span class='no'>treated_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'>panda.py</span>(<span class='kw'>expr_file</span> <span class='kw'>=</span> <span class='no'>treated_expression_file_path</span>,
+<span class='kw'>motif_file</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi_file</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>,
+<span class='kw'>modeProcess</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>remove_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA...</span></div><div class='input'>
 <span class='co'># access PANDA regulatory network</span>
 <span class='no'>treated_net</span> <span class='kw'>&lt;-</span> <span class='no'>treated_all_panda_result</span>$<span class='no'>panda</span>
 

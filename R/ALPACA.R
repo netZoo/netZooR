@@ -8,7 +8,8 @@
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its module's total differential modularity
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @importFrom utils write.table
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -95,7 +96,7 @@ alpaca <- function(net.table,file.stem,verbose=F)
 #' @return List with two elements. First element is a list of the top target genes in each cluster. Second element is a vector with the names of the gene sets. The names are in the format "number_length", where number is the module number label and length is the length of the gene set.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -133,7 +134,7 @@ alpaca.ExtractTopGenes <- function(module.result,set.lengths)
 #' @return A vector with strings representing gene lists, each element of the vector has the genes in that GO term and community pasted together with spaces in between.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @import GO.db
 #' @export
@@ -167,7 +168,7 @@ alpaca.GOtab.to.genes <- function(go.result,dm.top)
 #' @return A list of sets of gene symbols.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -192,7 +193,8 @@ alpaca.TopEnsembl.to.TopSym <- function(mod.top,annot.vec)
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its community's modularity in the final edge-subtracted network
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @importFrom utils write.table
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -236,7 +238,8 @@ alpaca.DeltaZAnalysis <- function(net.table,file.stem)
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its community's modularity in the final edge-subtracted network
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @importFrom utils write.table
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -272,7 +275,7 @@ alpaca.DeltaZAnalysis.Louvain <- function(net.table,file.stem)
 #' @return Vector of nodes ordered by how much they change their community membership between the two networks.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -309,7 +312,7 @@ alpaca.RotationAnalysis <- function(net.table)
 #' @return Vector of nodes ordered by how much they change their community membership between the two networks.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -340,7 +343,7 @@ alpaca.RotationAnalysis.Louvain <- function(net.table)
 #' @return List where first element is the community membership vector and second element is the contribution score of each node to its community's portion of the bipartite modularity.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -395,7 +398,7 @@ alpaca.WBM.louvain <- function(net.frame)
 #' @return Modularity matrix with rows representing TFs ("from" nodes) and columns repesenting targets ("to" nodes)
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -425,7 +428,7 @@ alpaca.computeWBMmat <- function(edge.mat)
 #' @return Untagged node name
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -442,8 +445,9 @@ alpaca.node.to.gene <- function(x){strsplit(x,split="_")[[1]][1]}
 #' @return A table whose rows represent enriched GO terms (p_adj<0.05) and columns describe useful properties, like the name of the GO term, the label of the gene set which is enriched in that GO term, the adjusted p-value and Odds Ratio.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
+#' @rawNamespace import(AnnotationDbi, except= select)
 #' @export
 #' 
 
@@ -489,7 +493,7 @@ alpaca.list.to.go <- function(gene.list,univ.vec,comm.nums){
 #' @return A vector of 4 values. 1) Wilcoxon p-value, 2) KS p-value, 3) Fisher p-value, 4) Fisher odds ratio.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -525,7 +529,7 @@ alpaca.TestNodeRank <- function(node.ordered,true.pos)
 #' @return A ranked list of nodes.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -564,7 +568,7 @@ alpaca.CommunityStructureRotation <- function(net1.memb,net2.memb){
 #' @return The differential modularity matrix, with rows representing "from" nodes and columns representing "to" nodes.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -663,7 +667,7 @@ alpaca.computeDWBMmat.mscale <- function(edge.mat,ctrl.memb){
 #' @return The differential modularity matrix, with rows representing "from" nodes and columns representing "to" nodes.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -677,13 +681,12 @@ alpaca.metanetwork <- function(J,S)
 #' Renumbering community membership vector
 #'
 #' This is a helper function alpaca.genlouvain. It re-numbers the communities so that they run from 1 to N increasing through the vector.
-#' @param J The modularity matrix
 #' @param S The community membership vector derived from the previous round of agglomeration.
 #'  
 #' @return The renumbered membership vector.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -706,7 +709,7 @@ alpaca.tidyconfig <- function(S)
 #' @return The community membership vector
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -809,7 +812,7 @@ alpaca.genlouvain <- function(B)
 #' @return A list with two elements. The first element is a four-column edge table of the same form that is input into the differential modularity function. The second element is a list of all the new nodes in the modules that were added to create the disease network.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @export
 #' 
@@ -884,9 +887,10 @@ alpaca.simulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,de
 #' @return A vector of all gene symbols associated with the GO term.
 #' @import igraph
 #' @import Matrix
-#' @import GOstats
+#' @rawNamespace import(GOstats, except= makeGOGraph) 
 #' @import org.Hs.eg.db
 #' @import GO.db
+#' @rawNamespace import(AnnotationDbi, except= select)
 #' @export
 #' 
 

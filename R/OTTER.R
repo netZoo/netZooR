@@ -12,7 +12,7 @@
 #'                       matrix of size (t,g), g=number of genes, t=number of TFs
 #' @param P     : TF-TF protein interaction network as a matrix of size (t,t)
 #' @param C     : gene coexpression as a matrix of size (g,g) 
-#' @param lambda: tuning parameter in [0,1] (higher gives more weight to C)
+#' @param lambda : tuning parameter in [0,1] (higher gives more weight to C)
 #' @param gamma : regularization parameter
 #' @param Iter  : number of iterations of the algorithm
 #' @param eta   : learning rate
@@ -20,9 +20,6 @@
 #'
 #' Outputs:
 #' @return W    : Predicted TF-gene complete regulatory network as an adjacency matrix of size (t,g).
-#'
-#' Authors: 
-#'               Rebekka Burkholz 4/2020
 #'
 #' @examples
 #'
@@ -35,7 +32,7 @@
 #'  
 #' @export
 
-otter <- function(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 300, eta = 0.00001, bexp = 1){
+otter <- function(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 32, eta = 0.00001, bexp = 1){
   #ADAM parameters
   b1 <- 0.9
   b2 <- 0.999
@@ -46,23 +43,27 @@ otter <- function(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 300, eta = 0.0
   dW <- dim(W)
   nTF <- dW[1]
   nGenes <- dW[2]
-  P <- P*((1-lambda)/sum(diag(P))) + (1-lambda)*0.0013
-  C <- C*(lambda/sum(diag(C)))
+  C <- C/sum(diag(C))
+  P <- P+2.2
   W <- P%*%W
-  W <- W/sqrt(sum(diag(W%*%t(W))))
-  P = P - gamma*diag(nTF)
+  W <- W/sum(diag(W%*%t(W)))
+  P <- P/sum(diag(P))
+  
+  P <- -P*(1-lambda) + gamma*diag(nTF)
+  C <- -C*lambda
+  
   m <- matrix(data = 0, nrow = nTF, ncol = nGenes)
   v <- m 
   for(i in 1:Iter){
-    grad <- W%*%t(W)%*%W -P%*%W - W%*%C  
-       m <- b1*m + (4*(1-b1))*grad
-       v <- b2*v + (16*(1-b2))*grad^2 
-      b1t <- b1t*b1
-      b2t <- b2t*b2
-      alpha <- sqrt(1-b2t)/(1-b1t)*eta
-      epst <- eps*sqrt((1-b2t))
-      #update of gene ragulatory matrix
-       W <- W - alpha*(m/(epst+sqrt(v)))
+    grad <- W%*%t(W)%*%W + P%*%W + W%*%C  
+    m <- b1*m + (4*(1-b1))*grad
+    v <- b2*v + (16*(1-b2))*grad^2 
+    b1t <- b1t*b1
+    b2t <- b2t*b2
+    alpha <- sqrt(1-b2t)/(1-b1t)*eta
+    epst <- eps*sqrt((1-b2t))
+    #update of gene ragulatory matrix
+    W <- W - alpha*(m/(epst+sqrt(v)))
   }
   return(W)
 }

@@ -5,6 +5,6 @@ test_that("otter function works", {
    
    # Run OTTER algorithm
    otterW <- otter(W, P, C, Iter = 1)
-   expect_equal(as.integer(otterW*10**2)/10**2, as.integer(gt*10**2)/10**2)  
+   expect_equal(as.integer(otterW*10**10)/10**10, as.integer(gt*10**10)/10**10)  
 })
 

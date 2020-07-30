@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -144,8 +144,7 @@
 
     <pre class="usage"><span class='fu'>sambar</span>(<span class='kw'>mutdata</span> <span class='kw'>=</span> <span class='no'>mut.ucec</span>, <span class='kw'>esize</span> <span class='kw'>=</span> <span class='no'>exon.size</span>,
   <span class='kw'>signatureset</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"h.all.v6.1.symbols.gmt"</span>, <span class='kw'>package</span>
-  <span class='kw'>=</span> <span class='st'>"SAMBAR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>cangenes</span> <span class='kw'>=</span> <span class='no'>genes</span>, <span class='kw'>kmin</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>kmax</span> <span class='kw'>=</span> <span class='fl'>4</span>,
-  <span class='no'>...</span>)</pre>
+  <span class='kw'>=</span> <span class='st'>"SAMBAR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>cangenes</span> <span class='kw'>=</span> <span class='no'>genes</span>, <span class='kw'>kmin</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>kmax</span> <span class='kw'>=</span> <span class='fl'>4</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,20 +154,24 @@
       <td><p>Mutation data in matrix format. The number of mutations should be listed for samples (rows) and genes (columns).</p></td>
     </tr>
     <tr>
+      <th>esize</th>
+      <td><p>A integer vector of gene lengths, with gene symbols as names.</p></td>
+    </tr>
+    <tr>
+      <th>signatureset</th>
+      <td><p>A file containing gene sets (signatures) in .gmt format. These gene sets will be used to de-sparsify the gene-level mutation scores.</p></td>
+    </tr>
+    <tr>
+      <th>cangenes</th>
+      <td><p>A vector of genes, for example of cancer-associated genes. This will be used to subset the gene-level mutation data to.</p></td>
+    </tr>
+    <tr>
       <th>kmin</th>
       <td><p>The minimum number of subtypes the user wants to assess. Defaults to 2.</p></td>
     </tr>
     <tr>
       <th>kmax</th>
       <td><p>The maximum number of subtypes the user wants to assess. Defaults to 4.</p></td>
-    </tr>
-    <tr>
-      <th>signature</th>
-      <td><p>A file containing gene sets (signatures) in .gmt format. These gene sets will be used to de-sparsify the gene-level mutation scores.</p></td>
-    </tr>
-    <tr>
-      <th>cagenes</th>
-      <td><p>A vector of genes, for example of cancer-associated genes. This will be used to subset the gene-level mutation data to.</p></td>
     </tr>
     </table>
     

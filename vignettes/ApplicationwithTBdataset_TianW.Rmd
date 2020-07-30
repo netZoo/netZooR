@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  eval = FALSE
+  eval =FALSE
 )
 ```
 
@@ -90,7 +90,7 @@ This package includes a function `source.PPI` may source a Protein-Protein Inter
 
 ```{r}
 # TF is a data frame with single column filled with TFs of Mycobacterium tuberculosis H37Rv.
-PPI <- source.PPI(TF, species.index=83332, score_threshold=0)
+# PPI <- source.PPI(TF, species.index=83332, score_threshold=0)
 ```
 
 ## Running the sample TB datasets
@@ -98,7 +98,7 @@ PPI <- source.PPI(TF, species.index=83332, score_threshold=0)
 Use search() to check all loaded package currently.
 ```{r}
 library(netZooR)
-search()
+# search()
 ```
 
 Accessing the help pages for the  usage of core functions.

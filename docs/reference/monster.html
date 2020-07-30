@@ -74,7 +74,7 @@ changes associated with phenotypic state transition." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -158,7 +158,7 @@ changes associated with phenotypic state transition.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>monster</span>(<span class='no'>expr</span>, <span class='no'>design</span>, <span class='no'>motif</span>, <span class='kw'>nullPerms</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>ni_method</span> <span class='kw'>=</span> <span class='st'>"BERE"</span>,
+    <pre class="usage"><span class='fu'>monster</span>(<span class='no'>expr</span>, <span class='no'>design</span>, <span class='no'>motif</span>, <span class='kw'>nullPerms</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>ni_method</span> <span class='kw'>=</span> <span class='st'>"bere"</span>,
   <span class='kw'>ni.coefficient.cutoff</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>numMaxCores</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>outputDir</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -183,6 +183,10 @@ regulates a gene (column 2) with a defined strength (column 3), usually taken to
 calculate observed transition matrix</p></td>
     </tr>
     <tr>
+      <th>ni_method</th>
+      <td><p>String to indicate algorithm method.  Must be one of "bere","pearson","cd","lda", or "wcd". Default is "bere"</p></td>
+    </tr>
+    <tr>
       <th>ni.coefficient.cutoff</th>
       <td><p>numeric to specify a p-value cutoff at the network
 inference step.  Default is NA, indicating inclusion of all coefficients.</p></td>
@@ -203,10 +207,6 @@ which to save MONSTER results, default is NA and results are not saved.</p></td>
 
     <p>An object of class "monsterAnalysis" containing results</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='monsterAnalysis-class.html'>monsterAnalysis-class</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
@@ -214,7 +214,8 @@ which to save MONSTER results, default is NA and results are not saved.</p></td>
 <span class='no'>design</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>,<span class='fl'>20</span>),<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>NA</span>,<span class='fl'>10</span>),<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>,<span class='fl'>20</span>))
 <span class='no'>monsterRes</span> <span class='kw'>&lt;-</span> <span class='fu'>monster</span>(<span class='no'>yeast</span>$<span class='no'>exp.cc</span>[<span class='fl'>1</span>:<span class='fl'>500</span>,], <span class='no'>design</span>, <span class='no'>yeast</span>$<span class='no'>motif</span>, <span class='kw'>nullPerms</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>numMaxCores</span><span class='kw'>=</span><span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] "Running null permutations in parallel"
 #&gt; [1] "4 cores used"
-#&gt; [1] "11 network transitions to be estimated"</div><div class='output co'>#&gt; <span class='error'>Error in e$fun(obj, substitute(ex), parent.frame(), e$data): worker initialization failed: there is no package called ‘MONSTER’</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>monsterRes</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'># }
+#&gt; [1] "11 network transitions to be estimated"
+#&gt; Time difference of 10.7082 secs</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>monsterRes</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -223,8 +224,6 @@ which to save MONSTER results, default is NA and results are not saved.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

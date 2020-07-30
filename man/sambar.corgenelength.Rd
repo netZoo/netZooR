@@ -4,7 +4,7 @@
 \alias{sambar.corgenelength}
 \title{Normalize gene mutation scores by gene length.}
 \usage{
-sambar.corgenelength(x, cagenes, exonsize, ...)
+sambar.corgenelength(x, cagenes, exonsize)
 }
 \arguments{
 \item{x}{Mutation data, in the format of a matrix, including the number of mutations for samples (rows) and genes (columns).}

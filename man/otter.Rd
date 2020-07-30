@@ -4,7 +4,7 @@
 \alias{otter}
 \title{Run OTTER in R}
 \usage{
-otter(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 300,
+otter(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 32,
   eta = 1e-05, bexp = 1)
 }
 \arguments{
@@ -15,6 +15,8 @@ matrix of size (t,g), g=number of genes, t=number of TFs}
 
 \item{C}{: gene coexpression as a matrix of size (g,g)}
 
+\item{lambda}{: tuning parameter in [0,1] (higher gives more weight to C)}
+
 \item{gamma}{: regularization parameter}
 
 \item{Iter}{: number of iterations of the algorithm}
@@ -24,14 +26,9 @@ matrix of size (t,g), g=number of genes, t=number of TFs}
 \item{bexp}{: exponent influencing learning rate (higher means smaller)
 
 Outputs:}
-
-\item{lambda:}{tuning parameter in [0,1] (higher gives more weight to C)}
 }
 \value{
 W    : Predicted TF-gene complete regulatory network as an adjacency matrix of size (t,g).
-
-Authors: 
-              Rebekka Burkholz 4/2020
 }
 \description{
 Description:

@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -161,12 +161,14 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># refer to the input datasets files of control TB dataset in inst/extdat as example</span>
-<span class='no'>control_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr10_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>control_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr10_matched.txt"</span>,
+<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>motif_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"chip_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>ppi_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ppi_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># Run PANDA algorithm</span>
-<span class='no'>control_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'>panda.fast</span>(<span class='kw'>e</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )
+<span class='no'>control_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='panda.py.html'>panda.py</a></span>(<span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>, <span class='kw'>motif</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>,
+<span class='kw'>ppi</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>, <span class='kw'>mode_process</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>rm_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )
 
 <span class='co'># access PANDA regulatory network</span>
 <span class='no'>control_net</span> <span class='kw'>&lt;-</span> <span class='no'>control_all_panda_result</span>$<span class='no'>panda</span>

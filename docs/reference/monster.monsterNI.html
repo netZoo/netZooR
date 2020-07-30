@@ -67,7 +67,7 @@ gene expression data and sequence motif data" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -153,6 +153,12 @@ gene expression data and sequence motif data</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>motif</th>
+      <td><p>A motif dataset, a data.frame, matrix or exprSet containing 
+3 columns. Each row describes an motif associated with a transcription 
+factor (column 1) a gene (column 2) and a score (column 3) for the motif.</p></td>
+    </tr>
+    <tr>
       <th>expr.data</th>
       <td><p>An expression dataset, as a genes (rows) by samples (columns)</p></td>
     </tr>
@@ -192,12 +198,6 @@ readded upon completion of the algorithm</p></td>
       <th>cpp</th>
       <td><p>logical use C++ for maximum speed, set to false if unable to run.</p></td>
     </tr>
-    <tr>
-      <th>motif.data</th>
-      <td><p>A motif dataset, a data.frame, matrix or exprSet containing 
-3 columns. Each row describes an motif associated with a transcription 
-factor (column 1) a gene (column 2) and a score (column 3) for the motif.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -207,8 +207,8 @@ factor (column 1) a gene (column 2) and a score (column 3) for the motif.</p></t
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>yeast</span>)
-<span class='no'>cc.net</span> <span class='kw'>&lt;-</span> <span class='fu'>monster.monsterNI</span>(<span class='no'>yeast</span>$<span class='no'>motif</span>,<span class='no'>yeast</span>$<span class='no'>exp.cc</span>)</div><div class='output co'>#&gt; Time difference of 1.211572 secs
-#&gt; Time difference of 0.482537 secs</div></pre>
+<span class='no'>cc.net</span> <span class='kw'>&lt;-</span> <span class='fu'>monster.monsterNI</span>(<span class='no'>yeast</span>$<span class='no'>motif</span>,<span class='no'>yeast</span>$<span class='no'>exp.cc</span>)</div><div class='output co'>#&gt; Time difference of 1.185848 secs
+#&gt; .......................</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ..........</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ....................</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>

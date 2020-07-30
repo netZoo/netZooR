@@ -12,7 +12,8 @@ setMethod("show","monsterAnalysis",function(object){monster.print.monsterAnalysi
 #' @examples
 #' \donttest{
 #' data(yeast)
-#' monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
+#' monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),
+#' yeast$motif, nullPerms=10, numMaxCores=4)
 #' plot(monsterRes)
 #' }
 monster.plot.monsterAnalysis <- function(x, ...){
@@ -58,6 +59,7 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' regulates a gene (column 2) with a defined strength (column 3), usually taken to be 0 or 1 
 #' @param nullPerms number of random permutations to run (default 100).  Set to 0 to only 
 #' calculate observed transition matrix
+#' @param ni_method String to indicate algorithm method.  Must be one of "bere","pearson","cd","lda", or "wcd". Default is "bere"
 #' @param ni.coefficient.cutoff numeric to specify a p-value cutoff at the network
 #' inference step.  Default is NA, indicating inclusion of all coefficients.
 #' @param numMaxCores requires doParallel, foreach.  Runs MONSTER in parallel computing 
@@ -70,7 +72,7 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' @import foreach
 #' @importFrom methods new
 #' @return An object of class "monsterAnalysis" containing results
-#' @seealso \code{\link{monsterAnalysis-class}}
+#' 
 #' @examples
 #' \donttest{
 #' data(yeast)
@@ -83,7 +85,7 @@ monster <- function(expr,
                     design, 
                     motif, 
                     nullPerms=100,
-                    ni_method="BERE",
+                    ni_method="bere",
                     ni.coefficient.cutoff = NA,
                     numMaxCores=1, 
                     outputDir=NA){
@@ -122,7 +124,7 @@ monster <- function(expr,
   
   nullExpr <- expr
   transMatrices <- foreach(i=1:iters,
-                           .packages=c("MONSTER","reshape2","penalized","MASS")) %dopar% {
+                           .packages=c("netZooR","reshape2","penalized","MASS")) %dopar% {
                              print(paste0("Running iteration ", i))
                              if(i!=1){
                                nullExpr[] <- expr[sample(seq_along(c(expr)))]
@@ -208,10 +210,12 @@ globalVariables("i")
 #' @importFrom reshape2 melt
 #' @export
 #' @examples
+#' \donttest{
 #' data(yeast)
 #' cc.net.1 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
 #' cc.net.2 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])
 #' monster.transformation.matrix(cc.net.1, cc.net.2)
+#' }
 monster.transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize=FALSE, 
                                   remove.diagonal=TRUE, method="ols"){
   if(is.list(network.1)&&is.list(network.2)){
@@ -323,7 +327,7 @@ kabsch <- function(P,Q){
 #' @export
 #' @import ggplot2
 #' @import grid
-#' @import stats
+#' @rawNamespace import(stats, except= c(cov2cor,decompose,toeplitz,lowess,update,spectrum))
 #' @return ggplot2 object for transition matrix heatmap
 #' @examples
 #' # data(yeast)
@@ -622,7 +626,7 @@ globalVariables(c("Var1", "Var2","value","variable","xend","yend","y","Comp.1", 
 #' This function generates a complete bipartite network from 
 #' gene expression data and sequence motif data
 #'
-#' @param motif.data A motif dataset, a data.frame, matrix or exprSet containing 
+#' @param motif A motif dataset, a data.frame, matrix or exprSet containing 
 #' 3 columns. Each row describes an motif associated with a transcription 
 #' factor (column 1) a gene (column 2) and a score (column 3) for the motif.
 #' @param expr.data An expression dataset, as a genes (rows) by samples (columns)
@@ -719,7 +723,7 @@ monster.monsterNI <- function (motif, expr.data, verbose = FALSE, randomize = "n
   if (verbose) 
     print("Main calculation")
   result <- NULL
-  if (method == "BERE") {
+  if (method == "bere") {
     expr.data <- data.frame(expr.data)
     tfdcast <- dcast(motif, TF ~ GENE, fill = 0)
     rownames(tfdcast) <- tfdcast[, 1]
@@ -893,3 +897,31 @@ monster.bereFull <- function(motif.data,
 }
 
 globalVariables(c("expr.data","lambda","rcpp_ccorr","GENE", "TF","value"))
+
+
+#' MONSTER results from example cell-cycle yeast transition
+#'
+#'This data contains the MONSTER result from analysis of Yeast Cell cycle, included in data(yeast).  
+#'This result arbitrarily takes the first 20 gene expression samples in yeast$cc to be the baseline condition, and the final 20 samples to be the final condition.
+#'
+#' @docType data
+#' @keywords datasets
+#' @name monsterRes
+#' @usage data(monsterRes)
+#' @format MONSTER obj
+NULL
+
+#' Toy data derived from three gene expression datasets and a mapping from transcription factors to genes.
+#'
+#'This data is a list containing gene expression data from three separate yeast studies along with data mapping yeast transcription factors with genes based on the presence of a sequence binding motif for each transcription factor in the vicinity of each gene. 
+#' The motif data.frame, yeast$motif, describes a set of pairwise connections where a specific known sequence motif of a transcription factor was found upstream of the corresponding gene.   
+#' The expression data, yeast$exp.ko, yeast$exp.cc, and yeast$exp.sr, are three gene expression datasets measured in conditions of gene knockout, cell cycle, and stress response, respectively. 
+#' @docType data
+#' @keywords datasets
+#' @name yeast
+#' @usage data(yeast)
+#' @format A list containing 4 data.frames
+#' @return A list of length 4
+#' @references Glass K, Huttenhower C, Quackenbush J, Yuan GC. Passing Messages Between Biological Networks to Refine Predicted Interactions. PLoS One. 2013 May 31;8(5):e64832.
+#' 
+NULL

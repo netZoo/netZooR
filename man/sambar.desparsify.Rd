@@ -4,7 +4,7 @@
 \alias{sambar.desparsify}
 \title{De-sparsify gene-level mutation scores into gene set-level mutation scores.}
 \usage{
-sambar.desparsify(edgx, mutratecorx, ...)
+sambar.desparsify(edgx, mutratecorx)
 }
 \arguments{
 \item{edgx}{A binary matrix containing information on which genes belong to which gene sets. Output from the sambar.convertgmt function.}

@@ -17,12 +17,14 @@ This function is able to modify PANDA network and plot in Cytoscape.
 \examples{
 \dontrun{
 # refer to the input datasets files of control TB dataset in inst/extdat as example
-control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+control_expression_file_path <- system.file("extdata", "expr10_matched.txt", 
+package = "netZooR", mustWork = TRUE)
 motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
 ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 
 # Run PANDA algorithm
-control_all_panda_result <- panda.fast(e = control_expression_file_path, m = motif_file_path, ppi = ppi_file_path, rm_missing = TRUE )
+control_all_panda_result <- panda.py(expr = control_expression_file_path, motif = motif_file_path, 
+ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
 
 # access PANDA regulatory network
 control_net <- control_all_panda_result$panda

@@ -1,9 +1,9 @@
 #' Create a Cytoscape visual style for PANDA network
 #'
 #'This function is able to create a Cytoscape visual style for any PANDA network output.
-#' @param style.name Character string indicating the style name. Defaults to "PandaStyle"
+#' @param style_name Character string indicating the style name. Defaults to "PandaStyle"
 #'
-#' @return a visual style in Cytoscape Control Panel under "Style" button.
+#' @return A visual style in Cytoscape Control Panel under "Style" button.
 #' @import RCy3
 #' @export
 

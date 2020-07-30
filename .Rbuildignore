@@ -12,3 +12,5 @@ CONDUCT\.md$
 ^pkgdown$
 ^doc$
 ^Meta$
+^\.Rapp\.history
+coverZoo.r

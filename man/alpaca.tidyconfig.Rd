@@ -8,8 +8,6 @@ alpaca.tidyconfig(S)
 }
 \arguments{
 \item{S}{The community membership vector derived from the previous round of agglomeration.}
-
-\item{J}{The modularity matrix}
 }
 \value{
 The renumbered membership vector.
