@@ -93,8 +93,7 @@ panda.to.condor.object <- function(panda.net, threshold){
   if(n_reg < n_tar) {
     condor.object <- create.condor.object(panda.trans[,c("Gene","TF")])
   } else { condor.object <- create.condor.object( panda.trans[,c("TF","Gene")] )}
-  
-  condor.object <- condor.cluster(condor.object, project=F)
+
   colnames(condor.object$edges)[c(1,2)] <- c ("red","blue")
 
   return(condor.object)
