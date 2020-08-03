@@ -6,7 +6,7 @@
 
 R4.01@Ubuntu 18.04: [![Build Status](http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04)](http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/)
 
-## Description
+ Description
 netZooR is an R package to reconstruct, analyse and plot biological networks.
 
 ## Features
