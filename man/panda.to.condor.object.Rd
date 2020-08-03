@@ -49,6 +49,10 @@ control_net <- control_all_panda_result$panda
 treated_condor_object <- panda.to.condor.object(treated_net, threshold = 0)
 control_condor_object <- panda.to.condor.object(control_net, threshold = 0)
 
+# cluster
+treated_condor_object <- condor.cluster(treated_condor_object, project=FALSE)
+control_condor_object <- condor.cluster(control_condor_object, project=FALSE)
+
 # plot communities
 # package igraph and package viridisLite are already loaded with this package.
 library(viridisLite)

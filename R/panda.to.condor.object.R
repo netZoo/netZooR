@@ -39,6 +39,10 @@
 #' treated_condor_object <- panda.to.condor.object(treated_net, threshold = 0)
 #' control_condor_object <- panda.to.condor.object(control_net, threshold = 0)
 #' 
+#' # cluster
+#' treated_condor_object <- condor.cluster(treated_condor_object, project=FALSE)
+#' control_condor_object <- condor.cluster(control_condor_object, project=FALSE)
+#' 
 #' # plot communities
 #' # package igraph and package viridisLite are already loaded with this package.
 #' library(viridisLite)
@@ -94,7 +98,6 @@ panda.to.condor.object <- function(panda.net, threshold){
     condor.object <- create.condor.object(panda.trans[,c("Gene","TF")])
   } else { condor.object <- create.condor.object( panda.trans[,c("TF","Gene")] )}
   
-  condor.object <- condor.cluster(condor.object, project=F)
   colnames(condor.object$edges)[c(1,2)] <- c ("red","blue")
 
   return(condor.object)
