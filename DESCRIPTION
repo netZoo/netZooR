@@ -1,7 +1,7 @@
 Package: netZooR
 Title: Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR, MONSTER and OTTER into one workflow
 Version: 0.7.2
-Date: 2020-07-07
+Date: 2020-08-03
 Authors@R: c(person("Tian", "Wang",
 			email = "twang@hsph.harvard.edu", role = c("aut", "cre")),
 	     person("Marouen", "Ben Guebila", 
