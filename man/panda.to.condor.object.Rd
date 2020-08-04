@@ -24,6 +24,7 @@ and estimatiing the contribution of each node to its community's modularity,
 This function uses the result of PANDA algorithm as the input dataset to run CONDOR algorithm. More about \href{https://github.com/jplatig/condor}{condor} package and usage.
 }
 \examples{
+\dontrun{
 # refer to four input datasets files in inst/extdat
 treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", 
 package = "netZooR", mustWork = TRUE)
@@ -63,6 +64,6 @@ control_color <- viridis(control_color_num, alpha = 1, begin = 0, end = 1,
 direction = 1, option = "D")
 condor.plot.communities(control_condor_object, color_list=control_color , 
 point.size=0.04, xlab="Target", ylab="Regulator")
-
+}
 
 }

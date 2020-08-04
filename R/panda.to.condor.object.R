@@ -14,6 +14,7 @@
 #' @return a CONDOR object, see \code{\link{create.condor.object}}.
 #' @import viridisLite
 #' @examples 
+#' \dontrun{
 #' # refer to four input datasets files in inst/extdat
 #' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", 
 #' package = "netZooR", mustWork = TRUE)
@@ -53,7 +54,7 @@
 #' direction = 1, option = "D")
 #' condor.plot.communities(control_condor_object, color_list=control_color , 
 #' point.size=0.04, xlab="Target", ylab="Regulator")
-#' 
+#' }
 #' 
 #' @export
 
