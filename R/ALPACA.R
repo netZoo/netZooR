@@ -64,8 +64,8 @@ alpaca <- function(net.table,file.stem,verbose=F)
   for (i in 1:max(louv.memb))
   {
     this.comm <- names(louv.memb)[louv.memb==i]
-    this.tfs <- this.comm[grep("_A",this.comm)]
-    this.genes <- this.comm[grep("_B",this.comm)]
+    this.tfs <- this.comm[grep("_A$",this.comm)]
+    this.genes <- this.comm[grep("_B$",this.comm)]
     if (length(this.tfs)>1){
       tf.sums <- apply(dwbm[this.tfs,this.genes],1,sum)
       gene.sums <- apply(dwbm[this.tfs,this.genes],2,sum)} else {
@@ -106,7 +106,7 @@ alpaca.ExtractTopGenes <- function(module.result,set.lengths)
   mod.memb <- module.result[[1]]
   mod.scores <- module.result[[2]]
   mod.ord <- names(mod.scores)[order(mod.scores,decreasing=T)]
-  mod.Bord <- mod.ord[grep("_B",mod.ord)]
+  mod.Bord <- mod.ord[grep("_B$",mod.ord)]
   
   mod.top <- NULL
   mod.top.names <- NULL
@@ -368,8 +368,8 @@ alpaca.WBM.louvain <- function(net.frame)
   for (i in 1:max(louv.memb))
   {
     this.comm <- names(louv.memb)[louv.memb==i]
-    this.tfs <- this.comm[grep("_A",this.comm)]
-    this.genes <- this.comm[grep("_B",this.comm)]
+    this.tfs <- this.comm[grep("_A$",this.comm)]
+    this.genes <- this.comm[grep("_B$",this.comm)]
     if (length(this.tfs)>1){
       tf.sums <- apply(wbm.mat[this.tfs,this.genes],1,sum)
       gene.sums <- apply(wbm.mat[this.tfs,this.genes],2,sum)} else {
