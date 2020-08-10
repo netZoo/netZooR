@@ -14,33 +14,28 @@
 #' @return a CONDOR object, see \code{\link{create.condor.object}}.
 #' @import viridisLite
 #' @examples 
-#' \dontrun{
-#' # refer to four input datasets files in inst/extdat
+#' 
+#' # refer to three input datasets files in inst/extdat
 #' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", 
-#' package = "netZooR", mustWork = TRUE)
-#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", 
 #' package = "netZooR", mustWork = TRUE)
 #' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
 #' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' 
-#' # Run PANDA for treated and control network
+#' # Run PANDA to construct the treated network
 #' treated_all_panda_result <- panda.py(expr_file = treated_expression_file_path, 
 #' motif_file= motif_file_path, ppi_file = ppi_file_path, 
-#' modeProcess="legacy", remove_missing = TRUE )
-#' control_all_panda_result <- panda.py(expr_file = control_expression_file_path,
-#'  motif_file= motif_file_path, ppi_file= ppi_file_path, 
 #' modeProcess="legacy", remove_missing = TRUE )
 #' 
 #' # access PANDA regulatory network
 #' treated_net <- treated_all_panda_result$panda
-#' control_net <- control_all_panda_result$panda
 #' 
-#' # Run CONDOR
+#' # Obtain the condor.object from PANDA network
 #' treated_condor_object <- panda.to.condor.object(treated_net, threshold = 0)
-#' control_condor_object <- panda.to.condor.object(control_net, threshold = 0)
 #' 
-#' # plot communities
+#' # cluster condor.object
+#' treated_condor_object <- condor.cluster(treated_condor_object, project = FALSE)
+#' 
 #' # package igraph and package viridisLite are already loaded with this package.
 #' library(viridisLite)
 #' treated_color_num <- max(treated_condor_object$red.memb$com)
@@ -49,13 +44,6 @@
 #' condor.plot.communities(treated_condor_object, color_list=treated_color, 
 #' point.size=0.04, xlab="Target", ylab="Regulator")
 #' 
-#' control_color_num <- max(control_condor_object$red.memb$com)
-#' control_color <- viridis(control_color_num, alpha = 1, begin = 0, end = 1, 
-#' direction = 1, option = "D")
-#' condor.plot.communities(control_condor_object, color_list=control_color , 
-#' point.size=0.04, xlab="Target", ylab="Regulator")
-#' 
-#' }
 #' 
 #' @export
 #'
@@ -87,7 +75,6 @@ panda.to.condor.object <- function(panda.net, threshold){
     panda.trans <- panda.net[panda.net$Score >= threshold, c('TF',"Gene","Score")]
   }
   
-  
   # *** create condor.object ***
   n_reg <- length(unique(panda.trans$TF))
   n_tar <- length(unique(panda.trans$Gene))
@@ -95,7 +82,6 @@ panda.to.condor.object <- function(panda.net, threshold){
     condor.object <- create.condor.object(panda.trans[,c("Gene","TF")])
   } else { condor.object <- create.condor.object( panda.trans[,c("TF","Gene")] )}
   
-  condor.object <- condor.cluster(condor.object, project=F)
   colnames(condor.object$edges)[c(1,2)] <- c ("red","blue")
 
   return(condor.object)
