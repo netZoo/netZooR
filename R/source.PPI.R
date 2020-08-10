@@ -22,7 +22,7 @@
 #' species.index=83332, score_threshold=0)}
 #' # write out locally then can be used in \code{\link{panda.py}}.
 #' 
-#' @return A PPI data.frame which contains two columns: "from" and "to" indicating the direction of protein-protein interaction.
+#' @return A PPI data.frame which contains three columns: "from" and "to" indicating the direction of protein-protein interaction, and "score" indicating the interaction score between two proteins.
 #' @import STRINGdb
 #' @export
 
@@ -34,11 +34,11 @@ source.PPI <- function(TF, STRING.version="10", species.index, ...){
   # map the TF to STRINGdb dataset
   TF_mapped <-  string_db$map(TF,"TF",removeUnmappedRows=F)
   # collect the interactions between the TF of interest
-  PPI <- string_db$get_interactions(TF_mapped$STRING_id)[,c(1,2)]
-  # remove the species index in the string identifiers.
-  PPI$from <- gsub(paste(species.index,".",sep=""), "", PPI$from)
-  PPI$to <- gsub(paste(species.index,".",sep=""), "", PPI$to)
-  # return a PPI network based on TF list of interest
+  ppi_tmp <- string_db$get_interactions(TF_mapped$STRING_id)[,c(1,2)]
+  # store the PPI by using original identifier.
+  PPI <- data.frame(from=TF_mapped[match(ppi_tmp$from,TF_mapped$STRING_id),1], to=TF_mapped[match(ppi_tmp$to,TF_mapped$STRING_id),1])
+  # assign "score"column  to "1"
+  PPI$score <- "1"
   return(PPI)
 }
 
