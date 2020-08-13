@@ -12,8 +12,7 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
+  comment = "#>"
 )
 ```
 
@@ -38,7 +37,7 @@ To run SAMBAR with default settings on these data:
 `subtypes <- sambar()`
 
 Or:
-`subtypes <- sambar(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package="netZooR", mustWork=TRUE), cangenes=genes, kmin=2, kmax=4)`
+<br>Download the signatureset from our public AWS S3 bucket by using`system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/h.all.v6.1.symbols.gmt")` and call SAMBAR  by using the path where the signatureset is stored, `subtypes <- sambar(mutdata=mut.ucec, esize=exon.size, signatureset="./h.all.v6.1.symbols.gmt"), cangenes=genes, kmin=2, kmax=4)`
 
 This will run SAMBAR on the UCEC mutation data, using desparsification on cancer-associated genes based on the MSigDb "Hallmark" gene sets. It will return a list of samples belonging to $k=2-4$ subtypes.
 
