@@ -160,6 +160,7 @@ panda_results_wblood <- panda.py(expr_file = "pandaExprWholeBlood.txt" , motif_f
 ```
 
 ```{r}
+install.packages("visNetwork",repos = "http://cran.us.r-project.org")
 library(visNetwork)
 edges <- head(panda_results_wblood$panda[order(panda_results_wblood$panda$Score,decreasing = TRUE),], 500)
 colnames(edges) <- c("from","to","motif","force")
