@@ -159,7 +159,7 @@ system("curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datas
 panda_results_wblood <- panda.py(expr_file = "pandaExprWholeBlood.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
 ```
 
-```{r}
+```{r,eval=FALSE}
 install.packages("visNetwork",repos = "http://cran.us.r-project.org",dependencies=TRUE)
 library(visNetwork)
 edges <- head(panda_results_wblood$panda[order(panda_results_wblood$panda$Score,decreasing = TRUE),], 500)
