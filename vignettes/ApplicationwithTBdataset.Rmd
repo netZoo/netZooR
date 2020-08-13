@@ -1,0 +1,199 @@
+---
+title: "netZooR application with TB dataset"
+author: "Tian Wang"
+date: "2019-10-16"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ApplicationwithTBdataset}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# netZooR
+
+netZooR is an R package which consists of  seven main algorithms and is able to construct, analyse and plot gene regulatory networks.
+
+* **PANDA**(Passing Attributes between Networks for Data Assimilation) is a message-passing model to gene regulatory network reconstruction. It integrates multiple sources of biological data, including protein-protein interaction, gene expression, and transcription factor binding motifs information to reconstruct genome-wide, condition-specific regulatory networks.[[Glass et al. 2013]](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832)
+
+* **LIONESS**(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks by applying linear interpolation to the predictions made by existing aggregate network inference approaches.[[Kuijjer et al. 2019]]](https://www.sciencedirect.com/science/article/pii/S2589004219300872)
+
+* **CONDOR** (COmplex Network Description Of Regulators) implements methods to cluster biapartite networks and estimatiing the contribution of each node to its community's modularity.[[Platig et al. 2016]](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033)
+
+* **ALPACA**(ALtered Partitions Across Community Architectures) is a method to compare two genome-scale networks derived from different phenotypic states to identify condition-specific modules. [[Padi and Quackenbush 2018]](https://www.nature.com/articles/s41540-018-0052-5)
+
+* **SAMBAR**(Subtyping Agglomerated Mutations By Annotation Relations) is a method to identify subtypes based on somatic mutation data.[[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7).
+
+* **MONSTER**(Modeling Network State Transitions from Expression and Regulatory data)[[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infers transcription factor which drivers of cell state conditions at the gene regulatory network level.
+
+* **OTTER**(Optimization to Estimate Regulation) [publication in preparation]: models gene regulation estimation as a graph matrching problem
+
+
+## Getting Started
+
+### Prerequisites
+
+Using this pacakage requires [**Python**](https://www.python.org/downloads/) (3.X) and some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access**.
+
+Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/) installed.
+
+### Required Python libraries
+
+How to install Python libraries depends varies from different platforms. More instructions could be find [here](https://packaging.python.org/tutorials/installing-packages/). 
+
+The following Python libraries (or packages) are required by running PANDA and LIONESS algorithms:
+
+The required Python packages are: [pandas](https://pandas.pydata.org/), [numpy](http://www.numpy.org/), [networkx](https://networkx.github.io/), [matplotlib.pyplot](https://matplotlib.org/api/pyplot_api.html).
+
+### Installing
+This package could be downloaded via `install_github()` function from `devtools` package.
+
+```{r,eval=FALSE}
+# install.packages("devtools") 
+library(devtools)
+# install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
+devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
+```
+
+## Data Resources
+
+### Motif data
+Here is some pre-prepared specie-sepcific PANDA-ready transcription factor binding motifs data stored in our AWS bucket https://s3.console.aws.amazon.com/s3/buckets/netzoo/netZooR/example_datasets/PANDA_ready_motif_prior/?region=us-east-2&tab=overview, which are derived from motif scan and motif info files located on https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resourcesby .
+
+### PPI
+This package includes a function `source.PPI` may source a Protein-Protein Interactions (PPI) througt STRING database given a list of proteins of interest. The [STRINGdb](http://www.bioconductor.org/packages/release/bioc/html/STRINGdb.html) is already loaded while loading netZooR.
+
+```{r,eval=FALSE}
+# TF is a data frame with single column filled with TFs of Mycobacterium tuberculosis H37Rv.
+PPI <- source.PPI(TF, STRING.version="10", species.index=83332, score_threshold=0)
+```
+
+## Running the sample TB datasets
+
+
+```{r}
+library(netZooR)
+```
+
+Accessing the help pages for the  usage of core functions.
+```{r,eval=FALSE}
+?panda.py
+?create.condor.object
+?panda.to.condor.object
+?lioness.py
+?alpaca
+?panda.to.alpaca
+?sambar
+```
+
+This package will invoke the Python in R environment through reticulate package.
+Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. 
+More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html)
+```{r,eval=FALSE}
+#check your Python configuration and the specific version of Python in use currently
+py_config()
+
+# reset to Python 3.X if necessary, like below:
+use_python("/usr/local/bin/python3")
+```
+
+Use example datasets within package to test this package.
+Refer to four input datasets files: one TB expression dataset control group , one TB expression dataset treated, one transcription factor binding motifs dataset, and one protein-protein interaction datasets from either inst/extdat or AWS.
+
+retrieve the file path of these files came with the netZooR package.
+```{r}
+# retrieve the file path of these files
+treated_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZooR", mustWork = TRUE)
+control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZooR", mustWork = TRUE)
+motif_file_path <- system.file("extdata", "chip.txt", package = "netZooR", mustWork = TRUE)
+ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZooR", mustWork = TRUE)
+```
+
+or, download to working directory from AWS.
+```{r,eval=FALSE}
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4.txt")
+treated_expression_file_path <- "./expr4.txt"
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr10.txt")
+control_expression_file_path <- "./expr10.txt"
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/chip.txt")
+motif_file_path <- "./chip.txt"
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/ppi.txt")
+ppi_file_path <- "./ppi.txt"
+```
+
+### PANDA algorithm
+
+Assign the above file paths to flag `e`(refers to "expression dataset"), `m`(refers to "motif dataset"), and `ppi`(refers to "PPI" dataset), respectively. Then set option `rm_missing` to `TRUE` to run **PANDA** to generate an aggregate network without unmatched TF and genes.
+
+Repeat with control group. 
+```{r,message=FALSE,results="hide"}
+treated_all_panda_result <- panda.py(expr_file = treated_expression_file_path, motif_file = motif_file_path, ppi_file= ppi_file_path,modeProcess="legacy",  remove_missing = TRUE )
+control_all_panda_result <- panda.py(expr_file = control_expression_file_path,motif_file = motif_file_path, ppi_file= ppi_file_path,modeProcess="legacy",  remove_missing = TRUE )
+```
+
+Vector `treated_all_panda_result` and vector `control_all_panda_result` below are large lists with three elements: the entire PANDA network, indegree ("to" nodes) nodes and score, outdegree ("from" nodes) nodes and score. Use `$panda`,`$indegree` and `$outdegree` to access each list item resepctively.
+
+Use `$panda`to access the entire PANDA network.
+```{r}
+treated_net <- treated_all_panda_result$panda
+control_net <- control_all_panda_result$panda
+```
+
+### PANDA Cytoscape Plotting
+Cytoscape is an interactivity network visualization tool highly recommanded to explore the PANDA network. Before using this function `plot.panda.in.cytoscape`, please install and launch Cytoscape (3.6.1 or greater) and keep it running whenever using.
+
+```{r,eval=FALSE}
+# select top 1000 edges in PANDA network by edge weight.
+panda.net <- head(treated_net[order(control_net$force,decreasing = TRUE),], 1000)
+ 
+# run this function to create a network in Cytoscape.
+vis.panda.in.cytoscape(panda.net, network.name="PANDA")
+```
+
+### LIONESS Algorithm 
+How to run LIONESS is mostly idential with method how to run PANDA in this package, unless the return values of `lioness.py()` is a data frame where first two columns represent TFs (regulators) and Genes (targets) while the rest columns represent each sample. each cell filled with estimated score calculated by LIONESS.
+
+```{r,results="hide",message=FALSE}
+# Run LIONESS algorithm for the first two samples
+# removing start_sample and end_sample arguments to generate whole LIONESS network with all samples.
+control_lioness_result <- lioness.py(expr_file = control_expression_file_path,motif_file = motif_file_path, ppi_file= ppi_file_path,modeProcess="legacy",  remove_missing = TRUE, start_sample=1, end_sample=2)
+```
+
+### CONDOR Algorithm and plotting
+PANDA network can simply be converted into condor.object by `panda.to.condor.object(panda.net, threshold)`
+Defaults option  `threshold` is the average of [median weight of non-prior edges] and [median weight of prior edges], all weights mentioned previous are transformationed with formula `w'=ln(e^w+1)` before calculating the median and average. But all the edges selected will remain the orginal weights calculated by PANDA.
+
+```{r}
+treated_condor_object <- panda.to.condor.object(treated_net, threshold = 0)
+```
+
+The communities structure can be plotted by igraph.
+```{r}
+library(viridisLite)
+treated_condor_object <-condor.cluster(treated_condor_object,project = FALSE)
+treated_color_num <- max(treated_condor_object$red.memb$com)
+treated_color <- viridis(treated_color_num, alpha = 1, begin = 0, end = 1, direction = 1, option = "D")
+condor.plot.communities(treated_condor_object, color_list=treated_color, point.size=0.04, xlab="Genes", ylab="TFs")
+```
+
+### ALPACA Algorithm
+
+ALPACA community structure can also be generated from two PANDA network by `panda.to.alpaca`
+
+```{r}
+alpaca<- panda.to.alpaca(treated_net, control_net, NULL, verbose=FALSE)
+```
+
+## More tutorials
+
+Browse with `browseVignettes("netZooR")`
+
+## Note
+If there is an error like `Error in fetch(key) : lazy-load database.rdb' is corrupt` when accessing the help pages of functions in this package after being loaded. It's [a limitation of base R](https://github.com/r-lib/devtools/issues/1660) and has not been solved yet. Restart R session and re-load this package will help.
+

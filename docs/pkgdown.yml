@@ -4,5 +4,6 @@ pkgdown_sha: 24ef1bbdec0de44fe11eb1d58b40dba961525d43
 articles:
   ALPACA: ALPACA.html
   ApplicationinGTExData: ApplicationinGTExData.html
+  ApplicationwithTBdataset: ApplicationwithTBdataset.html
   SAMBAR: SAMBAR.html
 

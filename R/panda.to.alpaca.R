@@ -46,7 +46,7 @@ panda.to.alpaca <- function(panda.net1, panda.net2, file.stem = "./alpaca", verb
   # run ALPACA.
   alp <- alpaca(net, file.stem, verbose)
   # full differential modularity matrix has been written to a file, print out the location.
-  message(paste("the ALPACA output located in", file.stem, sep=""))
+  if(!is.null(file.stem)){message(paste("the ALPACA output located in", file.stem, sep=""))}
   return(alp)
   }
   
