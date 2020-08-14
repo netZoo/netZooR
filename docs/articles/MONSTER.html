@@ -72,6 +72,9 @@
       <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
+      <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
+    </li>
+    <li>
       <a href="../articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
   </ul>
@@ -169,11 +172,11 @@ devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/
 <h2 class="hasAnchor">
 <a href="#running-monster" class="anchor"></a>Running MONSTER</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yeast<span class="op">$</span>exp.cc[<span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(yeast<span class="op">$</span>exp.cc)] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(yeast<span class="op">$</span>exp.cc),<span class="dt">na.rm=</span>T)
-monsterRes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/monster.html">monster</a></span>(yeast<span class="op">$</span>exp.cc, design, yeast<span class="op">$</span>motif, <span class="dt">nullPerms=</span><span class="dv">100</span>, <span class="dt">numMaxCores=</span><span class="dv">4</span>)
+monsterRes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/monster.html">monster</a></span>(yeast<span class="op">$</span>exp.cc, design, yeast<span class="op">$</span>motif, <span class="dt">nullPerms=</span><span class="dv">100</span>, <span class="dt">numMaxCores=</span><span class="dv">1</span>)
 <span class="co">#&gt; [1] "Running null permutations in parallel"</span>
-<span class="co">#&gt; [1] "4 cores used"</span>
+<span class="co">#&gt; [1] "1 cores used"</span>
 <span class="co">#&gt; [1] "101 network transitions to be estimated"</span>
-<span class="co">#&gt; Time difference of 2.509582 mins</span></code></pre></div>
+<span class="co">#&gt; Time difference of 6.703826 mins</span></code></pre></div>
 <p>We can print the details of the analysis result</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">monsterRes
 <span class="co">#&gt; MONSTER object</span>

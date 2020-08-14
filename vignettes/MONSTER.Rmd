@@ -96,7 +96,7 @@ Monster is optimized to run on multiple cores, if available.  We can specify the
 
 ```{r, message=F}
 yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
-monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
+monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=1)
 ```
 
 We can print the details of the analysis result
