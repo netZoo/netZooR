@@ -12,8 +12,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
+  comment = "#>"
 )
 ```
 
@@ -24,23 +23,26 @@ In this vignette, we will build one regulatory network for LCL cell line samples
 Cell lines are an essential tool in biomedical research and often used as surrogates for tissues. LCLs (obtained from the transformation of B cells present in whole blood) are among the most widely used continuous cell lines with the ability to proliferate indefinitely. By comparing the regulatory networks of LCL cell lines with its tissue of origin (whole blood), we find that LCLs exhibit large changes in their patterns of transcription factor regulation, specifically a loss of repressive transcription factor targeting of cell cycle genes.
 
 ## Install packages
-```{r eval=FALSE}
+```{r,message=FALSE,warning=FALSE,results="hide"}
 if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
+    install.packages("BiocManager",repos = "http://cran.us.r-project.org")
 BiocManager::install("fgsea")
-install.packages("reshape2")
-install.packages("ggplot2")
+# install.packages("reshape2",repos = "http://cran.us.r-project.org")
+install.packages("ggplot2",repos = "http://cran.us.r-project.org")
+```
+```{r,eval=FALSE}
 install.packages("devtools")
 library(devtools)
 devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
 ```
 
 ## Load packages
-```{r warning=FALSE, message=FALSE}
+```{r,warning=FALSE, message=FALSE}
 library(netZooR)
 library(fgsea)
 library(ggplot2)
 library(reshape2)
+library(data.table)
 ```
 
 
@@ -58,9 +60,11 @@ Now we locate our ppi and motif priors. The ppi represents physical interactions
 Let's take a look at the priors:
 
 ```{r}
-motif <- read.delim("data/motif_subset.txt", stringsAsFactors=F, header=F)
-ppi <- read.delim("data/ppi_subset.txt", stringsAsFactors=F, header=F)
-
+# download motif and ppi file from AWS Bucket
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_subset.txt")
+system("curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_subset.txt")
+motif <- read.delim("./motif_subset.txt", stringsAsFactors=F, header=F)
+ppi <- read.delim("./ppi_subset.txt", stringsAsFactors=F, header=F)
 ppi[1:5,]
 motif[1:5,]
 ```
@@ -68,8 +72,9 @@ motif[1:5,]
 Now we locate our expression data. As an example, we will use a subset of the GTEx version 7 RNA-Seq data, downloaded from https://gtexportal.org/home/datasets. We start with a subset of RNA-Seq data (tpm normalized) for 1,000 genes from 130 LCL cell line samples and 407 whole blood samples. 
 
 ```{r}
-# Load the GTEx expression matrix (tpm normalized expression)
-exp <- read.delim("data/expression_tpm_lcl_blood_subset.txt", stringsAsFactors = F, check.names = F)
+# dowload and load the GTEx expression matrix (tpm normalized expression)
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/expression_tpm_lcl_blood_subset.txt")
+exp <- read.delim("./expression_tpm_lcl_blood_subset.txt", stringsAsFactors = F, check.names = F)
 # Log transform the tpm normalized expression
 exp <- log2(exp+1)
 
@@ -84,14 +89,18 @@ motif_subset <- motif[(motif$V1 %in% rownames(exp)) & (motif$V2 %in% rownames(ex
 ppi_subset <- ppi[(ppi$V1 %in% motif_subset$V1) & (ppi$V2 %in% motif_subset$V1),]
 
 # Load the sample ids of LCL samples
-lcl_samples <-read.delim("data/LCL_samples.txt", header = FALSE, stringsAsFactors = F)
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/LCL_samples.txt")
+lcl_samples <-fread("./LCL_samples.txt", header = FALSE, data.table=FALSE)
+
 # Select the columns of the expression matrix corresponding to the LCL samples
 lcl_exp <- exp[,colnames(exp) %in% lcl_samples[,1]]
 
 # Load the sample ids of whole blood samples
-wb_samples <-read.delim("data/WholeBlood_samples.txt", header = FALSE, stringsAsFactors = F)
+system("curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/WholeBlood_samples.txt")
+wblood_samples <-fread("./WholeBlood_samples.txt", header = FALSE, data.table=FALSE)
+
 # Select the columns of the expression matrix corresponding to the whole blood samples
-wb_exp <- exp[,colnames(exp) %in% wb_samples[,1]]
+wb_exp <- exp[,colnames(exp) %in% wblood_samples[,1]]
 ```
 
 Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior. We will point to the same motif and ppi priors for each PANDA run, which represents the initial putative regulatory information. We then point to the expression matrix correspoding to the LCL samples to generate the LCL regulatory network, and to the expression matrix corresponding to the whole blood samples to generate the whole blood regulatory network.
@@ -122,15 +131,15 @@ Download Cytoscape from: https://cytoscape.org
 # We will use the function vis.panda.in.cytoscape to plot a set of nodes and edges on Cytoscape. The input for this function is a data.frame of edges to plot with 4 columns: "tf", "gene", "motif" (TF motif present or not on gene promoter), "force" (edge weight calculated by PANDA).
 lcl_vis <- melt(pandaLCL@regNet)
 wb_vis <- melt(pandaWB@regNet)
-lcl_vis <- data.frame("tf"=as.character(lcl_vis[,1]),"gene"=as.character(lcl_vis[,2]),"motif"=NA,"force"=as.numeric(lcl_vis[,3]),stringsAsFactors = FALSE)
-wb_vis <- data.frame("tf"=as.character(wb_vis[,1]),"gene"=as.character(wb_vis[,2]),"motif"=NA,"force"=as.numeric(wb_vis[,3]),stringsAsFactors = FALSE)
+lcl_vis <- data.frame("TF"=as.character(lcl_vis[,1]),"Gene"=as.character(lcl_vis[,2]),"Motif"=NA,"Score"=as.numeric(lcl_vis[,3]),stringsAsFactors = FALSE)
+wb_vis <- data.frame("TF"=as.character(wb_vis[,1]),"Gene"=as.character(wb_vis[,2]),"Motif"=NA,"Score"=as.numeric(wb_vis[,3]),stringsAsFactors = FALSE)
 head(lcl_vis)
 ```
 
 ## Plot the 200 highest edge weights
-```{r eval=FALSE}
+```{r,eval=FALSE}
 n=200 # number of edges to plot 
-top <- order(lcl_vis$force,decreasing=T)[1:n]
+top <- order(lcl_vis$Score,decreasing=T)[1:n]
 lcl_vis_top <- lcl_vis[top,]
 # Plot in cytoscape (open the cytoscape software before running this command)
 vis.panda.in.cytoscape(lcl_vis_top, network_name="LCL")
@@ -139,7 +148,7 @@ create.panda.style(style_name="PandaStyle")
 ```
 
 ## Plot the top differential edges betwen LCL and WB
-```{r warning=FALSE, message=FALSE}
+```{r,eval=FALSE,warning=FALSE, message=FALSE}
 # Select the top differential edge weights betweeen LCL and whole blood
 diffRes <- panda.diff.edges(lcl_vis, wb_vis, condition_name="LCL")
 head(diffRes)
@@ -149,11 +158,11 @@ nrow(diffRes)
 # Select the top differential edges higher in LCL to plot in Cytoscape
 n=200 # number of edges to select from each condition
 diffResLCL <- diffRes[diffRes$LCL=="T",]
-diffResLCL <- diffResLCL[order(diffResLCL$force,decreasing=TRUE),][1:n,]
+diffResLCL <- diffResLCL[order(diffResLCL$Score,decreasing=TRUE),][1:n,]
 
 # Select the top differential edges higher in whole blood to plot in Cytoscape
 diffResWB <- diffRes[diffRes$LCL=="F",]
-diffResWB <- diffResWB[order(diffResWB$force,decreasing=TRUE),][1:n,]
+diffResWB <- diffResWB[order(diffResWB$Score,decreasing=TRUE),][1:n,]
 
 # Combine top differential edges in LCL and WB to plot in Cytoscape
 diffRes_vis <- rbind(diffResLCL, diffResWB)
@@ -185,11 +194,12 @@ head(degreeDiff)
 Well will use the fgsea package to perform gene set enrichment analysis. We need to point to a ranked gene list (for example the gene in-degree difference between LCL and whole blood), and a list of gene sets (or signatures) in gmt format to test for enrichment. The gene sets can be downloaded from MSigDB: http://software.broadinstitute.org/gsea/msigdb Same gene annotation should be used in the ranked gene list and gene sets. In our example we will use the KEGG pathways downloaded from MSigDB.
 
 ## Run fgsea
-```{r warning=FALSE, message=FALSE}
-gmt.file <- "data/c2.cp.kegg.v7.0.symbols.gmt"
-pathways <- gmtPathways(gmt.file)
+```{r,warning=FALSE, message=FALSE}
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/c2.cp.kegg.v7.0.symbols.gmt")
+pathways <- gmtPathways("./c2.cp.kegg.v7.0.symbols.gmt")
 # To retrieve biological-relevant processes, we will load and use the complete ranked gene list (27,175 genes) calculated from the complete network instead of the 1,000 subset genes we used in this tutorial example to build PANDA networks within a very short run time.
-degreeDiff_all <- read.delim("data/lclWB_indegreeDifference.rnk",stringsAsFactors = F,header=F)
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/lclWB_indegreeDifference.rnk")
+degreeDiff_all <- read.delim("./lclWB_indegreeDifference.rnk",stringsAsFactors = F,header=F)
 degreeDiff_all <- setNames(degreeDiff_all[,2], degreeDiff_all[,1])
 fgseaRes <- fgsea(pathways, degreeDiff_all, minSize=15, maxSize=500, nperm=1000)
 head(fgseaRes)

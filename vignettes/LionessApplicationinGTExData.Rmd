@@ -12,8 +12,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
+  comment = "#>"
 )
 ```
 
@@ -23,17 +22,17 @@ LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples) is
 In this vignette, we will compare LIONESS regulatory networks from 207 females and 238 males with colon cancer using RNA-Seq data from TCGA. We will compare the edge weights between females and males using a linear regression model and correcting for the covariates age, race, and disease stage, as available in the limma package. We will also compare the gene's in-degree (defined as the sum of the gene's incoming edge weights from all TFs in the network). Finally, we will perform gene set enrichment analysis to find the pathways enriched for genes differentially targeted by sex in colon cancer.
 
 ## Install packages
-```{r eval=FALSE}
+```{r,message=FALSE,warning=FALSE,results='hide'}
 if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
+    install.packages("BiocManager",repos = "http://cran.us.r-project.org")
 BiocManager::install("limma")
 BiocManager::install("fgsea")
 BiocManager::install("Biobase")
-install.packages("ggplot2")
-install.packages("igraph")
+# install.packages("ggplot2",repos = "http://cran.us.r-project.org")
+install.packages("igraph",repos = "http://cran.us.r-project.org")
 ```
 ## Load packages
-```{r warning=FALSE, message=FALSE}
+```{r,warning=FALSE, message=FALSE}
 library(limma)
 library(fgsea)
 library(ggplot2)
@@ -48,8 +47,9 @@ For the purposes of demonstrating the workflow, we will load only a subet of LIO
 Let's take a look at the networks:
 
 ```{r}
-# Load a subset of LIONESS networks
-lioness <- read.delim("data/lioness_coloncancer_subset.txt",stringsAsFactors = F, check.names = F)
+# download a subset of LIONESS networks from netZooR AWS Bucket to working directory.
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/lioness_coloncancer_subset.txt")
+lioness <- read.delim("./lioness_coloncancer_subset.txt",stringsAsFactors = F, check.names = F)
 head(lioness[,1:5])
 # Add row names as "TF_gene" and remove columns 1 and 2 with TF and gene name
 rownames(lioness) <- apply(lioness, 1, function(x){
@@ -59,10 +59,11 @@ rownames(lioness) <- apply(lioness, 1, function(x){
 lioness <- lioness[,-(1:2)]
 head(lioness[,1:5])
 
-# Load the complete gene in-degree (sum of all edge weights for each gene) and clinical data stored as an expression set 
-obj <- get(load(paste("data/inDegree_allEdges_coloncancer.rdata", sep="/")))
+# Load the complete gene in-degree (sum of all edge weights for each gene) and clinical data stored as an expression set
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/inDegree_allEdges_coloncancer.rdata")
+load("./inDegree_allEdges_coloncancer.rdata")
 # Clinical information
-pData(obj)[1:5,30:35]
+pData(obj1)[1:5,30:35]
 ```
 
 # Compare the edge weights
@@ -71,17 +72,17 @@ Compare the edge weights between males and females using linear regression model
 ## Run limma
 ```{r}
 # Define the covariates
-gender <- factor(as.character(pData(obj)$gender),levels=c("MALE","FEMALE"))
+gender <- factor(as.character(pData(obj1)$gender),levels=c("MALE","FEMALE"))
 
-stage <- (as.character(pData(obj)$uicc_stage))
+stage <- (as.character(pData(obj1)$uicc_stage))
 stage[which(is.na(stage))] <- "NA"    
 stage <- as.factor(stage)
 
-race <- as.character(pData(obj)$race)
+race <- as.character(pData(obj1)$race)
 race[which(is.na(race))] <- "NA"
 race <- as.factor(race)
 
-age <- as.numeric(pData(obj)$age_at_initial_pathologic_diagnosis)
+age <- as.numeric(pData(obj1)$age_at_initial_pathologic_diagnosis)
 age[which(is.na(age))] <- mean(age,na.rm=TRUE)
 
 design = model.matrix(~ stage + race + age + gender)
@@ -113,7 +114,7 @@ Compare the gene's in-degree between males and females using linear regression m
 
 ## Run limma
 ```{r}
-indegree <- assayData(obj)[["quantile"]]
+indegree <- assayData(obj1)[["quantile"]]
 head(indegree[,1:3])
 # Use the same design matrix as before
 fitGood = lmFit(indegree,design)
@@ -129,8 +130,8 @@ Well will use the fgsea package to perform gene set enrichment analysis. We need
 
 ## Run fgsea
 ```{r}
-gmt.file <- "data/c2.cp.kegg.v7.0.symbols.gmt"
-pathways <- gmtPathways(gmt.file)
+system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/c2.cp.kegg.v7.0.symbols.gmt")
+pathways <- gmtPathways("./c2.cp.kegg.v7.0.symbols.gmt")
 fgseaRes <- fgsea(pathways, indegree_rank, minSize=15, maxSize=500, nperm=1000)
 head(fgseaRes)
 # Subset to pathways with FDR < 0.05
