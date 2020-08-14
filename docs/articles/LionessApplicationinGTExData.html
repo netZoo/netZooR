@@ -66,9 +66,6 @@
       <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
     </li>
     <li>
-      <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
-    </li>
-    <li>
       <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
@@ -322,20 +319,20 @@ indegree_rank &lt;-<span class="st"> </span><span class="kw"><a href="https://rd
 pathways &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/fgsea/man/gmtPathways.html">gmtPathways</a></span>(<span class="st">"./c2.cp.kegg.v7.0.symbols.gmt"</span>)
 fgseaRes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span>(pathways, indegree_rank, <span class="dt">minSize=</span><span class="dv">15</span>, <span class="dt">maxSize=</span><span class="dv">500</span>, <span class="dt">nperm=</span><span class="dv">1000</span>)
 <span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(fgseaRes)
-<span class="co">#&gt;                                 pathway      pval      padj         ES</span>
-<span class="co">#&gt; 1:      KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.1360294 0.2430188  0.3240518</span>
-<span class="co">#&gt; 2:         KEGG_CITRATE_CYCLE_TCA_CYCLE 0.5208791 0.6573857 -0.2702159</span>
-<span class="co">#&gt; 3:       KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.2384473 0.3791312  0.3795079</span>
-<span class="co">#&gt; 4: KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.0502693 0.1141831  0.4200039</span>
-<span class="co">#&gt; 5:            KEGG_GALACTOSE_METABOLISM 0.8399123 0.9210073 -0.2250237</span>
-<span class="co">#&gt; 6:           KEGG_FATTY_ACID_METABOLISM 0.1672727 0.2852018  0.3533304</span>
+<span class="co">#&gt;                                 pathway       pval      padj         ES</span>
+<span class="co">#&gt; 1:      KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.11741683 0.2170846  0.3240518</span>
+<span class="co">#&gt; 2:         KEGG_CITRATE_CYCLE_TCA_CYCLE 0.56312625 0.6969975 -0.2702159</span>
+<span class="co">#&gt; 3:       KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.24165029 0.3766902  0.3795079</span>
+<span class="co">#&gt; 4: KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.05273834 0.1197914  0.4200039</span>
+<span class="co">#&gt; 5:            KEGG_GALACTOSE_METABOLISM 0.87829615 0.9499938 -0.2250237</span>
+<span class="co">#&gt; 6:           KEGG_FATTY_ACID_METABOLISM 0.15120968 0.2604873  0.3533304</span>
 <span class="co">#&gt;           NES nMoreExtreme size                            leadingEdge</span>
-<span class="co">#&gt; 1:  1.2406572           73   47  ALDOB,TPI1,ALDH3A1,BPGM,PKLR,PDHB,...</span>
-<span class="co">#&gt; 2: -0.9539462          236   29      SDHA,CS,OGDH,PDHA1,ACO2,OGDHL,...</span>
-<span class="co">#&gt; 3:  1.1973691          128   21   ALDOB,DERA,RPE,TALDO1,PGM2,ALDOC,...</span>
-<span class="co">#&gt; 4:  1.4474433           27   30   ALDOB,TSTA3,MTMR6,TPI1,FPGT,PMM2,...</span>
-<span class="co">#&gt; 5: -0.7255465          382   20            HK1,GLA,GANC,PFKL,UGP2,PFKM</span>
-<span class="co">#&gt; 6:  1.2521301           91   33 GCDH,ACAT2,ACOX3,EHHADH,ECHS1,CPT2,...</span>
+<span class="co">#&gt; 1:  1.2539723           59   47  ALDOB,TPI1,ALDH3A1,BPGM,PKLR,PDHB,...</span>
+<span class="co">#&gt; 2: -0.9407524          280   29      SDHA,CS,OGDH,PDHA1,ACO2,OGDHL,...</span>
+<span class="co">#&gt; 3:  1.1973268          122   21   ALDOB,DERA,RPE,TALDO1,PGM2,ALDOC,...</span>
+<span class="co">#&gt; 4:  1.4424353           25   30   ALDOB,TSTA3,MTMR6,TPI1,FPGT,PMM2,...</span>
+<span class="co">#&gt; 5: -0.7088735          432   20            HK1,GLA,GANC,PFKL,UGP2,PFKM</span>
+<span class="co">#&gt; 6:  1.2525991           74   33 GCDH,ACAT2,ACOX3,EHHADH,ECHS1,CPT2,...</span>
 <span class="co"># Subset to pathways with FDR &lt; 0.05</span>
 sig &lt;-<span class="st"> </span>fgseaRes[fgseaRes<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>,]
 <span class="co"># Top 10 pathways enriched in females</span>
@@ -343,13 +340,13 @@ sig<span class="op">$</span>pathway[sig<span class="op">$</span>NES <span class=
 <span class="co">#&gt;  [1] "KEGG_STEROID_HORMONE_BIOSYNTHESIS"                </span>
 <span class="co">#&gt;  [2] "KEGG_OXIDATIVE_PHOSPHORYLATION"                   </span>
 <span class="co">#&gt;  [3] "KEGG_PYRIMIDINE_METABOLISM"                       </span>
-<span class="co">#&gt;  [4] "KEGG_HISTIDINE_METABOLISM"                        </span>
-<span class="co">#&gt;  [5] "KEGG_GLUTATHIONE_METABOLISM"                      </span>
-<span class="co">#&gt;  [6] "KEGG_TERPENOID_BACKBONE_BIOSYNTHESIS"             </span>
-<span class="co">#&gt;  [7] "KEGG_METABOLISM_OF_XENOBIOTICS_BY_CYTOCHROME_P450"</span>
-<span class="co">#&gt;  [8] "KEGG_DRUG_METABOLISM_CYTOCHROME_P450"             </span>
-<span class="co">#&gt;  [9] "KEGG_RIBOSOME"                                    </span>
-<span class="co">#&gt; [10] "KEGG_PROTEASOME"</span>
+<span class="co">#&gt;  [4] "KEGG_GLUTATHIONE_METABOLISM"                      </span>
+<span class="co">#&gt;  [5] "KEGG_TERPENOID_BACKBONE_BIOSYNTHESIS"             </span>
+<span class="co">#&gt;  [6] "KEGG_METABOLISM_OF_XENOBIOTICS_BY_CYTOCHROME_P450"</span>
+<span class="co">#&gt;  [7] "KEGG_DRUG_METABOLISM_CYTOCHROME_P450"             </span>
+<span class="co">#&gt;  [8] "KEGG_RIBOSOME"                                    </span>
+<span class="co">#&gt;  [9] "KEGG_PROTEASOME"                                  </span>
+<span class="co">#&gt; [10] "KEGG_PROTEIN_EXPORT"</span>
 <span class="co"># Top 10 pathways enriched in males</span>
 sig<span class="op">$</span>pathway[sig<span class="op">$</span>NES <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>][<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]
 <span class="co">#&gt;  [1] "KEGG_INOSITOL_PHOSPHATE_METABOLISM"        </span>
@@ -361,7 +358,7 @@ sig<span class="op">$</span>pathway[sig<span class="op">$</span>NES <span class=
 <span class="co">#&gt;  [7] "KEGG_MTOR_SIGNALING_PATHWAY"               </span>
 <span class="co">#&gt;  [8] "KEGG_WNT_SIGNALING_PATHWAY"                </span>
 <span class="co">#&gt;  [9] "KEGG_NOTCH_SIGNALING_PATHWAY"              </span>
-<span class="co">#&gt; [10] "KEGG_AXON_GUIDANCE"</span></code></pre></div>
+<span class="co">#&gt; [10] "KEGG_TGF_BETA_SIGNALING_PATHWAY"</span></code></pre></div>
 </div>
 <div id="bubble-plot-of-differentially-targeted-pathways" class="section level2">
 <h2 class="hasAnchor">
