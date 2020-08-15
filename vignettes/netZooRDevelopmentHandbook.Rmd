@@ -1,0 +1,109 @@
+---
+title: "netZooR Development Handbook"
+author: "Tian Wang"
+date: "2020-08-13"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pandaR}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+# Add a new tool
+1. Fork and clone netZooR repository https://github.com/netZoo/netZooR to local working directory.
+2. check pinot 1-7 https://netzoo.github.io/contribute/contribute/#pull-requests-to-netzoo for how to use Git.
+
+Idealy, all functions of the new tool should be written into one script named by tool and be placed in *netZooR/R/*, like *netZooR/R/CONDOR.R*. And function name convention is `toolname.functionname`, like `condor.cluster`.
+
+## Documenting functions
+Follow the procedure and example documentation chuck on *"The documentation workflow"* section on http://r-pkgs.had.co.nz/man.html.
+
+### when @examples doesn't work
+"For the purpose of illustration, it’s often useful to include code that causes an error. `\dontrun{}` allows you to include code in the example that is not run. (You used to be able to use `\donttest{}` for a similar purpose, but it’s no longer recommended because it actually is tested.)"
+<br>In the most common cases, we use `\donttest{}`.
+
+### add unit tests
+At this point, you might want to create a new buildnetZooR.R script located anywhere outside of /netZooR folder, set the working directory to the path of *"/netZooR"* folder, e.g. `setwd("~/Documents/GitHub/netZooR/")`
+
+In this buildnetZooR.R script, run `usethis::use_test("name_of_your_tool")` and one new test script named "test-name_of_your_tool.R"" will be created (in *netZooR/tests/testthat/*) and opened to modify. In this test script, you could write unit tests as many as possible to cover all lines in your tool, a good example is *netZooR/tests/testthat/test-panda.R*.
+
+
+### data used in test script
+
+#### R vectors data
+It's highly recommended to create small and repoducible dataset in the test script, but in the cases of real world dataset, like gene expression dataset, if it's .Rdata or it can be presented as R vector, you could load this .Rdata file *netZooR/tests/testthat/testDataset.RData*, generate or move your own data into the r enviroment, and re-save all dataset including the r objects come with *testDataset.RData*, as the original name and in original path, i.e. re-save as *netZooR/tests/testthat/testDataset.RData.* 
+<br>**Please do NOT use the same vector name as the vectors are already in testDataset.RData.**
+
+#### data in .txt ect. file
+Data in .txt, .cvs, .gmt or other file format, it can be stored in */netZooR/inst/extdata*. But, it's still recommended to convert the data in file to r vector and store in testDataset.RData.
+
+### check unit tests works or not
+In your buildnetZooR.R, you could use `devtools::test()` to check all unit tests including the unit tests existing previously.
+
+And there are also a funtion to check code coverage and coverage reports:
+```{r,eval=FALSE}
+library(covr)
+covr::package_coverage("path_of_/netZooR_folder")
+covr::report()
+```
+
+Move forward until all unit tests pass.
+
+## Add vignette, optional
+In buildnetZooR.R, use `devtools::use_vignette("vignett_name")` can create a vignette .Rmd file, e.g. `devtools::use_vignette("ALPACA")` will result in a  vignett_name.Rmd file located in netZooR/vignettes, modify the vignette as desired. The syntax of vignette is R Markdown, the basic syntax can be found here, https://rmarkdown.rstudio.com/authoring_basics.html.
+
+Use code chunk options https://bookdown.org/yihui/rmarkdown/r-code.html as desired.
+
+### upload data used in vignette to AWS
+Data in .Rdata, .txt, .cvs, .gmt or other file format, it can be stored in AWS https://s3.console.aws.amazon.com/s3/buckets/netzoo/netZooR/unittest_datasets/?region=us-east-2&tab=overview, Please contact Marouen Ben Guebila at benguebila@hsph.harvard.edu, and Camila Lopes-Ramos at camilaramos@hsph.harvard.edu for how to upload the dataset to AWS.
+
+Then, download with `system("curl -O  file_url")`, a good example of how to download files from AWS and use in vignette like what *netZooR/vignettes/LionessApplicationinGTExData.Rmd* did
+
+
+
+## Modify DESCRIPTION and README.md
+
+In DESCRIPTION, add any text content as desired, and add dependecy package in either `Depends` or `Imports` section, for details about the difference between these two sections, click here, https://kbroman.org/pkg_primer/pages/depends.html.
+
+And use Markdown syntax (https://www.markdownguide.org/basic-syntax/) to modify README.md as desired.
+
+# Development Circle
+
+After completing all above procedure:
+## Build the package
+```{r,eval=FALSE}
+# set working directory to where the /netZooR located
+# e.g. setwd("~/Documents/GitHub/netZooR/")
+library(devtools)
+document() # install any uninstalled packages at this step
+build()
+
+```
+
+## CMD check
+Fix any errors in this step, and fix any warnings, notes as many as possible.
+```{r,eval=FALSE}
+devtools::check()
+```
+
+## Re-build Documentation Websites
+
+### Add function reference in pkgdown config
+In *netZooR/_pkgdown.yml*, modify in 'reference' section to add your tool and functions, please follow the format in the *_pkgdown.yml*.
+
+
+After passing the CMD check, move to rebuild documentation website
+```{r,eval=FALSE}
+# Install release version from CRAN
+install.packages("pkgdown")
+# OR
+# Install development version from GitHub
+# devtools::install_github("r-lib/pkgdown")
+library("pkgdown")
+pkgdown::build_site()
+```
+
+**After building the documentation website, please go to *netZooR/vignettes/* folder and delete all files except .Rmd files.**
+
+If there is anything unclear or any questions, please feel free to contact me at tian.wang@bc.edu.
+

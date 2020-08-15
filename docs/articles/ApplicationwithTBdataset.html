@@ -66,7 +66,13 @@
       <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
     </li>
     <li>
+      <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+    </li>
+    <li>
       <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
+    </li>
+    <li>
+      <a href="../articles/netZooRDevelopmentHandbook.html">netZooR Development Handbook</a>
     </li>
     <li>
       <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
@@ -271,10 +277,7 @@ control_lioness_result &lt;-<span class="st"> </span><span class="kw"><a href=".
 <h3 class="hasAnchor">
 <a href="#condor-algorithm-and-plotting" class="anchor"></a>CONDOR Algorithm and plotting</h3>
 <p>PANDA network can simply be converted into condor.object by <code><a href="../reference/panda.to.condor.object.html">panda.to.condor.object(panda.net, threshold)</a></code> Defaults option <code>threshold</code> is the average of [median weight of non-prior edges] and [median weight of prior edges], all weights mentioned previous are transformationed with formula <code>w'=ln(e^w+1)</code> before calculating the median and average. But all the edges selected will remain the orginal weights calculated by PANDA.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">treated_condor_object &lt;-<span class="st"> </span><span class="kw"><a href="../reference/panda.to.condor.object.html">panda.to.condor.object</a></span>(treated_net, <span class="dt">threshold =</span> <span class="dv">0</span>)
-<span class="co">#&gt; [1] "modularity of projected graph 0.306134881290028"</span>
-<span class="co">#&gt; [1] "Q = 0.306345744728624"</span>
-<span class="co">#&gt; [1] "Q = 0.306345744728624"</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">treated_condor_object &lt;-<span class="st"> </span><span class="kw"><a href="../reference/panda.to.condor.object.html">panda.to.condor.object</a></span>(treated_net, <span class="dt">threshold =</span> <span class="dv">0</span>)</code></pre></div>
 <p>The communities structure can be plotted by igraph.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(viridisLite)
 treated_condor_object &lt;-<span class="kw"><a href="../reference/condor.cluster.html">condor.cluster</a></span>(treated_condor_object,<span class="dt">project =</span> <span class="ot">FALSE</span>)

@@ -104,7 +104,13 @@ This function uses the result of PANDA algorithm as the input dataset to run CON
       <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
     </li>
     <li>
+      <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+    </li>
+    <li>
       <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
+    </li>
+    <li>
+      <a href="../articles/netZooRDevelopmentHandbook.html">netZooR Development Handbook</a>
     </li>
     <li>
       <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
@@ -169,48 +175,37 @@ and the median edge-weight of non-prior edges (3rd column "Motif" is 0.0) in PAN
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># refer to four input datasets files in inst/extdat</span>
+    <pre class="examples"><div class='input'>
+<span class='co'># refer to three input datasets files in inst/extdat</span>
 <span class='no'>treated_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr4_matched.txt"</span>,
-<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>control_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr10_matched.txt"</span>,
 <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>motif_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"chip_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>ppi_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ppi_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 
-<span class='co'># Run PANDA for treated and control network</span>
+<span class='co'># Run PANDA to construct the treated network</span>
 <span class='no'>treated_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='panda.py.html'>panda.py</a></span>(<span class='kw'>expr_file</span> <span class='kw'>=</span> <span class='no'>treated_expression_file_path</span>,
 <span class='kw'>motif_file</span><span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi_file</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>,
-<span class='kw'>modeProcess</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>remove_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )
-<span class='no'>control_all_panda_result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='panda.py.html'>panda.py</a></span>(<span class='kw'>expr_file</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>,
- <span class='kw'>motif_file</span><span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi_file</span><span class='kw'>=</span> <span class='no'>ppi_file_path</span>,
-<span class='kw'>modeProcess</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>remove_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )
-
+<span class='kw'>modeProcess</span><span class='kw'>=</span><span class='st'>"legacy"</span>, <span class='kw'>remove_missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA...</span></div><div class='input'>
 <span class='co'># access PANDA regulatory network</span>
 <span class='no'>treated_net</span> <span class='kw'>&lt;-</span> <span class='no'>treated_all_panda_result</span>$<span class='no'>panda</span>
-<span class='no'>control_net</span> <span class='kw'>&lt;-</span> <span class='no'>control_all_panda_result</span>$<span class='no'>panda</span>
 
-<span class='co'># Run CONDOR</span>
+<span class='co'># Obtain the condor.object from PANDA network</span>
 <span class='no'>treated_condor_object</span> <span class='kw'>&lt;-</span> <span class='fu'>panda.to.condor.object</span>(<span class='no'>treated_net</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>)
-<span class='no'>control_condor_object</span> <span class='kw'>&lt;-</span> <span class='fu'>panda.to.condor.object</span>(<span class='no'>control_net</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>)
 
-<span class='co'># plot communities</span>
+<span class='co'># cluster condor.object</span>
+<span class='no'>treated_condor_object</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='condor.cluster.html'>condor.cluster</a></span>(<span class='no'>treated_condor_object</span>, <span class='kw'>project</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "modularity of projected graph 0.306134881290028"
+#&gt; [1] "Q = 0.306345744728624"
+#&gt; [1] "Q = 0.306345744728624"</div><div class='input'>
 <span class='co'># package igraph and package viridisLite are already loaded with this package.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>viridisLite</span>)
 <span class='no'>treated_color_num</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>treated_condor_object</span>$<span class='no'>red.memb</span>$<span class='no'>com</span>)
 <span class='no'>treated_color</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/viridisLite/man/viridis.html'>viridis</a></span>(<span class='no'>treated_color_num</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>begin</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>1</span>,
 <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"D"</span>)
 <span class='fu'><a href='condor.plot.communities.html'>condor.plot.communities</a></span>(<span class='no'>treated_condor_object</span>, <span class='kw'>color_list</span><span class='kw'>=</span><span class='no'>treated_color</span>,
-<span class='kw'>point.size</span><span class='kw'>=</span><span class='fl'>0.04</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Target"</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"Regulator"</span>)
+<span class='kw'>point.size</span><span class='kw'>=</span><span class='fl'>0.04</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Target"</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"Regulator"</span>)</div><div class='img'><img src='panda.to.condor.object-1.png' alt='' width='700' height='433' /></div><div class='input'>
 
-<span class='no'>control_color_num</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>control_condor_object</span>$<span class='no'>red.memb</span>$<span class='no'>com</span>)
-<span class='no'>control_color</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/viridisLite/man/viridis.html'>viridis</a></span>(<span class='no'>control_color_num</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>begin</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-<span class='kw'>direction</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"D"</span>)
-<span class='fu'><a href='condor.plot.communities.html'>condor.plot.communities</a></span>(<span class='no'>control_condor_object</span>, <span class='kw'>color_list</span><span class='kw'>=</span><span class='no'>control_color</span> ,
-<span class='kw'>point.size</span><span class='kw'>=</span><span class='fl'>0.04</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Target"</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"Regulator"</span>)
-
-}</div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
