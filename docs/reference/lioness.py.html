@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.3</span>
       </span>
     </div>
 
@@ -90,28 +90,25 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/ALPACA_MaghaP.html">Detecting differential modules using ALPACA</a>
+      <a href="../articles/ALPACA.html">Detecting differential modules using ALPACA</a>
     </li>
     <li>
-      <a href="../articles/ApplicationinGTExData_DeborahW.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
+      <a href="../articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
     <li>
-      <a href="../articles/ApplicationwithTBdataset_TianW.html">Application with TB dataset</a>
+      <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
     </li>
     <li>
-      <a href="../articles/MONSTER_DanielS.html">An Introduction to the MONSTER Package</a>
+      <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
     </li>
     <li>
-      <a href="../articles/SAMBAR_MariekeK.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
+      <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
-      <a href="../articles/lioness_limma_CamilaLR.html">Comparing LIONESS Regulatory Networks using limma</a>
+      <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
     </li>
     <li>
-      <a href="../articles/pandaR_DanielS.html">An Introduction to the pandaR Package</a>
-    </li>
-    <li>
-      <a href="../articles/panda_CamilaLR.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
+      <a href="../articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
   </ul>
 </li>
@@ -227,7 +224,8 @@ The default is a folder named "lioness_output" under current working directory. 
 <span class='co'># Run LIONESS algorithm</span>
 <span class='no'>control_lioness_result</span> <span class='kw'>&lt;-</span> <span class='fu'>lioness.py</span>(<span class='kw'>expr_file</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>,
 <span class='kw'>motif_file</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi_file</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>,
-<span class='kw'>modeProcess</span><span class='kw'>=</span><span class='st'>"union"</span>,<span class='kw'>start_sample</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>end_sample</span><span class='kw'>=</span><span class='fl'>2</span>)</div></pre>
+<span class='kw'>modeProcess</span><span class='kw'>=</span><span class='st'>"union"</span>,<span class='kw'>start_sample</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>end_sample</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns</span></div><div class='input'> 
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>

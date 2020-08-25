@@ -16,7 +16,7 @@ source.PPI(TF, STRING.version = "10", species.index, ...)
 \item{...}{any dditional arguments passed to}
 }
 \value{
-A PPI data.frame which contains two columns: "from" and "to" indicating the direction of protein-protein interaction.
+A PPI data.frame which contains three columns: "from" and "to" indicating the direction of protein-protein interaction, and "score" indicating the interaction score between two proteins.
 }
 \description{
 This function is able to use a list of Transcription Factors(TF) of interest to source the Protein-Protein interactions (PPI)in STRING database

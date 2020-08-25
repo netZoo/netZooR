@@ -18,6 +18,7 @@ The fundamental concepts behind the PANDA approach is to model the regulatory ne
 ## Example
 An example dataset derived from a subset of stress-induced Yeast is available by running
 ```{r}
+library(netZooR)
 library(pandaR)
 data(pandaToyData)
 ```
@@ -71,12 +72,6 @@ Other comparisons are underway...
 ## Other helpful functions
 
 There are a host of other helpful functions, including *testMotif*, *plotCommunityDetection*, and *multiplot*. See the full help pages.
-
-## Session information
-
-```{r}
-sessionInfo()
-```
 
 ##References
 
