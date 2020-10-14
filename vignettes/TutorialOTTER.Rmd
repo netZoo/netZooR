@@ -1,8 +1,8 @@
 ---
 title: "Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER"
-author: "Rebekka Burkholz"
-date: "9/22/2020"
-output: html_document
+author: Rebekka Burkholz
+date: 2020-9-22
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{otterRApplicationinGTExData}
   %\VignetteEngine{knitr::rmarkdown}
@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
 
 # Introduction
 In this tutorial, we will learn how to infer OTTER gene regulatory networks from gene expression data with netZooR. It is an adaptation of the PANDA tutorial written by Camila Lopes-Ramos.

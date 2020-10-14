@@ -8,23 +8,29 @@
 
 <title>Run OTTER in R — otter • netZooR</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,15 +38,15 @@
 
 
 
-<meta property="og:title" content="Run OTTER in R — otter" />
 
+<meta property="og:title" content="Run OTTER in R — otter" />
 <meta property="og:description" content="Description:
               OTTER infers gene regulatory networks using TF DNA binding
               motif (W), TF PPI (P), and gene coexpression (C) through 
               minimzing the following objective:
                                  min f(W) 
               with f(W) = (1-lambda)*||WW' - P||^2 + lambda*||W'W - C||^2 + (gamma/2)*||W||^2" />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -57,7 +63,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -109,6 +115,9 @@
       <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
+      <a href="../articles/TutorialOTTER.html">Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER</a>
+    </li>
+    <li>
       <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
     </li>
     <li>
@@ -117,7 +126,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -139,19 +147,25 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Description:
               OTTER infers gene regulatory networks using TF DNA binding
               motif (W), TF PPI (P), and gene coexpression (C) through 
               minimzing the following objective:
                                  min f(W) 
               with f(W) = (1-lambda)*||WW' - P||^2 + lambda*||W'W - C||^2 + (gamma/2)*||W||^2</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>otter</span>(<span class='no'>W</span>, <span class='no'>P</span>, <span class='no'>C</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0.0035</span>, <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='fl'>0.335</span>, <span class='kw'>Iter</span> <span class='kw'>=</span> <span class='fl'>32</span>,
-  <span class='kw'>eta</span> <span class='kw'>=</span> <span class='fl'>1e-05</span>, <span class='kw'>bexp</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>otter</span><span class='op'>(</span>
+  <span class='va'>W</span>,
+  <span class='va'>P</span>,
+  <span class='va'>C</span>,
+  lambda <span class='op'>=</span> <span class='fl'>0.0035</span>,
+  gamma <span class='op'>=</span> <span class='fl'>0.335</span>,
+  Iter <span class='op'>=</span> <span class='fl'>32</span>,
+  eta <span class='op'>=</span> <span class='fl'>1e-05</span>,
+  bexp <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -190,37 +204,29 @@ matrix of size (t,g), g=number of genes, t=number of TFs</p></td>
 <p>Outputs:</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>W    : Predicted TF-gene complete regulatory network as an adjacency matrix of size (t,g).</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Inputs:</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>W</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span>(<span class='fl'>100</span>, <span class='kw'>rate</span><span class='kw'>=</span><span class='fl'>.1</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>10</span>)
-<span class='no'>C</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span>(<span class='fl'>100</span>, <span class='kw'>rate</span><span class='kw'>=</span><span class='fl'>.1</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>10</span>)
-<span class='no'>P</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span>(<span class='fl'>100</span>, <span class='kw'>rate</span><span class='kw'>=</span><span class='fl'>.1</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>10</span>)
+<span class='va'>W</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span><span class='op'>(</span><span class='fl'>100</span>, rate<span class='op'>=</span><span class='fl'>.1</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>C</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span><span class='op'>(</span><span class='fl'>100</span>, rate<span class='op'>=</span><span class='fl'>.1</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>P</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span><span class='op'>(</span><span class='fl'>100</span>, rate<span class='op'>=</span><span class='fl'>.1</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>
 
 <span class='co'># Run OTTER algorithm</span>
-<span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='fu'>otter</span>(<span class='no'>W</span>, <span class='no'>P</span>, <span class='no'>C</span>)</div></pre>
+<span class='va'>W</span> <span class='op'>&lt;-</span> <span class='fu'>otter</span><span class='op'>(</span><span class='va'>W</span>, <span class='va'>P</span>, <span class='va'>C</span><span class='op'>)</span>
+ 
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -231,7 +237,7 @@ matrix of size (t,g), g=number of genes, t=number of TFs</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

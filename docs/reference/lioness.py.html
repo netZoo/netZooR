@@ -8,23 +8,29 @@
 
 <title>Run python implementation of LIONESS — lioness.py • netZooR</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,11 +38,11 @@
 
 
 
-<meta property="og:title" content="Run python implementation of LIONESS — lioness.py" />
 
+<meta property="og:title" content="Run python implementation of LIONESS — lioness.py" />
 <meta property="og:description" content="LIONESS(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks.
  [(LIONESS arxiv paper)])." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -53,7 +59,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -105,6 +111,9 @@
       <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
+      <a href="../articles/TutorialOTTER.html">Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER</a>
+    </li>
+    <li>
       <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
     </li>
     <li>
@@ -113,7 +122,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -135,18 +143,26 @@
     </div>
 
     <div class="ref-description">
-    
     <p><strong>LIONESS</strong>(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks.
  <a href='https://arxiv.org/abs/1505.06440'>[(LIONESS arxiv paper)])</a>.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>lioness.py</span>(<span class='no'>expr_file</span>, <span class='kw'>motif_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ppi_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>computing</span> <span class='kw'>=</span> <span class='st'>"cpu"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='st'>"double"</span>, <span class='kw'>save_tmp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>modeProcess</span> <span class='kw'>=</span> <span class='st'>"union"</span>, <span class='kw'>remove_missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>start_sample</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>end_sample</span> <span class='kw'>=</span> <span class='st'>"None"</span>, <span class='kw'>save_single_network</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>save_dir</span> <span class='kw'>=</span> <span class='st'>"lioness_output"</span>, <span class='kw'>save_fmt</span> <span class='kw'>=</span> <span class='st'>"npy"</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>lioness.py</span><span class='op'>(</span>
+  <span class='va'>expr_file</span>,
+  motif_file <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ppi_file <span class='op'>=</span> <span class='cn'>NULL</span>,
+  computing <span class='op'>=</span> <span class='st'>"cpu"</span>,
+  precision <span class='op'>=</span> <span class='st'>"double"</span>,
+  save_tmp <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  modeProcess <span class='op'>=</span> <span class='st'>"union"</span>,
+  remove_missing <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  start_sample <span class='op'>=</span> <span class='fl'>1</span>,
+  end_sample <span class='op'>=</span> <span class='st'>"None"</span>,
+  save_single_network <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  save_dir <span class='op'>=</span> <span class='st'>"lioness_output"</span>,
+  save_fmt <span class='op'>=</span> <span class='st'>"npy"</span>
+<span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -206,37 +222,31 @@ The default is a folder named "lioness_output" under current working directory. 
       <td><p>Character string indicating the format of lioness network of each sample. The dafault is "npy". The option is txt, npy, or mat. This paramter is valid only when save_single_network = TRUE.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with columns representing each sample, rows representing the regulator-target pair in PANDA network generated by <code><a href='panda.py.html'>panda.py</a></code>. 
         Each cell filled with the related score, representing the estimated contribution of a sample to the aggregate network.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># refer to the input datasets files of control in inst/extdat as example</span>
-<span class='no'>control_expression_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"expr10_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>,
-<span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>motif_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"chip_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>ppi_file_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ppi_matched.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"netZooR"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>control_expression_file_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"expr10_matched.txt"</span>, package <span class='op'>=</span> <span class='st'>"netZooR"</span>, 
+mustWork <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>motif_file_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"chip_matched.txt"</span>, package <span class='op'>=</span> <span class='st'>"netZooR"</span>, mustWork <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>ppi_file_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"ppi_matched.txt"</span>, package <span class='op'>=</span> <span class='st'>"netZooR"</span>, mustWork <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># Run LIONESS algorithm</span>
-<span class='no'>control_lioness_result</span> <span class='kw'>&lt;-</span> <span class='fu'>lioness.py</span>(<span class='kw'>expr_file</span> <span class='kw'>=</span> <span class='no'>control_expression_file_path</span>,
-<span class='kw'>motif_file</span> <span class='kw'>=</span> <span class='no'>motif_file_path</span>, <span class='kw'>ppi_file</span> <span class='kw'>=</span> <span class='no'>ppi_file_path</span>,
-<span class='kw'>modeProcess</span><span class='kw'>=</span><span class='st'>"union"</span>,<span class='kw'>start_sample</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>end_sample</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns</span></div><div class='input'> 
+<span class='va'>control_lioness_result</span> <span class='op'>&lt;-</span> <span class='fu'>lioness.py</span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>control_expression_file_path</span>, 
+motif_file <span class='op'>=</span> <span class='va'>motif_file_path</span>, ppi_file <span class='op'>=</span> <span class='va'>ppi_file_path</span>, 
+modeProcess<span class='op'>=</span><span class='st'>"union"</span>,start_sample<span class='op'>=</span><span class='fl'>1</span>, end_sample<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns</span></div><div class='input'> 
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -247,7 +257,7 @@ The default is a folder named "lioness_output" under current working directory. 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

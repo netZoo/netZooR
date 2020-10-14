@@ -6,19 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>An Introduction to the pandaR Package • netZooR</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="An Introduction to the pandaR Package">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="netZooR">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -69,6 +69,9 @@
       <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
+      <a href="../articles/TutorialOTTER.html">Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER</a>
+    </li>
+    <li>
       <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
     </li>
     <li>
@@ -87,10 +90,10 @@
 
       
 
-      </header><div class="row">
+      </header><script src="pandaR_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>An Introduction to the pandaR Package</h1>
+      <h1 data-toc-skip>An Introduction to the pandaR Package</h1>
                         <h4 class="author">Daniel Schlauch, Albert Young, Joseph N. Paulson</h4>
             
             <h4 class="date">2016-05-01</h4>
@@ -112,9 +115,9 @@
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>An example dataset derived from a subset of stress-induced Yeast is available by running</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(netZooR)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></pre></div>
 <pre><code>## Loading required package: igraph</code></pre>
-<pre><code>## Warning: package 'igraph' was built under R version 3.5.2</code></pre>
 <pre><code>## 
 ## Attaching package: 'igraph'</code></pre>
 <pre><code>## The following objects are masked from 'package:stats':
@@ -124,7 +127,6 @@
 ## 
 ##     union</code></pre>
 <pre><code>## Loading required package: reticulate</code></pre>
-<pre><code>## Warning: package 'reticulate' was built under R version 3.5.2</code></pre>
 <pre><code>## Loading required package: pandaR</code></pre>
 <pre><code>## Loading required package: Biobase</code></pre>
 <pre><code>## Loading required package: BiocGenerics</code></pre>
@@ -144,14 +146,12 @@
 ##     IQR, mad, sd, var, xtabs</code></pre>
 <pre><code>## The following objects are masked from 'package:base':
 ## 
-##     anyDuplicated, append, as.data.frame, basename, cbind,
-##     colMeans, colnames, colSums, dirname, do.call, duplicated,
-##     eval, evalq, Filter, Find, get, grep, grepl, intersect,
-##     is.unsorted, lapply, lengths, Map, mapply, match, mget, order,
-##     paste, pmax, pmax.int, pmin, pmin.int, Position, rank, rbind,
-##     Reduce, rowMeans, rownames, rowSums, sapply, setdiff, sort,
-##     table, tapply, union, unique, unsplit, which, which.max,
-##     which.min</code></pre>
+##     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+##     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+##     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+##     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+##     union, unique, unsplit, which, which.max, which.min</code></pre>
 <pre><code>## Welcome to Bioconductor
 ## 
 ##     Vignettes contain introductory material; view with
@@ -159,11 +159,13 @@
 ##     'citation("Biobase")', and for packages 'citation("pkgname")'.</code></pre>
 <pre><code>## </code></pre>
 <pre><code>## </code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pandaR)
-<span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(pandaToyData)</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">pandaR</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">pandaToyData</span><span class="op">)</span></pre></div>
 <p><strong>pandaToyData</strong> is a list containing a regulatory structure derived from sequence motif analysis, protein-protein interaction data and a gene expression. The primary function in pandaR is called with</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pandaResult &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span>(pandaToyData<span class="op">$</span>motif, pandaToyData<span class="op">$</span>expression, pandaToyData<span class="op">$</span>ppi)
-pandaResult</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit">
+<span class="va">pandaResult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">pandaToyData</span><span class="op">$</span><span class="va">motif</span>, <span class="va">pandaToyData</span><span class="op">$</span><span class="va">expression</span>, <span class="va">pandaToyData</span><span class="op">$</span><span class="va">ppi</span><span class="op">)</span>
+<span class="va">pandaResult</span></pre></div>
 <pre><code>## PANDA network for1000genes and87transcription factors.</code></pre>
 <pre><code>## 
 ## Slots:</code></pre>
@@ -173,17 +175,20 @@ pandaResult</code></pre></div>
 <pre><code>## Regulatory graph contains 87000 edges.</code></pre>
 <pre><code>## Regulatory graph is complete.</code></pre>
 <p>Where <strong>pandaResult</strong> is a ‘panda’ object which contains <strong>data.frame</strong>s describing the complete bipartite gene regulatory network as well as complete networks for gene coregulation and transcription factor cooperation. Due to completeness, edgeweights for the regulatory network are reported for all <em>m</em>x<em>n</em> possible TF-gene edges. The distribution of these edge weights for these networks has approximate mean 0 and standard deviation 1. The edges are therefore best interpreted in a relative sense. Strongly positive values indicative of relatively larger amounts of evidence in favor a regulatory mechanism and conversely, smaller or negative values can be interpreted as lacking evidence of a shared biological role. It is naturally of interest to specify a high edge weight subset of the complete network to investigate as a set of present/absent edges. This is easily performed by using the <strong>topedges</strong> function. A network containing the top 1000 edge scores as binary edges can be obtained by:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">topNet &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/topedges.html">topedges</a></span>(pandaResult, <span class="dv">1000</span>)</code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit">
+<span class="va">topNet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/topedges.html">topedges</a></span><span class="op">(</span><span class="va">pandaResult</span>, <span class="fl">1000</span><span class="op">)</span></pre></div>
 <p>Users may then examine the genes targeted by a transcription factor of interest.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/targetedGenes.html">targetedGenes</a></span>(topNet, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"AR"</span>))</code></pre></div>
-<pre><code>##  [1] "AKAP10"       "CNDP2"        "CRHR1"        "HNRNPD"      
-##  [5] "KIAA0652"     "LOC100093631" "LOC100128811" "PRR15"       
-##  [9] "TCF4"         "TCP11L2"      "TMPRSS11B"    "VCX3B"       
-## [13] "WDR4"</code></pre>
+<div class="sourceCode" id="cb29"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/targetedGenes.html">targetedGenes</a></span><span class="op">(</span><span class="va">topNet</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AR"</span><span class="op">)</span><span class="op">)</span></pre></div>
+<pre><code>##  [1] "AKAP10"       "CNDP2"        "CRHR1"        "HNRNPD"       "KIAA0652"    
+##  [6] "LOC100093631" "LOC100128811" "PRR15"        "TCF4"         "TCP11L2"     
+## [11] "TMPRSS11B"    "VCX3B"        "WDR4"</code></pre>
 <p>The network can be further simplified by focusing only on transcription factors on interest and the genes that they are found to regulate. The <strong>subnetwork</strong> method serves this function</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">topSubnet &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/subnetwork.html">subnetwork</a></span>(topNet, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"AR"</span>,<span class="st">"ARID3A"</span>,<span class="st">"ELK1"</span>))</code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit">
+<span class="va">topSubnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/subnetwork.html">subnetwork</a></span><span class="op">(</span><span class="va">topNet</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AR"</span>,<span class="st">"ARID3A"</span>,<span class="st">"ELK1"</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>Existing R packages, such as igraph, can be used to visualize the results</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/plotGraph.html">plotGraph</a></span>(topSubnet)</code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/plotGraph.html">plotGraph</a></span><span class="op">(</span><span class="va">topSubnet</span><span class="op">)</span></pre></div>
 <p><img src="pandaR_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div id="comparing-state-specific-panda-networks" class="section level2">
@@ -197,11 +202,11 @@ pandaResult</code></pre></div>
 <em>plotZbyTF</em> - Plot Z by TF outdegree quartiles</li>
 </ul>
 <p>We can compare how parameter choices effect the Z-score estimation between two PANDA runs. Additionally, we can compare two phenotypes:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">panda.res1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/with.html">with</a></span>(pandaToyData, <span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span>(motif, expression, ppi, <span class="dt">hamming=</span><span class="dv">1</span>))
-panda.res2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/with.html">with</a></span>(pandaToyData, <span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span>(motif, expression <span class="op">+</span><span class="st"> </span>
-<span class="st">                   </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/prod.html">prod</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(expression)),<span class="dt">sd=</span><span class="dv">5</span>), ppi, <span class="dt">hamming=</span><span class="dv">1</span>))
-<span class="kw"><a href="https://rdrr.io/pkg/pandaR/man/plotZ.html">plotZ</a></span>(panda.res1, panda.res2,<span class="dt">addLine=</span><span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## Warning: package 'hexbin' was built under R version 3.5.2</code></pre>
+<div class="sourceCode" id="cb33"><pre class="downlit">
+<span class="va">panda.res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">pandaToyData</span>, <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">motif</span>, <span class="va">expression</span>, <span class="va">ppi</span>, hamming<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="va">panda.res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">pandaToyData</span>, <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">motif</span>, <span class="va">expression</span> <span class="op">+</span> 
+                   <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/prod.html">prod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">expression</span><span class="op">)</span><span class="op">)</span>,sd<span class="op">=</span><span class="fl">5</span><span class="op">)</span>, <span class="va">ppi</span>, hamming<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/plotZ.html">plotZ</a></span><span class="op">(</span><span class="va">panda.res1</span>, <span class="va">panda.res2</span>,addLine<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></pre></div>
 <p><img src="pandaR_files/figure-html/plotZ-1.png" width="700"></p>
 <p>Other comparisons are underway…</p>
 </div>
@@ -209,28 +214,17 @@ panda.res2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.
 <h2 class="hasAnchor">
 <a href="#other-helpful-functions" class="anchor"></a>Other helpful functions</h2>
 <p>There are a host of other helpful functions, including <em>testMotif</em>, <em>plotCommunityDetection</em>, and <em>multiplot</em>. See the full help pages.</p>
-</div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<p>##References</p>
 <p>Glass K, Huttenhower C, Quackenbush J, Yuan GC. Passing Messages Between Biological Networks to Refine Predicted Interactions, <em>PLoS One</em>, 2013 May 31;8(5):e64832</p>
 <p>Glass K, Quackenbush J, Silverman EK, Celli B, Rennard S, Yuan GC and DeMeo DL. Sexually-dimorphic targeting of functionally-related genes in COPD, <em>BMC Systems Biology</em>, 2014 Nov 28; <strong>8</strong>:118</p>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#introduction">Introduction</a></li>
-      <li><a href="#example">Example</a></li>
-      <li><a href="#comparing-state-specific-panda-networks">Comparing state-specific PANDA networks</a></li>
-      <li><a href="#other-helpful-functions">Other helpful functions</a></li>
-      <li><a href="#references">References</a></li>
-      </ul>
+
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -241,7 +235,7 @@ panda.res2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
