@@ -10,12 +10,11 @@ setMethod("show","monsterAnalysis",function(object){monster.print.monsterAnalysi
 #' @export
 #' @return Plot of the dTFI for each TF against null distribution
 #' @examples
-#' \donttest{
 #' data(yeast)
-#' monsterRes <- monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),
-#' yeast$motif, nullPerms=10, numMaxCores=4)
-#' plot(monsterRes)
-#' }
+#' design <- c(rep(1,25),rep(0,10),rep(NA,15))
+#' monsterRes <- monster(yeast$exp.cc, design,
+#' yeast$motif, nullPerms=10, numMaxCores=1)
+#' monster.plot.monsterAnalysis(monsterRes)
 monster.plot.monsterAnalysis <- function(x, ...){
   monster.dTFIPlot(x,...)
 }
@@ -28,10 +27,9 @@ monster.plot.monsterAnalysis <- function(x, ...){
 #' @export
 #' @return Description of transition matrices in object
 #' @examples
-#' \donttest{
 #' data(yeast)
-#' monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
-#' }
+#' design <- c(rep(1,25),rep(0,10),rep(NA,15))
+#' monster(yeast$exp.cc,design,yeast$motif, nullPerms=10, numMaxCores=1)
 monster.print.monsterAnalysis <- function(x, ...){
   cat("MONSTER object\n")
   cat(paste(x@numGenes, "genes\n"))
@@ -74,12 +72,9 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' @return An object of class "monsterAnalysis" containing results
 #' 
 #' @examples
-#' \donttest{
 #' data(yeast)
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)
-#' plot(monsterRes)
-#' }
+#' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 
 monster <- function(expr, 
                     design, 
@@ -99,7 +94,7 @@ monster <- function(expr,
   # Initiate cluster
   if(!is.na(numMaxCores)){
     # Calculate the number of cores
-    numCores <- detectCores() - 4
+    numCores <- detectCores()
     numCores <- min(numCores, numMaxCores)
     
     cl <- makeCluster(numCores)
@@ -178,7 +173,7 @@ monster <- function(expr,
 #' 
 monster.checkDataType <- function(expr){
   assert_that(is.data.frame(expr)||is.matrix(expr)||class(expr)=="ExpressionSet")
-  if(class(expr)=="ExpressionSet"){
+  if("ExpressionSet" %in% class(expr)){
     if (requireNamespace("Biobase", quietly = TRUE)) {
       expr <- Biobase::exprs(expr)
     } 
@@ -210,7 +205,7 @@ globalVariables("i")
 #' @importFrom reshape2 melt
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(yeast)
 #' cc.net.1 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
 #' cc.net.2 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])

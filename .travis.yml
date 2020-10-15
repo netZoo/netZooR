@@ -10,7 +10,7 @@ install:
 
 script:
 - R CMD build .
-- R CMD check *tar.gz --no-manual
+- R CMD check *tar.gz --no-manual --no-build-vignettes --no-check-vignettes
 
 after_success:
 - Rscript coverZoo.r

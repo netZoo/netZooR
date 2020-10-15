@@ -37,7 +37,7 @@ library(data.table)
 
 ```{r,eval=FALSE}
 # point R to your python 3 installation. Make sure that this is the installation that has all the required python libraries (numpy, scipy, etc) installed. netZooR uses a python implementation of PANDA under the hood.
-use_python("/usr/bin/python3")
+#use_python("/usr/bin/python3") # for example, you can check the installation with py_config()
 ```
 
 Now we locate our ppi and motif priors. The ppi represents physical interactions between transcription factor proteins, and is an undirected network. The motif prior represents putative regulation events where a transcription factor binds in the promotor of a gene to regulate its expression, as predicted by the presence of transcription factor binding motifs in the promotor region of the gene. The motif prior is thus a directed network linking transcription factors to their predicted gene targets. These are small example priors for the purposes of demonstrating this method. 
@@ -97,7 +97,7 @@ system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_data
 
 Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior.
 ```{r,message=FALSE,warning=FALSE}
-panda_results_LCL <- panda.py(expr_file = "pandaExprLCL.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
+panda_results_LCL <- panda.py(expr_file = "./pandaExprLCL.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
 ```
 
 Let's take a look at the results. The output contains a list of three data frames:
@@ -156,7 +156,7 @@ system("curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datas
 
 ```{r,warning=FALSE}
 #run PANDA
-panda_results_wblood <- panda.py(expr_file = "pandaExprWholeBlood.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
+panda_results_wblood <- panda.py(expr_file = "./pandaExprWholeBlood.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
 ```
 
 ```{r,eval=FALSE}
