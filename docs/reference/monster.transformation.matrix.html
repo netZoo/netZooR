@@ -107,6 +107,9 @@
       <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
     </li>
     <li>
+      <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+    </li>
+    <li>
       <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
@@ -191,14 +194,12 @@ false, gives gene by gene transformation matrix</p></td>
     <p>matrix object corresponding to transition matrix</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>)</span>
 <span class='va'>cc.net.1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='monster.monsterNI.html'>monster.monsterNI</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>,<span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>20</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Time difference of 0.07351589 secs
-#&gt; .</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ......................</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ..........</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ....................</div><div class='input'><span class='va'>cc.net.2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='monster.monsterNI.html'>monster.monsterNI</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>,<span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>,<span class='fl'>31</span><span class='op'>:</span><span class='fl'>50</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Time difference of 0.07573605 secs
-#&gt; .......................</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ..............................</div><div class='input'><span class='fu'>monster.transformation.matrix</span><span class='op'>(</span><span class='va'>cc.net.1</span>, <span class='va'>cc.net.2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in svd(X): infinite or missing values in 'x'</span></div><div class='input'><span class='co'># }</span>
+<span class='va'>cc.net.2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='monster.monsterNI.html'>monster.monsterNI</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>,<span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>,<span class='fl'>31</span><span class='op'>:</span><span class='fl'>50</span><span class='op'>]</span><span class='op'>)</span>
+<span class='fu'>monster.transformation.matrix</span><span class='op'>(</span><span class='va'>cc.net.1</span>, <span class='va'>cc.net.2</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

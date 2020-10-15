@@ -36,7 +36,7 @@ matrix object corresponding to transition matrix
 This function analyzes a bi-partite network.
 }
 \examples{
-\donttest{
+\dontrun{
 data(yeast)
 cc.net.1 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
 cc.net.2 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])

@@ -66,6 +66,9 @@
       <a href="articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
     </li>
     <li>
+      <a href="articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+    </li>
+    <li>
       <a href="articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
@@ -103,15 +106,18 @@
 <div id="features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#features" class="anchor"></a>Features</h2>
-<p>netZooR currently integrates with:</p>
+<p>netZooR currently integrates:</p>
 <ul>
-<li><p><strong>PANDA</strong>(Passing Attributes between Networks for Data Assimilation)<a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832">[Glass et al. 2013]</a>: constructs gene regulatory network from gene expression data, protein-protein interaction data, and transcription factor binding motifs (TFBMs) data.</p></li>
-<li><p><strong>CONDOR</strong>(COmplex Network Description Of Regulators)<a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033">[Platig et al. 2016]</a>: analyses bipartite community structure analysis of biological networks.</p></li>
-<li><p><strong>LIONESS</strong>(Linear Interpolation to Obtain Network Estimates for Single Samples)<a href="https://doi.org/10.1016/j.isci.2019.03.021">[Kuijjer et al. 2019]</a>: reconstructs single-sample gene regulatory networks.</p></li>
-<li><p><strong>ALPACA</strong>(ALtered Partitions Across Community Architectures)<a href="https://www.nature.com/articles/s41540-018-0052-5">[Padi and Quackenbush 2018]</a>: compares two networks and identify changes in modular structure.</p></li>
-<li><p><strong>SAMBAR</strong>(Subtyping Agglomerated Mutations By Annotation Relations)<a href="https://www.nature.com/articles/s41416-018-0109-7">[Kuijjer et al.]</a>: identifies subtypes based on somatic mutation data.</p></li>
-<li><p><strong>MONSTER</strong>(Modeling Network State Transitions from Expression and Regulatory data)<a href="https://doi.org/10.1186/s12918-017-0517-y">[Schlauch et al.]</a>: infers transcription factor which drivers of cell state conditions at the gene regulatory network level.</p></li>
-<li><p><strong>OTTER</strong>(Optimization to Estimate Regulation) [publication in preparation]: models gene regulation estimation as a graph matrching problem</p></li>
+<li><p><strong>PANDA</strong> (Passing Attributes between Networks for Data Assimilation) <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832">[Glass et al. 2013]</a>: constructs gene regulatory network from gene expression data, protein-protein interaction data, and transcription factor binding motifs (TFBMs) data.</p></li>
+<li><p><strong>CONDOR</strong> (COmplex Network Description Of Regulators) <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033">[Platig et al. 2016]</a>: analyses bipartite community structure analysis of biological networks.</p></li>
+<li><p><strong>LIONESS</strong> (Linear Interpolation to Obtain Network Estimates for Single Samples) <a href="https://doi.org/10.1016/j.isci.2019.03.021">[Kuijjer et al. 2019]</a>: reconstructs single-sample gene regulatory networks.</p></li>
+<li><p><strong>ALPACA</strong> (ALtered Partitions Across Community Architectures) <a href="https://www.nature.com/articles/s41540-018-0052-5">[Padi and Quackenbush 2018]</a>: compares two networks and identify changes in modular structure.</p></li>
+<li><p><strong>SAMBAR</strong> (Subtyping Agglomerated Mutations By Annotation Relations) <a href="https://www.nature.com/articles/s41416-018-0109-7">[Kuijjer et al.]</a>: identifies subtypes based on somatic mutation data.</p></li>
+<li><p><strong>MONSTER</strong> (Modeling Network State Transitions from Expression and Regulatory data) <a href="https://doi.org/10.1186/s12918-017-0517-y">[Schlauch et al.]</a>: infers transcription factor which drivers of cell state conditions at the gene regulatory network level.</p></li>
+<li><p><strong>OTTER</strong> (Optimization to Estimate Regulation) <a href="https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract">[Weighill et al.]</a>: models gene regulation estimation as a graph matrching problem</p></li>
+</ul>
+<p>In addition to helper functions to:</p>
+<ul>
 <li><p>Source protein-protein interaction network from <a href="https://string-db.org/">STRINGdb</a> based on a list of protein of interest.</p></li>
 <li><p>Plot one PANDA network in <a href="https://cytoscape.org/">Cytoscape</a>.</p></li>
 <li><p>Plot two differential PANDA networks in Cytoscape.</p></li>
@@ -123,7 +129,7 @@
 <ul>
 <li><p>netZooR is compatible with R (&gt;= 3.3.3) including R (&gt;= 4.0), click <a href="https://www.r-project.org/">here</a> for more installation details.</p></li>
 <li>
-<p>To use two main tools PANDA and LIONESS, there are two options:</p>
+<p>To use PANDA and LIONESS, there are two options:</p>
 <ol>
 <li>use functions: <code><a href="reference/panda.py.html">panda.py()</a></code> and <code><a href="reference/lioness.py.html">lioness.py()</a></code> by invoking two Python implementations in <a href="(https://github.com/netZoo/netZooPy/tree/netZoo)">netZooPy</a>, respectively. This way is recommended if the user requires speedy computering in building gene regulatory networks. In order to pratice invoking Python scripts, there are some requirements to meet before using netZooR:</li>
 </ol>

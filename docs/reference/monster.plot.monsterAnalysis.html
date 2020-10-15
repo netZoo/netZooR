@@ -107,6 +107,9 @@
       <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
     </li>
     <li>
+      <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+    </li>
+    <li>
       <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
     </li>
     <li>
@@ -165,13 +168,16 @@
     <p>Plot of the dTFI for each TF against null distribution</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>)</span>
-<span class='va'>monsterRes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='monster.html'>monster</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.ko</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>42</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>49</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>,<span class='fl'>15</span><span class='op'>)</span><span class='op'>)</span>,
-<span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>, nullPerms<span class='op'>=</span><span class='fl'>10</span>, numMaxCores<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error: expr is not a data frame or expr is not a matrix or class(expr) not equal to "ExpressionSet"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>)</span>
+<span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>25</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>10</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>,<span class='fl'>15</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>monsterRes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='monster.html'>monster</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span>, <span class='va'>design</span>,
+<span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>, nullPerms<span class='op'>=</span><span class='fl'>10</span>, numMaxCores<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "Running null permutations in parallel"
+#&gt; [1] "1 cores used"
+#&gt; [1] "11 network transitions to be estimated"
+#&gt; Time difference of 46.07122 secs</div><div class='input'><span class='fu'>monster.plot.monsterAnalysis</span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Vectorized input to `element_text()` is not officially supported.</span>
+#&gt; <span class='warning'>Results may be unexpected or may change in future versions of ggplot2.</span></div><div class='img'><img src='monster.plot.monsterAnalysis-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
