@@ -2,7 +2,8 @@ context("test MONSTER result")
 
 test_that("MONSTER function works", {
   
-  load("./testDataset.RData")
+  system('curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/testDatasetMonster.RData')
+  load("./testDatasetMonster.RData")
   data("yeast")
   design <- c(rep(0,20),rep(NA,10),rep(1,20))
   yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
@@ -57,7 +58,7 @@ test_that("MONSTER function works", {
   
   # Bipartite Edge Reconstruction from Expression data (composite method with direct/indirect)
   monsterRes_bereFull<- monster.bereFull(yeast$motif, yeast$exp.cc, alpha=.5)
-  expect_equal(monsterRes_bereFull[1,1], 105770, tolerance=1e-7)
+  expect_equal(monsterRes_bereFull[1,1], 105346.5, tolerance=1e-7)
   
   # summarizes the results of a MONSTER analysis
   expect_error(monster.print.monsterAnalysis(monsterRes),NA)
