@@ -1,6 +1,7 @@
 #' Plot two PANDA networsk in Cytoscape
 #'
-#'This function is able to modify PANDA network and plot in Cytoscape.
+#'This function is able to modify PANDA network and plot in Cytoscape. Please make sure that Cytoscape 
+#' is installed and open it before calling this function.
 #'
 #' @param merged_panda vector indicating the merged PANDA networks in data frame structure type.
 #' @param condition_name string vector indicating the same condition name used in \code{\link{panda.diff.edges}}. 
