@@ -4,8 +4,10 @@
 \alias{create.diff.panda.style}
 \title{Create a Cytoscape visual style for two PANDA networks}
 \usage{
-create.diff.panda.style(style_name = "Diff.PandaStyle",
-  condition_name = "cond.1")
+create.diff.panda.style(
+  style_name = "Diff.PandaStyle",
+  condition_name = "cond.1"
+)
 }
 \arguments{
 \item{style_name}{Character string indicating the style name. Defaults to "Diff.PandaStyle"}

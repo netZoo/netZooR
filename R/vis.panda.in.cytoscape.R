@@ -1,6 +1,7 @@
 #' Plot PANDA network in Cytoscape
 #'
-#'This function is able to modify PANDA network and plot in Cytoscape.
+#' This function is able to modify PANDA network and plot in Cytoscape. Please make sure that Cytoscape 
+#' is installed and open it before calling this function.
 #'
 #' @param panda.net Character string indicating the input PANDA network in data frame structure type.
 #' @param network_name Character string indicating the name of Cytoscape network. 

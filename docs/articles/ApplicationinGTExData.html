@@ -6,19 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R • netZooR</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="netZooR">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -66,7 +66,13 @@
       <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
     </li>
     <li>
+      <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+    </li>
+    <li>
       <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
+    </li>
+    <li>
+      <a href="../articles/TutorialOTTER.html">Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER</a>
     </li>
     <li>
       <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
@@ -87,10 +93,10 @@
 
       
 
-      </header><div class="row">
+      </header><script src="ApplicationinGTExData_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</h1>
+      <h1 data-toc-skip>Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</h1>
                         <h4 class="author">Deborah Weighill</h4>
             
             <h4 class="date">2019-11-06</h4>
@@ -120,31 +126,34 @@
 <h2 class="hasAnchor">
 <a href="#running-a-single-panda-analysis" class="anchor"></a>Running a single PANDA analysis</h2>
 <p>Load some libraries. We use the data.table library for reading in large datasets as it is more efficient.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(netZooR)
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(data.table)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># point R to your python 3 installation. Make sure that this is the installation that has all the required python libraries (numpy, scipy, etc) installed. netZooR uses a python implementation of PANDA under the hood.</span>
-<span class="kw">use_python</span>(<span class="st">"/usr/bin/python3"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://r-datatable.com">data.table</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="co"># point R to your python 3 installation. Make sure that this is the installation that has all the required python libraries (numpy, scipy, etc) installed. netZooR uses a python implementation of PANDA under the hood.</span>
+<span class="co">#use_python("/usr/bin/python3") # for example, you can check the installation with py_config()</span></pre></div>
 <p>Now we locate our ppi and motif priors. The ppi represents physical interactions between transcription factor proteins, and is an undirected network. The motif prior represents putative regulation events where a transcription factor binds in the promotor of a gene to regulate its expression, as predicted by the presence of transcription factor binding motifs in the promotor region of the gene. The motif prior is thus a directed network linking transcription factors to their predicted gene targets. These are small example priors for the purposes of demonstrating this method.</p>
 <p>The ppi and motif priors are available in our AWS public bucket, and can be downloaded into current working directory.</p>
 <p>Let’s download and take a look at the priors:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt"</span>)
-<span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_GTEx.txt"</span>)
-motif &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span>(<span class="st">"./motif_GTEx.txt"</span>) 
-ppi &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span>(<span class="st">"./ppi_GTEx.txt"</span>)
-ppi[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_GTEx.txt"</span><span class="op">)</span>
+<span class="va">motif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"./motif_GTEx.txt"</span><span class="op">)</span> 
+<span class="va">ppi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"./ppi_GTEx.txt"</span><span class="op">)</span>
+<span class="va">ppi</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>
 <span class="co">#&gt;    V1   V2    V3</span>
 <span class="co">#&gt; 1 AHR  AHR 1.000</span>
 <span class="co">#&gt; 2 AHR ALX1 0.179</span>
 <span class="co">#&gt; 3 AHR ALX3 0.179</span>
 <span class="co">#&gt; 4 AHR ALX4 0.179</span>
 <span class="co">#&gt; 5 AHR   AR 0.811</span>
-motif[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]
+<span class="va">motif</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>
 <span class="co">#&gt;    V1              V2 V3</span>
 <span class="co">#&gt; 1 AHR ENSG00000004897  1</span>
 <span class="co">#&gt; 2 AHR ENSG00000005339  1</span>
 <span class="co">#&gt; 3 AHR ENSG00000006071  1</span>
 <span class="co">#&gt; 4 AHR ENSG00000006194  1</span>
-<span class="co">#&gt; 5 AHR ENSG00000006283  1</span></code></pre></div>
+<span class="co">#&gt; 5 AHR ENSG00000006283  1</span></pre></div>
 <p>Now we locate out expression data.</p>
 <p>As example, We will use a portion of the GTEx (Genotype-Tissue Expression) version 7 RNA-Seq data, read in the expression data and the list of LCL samples. Then parse the expression data.</p>
 <p>We can either</p>
@@ -152,32 +161,35 @@ motif[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span
 <li>downlaod the file GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct from from <a href="https://gtexportal.org/home/datasets" class="uri">https://gtexportal.org/home/datasets</a> or in our AWS bucket and place it in the folder “expressionData”. We will initially use the LCL RNA-seq data to create a regulatory network for this cell line. Later, we will also generate a regulatory network for whole blood for comaprison.</li>
 </ol>
 <p>Here, we use the expression data and sample ids file copy from our AWS bucket.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span><span class="op">)</span>
 <span class="co"># load the GTEx expression matrix</span>
-expr &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/data.table/man/fread.html">fread</a></span>(<span class="st">"./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">skip =</span> <span class="dv">2</span>, <span class="dt">data.table =</span> <span class="ot">TRUE</span>)
+<span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="st">"./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">2</span>, data.table <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co"># remove the transcript ids so that the genes match the gene ids in the tf-motif prior</span>
-expr<span class="op">$</span>Name&lt;-<span class="kw"><a href="https://rdrr.io/r/base/grep.html">sub</a></span>(<span class="st">"</span><span class="ch">\\</span><span class="st">.[0-9]"</span>,<span class="st">""</span>, expr<span class="op">$</span>Name)
+<span class="va">expr</span><span class="op">$</span><span class="va">Name</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"\\.[0-9]"</span>,<span class="st">""</span>, <span class="va">expr</span><span class="op">$</span><span class="va">Name</span><span class="op">)</span>
 
 <span class="co">#downlooad and load the sample ids of LCL samples</span>
-<span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/LCL_samples.txt"</span>)
-lcl_samples &lt;-<span class="kw"><a href="https://rdrr.io/pkg/data.table/man/fread.html">fread</a></span>(<span class="st">"./LCL_samples.txt"</span>, <span class="dt">header =</span> <span class="ot">FALSE</span>, <span class="dt">data.table=</span><span class="ot">FALSE</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/LCL_samples.txt"</span><span class="op">)</span>
+<span class="va">lcl_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="st">"./LCL_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co">#select the columns of the expression matrix corresponding to the LCL samples.</span>
-lcl_expr &lt;-<span class="st"> </span>expr[,<span class="kw"><a href="https://rdrr.io/pkg/data.table/man/setops.html">union</a></span>(<span class="st">"Name"</span>,<span class="kw"><a href="https://rdrr.io/pkg/data.table/man/setops.html">intersect</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(lcl_samples[<span class="dv">1</span><span class="op">:</span><span class="dv">149</span>,]),<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(expr))), with=<span class="ot">FALSE</span>]
+<span class="va">lcl_expr</span> <span class="op">&lt;-</span> <span class="va">expr</span><span class="op">[</span>,<span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">union</a></span><span class="op">(</span><span class="st">"Name"</span>,<span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">lcl_samples</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">149</span>,<span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, with<span class="op">=</span><span class="cn">FALSE</span><span class="op">]</span>
 
 <span class="co">#determine the number of non-NA/non-zero rows in the expression data. This is to be able to ensure that PANDA will have enough values in the vectors to calculate pearson correlations between gene expression profiles in the construction of the gene co-exression prior.</span>
-zero_na_counts &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(lcl_expr, <span class="dt">MARGIN =</span> <span class="dv">1</span>, <span class="dt">FUN =</span> <span class="cf">function</span>(x) <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(x[(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(x)<span class="op">|</span><span class="st"> </span>x<span class="op">!=</span><span class="dv">0</span>) ]))
+<span class="va">zero_na_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">lcl_expr</span>, MARGIN <span class="op">=</span> <span class="fl">1</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">|</span> <span class="va">x</span><span class="op">!=</span><span class="fl">0</span><span class="op">)</span> <span class="op">]</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">#maintain only genes with at least 20 valid gene expression entries</span>
-clean_data &lt;-<span class="st"> </span>lcl_expr[zero_na_counts <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>,]
+<span class="va">clean_data</span> <span class="op">&lt;-</span> <span class="va">lcl_expr</span><span class="op">[</span><span class="va">zero_na_counts</span> <span class="op">&gt;</span> <span class="fl">20</span>,<span class="op">]</span>
 
 <span class="co">#write the cleaned expression data to a file, ready to be passed as an argument to the PANDA algorithm.</span>
-<span class="kw"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(clean_data, <span class="dt">file =</span> <span class="st">"pandaExprLCL.txt"</span>, <span class="dt">sep =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, <span class="dt">col.names =</span> <span class="ot">FALSE</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>, <span class="dt">quote =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="va">clean_data</span>, file <span class="op">=</span> <span class="st">"pandaExprLCL.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, col.names <span class="op">=</span> <span class="cn">FALSE</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
 <p>Or</p>
 <p>Download our pre-processed pandaExprLCL.txt from our AWS S3 Bucket.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprLCL.txt"</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprLCL.txt"</span><span class="op">)</span></pre></div>
 <p>Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">panda_results_LCL &lt;-<span class="st"> </span><span class="kw"><a href="../reference/panda.py.html">panda.py</a></span>(<span class="dt">expr_file =</span> <span class="st">"pandaExprLCL.txt"</span> , <span class="dt">motif_file =</span> <span class="st">"./motif_GTEx.txt"</span>, <span class="dt">ppi_file =</span> <span class="st">"./ppi_GTEx.txt"</span>, <span class="dt">modeProcess=</span><span class="st">"legacy"</span>, <span class="dt">remove_missing =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="va">panda_results_LCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprLCL.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <p>Let’s take a look at the results. The output contains a list of three data frames:</p>
 <ul>
 <li>data frame containing the regulatory network (bipartite graph) with edge weights representing the “likelihood” that a transcription factor binds the promotor of and regulates the expression of a gene.<br>
@@ -185,9 +197,10 @@ clean_data &lt;-<span class="st"> </span>lcl_expr[zero_na_counts <span class="op
 <li>data frame odf the in-degrees of genes (sum of the weights of inbound edges around a gene)</li>
 <li>data frame of the out-degrees of TFs (sum of the weights of outbound edges around a TF)</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the bipartite regulatory network</span>
-regNetLCL &lt;-<span class="st"> </span>panda_results_LCL<span class="op">$</span>panda
-regNetLCL[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="co"># the bipartite regulatory network</span>
+<span class="va">regNetLCL</span> <span class="op">&lt;-</span> <span class="va">panda_results_LCL</span><span class="op">$</span><span class="va">panda</span>
+<span class="va">regNetLCL</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>
 <span class="co">#&gt;     TF            Gene Motif       Score</span>
 <span class="co">#&gt; 1  AHR ENSG00000049245     0 -0.66273059</span>
 <span class="co">#&gt; 2 AIRE ENSG00000049245     1  3.91520334</span>
@@ -196,8 +209,8 @@ regNetLCL[<span class="dv">1</span><span class="op">:</span><span class="dv">5</
 <span class="co">#&gt; 5 ALX4 ENSG00000049245     0 -0.06595998</span>
 
 <span class="co"># gene in-degree</span>
-inDegreeLCL &lt;-<span class="st"> </span>panda_results_LCL<span class="op">$</span>indegree
-<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(inDegreeLCL)
+<span class="va">inDegreeLCL</span> <span class="op">&lt;-</span> <span class="va">panda_results_LCL</span><span class="op">$</span><span class="va">indegree</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">inDegreeLCL</span><span class="op">)</span>
 <span class="co">#&gt;            Target Target_Score</span>
 <span class="co">#&gt; 1 ENSG00000000005    -47.74480</span>
 <span class="co">#&gt; 2 ENSG00000000419    -11.80864</span>
@@ -207,62 +220,66 @@ inDegreeLCL &lt;-<span class="st"> </span>panda_results_LCL<span class="op">$</s
 <span class="co">#&gt; 6 ENSG00000001084    292.77857</span>
 
 <span class="co"># TF out-degree</span>
-outDegreeLCL &lt;-<span class="st"> </span>panda_results_LCL<span class="op">$</span>outdegree
-<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(outDegreeLCL)
+<span class="va">outDegreeLCL</span> <span class="op">&lt;-</span> <span class="va">panda_results_LCL</span><span class="op">$</span><span class="va">outdegree</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">outDegreeLCL</span><span class="op">)</span>
 <span class="co">#&gt;   Regulator Regulator_Score</span>
 <span class="co">#&gt; 1       AHR      -172.47026</span>
 <span class="co">#&gt; 2      AIRE       115.74408</span>
 <span class="co">#&gt; 3      ALX1        83.45379</span>
 <span class="co">#&gt; 4      ALX3       139.81888</span>
 <span class="co">#&gt; 5      ALX4       119.41043</span>
-<span class="co">#&gt; 6        AR      -146.19404</span></code></pre></div>
+<span class="co">#&gt; 6        AR      -146.19404</span></pre></div>
 </div>
 <div id="run-another-panda-analysis-on-whole-blood-samples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-another-panda-analysis-on-whole-blood-samples" class="anchor"></a>Run another PANDA analysis on Whole Blood Samples</h2>
 <p>Like the LCL expression data in previous section, we can either download the raw data and process;</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">#### skip this part if you already did same process in LCL expression data section
-<span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="co">#### skip this part if you already did same process in LCL expression data section</span>
+<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span><span class="op">)</span>
 <span class="co"># load the GTEx expression matrix</span>
-expr &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/data.table/man/fread.html">fread</a></span>(<span class="st">"./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">skip =</span> <span class="dv">2</span>, <span class="dt">data.table =</span> <span class="ot">TRUE</span>)
+<span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="st">"./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">2</span>, data.table <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co"># remove the transcript ids so that the genes match the gene ids in the tf-motif prior</span>
-expr<span class="op">$</span>Name&lt;-<span class="kw"><a href="https://rdrr.io/r/base/grep.html">sub</a></span>(<span class="st">"</span><span class="ch">\\</span><span class="st">.[0-9]"</span>,<span class="st">""</span>, expr<span class="op">$</span>Name)
-#####
+<span class="va">expr</span><span class="op">$</span><span class="va">Name</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"\\.[0-9]"</span>,<span class="st">""</span>, <span class="va">expr</span><span class="op">$</span><span class="va">Name</span><span class="op">)</span>
+<span class="co">#####</span>
 
 <span class="co">#load the sample ids of Whole Blood samples</span>
-<span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/WholeBlood_samples.txt"</span>)
-wblood_samples &lt;-<span class="kw"><a href="https://rdrr.io/pkg/data.table/man/fread.html">fread</a></span>(<span class="st">"./WholeBlood_samples.txt"</span>, <span class="dt">header =</span> <span class="ot">FALSE</span>, <span class="dt">data.table=</span><span class="ot">FALSE</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/WholeBlood_samples.txt"</span><span class="op">)</span>
+<span class="va">wblood_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="st">"./WholeBlood_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co">#select the columns of the expression matrix corresponding to the LCL samples.</span>
-wblood_expr &lt;-<span class="st"> </span>expr[,<span class="kw"><a href="https://rdrr.io/pkg/data.table/man/setops.html">union</a></span>(<span class="st">"Name"</span>,<span class="kw"><a href="https://rdrr.io/pkg/data.table/man/setops.html">intersect</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(wblood_samples[<span class="dv">1</span><span class="op">:</span><span class="dv">149</span>,]),<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(expr))), with=<span class="ot">FALSE</span>]
+<span class="va">wblood_expr</span> <span class="op">&lt;-</span> <span class="va">expr</span><span class="op">[</span>,<span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">union</a></span><span class="op">(</span><span class="st">"Name"</span>,<span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">wblood_samples</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">149</span>,<span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, with<span class="op">=</span><span class="cn">FALSE</span><span class="op">]</span>
 
 <span class="co">#determine the number of non-NA/non-zero rows in the expression data. This is to be able to ensure that PANDA will have enough values in the vectors to calculate pearson correlations between gene expression profiles in the construction of the gene co-exression prior.</span>
-zero_na_counts_wblood &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(wblood_expr, <span class="dt">MARGIN =</span> <span class="dv">1</span>, <span class="dt">FUN =</span> <span class="cf">function</span>(x) <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(x[(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(x)<span class="op">|</span><span class="st"> </span>x<span class="op">!=</span><span class="dv">0</span>) ]))
+<span class="va">zero_na_counts_wblood</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">wblood_expr</span>, MARGIN <span class="op">=</span> <span class="fl">1</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">|</span> <span class="va">x</span><span class="op">!=</span><span class="fl">0</span><span class="op">)</span> <span class="op">]</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">#maintain only genes with at least 20 valid gene expression entries</span>
-clean_data_wb &lt;-<span class="st"> </span>wblood_expr[zero_na_counts_wblood <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>,]
+<span class="va">clean_data_wb</span> <span class="op">&lt;-</span> <span class="va">wblood_expr</span><span class="op">[</span><span class="va">zero_na_counts_wblood</span> <span class="op">&gt;</span> <span class="fl">20</span>,<span class="op">]</span>
 
 <span class="co">#write the cleaned expression data to a file, ready to be passed as an argument to the PANDA algorithm.</span>
-<span class="kw"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span>(clean_data_wb, <span class="dt">file =</span> <span class="st">"pandaExprWholeBlood.txt"</span>, <span class="dt">sep =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, <span class="dt">col.names =</span> <span class="ot">FALSE</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>, <span class="dt">quote =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="va">clean_data_wb</span>, file <span class="op">=</span> <span class="st">"pandaExprWholeBlood.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, col.names <span class="op">=</span> <span class="cn">FALSE</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
 <p>or download the whole blood expression data directly from AWS Bucket.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprWholeBlood.txt"</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#run PANDA</span>
-panda_results_wblood &lt;-<span class="st"> </span><span class="kw"><a href="../reference/panda.py.html">panda.py</a></span>(<span class="dt">expr_file =</span> <span class="st">"pandaExprWholeBlood.txt"</span> , <span class="dt">motif_file =</span> <span class="st">"./motif_GTEx.txt"</span>, <span class="dt">ppi_file =</span> <span class="st">"./ppi_GTEx.txt"</span>, <span class="dt">modeProcess=</span><span class="st">"legacy"</span>, <span class="dt">remove_missing =</span> <span class="ot">TRUE</span>)
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprWholeBlood.txt"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="co">#run PANDA</span>
+<span class="va">panda_results_wblood</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprWholeBlood.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span>
-<span class="co">#&gt; ...Finish PANDA...</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"visNetwork"</span>,<span class="dt">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>,<span class="dt">dependencies=</span><span class="ot">TRUE</span>)
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(visNetwork)
-edges &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(panda_results_wblood<span class="op">$</span>panda[<span class="kw"><a href="https://rdrr.io/pkg/data.table/man/setorder.html">order</a></span>(panda_results_wblood<span class="op">$</span>panda<span class="op">$</span>Score,<span class="dt">decreasing =</span> <span class="ot">TRUE</span>),], <span class="dv">500</span>)
-<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(edges) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"from"</span>,<span class="st">"to"</span>,<span class="st">"motif"</span>,<span class="st">"force"</span>)
-nodes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">id =</span> <span class="kw"><a href="https://rdrr.io/pkg/data.table/man/duplicated.html">unique</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/data.table/man/as.matrix.html">as.matrix</a></span>(edges[,<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>)]))))
-nodes<span class="op">$</span>group &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(nodes<span class="op">$</span>id <span class="op">%in%</span><span class="st"> </span>edges<span class="op">$</span>from, <span class="st">"TF"</span>, <span class="st">"gene"</span>)
+<span class="co">#&gt; ...Finish PANDA...</span></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"visNetwork"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span>,dependencies<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://datastorm-open.github.io/visNetwork/">visNetwork</a></span><span class="op">)</span>
+<span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">panda_results_wblood</span><span class="op">$</span><span class="va">panda</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">panda_results_wblood</span><span class="op">$</span><span class="va">panda</span><span class="op">$</span><span class="va">Score</span>,decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,<span class="op">]</span>, <span class="fl">500</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">edges</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"from"</span>,<span class="st">"to"</span>,<span class="st">"motif"</span>,<span class="st">"force"</span><span class="op">)</span>
+<span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/duplicated.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">edges</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">nodes</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">ifelse</a></span><span class="op">(</span><span class="va">nodes</span><span class="op">$</span><span class="va">id</span> <span class="op">%in%</span> <span class="va">edges</span><span class="op">$</span><span class="va">from</span>, <span class="st">"TF"</span>, <span class="st">"gene"</span><span class="op">)</span>
 
-net &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/visNetwork/man/visNetwork.html">visNetwork</a></span>(nodes, edges, <span class="dt">width =</span> <span class="st">"100%"</span>)
-net &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/visNetwork/man/visGroups.html">visGroups</a></span>(net, <span class="dt">groupname =</span> <span class="st">"TF"</span>, <span class="dt">shape =</span> <span class="st">"square"</span>,
-                     <span class="dt">color =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">background =</span> <span class="st">"teal"</span>, <span class="dt">border=</span><span class="st">"black"</span>))
-net &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/visNetwork/man/visGroups.html">visGroups</a></span>(net, <span class="dt">groupname =</span> <span class="st">"gene"</span>, <span class="dt">shape =</span> <span class="st">"dot"</span>,       
-                     <span class="dt">color =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">background =</span> <span class="st">"gold"</span>, <span class="dt">border=</span><span class="st">"black"</span>))
-<span class="kw"><a href="https://rdrr.io/pkg/visNetwork/man/visLegend.html">visLegend</a></span>(net, <span class="dt">main=</span><span class="st">"Legend"</span>, <span class="dt">position=</span><span class="st">"right"</span>, <span class="dt">ncol=</span><span class="dv">1</span>) </code></pre></div>
+<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/visNetwork/man/visNetwork.html">visNetwork</a></span><span class="op">(</span><span class="va">nodes</span>, <span class="va">edges</span>, width <span class="op">=</span> <span class="st">"100%"</span><span class="op">)</span>
+<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/visNetwork/man/visGroups.html">visGroups</a></span><span class="op">(</span><span class="va">net</span>, groupname <span class="op">=</span> <span class="st">"TF"</span>, shape <span class="op">=</span> <span class="st">"square"</span>,
+                     color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>background <span class="op">=</span> <span class="st">"teal"</span>, border<span class="op">=</span><span class="st">"black"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/visNetwork/man/visGroups.html">visGroups</a></span><span class="op">(</span><span class="va">net</span>, groupname <span class="op">=</span> <span class="st">"gene"</span>, shape <span class="op">=</span> <span class="st">"dot"</span>,       
+                     color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>background <span class="op">=</span> <span class="st">"gold"</span>, border<span class="op">=</span><span class="st">"black"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/visNetwork/man/visLegend.html">visLegend</a></span><span class="op">(</span><span class="va">net</span>, main<span class="op">=</span><span class="st">"Legend"</span>, position<span class="op">=</span><span class="st">"right"</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span> </pre></div>
 </div>
 </div>
 <div id="lioness" class="section level1">
@@ -270,42 +287,32 @@ net &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/
 <a href="#lioness" class="anchor"></a>LIONESS</h1>
 <p>LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples) is a method for creating sample-specific networks. When applied to a PANDA regulatory network, the result is a set of gene regulatory networks, one for each sample in the gene expression dataset. More information on LIONESS can be found in the published paper: <a href="https://doi.org/10.1016/j.isci.2019.03.021" class="uri">https://doi.org/10.1016/j.isci.2019.03.021</a></p>
 <p>Running LIONESS with netZoo is simple, and very similar to running PANDA:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lionessLCL &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lioness.py.html">lioness.py</a></span>(<span class="dt">expr_file =</span> <span class="st">"pandaExprLCL.txt"</span> , <span class="dt">motif_file =</span> <span class="st">"./motif_GTEx.txt"</span>, <span class="dt">ppi_file =</span> <span class="st">"./ppi_GTEx.txt"</span>, <span class="dt">modeProcess=</span><span class="st">"legacy"</span>, <span class="dt">remove_missing =</span> <span class="ot">TRUE</span>)
-<span class="co">#&gt; Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="va">lionessLCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lioness.py.html">lioness.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"pandaExprLCL.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></pre></div>
 <p>The result is a data frame in which the first colum contains TFs, the second column contains genes and each subsequent column contains the edge weight for that particular TF-gene pair in a particular sample.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lionessLCL[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]
-<span class="co">#&gt;     TF            Gene        0          1          2          3  </span>
-<span class="co">#&gt; 1  AHR ENSG00000049245   59.83660   58.94746   59.85994   59.26597</span>
-<span class="co">#&gt; 2 AIRE ENSG00000049245  -82.91891  -82.51506  -84.19484  -82.41868</span>
-<span class="co">#&gt; 3 ALX1 ENSG00000049245 -112.22820 -111.54828 -113.02663 -111.17812</span>
-<span class="co">#&gt; 4 ALX3 ENSG00000049245 -135.11048 -133.38124 -135.08914 -133.67784</span>
-<span class="co">#&gt; 5 ALX4 ENSG00000049245 -116.35833 -114.82369 -116.31932 -114.99477</span>
-<span class="co">#&gt;          4          5          6          7  </span>
-<span class="co">#&gt; 1   56.07829   59.67067   59.28414   59.04739</span>
-<span class="co">#&gt; 2  -77.98084  -83.44204  -82.03309  -82.85852</span>
-<span class="co">#&gt; 3 -109.89648 -111.62352 -110.63462 -109.95773</span>
-<span class="co">#&gt; 4 -128.37243 -134.12101 -133.54933 -132.54182</span>
-<span class="co">#&gt; 5 -111.51051 -115.24438 -114.84256 -113.37452</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="va">lionessLCL</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>
+<span class="co">#&gt;     TF            Gene          0          1          2          3          4</span>
+<span class="co">#&gt; 1  AHR ENSG00000049245   59.83660   58.94746   59.85994   59.26597   56.07829</span>
+<span class="co">#&gt; 2 AIRE ENSG00000049245  -82.91891  -82.51506  -84.19484  -82.41868  -77.98084</span>
+<span class="co">#&gt; 3 ALX1 ENSG00000049245 -112.22820 -111.54828 -113.02663 -111.17812 -109.89648</span>
+<span class="co">#&gt; 4 ALX3 ENSG00000049245 -135.11048 -133.38124 -135.08914 -133.67784 -128.37243</span>
+<span class="co">#&gt; 5 ALX4 ENSG00000049245 -116.35833 -114.82369 -116.31932 -114.99477 -111.51051</span>
+<span class="co">#&gt;            5          6          7</span>
+<span class="co">#&gt; 1   59.67067   59.28414   59.04739</span>
+<span class="co">#&gt; 2  -83.44204  -82.03309  -82.85852</span>
+<span class="co">#&gt; 3 -111.62352 -110.63462 -109.95773</span>
+<span class="co">#&gt; 4 -134.12101 -133.54933 -132.54182</span>
+<span class="co">#&gt; 5 -115.24438 -114.84256 -113.37452</span></pre></div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#introduction">Introduction</a></li>
-      <li>
-<a href="#panda">PANDA</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#panda-overview">PANDA Overview</a></li>
-      <li><a href="#running-a-single-panda-analysis">Running a single PANDA analysis</a></li>
-      <li><a href="#run-another-panda-analysis-on-whole-blood-samples">Run another PANDA analysis on Whole Blood Samples</a></li>
-      </ul>
-</li>
-      <li><a href="#lioness">LIONESS</a></li>
-      </ul>
+
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -316,7 +323,7 @@ net &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

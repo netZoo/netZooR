@@ -18,8 +18,7 @@ Description of transition matrices in object
 summarizes the results of a MONSTER analysis
 }
 \examples{
-\donttest{
 data(yeast)
-monster(yeast$exp.ko,c(rep(1,42),rep(0,49),rep(NA,15)),yeast$motif, nullPerms=10, numMaxCores=4)
-}
+design <- c(rep(1,25),rep(0,10),rep(NA,15))
+monster(yeast$exp.cc,design,yeast$motif, nullPerms=10, numMaxCores=1)
 }

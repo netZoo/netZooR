@@ -4,8 +4,16 @@
 \alias{otter}
 \title{Run OTTER in R}
 \usage{
-otter(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 32,
-  eta = 1e-05, bexp = 1)
+otter(
+  W,
+  P,
+  C,
+  lambda = 0.0035,
+  gamma = 0.335,
+  Iter = 32,
+  eta = 1e-05,
+  bexp = 1
+)
 }
 \arguments{
 \item{W}{: TF-gene regulatory network based on TF motifs as a

@@ -4,11 +4,21 @@
 \alias{lioness.py}
 \title{Run python implementation of LIONESS}
 \usage{
-lioness.py(expr_file, motif_file = NULL, ppi_file = NULL,
-  computing = "cpu", precision = "double", save_tmp = TRUE,
-  modeProcess = "union", remove_missing = FALSE, start_sample = 1,
-  end_sample = "None", save_single_network = FALSE,
-  save_dir = "lioness_output", save_fmt = "npy")
+lioness.py(
+  expr_file,
+  motif_file = NULL,
+  ppi_file = NULL,
+  computing = "cpu",
+  precision = "double",
+  save_tmp = TRUE,
+  modeProcess = "union",
+  remove_missing = FALSE,
+  start_sample = 1,
+  end_sample = "None",
+  save_single_network = FALSE,
+  save_dir = "lioness_output",
+  save_fmt = "npy"
+)
 }
 \arguments{
 \item{expr_file}{Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).}

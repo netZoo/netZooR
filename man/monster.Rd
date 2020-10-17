@@ -4,8 +4,16 @@
 \alias{monster}
 \title{MOdeling Network State Transitions from Expression and Regulatory data (MONSTER)}
 \usage{
-monster(expr, design, motif, nullPerms = 100, ni_method = "bere",
-  ni.coefficient.cutoff = NA, numMaxCores = 1, outputDir = NA)
+monster(
+  expr,
+  design,
+  motif,
+  nullPerms = 100,
+  ni_method = "bere",
+  ni.coefficient.cutoff = NA,
+  numMaxCores = 1,
+  outputDir = NA
+)
 }
 \arguments{
 \item{expr}{Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet}
@@ -44,10 +52,7 @@ By examining the properties of the transition matrix, we can gain insight into r
 changes associated with phenotypic state transition.
 }
 \examples{
-\donttest{
 data(yeast)
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
-monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=4)
-plot(monsterRes)
-}
+monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 }

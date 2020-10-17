@@ -11,21 +11,22 @@ netZooR is an R package to reconstruct, analyse and plot biological networks.
 
 ## Features
 
-netZooR currently integrates with:
-* **PANDA**(Passing Attributes between Networks for Data Assimilation)[[Glass et al. 2013]](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832): constructs gene regulatory network from gene expression data, protein-protein interaction data, and transcription factor binding motifs (TFBMs) data.
+netZooR currently integrates:
+* **PANDA** (Passing Attributes between Networks for Data Assimilation) [[Glass et al. 2013]](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832): constructs gene regulatory network from gene expression data, protein-protein interaction data, and transcription factor binding motifs (TFBMs) data.
 
-* **CONDOR**(COmplex Network Description Of Regulators)[[Platig et al. 2016]](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033): analyses bipartite community structure analysis of biological networks.
+* **CONDOR** (COmplex Network Description Of Regulators) [[Platig et al. 2016]](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033): analyses bipartite community structure analysis of biological networks.
 
-* **LIONESS**(Linear Interpolation to Obtain Network Estimates for Single Samples)[[Kuijjer et al. 2019]](https://doi.org/10.1016/j.isci.2019.03.021): reconstructs single-sample gene regulatory networks.
+* **LIONESS** (Linear Interpolation to Obtain Network Estimates for Single Samples) [[Kuijjer et al. 2019]](https://doi.org/10.1016/j.isci.2019.03.021): reconstructs single-sample gene regulatory networks.
 
-* **ALPACA**(ALtered Partitions Across Community Architectures)[[Padi and Quackenbush 2018]](https://www.nature.com/articles/s41540-018-0052-5): compares two networks and identify changes in modular structure.
+* **ALPACA** (ALtered Partitions Across Community Architectures) [[Padi and Quackenbush 2018]](https://www.nature.com/articles/s41540-018-0052-5): compares two networks and identify changes in modular structure.
 
-* **SAMBAR**(Subtyping Agglomerated Mutations By Annotation Relations)[[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identifies subtypes based on somatic mutation data.
+* **SAMBAR** (Subtyping Agglomerated Mutations By Annotation Relations) [[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identifies subtypes based on somatic mutation data.
 
-* **MONSTER**(Modeling Network State Transitions from Expression and Regulatory data)[[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infers transcription factor which drivers of cell state conditions at the gene regulatory network level.
+* **MONSTER** (Modeling Network State Transitions from Expression and Regulatory data) [[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infers transcription factor which drivers of cell state conditions at the gene regulatory network level.
 
-* **OTTER**(Optimization to Estimate Regulation) [publication in preparation]: models gene regulation estimation as a graph matrching problem
+* **OTTER** (Optimization to Estimate Regulation) [[Weighill et al.]](https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract): models gene regulation estimation as a graph matrching problem
 
+In addition to helper functions to:
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
 
 * Plot one PANDA network in [Cytoscape](https://cytoscape.org/).
@@ -36,16 +37,17 @@ netZooR currently integrates with:
 
 - netZooR is compatible with R (>= 3.3.3) including R (>= 4.0),  click [here](https://www.r-project.org/) for more installation details.
 
-- To use two main tools PANDA and LIONESS, there are two options: 
-  1. use functions: `panda.py()` and `lioness.py()` by invoking two Python implementations in [netZooPy]((https://github.com/netZoo/netZooPy/tree/netZoo)), respectively. This way is recommended if the user requires speedy computering in building gene regulatory networks. In order to pratice invoking Python scripts, there are some requirements to meet before using netZooR:
-    a) [**Python**](https://www.python.org/downloads/) (>= 3.5.0) installed;
-    b) Python libraries [pandas](https://pandas.pydata.org/), [numpy](https://numpy.org/), and [scipy](https://www.scipy.org/) installed;
-    c) stable Internet access as package `reticulate` will link the R wrapper to the Python scripts located [here](https://github.com/netZoo/netZooPy/tree/netZoo) for those two methods.
+- To use PANDA and LIONESS, there are two options: 
+  1. use functions: `panda.py()` and `lioness.py()` by invoking the respective Python implementations in [netZooPy]((https://github.com/netZoo/netZooPy/tree/netZoo)). Because the native R linear algebra libraries can be slow, this way is recommended for faster analysis. However, optimized parallel libraries can give reasonable run times (step2). In order to pratice invoking Python scripts, there are some requirements to meet before using netZooR:
 
-  2. use function: `panda()` in [pandaR](https://github.com/jnpaulson/pandaR) package and `lioness()` for R implementations of methods PANDA and LIONESS, respectively. This way is recommended when above requirements for 1) can not be met or constructing small scale networks.
+     a) [**Python**](https://www.python.org/downloads/) (>= 3.5.0) installed;
+     b) Python libraries [pandas](https://pandas.pydata.org/), [numpy](https://numpy.org/), and [scipy](https://www.scipy.org/) installed;
+     c) stable Internet access as package `reticulate` will link the R wrapper to the Python scripts located [here](https://github.com/netZoo/netZooPy/tree/netZoo) for those two methods.
+
+  2. use function: `panda()` in [pandaR](https://github.com/jnpaulson/pandaR) package and `lioness()` for the pure R implementations of PANDA and LIONESS. To speed up the run time, it is highly recommended to install an optimized linear algebra library, like Intel MKL. Detailed instructions can be found [here](https://csantill.github.io/RPerformanceWBLAS/).
 
 
-- Most of plotting function can be realized by functions in [igraph](https://igraph.org/redirect.html), which will be loaded with netZooR through `library(netZooR)`. Some plotting functions like `vis.panda.in.cytoscape()` and `vis.diff.panda.in.cytoscape()` are able to plot interactive PANDA networks in [Cytoscape](https://cytoscape.org/), but installation of Cytoscape is required before using these plotting functions.
+- Most of plotting function can be realized by functions in [igraph](https://igraph.org/redirect.html), which will be loaded with netZooR through `library(netZooR)`. Some plotting functions like `vis.panda.in.cytoscape()` and `vis.diff.panda.in.cytoscape()` are able to plot interactive PANDA networks in [Cytoscape](https://cytoscape.org/), but installation of Cytoscape is required before using these plotting functions. Also, please make sure that Cytoscape is open when these functions are called.
 
 ```r
 # install.packages("devtools") 
