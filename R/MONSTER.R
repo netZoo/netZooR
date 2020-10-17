@@ -718,23 +718,25 @@ monster.monsterNI <- function (motif, expr.data, verbose = FALSE, randomize = "n
   if (verbose) 
     print("Main calculation")
   result <- NULL
-  if (method == "bere") {
-    expr.data <- data.frame(expr.data)
-    tfdcast <- dcast(motif, TF ~ GENE, fill = 0)
-    rownames(tfdcast) <- tfdcast[, 1]
-    tfdcast <- tfdcast[, -1]
-    expr.data <- expr.data[sort(rownames(expr.data)), ]
-    tfdcast <- tfdcast[, sort(colnames(tfdcast)), ]
-    tfNames <- rownames(tfdcast)[rownames(tfdcast) %in% 
-                                   rownames(expr.data)]
-    tfdcast <- tfdcast[rownames(tfdcast) %in% tfNames, ]
-    commonGenes <- intersect(colnames(tfdcast), rownames(expr.data))
-    expr.data <- expr.data[commonGenes, ]
-    tfdcast <- tfdcast[, commonGenes]
-    if (prod(rownames(expr.data) == colnames(tfdcast)) != 
+  
+  # process data
+  expr.data <- data.frame(expr.data)
+  tfdcast <- dcast(motif, TF ~ GENE, fill = 0)
+  rownames(tfdcast) <- tfdcast[, 1]
+  tfdcast <- tfdcast[, -1]
+  expr.data <- expr.data[sort(rownames(expr.data)), ]
+  tfdcast <- tfdcast[, sort(colnames(tfdcast)), ]
+  tfNames <- rownames(tfdcast)[rownames(tfdcast) %in% 
+                                 rownames(expr.data)]
+  tfdcast <- tfdcast[rownames(tfdcast) %in% tfNames, ]
+  commonGenes <- intersect(colnames(tfdcast), rownames(expr.data))
+  expr.data <- expr.data[commonGenes, ]
+  tfdcast <- tfdcast[, commonGenes]
+  if (prod(rownames(expr.data) == colnames(tfdcast)) != 
         1) {
       stop("ID mismatch")
-    }
+  }
+  if (method == "bere") {
     directCor <- t(cor(t(expr.data), t(expr.data[rownames(expr.data) %in% 
                                                    tfNames, ]))^2)
     result <- t(apply(regulatory.network, 1, function(x) {
