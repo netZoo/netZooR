@@ -93,7 +93,7 @@
 
       
 
-      </header><script src="TutorialOTTER_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER</h1>
@@ -117,13 +117,13 @@
 <div id="install-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install-packages" class="anchor"></a>Install packages</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
     <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span>
 <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"fgsea"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"reshape2"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggplot2"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
@@ -131,7 +131,7 @@
 <div id="load-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-packages" class="anchor"></a>Load packages</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ctlab/fgsea/">fgsea</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
@@ -158,9 +158,9 @@
 <div id="otter-network-inference" class="section level2">
 <h2 class="hasAnchor">
 <a href="#otter-network-inference" class="anchor"></a>OTTER Network Inference</h2>
-<p>First, we have to define the input matrices <span class="math inline">\(P\)</span>, <span class="math inline">\(C\)</span>, and <span class="math inline">\(W_0\)</span>. Let’s start with <span class="math inline">\(P\)</span> and <span class="math inline">\(W_0\)</span> and locate our ppi data (to construct P) and motif priors (for W_0). The ppi represents physical interactions between transcription factor proteins, and is an undirected network. The transcription factor motif prior represents putative regulation events where a transcription factor binds in the promotor of a gene to regulate its expression, as predicted by the presence of transcription factor binding motifs in the promotor region of the gene. The motif prior is thus a directed bipartite network linking transcription factors to their predicted gene targets. These are small example priors for the purposes of demonstrating this method. A complete set of priors by species can be downloaded from: <a href="https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resources" class="uri">https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resources</a></p>
-<p>Let’s take a look at the priors:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
+<p>First, we have to define the input matrices <span class="math inline">\(P\)</span>, <span class="math inline">\(C\)</span>, and <span class="math inline">\(W_0\)</span>. Let's start with <span class="math inline">\(P\)</span> and <span class="math inline">\(W_0\)</span> and locate our ppi data (to construct P) and motif priors (for W_0). The ppi represents physical interactions between transcription factor proteins, and is an undirected network. The transcription factor motif prior represents putative regulation events where a transcription factor binds in the promotor of a gene to regulate its expression, as predicted by the presence of transcription factor binding motifs in the promotor region of the gene. The motif prior is thus a directed bipartite network linking transcription factors to their predicted gene targets. These are small example priors for the purposes of demonstrating this method. A complete set of priors by species can be downloaded from: <a href="https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resources" class="uri">https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resources</a></p>
+<p>Let's take a look at the priors:</p>
+<div class="sourceCode"><pre class="downlit">
 <span class="co"># download motif and ppi file from AWS Bucket</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_subset.txt"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_subset.txt"</span><span class="op">)</span>
@@ -185,7 +185,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">motif</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 49950     3</span></pre></div>
 <p>Next we locate our expression data and filter out genes, which are not expressed in too many samples. As example, we will use a subset of the GTEx version 7 RNA-Seq data, downloaded from <a href="https://gtexportal.org/home/datasets" class="uri">https://gtexportal.org/home/datasets</a>. We start with a subset of RNA-Seq data (tpm normalized) for 1,000 genes from 130 LCL cell line samples and 407 whole blood samples.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="co"># dowload and load the GTEx expression matrix (tpm normalized expression)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/expression_tpm_lcl_blood_subset.txt"</span><span class="op">)</span>
 <span class="va">exp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"./expression_tpm_lcl_blood_subset.txt"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">F</span>, check.names <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
@@ -210,7 +210,7 @@
 <span class="co"># Select the columns of the expression matrix corresponding to the whole blood samples</span>
 <span class="va">wb_exp</span> <span class="op">&lt;-</span> <span class="va">exp</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">%in%</span> <span class="va">wblood_samples</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">]</span></pre></div>
 <p>For use in OTTER, we have to transform the edgelists into matrices and compute correlation matrices</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="co">#names of genes and transcription factors (tf)</span>
 <span class="va">geneNames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/duplicated.html">unique</a></span><span class="op">(</span><span class="va">motif_subset</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>
 <span class="va">tfNames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/duplicated.html">unique</a></span><span class="op">(</span><span class="va">motif_subset</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>
@@ -227,11 +227,11 @@
 <span class="va">C_lcl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">lcl_exp</span><span class="op">)</span><span class="op">)</span>
 <span class="va">C_wb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">wb_exp</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>Now we can run OTTER. We want to generate two gene regulatory networks for comparison, one based on the LCL and one based on the whole blood data. Hence, we also have to run OTTER twice. Note that the matrices <span class="math inline">\(P\)</span> and <span class="math inline">\(W_0\)</span> are identical in each run. The input to OTTER only differ in the correlation matrix <span class="math inline">\(C_{lcl}\)</span> or <span class="math inline">\(C_{wb}\)</span>, respectively.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="va">otterLCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/otter.html">otter</a></span><span class="op">(</span><span class="va">W0</span>, <span class="va">P</span>, <span class="va">C_lcl</span><span class="op">)</span>
 <span class="va">otterWB</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/otter.html">otter</a></span><span class="op">(</span><span class="va">W0</span>, <span class="va">P</span>, <span class="va">C_wb</span><span class="op">)</span></pre></div>
 <p>OTTER networks have relatively small weights because of the internal normalization of edges. But the scaling does not matter for the prediction of regulatory links. The higher the edge weight, the higher is the probability that a transcription factor binds to the promoter region of a gene and regulates its expression. For convenience, we multiply all weights with a factor that sets the maximum weight to one.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="va">otterLCL</span> <span class="op">&lt;-</span> <span class="va">otterLCL</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">otterLCL</span><span class="op">)</span>
 <span class="va">otterWB</span> <span class="op">&lt;-</span> <span class="va">otterWB</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">otterWB</span><span class="op">)</span></pre></div>
 </div>
@@ -243,7 +243,7 @@
 <div id="preparing-data-to-plot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#preparing-data-to-plot" class="anchor"></a>Preparing data to plot</h2>
-<div class="sourceCode" id="cb9"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="co"># We will use the function vis.panda.in.cytoscape to plot a set of nodes and edges on Cytoscape. The input for this function is a data.frame of edges to plot with 4 columns: "tf", "gene", "motif" (TF motif present or not on gene promoter), "force" (edge weight calculated by OTTER).</span>
 <span class="va">lcl_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span><span class="op">(</span><span class="va">otterLCL</span><span class="op">)</span>
 <span class="co">#&gt; Warning in melt(otterLCL): The melt generic in data.table has been passed a</span>
@@ -273,7 +273,7 @@
 <div id="plot-the-200-highest-edge-weights" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-the-200-highest-edge-weights" class="anchor"></a>Plot the 200 highest edge weights</h2>
-<div class="sourceCode" id="cb10"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="va">n</span><span class="op">=</span><span class="fl">200</span> <span class="co"># number of edges to plot </span>
 <span class="va">top</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">$</span><span class="va">Score</span>,decreasing<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">]</span>
 <span class="va">lcl_vis_top</span> <span class="op">&lt;-</span> <span class="va">lcl_vis</span><span class="op">[</span><span class="va">top</span>,<span class="op">]</span>
@@ -285,7 +285,7 @@
 <div id="plot-the-top-differential-edges-betwen-lcl-and-wb" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-the-top-differential-edges-betwen-lcl-and-wb" class="anchor"></a>Plot the top differential edges betwen LCL and WB</h2>
-<div class="sourceCode" id="cb11"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="co"># Select the top differential edge weights betweeen LCL and whole blood</span>
 <span class="va">diffRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.diff.edges.html">panda.diff.edges</a></span><span class="op">(</span><span class="va">lcl_vis</span>, <span class="va">wb_vis</span>, condition_name<span class="op">=</span><span class="st">"LCL"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">diffRes</span><span class="op">)</span>
@@ -314,7 +314,7 @@
 <li>out-degrees of TFs: sum of the weights of edges pointing to a TF</li>
 <li>in-degrees of genes: sum of the weights of edges pointing to a gene</li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="va">lcl_outdegree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">otterLCL</span>, <span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span> 
 <span class="va">wb_outdegree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">otterWB</span>, <span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span> 
 <span class="va">lcl_indegree</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">otterLCL</span>, <span class="fl">2</span>, <span class="va">sum</span><span class="op">)</span> 
@@ -333,7 +333,7 @@
 <div id="run-fgsea" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-fgsea" class="anchor"></a>Run fgsea</h2>
-<div class="sourceCode" id="cb13"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/c2.cp.kegg.v7.0.symbols.gmt"</span><span class="op">)</span>
 <span class="va">pathways</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/gmtPathways.html">gmtPathways</a></span><span class="op">(</span><span class="st">"./c2.cp.kegg.v7.0.symbols.gmt"</span><span class="op">)</span>
 <span class="co"># To retrieve biological-relevant processes, we will load and use the complete ranked gene list (consisting of 26,077 out of 27,174 genes). The in-degree difference has been calculated based on the complete networks instead of the subnetworks, which we constructed in this tutorial as small examples (with reduced run time).</span>
@@ -343,51 +343,51 @@
 <span class="va">fgseaRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">degreeDiff_all</span>, minSize<span class="op">=</span><span class="fl">15</span>, maxSize<span class="op">=</span><span class="fl">500</span>, nperm<span class="op">=</span><span class="fl">1000</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span>
 <span class="co">#&gt;                                          pathway        pval       padj</span>
-<span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.002074689 0.01481419</span>
-<span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.224761905 0.37168873</span>
-<span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.093750000 0.19522059</span>
-<span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.413865546 0.58340963</span>
-<span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.048016701 0.11485076</span>
-<span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.332640333 0.49896050</span>
+<span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.002207506 0.01572495</span>
+<span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.218923933 0.36214520</span>
+<span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.072340426 0.15807723</span>
+<span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.392931393 0.57007259</span>
+<span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.057815846 0.13176179</span>
+<span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.350951374 0.51765328</span>
 <span class="co">#&gt;            ES       NES nMoreExtreme size                          leadingEdge</span>
-<span class="co">#&gt; 1:  0.4360719  1.792107            0   58    HK1,ENO2,ENO1,ALDOC,BPGM,PFKM,...</span>
-<span class="co">#&gt; 2: -0.3428560 -1.174810          117   29  DLST,PCK2,SUCLG2P2,MDH2,FH,IDH2,...</span>
-<span class="co">#&gt; 3:  0.4435710  1.434160           44   21   ALDOC,PFKM,PFKP,ALDOA,PFKL,GPI,...</span>
-<span class="co">#&gt; 4:  0.3180477  1.041951          196   22   UGT1A1,UGT1A10,UGT1A6,CRYL1,UGT2B7</span>
-<span class="co">#&gt; 5:  0.4118882  1.467421           22   31 HK1,ALDOC,PFKFB4,PFKM,MTMR2,PFKP,...</span>
-<span class="co">#&gt; 6:  0.3247973  1.097182          159   25      GLB1,HK1,PFKM,PFKP,PFKL,GAA,...</span>
+<span class="co">#&gt; 1:  0.4360719  1.766004            0   58    HK1,ENO2,ENO1,ALDOC,BPGM,PFKM,...</span>
+<span class="co">#&gt; 2: -0.3428560 -1.175137          117   29  DLST,PCK2,SUCLG2P2,MDH2,FH,IDH2,...</span>
+<span class="co">#&gt; 3:  0.4435710  1.435201           33   21   ALDOC,PFKM,PFKP,ALDOA,PFKL,GPI,...</span>
+<span class="co">#&gt; 4:  0.3180477  1.045682          188   22   UGT1A1,UGT1A10,UGT1A6,CRYL1,UGT2B7</span>
+<span class="co">#&gt; 5:  0.4118882  1.451153           26   31 HK1,ALDOC,PFKFB4,PFKM,MTMR2,PFKP,...</span>
+<span class="co">#&gt; 6:  0.3247973  1.077961          165   25      GLB1,HK1,PFKM,PFKP,PFKL,GAA,...</span>
 <span class="co"># Subset to pathways with FDR &lt; 0.05</span>
 <span class="va">sig</span> <span class="op">&lt;-</span> <span class="va">fgseaRes</span><span class="op">[</span><span class="va">fgseaRes</span><span class="op">$</span><span class="va">padj</span> <span class="op">&lt;</span> <span class="fl">0.05</span>,<span class="op">]</span>
 <span class="co"># Get the top 10 significant pathways enriched for genes having lower targeting in LCLs  </span>
 <span class="va">sig</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">sig</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>,<span class="op">]</span>
-<span class="co">#&gt;                              pathway        pval       padj         ES</span>
-<span class="co">#&gt;  1:             KEGG_DNA_REPLICATION 0.001897533 0.01481419 -0.7725018</span>
-<span class="co">#&gt;  2:                  KEGG_CELL_CYCLE 0.001801802 0.01481419 -0.5948628</span>
-<span class="co">#&gt;  3:                 KEGG_SPLICEOSOME 0.001808318 0.01481419 -0.5766563</span>
-<span class="co">#&gt;  4:              KEGG_PROTEIN_EXPORT 0.001890359 0.01481419 -0.6851677</span>
-<span class="co">#&gt;  5:  KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001937984 0.01481419 -0.5785505</span>
-<span class="co">#&gt;  6:        KEGG_BASE_EXCISION_REPAIR 0.001876173 0.01481419 -0.5965607</span>
-<span class="co">#&gt;  7:             KEGG_MISMATCH_REPAIR 0.003802281 0.02107143 -0.6107380</span>
-<span class="co">#&gt;  8:       KEGG_PYRIMIDINE_METABOLISM 0.001941748 0.01481419 -0.4606911</span>
-<span class="co">#&gt;  9:              KEGG_RNA_POLYMERASE 0.003809524 0.02107143 -0.5731001</span>
-<span class="co">#&gt; 10: KEGG_BASAL_TRANSCRIPTION_FACTORS 0.007619048 0.03308102 -0.5304212</span>
-<span class="co">#&gt;           NES nMoreExtreme size                                    leadingEdge</span>
-<span class="co">#&gt;  1: -2.732588            0   34             RFC5,RFC3,FEN1,MCM7,POLE2,DNA2,...</span>
-<span class="co">#&gt;  2: -2.688736            0  121          ORC6,CDC7,CDC20,PKMYT1,CCNE1,ORC1,...</span>
-<span class="co">#&gt;  3: -2.591145            0  118          PHF5A,SRSF3,LSM7,SRSF7,LSM4,U2AF2,...</span>
-<span class="co">#&gt;  4: -2.234207            0   23       IMMP1L,SRP9,SRPRB,SPCS3,HSPA5,IMMP2L,...</span>
-<span class="co">#&gt;  5: -2.120356            0   41             RFC5,RFC3,POLE2,CCNH,RFC4,PCNA,...</span>
-<span class="co">#&gt;  6: -2.111295            0   33           FEN1,HMGB1,MUTYH,UNG,POLE2,NEIL3,...</span>
-<span class="co">#&gt;  7: -1.955181            1   22              RFC5,RFC3,RFC4,PCNA,EXO1,RFC2,...</span>
-<span class="co">#&gt;  8: -1.943853            0   90         POLR2D,DUT,POLE2,PRIM1,DTYMK,DHODH,...</span>
-<span class="co">#&gt;  9: -1.935880            1   28 POLR2D,POLR3B,POLR2H,POLR2L,POLR3GL,POLR2J,...</span>
-<span class="co">#&gt; 10: -1.817509            3   29        TAF4,TAF5,TAF6L,GTF2E1,TAF12,GTF2H2,...</span></pre></div>
+<span class="co">#&gt;                             pathway        pval       padj         ES       NES</span>
+<span class="co">#&gt;  1:            KEGG_DNA_REPLICATION 0.001845018 0.01572495 -0.7725018 -2.748592</span>
+<span class="co">#&gt;  2:                 KEGG_CELL_CYCLE 0.001798561 0.01572495 -0.5948628 -2.715327</span>
+<span class="co">#&gt;  3:                KEGG_SPLICEOSOME 0.001841621 0.01572495 -0.5766563 -2.611563</span>
+<span class="co">#&gt;  4:             KEGG_PROTEIN_EXPORT 0.001908397 0.01572495 -0.6851677 -2.203745</span>
+<span class="co">#&gt;  5: KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001785714 0.01572495 -0.5785505 -2.147831</span>
+<span class="co">#&gt;  6:       KEGG_BASE_EXCISION_REPAIR 0.001845018 0.01572495 -0.5965607 -2.107457</span>
+<span class="co">#&gt;  7:      KEGG_PYRIMIDINE_METABOLISM 0.001782531 0.01572495 -0.4606911 -2.000457</span>
+<span class="co">#&gt;  8:            KEGG_MISMATCH_REPAIR 0.003838772 0.02191815 -0.6107380 -1.943433</span>
+<span class="co">#&gt;  9:             KEGG_RNA_POLYMERASE 0.003663004 0.02189239 -0.5731001 -1.941894</span>
+<span class="co">#&gt; 10:      KEGG_N_GLYCAN_BIOSYNTHESIS 0.001838235 0.01572495 -0.4815544 -1.832766</span>
+<span class="co">#&gt;     nMoreExtreme size                                    leadingEdge</span>
+<span class="co">#&gt;  1:            0   34             RFC5,RFC3,FEN1,MCM7,POLE2,DNA2,...</span>
+<span class="co">#&gt;  2:            0  121          ORC6,CDC7,CDC20,PKMYT1,CCNE1,ORC1,...</span>
+<span class="co">#&gt;  3:            0  118          PHF5A,SRSF3,LSM7,SRSF7,LSM4,U2AF2,...</span>
+<span class="co">#&gt;  4:            0   23       IMMP1L,SRP9,SRPRB,SPCS3,HSPA5,IMMP2L,...</span>
+<span class="co">#&gt;  5:            0   41             RFC5,RFC3,POLE2,CCNH,RFC4,PCNA,...</span>
+<span class="co">#&gt;  6:            0   33           FEN1,HMGB1,MUTYH,UNG,POLE2,NEIL3,...</span>
+<span class="co">#&gt;  7:            0   90         POLR2D,DUT,POLE2,PRIM1,DTYMK,DHODH,...</span>
+<span class="co">#&gt;  8:            1   22              RFC5,RFC3,RFC4,PCNA,EXO1,RFC2,...</span>
+<span class="co">#&gt;  9:            1   28 POLR2D,POLR3B,POLR2H,POLR2L,POLR3GL,POLR2J,...</span>
+<span class="co">#&gt; 10:            0   45         B4GALT2,DPM3,ALG14,FUT8,ALG6,MGAT2,...</span></pre></div>
 </div>
 <div id="bubble-plot-of-top-differentially-targeted-pathways" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bubble-plot-of-top-differentially-targeted-pathways" class="anchor"></a>Bubble plot of top differentially targeted pathways</h2>
 <p>Bubble plot of gene sets (KEGG pathways) on y-axis and adjusted p-value (padj) on x-axis. Bubble size indicates the number of genes in each gene set, and bubble color indicates the normalized enrichment score (NES). Blue is for negative NES (enrichment of higher targeted genes in whole blood), and red is for positive NES (enrichment of higher targeted genes in LCL).</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
+<div class="sourceCode"><pre class="downlit">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span>
 <span class="co"># Settings</span>
 <span class="va">fdrcut</span> <span class="op">&lt;-</span> <span class="fl">0.05</span> <span class="co"># FDR cut-off to use as output for significant signatures</span>

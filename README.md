@@ -78,7 +78,7 @@ Please report any further issue to the [issues page](https://github.com/netZoo/n
 
 
 ## Tutorials
-Please refer to the top navigation bar **Articles/** for basic usage and application cases.
+For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/). Tutorials are available at the top navigation bar **Articles/** for basic usage and application cases.
 Or use `browseVignettes("netZooR")` after installing package.
 
 ## Contribution and Development
