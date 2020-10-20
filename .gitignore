@@ -8,3 +8,8 @@ Meta
 .Rproj.user*
 inst/doc
 .Rapp.history
+vignettes/*.txt
+vignettes/*.gmt
+vignettes/*.rdata
+vignettes/*.rnk
+
