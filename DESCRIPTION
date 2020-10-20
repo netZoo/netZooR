@@ -50,6 +50,7 @@ Imports: RCy3,
    	 methods,
 	 AnnotationDbi,
 Remotes: jnpaulson/pandaR
+         PadiLab/CRANE
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
