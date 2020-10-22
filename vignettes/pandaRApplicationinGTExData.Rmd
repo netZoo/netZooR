@@ -36,7 +36,6 @@ install.packages("ggplot2",repos = "http://cran.us.r-project.org")
 ```{r,eval=FALSE}
 install.packages("devtools")	install.packages("devtools")
 library(devtools)	library(devtools)
-devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)	
 devtools::install_github("netZoo/netZooR", build_vignettes = FALSE)
 ```
 
