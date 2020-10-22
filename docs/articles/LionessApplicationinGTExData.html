@@ -93,7 +93,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="LionessApplicationinGTExData_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Comparing LIONESS Regulatory Networks using limma</h1>
@@ -112,11 +112,23 @@
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples) is a method for creating sample-specific networks. When applied to a PANDA regulatory network, the result is a set of gene regulatory networks, one for each sample in the gene expression dataset. More information on LIONESS can be found in the published paper: <a href="https://doi.org/10.1016/j.isci.2019.03.021" class="uri">https://doi.org/10.1016/j.isci.2019.03.021</a></p>
-<p>In this vignette, we will compare LIONESS regulatory networks from 207 females and 238 males with colon cancer using RNA-Seq data from TCGA. We will compare the edge weights between females and males using a linear regression model and correcting for the covariates age, race, and disease stage, as available in the limma package. We will also compare the gene's in-degree (defined as the sum of the gene's incoming edge weights from all TFs in the network). Finally, we will perform gene set enrichment analysis to find the pathways enriched for genes differentially targeted by sex in colon cancer.</p>
+<p>In this vignette, we will compare LIONESS regulatory networks from 207 females and 238 males with colon cancer using RNA-Seq data from TCGA. We will compare the edge weights between females and males using a linear regression model and correcting for the covariates age, race, and disease stage, as available in the limma package. We will also compare the gene’s in-degree (defined as the sum of the gene’s incoming edge weights from all TFs in the network). Finally, we will perform gene set enrichment analysis to find the pathways enriched for genes differentially targeted by sex in colon cancer.</p>
+<div id="install-packages" class="section level2">
+<h2 class="hasAnchor">
+<a href="#install-packages" class="anchor"></a>Install packages</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>   
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span>  
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"limma"</span><span class="op">)</span>   
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"fgsea"</span><span class="op">)</span>   
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"Biobase"</span><span class="op">)</span> 
+<span class="co"># install.packages("ggplot2",repos = "http://cran.us.r-project.org")    </span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"igraph"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span>   </pre></div>
+</div>
 <div id="load-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-packages" class="anchor"></a>Load packages</h2>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://bioinf.wehi.edu.au/limma">limma</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ctlab/fgsea/">fgsea</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
@@ -127,8 +139,8 @@
 <div id="load-the-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#load-the-data" class="anchor"></a>Load the data</h1>
-<p>For the purposes of demonstrating the workflow, we will load only a subet of LIONESS networks. Our subset shows the edge weights for 50,000 edges (rows) by 445 samples (columns). Let's take a look at the networks:</p>
-<div class="sourceCode"><pre class="downlit">
+<p>For the purposes of demonstrating the workflow, we will load only a subet of LIONESS networks. Our subset shows the edge weights for 50,000 edges (rows) by 445 samples (columns). Let’s take a look at the networks:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="co"># download a subset of LIONESS networks from netZooR AWS Bucket to working directory.</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/lioness_coloncancer_subset.txt"</span><span class="op">)</span>
 <span class="va">lioness</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"./lioness_coloncancer_subset.txt"</span>,stringsAsFactors <span class="op">=</span> <span class="cn">F</span>, check.names <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
@@ -206,7 +218,7 @@
 <div id="run-limma" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-limma" class="anchor"></a>Run limma</h2>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="co"># Define the covariates</span>
 <span class="va">gender</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span><span class="op">(</span><span class="va">obj1</span><span class="op">)</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span>,levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MALE"</span>,<span class="st">"FEMALE"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">stage</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html">pData</a></span><span class="op">(</span><span class="va">obj1</span><span class="op">)</span><span class="op">$</span><span class="va">uicc_stage</span><span class="op">)</span><span class="op">)</span>
@@ -235,7 +247,7 @@
 <h2 class="hasAnchor">
 <a href="#visualize-the-top-edges-with-differential-weights-by-sex" class="anchor"></a>Visualize the top edges with differential weights by sex</h2>
 <p>We select the top 50 edges with differential edge weights by sex and convert them into an igraph graph.data.frame object for visualization. We color edges red if they have higher coefficients in the female group, and blue if they have higher coefficients in the male group.</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="va">toptable_edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/tstrsplit.html">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span>, <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/cbind.html">cbind</a></span><span class="op">(</span><span class="va">toptable_edges</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>,<span class="op">]</span>, <span class="va">tb</span><span class="op">$</span><span class="va">logFC</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span><span class="op">]</span><span class="op">)</span>
 <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html">graph.data.frame</a></span><span class="op">(</span><span class="va">z</span>, directed<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
@@ -245,7 +257,7 @@
 <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fl">1</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g</span>, vertex.label.cex<span class="op">=</span><span class="fl">0.7</span>, vertex.size<span class="op">=</span><span class="fl">10</span>,  vertex.label.font<span class="op">=</span><span class="fl">3</span>, edge.width<span class="op">=</span><span class="fl">5</span><span class="op">*</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">z</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
-<p><img src="LionessApplicationinGTExData_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="LionessApplicationinGTExData_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 </div>
 <div id="compare-the-gene-in-degree" class="section level1">
@@ -255,7 +267,7 @@
 <div id="run-limma-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-limma-1" class="anchor"></a>Run limma</h2>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="va">indegree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/assayData.html">assayData</a></span><span class="op">(</span><span class="va">obj1</span><span class="op">)</span><span class="op">[[</span><span class="st">"quantile"</span><span class="op">]</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">indegree</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt;        TCGA-AY-A71X-01A-12R-A37K-07 TCGA-A6-4105-01A-02R-1774-07</span>
@@ -295,25 +307,25 @@
 <div id="run-fgsea" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-fgsea" class="anchor"></a>Run fgsea</h2>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/c2.cp.kegg.v7.0.symbols.gmt"</span><span class="op">)</span>
 <span class="va">pathways</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/gmtPathways.html">gmtPathways</a></span><span class="op">(</span><span class="st">"./c2.cp.kegg.v7.0.symbols.gmt"</span><span class="op">)</span>
 <span class="va">fgseaRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">indegree_rank</span>, minSize<span class="op">=</span><span class="fl">15</span>, maxSize<span class="op">=</span><span class="fl">500</span>, nperm<span class="op">=</span><span class="fl">1000</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span>
-<span class="co">#&gt;                                 pathway       pval       padj         ES</span>
-<span class="co">#&gt; 1:      KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.14694656 0.25675279  0.3240518</span>
-<span class="co">#&gt; 2:         KEGG_CITRATE_CYCLE_TCA_CYCLE 0.50955414 0.64300880 -0.2702159</span>
-<span class="co">#&gt; 3:       KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.19238095 0.30588571  0.3795079</span>
-<span class="co">#&gt; 4: KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.03710575 0.09076638  0.4200039</span>
-<span class="co">#&gt; 5:            KEGG_GALACTOSE_METABOLISM 0.86307054 0.94086298 -0.2250237</span>
-<span class="co">#&gt; 6:           KEGG_FATTY_ACID_METABOLISM 0.11545624 0.21100623  0.3533304</span>
+<span class="co">#&gt;                                 pathway       pval      padj         ES</span>
+<span class="co">#&gt; 1:      KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.12190476 0.2227915  0.3240518</span>
+<span class="co">#&gt; 2:         KEGG_CITRATE_CYCLE_TCA_CYCLE 0.53797468 0.6735274 -0.2702159</span>
+<span class="co">#&gt; 3:       KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.18965517 0.3045977  0.3795079</span>
+<span class="co">#&gt; 4: KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.04942966 0.1091572  0.4200039</span>
+<span class="co">#&gt; 5:            KEGG_GALACTOSE_METABOLISM 0.88981289 0.9371117 -0.2250237</span>
+<span class="co">#&gt; 6:           KEGG_FATTY_ACID_METABOLISM 0.13307985 0.2351077  0.3533304</span>
 <span class="co">#&gt;           NES nMoreExtreme size                            leadingEdge</span>
-<span class="co">#&gt; 1:  1.2617248           76   47  ALDOB,TPI1,ALDH3A1,BPGM,PKLR,PDHB,...</span>
-<span class="co">#&gt; 2: -0.9601351          239   29      SDHA,CS,OGDH,PDHA1,ACO2,OGDHL,...</span>
-<span class="co">#&gt; 3:  1.2276875          100   21   ALDOB,DERA,RPE,TALDO1,PGM2,ALDOC,...</span>
-<span class="co">#&gt; 4:  1.4945603           19   30   ALDOB,TSTA3,MTMR6,TPI1,FPGT,PMM2,...</span>
-<span class="co">#&gt; 5: -0.7420877          415   20            HK1,GLA,GANC,PFKL,UGP2,PFKM</span>
-<span class="co">#&gt; 6:  1.2823718           61   33 GCDH,ACAT2,ACOX3,EHHADH,ECHS1,CPT2,...</span>
+<span class="co">#&gt; 1:  1.2742811           63   47  ALDOB,TPI1,ALDH3A1,BPGM,PKLR,PDHB,...</span>
+<span class="co">#&gt; 2: -0.9432497          254   29      SDHA,CS,OGDH,PDHA1,ACO2,OGDHL,...</span>
+<span class="co">#&gt; 3:  1.2109823           98   21   ALDOB,DERA,RPE,TALDO1,PGM2,ALDOC,...</span>
+<span class="co">#&gt; 4:  1.4736549           25   30   ALDOB,TSTA3,MTMR6,TPI1,FPGT,PMM2,...</span>
+<span class="co">#&gt; 5: -0.7134955          427   20            HK1,GLA,GANC,PFKL,UGP2,PFKM</span>
+<span class="co">#&gt; 6:  1.2721071           69   33 GCDH,ACAT2,ACOX3,EHHADH,ECHS1,CPT2,...</span>
 <span class="co"># Subset to pathways with FDR &lt; 0.05</span>
 <span class="va">sig</span> <span class="op">&lt;-</span> <span class="va">fgseaRes</span><span class="op">[</span><span class="va">fgseaRes</span><span class="op">$</span><span class="va">padj</span> <span class="op">&lt;</span> <span class="fl">0.05</span>,<span class="op">]</span>
 <span class="co"># Top 10 pathways enriched in females</span>
@@ -345,7 +357,7 @@
 <h2 class="hasAnchor">
 <a href="#bubble-plot-of-differentially-targeted-pathways-by-sex" class="anchor"></a>Bubble plot of differentially targeted pathways by sex</h2>
 <p>Bubble plot of gene sets on y-axis and adjusted p-value (padj) on x-axis. Bubble size indicates the number of genes in each gene set, and bubble color indicates the normalized enrichment score (NES). Blue is for negative NES (enrichment of higher targeted genes in males), and red is for positive NES (enrichment of higher targeted genes in females).</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span>
 <span class="co"># Settings</span>
 <span class="va">fdrcut</span> <span class="op">&lt;-</span> <span class="fl">0.05</span> <span class="co"># FDR cut-off to use as output for significant signatures</span>
@@ -386,7 +398,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient2</a></span><span class="op">(</span>low<span class="op">=</span><span class="va">dencol_neg</span>, high<span class="op">=</span><span class="va">dencol_pos</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>colour<span class="op">=</span><span class="va">signcol</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>aspect.ratio<span class="op">=</span><span class="va">asp</span>, axis.title.y<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># test aspect.ratio</span></pre></div>
-<p><img src="LionessApplicationinGTExData_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="LionessApplicationinGTExData_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 </div>
 </div>
   </div>

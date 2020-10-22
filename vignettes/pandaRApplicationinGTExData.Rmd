@@ -24,10 +24,19 @@ In this vignette, we will build one regulatory network for LCL cell line samples
   
 Cell lines are an essential tool in biomedical research and often used as surrogates for tissues. LCLs (obtained from the transformation of B cells present in whole blood) are among the most widely used continuous cell lines with the ability to proliferate indefinitely. By comparing the regulatory networks of LCL cell lines with its tissue of origin (whole blood), we find that LCLs exhibit large changes in their patterns of transcription factor regulation, specifically a loss of repressive transcription factor targeting of cell cycle genes.
 
-## Install netZooR package
+## Install packages	
+```{r,message=FALSE,warning=FALSE,results="hide"}	
+if (!requireNamespace("BiocManager", quietly = TRUE))	
+    install.packages("BiocManager",repos = "http://cran.us.r-project.org")	
+BiocManager::install("fgsea")	
+# install.packages("reshape2",repos = "http://cran.us.r-project.org")	
+install.packages("ggplot2",repos = "http://cran.us.r-project.org")	
+```
+
 ```{r,eval=FALSE}
-install.packages("devtools")
-library(devtools)
+install.packages("devtools")	install.packages("devtools")
+library(devtools)	library(devtools)
+devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)	
 devtools::install_github("netZoo/netZooR", build_vignettes = FALSE)
 ```
 

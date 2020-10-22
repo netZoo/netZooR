@@ -93,7 +93,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="ApplicationinGTExData_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</h1>
@@ -126,16 +126,16 @@
 <h2 class="hasAnchor">
 <a href="#running-a-single-panda-analysis" class="anchor"></a>Running a single PANDA analysis</h2>
 <p>Load some libraries. We use the data.table library for reading in large datasets as it is more efficient.</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://r-datatable.com">data.table</a></span><span class="op">)</span></pre></div>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="co"># point R to your python 3 installation. Make sure that this is the installation that has all the required python libraries (numpy, scipy, etc) installed. netZooR uses a python implementation of PANDA under the hood.</span>
 <span class="co">#use_python("/usr/bin/python3") # for example, you can check the installation with py_config()</span></pre></div>
 <p>Now we locate our ppi and motif priors. The ppi represents physical interactions between transcription factor proteins, and is an undirected network. The motif prior represents putative regulation events where a transcription factor binds in the promotor of a gene to regulate its expression, as predicted by the presence of transcription factor binding motifs in the promotor region of the gene. The motif prior is thus a directed network linking transcription factors to their predicted gene targets. These are small example priors for the purposes of demonstrating this method.</p>
 <p>The ppi and motif priors are available in our AWS public bucket, and can be downloaded into current working directory.</p>
-<p>Let's download and take a look at the priors:</p>
-<div class="sourceCode"><pre class="downlit">
+<p>Let’s download and take a look at the priors:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_GTEx.txt"</span><span class="op">)</span>
 <span class="va">motif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"./motif_GTEx.txt"</span><span class="op">)</span> 
@@ -158,10 +158,10 @@
 <p>As example, We will use a portion of the GTEx (Genotype-Tissue Expression) version 7 RNA-Seq data, read in the expression data and the list of LCL samples. Then parse the expression data.</p>
 <p>We can either</p>
 <ol style="list-style-type: decimal">
-<li>downlaod the file GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct from from <a href="https://gtexportal.org/home/datasets" class="uri">https://gtexportal.org/home/datasets</a> or in our AWS bucket and place it in the folder "expressionData". We will initially use the LCL RNA-seq data to create a regulatory network for this cell line. Later, we will also generate a regulatory network for whole blood for comaprison.</li>
+<li>downlaod the file GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct from from <a href="https://gtexportal.org/home/datasets" class="uri">https://gtexportal.org/home/datasets</a> or in our AWS bucket and place it in the folder “expressionData”. We will initially use the LCL RNA-seq data to create a regulatory network for this cell line. Later, we will also generate a regulatory network for whole blood for comaprison.</li>
 </ol>
 <p>Here, we use the expression data and sample ids file copy from our AWS bucket.</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span><span class="op">)</span>
 <span class="co"># load the GTEx expression matrix</span>
 <span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="st">"./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">2</span>, data.table <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -185,19 +185,19 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="va">clean_data</span>, file <span class="op">=</span> <span class="st">"pandaExprLCL.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, col.names <span class="op">=</span> <span class="cn">FALSE</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
 <p>Or</p>
 <p>Download our pre-processed pandaExprLCL.txt from our AWS S3 Bucket.</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprLCL.txt"</span><span class="op">)</span></pre></div>
 <p>Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior.</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="va">panda_results_LCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprLCL.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
-<p>Let's take a look at the results. The output contains a list of three data frames:</p>
+<p>Let’s take a look at the results. The output contains a list of three data frames:</p>
 <ul>
-<li>data frame containing the regulatory network (bipartite graph) with edge weights representing the "likelihood" that a transcription factor binds the promotor of and regulates the expression of a gene.<br>
+<li>data frame containing the regulatory network (bipartite graph) with edge weights representing the “likelihood” that a transcription factor binds the promotor of and regulates the expression of a gene.<br>
 </li>
 <li>data frame odf the in-degrees of genes (sum of the weights of inbound edges around a gene)</li>
 <li>data frame of the out-degrees of TFs (sum of the weights of outbound edges around a TF)</li>
 </ul>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="co"># the bipartite regulatory network</span>
 <span class="va">regNetLCL</span> <span class="op">&lt;-</span> <span class="va">panda_results_LCL</span><span class="op">$</span><span class="va">panda</span>
 <span class="va">regNetLCL</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>
@@ -234,7 +234,7 @@
 <h2 class="hasAnchor">
 <a href="#run-another-panda-analysis-on-whole-blood-samples" class="anchor"></a>Run another PANDA analysis on Whole Blood Samples</h2>
 <p>Like the LCL expression data in previous section, we can either download the raw data and process;</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="co">#### skip this part if you already did same process in LCL expression data section</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span><span class="op">)</span>
 <span class="co"># load the GTEx expression matrix</span>
@@ -259,27 +259,27 @@
 <span class="co">#write the cleaned expression data to a file, ready to be passed as an argument to the PANDA algorithm.</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="va">clean_data_wb</span>, file <span class="op">=</span> <span class="st">"pandaExprWholeBlood.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, col.names <span class="op">=</span> <span class="cn">FALSE</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
 <p>or download the whole blood expression data directly from AWS Bucket.</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprWholeBlood.txt"</span><span class="op">)</span></pre></div>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="co">#run PANDA</span>
 <span class="va">panda_results_wblood</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprWholeBlood.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span>
 <span class="co">#&gt; ...Finish PANDA...</span></pre></div>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"visNetwork"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span>,dependencies<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">visNetwork</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://datastorm-open.github.io/visNetwork/">visNetwork</a></span><span class="op">)</span>
 <span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">panda_results_wblood</span><span class="op">$</span><span class="va">panda</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">panda_results_wblood</span><span class="op">$</span><span class="va">panda</span><span class="op">$</span><span class="va">Score</span>,decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,<span class="op">]</span>, <span class="fl">500</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">edges</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"from"</span>,<span class="st">"to"</span>,<span class="st">"motif"</span>,<span class="st">"force"</span><span class="op">)</span>
 <span class="va">nodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/duplicated.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">edges</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">nodes</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">ifelse</a></span><span class="op">(</span><span class="va">nodes</span><span class="op">$</span><span class="va">id</span> <span class="op">%in%</span> <span class="va">edges</span><span class="op">$</span><span class="va">from</span>, <span class="st">"TF"</span>, <span class="st">"gene"</span><span class="op">)</span>
 
-<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu">visNetwork</span><span class="op">(</span><span class="va">nodes</span>, <span class="va">edges</span>, width <span class="op">=</span> <span class="st">"100%"</span><span class="op">)</span>
-<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu">visGroups</span><span class="op">(</span><span class="va">net</span>, groupname <span class="op">=</span> <span class="st">"TF"</span>, shape <span class="op">=</span> <span class="st">"square"</span>,
+<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/visNetwork/man/visNetwork.html">visNetwork</a></span><span class="op">(</span><span class="va">nodes</span>, <span class="va">edges</span>, width <span class="op">=</span> <span class="st">"100%"</span><span class="op">)</span>
+<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/visNetwork/man/visGroups.html">visGroups</a></span><span class="op">(</span><span class="va">net</span>, groupname <span class="op">=</span> <span class="st">"TF"</span>, shape <span class="op">=</span> <span class="st">"square"</span>,
                      color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>background <span class="op">=</span> <span class="st">"teal"</span>, border<span class="op">=</span><span class="st">"black"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu">visGroups</span><span class="op">(</span><span class="va">net</span>, groupname <span class="op">=</span> <span class="st">"gene"</span>, shape <span class="op">=</span> <span class="st">"dot"</span>,       
+<span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/visNetwork/man/visGroups.html">visGroups</a></span><span class="op">(</span><span class="va">net</span>, groupname <span class="op">=</span> <span class="st">"gene"</span>, shape <span class="op">=</span> <span class="st">"dot"</span>,       
                      color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>background <span class="op">=</span> <span class="st">"gold"</span>, border<span class="op">=</span><span class="st">"black"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">visLegend</span><span class="op">(</span><span class="va">net</span>, main<span class="op">=</span><span class="st">"Legend"</span>, position<span class="op">=</span><span class="st">"right"</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span> </pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/visNetwork/man/visLegend.html">visLegend</a></span><span class="op">(</span><span class="va">net</span>, main<span class="op">=</span><span class="st">"Legend"</span>, position<span class="op">=</span><span class="st">"right"</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span> </pre></div>
 </div>
 </div>
 <div id="lioness" class="section level1">
@@ -287,19 +287,19 @@
 <a href="#lioness" class="anchor"></a>LIONESS</h1>
 <p>LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples) is a method for creating sample-specific networks. When applied to a PANDA regulatory network, the result is a set of gene regulatory networks, one for each sample in the gene expression dataset. More information on LIONESS can be found in the published paper: <a href="https://doi.org/10.1016/j.isci.2019.03.021" class="uri">https://doi.org/10.1016/j.isci.2019.03.021</a></p>
 <p>Running LIONESS with netZoo is simple, and very similar to running PANDA:</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="va">lionessLCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lioness.py.html">lioness.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"pandaExprLCL.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></pre></div>
 <p>The result is a data frame in which the first colum contains TFs, the second column contains genes and each subsequent column contains the edge weight for that particular TF-gene pair in a particular sample.</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="va">lionessLCL</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>
-<span class="co">#&gt;     TF            Gene        0          1          2          3          4  </span>
+<span class="co">#&gt;     TF            Gene          0          1          2          3          4</span>
 <span class="co">#&gt; 1  AHR ENSG00000049245   59.83660   58.94746   59.85994   59.26597   56.07829</span>
 <span class="co">#&gt; 2 AIRE ENSG00000049245  -82.91891  -82.51506  -84.19484  -82.41868  -77.98084</span>
 <span class="co">#&gt; 3 ALX1 ENSG00000049245 -112.22820 -111.54828 -113.02663 -111.17812 -109.89648</span>
 <span class="co">#&gt; 4 ALX3 ENSG00000049245 -135.11048 -133.38124 -135.08914 -133.67784 -128.37243</span>
 <span class="co">#&gt; 5 ALX4 ENSG00000049245 -116.35833 -114.82369 -116.31932 -114.99477 -111.51051</span>
-<span class="co">#&gt;          5          6          7  </span>
+<span class="co">#&gt;            5          6          7</span>
 <span class="co">#&gt; 1   59.67067   59.28414   59.04739</span>
 <span class="co">#&gt; 2  -83.44204  -82.03309  -82.85852</span>
 <span class="co">#&gt; 3 -111.62352 -110.63462 -109.95773</span>
