@@ -24,7 +24,9 @@ netZooR currently integrates:
 
 * **MONSTER** (Modeling Network State Transitions from Expression and Regulatory data) [[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infers transcription factor which drivers of cell state conditions at the gene regulatory network level.
 
-* **OTTER** (Optimization to Estimate Regulation) [[Weighill et al.]](https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract): models gene regulation estimation as a graph matrching problem
+* **OTTER** (Optimization to Estimate Regulation) [[Weighill et al.]](https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract): models gene regulation estimation as a graph matching problem.
+
+* **CRANE** (Constrained Random Alteration of Network Edges) [[Lim et al.]](https://www.biorxiv.org/content/10.1101/2020.07.12.198747v1): generates ensembles of gene regulatory networks to identify disease modules.
 
 In addition to helper functions to:
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
@@ -78,12 +80,12 @@ Please report any further issue to the [issues page](https://github.com/netZoo/n
 
 
 ## Tutorials
-Please refer to the top navigation bar **Articles/** for basic usage and application cases.
+For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/). Tutorials are available at the top navigation bar **Articles/** for basic usage and application cases.
 Or use `browseVignettes("netZooR")` after installing package.
 
 ## Contribution and Development
-Contributions are welcome! Instruction of how to contribute netZooR repository can be found [here](https://netzoo.github.io/contribute/contribute/). 
-After adding new features or debugging, please re-build package and run CDM check by using below codes before pulling request to the devel branch.
+Contributions are welcome! The contribution guide to netZooR can be found [here](https://netzoo.github.io/contribute/contribute/). 
+After adding new features or optimizing a function in the package, please re-build the package and run `R CMD check .` in the terminal or follow the instructions below before doing the pull request to the devel branch.
 ```r
 library(devtools)
 library(pkgdown)

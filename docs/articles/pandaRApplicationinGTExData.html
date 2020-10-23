@@ -99,7 +99,7 @@
       <h1 data-toc-skip>Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</h1>
                         <h4 class="author">Camila Lopes-Ramos</h4>
             
-            <h4 class="date">2019-12-20</h4>
+            <h4 class="date">2020-10-19</h4>
       
       
       <div class="hidden name"><code>pandaRApplicationinGTExData.Rmd</code></div>
@@ -111,21 +111,21 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>In this vignette, we will build one regulatory network for LCL cell line samples and one for whole blood samples from the GTEx gene expression data using the pandaR package. Next, we will compare the two networks, and find the pathways enriched for genes differentially targeted between the LCL cell line and whole blood.</p>
+<p>In this vignette, we will build one regulatory network for LCL cell line samples and one for whole blood samples from the GTEx gene expression data using the netZooR package. Next, we will compare the two networks, and find the pathways enriched for genes differentially targeted between the LCL cell line and whole blood.</p>
 <p>Cell lines are an essential tool in biomedical research and often used as surrogates for tissues. LCLs (obtained from the transformation of B cells present in whole blood) are among the most widely used continuous cell lines with the ability to proliferate indefinitely. By comparing the regulatory networks of LCL cell lines with its tissue of origin (whole blood), we find that LCLs exhibit large changes in their patterns of transcription factor regulation, specifically a loss of repressive transcription factor targeting of cell cycle genes.</p>
 <div id="install-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install-packages" class="anchor"></a>Install packages</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span>
-<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"fgsea"</span><span class="op">)</span>
-<span class="co"># install.packages("reshape2",repos = "http://cran.us.r-project.org")</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggplot2"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></pre></div>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>   
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span>  
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"fgsea"</span><span class="op">)</span>   
+<span class="co"># install.packages("reshape2",repos = "http://cran.us.r-project.org")   </span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggplot2"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span>  </pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>    
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
 </div>
 <div id="load-packages" class="section level2">
 <h2 class="hasAnchor">
@@ -134,8 +134,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ctlab/fgsea/">fgsea</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/reshape">reshape2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://r-datatable.com">data.table</a></span><span class="op">)</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/reshape">reshape2</a></span><span class="op">)</span></pre></div>
 </div>
 </div>
 <div id="panda" class="section level1">
@@ -150,7 +149,8 @@
 <div id="building-a-panda-regulatory-network" class="section level2">
 <h2 class="hasAnchor">
 <a href="#building-a-panda-regulatory-network" class="anchor"></a>Building a PANDA regulatory network</h2>
-<p>Now we locate our ppi and motif priors. The ppi represents physical interactions between transcription factor proteins, and is an undirected network. The transcription factor motif prior represents putative regulation events where a transcription factor binds in the promotor of a gene to regulate its expression, as predicted by the presence of transcription factor binding motifs in the promotor region of the gene. The motif prior is thus a directed network linking transcription factors to their predicted gene targets. These are small example priors for the purposes of demonstrating this method. A complete set of priors by species can be downloaded from: <a href="https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resources" class="uri">https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resources</a></p>
+<p>Now we locate our ppi and motif priors. The ppi represents physical interactions between transcription factor proteins, and is an undirected network. The transcription factor motif prior represents putative regulation events where a transcription factor binds in the promotor of a gene to regulate its expression, as predicted by the presence of transcription factor binding motifs in the promotor region of the gene. The motif prior is thus a directed network linking transcription factors to their predicted gene targets. These are small example priors for the purposes of demonstrating this method. A complete set of motif priors by species can be downloaded from: <a href="https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resources" class="uri">https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resources</a><br>
+The function source.PPI can be used to source the protein-protein interaction in the STRING database.</p>
 <p>Let’s take a look at the priors:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="co"># download motif and ppi file from AWS Bucket</span>
@@ -179,52 +179,45 @@
 <span class="va">exp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"./expression_tpm_lcl_blood_subset.txt"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">F</span>, check.names <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
 <span class="co"># Log transform the tpm normalized expression</span>
 <span class="va">exp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log2</a></span><span class="op">(</span><span class="va">exp</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span>
-
 <span class="co"># Determine the number of non-NA/non-zero rows in the expression data. This is to be able to ensure that PANDA will have enough values in the vectors to calculate pearson correlations between gene expression profiles in the construction of the gene co-expression prior.</span>
 <span class="va">zero_na_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">exp</span>, MARGIN <span class="op">=</span> <span class="fl">1</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">x</span><span class="op">!=</span><span class="fl">0</span><span class="op">)</span> <span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># Maintain only genes with at least 20 valid gene expression entries</span>
 <span class="va">exp</span> <span class="op">&lt;-</span> <span class="va">exp</span><span class="op">[</span><span class="va">zero_na_counts</span> <span class="op">&gt;</span> <span class="fl">20</span>,<span class="op">]</span>
-
-<span class="co"># The set of genes in the expression, motif and ppi matrices must be the same</span>
-<span class="va">exp</span> <span class="op">&lt;-</span> <span class="va">exp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">%in%</span> <span class="va">motif</span><span class="op">$</span><span class="va">V2</span>,<span class="op">]</span>
-<span class="va">motif_subset</span> <span class="op">&lt;-</span> <span class="va">motif</span><span class="op">[</span><span class="op">(</span><span class="va">motif</span><span class="op">$</span><span class="va">V1</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">(</span><span class="va">motif</span><span class="op">$</span><span class="va">V2</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span><span class="op">)</span>,<span class="op">]</span>
-<span class="va">ppi_subset</span> <span class="op">&lt;-</span> <span class="va">ppi</span><span class="op">[</span><span class="op">(</span><span class="va">ppi</span><span class="op">$</span><span class="va">V1</span> <span class="op">%in%</span> <span class="va">motif_subset</span><span class="op">$</span><span class="va">V1</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">(</span><span class="va">ppi</span><span class="op">$</span><span class="va">V2</span> <span class="op">%in%</span> <span class="va">motif_subset</span><span class="op">$</span><span class="va">V1</span><span class="op">)</span>,<span class="op">]</span>
-
+<span class="co"># # The set of genes in the expression, motif and ppi matrices must be the same</span>
+<span class="co"># exp &lt;- exp[rownames(exp) %in% motif$V2,]</span>
+<span class="co"># motif_subset &lt;- motif[(motif$V1 %in% rownames(exp)) &amp; (motif$V2 %in% rownames(exp)),]</span>
+<span class="co"># ppi_subset &lt;- ppi[(ppi$V1 %in% motif_subset$V1) &amp; (ppi$V2 %in% motif_subset$V1),]</span>
 <span class="co"># Load the sample ids of LCL samples</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/LCL_samples.txt"</span><span class="op">)</span>
-<span class="va">lcl_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="st">"./LCL_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
-
+<span class="va">lcl_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"./LCL_samples.txt"</span>, header<span class="op">=</span><span class="cn">FALSE</span>, stringsAsFactors<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 <span class="co"># Select the columns of the expression matrix corresponding to the LCL samples</span>
 <span class="va">lcl_exp</span> <span class="op">&lt;-</span> <span class="va">exp</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">%in%</span> <span class="va">lcl_samples</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-
 <span class="co"># Load the sample ids of whole blood samples</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/WholeBlood_samples.txt"</span><span class="op">)</span>
-<span class="va">wblood_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="st">"./WholeBlood_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
-
+<span class="va">wblood_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.delim</a></span><span class="op">(</span><span class="st">"./WholeBlood_samples.txt"</span>, header<span class="op">=</span><span class="cn">FALSE</span>, stringsAsFactors<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 <span class="co"># Select the columns of the expression matrix corresponding to the whole blood samples</span>
 <span class="va">wb_exp</span> <span class="op">&lt;-</span> <span class="va">exp</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">%in%</span> <span class="va">wblood_samples</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">]</span></pre></div>
 <p>Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior. We will point to the same motif and ppi priors for each PANDA run, which represents the initial putative regulatory information. We then point to the expression matrix correspoding to the LCL samples to generate the LCL regulatory network, and to the expression matrix corresponding to the whole blood samples to generate the whole blood regulatory network.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">pandaLCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">motif_subset</span>, <span class="va">lcl_exp</span>, <span class="va">ppi_subset</span><span class="op">)</span>
-<span class="va">pandaWB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">motif_subset</span>, <span class="va">wb_exp</span>, <span class="va">ppi_subset</span><span class="op">)</span>
-
+<span class="va">pandaLCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">motif</span>, <span class="va">lcl_exp</span>, <span class="va">ppi</span>, mode<span class="op">=</span><span class="st">"intersection"</span><span class="op">)</span>
+<span class="va">pandaWB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">motif</span>, <span class="va">wb_exp</span>, <span class="va">ppi</span>, mode<span class="op">=</span><span class="st">"intersection"</span><span class="op">)</span>
 <span class="va">pandaLCL</span>
-<span class="co">#&gt; PANDA network for968genes and49transcription factors.</span>
+<span class="co">#&gt; PANDA network for968genes and50transcription factors.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Slots:</span>
-<span class="co">#&gt; regNet   : Regulatory network of 49 transcription factors to 968 genes.</span>
+<span class="co">#&gt; regNet   : Regulatory network of 50 transcription factors to 968 genes.</span>
 <span class="co">#&gt; coregNet: Co-regulation network of 968 genes.</span>
-<span class="co">#&gt; coopNet  : Cooperative network of 49 transcription factors.</span>
-<span class="co">#&gt; Regulatory graph contains 47432 edges.</span>
+<span class="co">#&gt; coopNet  : Cooperative network of 50 transcription factors.</span>
+<span class="co">#&gt; Regulatory graph contains 48400 edges.</span>
 <span class="co">#&gt; Regulatory graph is complete.</span>
 <span class="va">pandaWB</span>
-<span class="co">#&gt; PANDA network for968genes and49transcription factors.</span>
+<span class="co">#&gt; PANDA network for968genes and50transcription factors.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Slots:</span>
-<span class="co">#&gt; regNet   : Regulatory network of 49 transcription factors to 968 genes.</span>
+<span class="co">#&gt; regNet   : Regulatory network of 50 transcription factors to 968 genes.</span>
 <span class="co">#&gt; coregNet: Co-regulation network of 968 genes.</span>
-<span class="co">#&gt; coopNet  : Cooperative network of 49 transcription factors.</span>
-<span class="co">#&gt; Regulatory graph contains 47432 edges.</span>
+<span class="co">#&gt; coopNet  : Cooperative network of 50 transcription factors.</span>
+<span class="co">#&gt; Regulatory graph contains 48400 edges.</span>
 <span class="co">#&gt; Regulatory graph is complete.</span></pre></div>
 <p>The regulatory network (bipartite graph) with edge weights representing the “likelihood” that a transcription factor binds the promotor of and regulates the expression of a gene.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
@@ -232,49 +225,35 @@
 <span class="va">regNetLCL</span> <span class="op">&lt;-</span> <span class="va">pandaLCL</span><span class="op">@</span><span class="va">regNet</span>
 <span class="va">regNetLCL</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
 <span class="co">#&gt;         RP4-669L17.8    MTND2P28        HES4     ACTRT2 RP3-467L1.6</span>
-<span class="co">#&gt; ASCL1     -0.4208359 -0.04542644  0.44233153 -0.3490675 -0.10754463</span>
-<span class="co">#&gt; BARX1     -0.5501750 -0.84394635 -0.67999717 -0.2696099  0.07233836</span>
-<span class="co">#&gt; BHLHE41   -0.4587494 -0.22638411 -0.04797392 -0.2289900 -0.44595612</span>
-<span class="co">#&gt; CEBPD     -0.1076370  0.06141078 -0.04441761 -0.2097561 -0.51995579</span>
-<span class="co">#&gt; CEBPZ     -0.2217286 -0.18001207 -0.13000309 -0.3191476 -0.51898843</span>
+<span class="co">#&gt; ASCL1     -0.4338663 -0.06046052  0.43546720 -0.3541327  -0.1055712</span>
+<span class="co">#&gt; BARX1     -0.5516320 -0.83640043 -0.68106570 -0.2683416   0.0649070</span>
+<span class="co">#&gt; BHLHE41   -0.4478896 -0.22003403 -0.03953981 -0.2154970  -0.4435292</span>
+<span class="co">#&gt; CEBPD     -0.1053101  0.06674693 -0.04042170 -0.2018673  -0.5209635</span>
+<span class="co">#&gt; CEBPZ     -0.2151449 -0.16801549 -0.12427431 -0.3099354  -0.5307553</span>
 <span class="va">regNetWB</span> <span class="op">&lt;-</span> <span class="va">pandaWB</span><span class="op">@</span><span class="va">regNet</span></pre></div>
 </div>
 </div>
 <div id="visualizing-networks-in-cytoscape" class="section level1">
 <h1 class="hasAnchor">
 <a href="#visualizing-networks-in-cytoscape" class="anchor"></a>Visualizing networks in Cytoscape</h1>
-<p>In this section we will visualize parts of the network using the Cytoscape software. Download Cytoscape from: <a href="https://cytoscape.org" class="uri">https://cytoscape.org</a></p>
+<p>In this section we will visualize parts of the network using the Cytoscape software. Download Cytoscape from: <a href="https://cytoscape.org" class="uri">https://cytoscape.org</a> and have the software open before calling the function.</p>
 <div id="preparing-data-to-plot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#preparing-data-to-plot" class="anchor"></a>Preparing data to plot</h2>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="co"># We will use the function vis.panda.in.cytoscape to plot a set of nodes and edges on Cytoscape. The input for this function is a data.frame of edges to plot with 4 columns: "tf", "gene", "motif" (TF motif present or not on gene promoter), "force" (edge weight calculated by PANDA).</span>
-<span class="va">lcl_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span><span class="op">(</span><span class="va">pandaLCL</span><span class="op">@</span><span class="va">regNet</span><span class="op">)</span>
-<span class="co">#&gt; Warning in melt(pandaLCL@regNet): The melt generic in data.table has been</span>
-<span class="co">#&gt; passed a matrix and will attempt to redirect to the relevant reshape2</span>
-<span class="co">#&gt; method; please note that reshape2 is deprecated, and this redirection is now</span>
-<span class="co">#&gt; deprecated as well. To continue using melt methods from reshape2 while both</span>
-<span class="co">#&gt; libraries are attached, e.g. melt.list, you can prepend the namespace like</span>
-<span class="co">#&gt; reshape2::melt(pandaLCL@regNet). In the next version, this warning will become</span>
-<span class="co">#&gt; an error.</span>
-<span class="va">wb_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span><span class="op">(</span><span class="va">pandaWB</span><span class="op">@</span><span class="va">regNet</span><span class="op">)</span>
-<span class="co">#&gt; Warning in melt(pandaWB@regNet): The melt generic in data.table has been</span>
-<span class="co">#&gt; passed a matrix and will attempt to redirect to the relevant reshape2</span>
-<span class="co">#&gt; method; please note that reshape2 is deprecated, and this redirection is now</span>
-<span class="co">#&gt; deprecated as well. To continue using melt methods from reshape2 while both</span>
-<span class="co">#&gt; libraries are attached, e.g. melt.list, you can prepend the namespace like</span>
-<span class="co">#&gt; reshape2::melt(pandaWB@regNet). In the next version, this warning will become an</span>
-<span class="co">#&gt; error.</span>
+<span class="va">lcl_vis</span> <span class="op">&lt;-</span> <span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span><span class="op">(</span><span class="va">pandaLCL</span><span class="op">@</span><span class="va">regNet</span><span class="op">)</span>
+<span class="va">wb_vis</span> <span class="op">&lt;-</span> <span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span><span class="op">(</span><span class="va">pandaWB</span><span class="op">@</span><span class="va">regNet</span><span class="op">)</span>
 <span class="va">lcl_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"TF"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>,<span class="st">"Gene"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>,<span class="st">"Motif"</span><span class="op">=</span><span class="cn">NA</span>,<span class="st">"Score"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>,stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">wb_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"TF"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">wb_vis</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>,<span class="st">"Gene"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">wb_vis</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>,<span class="st">"Motif"</span><span class="op">=</span><span class="cn">NA</span>,<span class="st">"Score"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">wb_vis</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>,stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">)</span>
 <span class="co">#&gt;        TF         Gene Motif      Score</span>
-<span class="co">#&gt; 1   ASCL1 RP4-669L17.8    NA -0.4208359</span>
-<span class="co">#&gt; 2   BARX1 RP4-669L17.8    NA -0.5501750</span>
-<span class="co">#&gt; 3 BHLHE41 RP4-669L17.8    NA -0.4587494</span>
-<span class="co">#&gt; 4   CEBPD RP4-669L17.8    NA -0.1076370</span>
-<span class="co">#&gt; 5   CEBPZ RP4-669L17.8    NA -0.2217286</span>
-<span class="co">#&gt; 6   CENPB RP4-669L17.8    NA -0.1081259</span></pre></div>
+<span class="co">#&gt; 1   ASCL1 RP4-669L17.8    NA -0.4338663</span>
+<span class="co">#&gt; 2   BARX1 RP4-669L17.8    NA -0.5516320</span>
+<span class="co">#&gt; 3 BHLHE41 RP4-669L17.8    NA -0.4478896</span>
+<span class="co">#&gt; 4   CEBPD RP4-669L17.8    NA -0.1053101</span>
+<span class="co">#&gt; 5   CEBPZ RP4-669L17.8    NA -0.2151449</span>
+<span class="co">#&gt; 6   CENPB RP4-669L17.8    NA -0.1024927</span></pre></div>
 </div>
 <div id="plot-the-200-highest-edge-weights" class="section level2">
 <h2 class="hasAnchor">
@@ -297,19 +276,15 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">diffRes</span><span class="op">)</span>
 <span class="co"># Number of differential edges is:</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">diffRes</span><span class="op">)</span>
-
 <span class="co"># Select the top differential edges higher in LCL to plot in Cytoscape</span>
 <span class="va">n</span><span class="op">=</span><span class="fl">200</span> <span class="co"># number of edges to select from each condition</span>
 <span class="va">diffResLCL</span> <span class="op">&lt;-</span> <span class="va">diffRes</span><span class="op">[</span><span class="va">diffRes</span><span class="op">$</span><span class="va">LCL</span><span class="op">==</span><span class="st">"T"</span>,<span class="op">]</span>
 <span class="va">diffResLCL</span> <span class="op">&lt;-</span> <span class="va">diffResLCL</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">diffResLCL</span><span class="op">$</span><span class="va">Score</span>,decreasing<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,<span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span>,<span class="op">]</span>
-
 <span class="co"># Select the top differential edges higher in whole blood to plot in Cytoscape</span>
 <span class="va">diffResWB</span> <span class="op">&lt;-</span> <span class="va">diffRes</span><span class="op">[</span><span class="va">diffRes</span><span class="op">$</span><span class="va">LCL</span><span class="op">==</span><span class="st">"F"</span>,<span class="op">]</span>
 <span class="va">diffResWB</span> <span class="op">&lt;-</span> <span class="va">diffResWB</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">diffResWB</span><span class="op">$</span><span class="va">Score</span>,decreasing<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,<span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span>,<span class="op">]</span>
-
 <span class="co"># Combine top differential edges in LCL and WB to plot in Cytoscape</span>
 <span class="va">diffRes_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/rbindlist.html">rbind</a></span><span class="op">(</span><span class="va">diffResLCL</span>, <span class="va">diffResWB</span><span class="op">)</span>
-
 <span class="co"># Plot the network (open Cytoscape before running this command)</span>
 <span class="co"># Purple edges indicate higher edge weight in the defined "condition_name" parameter (LCL in our example), and green edges indicate higher edge weight in the other condition (whole blood in our example).</span>
 <span class="fu"><a href="../reference/vis.diff.panda.in.cytoscape.html">vis.diff.panda.in.cytoscape</a></span><span class="op">(</span><span class="va">diffRes_vis</span>, condition_name <span class="op">=</span> <span class="st">"LCL"</span>, network_name<span class="op">=</span><span class="st">"diff.PANDA"</span><span class="op">)</span>
@@ -327,15 +302,13 @@
 <div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="va">lcl_outdegree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/calcDegree.html">calcDegree</a></span><span class="op">(</span><span class="va">pandaLCL</span>, type<span class="op">=</span><span class="st">"tf"</span><span class="op">)</span>
 <span class="va">wb_outdegree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/calcDegree.html">calcDegree</a></span><span class="op">(</span><span class="va">pandaWB</span>, type<span class="op">=</span><span class="st">"tf"</span><span class="op">)</span>
-
 <span class="va">lcl_indegree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/calcDegree.html">calcDegree</a></span><span class="op">(</span><span class="va">pandaLCL</span>, type<span class="op">=</span><span class="st">"gene"</span><span class="op">)</span>
 <span class="va">wb_indegree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/calcDegree.html">calcDegree</a></span><span class="op">(</span><span class="va">pandaWB</span>, type<span class="op">=</span><span class="st">"gene"</span><span class="op">)</span>
-
 <span class="co"># Calculate the gene in-degree difference for two different panda regulatory networks (LCL minus whole blood)</span>
 <span class="va">degreeDiff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/calcDegreeDifference.html">calcDegreeDifference</a></span><span class="op">(</span><span class="va">pandaLCL</span>, <span class="va">pandaWB</span>, type<span class="op">=</span><span class="st">"gene"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">degreeDiff</span><span class="op">)</span>
 <span class="co">#&gt; RP4-669L17.8     MTND2P28         HES4       ACTRT2  RP3-467L1.6        FBXO6 </span>
-<span class="co">#&gt;   -0.5824133   -4.3127789   -0.6148939    0.5242457    0.3215045   -0.2831833</span></pre></div>
+<span class="co">#&gt;   -0.4731904   -4.5354668   -0.7550223    0.6174926    0.2393536   -0.5087543</span></pre></div>
 </div>
 <div id="gene-set-enrichment-analysis" class="section level1">
 <h1 class="hasAnchor">
@@ -354,19 +327,19 @@
 <span class="va">fgseaRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">degreeDiff_all</span>, minSize<span class="op">=</span><span class="fl">15</span>, maxSize<span class="op">=</span><span class="fl">500</span>, nperm<span class="op">=</span><span class="fl">1000</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span>
 <span class="co">#&gt;                                          pathway        pval       padj</span>
-<span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.047511312 0.12451441</span>
-<span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.001824818 0.01693266</span>
-<span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.076433121 0.17050465</span>
-<span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.600000000 0.69139073</span>
-<span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.044444444 0.11897436</span>
-<span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.022471910 0.07140152</span>
+<span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.032751092 0.09191435</span>
+<span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.001733102 0.01361076</span>
+<span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.079006772 0.16971825</span>
+<span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.625282167 0.71578353</span>
+<span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.023041475 0.07268170</span>
+<span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.037296037 0.10139860</span>
 <span class="co">#&gt;            ES        NES nMoreExtreme size</span>
-<span class="co">#&gt; 1:  0.3355458  1.4017905           20   58</span>
-<span class="co">#&gt; 2: -0.5923935 -2.0797098            0   29</span>
-<span class="co">#&gt; 3:  0.4235984  1.4124035           35   21</span>
-<span class="co">#&gt; 4:  0.2675875  0.8977474          272   22</span>
-<span class="co">#&gt; 5:  0.4168076  1.4972280           19   30</span>
-<span class="co">#&gt; 6:  0.4491757  1.5673007            9   25</span>
+<span class="co">#&gt; 1:  0.3355458  1.4294812           14   58</span>
+<span class="co">#&gt; 2: -0.5923935 -2.0360749            0   29</span>
+<span class="co">#&gt; 3:  0.4235984  1.4040686           34   21</span>
+<span class="co">#&gt; 4:  0.2675875  0.8989849          276   22</span>
+<span class="co">#&gt; 5:  0.4168076  1.5405240            9   30</span>
+<span class="co">#&gt; 6:  0.4491757  1.5662050           15   25</span>
 <span class="co">#&gt;                                        leadingEdge</span>
 <span class="co">#&gt; 1:         ALDH3B1,LDHAL6A,PGM1,PKM,ALDOA,ENO1,...</span>
 <span class="co">#&gt; 2:              MDH2,CS,DLST,SDHD,IDH3B,SUCLG2,...</span>
@@ -379,27 +352,27 @@
 <span class="co"># Get the top 10 significant pathways enriched for genes having lower targeting in LCLs  </span>
 <span class="va">sig</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">sig</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>,<span class="op">]</span>
 <span class="co">#&gt;                              pathway        pval       padj         ES</span>
-<span class="co">#&gt;  1:                 KEGG_SPLICEOSOME 0.001605136 0.01693266 -0.6155980</span>
-<span class="co">#&gt;  2:                    KEGG_RIBOSOME 0.001663894 0.01693266 -0.6438056</span>
-<span class="co">#&gt;  3:             KEGG_DNA_REPLICATION 0.001785714 0.01693266 -0.7301502</span>
-<span class="co">#&gt;  4:                  KEGG_CELL_CYCLE 0.001618123 0.01693266 -0.5352336</span>
-<span class="co">#&gt;  5:  KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001760563 0.01693266 -0.5896497</span>
-<span class="co">#&gt;  6:              KEGG_PROTEIN_EXPORT 0.001828154 0.01693266 -0.6735362</span>
-<span class="co">#&gt;  7:     KEGG_CITRATE_CYCLE_TCA_CYCLE 0.001824818 0.01693266 -0.5923935</span>
-<span class="co">#&gt;  8: KEGG_AMINOACYL_TRNA_BIOSYNTHESIS 0.001751313 0.01693266 -0.5489421</span>
-<span class="co">#&gt;  9: KEGG_BASAL_TRANSCRIPTION_FACTORS 0.001831502 0.01693266 -0.5641948</span>
-<span class="co">#&gt; 10:             KEGG_MISMATCH_REPAIR 0.003656307 0.01927871 -0.5977217</span>
+<span class="co">#&gt;  1:                 KEGG_SPLICEOSOME 0.001650165 0.01361076 -0.6155980</span>
+<span class="co">#&gt;  2:                    KEGG_RIBOSOME 0.001776199 0.01361076 -0.6438056</span>
+<span class="co">#&gt;  3:             KEGG_DNA_REPLICATION 0.001795332 0.01361076 -0.7301502</span>
+<span class="co">#&gt;  4:                  KEGG_CELL_CYCLE 0.001680672 0.01361076 -0.5352336</span>
+<span class="co">#&gt;  5:  KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001748252 0.01361076 -0.5896497</span>
+<span class="co">#&gt;  6:              KEGG_PROTEIN_EXPORT 0.001788909 0.01361076 -0.6735362</span>
+<span class="co">#&gt;  7:     KEGG_CITRATE_CYCLE_TCA_CYCLE 0.001733102 0.01361076 -0.5923935</span>
+<span class="co">#&gt;  8: KEGG_AMINOACYL_TRNA_BIOSYNTHESIS 0.001745201 0.01361076 -0.5489421</span>
+<span class="co">#&gt;  9: KEGG_BASAL_TRANSCRIPTION_FACTORS 0.001792115 0.01361076 -0.5641948</span>
+<span class="co">#&gt; 10:             KEGG_MISMATCH_REPAIR 0.001788909 0.01361076 -0.5977217</span>
 <span class="co">#&gt;           NES nMoreExtreme size                                   leadingEdge</span>
-<span class="co">#&gt;  1: -2.772297            0  116 SRSF6,SRSF3,SRSF7,HNRNPA1L2,PRPF38A,PPIL1,...</span>
-<span class="co">#&gt;  2: -2.720615            0   80      RPS2,RPL23A,RPL19,RPS12,RPS17,RPL10A,...</span>
-<span class="co">#&gt;  3: -2.643928            0   34           RFC3,RFC5,RPA2,POLE3,PRIM1,PCNA,...</span>
-<span class="co">#&gt;  4: -2.425431            0  121         YWHAQ,ORC6,DBF4,ANAPC10,BUB3,WEE1,...</span>
-<span class="co">#&gt;  5: -2.236508            0   41            XPA,RFC3,RFC5,RPA2,POLE3,ERCC8,...</span>
-<span class="co">#&gt;  6: -2.197762            0   22      SRP9,IMMP1L,HSPA5,SEC11C,OXA1L,SPCS2,...</span>
-<span class="co">#&gt;  7: -2.079710            0   29            MDH2,CS,DLST,SDHD,IDH3B,SUCLG2,...</span>
-<span class="co">#&gt;  8: -2.068534            0   40         MARS2,NARS,YARS,FARS2,YARS2,NARS2,...</span>
-<span class="co">#&gt;  9: -2.012260            0   31          TAF4,TAF7,TAF9,GTF2E1,GTF2F2,TBP,...</span>
-<span class="co">#&gt; 10: -1.950378            1   22             RFC3,RFC5,RPA2,PCNA,MSH2,RPA1,...</span></pre></div>
+<span class="co">#&gt;  1: -2.804245            0  116 SRSF6,SRSF3,SRSF7,HNRNPA1L2,PRPF38A,PPIL1,...</span>
+<span class="co">#&gt;  2: -2.744271            0   80      RPS2,RPL23A,RPL19,RPS12,RPS17,RPL10A,...</span>
+<span class="co">#&gt;  3: -2.581440            0   34           RFC3,RFC5,RPA2,POLE3,PRIM1,PCNA,...</span>
+<span class="co">#&gt;  4: -2.444910            0  121         YWHAQ,ORC6,DBF4,ANAPC10,BUB3,WEE1,...</span>
+<span class="co">#&gt;  5: -2.176874            0   41            XPA,RFC3,RFC5,RPA2,POLE3,ERCC8,...</span>
+<span class="co">#&gt;  6: -2.126173            0   22      SRP9,IMMP1L,HSPA5,SEC11C,OXA1L,SPCS2,...</span>
+<span class="co">#&gt;  7: -2.036075            0   29            MDH2,CS,DLST,SDHD,IDH3B,SUCLG2,...</span>
+<span class="co">#&gt;  8: -2.015247            0   40         MARS2,NARS,YARS,FARS2,YARS2,NARS2,...</span>
+<span class="co">#&gt;  9: -1.956557            0   31          TAF4,TAF7,TAF9,GTF2E1,GTF2F2,TBP,...</span>
+<span class="co">#&gt; 10: -1.886847            0   22             RFC3,RFC5,RPA2,PCNA,MSH2,RPA1,...</span></pre></div>
 </div>
 <div id="bubble-plot-of-top-differentially-targeted-pathways" class="section level2">
 <h2 class="hasAnchor">
@@ -407,7 +380,6 @@
 <p>Bubble plot of gene sets (KEGG pathways) on y-axis and adjusted p-value (padj) on x-axis. Bubble size indicates the number of genes in each gene set, and bubble color indicates the normalized enrichment score (NES). Blue is for negative NES (enrichment of higher targeted genes in whole blood), and red is for positive NES (enrichment of higher targeted genes in LCL).</p>
 <div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span>
-
 <span class="co"># Settings</span>
 <span class="va">fdrcut</span> <span class="op">&lt;-</span> <span class="fl">0.05</span> <span class="co"># FDR cut-off to use as output for significant signatures</span>
 <span class="va">dencol_neg</span> <span class="op">&lt;-</span> <span class="st">"blue"</span> <span class="co"># bubble plot color for negative ES</span>
@@ -415,7 +387,6 @@
 <span class="va">signnamelength</span> <span class="op">&lt;-</span> <span class="fl">4</span> <span class="co"># set to remove prefix from signature names (2 for "GO", 4 for "KEGG", 8 for "REACTOME")</span>
 <span class="va">asp</span> <span class="op">&lt;-</span> <span class="fl">3</span> <span class="co"># aspect ratio of bubble plot</span>
 <span class="va">charcut</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="co"># cut signature name in heatmap to this nr of characters</span>
-
 <span class="co"># Make signature names more readable</span>
 <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">pathway</span><span class="op">)</span> <span class="co"># 'a' is a great variable name to substitute row names with something more readable</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
@@ -427,7 +398,6 @@
 <span class="op">}</span> <span class="co"># cut signature names that have more characters than charcut, and add "..."</span>
 <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"_"</span>, <span class="st">" "</span>, <span class="va">a</span><span class="op">)</span>
 <span class="va">dat</span><span class="op">$</span><span class="va">NAME</span> <span class="op">&lt;-</span> <span class="va">a</span>
-
 <span class="co"># Determine what signatures to plot (based on FDR cut)</span>
 <span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">dat</span><span class="op">[</span>,<span class="st">"padj"</span><span class="op">]</span><span class="op">&lt;</span><span class="va">fdrcut</span>,<span class="op">]</span>
 <span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">dat2</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">[</span>,<span class="st">"padj"</span><span class="op">]</span><span class="op">)</span>,<span class="op">]</span> 
@@ -440,7 +410,6 @@
 <span class="va">signcol</span><span class="op">[</span><span class="va">sign_neg</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">dencol_neg</span> <span class="co"># text color of negative signatures</span>
 <span class="va">signcol</span><span class="op">[</span><span class="va">sign_pos</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">dencol_pos</span> <span class="co"># text color of positive signatures</span>
 <span class="va">signcol</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">signcol</span><span class="op">)</span> <span class="co"># need to revert vector of colors, because ggplot starts plotting these from below</span>
-
 <span class="co"># Plot bubble plot</span>
 <span class="va">g</span><span class="op">&lt;-</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">padj</span>,y<span class="op">=</span><span class="va">signature</span>,size<span class="op">=</span><span class="va">size</span><span class="op">)</span><span class="op">)</span>
 <span class="va">g</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill<span class="op">=</span><span class="va">NES</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">21</span>, colour<span class="op">=</span><span class="st">"white"</span><span class="op">)</span><span class="op">+</span>
@@ -449,10 +418,8 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span><span class="op">(</span>max_size<span class="op">=</span><span class="fl">10</span>,guide<span class="op">=</span><span class="st">"none"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient2</a></span><span class="op">(</span>low<span class="op">=</span><span class="va">dencol_neg</span>, high<span class="op">=</span><span class="va">dencol_pos</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>colour<span class="op">=</span><span class="va">signcol</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>aspect.ratio<span class="op">=</span><span class="va">asp</span>, axis.title.y<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># test aspect.ratio</span>
-<span class="co">#&gt; Warning: Vectorized input to `element_text()` is not officially supported.</span>
-<span class="co">#&gt; Results may be unexpected or may change in future versions of ggplot2.</span></pre></div>
-<p><img src="pandaRApplicationinGTExData_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>aspect.ratio<span class="op">=</span><span class="va">asp</span>, axis.title.y<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># test aspect.ratio</span></pre></div>
+<p><img src="pandaRApplicationinGTExData_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 </div>
 </div>
   </div>

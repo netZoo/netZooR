@@ -114,7 +114,8 @@
 <li><p><strong>ALPACA</strong> (ALtered Partitions Across Community Architectures) <a href="https://www.nature.com/articles/s41540-018-0052-5">[Padi and Quackenbush 2018]</a>: compares two networks and identify changes in modular structure.</p></li>
 <li><p><strong>SAMBAR</strong> (Subtyping Agglomerated Mutations By Annotation Relations) <a href="https://www.nature.com/articles/s41416-018-0109-7">[Kuijjer et al.]</a>: identifies subtypes based on somatic mutation data.</p></li>
 <li><p><strong>MONSTER</strong> (Modeling Network State Transitions from Expression and Regulatory data) <a href="https://doi.org/10.1186/s12918-017-0517-y">[Schlauch et al.]</a>: infers transcription factor which drivers of cell state conditions at the gene regulatory network level.</p></li>
-<li><p><strong>OTTER</strong> (Optimization to Estimate Regulation) <a href="https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract">[Weighill et al.]</a>: models gene regulation estimation as a graph matrching problem</p></li>
+<li><p><strong>OTTER</strong> (Optimization to Estimate Regulation) <a href="https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract">[Weighill et al.]</a>: models gene regulation estimation as a graph matching problem.</p></li>
+<li><p><strong>CRANE</strong> (Constrained Random Alteration of Network Edges) <a href="https://www.biorxiv.org/content/10.1101/2020.07.12.198747v1">[Lim et al.]</a>: generates ensembles of gene regulatory networks to identify disease modules.</p></li>
 </ul>
 <p>In addition to helper functions to:</p>
 <ul>
@@ -166,12 +167,12 @@
 <div id="tutorials" class="section level2">
 <h2 class="hasAnchor">
 <a href="#tutorials" class="anchor"></a>Tutorials</h2>
-<p>Please refer to the top navigation bar <strong>Articles/</strong> for basic usage and application cases. Or use <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("netZooR")</a></code> after installing package.</p>
+<p>For more details please refer to the <a href="https://netzoo.github.io/netZooR/">documentation website</a>. Tutorials are available at the top navigation bar <strong>Articles/</strong> for basic usage and application cases. Or use <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("netZooR")</a></code> after installing package.</p>
 </div>
 <div id="contribution-and-development" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contribution-and-development" class="anchor"></a>Contribution and Development</h2>
-<p>Contributions are welcome! Instruction of how to contribute netZooR repository can be found <a href="https://netzoo.github.io/contribute/contribute/">here</a>. After adding new features or debugging, please re-build package and run CDM check by using below codes before pulling request to the devel branch.</p>
+<p>Contributions are welcome! The contribution guide to netZooR can be found <a href="https://netzoo.github.io/contribute/contribute/">here</a>. After adding new features or optimizing a function in the package, please re-build the package and run <code>R CMD check .</code> in the terminal or follow the instructions below before doing the pull request to the devel branch.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://pkgdown.r-lib.org">pkgdown</a></span><span class="op">)</span>
