@@ -49,7 +49,8 @@ Imports: RCy3,
    	 tidyr,
    	 methods,
 	 AnnotationDbi,
-Remotes: jnpaulson/pandaR
+Remotes: jnpaulson/pandaR,
+         PadiLab/CRANE,
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
