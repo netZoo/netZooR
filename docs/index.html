@@ -97,7 +97,7 @@
   <div class="contents col-md-9">
 
 
-<p><a href="mailto:R4.01@Ubuntu" class="email">R4.01@Ubuntu</a> 18.04: <a href="http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/"><img src="http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04" alt="Build Status"></a></p>
+<p><a href="mailto:R4.01@Ubuntu">R4.01@Ubuntu</a> 18.04: <a href="http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/"><img src="http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04" alt="Build Status"></a></p>
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"></a>Description</h2>
@@ -124,39 +124,38 @@
 <li><p>Plot two differential PANDA networks in Cytoscape.</p></li>
 </ul>
 </div>
-<div id="requirements-installation-and-basic-configuration" class="section level2">
+<div id="requirements-installation-and-basic-configuration-" class="section level2">
 <h2 class="hasAnchor">
-<a href="#requirements-installation-and-basic-configuration" class="anchor"></a>Requirements, installation and basic configuration.</h2>
+<a href="#requirements-installation-and-basic-configuration-" class="anchor"></a>Requirements, installation and basic configuration.</h2>
 <ul>
 <li><p>netZooR is compatible with R (&gt;= 3.3.3) including R (&gt;= 4.0), click <a href="https://www.r-project.org/">here</a> for more installation details.</p></li>
-<li>
-<p>To use PANDA and LIONESS, there are two options:</p>
+<li>To use PANDA and LIONESS, there are two options:
 <ol>
 <li>
 <p>use functions: <code><a href="reference/panda.py.html">panda.py()</a></code> and <code><a href="reference/lioness.py.html">lioness.py()</a></code> by invoking the respective Python implementations in <a href="(https://github.com/netZoo/netZooPy/tree/netZoo)">netZooPy</a>. Because the native R linear algebra libraries can be slow, this way is recommended for faster analysis. However, optimized parallel libraries can give reasonable run times (step2). In order to pratice invoking Python scripts, there are some requirements to meet before using netZooR:</p>
-<p>a) <a href="https://www.python.org/downloads/"><strong>Python</strong></a> (&gt;= 3.5.0) installed;</p>
-<p>b) Python libraries <a href="https://pandas.pydata.org/">pandas</a>, <a href="https://numpy.org/">numpy</a>, and <a href="https://www.scipy.org/">scipy</a> installed;</p>
+a) <a href="https://www.python.org/downloads/"><strong>Python</strong></a> (&gt;= 3.5.0) installed;
+b) Python libraries <a href="https://pandas.pydata.org/">pandas</a>, <a href="https://numpy.org/">numpy</a>, and <a href="https://www.scipy.org/">scipy</a> installed;
 <p>c) stable Internet access as package <code>reticulate</code> will link the R wrapper to the Python scripts located <a href="https://github.com/netZoo/netZooPy/tree/netZoo">here</a> for those two methods.</p>
 </li>
 <li><p>use function: <code>panda()</code> in <a href="https://github.com/jnpaulson/pandaR">pandaR</a> package and <code><a href="reference/lioness.html">lioness()</a></code> for the pure R implementations of PANDA and LIONESS. To speed up the run time, it is highly recommended to install an optimized linear algebra library, like Intel MKL. Detailed instructions can be found <a href="https://csantill.github.io/RPerformanceWBLAS/">here</a>.</p></li>
 </ol>
 </li>
-<li><p>Most of plotting function can be realized by functions in <a href="https://igraph.org/redirect.html">igraph</a>, which will be loaded with netZooR through <code>library(netZooR)</code>. Some plotting functions like <code><a href="reference/vis.panda.in.cytoscape.html">vis.panda.in.cytoscape()</a></code> and <code><a href="reference/vis.diff.panda.in.cytoscape.html">vis.diff.panda.in.cytoscape()</a></code> are able to plot interactive PANDA networks in <a href="https://cytoscape.org/">Cytoscape</a>, but installation of Cytoscape is required before using these plotting functions. Also, please make sure that Cytoscape is open when these functions are called.</p></li>
+<li><p>Most of plotting function can be realized by functions in <a href="https://igraph.org/redirect.html">igraph</a>, which will be loaded with netZooR through <code><a href="https://rdrr.io/r/base/library.html">library(netZooR)</a></code>. Some plotting functions like <code><a href="reference/vis.panda.in.cytoscape.html">vis.panda.in.cytoscape()</a></code> and <code><a href="reference/vis.diff.panda.in.cytoscape.html">vis.diff.panda.in.cytoscape()</a></code> are able to plot interactive PANDA networks in <a href="https://cytoscape.org/">Cytoscape</a>, but installation of Cytoscape is required before using these plotting functions. Also, please make sure that Cytoscape is open when these functions are called.</p></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># install.packages("devtools") </span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools") </span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
 <span class="co"># install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></code></pre></div>
 <p>For more details please refer to the <a href="https://netzoo.github.io/netZooR/">documentation website</a>.</p>
 <p>This package will invoke Python programming language in R environment through <a href="https://rstudio.github.io/reticulate/">reticulate</a> package, by default setting there is no additional configuration needed. Configuring which version of Python to use , here in netZooR, Python 3.X is required. More details can be found <a href="https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html">here</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co">#check your Python configuration and the specific version of Python in use currently</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#check your Python configuration and the specific version of Python in use currently</span>
 <span class="fu">py_config</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># reset to Python 3.X if necessary, like below:</span>
-<span class="co"># use_python("/usr/local/bin/python3")</span></pre></div>
+<span class="co"># use_python("/usr/local/bin/python3")</span></code></pre></div>
 </div>
 <div id="issues" class="section level2">
 <h2 class="hasAnchor">
@@ -173,8 +172,8 @@
 <h2 class="hasAnchor">
 <a href="#contribution-and-development" class="anchor"></a>Contribution and Development</h2>
 <p>Contributions are welcome! The contribution guide to netZooR can be found <a href="https://netzoo.github.io/contribute/contribute/">here</a>. After adding new features or optimizing a function in the package, please re-build the package and run <code>R CMD check .</code> in the terminal or follow the instructions below before doing the pull request to the devel branch.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://pkgdown.r-lib.org">pkgdown</a></span><span class="op">)</span>
 <span class="co"># document the description of function</span>
 <span class="co"># setwd('path/to/netZooR/root') # Set the working directory to netZooR root</span>
@@ -189,13 +188,13 @@
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/build.html">build</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To build the package</span>
 
 <span class="co"># CMD check, if passed all tests here, it means this package is ready to pull request to the devel branch. Otherwise, fix the bug before pulling request.</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/check.html">check</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/check.html">check</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>The master branch on github should always be in good shape, so please to pull request to the <strong>devel</strong> branch. If the contribution is specific to pandaR, please contribute to its seperate GitHub page by <a href="https://github.com/jnpaulson/pandaR">pull request</a>.</p>
 </div>
 <div id="license" class="section level2">
 <h2 class="hasAnchor">
 <a href="#license" class="anchor"></a>License</h2>
-<p>The software is free and is licensed under the GNU General License v3.0, see the file <a href="LICENSE">LICENSE</a> for details.</p>
+<p>The software is free and is licensed under the GNU General License v3.0, see the file <a href="LICENSE" class="uri">LICENSE</a> for details.</p>
 </div>
 <div id="code-of-conduct" class="section level2">
 <h2 class="hasAnchor">

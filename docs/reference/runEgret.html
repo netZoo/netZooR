@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>monster.print.monsterAnalysis — monster.print.monsterAnalysis • netZooR</title>
+<title>Run EGRET in R — runEgret • netZooR</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,12 @@
 
 
 
-<meta property="og:title" content="monster.print.monsterAnalysis — monster.print.monsterAnalysis" />
-<meta property="og:description" content="summarizes the results of a MONSTER analysis" />
+<meta property="og:title" content="Run EGRET in R — runEgret" />
+<meta property="og:description" content="Description:
+              NOTE: Beta version. EGRET infers individual-specific gene regulatory networks using inidividual level data - 
+              a genotype vcf file (v) and QBiC binding predictions (q) -  as well as population/reference level data - 
+               eQTLs (b), a motif-gene prior (m), PPI network (p), and gene expression (e). An annotation file g is also used to
+               map TF names to their corresponding ensemble ids." />
 
 
 
@@ -139,41 +143,78 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>monster.print.monsterAnalysis</h1>
+    <h1>Run EGRET in R</h1>
     
-    <div class="hidden name"><code>monster.print.monsterAnalysis.Rd</code></div>
+    <div class="hidden name"><code>runEgret.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>summarizes the results of a MONSTER analysis</p>
+    <p>Description:
+              NOTE: Beta version. EGRET infers individual-specific gene regulatory networks using inidividual level data - 
+              a genotype vcf file (v) and QBiC binding predictions (q) -  as well as population/reference level data - 
+               eQTLs (b), a motif-gene prior (m), PPI network (p), and gene expression (e). An annotation file g is also used to
+               map TF names to their corresponding ensemble ids.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>monster.print.monsterAnalysis</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>runEgret</span><span class='op'>(</span><span class='va'>b</span>, <span class='va'>v</span>, <span class='va'>q</span>, <span class='va'>m</span>, <span class='va'>e</span>, <span class='va'>p</span>, <span class='va'>g</span>, <span class='va'>t</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>an object of class "monster"</p></td>
+      <th>b</th>
+      <td><p>: Data frame of eQTL data, each row containing an eQTL which exist within motif regions adjacent to the eGene, with columns
+TF, gene, variant position,variant chromosome, eQTL beta value.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>further arguments passed to or from other methods.</p></td>
+      <th>v</th>
+      <td><p>: Data frame of VCF file containing SNPs of the individual in question</p></td>
+    </tr>
+    <tr>
+      <th>q</th>
+      <td><p>: Data frame of QBiC predictions of the effect of eQTL variants on TF binding. Each row represents an 
+eQTL variant with a predicted negative (disruptive) effect on the binding of the TF corresponding to the motif in which the eQTL variant 
+resides. Colums are: eQTL variant as chr[chrNum]_position, TF, adjacent eGene, QBiC binding effect size and QBiC binding effect (should be negative)</p></td>
+    </tr>
+    <tr>
+      <th>m</th>
+      <td><p>: Motif prior data frame. Each row represents an edge in the bipartite motif prior, with columns TF, gene and edge weight. 
+The edge weight should be 1 or 0 based on the presence/absence of the TF motif in the promoter region of the gene.</p></td>
+    </tr>
+    <tr>
+      <th>e</th>
+      <td><p>: Gene expression data frame in which each row represents a gene and each column represents the expression of that gene in a sample.
+The first column should contain gene IDs.</p></td>
+    </tr>
+    <tr>
+      <th>p</th>
+      <td><p>: PPI network data frame. Each row represents an edgem with columns TF, TF and interaction weight.</p></td>
+    </tr>
+    <tr>
+      <th>g</th>
+      <td><p>: Data frame mapping gene names to gene ids, with columns containing the gene ID the corresponding gene name.</p></td>
+    </tr>
+    <tr>
+      <th>t</th>
+      <td><p>: A string containing a name for the EGRET run. Output files will be labelled with this tag.</p>
+<p>Outputs:</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Description of transition matrices in object</p>
+    <p>EGRET    : Predicted genotye-specific gene regulatory network saved as tag_egret.RData</p>
+<p>BASELINE : A Baseline (PANDA) genotype-agnostic gene regulatory network saved as tag_panda.RData</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Inputs:</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>)</span>
-<span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>25</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>10</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>,<span class='fl'>15</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='monster.html'>monster</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span>,<span class='va'>design</span>,<span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>, nullPerms<span class='op'>=</span><span class='fl'>10</span>, numMaxCores<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Running null permutations in parallel"
-#&gt; [1] "1 cores used"
-#&gt; [1] "11 network transitions to be estimated"</div><div class='output co'>#&gt; <span class='error'>Error in {    print(paste0("Running iteration ", i))    if (i != 1) {        nullExpr[] &lt;- expr[sample(seq_along(c(expr)))]    }    nullExprCases &lt;- nullExpr[, design == 1]    nullExprControls &lt;- nullExpr[, design == 0]    tmpNetCases &lt;- monster.monsterNI(motif, nullExprCases, method = ni_method,         regularization = "none", score = "none", ni.coefficient.cutoff = ni.coefficient.cutoff)    tmpNetControls &lt;- monster.monsterNI(motif, nullExprControls,         method = ni_method, regularization = "none", score = "none",         ni.coefficient.cutoff = ni.coefficient.cutoff)    tmpNetControls[is.na(tmpNetControls)] &lt;- 0    tmpNetCases[is.na(tmpNetCases)] &lt;- 0    transitionMatrix &lt;- monster.transformation.matrix(tmpNetControls,         tmpNetCases, remove.diagonal = TRUE, method = "ols")    print(paste("Finished running iteration", i))    if (!is.na(outputDir)) {        saveRDS(transitionMatrix, file.path(outputDir, "tms",             paste0("tm_", i, ".rds")))    }    transitionMatrix}: task 1 failed - "could not find function "monster.monsterNI""</span></div></pre>
+    <pre class="examples"><div class='input'>
+<span class='co'># Run EGRET algorithm</span>
+<span class='fu'>runEgret</span><span class='op'>(</span><span class='va'>qbic</span>,<span class='va'>vcf</span>,<span class='va'>qtl</span>,<span class='va'>motif</span>,<span class='va'>expr</span>,<span class='va'>ppi</span>,<span class='va'>nameGeneMap</span>,<span class='va'>tag</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in runEgret(qbic, vcf, qtl, motif, expr, ppi, nameGeneMap, tag): object 'qtl' not found</span></div><div class='input'> 
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
