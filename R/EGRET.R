@@ -28,8 +28,22 @@
 #' @examples
 #' 
 #' # Run EGRET algorithm
-#' # runEgret(qbic,vcf,qtl,motif,expr,ppi,nameGeneMap,tag)
-#'  
+#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_qbic.txt")
+#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_genotype.vcf")
+#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_motif_prior.txt")
+#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_expr.txt")
+#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_ppi_prior.txt")
+#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_eQTL.txt")
+#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_map.txt")
+#' qbic <- read.table(file = "toy_qbic.txt", header = FALSE)
+#' vcf <- read.table("toy_genotype.vcf", header = FALSE, sep = "\t")
+#' motif <- read.table("toy_motif_prior.txt", sep = "\t", header = FALSE)
+#' expr <- read.table("toy_expr.txt", header = FALSE, sep = "\t", row.names = 1)
+#' ppi <- read.table("toy_ppi_prior.txt", header = FALSE, sep = "\t")
+#' qtl <- read.table("toy_eQTL.txt", header = FALSE)
+#' nameGeneMap <- read.table("toy_map.txt", header = FALSE)
+#' tag <- "my_toy_egret_run"
+#' runEgret(qbic,vcf,qtl,motif,expr,ppi,nameGeneMap,tag)
 #' @export
 
 runEgret <- function(b,v,q,m,e,p,g,t){
@@ -56,7 +70,7 @@ runEgret <- function(b,v,q,m,e,p,g,t){
     location <- which(abs(x) == max(abs(x)))
     return(x[location])
   }
-  qbic_uniq <- distinct(qbic)
+  qbic_uniq <- dplyr::distinct(qbic)
   qbic_uniq$catid <- paste0(qbic_uniq$snpID,qbic_uniq$tf,qbic_uniq$gene,qbic_uniq$qbicEffectSize)
   qbic_ag <- aggregate(qbic_uniq$qbicEffectSize, by = list(qbic_uniq$snpID,qbic_uniq$tf,qbic_uniq$gene), FUN = maxabs)
   colnames(qbic_ag) <- c("snpID","tf","gene","qbicEffectSize")
@@ -66,12 +80,12 @@ runEgret <- function(b,v,q,m,e,p,g,t){
   colnames(vcf) <- c("CHROM",  "POS"  ,   "ID"  ,    "REF"  ,   "ALT"   ,  "QUAL"   , "FILTER" , "INFO"   , "FORMAT", "NA12878")
   snp_ids <- paste0(vcf$CHROM,"_",vcf$POS)
   rownames(vcf) <- snp_ids
-  vcf <- separate(vcf, NA12878, c("allele1", "allele2"), "\\|", remove = TRUE)
+  vcf <- tidyr::separate(vcf, NA12878, c("allele1", "allele2"), "\\|", remove = TRUE)
   vcf$alt_allele_count <- as.numeric(vcf$allele1) + as.numeric(vcf$allele2)
   vcf$snp_id <- snp_ids
   qbic_ag$alt_allele_count <- vcf$alt_allele_count[match(qbic_ag$snpID, vcf$snp_id)]
   qtl$alt_allele_count <- vcf$alt_allele_count[match(qtl$snpID, vcf$snp_id)]
-  QTL_tf_gene_pairs <- distinct(qtl[,c(1:7)])
+  QTL_tf_gene_pairs <- dplyr::distinct(qtl[,c(1:7)])
   QTL_tf_gene_pairs$edgeE <- rep(1,nrow(QTL_tf_gene_pairs))
   QTL_tf_gene_pairs$alt_allele_count[is.na(QTL_tf_gene_pairs$alt_allele_count)] <- 0
   QTL_tf_gene_pairs$qtlTF <- paste0(QTL_tf_gene_pairs$tf,QTL_tf_gene_pairs$snpID)
@@ -97,11 +111,11 @@ runEgret <- function(b,v,q,m,e,p,g,t){
   write.table(combined, file = priorfile, col.names = TRUE, row.names = FALSE, sep = "\t", quote = FALSE)
   
   # Run message passing
-  resultsP <- panda(as.data.frame(motif), expr=expr, ppi=ppiFiltered,progress=TRUE, remove.missing.ppi = TRUE, remove.missing.motif = TRUE, remove.missing.genes = TRUE)
+  resultsP <- panda(as.data.frame(motif), expr=expr, ppi=ppiFiltered,progress=TRUE, remove.missing.ppi = TRUE, remove.missing.motif = TRUE, remove.missing.genes = TRUE, mode='legacy')
   filenameP <- paste0(tag,"_panda.RData")
   regnetP <- resultsP@regNet
   save(regnetP, file = filenameP)
-  resultsE <- panda(as.data.frame(egretPrior), expr=expr, ppi=ppiFiltered,progress=TRUE, remove.missing.ppi = TRUE, remove.missing.motif = TRUE, remove.missing.genes = TRUE)
+  resultsE <- panda(as.data.frame(egretPrior), expr=expr, ppi=ppiFiltered,progress=TRUE, remove.missing.ppi = TRUE, remove.missing.motif = TRUE, remove.missing.genes = TRUE, mode='legacy')
   filenameE <- paste0(tag,"_egret.RData")
   regnetE <- resultsE@regNet
   save(regnetE, file = filenameE)
