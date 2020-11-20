@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9</span>
       </span>
     </div>
 
@@ -174,8 +174,10 @@
 <span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>, nullPerms<span class='op'>=</span><span class='fl'>10</span>, numMaxCores<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "Running null permutations in parallel"
 #&gt; [1] "1 cores used"
-#&gt; [1] "11 network transitions to be estimated"</div><div class='output co'>#&gt; <span class='error'>Error in {    print(paste0("Running iteration ", i))    if (i != 1) {        nullExpr[] &lt;- expr[sample(seq_along(c(expr)))]    }    nullExprCases &lt;- nullExpr[, design == 1]    nullExprControls &lt;- nullExpr[, design == 0]    tmpNetCases &lt;- monster.monsterNI(motif, nullExprCases, method = ni_method,         regularization = "none", score = "none", ni.coefficient.cutoff = ni.coefficient.cutoff)    tmpNetControls &lt;- monster.monsterNI(motif, nullExprControls,         method = ni_method, regularization = "none", score = "none",         ni.coefficient.cutoff = ni.coefficient.cutoff)    tmpNetControls[is.na(tmpNetControls)] &lt;- 0    tmpNetCases[is.na(tmpNetCases)] &lt;- 0    transitionMatrix &lt;- monster.transformation.matrix(tmpNetControls,         tmpNetCases, remove.diagonal = TRUE, method = "ols")    print(paste("Finished running iteration", i))    if (!is.na(outputDir)) {        saveRDS(transitionMatrix, file.path(outputDir, "tms",             paste0("tm_", i, ".rds")))    }    transitionMatrix}: task 1 failed - "could not find function "monster.monsterNI""</span></div><div class='input'><span class='fu'>monster.plot.monsterAnalysis</span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>
-</div><div class='img'><img src='monster.plot.monsterAnalysis-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt; [1] "11 network transitions to be estimated"
+#&gt; Time difference of 49.47831 secs</div><div class='input'><span class='fu'>monster.plot.monsterAnalysis</span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Vectorized input to `element_text()` is not officially supported.</span>
+#&gt; <span class='warning'>Results may be unexpected or may change in future versions of ggplot2.</span></div><div class='img'><img src='monster.plot.monsterAnalysis-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

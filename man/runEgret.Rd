@@ -48,6 +48,6 @@ Inputs:
 \examples{
 
 # Run EGRET algorithm
-runEgret(qbic,vcf,qtl,motif,expr,ppi,nameGeneMap,tag)
+# runEgret(qbic,vcf,qtl,motif,expr,ppi,nameGeneMap,tag)
  
 }
