@@ -24,7 +24,7 @@ netZooR currently integrates:
 
 * **SAMBAR** (Subtyping Agglomerated Mutations By Annotation Relations) [[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identifies subtypes based on somatic mutation data.
 
-* **MONSTER** (Modeling Network State Transitions from Expression and Regulatory data) [[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infers transcription factor which drivers of cell state conditions at the gene regulatory network level.
+* **MONSTER** (Modeling Network State Transitions from Expression and Regulatory data) [[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infers transcription factor drivers of cell state conditions at the gene regulatory network level.
 
 * **OTTER** (Optimization to Estimate Regulation) [[Weighill et al.]](https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract): models gene regulation estimation as a graph matching problem.
 
