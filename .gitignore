@@ -12,4 +12,10 @@ vignettes/*.txt
 vignettes/*.gmt
 vignettes/*.rdata
 vignettes/*.rnk
-
+toy_eQTL.txt
+toy_expr.txt
+toy_genotype.vcf
+toy_map.txt
+toy_motif_prior.txt
+toy_ppi_prior.txt
+toy_qbic.txt
