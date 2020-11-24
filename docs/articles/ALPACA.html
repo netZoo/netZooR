@@ -63,6 +63,9 @@
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
     </li>
     <li>
+      <a href="../articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET (Beta Version)</a>
+    </li>
+    <li>
       <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
     </li>
     <li>
@@ -93,7 +96,8 @@
 
       
 
-      </header><script src="ALPACA_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><link href="ALPACA_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="ALPACA_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Detecting differential modules using ALPACA</h1>
@@ -109,23 +113,24 @@
     
     
 <p>Install and load netZooR package</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># install.packages("devtools") </span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools") </span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
 <span class="co"># install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></code></pre></div>
 <p>This vignettes can be accessed in R by using below line. when netZoooR was installed with arguments <em>“build_vignettes = TRUE”</em>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"ALPACA"</span>,package<span class="op">=</span><span class="st">"netZooR"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"ALPACA"</span>,package<span class="op">=</span><span class="st">"netZooR"</span><span class="op">)</span></code></pre></div>
+
 <p>We will show how ALPACA can find changes in modular structure between two simulated networks. The networks both have 20 regulator nodes and 80 target nodes. The baseline network consists of two groups that are strongly connected to each other, whereas the perturbed network has weaker connections between the two groups. The two groups consist of nodes {A1-A10,B1-B40} and {A11-A20,B41-B80}. Contrasting the two networks using ALPACA identifies these two groups as being the modules that best characterize the perturbation.</p>
 <p>These simulated networks is available in our public AWS S3 bucket. Change the preferred working directory to store the Example_2comm.txt file, otherwise the store directory is current working directory.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/Example_2comm.txt"</span><span class="op">)</span>
-<span class="va">simp.mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"./Example_2comm.txt"</span>,header<span class="op">=</span><span class="cn">T</span><span class="op">)</span> </pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">simp.alp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alpaca.html">alpaca</a></span><span class="op">(</span><span class="va">simp.mat</span>,<span class="cn">NULL</span>,verbose<span class="op">=</span><span class="cn">F</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/Example_2comm.txt"</span><span class="op">)</span>
+<span class="va">simp.mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"./Example_2comm.txt"</span>,header<span class="op">=</span><span class="cn">T</span><span class="op">)</span> </code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simp.alp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alpaca.html">alpaca</a></span><span class="op">(</span><span class="va">simp.mat</span>,<span class="cn">NULL</span>,verbose<span class="op">=</span><span class="cn">F</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "Detecting communities in control network..."
 ## [1] "modularity of projected graph 3.88578058618802e-16"
 ## [1] "Q = 0.0263157894736842"
@@ -138,12 +143,12 @@
 ## [1] "Merging 2 communities"
 ## [1] 1
 ## [1] "Computing node scores..."</code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">simp.alp2</span> <span class="op">&lt;-</span> <span class="va">simp.alp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simp.alp2</span> <span class="op">&lt;-</span> <span class="va">simp.alp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="va">simp.memb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="va">simp.alp2</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">simp.memb</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">simp.alp2</span><span class="op">)</span>
 
-<span class="va">simp.memb</span></pre></div>
+<span class="va">simp.memb</span></code></pre></div>
 <pre><code>##  A1_A  A2_A  A3_A  A4_A  A5_A  A6_A  A7_A  A8_A  A9_A A10_A A11_A A12_A A13_A 
 ##     1     1     1     1     1     1     1     1     1     1     2     2     2 
 ## A14_A A15_A A16_A A17_A A18_A A19_A A20_A  B1_B  B2_B  B3_B  B4_B  B5_B  B6_B 

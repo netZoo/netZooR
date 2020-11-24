@@ -63,6 +63,9 @@
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
     </li>
     <li>
+      <a href="../articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET (Beta Version)</a>
+    </li>
+    <li>
       <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
     </li>
     <li>
@@ -93,7 +96,8 @@
 
       
 
-      </header><script src="SAMBAR_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><link href="SAMBAR_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="SAMBAR_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</h1>
@@ -109,7 +113,7 @@
     
     
 <p>SAMBAR, or Subtyping Agglomerated Mutations By Annotation Relations, is a method to identify subtypes based on somatic mutation data. SAMBAR was used to identify mutational subtypes in 23 cancer types from The Cancer Genome Atlas (Kuijjer ML, Paulson JN, Salzman P, Ding W, Quackenbush J, British Journal of Cancer (May 16, 2018), doi: 10.1038/s41416-018-0109-7, <a href="https://www.nature.com/articles/s41416-018-0109-7" class="uri">https://www.nature.com/articles/s41416-018-0109-7</a>, BioRxiv, doi: <a href="https://doi.org/10.1101/228031" class="uri">https://doi.org/10.1101/228031</a>).</p>
-<p>SAMBAR’s input is a matrix that includes the number of non-synonymous mutations in a sample <span class="math inline">\(i\)</span> and gene <span class="math inline">\(j\)</span> . SAMBAR first subsets these data to a set of 2,219 cancer-associated genes (optional) from the Catalogue Of Somatic Mutations In Cancer (COSMIC) and Östlund et al. (Network-based identification of novel cancer genes, 2010, Mol Cell Prot), or from a user-defined list. It then divides the number of non-synonymous mutations by the gene’s length <span class="math inline">\(L_j\)</span>, defined as the number of non-overlapping exonic base pairs of a gene. For each sample, SAMBAR then calculates the overall cancer-associated mutation rate by summing mutation scores in all cancer-associated genes <span class="math inline">\(j'\)</span> . It removes samples for which the mutation rate is zero and divides the mutation scores the remaining samples by the sample’s mutation rate, resulting in a matrix of mutation rate-adjusted scores <span class="math inline">\(G\)</span>:</p>
+<p>SAMBAR’s input is a matrix that includes the number of non-synonymous mutations in a sample <span class="math inline">\(i\)</span> and gene <span class="math inline">\(j\)</span> . SAMBAR first subsets these data to a set of 2,219 cancer-associated genes (optional) from the Catalogue Of Somatic Mutations In Cancer (COSMIC) and Östlund et al. (Network-based identification of novel cancer genes, 2010, Mol Cell Prot), or from a user-defined list. It then divides the number of non-synonymous mutations by the gene’s length <span class="math inline">\(L_j\)</span>, defined as the number of non-overlapping exonic base pairs of a gene. For each sample, SAMBAR then calculates the overall cancer-associated mutation rate by summing mutation scores in all cancer-associated genes <span class="math inline">\(j'\)</span> . It removes samples for which the mutation rate is zero and divides the mutation scores the remaining samples by the sample’s mutation rate, resulting in a matrix of mutation rate-adjusted scores <span class="math inline">\(G\)</span>:</p>
 <p><span class="math inline">\(G_{ij}=\frac{N_{ij}/L_{j}}{\displaystyle\sum_{j'}({N_{ij'}/L_{j'}})}\)</span></p>
 <p>The next step in SAMBAR is de-sparsification of these gene mutation scores (agglomerated mutations) into pathway mutation (annotation relation) scores. SAMBAR converts a (user-defined) gene signature (.gmt format) into a binary matrix <span class="math inline">\(M\)</span> , with information of whether a gene <span class="math inline">\(j\)</span> belongs to a pathway <span class="math inline">\(q\)</span> . It then calculates pathway mutation scores <span class="math inline">\(P\)</span> by correcting the sum of mutation scores of all genes in a pathway for the number of pathways <span class="math inline">\(q'\)</span> a gene belongs to, and for the number of cancer-associated genes present in that pathway:</p>
 <p><span class="math inline">\(P_{iq}=\frac{\displaystyle\sum_{j \in q} G_{ij}/{\displaystyle\sum_{q'} M_{jq'}}}{\displaystyle\sum_{j} M_{jq}}\)</span></p>
