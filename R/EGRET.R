@@ -36,7 +36,7 @@
 #' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_eQTL.txt")
 #' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_map.txt")
 #' qbic <- read.table(file = "toy_qbic.txt", header = FALSE)
-#' vcf <- read.table("toy_genotype.vcf", header = FALSE, sep = "\t")
+#' vcf <- read.table("toy_genotype.vcf", header = FALSE, sep = "\t", stringsAsFactors = FALSE, colClasses = c("character", "numeric", "character", "character", "character", "character", "character", "character", "character", "character"))
 #' motif <- read.table("toy_motif_prior.txt", sep = "\t", header = FALSE)
 #' expr <- read.table("toy_expr.txt", header = FALSE, sep = "\t", row.names = 1)
 #' ppi <- read.table("toy_ppi_prior.txt", header = FALSE, sep = "\t")

@@ -19,3 +19,8 @@ toy_map.txt
 toy_motif_prior.txt
 toy_ppi_prior.txt
 toy_qbic.txt
+docs/reference/my_toy_egret_run_egret.RData
+docs/reference/my_toy_egret_run_panda.RData
+docs/reference/priors_my_toy_egret_run.txt
+docs/reference/TB_ALPACA_scores.txt
+docs/reference/TB_DWBM.txt
