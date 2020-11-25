@@ -1,4 +1,4 @@
-pandoc: 2.2.3.2
+pandoc: 2.8.1
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
@@ -12,5 +12,5 @@ articles:
   TutorialOTTER: TutorialOTTER.html
   pandaR: pandaR.html
   pandaRApplicationinGTExData: pandaRApplicationinGTExData.html
-last_built: 2020-11-24T18:53Z
+last_built: 2020-11-25T00:12Z
 

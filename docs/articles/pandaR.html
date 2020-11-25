@@ -63,7 +63,7 @@
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
     </li>
     <li>
-      <a href="../articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET (Beta Version)</a>
+      <a href="../articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a>
     </li>
     <li>
       <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
@@ -96,8 +96,7 @@
 
       
 
-      </header><link href="pandaR_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="pandaR_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="pandaR_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>An Introduction to the pandaR Package</h1>
@@ -122,8 +121,8 @@
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>An example dataset derived from a subset of stress-induced Yeast is available by running</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></pre></div>
 <pre><code>## Loading required package: igraph</code></pre>
 <pre><code>## 
 ## Attaching package: 'igraph'</code></pre>
@@ -158,7 +157,7 @@
 ##     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
 ##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
 ##     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-##     union, unique, unsplit, which, which.max, which.min</code></pre>
+##     union, unique, unsplit, which.max, which.min</code></pre>
 <pre><code>## Welcome to Bioconductor
 ## 
 ##     Vignettes contain introductory material; view with
@@ -166,13 +165,13 @@
 ##     'citation("Biobase")', and for packages 'citation("pkgname")'.</code></pre>
 <pre><code>## </code></pre>
 <pre><code>## </code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">pandaR</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">pandaToyData</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">pandaR</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">pandaToyData</span><span class="op">)</span></pre></div>
 <p><strong>pandaToyData</strong> is a list containing a regulatory structure derived from sequence motif analysis, protein-protein interaction data and a gene expression. The primary function in pandaR is called with</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pandaResult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">pandaToyData</span><span class="op">$</span><span class="va">motif</span>, <span class="va">pandaToyData</span><span class="op">$</span><span class="va">expression</span>, <span class="va">pandaToyData</span><span class="op">$</span><span class="va">ppi</span><span class="op">)</span>
-<span class="va">pandaResult</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit">
+<span class="va">pandaResult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">pandaToyData</span><span class="op">$</span><span class="va">motif</span>, <span class="va">pandaToyData</span><span class="op">$</span><span class="va">expression</span>, <span class="va">pandaToyData</span><span class="op">$</span><span class="va">ppi</span><span class="op">)</span>
+<span class="va">pandaResult</span></pre></div>
 <pre><code>## PANDA network for1000genes and87transcription factors.</code></pre>
 <pre><code>## 
 ## Slots:</code></pre>
@@ -182,20 +181,20 @@
 <pre><code>## Regulatory graph contains 87000 edges.</code></pre>
 <pre><code>## Regulatory graph is complete.</code></pre>
 <p>Where <strong>pandaResult</strong> is a ‘panda’ object which contains <strong>data.frame</strong>s describing the complete bipartite gene regulatory network as well as complete networks for gene coregulation and transcription factor cooperation. Due to completeness, edgeweights for the regulatory network are reported for all <em>m</em>x<em>n</em> possible TF-gene edges. The distribution of these edge weights for these networks has approximate mean 0 and standard deviation 1. The edges are therefore best interpreted in a relative sense. Strongly positive values indicative of relatively larger amounts of evidence in favor a regulatory mechanism and conversely, smaller or negative values can be interpreted as lacking evidence of a shared biological role. It is naturally of interest to specify a high edge weight subset of the complete network to investigate as a set of present/absent edges. This is easily performed by using the <strong>topedges</strong> function. A network containing the top 1000 edge scores as binary edges can be obtained by:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">topNet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/topedges.html">topedges</a></span><span class="op">(</span><span class="va">pandaResult</span>, <span class="fl">1000</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit">
+<span class="va">topNet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/topedges.html">topedges</a></span><span class="op">(</span><span class="va">pandaResult</span>, <span class="fl">1000</span><span class="op">)</span></pre></div>
 <p>Users may then examine the genes targeted by a transcription factor of interest.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/targetedGenes.html">targetedGenes</a></span><span class="op">(</span><span class="va">topNet</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/targetedGenes.html">targetedGenes</a></span><span class="op">(</span><span class="va">topNet</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AR"</span><span class="op">)</span><span class="op">)</span></pre></div>
 <pre><code>##  [1] "AKAP10"       "CNDP2"        "CRHR1"        "HNRNPD"       "KIAA0652"    
 ##  [6] "LOC100093631" "LOC100128811" "PRR15"        "TCF4"         "TCP11L2"     
 ## [11] "TMPRSS11B"    "VCX3B"        "WDR4"</code></pre>
 <p>The network can be further simplified by focusing only on transcription factors on interest and the genes that they are found to regulate. The <strong>subnetwork</strong> method serves this function</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">topSubnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/subnetwork.html">subnetwork</a></span><span class="op">(</span><span class="va">topNet</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AR"</span>,<span class="st">"ARID3A"</span>,<span class="st">"ELK1"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit">
+<span class="va">topSubnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/subnetwork.html">subnetwork</a></span><span class="op">(</span><span class="va">topNet</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AR"</span>,<span class="st">"ARID3A"</span>,<span class="st">"ELK1"</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>Existing R packages, such as igraph, can be used to visualize the results</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/plotGraph.html">plotGraph</a></span><span class="op">(</span><span class="va">topSubnet</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/plotGraph.html">plotGraph</a></span><span class="op">(</span><span class="va">topSubnet</span><span class="op">)</span></pre></div>
 <p><img src="pandaR_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div id="comparing-state-specific-panda-networks" class="section level2">
@@ -209,11 +208,11 @@
 <em>plotZbyTF</em> - Plot Z by TF outdegree quartiles</li>
 </ul>
 <p>We can compare how parameter choices effect the Z-score estimation between two PANDA runs. Additionally, we can compare two phenotypes:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">panda.res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">pandaToyData</span>, <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">motif</span>, <span class="va">expression</span>, <span class="va">ppi</span>, hamming<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb33"><pre class="downlit">
+<span class="va">panda.res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">pandaToyData</span>, <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">motif</span>, <span class="va">expression</span>, <span class="va">ppi</span>, hamming<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">panda.res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">pandaToyData</span>, <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">motif</span>, <span class="va">expression</span> <span class="op">+</span> 
                    <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/prod.html">prod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">expression</span><span class="op">)</span><span class="op">)</span>,sd<span class="op">=</span><span class="fl">5</span><span class="op">)</span>, <span class="va">ppi</span>, hamming<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/plotZ.html">plotZ</a></span><span class="op">(</span><span class="va">panda.res1</span>, <span class="va">panda.res2</span>,addLine<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/plotZ.html">plotZ</a></span><span class="op">(</span><span class="va">panda.res1</span>, <span class="va">panda.res2</span>,addLine<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></pre></div>
 <p><img src="pandaR_files/figure-html/plotZ-1.png" width="700"></p>
 <p>Other comparisons are underway…</p>
 </div>
@@ -238,7 +237,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz.</p>
+  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz, Deborah Weighill.</p>
 </div>
 
 <div class="pkgdown">

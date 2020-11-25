@@ -1,13 +1,22 @@
 ---
-title: "Constructing genotype-specific gene regulatory networks with EGRET (Beta Version)"
-author: "Deborah Weighill <sup>1</sup>"
-date: "<sup>1</sup> Harvard T.H. Chan School of Public Health, Boston, MA, USA."
-
+title: "Constructing genotype-specific gene regulatory networks with EGRET"
+author: "Deborah Weighill"
+date: '2020-11-24'
 output:
-  html_document:
-    df_print: paged
+  rmarkdown::html_vignette:
     toc: yes
+vignette: >
+  %\VignetteIndexEntry{EGRET_toy_example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 # Introduction
 EGRET is a method for constructing individual-specific gene regulatory networks (GRNs), taking into account the underlying genotype of the individual in question. EGRET combines multiple lines of evidence (See Figure 1 below) in order to predict the effect of an individual's mutations on TF-to-gene edges and construct a complete, individual-specific bipartite GRN. TF motifs are used to construct a prior bipartite network of the presence or absence of TFs in the promoter regions of genes. This prior serves as an initial "guess" as to which TFs bind within the promoter regions of, and thus potentially regulate the expression of which genes. This prior is then modified to account for individual-specific genetic information using the individual's genotype combined with publicly available eQTL data as well as computational predictions of the effects of variants on TF binding using QBiC [1]. 
@@ -16,17 +25,17 @@ For a given individual and a given prior edge connecting TF **i** to gene **j**,
 
 EGRET has been integrated into the netZooR package.
 
-![**Figure 1:** EGRET workflow.](./diagram.png)
+![**Figure 1:** EGRET workflow.](https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/diagram.png)
 
 # Install/load netZooR 
 If you do not have netZooR installed, you can install it from the development branch as follows:
-```{r}
+```{r,warning=FALSE, message=FALSE}
 #install.packages("devtools")
 #devtools::install_github("netZoo/netZooR@devel")
 ```
 
 Load the netZooR package:
-```{r,results='asis',message=FALSE}
+```{r,warning=FALSE, message=FALSE}
 library(netZooR)
 ```
 
@@ -34,7 +43,7 @@ library(netZooR)
 
 ## Get the example data sets
 First download the example datasets:
-```{r,results='asis',message=FALSE}
+```{r,warning=FALSE, message=FALSE}
 system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_qbic.txt")
 system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_genotype.vcf")
 system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_motif_prior.txt")
@@ -45,7 +54,7 @@ system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_data
 ```
 
 Read in each of the data types.
-```{r,results='asis'}
+```{r,warning=FALSE, message=FALSE}
 qbic <- read.table("toy_qbic.txt", header = FALSE)
 vcf <- read.table("toy_genotype.vcf", header = FALSE, sep = "\t", stringsAsFactors = FALSE, colClasses = c("character", "numeric", "character", "character", "character", "character", "character", "character", "character", "character"))
 motif <- read.table("toy_motif_prior.txt", sep = "\t", header = FALSE)
@@ -60,40 +69,41 @@ Let's take a look at each of the inputs for EGRET:
 ## Motif prior
 The motif prior is a bipartite network represented as a 3 column data frame. Each row represents an edge in the bipartite graph, with column 1 representing source TFs, column 2 representing target genes and column 3 representing the edge weight. The edge weight represents the presence (edge weight = 1) or absence (edge weight = 0) of the motif corresponding to the TF in column 1 in the promoter region of the gene in column 2. Note that, for ease of differentiating TF nodes from gene nodes, we name TFs with the TF name, and we name genes with their ensembl id.
 
-```{r,results='asis'}
+```{r,warning=FALSE, message=FALSE}
 head(motif)
 ```
+
 ## Gene expression
 The gene expression data represents gene expression measurements (in this case as TPMs from GTEx https://gtexportal.org/home/datasets) across several individuals. These are represented in a data frame with rows corresponding to genes and columns corresponding to samples/individuals. Row names of the data frame should be assigned gene names. 
-```{r,results='asis'}
+```{r,warning=FALSE, message=FALSE}
 head(expr)
 ```
 
 ## Protein-protein interaction (PPI) data
 The PPI prior can be obtained from interaction databases such as String (https://string-db.org/). EGRET takes in a PPI network of TFs as a data frame in which each row represents an edge, with columns one and two corresponding to TF nodes and column 3 representing the interaction weight.
 
-```{r,results='asis'}
+```{r,warning=FALSE, message=FALSE}
 head(ppi)
 ```
 
 ## eQTL data
 The eQTL data consists of eQTL variants where the eQTL variant lies within a motif within the promoter region of the eGene. These are passed to EGRET as a data frame with the following columns: (1) TF corresponding to the motif in which the eQTL variant resides, (2) eGene adjacent to the promoter, (3) position of the eQTL variant, (4) chromosome on which the eQTL variant and eGene reside, and (5) beta value for the eQTL association. The eQTL data should be from the same cell type/tissue as the gene expression data and can be obtained from databases such as GTEx (https://gtexportal.org/home/datasets).
 
-```{r,results='asis'}
+```{r,warning=FALSE, message=FALSE}
 head(qtl)
 ```
 
 ## Individual genotype
 The genotype data for the individual in question should be loaded as a VCF file. Columns of the VCF used include column 1 (chromosome), column 2 (variant position), column 4 (reference allele), column 5 (alternate allele) and column 10 (genotype).
 
-```{r,results='asis'}
+```{r,warning=FALSE, message=FALSE}
 head(vcf)
 ```
 
 ## QBiC predictions
 EGRET requires QBiC [1] to be run on the eQTL variants occurring in the individual(s) in question in order to determine which transcription factor's binding is potentially disrupted due to the variant, at the location of the variant. QBiC makes use of models trained on protein binding microarray (PBM) data to predict the impact of a given variant on TF binding at that location. Some of QBiC's models are trained on non-human PBMs. We thus require a more stringent filtering (p < 1e-20) of resulting QBiC predictions from non-human models. We also require the predicted effect on binding to be negative (i.e. disruption of binding). QBiC predictions are passed to EGRET in a dataframe with the following columns: (1) variant as chr[num]_position which occurs within a motif in a promoter, (2) TF predicted to be impacted by QBiC, (3) gene adjacent to the promoter, (4) QBiC effect on binding. Note that multiple TFs can be predicted to have disrupted binding at a given variant.
 
-```{r,results='asis'}
+```{r,warning=FALSE, message=FALSE}
 head(qbic)
 ```
 
@@ -101,19 +111,19 @@ head(qbic)
 # Run EGRET 
 Set a tag for the EGRET run. The EGRET outputs will be labeled with this tag.
 
-```{r,results='asis'}
+```{r,warning=FALSE, message=FALSE}
 tag <- "my_toy_egret_run"
 ```
 
 Call the runEgret function to 
-```{r,results='asis', message=FALSE}
+```{r,warning=FALSE, message=FALSE}
 runEgret(qtl,vcf,qbic,motif,expr,ppi,nameGeneMap,tag)
 ```
 
 # EGRET output
 EGRET produces two output GRNs - a genotype specific "EGRET" network, and a genotype-agnostic baseline network (equivalent to a PANDA network).
 
-```{r}
+```{r,warning=FALSE, message=FALSE}
 load("my_toy_egret_run_egret.RData")
 load("my_toy_egret_run_panda.RData")
 
