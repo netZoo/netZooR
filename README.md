@@ -24,11 +24,13 @@ netZooR currently integrates:
 
 * **SAMBAR** (Subtyping Agglomerated Mutations By Annotation Relations) [[Kuijjer et al.]](https://www.nature.com/articles/s41416-018-0109-7): identifies subtypes based on somatic mutation data.
 
-* **MONSTER** (Modeling Network State Transitions from Expression and Regulatory data) [[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infers transcription factor which drivers of cell state conditions at the gene regulatory network level.
+* **MONSTER** (Modeling Network State Transitions from Expression and Regulatory data) [[Schlauch et al.]](https://doi.org/10.1186/s12918-017-0517-y): infers transcription factor drivers of cell state conditions at the gene regulatory network level.
 
 * **OTTER** (Optimization to Estimate Regulation) [[Weighill et al.]](https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract): models gene regulation estimation as a graph matching problem.
 
 * **CRANE** (Constrained Random Alteration of Network Edges) [[Lim et al.]](https://www.biorxiv.org/content/10.1101/2020.07.12.198747v1): generates ensembles of gene regulatory networks to identify disease modules.
+
+* **EGRET** (Estimating the Genetic Regulatory effects on TFs) [[Weighill et al.]]() In preparation: models individual-specific gene regulatory networks using their genetic variants.
 
 In addition to helper functions to:
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
@@ -95,16 +97,18 @@ library(pkgdown)
 # setwd('path/to/netZooR/root') # Set the working directory to netZooR root
 devtools::document()
 # build vignettes
-devtools::build_vignettes()
+devtools::build_vignettes() # You can skip building the vignettes if you are not contributing a vignette
 # build documentation website
 pkgdown::build_site()
 
 # Install and build the package using devtools
 devtools::install() # To install the dependecies
 devtools::build() # To build the package
+#devtools::build(vignettes = FALSE) # You can skip building the vignettes if you are not contributing a vignette
 
 # CMD check, if passed all tests here, it means this package is ready to pull request to the devel branch. Otherwise, fix the bug before pulling request.
 devtools::check()
+#devtools::check(vignettes = FALSE) #You can skip building the vignettes if you are not contributing a vignette
 ```
 
 The master branch on github should always be in good shape, so please to pull request to the **devel** branch.

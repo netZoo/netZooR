@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9</span>
       </span>
     </div>
 
@@ -61,6 +61,9 @@
     </li>
     <li>
       <a href="articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
+    </li>
+    <li>
+      <a href="articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a>
     </li>
     <li>
       <a href="articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
@@ -113,9 +116,10 @@
 <li><p><strong>LIONESS</strong> (Linear Interpolation to Obtain Network Estimates for Single Samples) <a href="https://doi.org/10.1016/j.isci.2019.03.021">[Kuijjer et al. 2019]</a>: reconstructs single-sample gene regulatory networks.</p></li>
 <li><p><strong>ALPACA</strong> (ALtered Partitions Across Community Architectures) <a href="https://www.nature.com/articles/s41540-018-0052-5">[Padi and Quackenbush 2018]</a>: compares two networks and identify changes in modular structure.</p></li>
 <li><p><strong>SAMBAR</strong> (Subtyping Agglomerated Mutations By Annotation Relations) <a href="https://www.nature.com/articles/s41416-018-0109-7">[Kuijjer et al.]</a>: identifies subtypes based on somatic mutation data.</p></li>
-<li><p><strong>MONSTER</strong> (Modeling Network State Transitions from Expression and Regulatory data) <a href="https://doi.org/10.1186/s12918-017-0517-y">[Schlauch et al.]</a>: infers transcription factor which drivers of cell state conditions at the gene regulatory network level.</p></li>
+<li><p><strong>MONSTER</strong> (Modeling Network State Transitions from Expression and Regulatory data) <a href="https://doi.org/10.1186/s12918-017-0517-y">[Schlauch et al.]</a>: infers transcription factor drivers of cell state conditions at the gene regulatory network level.</p></li>
 <li><p><strong>OTTER</strong> (Optimization to Estimate Regulation) <a href="https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract">[Weighill et al.]</a>: models gene regulation estimation as a graph matching problem.</p></li>
 <li><p><strong>CRANE</strong> (Constrained Random Alteration of Network Edges) <a href="https://www.biorxiv.org/content/10.1101/2020.07.12.198747v1">[Lim et al.]</a>: generates ensembles of gene regulatory networks to identify disease modules.</p></li>
+<li><p><strong>EGRET</strong> (Estimating the Genetic Regulatory effects on TFs) <a href="">[Weighill et al.]</a> In preparation: models individual-specific gene regulatory networks using their genetic variants.</p></li>
 </ul>
 <p>In addition to helper functions to:</p>
 <ul>
@@ -180,16 +184,18 @@
 <span class="co"># setwd('path/to/netZooR/root') # Set the working directory to netZooR root</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/document.html">document</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># build vignettes</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/build_vignettes.html">build_vignettes</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/build_vignettes.html">build_vignettes</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># You can skip building the vignettes if you are not contributing a vignette</span>
 <span class="co"># build documentation website</span>
 <span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Install and build the package using devtools</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/install.html">install</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To install the dependecies</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/build.html">build</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To build the package</span>
+<span class="co">#devtools::build(vignettes = FALSE) # You can skip building the vignettes if you are not contributing a vignette</span>
 
 <span class="co"># CMD check, if passed all tests here, it means this package is ready to pull request to the devel branch. Otherwise, fix the bug before pulling request.</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/check.html">check</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/check.html">check</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#devtools::check(vignettes = FALSE) #You can skip building the vignettes if you are not contributing a vignette</span></pre></div>
 <p>The master branch on github should always be in good shape, so please to pull request to the <strong>devel</strong> branch. If the contribution is specific to pandaR, please contribute to its seperate GitHub page by <a href="https://github.com/jnpaulson/pandaR">pull request</a>.</p>
 </div>
 <div id="license" class="section level2">
@@ -221,6 +227,7 @@
 <li>Marieke Kuijjer <br><small class="roles"> Author </small>  </li>
 <li>Magha Padi <br><small class="roles"> Author </small>  </li>
 <li>Rebekka Burkholz <br><small class="roles"> Author </small>  </li>
+<li>Deborah Weighill <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -240,7 +247,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz.</p>
+  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz, Deborah Weighill.</p>
 </div>
 
 <div class="pkgdown">
