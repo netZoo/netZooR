@@ -7,7 +7,7 @@
 sambar(
   mutdata = mut.ucec,
   esize = exon.size,
-  signatureset = system.file("extdata", "h.all.v6.1.symbols.gmt", package = "SAMBAR",
+  signatureset = system.file("extdata", "h.all.v6.1.symbols.gmt", package = "netZooR",
     mustWork = TRUE),
   cangenes = genes,
   kmin = 2,
