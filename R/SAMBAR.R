@@ -146,7 +146,7 @@ NULL
 #' @rawNamespace import(stats, except= c(cov2cor,decompose,toeplitz,lowess,update,spectrum))
 #' @return A list of samples and the subtypes to which these samples are assigned, for each k.
 #' @export
-sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package = "SAMBAR", mustWork = TRUE), cangenes=genes, kmin=2, kmax=4){
+sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package = "netZooR", mustWork = TRUE), cangenes=genes, kmin=2, kmax=4){
   
   # convert gmt file to binary matrix, subset to cancer-associated genes
   edg <- sambar.convertgmt(signature=signatureset, cagenes=cangenes)

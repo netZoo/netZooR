@@ -59,6 +59,7 @@ This package could be downloaded via `install_github()` function from `devtools`
 library(devtools)
 # install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
 devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
+library(viridisLite)#To visualize communities
 ```
 
 ## Data Resources
@@ -103,7 +104,8 @@ py_config()
 use_python("/usr/local/bin/python3")
 ```
 
-Use example datasets within package to test this package.
+The previous command is necessary to bind R to Python since we are calling PANDA from Python because netZooPy has an optimized implementation of PANDA. Check [this tutorial](http://netbooks.networkmedicine.org/user/marouenbg/notebooks/netZooR/panda_gtex_tutorial_server.ipynb) for an example using a pure R implementation of PANDA. 
+Use example data sets within package to test this package.
 Refer to four input datasets files: one TB expression dataset control group , one TB expression dataset treated, one transcription factor binding motifs dataset, and one protein-protein interaction datasets from either inst/extdat or AWS.
 
 retrieve the file path of these files came with the netZooR package.

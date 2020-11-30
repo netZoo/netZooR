@@ -104,7 +104,7 @@
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"></a>Description</h2>
-<p>netZooR is an R package to reconstruct, analyse and plot biological networks.</p>
+<p>netZooR is an R package to reconstruct, analyse, and plot biological networks.</p>
 </div>
 <div id="features" class="section level2">
 <h2 class="hasAnchor">
@@ -121,7 +121,7 @@
 <li><p><strong>CRANE</strong> (Constrained Random Alteration of Network Edges) <a href="https://www.biorxiv.org/content/10.1101/2020.07.12.198747v1">[Lim et al.]</a>: generates ensembles of gene regulatory networks to identify disease modules.</p></li>
 <li><p><strong>EGRET</strong> (Estimating the Genetic Regulatory effects on TFs) <a href="">[Weighill et al.]</a> In preparation: models individual-specific gene regulatory networks using their genetic variants.</p></li>
 </ul>
-<p>In addition to helper functions to:</p>
+<p>The package also integrates additional functions to:</p>
 <ul>
 <li><p>Source protein-protein interaction network from <a href="https://string-db.org/">STRINGdb</a> based on a list of protein of interest.</p></li>
 <li><p>Plot one PANDA network in <a href="https://cytoscape.org/">Cytoscape</a>.</p></li>
@@ -137,12 +137,15 @@
 <p>To use PANDA and LIONESS, there are two options:</p>
 <ol>
 <li>
-<p>use functions: <code><a href="reference/panda.py.html">panda.py()</a></code> and <code><a href="reference/lioness.py.html">lioness.py()</a></code> by invoking the respective Python implementations in <a href="(https://github.com/netZoo/netZooPy/tree/netZoo)">netZooPy</a>. Because the native R linear algebra libraries can be slow, this way is recommended for faster analysis. However, optimized parallel libraries can give reasonable run times (step2). In order to pratice invoking Python scripts, there are some requirements to meet before using netZooR:</p>
+<p>Use <code><a href="reference/panda.py.html">panda.py()</a></code> and <code><a href="reference/lioness.py.html">lioness.py()</a></code> by invoking the respective Python implementations in <a href="(https://github.com/netZoo/netZooPy/tree/netZoo)">netZooPy</a>. Because the native R linear algebra libraries can be slow, this way is recommended for faster analysis. However, optimized parallel libraries can give reasonable run times (option ii). To invoke Python scripts, there are some requirements to meet before using netZooR:</p>
 <p>a) <a href="https://www.python.org/downloads/"><strong>Python</strong></a> (&gt;= 3.5.0) installed;</p>
 <p>b) Python libraries <a href="https://pandas.pydata.org/">pandas</a>, <a href="https://numpy.org/">numpy</a>, and <a href="https://www.scipy.org/">scipy</a> installed;</p>
-<p>c) stable Internet access as package <code>reticulate</code> will link the R wrapper to the Python scripts located <a href="https://github.com/netZoo/netZooPy/tree/netZoo">here</a> for those two methods.</p>
+<p>c) Internet access as package <code>reticulate</code> will link the R wrapper to the Python scripts located <a href="https://github.com/netZoo/netZooPy/tree/netZoo">here</a> for those two methods.</p>
 </li>
-<li><p>use function: <code>panda()</code> in <a href="https://github.com/jnpaulson/pandaR">pandaR</a> package and <code><a href="reference/lioness.html">lioness()</a></code> for the pure R implementations of PANDA and LIONESS. To speed up the run time, it is highly recommended to install an optimized linear algebra library, like Intel MKL. Detailed instructions can be found <a href="https://csantill.github.io/RPerformanceWBLAS/">here</a>.</p></li>
+<li>
+<p>Use <code>panda()</code> and <code><a href="reference/lioness.html">lioness()</a></code> for the pure R implementations of PANDA and LIONESS. To speed up the run time, it is highly recommended to install an optimized linear algebra library, particularly for Ubunutu. Macos generally comes with optimized linear algebra libraries. You can check the <code>BLAS/LAPACK</code> fields in <code><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo()</a></code> in your R console. Detailed instructions can be found <a href="https://csantill.github.io/RPerformanceWBLAS/">here</a>.</p>
+<p><span class="emoji" data-emoji="warning">⚠️</span> However, we found that Intel MKL linear algebra library with R 4.0.3 on Ubuntu 18.04 gave inconsistent results for the multiplication of large matrices and the results of PANDA were inconsistent. Therefore, Intel MKL is not currently recommended.</p>
+</li>
 </ol>
 </li>
 <li><p>Most of plotting function can be realized by functions in <a href="https://igraph.org/redirect.html">igraph</a>, which will be loaded with netZooR through <code>library(netZooR)</code>. Some plotting functions like <code><a href="reference/vis.panda.in.cytoscape.html">vis.panda.in.cytoscape()</a></code> and <code><a href="reference/vis.diff.panda.in.cytoscape.html">vis.diff.panda.in.cytoscape()</a></code> are able to plot interactive PANDA networks in <a href="https://cytoscape.org/">Cytoscape</a>, but installation of Cytoscape is required before using these plotting functions. Also, please make sure that Cytoscape is open when these functions are called.</p></li>
@@ -171,7 +174,7 @@
 <div id="tutorials" class="section level2">
 <h2 class="hasAnchor">
 <a href="#tutorials" class="anchor"></a>Tutorials</h2>
-<p>For more details please refer to the <a href="https://netzoo.github.io/netZooR/">documentation website</a>. Tutorials are available at the top navigation bar <strong>Articles/</strong> for basic usage and application cases. Or use <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("netZooR")</a></code> after installing package.</p>
+<p>For more details please refer to the <a href="https://netzoo.github.io/netZooR/">documentation website</a>. Tutorials are available at the top navigation bar <strong>Articles/</strong> for basic usage and application cases. Or use <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("netZooR")</a></code> after installing the package. Also check <a href="http://netbooks.networkmedicine.org">netbooks</a> to go through the tutorials on a jupyter notebook cloud server.</p>
 </div>
 <div id="contribution-and-development" class="section level2">
 <h2 class="hasAnchor">

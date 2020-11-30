@@ -33,6 +33,7 @@ Load some libraries. We use the data.table library for reading in large datasets
 ```{r,warning=FALSE,message=FALSE}
 library(netZooR)
 library(data.table)
+library(visNetwork) # to visualize the networks
 ```
 
 ```{r,eval=FALSE}
@@ -40,6 +41,7 @@ library(data.table)
 #use_python("/usr/bin/python3") # for example, you can check the installation with py_config()
 ```
 
+The previous command is necessary to bind R to Python since we are calling PANDA from Python because netZooPy has an optimized implementation of PANDA. Check [this tutorial](http://netbooks.networkmedicine.org/user/marouenbg/notebooks/netZooR/panda_gtex_tutorial_server.ipynb) for an example using a pure R implementation of PANDA.
 Now we locate our ppi and motif priors. The ppi represents physical interactions between transcription factor proteins, and is an undirected network. The motif prior represents putative regulation events where a transcription factor binds in the promotor of a gene to regulate its expression, as predicted by the presence of transcription factor binding motifs in the promotor region of the gene. The motif prior is thus a directed network linking transcription factors to their predicted gene targets. These are small example priors for the purposes of demonstrating this method. 
 
 The ppi and motif priors are available in our AWS public bucket, and can be downloaded into current working directory.
