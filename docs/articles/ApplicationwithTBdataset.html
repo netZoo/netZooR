@@ -148,7 +148,8 @@
 <span class="co"># install.packages("devtools") </span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
 <span class="co"># install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sjmgarnier/viridisLite">viridisLite</a></span><span class="op">)</span><span class="co">#To visualize communities</span></pre></div>
 </div>
 </div>
 <div id="data-resources" class="section level2">
@@ -231,7 +232,7 @@
 
 <span class="co"># reset to Python 3.X if necessary, like below:</span>
 <span class="fu">use_python</span><span class="op">(</span><span class="st">"/usr/local/bin/python3"</span><span class="op">)</span></pre></div>
-<p>Use example datasets within package to test this package. Refer to four input datasets files: one TB expression dataset control group , one TB expression dataset treated, one transcription factor binding motifs dataset, and one protein-protein interaction datasets from either inst/extdat or AWS.</p>
+<p>The previous command is necessary to bind R to Python since we are calling PANDA from Python because netZooPy has an optimized implementation of PANDA. Check <a href="http://netbooks.networkmedicine.org/user/marouenbg/notebooks/netZooR/panda_gtex_tutorial_server.ipynb">this tutorial</a> for an example using a pure R implementation of PANDA. Use example data sets within package to test this package. Refer to four input datasets files: one TB expression dataset control group , one TB expression dataset treated, one transcription factor binding motifs dataset, and one protein-protein interaction datasets from either inst/extdat or AWS.</p>
 <p>retrieve the file path of these files came with the netZooR package.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="co"># retrieve the file path of these files</span>

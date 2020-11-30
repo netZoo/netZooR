@@ -9,7 +9,7 @@
 R4.01@Ubuntu 18.04: [![Build Status](http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04)](http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/)
 
 ## Description
-netZooR is an R package to reconstruct, analyse and plot biological networks.
+netZooR is an R package to reconstruct, analyse, and plot biological networks.
 
 ## Features
 
@@ -32,7 +32,7 @@ netZooR currently integrates:
 
 * **EGRET** (Estimating the Genetic Regulatory effects on TFs) [[Weighill et al.]]() In preparation: models individual-specific gene regulatory networks using their genetic variants.
 
-In addition to helper functions to:
+The package also integrates additional functions to:
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
 
 * Plot one PANDA network in [Cytoscape](https://cytoscape.org/).
@@ -44,13 +44,18 @@ In addition to helper functions to:
 - netZooR is compatible with R (>= 3.3.3) including R (>= 4.0),  click [here](https://www.r-project.org/) for more installation details.
 
 - To use PANDA and LIONESS, there are two options: 
-  1. use functions: `panda.py()` and `lioness.py()` by invoking the respective Python implementations in [netZooPy]((https://github.com/netZoo/netZooPy/tree/netZoo)). Because the native R linear algebra libraries can be slow, this way is recommended for faster analysis. However, optimized parallel libraries can give reasonable run times (step2). In order to pratice invoking Python scripts, there are some requirements to meet before using netZooR:
+
+  1. Use `panda.py()` and `lioness.py()` by invoking the respective Python implementations in [netZooPy]((https://github.com/netZoo/netZooPy/tree/netZoo)). Because the native R linear algebra libraries can be slow, this way is recommended for faster analysis. However, optimized parallel libraries can give reasonable run times (option ii). To invoke Python scripts, there are some requirements to meet before using netZooR:
 
      a) [**Python**](https://www.python.org/downloads/) (>= 3.5.0) installed;
-     b) Python libraries [pandas](https://pandas.pydata.org/), [numpy](https://numpy.org/), and [scipy](https://www.scipy.org/) installed;
-     c) stable Internet access as package `reticulate` will link the R wrapper to the Python scripts located [here](https://github.com/netZoo/netZooPy/tree/netZoo) for those two methods.
 
-  2. use function: `panda()` in [pandaR](https://github.com/jnpaulson/pandaR) package and `lioness()` for the pure R implementations of PANDA and LIONESS. To speed up the run time, it is highly recommended to install an optimized linear algebra library, like Intel MKL. Detailed instructions can be found [here](https://csantill.github.io/RPerformanceWBLAS/).
+     b) Python libraries [pandas](https://pandas.pydata.org/), [numpy](https://numpy.org/), and [scipy](https://www.scipy.org/) installed;
+
+     c) Internet access as package `reticulate` will link the R wrapper to the Python scripts located [here](https://github.com/netZoo/netZooPy/tree/netZoo) for those two methods.
+
+  2. Use `panda()` and `lioness()` for the pure R implementations of PANDA and LIONESS. To speed up the run time, it is highly recommended to install an optimized linear algebra library, particularly for Ubunutu. Macos generally comes with optimized linear algebra libraries. You can check the `BLAS/LAPACK` fields in `sessionInfo()` in your R console. Detailed instructions can be found [here](https://csantill.github.io/RPerformanceWBLAS/).
+
+     :warning: However, we found that Intel MKL linear algebra library with R 4.0.3 on Ubuntu 18.04 gave inconsistent results for the multiplication of large matrices and the results of PANDA were inconsistent. Therefore, Intel MKL is not currently recommended. 
 
 
 - Most of plotting function can be realized by functions in [igraph](https://igraph.org/redirect.html), which will be loaded with netZooR through `library(netZooR)`. Some plotting functions like `vis.panda.in.cytoscape()` and `vis.diff.panda.in.cytoscape()` are able to plot interactive PANDA networks in [Cytoscape](https://cytoscape.org/), but installation of Cytoscape is required before using these plotting functions. Also, please make sure that Cytoscape is open when these functions are called.
@@ -85,7 +90,7 @@ Please report any further issue to the [issues page](https://github.com/netZoo/n
 
 ## Tutorials
 For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/). Tutorials are available at the top navigation bar **Articles/** for basic usage and application cases.
-Or use `browseVignettes("netZooR")` after installing package.
+Or use `browseVignettes("netZooR")` after installing the package. Also check [netbooks](http://netbooks.networkmedicine.org) to go through the  tutorials on a jupyter notebook cloud server.
 
 ## Contribution and Development
 Contributions are welcome! The contribution guide to netZooR can be found [here](https://netzoo.github.io/contribute/contribute/). 
