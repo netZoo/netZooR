@@ -48,7 +48,12 @@ occur when disease arises from healthy tissue, are associated with changes in th
 MONSTER is an approach to understanding these transitions. MONSTER models phenotypic-specific 
 regulatory networks and then estimates a &quot;transition matrix&quot; that converts one state to another. 
 By examining the properties of the transition matrix, we can gain insight into regulatory 
-changes associated with phenotypic state transition." />
+changes associated with phenotypic state transition.
+Important note: the direct regulatory network observed from gene expression is currently
+implemented as a regular correlation as opposed to the partial correlation described 
+in the paper.
+Citation: Schlauch, Daniel, et al. &quot;Estimating drivers of cell state transitions using gene regulatory network models.&quot; 
+BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y" />
 
 
 
@@ -112,6 +117,9 @@ changes associated with phenotypic state transition." />
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
     </li>
     <li>
+      <a href="../articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
+    </li>
+    <li>
       <a href="../articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a>
     </li>
     <li>
@@ -164,7 +172,12 @@ occur when disease arises from healthy tissue, are associated with changes in th
 MONSTER is an approach to understanding these transitions. MONSTER models phenotypic-specific 
 regulatory networks and then estimates a "transition matrix" that converts one state to another. 
 By examining the properties of the transition matrix, we can gain insight into regulatory 
-changes associated with phenotypic state transition.</p>
+changes associated with phenotypic state transition.
+Important note: the direct regulatory network observed from gene expression is currently
+implemented as a regular correlation as opposed to the partial correlation described 
+in the paper.
+Citation: Schlauch, Daniel, et al. "Estimating drivers of cell state transitions using gene regulatory network models." 
+BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y</p>
     </div>
 
     <pre class="usage"><span class='fu'>monster</span><span class='op'>(</span>
@@ -172,10 +185,11 @@ changes associated with phenotypic state transition.</p>
   <span class='va'>design</span>,
   <span class='va'>motif</span>,
   nullPerms <span class='op'>=</span> <span class='fl'>100</span>,
-  ni_method <span class='op'>=</span> <span class='st'>"bere"</span>,
+  ni_method <span class='op'>=</span> <span class='st'>"BERE"</span>,
   ni.coefficient.cutoff <span class='op'>=</span> <span class='cn'>NA</span>,
   numMaxCores <span class='op'>=</span> <span class='fl'>1</span>,
-  outputDir <span class='op'>=</span> <span class='cn'>NA</span>
+  outputDir <span class='op'>=</span> <span class='cn'>NA</span>,
+  alphaw <span class='op'>=</span> <span class='fl'>0.5</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -211,12 +225,17 @@ inference step.  Default is NA, indicating inclusion of all coefficients.</p></t
     <tr>
       <th>numMaxCores</th>
       <td><p>requires doParallel, foreach.  Runs MONSTER in parallel computing 
-environment.  Set to 1 to avoid parallelization.</p></td>
+environment.  Set to 1 to avoid parallelization, NA will take the default parallel pool in the computer.</p></td>
     </tr>
     <tr>
       <th>outputDir</th>
       <td><p>character vector specifying a directory or path in which 
 which to save MONSTER results, default is NA and results are not saved.</p></td>
+    </tr>
+    <tr>
+      <th>alphaw</th>
+      <td><p>A weight parameter between 0 and 1 specifying proportion of weight 
+to give to indirect compared to direct evidence. The default is 0.5 to give an equal weight to direct and indirect evidence.</p></td>
     </tr>
     </table>
 
@@ -227,11 +246,241 @@ which to save MONSTER results, default is NA and results are not saved.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>)</span>
 <span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>20</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>,<span class='fl'>10</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>)</span>,na.rm<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span>
 <span class='va'>monsterRes</span> <span class='op'>&lt;-</span> <span class='fu'>monster</span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>500</span>,<span class='op'>]</span>, <span class='va'>design</span>, <span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>, nullPerms<span class='op'>=</span><span class='fl'>10</span>, numMaxCores<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Running null permutations in parallel"
-#&gt; [1] "1 cores used"
-#&gt; [1] "11 network transitions to be estimated"
-#&gt; Time difference of 19.10134 secs</div></pre>
+</div><div class='output co'>#&gt; [1] "11 network transitions to be estimated"
+#&gt; [1] "Running iteration 1"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.079674e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 8.797646e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 1"
+#&gt; [1] "Running iteration 2"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.008148e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.484985e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 2"
+#&gt; [1] "Running iteration 3"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.484985e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.00679e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; ................[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 3"
+#&gt; [1] "Running iteration 4"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 4.696846e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.078316e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 4"
+#&gt; [1] "Running iteration 5"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.197525e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.197525e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; ................[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 5"
+#&gt; [1] "Running iteration 6"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.507469e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.41346e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 6"
+#&gt; [1] "Running iteration 7"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.412102e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.102158e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 7"
+#&gt; [1] "Running iteration 8"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.292892e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; ................[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.793571e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 8"
+#&gt; [1] "Running iteration 9"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.197525e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 4.696846e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 9"
+#&gt; [1] "Running iteration 10"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.602837e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 7.295609e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 10"
+#&gt; [1] "Running iteration 11"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.604195e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 4.482269e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]  20 500
+#&gt; [1] 20 16
+#&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1]  16 500
+#&gt; [1]  16 500
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 11"
+#&gt; Time difference of 3.937353 secs</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -9,7 +9,7 @@ test_that("MONSTER function works", {
   yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
   # monster result
   # caused server build failed for unknown reason.
-  expect_equal(monster(yeast$exp.cc, design, yeast$motif, nullPerms=0, numMaxCores=1), monsterRes_nP0)
+  expect_equal(monster(yeast$exp.cc, design, yeast$motif, nullPerms=0, numMaxCores=1, alphaw=1), monsterRes_nP0)
   
   # analyzes a bi-partite network by monster.transformation.matrix() function.
  

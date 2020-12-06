@@ -21,7 +21,8 @@ transition matrix given a set of null transition matrices
 \examples{
 # data(yeast)
 # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-# monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+# yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+# monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
 data(monsterRes)
 monster.calculate.tm.p.values(monsterRes)
 }

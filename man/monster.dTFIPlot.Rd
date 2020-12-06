@@ -9,7 +9,8 @@ monster.dTFIPlot(
   monsterObj,
   rescale = FALSE,
   plot.title = NA,
-  highlight.tfs = NA
+  highlight.tfs = NA,
+  nTFs = -1
 )
 }
 \arguments{
@@ -24,6 +25,8 @@ distribution}
 
 \item{highlight.tfs}{vector specifying a set of transcription 
 factors to highlight in the plot}
+
+\item{nTFs}{number of TFs to plot in x axis. -1 takes all TFs.}
 }
 \value{
 ggplot2 object for transition matrix comparing observed 
@@ -35,6 +38,7 @@ observed Transition Matrix compared to a set of null TMs
 }
 \examples{
 # data(yeast)
+# yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
 # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 data(monsterRes)

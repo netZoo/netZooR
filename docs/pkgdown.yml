@@ -5,6 +5,7 @@ articles:
   ALPACA: ALPACA.html
   ApplicationinGTExData: ApplicationinGTExData.html
   ApplicationwithTBdataset: ApplicationwithTBdataset.html
+  CONDOR: CONDOR.html
   EGRET_toy_example: EGRET_toy_example.html
   LionessApplicationinGTExData: LionessApplicationinGTExData.html
   MONSTER: MONSTER.html
@@ -12,5 +13,5 @@ articles:
   TutorialOTTER: TutorialOTTER.html
   pandaR: pandaR.html
   pandaRApplicationinGTExData: pandaRApplicationinGTExData.html
-last_built: 2020-11-30T19:21Z
+last_built: 2020-12-05T23:44Z
 

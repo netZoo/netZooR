@@ -11,6 +11,7 @@ setMethod("show","monsterAnalysis",function(object){monster.print.monsterAnalysi
 #' @return Plot of the dTFI for each TF against null distribution
 #' @examples
 #' data(yeast)
+#' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
 #' design <- c(rep(1,25),rep(0,10),rep(NA,15))
 #' monsterRes <- monster(yeast$exp.cc, design,
 #' yeast$motif, nullPerms=10, numMaxCores=1)
@@ -28,6 +29,7 @@ monster.plot.monsterAnalysis <- function(x, ...){
 #' @return Description of transition matrices in object
 #' @examples
 #' data(yeast)
+#' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
 #' design <- c(rep(1,25),rep(0,10),rep(NA,15))
 #' monster(yeast$exp.cc,design,yeast$motif, nullPerms=10, numMaxCores=1)
 monster.print.monsterAnalysis <- function(x, ...){
@@ -50,7 +52,11 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' regulatory networks and then estimates a "transition matrix" that converts one state to another. 
 #' By examining the properties of the transition matrix, we can gain insight into regulatory 
 #' changes associated with phenotypic state transition.
-#'
+#' Important note: the direct regulatory network observed from gene expression is currently
+#' implemented as a regular correlation as opposed to the partial correlation described 
+#' in the paper.
+#' Citation: Schlauch, Daniel, et al. "Estimating drivers of cell state transitions using gene regulatory network models." 
+#' BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y
 #' @param expr Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet
 #' @param design Binary vector indicating case control partition
 #' @param motif Regulatory data.frame consisting of three columns.  For each row, a transcription factor (column 1) 
@@ -61,9 +67,11 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' @param ni.coefficient.cutoff numeric to specify a p-value cutoff at the network
 #' inference step.  Default is NA, indicating inclusion of all coefficients.
 #' @param numMaxCores requires doParallel, foreach.  Runs MONSTER in parallel computing 
-#' environment.  Set to 1 to avoid parallelization.
+#' environment.  Set to 1 to avoid parallelization, NA will take the default parallel pool in the computer.
 #' @param outputDir character vector specifying a directory or path in which 
 #' which to save MONSTER results, default is NA and results are not saved.
+#' @param alphaw A weight parameter between 0 and 1 specifying proportion of weight 
+#' to give to indirect compared to direct evidence. The default is 0.5 to give an equal weight to direct and indirect evidence.
 #' @export
 #' @import doParallel
 #' @import parallel
@@ -74,16 +82,17 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' @examples
 #' data(yeast)
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
+#' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
 #' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 
 monster <- function(expr, 
                     design, 
                     motif, 
                     nullPerms=100,
-                    ni_method="bere",
+                    ni_method="BERE",
                     ni.coefficient.cutoff = NA,
                     numMaxCores=1, 
-                    outputDir=NA){
+                    outputDir=NA, alphaw=0.5){
   
   # Data type checking
   expr <- monster.checkDataType(expr)
@@ -92,18 +101,18 @@ monster <- function(expr,
   }
   # Parallelize
   # Initiate cluster
-  if(!is.na(numMaxCores)){
+  if(!is.na(numMaxCores) && numMaxCores > 1){
     # Calculate the number of cores
-    numCores <- detectCores()
+    numCores <- detectCores() - 4
     numCores <- min(numCores, numMaxCores)
-    
     cl <- makeCluster(numCores)
     registerDoParallel(cl)
-    iters <- nullPerms+1 # Two networks for each partition, plus observed partition
     print("Running null permutations in parallel")
     print(paste(numCores,"cores used"))
-    print(paste(iters,"network transitions to be estimated"))
   }
+  
+  iters <- nullPerms+1 # Two networks for each partition, plus observed partition
+  print(paste(iters,"network transitions to be estimated"))
   
   #start time
   strt  <- Sys.time()
@@ -118,32 +127,67 @@ monster <- function(expr,
   design <- design[design%in%c(0,1)]
   
   nullExpr <- expr
-  transMatrices <- foreach(i=1:iters,
-                           .packages=c("netZooR","reshape2","penalized","MASS")) %dopar% {
-                             print(paste0("Running iteration ", i))
-                             if(i!=1){
-                               nullExpr[] <- expr[sample(seq_along(c(expr)))]
+  if(numMaxCores == 1){
+    transMatrices=list()
+    for(i in 1:iters){
+      print(paste0("Running iteration ", i))
+      if(i!=1){
+        nullExpr[] <- expr[sample(seq_along(c(expr)))]
+      }
+      nullExprCases <- nullExpr[,design==1]
+      nullExprControls <- nullExpr[,design==0]
+      
+      tmpNetCases <- monster.monsterNI(motif, nullExprCases, 
+                                       method=ni_method, regularization="none",
+                                       score="none", ni.coefficient.cutoff,
+                                       verbose=TRUE, randomize = "none", cpp=FALSE,
+                                       alphaw)
+      tmpNetControls <- monster.monsterNI(motif, nullExprControls, 
+                                          method=ni_method, regularization="none",
+                                          score="none", ni.coefficient.cutoff,
+                                          verbose=TRUE, randomize = "none", cpp=FALSE,
+                                          alphaw)
+      transitionMatrix <- monster.transformation.matrix(
+        tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
+      print(paste("Finished running iteration", i))
+      if (!is.na(outputDir)){
+        saveRDS(transitionMatrix,file.path(outputDir,'tms',paste0('tm_',i,'.rds')))
+      }
+      transMatrices[[i]]=transitionMatrix
+    }
+    print(Sys.time()-strt)
+  }else{
+    transMatrices <- foreach(i=1:iters,
+                             .packages=c("netZooR","reshape2","penalized","MASS")) %dopar% {
+                               print(paste0("Running iteration ", i))
+                               if(i!=1){
+                                 nullExpr[] <- expr[sample(seq_along(c(expr)))]
+                               }
+                               nullExprCases <- nullExpr[,design==1]
+                               nullExprControls <- nullExpr[,design==0]
+                               
+                               tmpNetCases <- monster.monsterNI(motif, nullExprCases, 
+                                                                method=ni_method, regularization="none",
+                                                                score="none", ni.coefficient.cutoff,
+                                                                verbose = FALSE, randomize = "none",
+                                                                alphaw)
+                               tmpNetControls <- monster.monsterNI(motif, nullExprControls, 
+                                                                   method=ni_method, regularization="none",
+                                                                   score="none", ni.coefficient.cutoff,
+                                                                   verbose = FALSE, randomize = "none",
+                                                                   alphaw)
+                               transitionMatrix <- monster.transformation.matrix(
+                                 tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
+                               print(paste("Finished running iteration", i))
+                               if (!is.na(outputDir)){
+                                 saveRDS(transitionMatrix,file.path(outputDir,'tms',paste0('tm_',i,'.rds')))
+                               }
+                               transitionMatrix
                              }
-                             nullExprCases <- nullExpr[,design==1]
-                             nullExprControls <- nullExpr[,design==0]
-                             
-                             tmpNetCases <- monster.monsterNI(motif, nullExprCases, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff=ni.coefficient.cutoff)
-                             tmpNetControls <- monster.monsterNI(motif, nullExprControls, method=ni_method, regularization="none",score="none", ni.coefficient.cutoff=ni.coefficient.cutoff)
-                             # the result matrix has nan, replaced with zero to carry on the analysis
-                             # I am not sure if this makes sense but the function does not work otherwise ~ Marouen
-                             tmpNetControls[is.na(tmpNetControls)] <- 0
-                             tmpNetCases[is.na(tmpNetCases)] <- 0
-                             transitionMatrix <- monster.transformation.matrix(
-                               tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
-                             print(paste("Finished running iteration", i))
-                             if (!is.na(outputDir)){
-                               saveRDS(transitionMatrix,file.path(outputDir,'tms',paste0('tm_',i,'.rds')))
-                             }
-                             transitionMatrix
-                           }
-  
-  print(Sys.time()-strt)
-  if(!is.na(numMaxCores)){
+    
+    print(Sys.time()-strt)
+  }
+  if(!is.na(numMaxCores)  && numMaxCores > 1){
     stopCluster(cl)
   }
   
@@ -173,7 +217,7 @@ monster <- function(expr,
 #' 
 monster.checkDataType <- function(expr){
   assert_that(is.data.frame(expr)||is.matrix(expr)||class(expr)=="ExpressionSet")
-  if("ExpressionSet" %in% class(expr)){
+  if(class(expr)=="ExpressionSet"){
     if (requireNamespace("Biobase", quietly = TRUE)) {
       expr <- Biobase::exprs(expr)
     } 
@@ -205,14 +249,13 @@ globalVariables("i")
 #' @importFrom reshape2 melt
 #' @export
 #' @examples
-#' \dontrun{
 #' data(yeast)
 #' cc.net.1 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
 #' cc.net.2 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])
 #' monster.transformation.matrix(cc.net.1, cc.net.2)
-#' }
+
 monster.transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize=FALSE, 
-                                  remove.diagonal=TRUE, method="ols"){
+                                          remove.diagonal=TRUE, method="ols"){
   if(is.list(network.1)&&is.list(network.2)){
     if(by.tfs){
       net1 <- t(network.1$reg.net)
@@ -310,7 +353,6 @@ kabsch <- function(P,Q){
   W
 }
 
-
 #' Transformation matrix plot
 #'
 #' This function plots a hierachically clustered heatmap and 
@@ -327,7 +369,8 @@ kabsch <- function(P,Q){
 #' @examples
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
+#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=10, numMaxCores=1)
 #' data(monsterRes)
 #' monster.hcl.heatmap.plot(monsterRes)
 monster.hcl.heatmap.plot <- function(monsterObj, method="pearson"){
@@ -418,6 +461,7 @@ monster.hcl.heatmap.plot <- function(monsterObj, method="pearson"){
 #' @examples
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
+#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
 #' # Color the nodes according to cluster membership
@@ -426,8 +470,8 @@ monster.hcl.heatmap.plot <- function(monsterObj, method="pearson"){
 #' title="PCA Plot of Transition - Cell Cycle vs Stress Response", 
 #' clusters=clusters)
 monster.transitionPCAPlot <-    function(monsterObj, 
-                                 title="PCA Plot of Transition", 
-                                 clusters=1, alpha=1){
+                                         title="PCA Plot of Transition", 
+                                         clusters=1, alpha=1){
   tm.pca <- princomp(monsterObj@tm)
   odsm <- apply(monsterObj@tm,2,function(x){t(x)%*%x})
   odsm.scaled <- 2*(odsm-mean(odsm))/sd(odsm)+4
@@ -450,6 +494,7 @@ monster.transitionPCAPlot <-    function(monsterObj,
 #' @export
 #' @examples
 #' # data(yeast)
+#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
@@ -477,7 +522,7 @@ monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10
   # adj.combined[,2] <- mappings[match(adj.combined[,2], mappings[,1]),2]
   
   dTFI_pVals_All <- 1-2*abs(.5-monster.calculate.tm.p.values(monsterObj, 
-                                                     method="z-score"))
+                                                             method="z-score"))
   topTFsIncluded <- names(sort(dTFI_pVals_All)[1:numTopTFs])
   topTFIndices <- 2>(is.na(match(adj.combined[,1],topTFsIncluded)) + 
                        is.na(match(adj.combined[,2],topTFsIncluded)))
@@ -508,16 +553,19 @@ monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10
 #' @param plot.title String specifying the plot title
 #' @param highlight.tfs vector specifying a set of transcription 
 #' factors to highlight in the plot
+#' @param nTFs number of TFs to plot in x axis. -1 takes all TFs.
 #' @return ggplot2 object for transition matrix comparing observed 
 #' distribution to that estimated under the null 
 #' @export
 #' @examples
 #' # data(yeast)
+#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
 #' monster.dTFIPlot(monsterRes)
-monster.dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA){
+monster.dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA,
+                             nTFs=-1){
   if(is.na(plot.title)){
     plot.title <- "Differential TF Involvement"
   }
@@ -553,7 +601,9 @@ monster.dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight
     x.axis.order <- rownames(monsterObj@nullTM[[1]])
     x.axis.size    <- pmin(15,7-log(p.values))
   }
-  
+  if(nTFs==-1){
+    nTFs = length(x.axis.order)
+  }
   null.SSODM.melt <- melt(combined.mat)[,-1][,c(2,1)]
   null.SSODM.melt$TF<-rep(rownames(monsterObj@nullTM[[1]]),num.iterations+1)
   
@@ -562,7 +612,7 @@ monster.dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight
     geom_point(aes(color=factor(Var2), alpha = .5*as.numeric(factor(Var2))), size=2) +
     scale_color_manual(values = c("blue", "red")) +
     scale_alpha(guide = "none") +
-    scale_x_discrete(limits = x.axis.order ) +
+    scale_x_discrete(limits = x.axis.order[1:nTFs] ) +
     theme_classic() +
     theme(legend.title=element_blank(),
           axis.text.x = element_text(colour = 1+x.axis.order%in%highlight.tfs, 
@@ -585,7 +635,8 @@ monster.dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight
 #' @examples
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
+#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
 #' data(monsterRes)
 #' monster.calculate.tm.p.values(monsterRes)
 monster.calculate.tm.p.values <- function(monsterObj, method="z-score"){
@@ -620,14 +671,17 @@ globalVariables(c("Var1", "Var2","value","variable","xend","yend","y","Comp.1", 
 #'
 #' This function generates a complete bipartite network from 
 #' gene expression data and sequence motif data
-#'
+#' 
 #' @param motif A motif dataset, a data.frame, matrix or exprSet containing 
 #' 3 columns. Each row describes an motif associated with a transcription 
 #' factor (column 1) a gene (column 2) and a score (column 3) for the motif.
 #' @param expr.data An expression dataset, as a genes (rows) by samples (columns)
 #' @param verbose logical to indicate printing of output for algorithm progress.
 #' @param method String to indicate algorithm method.  Must be one of 
-#' "bere","pearson","cd","lda", or "wcd". Default is "bere"
+#' "bere","pearson","cd","lda", or "wcd". Default is "bere".
+#' Important note: the direct regulatory network observed from gene expression is currently
+#' implemented as a regular correlation as opposed to the partial correlation described 
+#' in the paper (please see Schlauch et al., 2017,  https://doi.org/10.1186/s12918-017-0517-y)
 #' @param ni.coefficient.cutoff numeric to specify a p-value cutoff at the network
 #' inference step.  Default is NA, indicating inclusion of all coefficients.
 #' @param randomize logical indicating randomization by genes, within genes or none
@@ -646,157 +700,209 @@ globalVariables(c("Var1", "Var2","value","variable","xend","yend","y","Comp.1", 
 #' data(yeast)
 #' cc.net <- monster.monsterNI(yeast$motif,yeast$exp.cc)
 
-monster.monsterNI <- function (motif, expr.data, verbose = FALSE, randomize = "none", 
-                       method = "bere", ni.coefficient.cutoff = NA, alphaw = 1, 
-                       regularization = "none", score = "motifincluded", cpp = FALSE) 
-{
-  if (verbose) 
-    print("Initializing and validating")
-  tf.names <- sort(unique(motif[, 1]))
-  num.TFs <- length(tf.names)
-  if (is.null(expr.data)) {
+monster.monsterNI <- function(motif.data, 
+                              expr.data,
+                              verbose=FALSE,
+                              randomize="none",
+                              method="bere",
+                              ni.coefficient.cutoff=NA,
+                              alphaw=1.0,
+                              regularization="none",
+                              score="motifincluded",
+                              cpp=FALSE){
+  if(verbose)
+    print('Initializing and validating')
+  # Create vectors for TF names and Gene names from Motif dataset
+  tf.names   <- sort(unique(motif.data[,1]))
+  num.TFs    <- length(tf.names)
+  if (is.null(expr.data)){
     stop("Error: Expression data null")
-  }
-  else {
-    gene.names <- sort(intersect(motif[, 2], rownames(expr.data)))
-    num.genes <- length(gene.names)
-    expr.data <- expr.data[rownames(expr.data) %in% gene.names, 
-                           ]
-    expr.data <- expr.data[order(rownames(expr.data)), ]
-    num.conditions <- ncol(expr.data)
-    if (randomize == "within.gene") {
+  } else {
+    # Use the motif data AND the expr data (if provided) for the gene list
+    gene.names <- sort(intersect(motif.data[,2],rownames(expr.data)))
+    num.genes  <- length(gene.names)
+    
+    # Filter out the expr genes without motif data
+    expr.data <- expr.data[rownames(expr.data) %in% gene.names,]
+    
+    # Keep everything sorted alphabetically
+    expr.data      <- expr.data[order(rownames(expr.data)),]
+    num.conditions <- ncol(expr.data);
+    if (randomize=='within.gene'){
       expr.data <- t(apply(expr.data, 1, sample))
-      if (verbose) 
+      if(verbose)
         print("Randomizing by reordering each gene's expression")
-    }
-    else if (randomize == "by.genes") {
+    } else if (randomize=='by.genes'){
       rownames(expr.data) <- sample(rownames(expr.data))
-      expr.data <- expr.data[order(rownames(expr.data)), 
-                             ]
-      if (verbose) 
+      expr.data           <- expr.data[order(rownames(expr.data)),]
+      if(verbose)
         print("Randomizing by reordering each gene labels")
     }
   }
-  if (num.genes == 0) {
-    stop("Error validating data.  No matched genes.\n\n            Please ensure that gene names in expression \n            file match gene names in motif file.")
+  
+  # Bad data checking
+  if (num.genes==0){
+    stop("Error validating data.  No matched genes.\n
+            Please ensure that gene names in expression 
+            file match gene names in motif file.")
   }
-  strt <- Sys.time()
-  if (num.conditions == 0) {
+  
+  strt<-Sys.time()
+  if(num.conditions==0) {
     stop("Error: Number of samples = 0")
     gene.coreg <- diag(num.genes)
-  }
-  else if (num.conditions < 3) {
-    stop("Not enough expression conditions detected to calculate correlation.")
-  }
-  else {
-    if (verbose) 
-      print("Verified adequate samples, calculating correlation matrix")
-    if (cpp) {
-      gene.coreg <- rcpp_ccorr(t(apply(expr.data, 1, function(x) (x - 
-                                                                    mean(x))/(sd(x)))))
-      rownames(gene.coreg) <- rownames(expr.data)
-      colnames(gene.coreg) <- rownames(expr.data)
-    }
-    else {
-      gene.coreg <- cor(t(expr.data), method = "pearson", 
-                        use = "pairwise.complete.obs")
+  } else if(num.conditions<3) {
+    stop('Not enough expression conditions detected to calculate correlation.')
+  } else {
+    if(verbose)
+      print('Verified adequate samples, calculating correlation matrix')
+    if(cpp){
+      # C++ implementation
+      gene.coreg <- rcpp_ccorr(t(apply(expr.data, 1, function(x)(x-mean(x))/(sd(x)))))
+      rownames(gene.coreg)<- rownames(expr.data)
+      colnames(gene.coreg)<- rownames(expr.data)
+      
+    } else if(!(method %in% c("BERE","pearson"))) {
+      # Standard r correlation calculation
+      gene.coreg <- cor(t(expr.data), method="pearson", use="pairwise.complete.obs")
     }
   }
-  print(Sys.time() - strt)
-  if (verbose) 
-    print("More data cleaning")
-  colnames(motif) <- c("TF", "GENE", "value")
-  regulatory.network <- spread(motif, GENE, value, fill = 0)
-  rownames(regulatory.network) <- regulatory.network[, 1]
-  regulatory.network <- regulatory.network[order(rownames(regulatory.network)), 
-                                           -1]
-  regulatory.network <- as.matrix(regulatory.network[, order(colnames(regulatory.network))])
-  if (!is.null(expr.data)) {
-    regulatory.network <- regulatory.network[, colnames(regulatory.network) %in% 
-                                               gene.names]
-  }
-  if (verbose) 
-    print("Main calculation")
-  result <- NULL
   
-  # process data
-  expr.data <- data.frame(expr.data)
-  tfdcast <- dcast(motif, TF ~ GENE, fill = 0)
-  rownames(tfdcast) <- tfdcast[, 1]
-  tfdcast <- tfdcast[, -1]
-  expr.data <- expr.data[sort(rownames(expr.data)), ]
-  tfdcast <- tfdcast[, sort(colnames(tfdcast)), ]
-  tfNames <- rownames(tfdcast)[rownames(tfdcast) %in% 
-                                 rownames(expr.data)]
-  tfdcast <- tfdcast[rownames(tfdcast) %in% tfNames, ]
-  commonGenes <- intersect(colnames(tfdcast), rownames(expr.data))
-  expr.data <- expr.data[commonGenes, ]
-  tfdcast <- tfdcast[, commonGenes]
-  if (prod(rownames(expr.data) == colnames(tfdcast)) != 
-        1) {
+  print(Sys.time()-strt)
+  
+  if(verbose)
+    print('More data cleaning')
+  # Convert 3 column format to matrix format
+  colnames(motif.data) <- c('TF','GENE','value')
+  if( method != "BERE"){
+    regulatory.network <- spread(motif.data, GENE, value, fill=0)
+    rownames(regulatory.network) <- regulatory.network[,1]
+    # sort the TFs (rows), and remove redundant first column
+    regulatory.network <- regulatory.network[order(rownames(regulatory.network)),-1]
+    # sort the genes (columns)
+    regulatory.network <- as.matrix(regulatory.network[,order(colnames(regulatory.network))])
+    
+    # Filter out any motifs that are not in expr dataset (if given)
+    if (!is.null(expr.data)){
+      regulatory.network <- regulatory.network[,colnames(regulatory.network) %in% gene.names]
+    }
+    
+    # store initial motif network (alphabetized for rows and columns)
+    #   starting.motifs <- regulatory.network
+  }
+  
+  if(verbose)
+    print('Main calculation')
+  result <- NULL
+  ########################################
+  if (method=="BERE"){
+    
+    expr.data <- data.frame(expr.data)
+    tfdcast <- dcast(motif.data,TF~GENE,fill=0)
+    rownames(tfdcast) <- tfdcast[,1]
+    tfdcast <- tfdcast[,-1]
+    
+    expr.data <- expr.data[sort(rownames(expr.data)),]
+    tfdcast <- tfdcast[,sort(colnames(tfdcast)),]
+    tfNames <- rownames(tfdcast)[rownames(tfdcast) %in% rownames(expr.data)]
+    
+    ## Filtering
+    # filter out the TFs that are not in expression set
+    tfdcast <- tfdcast[rownames(tfdcast)%in%tfNames,]
+    
+    # Filter out genes that aren't targetted by anything 7/28/15
+    commonGenes <- intersect(colnames(tfdcast),rownames(expr.data))
+    expr.data <- expr.data[commonGenes,]
+    tfdcast <- tfdcast[,commonGenes]
+    
+    # check that IDs match
+    if (prod(rownames(expr.data)==colnames(tfdcast))!=1){
       stop("ID mismatch")
-  }
-  if (method == "bere") {
-    directCor <- t(cor(t(expr.data), t(expr.data[rownames(expr.data) %in% 
-                                                   tfNames, ]))^2)
-    result <- t(apply(regulatory.network, 1, function(x) {
-      cat(".")
-      tfTargets <- as.numeric(x)
-      z <- NULL
-      if (regularization == "none") {
-        z <- glm(tfTargets ~ ., data = expr.data, family = "binomial")
-        if (is.numeric(ni.coefficient.cutoff)) {
-          coefs <- coef(z)
-          coefs[summary(z)$coef[, 4] > ni.coefficient.cutoff] <- 0
-          logit.res <- apply(expr.data, 1, function(x) {
-            coefs[1] + sum(coefs[-1] * x)
-          })
-          return(exp(logit.res)/(1 + exp(logit.res)))
-        }
-        else {
-          return(predict(z, expr.data, type = "response"))
-        }
-      }
-      else {
-        z <- penalized(tfTargets, expr.data, lambda2 = 10, 
-                       model = "logistic", standardize = TRUE)
-      }
-      predict(z, expr.data)
-    }))
-    if(1-alphaw==0){
-      consensus <- result * alphaw
+    }
+    
+    ## Get direct evidence
+    print(dim(t(expr.data)))
+    print(dim(t(expr.data[rownames(expr.data)%in%tfNames,])))
+    if ((1-alphaw)!=0){
+      directCor <- t(cor(t(expr.data),t(expr.data[rownames(expr.data)%in%tfNames,]))^2)
     }else{
-      consensus <- directCor * (1 - alphaw) + result * alphaw
+      directCor = matrix(0L, length(tfNames), length(commonGenes))
     }
-    rownames(consensus) <- rownames(regulatory.network)
+    
+    ## Get the indirect evidence    
+    if(alphaw==0){
+      result = matrix(0L, length(tfNames), length(commonGenes))
+    }else{
+      result <- t(apply(tfdcast, 1, function(x){
+        cat(".")
+        tfTargets <- as.numeric(x)
+        z <- NULL
+        if(regularization=="none"){
+          z <- glm(tfTargets ~ ., data=expr.data, family="binomial")
+          
+          # 9/10/17
+          # Adding argument to allow cutoffs based on p-values
+          if(is.numeric(ni.coefficient.cutoff)){
+            coefs <- coef(z)
+            coefs[summary(z)$coef[,4]>ni.coefficient.cutoff] <- 0
+            logit.res <- apply(expr.data,1,function(x){coefs[1] + sum(coefs[-1]*x)})
+            return(exp(logit.res)/(1+exp(logit.res)))
+            
+          } else {
+            return(predict(z, expr.data,type='response'))
+          }
+          
+        } else {
+          z <- penalized(tfTargets, expr.data,
+                         lambda2=10, model="logistic", standardize=TRUE)
+          # z <- optL1(tfTargets, expr.data, minlambda1=25, fold=5)
+          
+        }
+        
+        # Penalized Logistic Reg
+        
+        
+        predict(z, expr.data)
+      }))
+    }
+    
+    ## Convert values to ranks
+    if(alphaw<1 && alphaw>0){
+      directCor <- matrix(rank(directCor), ncol=ncol(directCor))
+      result <- matrix(rank(result), ncol=ncol(result))
+    }
+    print(dim(result))
+    print(dim(directCor))
+    consensus <- directCor*(1-alphaw) + result*alphaw
+    rownames(consensus) <- rownames(tfdcast)
     colnames(consensus) <- rownames(expr.data)
-    consensusRange <- max(consensus) - min(consensus)
-    if (score == "motifincluded") {
-      consensus <- as.matrix(consensus + consensusRange * 
-                               regulatory.network)
+    consensusRange <- max(consensus)- min(consensus)
+    if(score=="motifincluded"){
+      consensus <- as.matrix(consensus + consensusRange*regulatory.network)
     }
-    consensus
-  }
-  else if (method == "pearson") {
-    result <- t(cor(t(expr.data), t(expr.data[rownames(expr.data) %in% 
-                                                tfNames, ]))^2)
-    if (score == "motifincluded") {
-      result <- as.matrix(consensus + consensusRange * 
-                            regulatory.network)
+    result=consensus
+  } else if (method=="pearson"){
+    tfNames = levels(yeast$motif$TF)
+    result <- t(cor(t(expr.data),t(expr.data[rownames(expr.data)%in%tfNames,]))^2)
+    if(score=="motifincluded"){
+      result <- as.matrix(consensus + consensusRange*regulatory.network)
     }
     result
-  }
-  else {
-    strt <- Sys.time()
+  } else {
+    strt<-Sys.time()
+    # Remove NA correlations
     gene.coreg[is.na(gene.coreg)] <- 0
-    correlation.dif <- sweep(regulatory.network, 1, rowSums(regulatory.network), 
-                             `/`) %*% gene.coreg - sweep(1 - regulatory.network, 
-                                                         1, rowSums(1 - regulatory.network), `/`) %*% gene.coreg
-    result <- sweep(correlation.dif, 2, apply(correlation.dif, 
-                                              2, sd), "/")
-    print(Sys.time() - strt)
-    if (score == "motifincluded") {
-      result <- result + max(result) * regulatory.network
+    correlation.dif <- sweep(regulatory.network,1,rowSums(regulatory.network),`/`)%*%
+      gene.coreg - 
+      sweep(1-regulatory.network,1,rowSums(1-regulatory.network),`/`)%*%
+      gene.coreg
+    result <- sweep(correlation.dif, 2, apply(correlation.dif, 2, sd),'/')
+    #   regulatory.network <- ifelse(res>quantile(res,1-mean(regulatory.network)),1,0)
+    
+    print(Sys.time()-strt)
+    ########################################
+    if(score=="motifincluded"){
+      result <- result + max(result)*regulatory.network
     }
     result
   }
@@ -831,10 +937,10 @@ monster.monsterNI <- function (motif, expr.data, verbose = FALSE, randomize = "n
 #' data(yeast)
 #' monsterRes <- monster.bereFull(yeast$motif, yeast$exp.cc, alpha=.5)
 monster.bereFull <- function(motif.data, 
-                     expr.data, 
-                     alpha=.5, 
-                     lambda=10, 
-                     score="motifincluded"){
+                             expr.data, 
+                             alpha=.5, 
+                             lambda=10, 
+                             score="motifincluded"){
   
   expr.data <- data.frame(expr.data)
   tfdcast <- dcast(motif.data,TF~GENE,fill=0)
@@ -894,7 +1000,6 @@ monster.bereFull <- function(motif.data,
 }
 
 globalVariables(c("expr.data","lambda","rcpp_ccorr","GENE", "TF","value"))
-
 
 #' MONSTER results from example cell-cycle yeast transition
 #'

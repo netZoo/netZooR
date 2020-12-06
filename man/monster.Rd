@@ -9,10 +9,11 @@ monster(
   design,
   motif,
   nullPerms = 100,
-  ni_method = "bere",
+  ni_method = "BERE",
   ni.coefficient.cutoff = NA,
   numMaxCores = 1,
-  outputDir = NA
+  outputDir = NA,
+  alphaw = 0.5
 )
 }
 \arguments{
@@ -32,10 +33,13 @@ calculate observed transition matrix}
 inference step.  Default is NA, indicating inclusion of all coefficients.}
 
 \item{numMaxCores}{requires doParallel, foreach.  Runs MONSTER in parallel computing 
-environment.  Set to 1 to avoid parallelization.}
+environment.  Set to 1 to avoid parallelization, NA will take the default parallel pool in the computer.}
 
 \item{outputDir}{character vector specifying a directory or path in which 
 which to save MONSTER results, default is NA and results are not saved.}
+
+\item{alphaw}{A weight parameter between 0 and 1 specifying proportion of weight 
+to give to indirect compared to direct evidence. The default is 0.5 to give an equal weight to direct and indirect evidence.}
 }
 \value{
 An object of class "monsterAnalysis" containing results
@@ -50,9 +54,15 @@ MONSTER is an approach to understanding these transitions. MONSTER models phenot
 regulatory networks and then estimates a "transition matrix" that converts one state to another. 
 By examining the properties of the transition matrix, we can gain insight into regulatory 
 changes associated with phenotypic state transition.
+Important note: the direct regulatory network observed from gene expression is currently
+implemented as a regular correlation as opposed to the partial correlation described 
+in the paper.
+Citation: Schlauch, Daniel, et al. "Estimating drivers of cell state transitions using gene regulatory network models." 
+BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y
 }
 \examples{
 data(yeast)
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
+yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
 monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 }
