@@ -19,7 +19,7 @@ summarizes the results of a MONSTER analysis
 }
 \examples{
 data(yeast)
-yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 design <- c(rep(1,25),rep(0,10),rep(NA,15))
 monster(yeast$exp.cc,design,yeast$motif, nullPerms=10, numMaxCores=1)
 }

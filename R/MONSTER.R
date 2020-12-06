@@ -11,7 +11,7 @@ setMethod("show","monsterAnalysis",function(object){monster.print.monsterAnalysi
 #' @return Plot of the dTFI for each TF against null distribution
 #' @examples
 #' data(yeast)
-#' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+#' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' design <- c(rep(1,25),rep(0,10),rep(NA,15))
 #' monsterRes <- monster(yeast$exp.cc, design,
 #' yeast$motif, nullPerms=10, numMaxCores=1)
@@ -29,7 +29,7 @@ monster.plot.monsterAnalysis <- function(x, ...){
 #' @return Description of transition matrices in object
 #' @examples
 #' data(yeast)
-#' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+#' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' design <- c(rep(1,25),rep(0,10),rep(NA,15))
 #' monster(yeast$exp.cc,design,yeast$motif, nullPerms=10, numMaxCores=1)
 monster.print.monsterAnalysis <- function(x, ...){
@@ -82,7 +82,7 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' @examples
 #' data(yeast)
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+#' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 
 monster <- function(expr, 
@@ -369,7 +369,7 @@ kabsch <- function(P,Q){
 #' @examples
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=10, numMaxCores=1)
 #' data(monsterRes)
 #' monster.hcl.heatmap.plot(monsterRes)
@@ -461,7 +461,7 @@ monster.hcl.heatmap.plot <- function(monsterObj, method="pearson"){
 #' @examples
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
 #' # Color the nodes according to cluster membership
@@ -494,7 +494,7 @@ monster.transitionPCAPlot <-    function(monsterObj,
 #' @export
 #' @examples
 #' # data(yeast)
-#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
@@ -559,7 +559,7 @@ monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10
 #' @export
 #' @examples
 #' # data(yeast)
-#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
@@ -635,7 +635,7 @@ monster.dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight
 #' @examples
 #' # data(yeast)
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
-#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
 #' data(monsterRes)
 #' monster.calculate.tm.p.values(monsterRes)
