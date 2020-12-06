@@ -104,6 +104,9 @@
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
     </li>
     <li>
+      <a href="../articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
+    </li>
+    <li>
       <a href="../articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a>
     </li>
     <li>
@@ -172,12 +175,242 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>)</span>
+<span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>)</span>,na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>25</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>10</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>,<span class='fl'>15</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='monster.html'>monster</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span>,<span class='va'>design</span>,<span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>, nullPerms<span class='op'>=</span><span class='fl'>10</span>, numMaxCores<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Running null permutations in parallel"
-#&gt; [1] "1 cores used"
-#&gt; [1] "11 network transitions to be estimated"
-#&gt; Time difference of 44.46166 secs</div><div class='output co'>#&gt; MONSTER object
+</div><div class='output co'>#&gt; [1] "11 network transitions to be estimated"
+#&gt; [1] "Running iteration 1"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.604195e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   25 2555
+#&gt; [1] 25 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 4.601479e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   10 2555
+#&gt; [1] 10 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 1"
+#&gt; [1] "Running iteration 2"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.008148e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   25 2555
+#&gt; [1] 25 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.699562e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   10 2555
+#&gt; [1] 10 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 2"
+#&gt; [1] "Running iteration 3"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.102158e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   25 2555
+#&gt; [1] 25 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.508827e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   10 2555
+#&gt; [1] 10 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 3"
+#&gt; [1] "Running iteration 4"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.818771e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   25 2555
+#&gt; [1] 25 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.102158e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   10 2555
+#&gt; [1] 10 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 4"
+#&gt; [1] "Running iteration 5"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 0.0001130104 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   25 2555
+#&gt; [1] 25 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.412102e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   10 2555
+#&gt; [1] 10 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 5"
+#&gt; [1] "Running iteration 6"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.698204e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   25 2555
+#&gt; [1] 25 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.412102e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   10 2555
+#&gt; [1] 10 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 6"
+#&gt; [1] "Running iteration 7"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 8.392334e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   25 2555
+#&gt; [1] 25 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.507469e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   10 2555
+#&gt; [1] 10 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 7"
+#&gt; [1] "Running iteration 8"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.38826e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   25 2555
+#&gt; [1] 25 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.817413e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   10 2555
+#&gt; [1] 10 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 8"
+#&gt; [1] "Running iteration 9"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 7.295609e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   25 2555
+#&gt; [1] 25 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.197525e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   10 2555
+#&gt; [1] 10 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 9"
+#&gt; [1] "Running iteration 10"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.008148e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   25 2555
+#&gt; [1] 25 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.29425e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   10 2555
+#&gt; [1] 10 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 10"
+#&gt; [1] "Running iteration 11"
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 5.292892e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   25 2555
+#&gt; [1] 25 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Initializing and validating"
+#&gt; [1] "Verified adequate samples, calculating correlation matrix"
+#&gt; Time difference of 6.604195e-05 secs
+#&gt; [1] "More data cleaning"
+#&gt; [1] "Main calculation"
+#&gt; [1]   10 2555
+#&gt; [1] 10 53
+#&gt; .....................................................[1]   53 2555
+#&gt; [1]   53 2555
+#&gt; [1] "Using OLS method"
+#&gt; [1] "Finished running iteration 11"
+#&gt; Time difference of 23.35492 secs</div><div class='output co'>#&gt; MONSTER object
 #&gt; 2555 genes
 #&gt; 10 baseline samples
 #&gt; 25 final samples

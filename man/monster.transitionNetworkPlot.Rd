@@ -21,6 +21,7 @@ This function uses igraph to plot the transition matrix as a network
 }
 \examples{
 # data(yeast)
+# yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 data(monsterRes)

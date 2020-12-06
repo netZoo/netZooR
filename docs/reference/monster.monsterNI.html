@@ -105,6 +105,9 @@ gene expression data and sequence motif data" />
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
     </li>
     <li>
+      <a href="../articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
+    </li>
+    <li>
       <a href="../articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a>
     </li>
     <li>
@@ -154,7 +157,7 @@ gene expression data and sequence motif data</p>
     </div>
 
     <pre class="usage"><span class='fu'>monster.monsterNI</span><span class='op'>(</span>
-  <span class='va'>motif</span>,
+  <span class='va'>motif.data</span>,
   <span class='va'>expr.data</span>,
   verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
   randomize <span class='op'>=</span> <span class='st'>"none"</span>,
@@ -170,12 +173,6 @@ gene expression data and sequence motif data</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>motif</th>
-      <td><p>A motif dataset, a data.frame, matrix or exprSet containing 
-3 columns. Each row describes an motif associated with a transcription 
-factor (column 1) a gene (column 2) and a score (column 3) for the motif.</p></td>
-    </tr>
-    <tr>
       <th>expr.data</th>
       <td><p>An expression dataset, as a genes (rows) by samples (columns)</p></td>
     </tr>
@@ -190,7 +187,10 @@ factor (column 1) a gene (column 2) and a score (column 3) for the motif.</p></t
     <tr>
       <th>method</th>
       <td><p>String to indicate algorithm method.  Must be one of 
-"bere","pearson","cd","lda", or "wcd". Default is "bere"</p></td>
+"bere","pearson","cd","lda", or "wcd". Default is "bere".
+Important note: the direct regulatory network observed from gene expression is currently
+implemented as a regular correlation as opposed to the partial correlation described 
+in the paper (please see Schlauch et al., 2017,  https://doi.org/10.1186/s12918-017-0517-y)</p></td>
     </tr>
     <tr>
       <th>ni.coefficient.cutoff</th>
@@ -215,6 +215,12 @@ readded upon completion of the algorithm</p></td>
       <th>cpp</th>
       <td><p>logical use C++ for maximum speed, set to false if unable to run.</p></td>
     </tr>
+    <tr>
+      <th>motif</th>
+      <td><p>A motif dataset, a data.frame, matrix or exprSet containing 
+3 columns. Each row describes an motif associated with a transcription 
+factor (column 1) a gene (column 2) and a score (column 3) for the motif.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -224,8 +230,8 @@ readded upon completion of the algorithm</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>)</span>
 <span class='va'>cc.net</span> <span class='op'>&lt;-</span> <span class='fu'>monster.monsterNI</span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>,<span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Time difference of 1.113026 secs
-#&gt; .......................</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ..........</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ....................</div></pre>
+</div><div class='output co'>#&gt; Time difference of 1.14611 secs
+#&gt; Time difference of 0.4518781 secs</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
