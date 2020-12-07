@@ -534,8 +534,18 @@ monster.transitionPCAPlot <-    function(monsterObj,
 #'
 #' @param monsterObj monsterAnalysis Object
 #' @param numEdges The number of edges to display
-#' @param numTopTFs The number of TFs to display, ranked by the most significant p-values of their dTFIs
-#' @return igraph object for transition matrix
+#' @param numTopTFs The number of TFs to display, only when rescale='significance'
+#' @param rescale string to specify the order of edges. If set to 'significance', 
+#' the TFs with the largest dTFI significance (smallest dTFI p-values) will be filtered first before
+#' plotting the edges with the largest magnitude in the transition matrix. Otherwise
+#' the filtering step will be skipped and the edges with the largest transitions will be plotted.
+#' The plotted graph represents the top numEdges edges between the numTopTFs if rescale=='significance'
+#' and top numEdges edges otherwise. The edge weight represents the observed transition edges standardized
+#' by the null and the node size in the graph is proportional to the p-values of the dTFIs of each
+#' TF. When rescale is set to 'significance', the results can be different between two MONSTER runs
+#' if the number of permutations is not large enough to sample the null, that is why it is the seed should be set
+#' prior to calling MONSTER to get reproducible results. If rescale is set to another value such as 'none', it will
+#' produce deterministic results between two identical MONSTER runs.
 #' @importFrom igraph graph.data.frame plot.igraph V E V<- E<-
 #' @export
 #' @examples
@@ -544,9 +554,10 @@ monster.transitionPCAPlot <-    function(monsterObj,
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
-#' monster.transitionNetworkPlot(monsterRes)
-#' 
-monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10){
+#' monster.transitionNetworkPlot(monsterRes, rescale='significance')
+#' monster.transitionNetworkPlot(monsterRes, rescale='none')
+
+monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10, rescale='significance'){
   ## Calculate p-values for off-diagonals
   transitionSigmas <- function(tm.observed, tm.null){
     tm.null.mean <- apply(simplify2array(tm.null), 1:2, mean)
@@ -566,13 +577,15 @@ monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10
   
   # adj.combined[,1] <- mappings[match(adj.combined[,1], mappings[,1]),2]
   # adj.combined[,2] <- mappings[match(adj.combined[,2], mappings[,1]),2]
-  
   dTFI_pVals_All <- 1-2*abs(.5-monster.calculate.tm.p.values(monsterObj, 
                                                              method="z-score"))
-  topTFsIncluded <- names(sort(dTFI_pVals_All)[1:numTopTFs])
-  topTFIndices <- 2>(is.na(match(adj.combined[,1],topTFsIncluded)) + 
-                       is.na(match(adj.combined[,2],topTFsIncluded)))
-  adj.combined <- adj.combined[topTFIndices,]
+  if(rescale=='significance'){
+    topTFsIncluded <- names(sort(dTFI_pVals_All)[1:numTopTFs])
+    topTFIndices <- 2>(is.na(match(adj.combined[,1],topTFsIncluded)) + 
+                         is.na(match(adj.combined[,2],topTFsIncluded)))
+    adj.combined <- adj.combined[topTFIndices,]
+  }
+  
   adj.combined <- adj.combined[
     abs(adj.combined[,4])>=sort(abs(adj.combined[,4]),decreasing=TRUE)[numEdges],]
   tfNet <- graph.data.frame(adj.combined, directed=TRUE)
@@ -585,17 +598,23 @@ monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10
   E(tfNet)$width <- (abs(E(tfNet)$value.x))*15/max(abs(E(tfNet)$value.x))
   E(tfNet)$color <-ifelse(E(tfNet)$value.x>0, "blue", "red")
   
-  plot.igraph(tfNet, edge.arrow.size=2, vertex.label.cex= 1.5, vertex.label.color= "black",main="")
+  plot.igraph(tfNet, edge.arrow.size=1, vertex.label.cex= 1.5, vertex.label.color= "black",main="")
 }
 
 #' This function plots the Off diagonal mass of an 
 #' observed Transition Matrix compared to a set of null TMs
 #'
 #' @param monsterObj monsterAnalysis Object
-#' @param rescale logical indicating whether to reorder transcription
+#' @param rescale string indicating whether to reorder transcription
 #' factors according to their statistical significance and to 
 #' rescale the values observed to be standardized by the null
-#' distribution 
+#' distribution ('significance'), to reorder transcription
+#' factors according to the largest dTFIs ('magnitude') with the TF x axis labels proportional to their significance
+#' , or finally without ordering them ('none'). When rescale is set to 'significance', 
+#' the results can be different between two MONSTER runs if the number of permutations is not large enough to sample 
+#' the null, that is why it is the seed should be set prior to calling MONSTER to get reproducible results. 
+#' If rescale is set to another value such as 'magnitude' or 'none', it will produce deterministic results 
+#' between two identical MONSTER runs.
 #' @param plot.title String specifying the plot title
 #' @param highlight.tfs vector specifying a set of transcription 
 #' factors to highlight in the plot
@@ -610,7 +629,7 @@ monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
 #' monster.dTFIPlot(monsterRes)
-monster.dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight.tfs=NA,
+monster.dTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight.tfs=NA,
                              nTFs=-1){
   if(is.na(plot.title)){
     plot.title <- "Differential TF Involvement"
@@ -637,14 +656,17 @@ monster.dTFIPlot <- function(monsterObj, rescale=FALSE, plot.title=NA, highlight
   colnames(combined.mat) <- c(rep('Null',num.iterations),"Observed")
   
   
-  if (rescale){
+  if (rescale == 'significance'){
     combined.mat <- t(apply(combined.mat,1,function(x){
       (x-mean(x[-(num.iterations+1)]))/sd(x[-(num.iterations+1)])
     }))
     x.axis.order <- rownames(monsterObj@nullTM[[1]])[order(-t.values)]
     x.axis.size    <- 10 # pmin(15,7-log(p.values[order(p.values)]))
-  } else {
+  } else if (rescale == 'none'){
     x.axis.order <- rownames(monsterObj@nullTM[[1]])
+    x.axis.size    <- pmin(15,7-log(p.values))
+  } else if (rescale == 'magnitude'){
+    x.axis.order <- rownames(monsterObj@nullTM[[1]])[order(-combined.mat[, dim(combined.mat)[2]])]
     x.axis.size    <- pmin(15,7-log(p.values))
   }
   if(nTFs==-1){

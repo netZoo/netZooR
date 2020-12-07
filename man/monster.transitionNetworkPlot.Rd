@@ -4,17 +4,31 @@
 \alias{monster.transitionNetworkPlot}
 \title{This function uses igraph to plot the transition matrix as a network}
 \usage{
-monster.transitionNetworkPlot(monsterObj, numEdges = 100, numTopTFs = 10)
+monster.transitionNetworkPlot(
+  monsterObj,
+  numEdges = 100,
+  numTopTFs = 10,
+  rescale = "significance"
+)
 }
 \arguments{
 \item{monsterObj}{monsterAnalysis Object}
 
 \item{numEdges}{The number of edges to display}
 
-\item{numTopTFs}{The number of TFs to display, ranked by the most significant p-values of their dTFIs}
-}
-\value{
-igraph object for transition matrix
+\item{numTopTFs}{The number of TFs to display, only when rescale='significance'}
+
+\item{rescale}{string to specify the order of edges. If set to 'significance', 
+the TFs with the largest dTFI significance (smallest dTFI p-values) will be filtered first before
+plotting the edges with the largest magnitude in the transition matrix. Otherwise
+the filtering step will be skipped and the edges with the largest transitions will be plotted.
+The plotted graph represents the top numEdges edges between the numTopTFs if rescale=='significance'
+and top numEdges edges otherwise. The edge weight represents the observed transition edges standardized
+by the null and the node size in the graph is proportional to the p-values of the dTFIs of each
+TF. When rescale is set to 'significance', the results can be different between two MONSTER runs
+if the number of permutations is not large enough to sample the null, that is why it is the seed should be set
+prior to calling MONSTER to get reproducible results. If rescale is set to another value such as 'none', it will
+produce deterministic results between two identical MONSTER runs.}
 }
 \description{
 This function uses igraph to plot the transition matrix as a network
@@ -25,6 +39,6 @@ This function uses igraph to plot the transition matrix as a network
 # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 data(monsterRes)
-monster.transitionNetworkPlot(monsterRes)
-
+monster.transitionNetworkPlot(monsterRes, rescale='significance')
+monster.transitionNetworkPlot(monsterRes, rescale='none')
 }

@@ -7,7 +7,7 @@ observed Transition Matrix compared to a set of null TMs}
 \usage{
 monster.dTFIPlot(
   monsterObj,
-  rescale = FALSE,
+  rescale = "none",
   plot.title = NA,
   highlight.tfs = NA,
   nTFs = -1
@@ -16,10 +16,16 @@ monster.dTFIPlot(
 \arguments{
 \item{monsterObj}{monsterAnalysis Object}
 
-\item{rescale}{logical indicating whether to reorder transcription
+\item{rescale}{string indicating whether to reorder transcription
 factors according to their statistical significance and to 
 rescale the values observed to be standardized by the null
-distribution}
+distribution ('significance'), to reorder transcription
+factors according to the largest dTFIs ('magnitude') with the TF x axis labels proportional to their significance
+, or finally without ordering them ('none'). When rescale is set to 'significance', 
+the results can be different between two MONSTER runs if the number of permutations is not large enough to sample 
+the null, that is why it is the seed should be set prior to calling MONSTER to get reproducible results. 
+If rescale is set to another value such as 'magnitude' or 'none', it will produce deterministic results 
+between two identical MONSTER runs.}
 
 \item{plot.title}{String specifying the plot title}
 

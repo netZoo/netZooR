@@ -149,7 +149,7 @@ The code in <strong>condor.modularity.max</strong> is an implementation of the m
 <span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condor.cluster.html">condor.cluster</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></pre></div>
 <pre><code>## [1] "modularity of projected graph 0"
 ## [1] "Q = 0"
-## [1] "Q = 0.173553719008264"
+## [1] "Q = 0.15702479338843"
 ## [1] "Q = 0.231404958677686"
 ## [1] "Q = 0.231404958677686"</code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit">
@@ -170,9 +170,9 @@ The code in <strong>condor.modularity.max</strong> is an implementation of the m
 <div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="va">gtoy</span> <span class="op">=</span> <span class="fu">graph.edgelist</span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">elist</span><span class="op">)</span>,directed<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu">set.graph.attribute</span><span class="op">(</span><span class="va">gtoy</span>, <span class="st">"layout"</span>, <span class="fu">layout.kamada.kawai</span><span class="op">(</span><span class="va">gtoy</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## IGRAPH 479f1fa UN-- 8 11 -- 
+<pre><code>## IGRAPH 7e639f0 UN-- 8 11 -- 
 ## + attr: layout (g/n), name (v/c)
-## + edges from 479f1fa (vertex names):
+## + edges from 7e639f0 (vertex names):
 ##  [1] Alice--Bob    Alice--John   Alice--Ed     Bob  --Sue    John --Sue   
 ##  [6] Sue  --Hank   John --Janine Ed   --Janine Hank --Janine Ed   --Mary  
 ## [11] Hank --Mary</code></pre>
