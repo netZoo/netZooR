@@ -98,7 +98,7 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' rownames(control) = rownames(case) 
 #' expr = as.data.frame(cbind(control,case))
 #' design=c(rep(0,nGenes),rep(1, nGenes))
-#' monsterRes <- monster(expr, design, moitf=NA, nullPerms=10, numMaxCores=1, mode='regNet')
+#' monsterRes <- monster(expr, design, motif=NA, nullPerms=10, numMaxCores=1, mode='regNet')
 
 monster <- function(expr, 
                     design, 
