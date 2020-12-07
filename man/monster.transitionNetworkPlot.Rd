@@ -11,7 +11,7 @@ monster.transitionNetworkPlot(monsterObj, numEdges = 100, numTopTFs = 10)
 
 \item{numEdges}{The number of edges to display}
 
-\item{numTopTFs}{The number of TFs to display, ranked by largest dTFI}
+\item{numTopTFs}{The number of TFs to display, ranked by the most significant p-values of their dTFIs}
 }
 \value{
 igraph object for transition matrix

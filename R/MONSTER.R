@@ -57,12 +57,13 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' in the paper.
 #' Citation: Schlauch, Daniel, et al. "Estimating drivers of cell state transitions using gene regulatory network models." 
 #' BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y
-#' @param expr Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet
-#' @param design Binary vector indicating case control partition
+#' @param expr Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet. 
+#' @param design Binary vector indicating case control partition. 1 for case and 0 for control.
 #' @param motif Regulatory data.frame consisting of three columns.  For each row, a transcription factor (column 1) 
 #' regulates a gene (column 2) with a defined strength (column 3), usually taken to be 0 or 1 
 #' @param nullPerms number of random permutations to run (default 100).  Set to 0 to only 
-#' calculate observed transition matrix
+#' calculate observed transition matrix. When mode is is 'buildNet' it randomly permutes the case and control expression
+#' samples, if mode is 'regNet' it will randomly permute the case and control networks.
 #' @param ni_method String to indicate algorithm method.  Must be one of "bere","pearson","cd","lda", or "wcd". Default is "bere"
 #' @param ni.coefficient.cutoff numeric to specify a p-value cutoff at the network
 #' inference step.  Default is NA, indicating inclusion of all coefficients.
@@ -72,6 +73,8 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' which to save MONSTER results, default is NA and results are not saved.
 #' @param alphaw A weight parameter between 0 and 1 specifying proportion of weight 
 #' to give to indirect compared to direct evidence. The default is 0.5 to give an equal weight to direct and indirect evidence.
+#' @param mode A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
+#' ('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA.
 #' @export
 #' @import doParallel
 #' @import parallel
@@ -80,10 +83,22 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' @return An object of class "monsterAnalysis" containing results
 #' 
 #' @examples
+#' # Example with the network reconstruction step
 #' data(yeast)
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
+#' # Example with provided networks
+#' pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
+#' case=pandaResult@regNet
+#' nelemReg=dim(pandaResult@regNet)[1]*dim(pandaResult@regNet)[2]
+#' nGenes=length(colnames(pandaResult@regNet))
+#' control=matrix(rexp(nelemReg, rate=.1), ncol=nGenes)
+#' colnames(control) = colnames(case)
+#' rownames(control) = rownames(case) 
+#' expr = as.data.frame(cbind(control,case))
+#' design=c(rep(0,nGenes),rep(1, nGenes))
+#' monsterRes <- monster(expr, design, moitf=NA, nullPerms=10, numMaxCores=1, mode='regNet')
 
 monster <- function(expr, 
                     design, 
@@ -92,13 +107,23 @@ monster <- function(expr,
                     ni_method="BERE",
                     ni.coefficient.cutoff = NA,
                     numMaxCores=1, 
-                    outputDir=NA, alphaw=0.5){
+                    outputDir=NA, alphaw=0.5, mode='buildNet'){
   
+  if(mode=='regNet'){
+    motif=NA
+    alphaw=NA
+    ni_method=NA
+    ni.coefficient.cutoff=NA
+    if(length(design == 1) != length(design == 0)){
+      stop('case and control have a different number of genes')
+    }
+  }else{
+    if(is.null(motif)){
+      stop("motif may not be NULL")
+    }
+  }
   # Data type checking
   expr <- monster.checkDataType(expr)
-  if(is.null(motif)){
-    stop("motif may not be NULL")
-  }
   # Parallelize
   # Initiate cluster
   if(!is.na(numMaxCores) && numMaxCores > 1){
@@ -126,6 +151,17 @@ monster <- function(expr,
   expr <- expr[,design%in%c(0,1)]
   design <- design[design%in%c(0,1)]
   
+  # Check column order
+  if(mode == 'regNet'){
+    numGenes = ncol(expr)/2
+    if(any(colnames(expr[,design==1]) != colnames(expr[,design==0]))){
+      stop('Please provide two regulatory networks with the same gene labels and 
+           the same number of genes in the same order')
+    }
+  }else if(mode == 'buildNet'){
+    numGenes = nrow(expr)
+  }
+  
   nullExpr <- expr
   if(numMaxCores == 1){
     transMatrices=list()
@@ -134,19 +170,24 @@ monster <- function(expr,
       if(i!=1){
         nullExpr[] <- expr[sample(seq_along(c(expr)))]
       }
-      nullExprCases <- nullExpr[,design==1]
-      nullExprControls <- nullExpr[,design==0]
-      
-      tmpNetCases <- monster.monsterNI(motif, nullExprCases, 
-                                       method=ni_method, regularization="none",
-                                       score="none", ni.coefficient.cutoff,
-                                       verbose=TRUE, randomize = "none", cpp=FALSE,
-                                       alphaw)
-      tmpNetControls <- monster.monsterNI(motif, nullExprControls, 
-                                          method=ni_method, regularization="none",
-                                          score="none", ni.coefficient.cutoff,
-                                          verbose=TRUE, randomize = "none", cpp=FALSE,
-                                          alphaw)
+      if(mode == 'buildNet'){
+        nullExprCases <- nullExpr[,design==1]
+        nullExprControls <- nullExpr[,design==0]
+        
+        tmpNetCases <- monster.monsterNI(motif, nullExprCases, 
+                                         method=ni_method, regularization="none",
+                                         score="none", ni.coefficient.cutoff,
+                                         verbose=TRUE, randomize = "none", cpp=FALSE,
+                                         alphaw)
+        tmpNetControls <- monster.monsterNI(motif, nullExprControls, 
+                                            method=ni_method, regularization="none",
+                                            score="none", ni.coefficient.cutoff,
+                                            verbose=TRUE, randomize = "none", cpp=FALSE,
+                                            alphaw)
+      }else if(mode == 'regNet'){
+        tmpNetCases    = nullExpr[,design==1]
+        tmpNetControls = nullExpr[,design==0]
+      }
       transitionMatrix <- monster.transformation.matrix(
         tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
       print(paste("Finished running iteration", i))
@@ -163,19 +204,24 @@ monster <- function(expr,
                                if(i!=1){
                                  nullExpr[] <- expr[sample(seq_along(c(expr)))]
                                }
-                               nullExprCases <- nullExpr[,design==1]
-                               nullExprControls <- nullExpr[,design==0]
-                               
-                               tmpNetCases <- monster.monsterNI(motif, nullExprCases, 
-                                                                method=ni_method, regularization="none",
-                                                                score="none", ni.coefficient.cutoff,
-                                                                verbose = FALSE, randomize = "none",
-                                                                alphaw)
-                               tmpNetControls <- monster.monsterNI(motif, nullExprControls, 
-                                                                   method=ni_method, regularization="none",
-                                                                   score="none", ni.coefficient.cutoff,
-                                                                   verbose = FALSE, randomize = "none",
-                                                                   alphaw)
+                               if(mode == 'buildNet'){
+                                 nullExprCases <- nullExpr[,design==1]
+                                 nullExprControls <- nullExpr[,design==0]
+                                 
+                                 tmpNetCases <- monster.monsterNI(motif, nullExprCases, 
+                                                                  method=ni_method, regularization="none",
+                                                                  score="none", ni.coefficient.cutoff,
+                                                                  verbose = FALSE, randomize = "none",
+                                                                  alphaw)
+                                 tmpNetControls <- monster.monsterNI(motif, nullExprControls, 
+                                                                     method=ni_method, regularization="none",
+                                                                     score="none", ni.coefficient.cutoff,
+                                                                     verbose = FALSE, randomize = "none",
+                                                                     alphaw)
+                               }else if(mode == 'regNet'){
+                                 tmpNetCases    = nullExpr[,design==1]
+                                 tmpNetControls = nullExpr[,design==0]
+                               }
                                transitionMatrix <- monster.transformation.matrix(
                                  tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
                                print(paste("Finished running iteration", i))
@@ -196,7 +242,7 @@ monster <- function(expr,
     monsterAnalysis(
       tm=transMatrices[[1]], 
       nullTM=transMatrices[-1], 
-      numGenes=nrow(expr), 
+      numGenes=numGenes, 
       numSamples=c(sum(design==0), sum(design==1))))
 }
 
@@ -488,7 +534,7 @@ monster.transitionPCAPlot <-    function(monsterObj,
 #'
 #' @param monsterObj monsterAnalysis Object
 #' @param numEdges The number of edges to display
-#' @param numTopTFs The number of TFs to display, ranked by largest dTFI
+#' @param numTopTFs The number of TFs to display, ranked by the most significant p-values of their dTFIs
 #' @return igraph object for transition matrix
 #' @importFrom igraph graph.data.frame plot.igraph V E V<- E<-
 #' @export
@@ -821,8 +867,6 @@ monster.monsterNI <- function(motif.data,
     }
     
     ## Get direct evidence
-    print(dim(t(expr.data)))
-    print(dim(t(expr.data[rownames(expr.data)%in%tfNames,])))
     if ((1-alphaw)!=0){
       directCor <- t(cor(t(expr.data),t(expr.data[rownames(expr.data)%in%tfNames,]))^2)
     }else{
@@ -871,8 +915,6 @@ monster.monsterNI <- function(motif.data,
       directCor <- matrix(rank(directCor), ncol=ncol(directCor))
       result <- matrix(rank(result), ncol=ncol(result))
     }
-    print(dim(result))
-    print(dim(directCor))
     consensus <- directCor*(1-alphaw) + result*alphaw
     rownames(consensus) <- rownames(tfdcast)
     colnames(consensus) <- rownames(expr.data)

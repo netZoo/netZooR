@@ -13,19 +13,21 @@ monster(
   ni.coefficient.cutoff = NA,
   numMaxCores = 1,
   outputDir = NA,
-  alphaw = 0.5
+  alphaw = 0.5,
+  mode = "buildNet"
 )
 }
 \arguments{
-\item{expr}{Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet}
+\item{expr}{Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet.}
 
-\item{design}{Binary vector indicating case control partition}
+\item{design}{Binary vector indicating case control partition. 1 for case and 0 for control.}
 
 \item{motif}{Regulatory data.frame consisting of three columns.  For each row, a transcription factor (column 1) 
 regulates a gene (column 2) with a defined strength (column 3), usually taken to be 0 or 1}
 
 \item{nullPerms}{number of random permutations to run (default 100).  Set to 0 to only 
-calculate observed transition matrix}
+calculate observed transition matrix. When mode is is 'buildNet' it randomly permutes the case and control expression
+samples, if mode is 'regNet' it will randomly permute the case and control networks.}
 
 \item{ni_method}{String to indicate algorithm method.  Must be one of "bere","pearson","cd","lda", or "wcd". Default is "bere"}
 
@@ -40,6 +42,9 @@ which to save MONSTER results, default is NA and results are not saved.}
 
 \item{alphaw}{A weight parameter between 0 and 1 specifying proportion of weight 
 to give to indirect compared to direct evidence. The default is 0.5 to give an equal weight to direct and indirect evidence.}
+
+\item{mode}{A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
+('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA.}
 }
 \value{
 An object of class "monsterAnalysis" containing results
@@ -61,8 +66,20 @@ Citation: Schlauch, Daniel, et al. "Estimating drivers of cell state transitions
 BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y
 }
 \examples{
+# Example with the network reconstruction step
 data(yeast)
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
 yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
+# Example with provided networks
+pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
+case=pandaResult@regNet
+nelemReg=dim(pandaResult@regNet)[1]*dim(pandaResult@regNet)[2]
+nGenes=length(colnames(pandaResult@regNet))
+control=matrix(rexp(nelemReg, rate=.1), ncol=nGenes)
+colnames(control) = colnames(case)
+rownames(control) = rownames(case) 
+expr = as.data.frame(cbind(control,case))
+design=c(rep(0,nGenes),rep(1, nGenes))
+monsterRes <- monster(expr, design, moitf=NA, nullPerms=10, numMaxCores=1, mode='regNet')
 }
