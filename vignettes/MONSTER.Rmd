@@ -128,10 +128,10 @@ In this plot, we have the $dTFI$ for each transcription factor along the x-axis.
 
 Due to the complex nature of the structure of gene regulatory networks, it is not uncommon to see transcription factors which exhibit a high degree of transitional change, but which is not statistically significant due to the high variability of that particular TF (e.g. YDR463W).  Conversely, some TFs show weak changes, but those changes are large compared to the changes observed in null transitions (e.g. YKL062W).  Ideally, we are most interested in TFs which demonstrate large changes in targetting pattern which is found to be strongly significant (e.g. YJL056C).
 
-Adding the argument `sort.by.sig=TRUE`, sorts the x-axis so that the most significant transcription factors are on the left.
+Adding the argument `rescale='significance'`, sorts the x-axis so that the most significant transcription factors are on the left.
 
 ```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=F}
-monster.plot.monsterAnalysis(monsterRes, rescale=TRUE)
+monster.plot.monsterAnalysis(monsterRes, rescale='significance')
 ```
 
 Our top hit here is YDL056W, which reassuringly is established in the literature as being involved in regulation of cell cycle progression from G1 to S phase [Koch C, et al. (1993)]

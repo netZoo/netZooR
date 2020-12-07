@@ -154,7 +154,12 @@
     <p>This function uses igraph to plot the transition matrix as a network</p>
     </div>
 
-    <pre class="usage"><span class='fu'>monster.transitionNetworkPlot</span><span class='op'>(</span><span class='va'>monsterObj</span>, numEdges <span class='op'>=</span> <span class='fl'>100</span>, numTopTFs <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>monster.transitionNetworkPlot</span><span class='op'>(</span>
+  <span class='va'>monsterObj</span>,
+  numEdges <span class='op'>=</span> <span class='fl'>100</span>,
+  numTopTFs <span class='op'>=</span> <span class='fl'>10</span>,
+  rescale <span class='op'>=</span> <span class='st'>"significance"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,13 +174,24 @@
     </tr>
     <tr>
       <th>numTopTFs</th>
-      <td><p>The number of TFs to display, ranked by largest dTFI</p></td>
+      <td><p>The number of TFs to display, only when rescale='significance'</p></td>
+    </tr>
+    <tr>
+      <th>rescale</th>
+      <td><p>string to specify the order of edges. If set to 'significance', 
+the TFs with the largest dTFI significance (smallest dTFI p-values) will be filtered first before
+plotting the edges with the largest magnitude in the transition matrix. Otherwise
+the filtering step will be skipped and the edges with the largest transitions will be plotted.
+The plotted graph represents the top numEdges edges between the numTopTFs if rescale=='significance'
+and top numEdges edges otherwise. The edge weight represents the observed transition edges standardized
+by the null and the node size in the graph is proportional to the p-values of the dTFIs of each
+TF. When rescale is set to 'significance', the results can be different between two MONSTER runs
+if the number of permutations is not large enough to sample the null, that is why it is the seed should be set
+prior to calling MONSTER to get reproducible results. If rescale is set to another value such as 'none', it will
+produce deterministic results between two identical MONSTER runs.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>igraph object for transition matrix</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># data(yeast)</span>
@@ -183,9 +199,9 @@
 <span class='co'># design &lt;- c(rep(0,20),rep(NA,10),rep(1,20))</span>
 <span class='co'># monsterRes &lt;- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' </span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>
-<span class='fu'>monster.transitionNetworkPlot</span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>
-</div><div class='img'><img src='monster.transitionNetworkPlot-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+<span class='fu'>monster.transitionNetworkPlot</span><span class='op'>(</span><span class='va'>monsterRes</span>, rescale<span class='op'>=</span><span class='st'>'significance'</span><span class='op'>)</span>
+</div><div class='img'><img src='monster.transitionNetworkPlot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>monster.transitionNetworkPlot</span><span class='op'>(</span><span class='va'>monsterRes</span>, rescale<span class='op'>=</span><span class='st'>'none'</span><span class='op'>)</span>
+</div><div class='img'><img src='monster.transitionNetworkPlot-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
