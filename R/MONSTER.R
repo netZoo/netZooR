@@ -598,7 +598,7 @@ monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10
   E(tfNet)$width <- (abs(E(tfNet)$value.x))*15/max(abs(E(tfNet)$value.x))
   E(tfNet)$color <-ifelse(E(tfNet)$value.x>0, "blue", "red")
   
-  plot.igraph(tfNet, edge.arrow.size=1, vertex.label.cex= 1.5, vertex.label.color= "black",main="")
+  plot.igraph(tfNet, edge.arrow.size=2, vertex.label.cex= 1.5, vertex.label.color= "black",main="")
 }
 
 #' This function plots the Off diagonal mass of an 
