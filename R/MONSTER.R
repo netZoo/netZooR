@@ -440,7 +440,9 @@ monster.transitionPCAPlot <-    function(monsterObj,
     ggtitle(title)
 }
 
-#' This function uses igraph to plot the transition matrix as a network
+#' This function uses igraph to plot the transition matrix (directed graph) as a network.
+#' The edges in the network should be read as A 'positively/negatively contributes to' the 
+#' targeting of B in the target state.
 #'
 #' @param monsterObj monsterAnalysis Object
 #' @param numEdges The number of edges to display
