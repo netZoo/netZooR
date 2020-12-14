@@ -268,13 +268,13 @@
 <span class="va">lcl_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"TF"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>,<span class="st">"Gene"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>,<span class="st">"Motif"</span><span class="op">=</span><span class="cn">NA</span>,<span class="st">"Score"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>,stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">wb_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"TF"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">wb_vis</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>,<span class="st">"Gene"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">wb_vis</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>,<span class="st">"Motif"</span><span class="op">=</span><span class="cn">NA</span>,<span class="st">"Score"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">wb_vis</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>,stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">)</span>
-<span class="co">#&gt;        TF  Gene Motif     Score</span>
-<span class="co">#&gt; 1   ASCL1 RPAP3    NA 0.9617341</span>
-<span class="co">#&gt; 2   BARX1 RPAP3    NA 0.9616993</span>
-<span class="co">#&gt; 3 BHLHE41 RPAP3    NA 0.9617121</span>
-<span class="co">#&gt; 4   CEBPD RPAP3    NA 0.9617139</span>
-<span class="co">#&gt; 5   CEBPZ RPAP3    NA 0.9617043</span>
-<span class="co">#&gt; 6   CENPB RPAP3    NA 0.9617101</span></pre></div>
+<span class="co">#&gt;        TF  Gene Motif        Score</span>
+<span class="co">#&gt; 1   ASCL1 RPAP3    NA -0.025403065</span>
+<span class="co">#&gt; 2   BARX1 RPAP3    NA -0.031608707</span>
+<span class="co">#&gt; 3 BHLHE41 RPAP3    NA -0.025950559</span>
+<span class="co">#&gt; 4   CEBPD RPAP3    NA  0.011696100</span>
+<span class="co">#&gt; 5   CEBPZ RPAP3    NA -0.026022708</span>
+<span class="co">#&gt; 6   CENPB RPAP3    NA -0.003328924</span></pre></div>
 </div>
 <div id="plot-the-200-highest-edge-weights" class="section level2">
 <h2 class="hasAnchor">
@@ -327,10 +327,8 @@
 <span class="va">wb_indegree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">otterWB</span>, <span class="fl">2</span>, <span class="va">sum</span><span class="op">)</span> 
 <span class="va">degreeDiff</span> <span class="op">&lt;-</span> <span class="va">lcl_indegree</span><span class="op">-</span><span class="va">wb_indegree</span> 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">degreeDiff</span><span class="op">)</span>
-<span class="co">#&gt;         RPAP3         ACSM3        CREBBP        ZNF263          RALA </span>
-<span class="co">#&gt; -1.644496e-04  1.960062e-04 -1.709337e-04 -3.284675e-04 -6.335936e-05 </span>
-<span class="co">#&gt;         PSMB1 </span>
-<span class="co">#&gt; -3.213199e-04</span></pre></div>
+<span class="co">#&gt;        RPAP3        ACSM3       CREBBP       ZNF263         RALA        PSMB1 </span>
+<span class="co">#&gt; -0.006887092 -0.001475058  0.002100493  0.005429057 -0.017758478 -0.048606106</span></pre></div>
 </div>
 <div id="gene-set-enrichment-analysis" class="section level1">
 <h1 class="hasAnchor">
@@ -349,37 +347,37 @@
 <span class="va">fgseaRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">degreeDiff_all</span>, minSize<span class="op">=</span><span class="fl">15</span>, maxSize<span class="op">=</span><span class="fl">500</span>, nperm<span class="op">=</span><span class="fl">1000</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span>
 <span class="co">#&gt;                                          pathway        pval       padj</span>
-<span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.002087683 0.01253186</span>
-<span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.223735409 0.36331346</span>
-<span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.055441478 0.12266427</span>
-<span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.385714286 0.55960187</span>
-<span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.051975052 0.11794339</span>
-<span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.317622951 0.47643443</span>
+<span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.002066116 0.01112368</span>
+<span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.258979206 0.41672109</span>
+<span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.068085106 0.15650732</span>
+<span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.388888889 0.56420765</span>
+<span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.058212058 0.14310464</span>
+<span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.305263158 0.46983982</span>
 <span class="co">#&gt;            ES       NES nMoreExtreme size                          leadingEdge</span>
-<span class="co">#&gt; 1:  0.4360719  1.809776            0   58    HK1,ENO2,ENO1,ALDOC,BPGM,PFKM,...</span>
-<span class="co">#&gt; 2: -0.3428560 -1.173288          114   29  DLST,PCK2,SUCLG2P2,MDH2,FH,IDH2,...</span>
-<span class="co">#&gt; 3:  0.4435710  1.431754           26   21   ALDOC,PFKM,PFKP,ALDOA,PFKL,GPI,...</span>
-<span class="co">#&gt; 4:  0.3180477  1.041648          188   22   UGT1A1,UGT1A10,UGT1A6,CRYL1,UGT2B7</span>
-<span class="co">#&gt; 5:  0.4118882  1.460801           24   31 HK1,ALDOC,PFKFB4,PFKM,MTMR2,PFKP,...</span>
-<span class="co">#&gt; 6:  0.3247973  1.098872          154   25      GLB1,HK1,PFKM,PFKP,PFKL,GAA,...</span>
+<span class="co">#&gt; 1:  0.4360719  1.763209            0   58    HK1,ENO2,ENO1,ALDOC,BPGM,PFKM,...</span>
+<span class="co">#&gt; 2: -0.3428560 -1.157825          136   29  DLST,PCK2,SUCLG2P2,MDH2,FH,IDH2,...</span>
+<span class="co">#&gt; 3:  0.4435710  1.434086           31   21   ALDOC,PFKM,PFKP,ALDOA,PFKL,GPI,...</span>
+<span class="co">#&gt; 4:  0.3180477  1.033745          181   22   UGT1A1,UGT1A10,UGT1A6,CRYL1,UGT2B7</span>
+<span class="co">#&gt; 5:  0.4118882  1.454572           27   31 HK1,ALDOC,PFKFB4,PFKM,MTMR2,PFKP,...</span>
+<span class="co">#&gt; 6:  0.3247973  1.090149          144   25      GLB1,HK1,PFKM,PFKP,PFKL,GAA,...</span>
 <span class="co"># Subset to pathways with FDR &lt; 0.05</span>
 <span class="va">sig</span> <span class="op">&lt;-</span> <span class="va">fgseaRes</span><span class="op">[</span><span class="va">fgseaRes</span><span class="op">$</span><span class="va">padj</span> <span class="op">&lt;</span> <span class="fl">0.05</span>,<span class="op">]</span>
 <span class="co"># Get the top 10 significant pathways enriched for genes having lower targeting in LCLs  </span>
 <span class="va">sig</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">sig</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>,<span class="op">]</span>
 <span class="co">#&gt;                             pathway        pval       padj         ES       NES</span>
-<span class="co">#&gt;  1:            KEGG_DNA_REPLICATION 0.001941748 0.01253186 -0.7725018 -2.756094</span>
-<span class="co">#&gt;  2:                 KEGG_CELL_CYCLE 0.001782531 0.01253186 -0.5948628 -2.708173</span>
-<span class="co">#&gt;  3:                KEGG_SPLICEOSOME 0.001776199 0.01253186 -0.5766563 -2.607606</span>
-<span class="co">#&gt;  4:             KEGG_PROTEIN_EXPORT 0.001960784 0.01253186 -0.6851677 -2.213459</span>
-<span class="co">#&gt;  5: KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001984127 0.01253186 -0.5785505 -2.141004</span>
-<span class="co">#&gt;  6:       KEGG_BASE_EXCISION_REPAIR 0.001915709 0.01253186 -0.5965607 -2.111975</span>
-<span class="co">#&gt;  7:      KEGG_PYRIMIDINE_METABOLISM 0.001879699 0.01253186 -0.4606911 -1.995188</span>
-<span class="co">#&gt;  8:            KEGG_MISMATCH_REPAIR 0.001953125 0.01253186 -0.6107380 -1.959989</span>
-<span class="co">#&gt;  9:             KEGG_RNA_POLYMERASE 0.001964637 0.01253186 -0.5731001 -1.932532</span>
-<span class="co">#&gt; 10:      KEGG_N_GLYCAN_BIOSYNTHESIS 0.001879699 0.01253186 -0.4815544 -1.845631</span>
+<span class="co">#&gt;  1:                 KEGG_CELL_CYCLE 0.001865672 0.01112368 -0.5948628 -2.732258</span>
+<span class="co">#&gt;  2:            KEGG_DNA_REPLICATION 0.001865672 0.01112368 -0.7725018 -2.717212</span>
+<span class="co">#&gt;  3:                KEGG_SPLICEOSOME 0.001872659 0.01112368 -0.5766563 -2.647221</span>
+<span class="co">#&gt;  4:             KEGG_PROTEIN_EXPORT 0.001886792 0.01112368 -0.6851677 -2.179071</span>
+<span class="co">#&gt;  5: KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001919386 0.01112368 -0.5785505 -2.113457</span>
+<span class="co">#&gt;  6:       KEGG_BASE_EXCISION_REPAIR 0.001841621 0.01112368 -0.5965607 -2.086274</span>
+<span class="co">#&gt;  7:      KEGG_PYRIMIDINE_METABOLISM 0.001890359 0.01112368 -0.4606911 -1.999815</span>
+<span class="co">#&gt;  8:            KEGG_MISMATCH_REPAIR 0.001872659 0.01112368 -0.6107380 -1.932905</span>
+<span class="co">#&gt;  9:             KEGG_RNA_POLYMERASE 0.001901141 0.01112368 -0.5731001 -1.918859</span>
+<span class="co">#&gt; 10:      KEGG_N_GLYCAN_BIOSYNTHESIS 0.001923077 0.01112368 -0.4815544 -1.797937</span>
 <span class="co">#&gt;     nMoreExtreme size                                    leadingEdge</span>
-<span class="co">#&gt;  1:            0   34             RFC5,RFC3,FEN1,MCM7,POLE2,DNA2,...</span>
-<span class="co">#&gt;  2:            0  121          ORC6,CDC7,CDC20,PKMYT1,CCNE1,ORC1,...</span>
+<span class="co">#&gt;  1:            0  121          ORC6,CDC7,CDC20,PKMYT1,CCNE1,ORC1,...</span>
+<span class="co">#&gt;  2:            0   34             RFC5,RFC3,FEN1,MCM7,POLE2,DNA2,...</span>
 <span class="co">#&gt;  3:            0  118          PHF5A,SRSF3,LSM7,SRSF7,LSM4,U2AF2,...</span>
 <span class="co">#&gt;  4:            0   23       IMMP1L,SRP9,SRPRB,SPCS3,HSPA5,IMMP2L,...</span>
 <span class="co">#&gt;  5:            0   41             RFC5,RFC3,POLE2,CCNH,RFC4,PCNA,...</span>
