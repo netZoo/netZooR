@@ -9,22 +9,25 @@ monster(
   design,
   motif,
   nullPerms = 100,
-  ni_method = "bere",
+  ni_method = "BERE",
   ni.coefficient.cutoff = NA,
   numMaxCores = 1,
-  outputDir = NA
+  outputDir = NA,
+  alphaw = 0.5,
+  mode = "buildNet"
 )
 }
 \arguments{
-\item{expr}{Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet}
+\item{expr}{Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet.}
 
-\item{design}{Binary vector indicating case control partition}
+\item{design}{Binary vector indicating case control partition. 1 for case and 0 for control.}
 
 \item{motif}{Regulatory data.frame consisting of three columns.  For each row, a transcription factor (column 1) 
 regulates a gene (column 2) with a defined strength (column 3), usually taken to be 0 or 1}
 
 \item{nullPerms}{number of random permutations to run (default 100).  Set to 0 to only 
-calculate observed transition matrix}
+calculate observed transition matrix. When mode is is 'buildNet' it randomly permutes the case and control expression
+samples, if mode is 'regNet' it will randomly permute the case and control networks.}
 
 \item{ni_method}{String to indicate algorithm method.  Must be one of "bere","pearson","cd","lda", or "wcd". Default is "bere"}
 
@@ -32,10 +35,16 @@ calculate observed transition matrix}
 inference step.  Default is NA, indicating inclusion of all coefficients.}
 
 \item{numMaxCores}{requires doParallel, foreach.  Runs MONSTER in parallel computing 
-environment.  Set to 1 to avoid parallelization.}
+environment.  Set to 1 to avoid parallelization, NA will take the default parallel pool in the computer.}
 
 \item{outputDir}{character vector specifying a directory or path in which 
 which to save MONSTER results, default is NA and results are not saved.}
+
+\item{alphaw}{A weight parameter between 0 and 1 specifying proportion of weight 
+to give to indirect compared to direct evidence. The default is 0.5 to give an equal weight to direct and indirect evidence.}
+
+\item{mode}{A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
+('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA.}
 }
 \value{
 An object of class "monsterAnalysis" containing results
@@ -50,9 +59,27 @@ MONSTER is an approach to understanding these transitions. MONSTER models phenot
 regulatory networks and then estimates a "transition matrix" that converts one state to another. 
 By examining the properties of the transition matrix, we can gain insight into regulatory 
 changes associated with phenotypic state transition.
+Important note: the direct regulatory network observed from gene expression is currently
+implemented as a regular correlation as opposed to the partial correlation described 
+in the paper.
+Citation: Schlauch, Daniel, et al. "Estimating drivers of cell state transitions using gene regulatory network models." 
+BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y
 }
 \examples{
+# Example with the network reconstruction step
 data(yeast)
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
+yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
+# Example with provided networks
+pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
+case=pandaResult@regNet
+nelemReg=dim(pandaResult@regNet)[1]*dim(pandaResult@regNet)[2]
+nGenes=length(colnames(pandaResult@regNet))
+control=matrix(rexp(nelemReg, rate=.1), ncol=nGenes)
+colnames(control) = colnames(case)
+rownames(control) = rownames(case) 
+expr = as.data.frame(cbind(control,case))
+design=c(rep(0,nGenes),rep(1, nGenes))
+monsterRes <- monster(expr, design, motif=NA, nullPerms=10, numMaxCores=1, mode='regNet')
 }

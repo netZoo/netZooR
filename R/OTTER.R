@@ -32,7 +32,7 @@
 #'  
 #' @export
 
-otter <- function(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 32, eta = 0.00001, bexp = 1){
+otter <- function(W, P, C, lambda = 0.035, gamma = 0.335, Iter = 60, eta = 0.00001, bexp = 1){
   #ADAM parameters
   b1 <- 0.9
   b2 <- 0.999
@@ -44,9 +44,7 @@ otter <- function(W, P, C, lambda = 0.0035, gamma = 0.335, Iter = 32, eta = 0.00
   nTF <- dW[1]
   nGenes <- dW[2]
   C <- C/sum(diag(C))
-  P <- P+2.2
-  W <- P%*%W
-  W <- W/sum(diag(W%*%t(W)))
+  W <- W/sqrt(sum(diag(W%*%t(W))))
   P <- P/sum(diag(P))
   
   P <- -P*(1-lambda) + gamma*diag(nTF)

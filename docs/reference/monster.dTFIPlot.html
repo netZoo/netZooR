@@ -107,6 +107,9 @@ observed Transition Matrix compared to a set of null TMs" />
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
     </li>
     <li>
+      <a href="../articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
+    </li>
+    <li>
       <a href="../articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a>
     </li>
     <li>
@@ -158,9 +161,10 @@ observed Transition Matrix compared to a set of null TMs</p>
 
     <pre class="usage"><span class='fu'>monster.dTFIPlot</span><span class='op'>(</span>
   <span class='va'>monsterObj</span>,
-  rescale <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  rescale <span class='op'>=</span> <span class='st'>"none"</span>,
   plot.title <span class='op'>=</span> <span class='cn'>NA</span>,
-  highlight.tfs <span class='op'>=</span> <span class='cn'>NA</span>
+  highlight.tfs <span class='op'>=</span> <span class='cn'>NA</span>,
+  nTFs <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -172,10 +176,16 @@ observed Transition Matrix compared to a set of null TMs</p>
     </tr>
     <tr>
       <th>rescale</th>
-      <td><p>logical indicating whether to reorder transcription
+      <td><p>string indicating whether to reorder transcription
 factors according to their statistical significance and to 
 rescale the values observed to be standardized by the null
-distribution</p></td>
+distribution ('significance'), to reorder transcription
+factors according to the largest dTFIs ('magnitude') with the TF x axis labels proportional to their significance
+, or finally without ordering them ('none'). When rescale is set to 'significance', 
+the results can be different between two MONSTER runs if the number of permutations is not large enough to sample 
+the null, that is why it is the seed should be set prior to calling MONSTER to get reproducible results. 
+If rescale is set to another value such as 'magnitude' or 'none', it will produce deterministic results 
+between two identical MONSTER runs.</p></td>
     </tr>
     <tr>
       <th>plot.title</th>
@@ -186,6 +196,10 @@ distribution</p></td>
       <td><p>vector specifying a set of transcription 
 factors to highlight in the plot</p></td>
     </tr>
+    <tr>
+      <th>nTFs</th>
+      <td><p>number of TFs to plot in x axis. -1 takes all TFs.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -195,6 +209,7 @@ distribution to that estimated under the null</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># data(yeast)</span>
+<span class='co'># yeast$exp.cc[is.na(yeast$exp.cc)] &lt;- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)</span>
 <span class='co'># design &lt;- c(rep(0,20),rep(NA,10),rep(1,20))</span>
 <span class='co'># monsterRes &lt;- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' </span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>

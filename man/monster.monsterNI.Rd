@@ -5,7 +5,7 @@
 \title{Bipartite Edge Reconstruction from Expression data}
 \usage{
 monster.monsterNI(
-  motif,
+  motif.data,
   expr.data,
   verbose = FALSE,
   randomize = "none",
@@ -18,10 +18,6 @@ monster.monsterNI(
 )
 }
 \arguments{
-\item{motif}{A motif dataset, a data.frame, matrix or exprSet containing 
-3 columns. Each row describes an motif associated with a transcription 
-factor (column 1) a gene (column 2) and a score (column 3) for the motif.}
-
 \item{expr.data}{An expression dataset, as a genes (rows) by samples (columns)}
 
 \item{verbose}{logical to indicate printing of output for algorithm progress.}
@@ -29,7 +25,10 @@ factor (column 1) a gene (column 2) and a score (column 3) for the motif.}
 \item{randomize}{logical indicating randomization by genes, within genes or none}
 
 \item{method}{String to indicate algorithm method.  Must be one of 
-"bere","pearson","cd","lda", or "wcd". Default is "bere"}
+"bere","pearson","cd","lda", or "wcd". Default is "bere".
+Important note: the direct regulatory network observed from gene expression is currently
+implemented as a regular correlation as opposed to the partial correlation described 
+in the paper (please see Schlauch et al., 2017,  https://doi.org/10.1186/s12918-017-0517-y)}
 
 \item{ni.coefficient.cutoff}{numeric to specify a p-value cutoff at the network
 inference step.  Default is NA, indicating inclusion of all coefficients.}
@@ -43,6 +42,10 @@ to give to indirect compared to direct evidence.  See documentation.}
 readded upon completion of the algorithm}
 
 \item{cpp}{logical use C++ for maximum speed, set to false if unable to run.}
+
+\item{motif}{A motif dataset, a data.frame, matrix or exprSet containing 
+3 columns. Each row describes an motif associated with a transcription 
+factor (column 1) a gene (column 2) and a score (column 3) for the motif.}
 }
 \value{
 matrix for inferred network between TFs and genes
