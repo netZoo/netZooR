@@ -5,6 +5,8 @@
 <a href="https://netzoo.github.io/netZooR/"><img src="https://img.shields.io/badge/docs-passing-green"></a>
 [![tutorials](https://img.shields.io/badge/netZooR-tutorials-9cf)](https://github.com/netZoo/netZooR/tree/master/vignettes)
 [![netBooks](https://img.shields.io/badge/netZooR-netBooks-ff69b4)](http://netbooks.networkmedicine.org/user/marouenbg/notebooks/Welcome_to_netBooks.ipynb?)
+[![discussions](https://img.shields.io/badge/netZooR-discussions-orange)](https://github.com/netZoo/netZooR/discussions)
+
 
 R4.01@Ubuntu 18.04: [![Build Status](http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04)](http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/)
 
@@ -81,11 +83,10 @@ py_config()
 
 ```
 
-## Issues
+## Help
 
-For **data.table** installation issue please refer to [issue #40](https://github.com/netZoo/netZooR/issues/40).
-
-Please report any further issue to the [issues page](https://github.com/netZoo/netZooR/issues).
+If you need help or if you have any question about netZoo, feel free to start with [discussions](https://github.com/netZoo/netZooR/discussions).
+To report a bug, please open a new [issue](https://github.com/netZoo/netZooR/issues).
 
 
 ## Tutorials
