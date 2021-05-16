@@ -759,8 +759,8 @@ condor.plot.communities = function(condor.object,color_list,point.size=0.01,
   # coerce non-factor inpout
   eqtl_block$gene = as.factor(eqtl_block$gene)
   eqtl_block$SNP = as.factor(eqtl_block$SNP)
-  eqtl_all$gene = as.factor(eqtl_block$gene)
-  eqtl_all$SNP = as.factor(eqtl_block$SNP)
+  eqtl_all$gene = as.factor(eqtl_all$gene)
+  eqtl_all$SNP = as.factor(eqtl_all$SNP)
   
   #setkeyv(eqtl1,c("SNP","blue.memb","gene","red.memb"))
   if(nlevels(eqtl_block$SNP) != length(unique(eqtl_block$SNP))){
