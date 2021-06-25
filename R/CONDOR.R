@@ -756,6 +756,11 @@ condor.plot.communities = function(condor.object,color_list,point.size=0.01,
   eqtl_all <- data.table(eqtl_object[!is.na(SNP)])
   #this groups red and blue nodes in the same community. very important
   eqtl_block <- eqtl_all[blue.memb==red.memb]
+  # coerce non-factor inpout
+  eqtl_block$gene = as.factor(eqtl_block$gene)
+  eqtl_block$SNP = as.factor(eqtl_block$SNP)
+  eqtl_all$gene = as.factor(eqtl_all$gene)
+  eqtl_all$SNP = as.factor(eqtl_all$SNP)
   
   #setkeyv(eqtl1,c("SNP","blue.memb","gene","red.memb"))
   if(nlevels(eqtl_block$SNP) != length(unique(eqtl_block$SNP))){
