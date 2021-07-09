@@ -573,7 +573,7 @@ monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10
   diag(adjMat) <- 0
   adjMat.melt <- melt(adjMat)
   
-  adj.combined <- merge(tm.sigmas.melt, adjMat.melt, by=c("Var1","Var2"))
+  adj.combined <- merge(tm.sigmas.melt, adjMat.melt, by=c("X1","X2"))
   
   # adj.combined[,1] <- mappings[match(adj.combined[,1], mappings[,1]),2]
   # adj.combined[,2] <- mappings[match(adj.combined[,2], mappings[,1]),2]
