@@ -66,15 +66,18 @@ alpaca <- function(net.table,file.stem,verbose=F)
     this.comm <- names(louv.memb)[louv.memb==i]
     this.tfs <- this.comm[grep("_A$",this.comm)]
     this.genes <- this.comm[grep("_B$",this.comm)]
-    if (length(this.tfs)>1){
-      tf.sums <- apply(dwbm[this.tfs,this.genes],1,sum)
-      gene.sums <- apply(dwbm[this.tfs,this.genes],2,sum)} else {
-        tf.sums <- sum(dwbm[this.tfs,this.genes])
-        gene.sums <- dwbm[this.tfs,this.genes]
-      }
-    this.denom <- sum(dwbm[this.tfs,this.genes])
-    louv.Ascores <- c(louv.Ascores,tf.sums/this.denom)
-    louv.Bscores <- c(louv.Bscores,gene.sums/this.denom)
+    if (length(this.tfs)>=1){
+      if (length(this.tfs)>1){
+        tf.sums <- apply(dwbm[this.tfs,this.genes],1,sum)
+        gene.sums <- apply(dwbm[this.tfs,this.genes],2,sum)
+        } else if (length(this.tfs)==1) {
+            tf.sums <- sum(dwbm[this.tfs,this.genes])
+            gene.sums <- dwbm[this.tfs,this.genes]
+        } 
+      this.denom <- sum(dwbm[this.tfs,this.genes])
+      louv.Ascores <- c(louv.Ascores,tf.sums/this.denom)
+      louv.Bscores <- c(louv.Bscores,gene.sums/this.denom)
+    }
   }
   
   louv.scores <- c(louv.Ascores,louv.Bscores)
@@ -771,7 +774,7 @@ alpaca.genlouvain <- function(B)
         
         yi <- which(u==y[i])
         dH[yi] <- dH[yi] - M[i,i]
-        k <- which(dH==max(dH))[1]
+        k <- max.col(dH)
         #if (length(k)>1) k <- sample(k,1)
         
         if (dH[k]>dH[yi]){
