@@ -41,3 +41,5 @@ jobs:
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
 
+after_success:
+- Rscript coverZoo.r
