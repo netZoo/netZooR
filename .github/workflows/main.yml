@@ -46,7 +46,7 @@ jobs:
         run: sudo Rscript travis_script.r
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
-        shell: Rscript {0}
+        shell: sudo Rscript {0}
       - name: Report coverage
         run: |
            - Rscript coverZoo.r
