@@ -39,12 +39,10 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"))
-          options(download.file.method = "libcurl")
-          remotes::install_github("jnpaulson/pandaR")
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-      #- name: Check
-      #  run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
-      #- name: Report coverage
-      #  run: |
-      #     - Rscript coverZoo.r
+      - name: Check
+        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
+      - name: Report coverage
+        run: |
+           - Rscript coverZoo.r
