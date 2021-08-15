@@ -39,7 +39,7 @@ jobs:
       - name: Install bash dependencies 1
         run: sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
       - name: Install dependencies 2
-        run: Rscript travis_script.r
+        run: sudo Rscript travis_script.r
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
