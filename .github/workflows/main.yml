@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck", "libcurl"))
-          options(download.file.method = "libcurl")
+          options(download.file.method = "wget")
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
       - name: Check
