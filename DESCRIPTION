@@ -21,6 +21,7 @@ Depends: R (>= 3.3),
    	 igraph,
 	 reticulate,
 	 pandaR,
+	 markdown,
 biocViews:
 Imports: RCy3,
 	 viridisLite, 
