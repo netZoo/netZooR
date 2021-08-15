@@ -12,11 +12,11 @@ on:
   push:
     branches: 
         - master
-	- devel
+        - devel
   pull_request:
     branches: 
         - master
-	- devel
+        - devel
 
 jobs:
   build:
