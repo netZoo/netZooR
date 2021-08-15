@@ -11,11 +11,11 @@ name: R
 on:
   push:
     branches: 
-	- master
+        - master
 	- devel
   pull_request:
     branches: 
-	- master
+        - master
 	- devel
 
 jobs:
