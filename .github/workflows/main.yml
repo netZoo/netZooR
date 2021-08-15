@@ -10,6 +10,7 @@ name: R
 
 env:
     ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+    GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         
 on:
   push:
