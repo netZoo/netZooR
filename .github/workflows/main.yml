@@ -37,9 +37,10 @@ jobs:
           r-version: ${{ matrix.r-version }}
       - name: Install dependencies
         run: |
-          install.packages(c("devtools", "rcmdcheck"))
+          install.packages(c("remotes", "rcmdcheck"))
           options(download.file.method = "libcurl")
-          devtools::install_deps(dependencies = TRUE)
+          remotes::install_github("jnpaulson/pandaR")
+          remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
       #- name: Check
       #  run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
