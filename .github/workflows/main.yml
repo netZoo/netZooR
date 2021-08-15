@@ -7,8 +7,6 @@
 # additional example workflows available for the R community.
 
 name: R
-    with:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         
 on:
   push:
@@ -34,6 +32,7 @@ jobs:
         uses: r-lib/actions/setup-r@ffe45a39586f073cc2e9af79c4ba563b657dc6e3
         with:
           r-version: ${{ matrix.r-version }}
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"))
