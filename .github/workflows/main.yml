@@ -37,7 +37,7 @@ jobs:
         with:
           r-version: ${{ matrix.r-version }}
       - name: Install bash dependencies 1
-        run: apt-get install libcurl4-openssl-dev
+        run: sudo apt-get install libcurl4-openssl-dev
       - name: Install dependencies 2
         run: Rscript travis_script.r
       - name: Check
