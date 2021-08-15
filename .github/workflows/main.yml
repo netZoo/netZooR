@@ -43,9 +43,7 @@ jobs:
       - name: Install dependencies 2
         run: sudo Rscript travis_script.r
       - name: Check
-        run: 
-        - install.packages('visNetwork')
-        - rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
+        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
       - name: Report coverage
         run: |
