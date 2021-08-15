@@ -37,7 +37,7 @@ jobs:
         with:
           r-version: ${{ matrix.r-version }}
       - name: Install dependencies
-        shell: Rscript travis_script.r
+        run: Rscript travis_script.r
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
