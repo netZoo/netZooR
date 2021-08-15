@@ -36,10 +36,8 @@ jobs:
         uses: r-lib/actions/setup-r@ffe45a39586f073cc2e9af79c4ba563b657dc6e3
         with:
           r-version: ${{ matrix.r-version }}
-      - name: Install dependencies 1
-        run: |
-          install.packages(c("curl","gh","gert","httr","usethis","rversions"))
-        shell: Rscript {0}
+      - name: Install bash dependencies 1
+        run: apt-get install libcurl4-openssl-dev
       - name: Install dependencies 2
         run: Rscript travis_script.r
       - name: Check
