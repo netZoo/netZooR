@@ -32,6 +32,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up R ${{ matrix.r-version }} 
         uses: r-lib/actions/setup-r@v1
         with:
