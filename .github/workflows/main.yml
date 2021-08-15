@@ -41,8 +41,8 @@ jobs:
           options(download.file.method = "wget")
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-      - name: Check
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
-      - name: Report coverage
-        run: |
-           - Rscript coverZoo.r
+      #- name: Check
+      #  run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
+      #- name: Report coverage
+      #  run: |
+      #     - Rscript coverZoo.r
