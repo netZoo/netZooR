@@ -38,7 +38,7 @@ jobs:
           r-version: ${{ matrix.r-version }}
       - name: Install dependencies 1
         run: |
-          install.packages(c("httr","usethis","rversions"))
+          install.packages(c("curl","gh","gert","httr","usethis","rversions"))
         shell: Rscript {0}
       - name: Install dependencies 2
         run: Rscript travis_script.r
