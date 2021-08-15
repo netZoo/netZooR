@@ -37,8 +37,8 @@ jobs:
           r-version: ${{ matrix.r-version }}
       - name: Install dependencies
         run: |
-          options(download.file.method = "libcurl")
           install.packages(c("remotes", "rcmdcheck", "libcurl"))
+          options(download.file.method = "libcurl")
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
       - name: Check
