@@ -7,7 +7,9 @@
 # additional example workflows available for the R community.
 
 name: R
-
+    with:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        
 on:
   push:
     branches: 
