@@ -51,10 +51,11 @@ jobs:
             install.packages('reticulate', repos = "http://cran.us.r-project.org")
             reticulate::py_config()
             reticulate::py_config()
+      - name: Install reticulate 2
+        run: |
             conda activate r-reticulate
             which python
             which python3
-        shell: sudo Rscript {0}
       - name: Install dependencies 2
         run: |
             install.packages(c("remotes", "rcmdcheck"), repos = "http://cran.us.r-project.org")
