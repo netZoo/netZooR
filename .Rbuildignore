@@ -14,3 +14,4 @@ CONDUCT\.md$
 ^Meta$
 ^\.Rapp\.history
 coverZoo.r
+.github
