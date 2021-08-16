@@ -49,7 +49,7 @@ jobs:
             py_config()
             use_python("/usr/bin/python3")
             py_config()
-        shell: sudo Rscript -i {0}
+        shell: sudo Rscript {0}
       - name: Install py dependency
         run: |
             python3 -m pip install numpy scipy pandas
@@ -58,7 +58,7 @@ jobs:
         run: |
             library('reticulate')
             py_config()
-        shell: sudo Rscript -i {0}
+        shell: sudo Rscript {0}
       - name: Install dependencies 2
         run: |
             reticulate::py_config()
