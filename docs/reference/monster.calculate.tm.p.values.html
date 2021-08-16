@@ -176,30 +176,13 @@ transition matrix given a set of null transition matrices</p>
     <p>vector of p-values for each transcription factor</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># data(yeast)</span>
+    <pre class="examples"><span class='co'># data(yeast)</span>
 <span class='co'># design &lt;- c(rep(0,20),rep(NA,10),rep(1,20))</span>
 <span class='co'># yeast$exp.cc[is.na(yeast$exp.cc)] &lt;- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)</span>
 <span class='co'># monsterRes &lt;- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>
 <span class='fu'>monster.calculate.tm.p.values</span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      YBL005W      YBR083W      YBR240C      YCR106W      YDL056W      YDL106C 
-#&gt; 1.000000e+00 3.096997e-01 9.999999e-01 2.261156e-01 1.000000e+00 6.033369e-05 
-#&gt;      YDR216W      YDR259C      YDR423C      YDR463W      YEL009C      YER040W 
-#&gt; 1.000000e+00 7.942790e-01 4.529013e-01 9.998485e-01 1.560160e-01 2.124952e-01 
-#&gt;      YFR034C      YGL013C      YGL162W      YHL020C      YHR084W      YHR178W 
-#&gt; 9.836124e-03 7.915855e-03 8.541785e-01 8.430972e-03 2.326413e-01 9.998804e-01 
-#&gt;      YHR206W      YIL101C      YIL131C      YIR018W      YJL056C      YJL110C 
-#&gt; 2.997113e-01 6.978234e-01 7.039502e-01 7.942790e-01 1.000000e+00 8.495615e-01 
-#&gt;      YJR060W      YKL038W      YKL043W      YKL062W      YKL109W      YKR099W 
-#&gt; 1.000000e+00 7.873571e-02 6.816097e-02 1.000000e+00 8.615076e-01 1.620822e-01 
-#&gt;      YLR131C      YLR182W      YLR228C      YLR403W      YLR451W      YML051W 
-#&gt; 3.893480e-01 1.000000e+00 1.000000e+00 9.449312e-03 4.358712e-01 9.978266e-01 
-#&gt;      YMR016C      YMR019W      YMR043W      YMR070W      YNL068C      YNL216W 
-#&gt; 1.115626e-02 2.480164e-01 1.000000e+00 4.254946e-01 1.000000e+00 7.673937e-01 
-#&gt;      YOL028C      YOR113W      YOR344C      YPL038W      YPL049C      YPL075W 
-#&gt; 5.020838e-01 9.267750e-01 4.532812e-01 4.148779e-02 4.042531e-01 3.769631e-01 
-#&gt;      YPL089C      YPL139C      YPL202C      YPR065W      YPR104C 
-#&gt; 1.000000e+00 2.577283e-02 4.877241e-02 1.500716e-01 6.171438e-01 </div></pre>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
