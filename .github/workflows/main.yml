@@ -11,6 +11,7 @@ name: R
 env:
     ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    RETICULATE_PYTHON: "/usr/bin/python3"
         
 on:
   push:
