@@ -46,7 +46,7 @@ jobs:
         run: |
             install.packages('reticulate', repos = "http://cran.us.r-project.org")
             reticulate::py_config()
-            reticulate::use_python('/usr/bin/python')
+            reticulate::use_condaenv("r-reticulate")
         shell: sudo Rscript {0}
       - name: Install py dependency
         run: |
