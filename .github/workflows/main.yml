@@ -65,6 +65,7 @@ jobs:
       - name: Install dependencies 2
         run: |
             library('reticulate')
+            py_install("numpy")
             n=import("numpy")
             py_config()
             # install.packages(c("remotes", "rcmdcheck"), repos = "http://cran.us.r-project.org")
