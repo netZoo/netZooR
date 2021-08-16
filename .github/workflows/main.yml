@@ -43,13 +43,17 @@ jobs:
       - name: Install bash dependencies 1
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
-      - name: Install reticulate
+      - name: Install reticulate 1
         run: |
             install.packages('reticulate', repos = "http://cran.us.r-project.org")
             library('reticulate')
             py_config()
+        shell: sudo Rscript {0}
+      - name: Install reticulate 2
+        run: |
+            library('reticulate')
             use_condaenv("r-reticulate")
-            py_install(c("numpy","pandas","scipy"))
+            py_install("numpy")
         shell: sudo Rscript {0}
       - name: Install dependencies 2
         run: |
