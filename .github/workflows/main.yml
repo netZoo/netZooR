@@ -45,8 +45,10 @@ jobs:
       - name: Install reticulate
         run: |
             install.packages('reticulate', repos = "http://cran.us.r-project.org")
-            reticulate::py_config()
-            reticulate::use_condaenv("r-reticulate")
+            library('reticulate')
+            py_config()
+            use_python("/usr/bin/python3")
+            py_config()
         shell: sudo Rscript -i {0}
       - name: Install py dependency
         run: |
@@ -54,7 +56,8 @@ jobs:
             python -m pip install numpy scipy pandas
       - name: Install reticulate
         run: |
-            reticulate::py_config()
+            library('reticulate')
+            py_config()
         shell: sudo Rscript -i {0}
       - name: Install dependencies 2
         run: |
