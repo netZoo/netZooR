@@ -61,7 +61,10 @@ jobs:
             remotes::install_deps(dep = T)
         shell: sudo Rscript {0}
       - name: Check
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
+        run: |
+            library('reticulate')
+            use_condaenv("r-reticulate")
+            rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
         shell: sudo Rscript {0}
       - name: Report coverage
         run: |
