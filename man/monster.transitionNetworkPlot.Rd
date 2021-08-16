@@ -2,7 +2,9 @@
 % Please edit documentation in R/MONSTER.R
 \name{monster.transitionNetworkPlot}
 \alias{monster.transitionNetworkPlot}
-\title{This function uses igraph to plot the transition matrix as a network}
+\title{This function uses igraph to plot the transition matrix (directed graph) as a network.
+The edges in the network should be read as A 'positively/negatively contributes to' the 
+targeting of B in the target state.}
 \usage{
 monster.transitionNetworkPlot(
   monsterObj,
@@ -31,7 +33,9 @@ prior to calling MONSTER to get reproducible results. If rescale is set to anoth
 produce deterministic results between two identical MONSTER runs.}
 }
 \description{
-This function uses igraph to plot the transition matrix as a network
+This function uses igraph to plot the transition matrix (directed graph) as a network.
+The edges in the network should be read as A 'positively/negatively contributes to' the 
+targeting of B in the target state.
 }
 \examples{
 # data(yeast)
