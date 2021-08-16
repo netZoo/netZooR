@@ -41,11 +41,8 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install py dependency
         run: |
-            /usr/local/bin/python3 -m pip install numpy scipy pandas
-            /usr/bin/python -m pip install numpy scipy pandas
-            pip3 list
-            pip list
-            which python3
+            python3 -m pip install numpy scipy pandas
+            python -m pip install numpy scipy pandas
       - name: Install bash dependencies 1
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
@@ -53,7 +50,6 @@ jobs:
         run: |
             install.packages('reticulate', repos = "http://cran.us.r-project.org")
             reticulate::py_config()
-            reticulate::use_python("/usr/local/bin/python3")
             reticulate::py_config()
             conda activate r-reticulate
             which python
