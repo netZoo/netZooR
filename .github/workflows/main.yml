@@ -47,7 +47,7 @@ jobs:
             install.packages('reticulate', repos = "http://cran.us.r-project.org")
             library('reticulate')
             py_config()
-        shell: sudo Rscript {0}
+        shell: Rscript {0}
       - name: Install reticulate 2
         run: |
             library('reticulate')
