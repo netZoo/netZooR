@@ -1,12 +1,12 @@
-
-[![Build Status](http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04)](http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/)
+![master](https://github.com/netZoo/netZooR/workflows/netZooR/badge.svg?branch=master)
+![devel](https://github.com/netZoo/netZooR/workflows/netZooR/badge.svg?branch=devel)
 [![codecov](https://codecov.io/gh/netZoo/netZooR/branch/devel/graph/badge.svg)](https://codecov.io/gh/netZoo/netZooR)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <a href="https://netzoo.github.io/netZooR/"><img src="https://img.shields.io/badge/docs-passing-green"></a>
 [![tutorials](https://img.shields.io/badge/netZooR-tutorials-9cf)](https://github.com/netZoo/netZooR/tree/master/vignettes)
 [![netBooks](https://img.shields.io/badge/netZooR-netBooks-ff69b4)](http://netbooks.networkmedicine.org/user/marouenbg/notebooks/Welcome_to_netBooks.ipynb?)
 
-R4.01@Ubuntu 18.04: [![Build Status](http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04)](http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/)
+netZooR is tested on: (OS: Ubuntu) X (Language: R v4.0)
 
 ## Description
 netZooR is an R package to reconstruct, analyse, and plot biological networks.
