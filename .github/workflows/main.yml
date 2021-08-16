@@ -40,7 +40,9 @@ jobs:
           r-version: ${{ matrix.r-version }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install py dependency
-        run: /usr/bin/python3 -m pip install numpy scipy pandas
+        run: |
+            /usr/bin/python3 -m pip install numpy scipy pandas
+            pip3 list
       - name: Install bash dependencies 1
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
