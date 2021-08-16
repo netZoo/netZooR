@@ -64,11 +64,20 @@ The package also integrates additional functions to:
 
 ```r
 # install.packages("devtools") 
-library(devtools)
 # install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
 devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
 library(netZooR)
 ```
+You can use `remotes` instead of `devtools` because it is faster to install and run. The synatx is the following:
+
+```r
+# install.packages("remotes") 
+library(remotes)
+# install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
+remotes::install_github("netZoo/netZooR", build_vignettes = TRUE)
+library(netZooR)
+```
+
 For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/).
 
 This package will invoke Python programming language in R environment through [reticulate](https://rstudio.github.io/reticulate/) package, by default setting there is no additional configuration needed.
@@ -96,9 +105,14 @@ Or use `browseVignettes("netZooR")` after installing the package. Also check [ne
 ## Contribution and Development
 Contributions are welcome! The contribution guide to netZooR can be found [here](https://netzoo.github.io/contribute/contribute/). 
 After adding new features or optimizing a function in the package, please re-build the package and run `R CMD check .` in the terminal or follow the instructions below before doing the pull request to the devel branch.
+To run only the tests:
 ```r
-library(devtools)
-library(pkgdown)
+# install.packages('rcmdcheck')
+# setwd('path/to/netZooR/root') # Set the working directory to netZooR root
+rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
+```
+To rebuild vignettes, documentation, and tests:
+```r
 # document the description of function
 # setwd('path/to/netZooR/root') # Set the working directory to netZooR root
 devtools::document()
