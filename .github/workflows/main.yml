@@ -28,8 +28,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest]
-        r-version: [4.0]
+        os: [ubuntu-latest, macos-latest]
+        r-version: [3.6,4.0]
 
     steps:
       - uses: actions/checkout@v2
