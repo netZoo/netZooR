@@ -55,6 +55,7 @@ jobs:
             use_condaenv("r-reticulate")
             py_config()
             py_install(c("numpy","scipy","pandas"))
+            remotes::install_cran("covr")
         shell: Rscript {0}
       #- name: Install dependencies 2
       #  run: |
