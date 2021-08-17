@@ -11,7 +11,7 @@ name: R
 env:
     ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-    CODECOV_TOKEN: 'eb271df0-06bb-49bb-9b4a-2d250baf2328'
+    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         
 on:
   push:
