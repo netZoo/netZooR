@@ -9,7 +9,7 @@ test_that("panda function works", {
    # input file path
    T4_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZooR", mustWork = TRUE)
    motif_file_path <- system.file("extdata", "chip.txt", package = "netZooR", mustWork = TRUE)
-   ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZooR", mustWork = TRUE)
+   ppi_file_path <- "./ppi.txt"
   
   # test 2: check message when only expression data input
   # To do 1: error occurred when only expression as input dataset
