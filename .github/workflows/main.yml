@@ -11,6 +11,7 @@ name: R
 env:
     ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         
 on:
   push:
@@ -38,7 +39,6 @@ jobs:
         uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.r-version }}
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install bash dependencies 1
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libopenblas-base libatlas3-base
@@ -60,6 +60,7 @@ jobs:
       - name: Install dependencies 2
         run: |
             install.packages(c("remotes", "rcmdcheck"), repos = "http://cran.us.r-project.org")
+            remotes::install_cran("covr") 
             remotes::install_deps(dep = T)
         shell: Rscript {0}
       - name: Check
@@ -70,6 +71,6 @@ jobs:
             rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
         shell: Rscript {0}
       - name: Report coverage
-        run: |
-            Rscript coverZoo.r
+        run: covr::codecov()
         shell: Rscript {0}
+
