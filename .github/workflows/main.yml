@@ -11,6 +11,7 @@ name: R
 env:
     ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    CODECOV_TOKEN: 'eb271df0-06bb-49bb-9b4a-2d250baf2328'
         
 on:
   push:
@@ -70,5 +71,5 @@ jobs:
       #      rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
       #  shell: Rscript {0}
       - name: Report coverage
-        run: covr::codecov(token='eb271df0-06bb-49bb-9b4a-2d250baf2328')
+        run: covr::codecov()
         shell: Rscript {0}
