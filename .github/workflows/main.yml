@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [macos-latest]
         r-version: [4.0]
 
     steps:
@@ -41,7 +41,9 @@ jobs:
           r-version: ${{ matrix.r-version }}
       - name: Install bash dependencies 1
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libopenblas-base libatlas3-base
+        run: |
+            sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libopenblas-base libatlas3-base
+            sudo chown 501:20 /usr/local/miniconda/pkgs/cache/b89cf7bf.json
       - name: Install reticulate 1
         run: |
             La_library()
