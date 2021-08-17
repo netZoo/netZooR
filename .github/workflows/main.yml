@@ -56,7 +56,7 @@ jobs:
             py_config()
         shell: sudo -E Rscript {0}
       - name: Change permissions
-        run: sudo chown 501:20 /usr/local/miniconda/pkgs/cache/b89cf7bf.json
+        run: sudo chown 501:20 /usr/local/miniconda/pkgs/cache/53d7ef51.json
       - name: Install reticulate 3
         run: |
             library('reticulate')
