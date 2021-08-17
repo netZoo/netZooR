@@ -55,13 +55,13 @@ jobs:
             use_condaenv("r-reticulate")
             py_config()
             py_install(c("numpy","scipy","pandas"))
-            remotes::install_cran("covr")
         shell: Rscript {0}
-      #- name: Install dependencies 2
-      #  run: |
-      #      install.packages(c("remotes", "rcmdcheck"), repos = "http://cran.us.r-project.org")
-      #      remotes::install_deps(dep = T)
-      #  shell: Rscript {0}
+      - name: Install dependencies 2
+        run: |
+            install.packages(c("remotes", "rcmdcheck"), repos = "http://cran.us.r-project.org")
+            remotes::install_cran("covr") 
+     #      remotes::install_deps(dep = T)
+        shell: Rscript {0}
       #- name: Check
       #  run: |
       #      library('reticulate')
