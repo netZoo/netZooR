@@ -38,7 +38,6 @@ jobs:
         uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.r-version }}
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install bash dependencies 1
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libopenblas-base libatlas3-base
