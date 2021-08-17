@@ -61,15 +61,15 @@ jobs:
         run: |
             install.packages(c("remotes", "rcmdcheck"), repos = "http://cran.us.r-project.org")
             remotes::install_cran("covr") 
-     #      remotes::install_deps(dep = T)
+            remotes::install_deps(dep = T)
         shell: Rscript {0}
-      #- name: Check
-      #  run: |
-      #      library('reticulate')
-      #      use_condaenv("r-reticulate")
-      #      py_config()
-      #      rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
-      #  shell: Rscript {0}
+      - name: Check
+        run: |
+            library('reticulate')
+            use_condaenv("r-reticulate")
+            py_config()
+            rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
+        shell: Rscript {0}
       - name: Report coverage
         run: covr::codecov()
         shell: Rscript {0}
