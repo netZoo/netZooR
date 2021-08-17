@@ -43,7 +43,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
             sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libopenblas-base libatlas3-base
-            sudo chown 501:20 /usr/local/miniconda/pkgs/cache/b89cf7bf.json
+            sudo chown 501:20 /usr/local/
       - name: Install reticulate 1
         run: |
             La_library()
@@ -51,7 +51,7 @@ jobs:
             install.packages('reticulate', repos = "http://cran.us.r-project.org")
             library('reticulate')
             py_config()
-        shell: sudo Rscript {0}
+        shell: Rscript {0}
       - name: Install reticulate 2
         run: |
             library('reticulate')
