@@ -71,5 +71,10 @@ jobs:
             rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
         shell: Rscript {0}
       - name: Report coverage
-        run: covr::codecov()
+        run: |
+            library('reticulate')
+            use_condaenv("r-reticulate")
+            py_config()            
+            covr::codecov()
         shell: Rscript {0}
+

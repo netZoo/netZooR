@@ -213,7 +213,7 @@ matrix of size (t,g), g=number of genes, t=number of TFs</p></td>
     <p>Inputs:</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples">
 <span class='va'>W</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span><span class='op'>(</span><span class='fl'>100</span>, rate<span class='op'>=</span><span class='fl'>.1</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>
 <span class='va'>C</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span><span class='op'>(</span><span class='fl'>100</span>, rate<span class='op'>=</span><span class='fl'>.1</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>
 <span class='va'>P</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span><span class='op'>(</span><span class='fl'>100</span>, rate<span class='op'>=</span><span class='fl'>.1</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>
@@ -221,7 +221,7 @@ matrix of size (t,g), g=number of genes, t=number of TFs</p></td>
 <span class='co'># Run OTTER algorithm</span>
 <span class='va'>W</span> <span class='op'>&lt;-</span> <span class='fu'>otter</span><span class='op'>(</span><span class='va'>W</span>, <span class='va'>P</span>, <span class='va'>C</span><span class='op'>)</span>
  
-</div></pre>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

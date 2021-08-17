@@ -118,7 +118,7 @@ devtools::document()
 # build vignettes
 devtools::build_vignettes() # You can skip building the vignettes if you are not contributing a vignette
 # build documentation website
-pkgdown::build_site()
+pkgdown::build_site(examples=FALSE)
 
 # Install and build the package using devtools
 devtools::install() # To install the dependecies

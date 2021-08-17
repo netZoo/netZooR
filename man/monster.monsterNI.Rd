@@ -18,6 +18,10 @@ monster.monsterNI(
 )
 }
 \arguments{
+\item{motif.data}{A motif dataset, a data.frame, matrix or exprSet containing 
+3 columns. Each row describes an motif associated with a transcription 
+factor (column 1) a gene (column 2) and a score (column 3) for the motif.}
+
 \item{expr.data}{An expression dataset, as a genes (rows) by samples (columns)}
 
 \item{verbose}{logical to indicate printing of output for algorithm progress.}
@@ -42,10 +46,6 @@ to give to indirect compared to direct evidence.  See documentation.}
 readded upon completion of the algorithm}
 
 \item{cpp}{logical use C++ for maximum speed, set to false if unable to run.}
-
-\item{motif}{A motif dataset, a data.frame, matrix or exprSet containing 
-3 columns. Each row describes an motif associated with a transcription 
-factor (column 1) a gene (column 2) and a score (column 3) for the motif.}
 }
 \value{
 matrix for inferred network between TFs and genes
