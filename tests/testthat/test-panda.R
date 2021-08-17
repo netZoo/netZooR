@@ -6,9 +6,6 @@ test_that("panda function works", {
   # test 1: check test error message when empty inputs
    expect_error(panda.py())
    
-   #download test data
-   system('curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/ppi.txt')
-   
    # input file path
    T4_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZooR", mustWork = TRUE)
    motif_file_path <- system.file("extdata", "chip.txt", package = "netZooR", mustWork = TRUE)
