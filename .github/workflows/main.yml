@@ -56,11 +56,11 @@ jobs:
             py_config()
             py_install(c("numpy","scipy","pandas"))
         shell: Rscript {0}
-      - name: Install dependencies 2
-        run: |
-            install.packages(c("remotes", "rcmdcheck"), repos = "http://cran.us.r-project.org")
-            remotes::install_deps(dep = T)
-        shell: Rscript {0}
+      #- name: Install dependencies 2
+      #  run: |
+      #      install.packages(c("remotes", "rcmdcheck"), repos = "http://cran.us.r-project.org")
+      #      remotes::install_deps(dep = T)
+      #  shell: Rscript {0}
       #- name: Check
       #  run: |
       #      library('reticulate')
