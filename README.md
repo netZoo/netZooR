@@ -1,5 +1,5 @@
-
-[![Build Status](http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04)](http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/)
+![master](https://github.com/netZoo/netZooR/workflows/netZooR/badge.svg?branch=master)
+![devel](https://github.com/netZoo/netZooR/workflows/netZooR/badge.svg?branch=devel)
 [![codecov](https://codecov.io/gh/netZoo/netZooR/branch/devel/graph/badge.svg)](https://codecov.io/gh/netZoo/netZooR)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <a href="https://netzoo.github.io/netZooR/"><img src="https://img.shields.io/badge/docs-passing-green"></a>
@@ -8,7 +8,7 @@
 [![discussions](https://img.shields.io/badge/netZooR-discussions-orange)](https://github.com/netZoo/netZooR/discussions)
 
 
-R4.01@Ubuntu 18.04: [![Build Status](http://zookeeper.networkmedicine.org/buildStatus/icon?job=netZooR_Ubuntu18.04)](http://zookeeper.networkmedicine.org/job/netZooR_Ubuntu18.04/)
+netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v3.6 + R v4.0)
 
 ## Description
 netZooR is an R package to reconstruct, analyse, and plot biological networks.
@@ -72,7 +72,6 @@ You can use `remotes` instead of `devtools` because it is faster to install and 
 
 ```r
 # install.packages("remotes") 
-library(remotes)
 # install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
 remotes::install_github("netZoo/netZooR", build_vignettes = TRUE)
 library(netZooR)
@@ -119,7 +118,7 @@ devtools::document()
 # build vignettes
 devtools::build_vignettes() # You can skip building the vignettes if you are not contributing a vignette
 # build documentation website
-pkgdown::build_site()
+pkgdown::build_site(examples=FALSE)
 
 # Install and build the package using devtools
 devtools::install() # To install the dependecies

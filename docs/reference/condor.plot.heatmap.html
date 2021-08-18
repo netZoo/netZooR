@@ -183,13 +183,11 @@
     <p>produces a <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></code> output.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>small1976</span><span class='op'>)</span>
+    <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>small1976</span><span class='op'>)</span>
 <span class='va'>condor.object</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create.condor.object.html'>create.condor.object</a></span><span class='op'>(</span><span class='va'>small1976</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Weights detected. Building condor object with weighted edges.</span></div><div class='input'><span class='va'>condor.object</span> <span class='op'>&lt;-</span> <span class='fu'><a href='condor.cluster.html'>condor.cluster</a></span><span class='op'>(</span><span class='va'>condor.object</span>, project<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "modularity of projected graph 0.525346928655047"
-#&gt; [1] "Q = 0.52666696475026"
-#&gt; [1] "Q = 0.52666696475026"</div><div class='input'><span class='fu'>condor.plot.heatmap</span><span class='op'>(</span><span class='va'>condor.object</span><span class='op'>)</span>
-</div><div class='img'><img src='condor.plot.heatmap-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='va'>condor.object</span> <span class='op'>&lt;-</span> <span class='fu'><a href='condor.cluster.html'>condor.cluster</a></span><span class='op'>(</span><span class='va'>condor.object</span>, project<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>condor.plot.heatmap</span><span class='op'>(</span><span class='va'>condor.object</span><span class='op'>)</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

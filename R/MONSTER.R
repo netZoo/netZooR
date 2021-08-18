@@ -168,8 +168,14 @@ monster <- function(expr,
     for(i in 1:iters){
       print(paste0("Running iteration ", i))
       if(i!=1){
-        nullExpr[] <- expr[sample(seq_along(c(expr)))]
+        if(mode == 'regNet'){
+          # Resample columns of provided network
+          nullExpr[] <- expr[,sample(seq_along(colnames(expr)))]
+        }else if(mode=='buildNet'){
+          # Resample all entries in gene expression matrix then build null network
+          nullExpr[] <- expr[sample(seq_along(c(expr)))]
       }
+    }
       if(mode == 'buildNet'){
         nullExprCases <- nullExpr[,design==1]
         nullExprControls <- nullExpr[,design==0]
@@ -202,7 +208,13 @@ monster <- function(expr,
                              .packages=c("netZooR","reshape2","penalized","MASS")) %dopar% {
                                print(paste0("Running iteration ", i))
                                if(i!=1){
-                                 nullExpr[] <- expr[sample(seq_along(c(expr)))]
+                                 if(mode == 'regNet'){
+                                   # Resample columns of provided network
+                                   nullExpr[] <- expr[,sample(seq_along(colnames(expr)))]
+                                 }else if(mode=='buildNet'){
+                                   # Resample all entries in gene expression matrix then build null network
+                                   nullExpr[] <- expr[sample(seq_along(c(expr)))]
+                                 }
                                }
                                if(mode == 'buildNet'){
                                  nullExprCases <- nullExpr[,design==1]
@@ -742,7 +754,7 @@ globalVariables(c("Var1", "Var2","value","variable","xend","yend","y","Comp.1", 
 #' This function generates a complete bipartite network from 
 #' gene expression data and sequence motif data
 #' 
-#' @param motif A motif dataset, a data.frame, matrix or exprSet containing 
+#' @param motif.data A motif dataset, a data.frame, matrix or exprSet containing 
 #' 3 columns. Each row describes an motif associated with a transcription 
 #' factor (column 1) a gene (column 2) and a score (column 3) for the motif.
 #' @param expr.data An expression dataset, as a genes (rows) by samples (columns)

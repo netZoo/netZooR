@@ -1,0 +1,85 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+#
+# See https://github.com/r-lib/actions/tree/master/examples#readme for
+# additional example workflows available for the R community.
+
+name: R
+
+env:
+    ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+    GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        
+on:
+  push:
+    branches: 
+        - master
+        - devel
+  pull_request:
+    branches: 
+        - master
+        - devel
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        r-version: [3.6,4]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up R ${{ matrix.r-version }} 
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: ${{ matrix.r-version }}
+      - name: Install bash dependencies 1
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+            sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libopenblas-base libatlas3-base
+      - name: Install reticulate 1
+        run: |
+            La_library()
+            extSoftVersion()["BLAS"]
+            install.packages('reticulate', repos = "http://cran.us.r-project.org")
+            library('reticulate')
+        shell: Rscript {0}
+      - name: Install reticulate 2
+        run: |
+            library('reticulate')
+            py_config()
+        shell: sudo -E Rscript {0}
+      - name: Install reticulate 3
+        run: |
+            library('reticulate')
+            use_condaenv("r-reticulate")
+            py_config()
+            py_install(c("numpy","scipy","pandas"))
+        shell: sudo -E Rscript {0}
+      - name: Install dependencies 2
+        run: |
+            install.packages(c("remotes", "rcmdcheck"), repos = "http://cran.us.r-project.org")
+            remotes::install_cran("covr") 
+            remotes::install_deps(dep = T)
+        shell: Rscript {0}
+      - name: Check
+        run: |
+            library('reticulate')
+            use_condaenv("r-reticulate")
+            py_config()
+            rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
+        shell: sudo -E Rscript {0}
+      - name: Report coverage
+        run: |
+            library('reticulate')
+            use_condaenv("r-reticulate")
+            py_config()            
+            covr::codecov()
+        shell: sudo -E Rscript {0}
+

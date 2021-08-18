@@ -7,6 +7,8 @@ test_that("source.PPI works", {
   # STRINGdb Version 10
   if(R.Version()$major=="3"){
   actual_PPI_V10 <- source.PPI(tf,"10",83332)
+  ppiV10$from = as.factor(ppiV10$from)
+  ppiV10$to = as.factor(ppiV10$to)
   expect_equal(actual_PPI_V10, ppiV10)}
   
   # STRINGdb Version 11

@@ -139,7 +139,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ctlab/fgsea/">fgsea</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/reshape">reshape2</a></span><span class="op">)</span></pre></div>
 </div>
 </div>
@@ -333,19 +333,19 @@ The function source.PPI can be used to source the protein-protein interaction in
 <span class="va">fgseaRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">degreeDiff_all</span>, minSize<span class="op">=</span><span class="fl">15</span>, maxSize<span class="op">=</span><span class="fl">500</span>, nperm<span class="op">=</span><span class="fl">1000</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span>
 <span class="co">#&gt;                                          pathway        pval       padj</span>
-<span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.054794521 0.14445828</span>
-<span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.001858736 0.01606648</span>
-<span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.097826087 0.20758218</span>
-<span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.644880174 0.72393000</span>
-<span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.043010753 0.12473118</span>
-<span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.033185841 0.10130415</span>
+<span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.042154567 0.12432025</span>
+<span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.001792115 0.01870968</span>
+<span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.127272727 0.26363636</span>
+<span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.649890591 0.73684809</span>
+<span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.046979866 0.12975391</span>
+<span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.050997783 0.13651714</span>
 <span class="co">#&gt;            ES        NES nMoreExtreme size</span>
-<span class="co">#&gt; 1:  0.3355458  1.4078162           23   58</span>
-<span class="co">#&gt; 2: -0.5923935 -2.0147499            0   29</span>
-<span class="co">#&gt; 3:  0.4235984  1.3797551           44   21</span>
-<span class="co">#&gt; 4:  0.2675875  0.8793993          295   22</span>
-<span class="co">#&gt; 5:  0.4168076  1.4858244           19   30</span>
-<span class="co">#&gt; 6:  0.4491757  1.5169910           14   25</span>
+<span class="co">#&gt; 1:  0.3355458  1.3944947           17   58</span>
+<span class="co">#&gt; 2: -0.5923935 -1.9949197            0   29</span>
+<span class="co">#&gt; 3:  0.4235984  1.3469540           55   21</span>
+<span class="co">#&gt; 4:  0.2675875  0.8765243          296   22</span>
+<span class="co">#&gt; 5:  0.4168076  1.4656532           20   30</span>
+<span class="co">#&gt; 6:  0.4491757  1.5071381           22   25</span>
 <span class="co">#&gt;                                        leadingEdge</span>
 <span class="co">#&gt; 1:         ALDH3B1,LDHAL6A,PGM1,PKM,ALDOA,ENO1,...</span>
 <span class="co">#&gt; 2:              MDH2,CS,DLST,SDHD,IDH3B,SUCLG2,...</span>
@@ -358,27 +358,27 @@ The function source.PPI can be used to source the protein-protein interaction in
 <span class="co"># Get the top 10 significant pathways enriched for genes having lower targeting in LCLs  </span>
 <span class="va">sig</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">sig</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>,<span class="op">]</span>
 <span class="co">#&gt;                              pathway        pval       padj         ES</span>
-<span class="co">#&gt;  1:                 KEGG_SPLICEOSOME 0.001658375 0.01606648 -0.6155980</span>
-<span class="co">#&gt;  2:                    KEGG_RIBOSOME 0.001652893 0.01606648 -0.6438056</span>
-<span class="co">#&gt;  3:             KEGG_DNA_REPLICATION 0.001792115 0.01606648 -0.7301502</span>
-<span class="co">#&gt;  4:                  KEGG_CELL_CYCLE 0.001650165 0.01606648 -0.5352336</span>
-<span class="co">#&gt;  5:  KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001745201 0.01606648 -0.5896497</span>
-<span class="co">#&gt;  6:              KEGG_PROTEIN_EXPORT 0.001841621 0.01606648 -0.6735362</span>
-<span class="co">#&gt;  7: KEGG_AMINOACYL_TRNA_BIOSYNTHESIS 0.001782531 0.01606648 -0.5489421</span>
-<span class="co">#&gt;  8:     KEGG_CITRATE_CYCLE_TCA_CYCLE 0.001858736 0.01606648 -0.5923935</span>
-<span class="co">#&gt;  9: KEGG_BASAL_TRANSCRIPTION_FACTORS 0.001834862 0.01606648 -0.5641948</span>
-<span class="co">#&gt; 10:             KEGG_MISMATCH_REPAIR 0.001841621 0.01606648 -0.5977217</span>
+<span class="co">#&gt;  1:                 KEGG_SPLICEOSOME 0.001650165 0.01870968 -0.6155980</span>
+<span class="co">#&gt;  2:                    KEGG_RIBOSOME 0.001652893 0.01870968 -0.6438056</span>
+<span class="co">#&gt;  3:             KEGG_DNA_REPLICATION 0.001776199 0.01870968 -0.7301502</span>
+<span class="co">#&gt;  4:                  KEGG_CELL_CYCLE 0.001658375 0.01870968 -0.5352336</span>
+<span class="co">#&gt;  5:  KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001739130 0.01870968 -0.5896497</span>
+<span class="co">#&gt;  6:              KEGG_PROTEIN_EXPORT 0.001834862 0.01870968 -0.6735362</span>
+<span class="co">#&gt;  7:     KEGG_CITRATE_CYCLE_TCA_CYCLE 0.001792115 0.01870968 -0.5923935</span>
+<span class="co">#&gt;  8: KEGG_AMINOACYL_TRNA_BIOSYNTHESIS 0.001773050 0.01870968 -0.5489421</span>
+<span class="co">#&gt;  9: KEGG_BASAL_TRANSCRIPTION_FACTORS 0.001773050 0.01870968 -0.5641948</span>
+<span class="co">#&gt; 10:             KEGG_MISMATCH_REPAIR 0.007339450 0.03274524 -0.5977217</span>
 <span class="co">#&gt;           NES nMoreExtreme size                                   leadingEdge</span>
-<span class="co">#&gt;  1: -2.796263            0  116 SRSF6,SRSF3,SRSF7,HNRNPA1L2,PRPF38A,PPIL1,...</span>
-<span class="co">#&gt;  2: -2.753843            0   80      RPS2,RPL23A,RPL19,RPS12,RPS17,RPL10A,...</span>
-<span class="co">#&gt;  3: -2.606973            0   34           RFC3,RFC5,RPA2,POLE3,PRIM1,PCNA,...</span>
-<span class="co">#&gt;  4: -2.454023            0  121         YWHAQ,ORC6,DBF4,ANAPC10,BUB3,WEE1,...</span>
-<span class="co">#&gt;  5: -2.207000            0   41            XPA,RFC3,RFC5,RPA2,POLE3,ERCC8,...</span>
-<span class="co">#&gt;  6: -2.124283            0   22      SRP9,IMMP1L,HSPA5,SEC11C,OXA1L,SPCS2,...</span>
-<span class="co">#&gt;  7: -2.034656            0   40         MARS2,NARS,YARS,FARS2,YARS2,NARS2,...</span>
-<span class="co">#&gt;  8: -2.014750            0   29            MDH2,CS,DLST,SDHD,IDH3B,SUCLG2,...</span>
-<span class="co">#&gt;  9: -1.948510            0   31          TAF4,TAF7,TAF9,GTF2E1,GTF2F2,TBP,...</span>
-<span class="co">#&gt; 10: -1.885170            0   22             RFC3,RFC5,RPA2,PCNA,MSH2,RPA1,...</span></pre></div>
+<span class="co">#&gt;  1: -2.773015            0  116 SRSF6,SRSF3,SRSF7,HNRNPA1L2,PRPF38A,PPIL1,...</span>
+<span class="co">#&gt;  2: -2.729644            0   80      RPS2,RPL23A,RPL19,RPS12,RPS17,RPL10A,...</span>
+<span class="co">#&gt;  3: -2.552035            0   34           RFC3,RFC5,RPA2,POLE3,PRIM1,PCNA,...</span>
+<span class="co">#&gt;  4: -2.418384            0  121         YWHAQ,ORC6,DBF4,ANAPC10,BUB3,WEE1,...</span>
+<span class="co">#&gt;  5: -2.160327            0   41            XPA,RFC3,RFC5,RPA2,POLE3,ERCC8,...</span>
+<span class="co">#&gt;  6: -2.101943            0   22      SRP9,IMMP1L,HSPA5,SEC11C,OXA1L,SPCS2,...</span>
+<span class="co">#&gt;  7: -1.994920            0   29            MDH2,CS,DLST,SDHD,IDH3B,SUCLG2,...</span>
+<span class="co">#&gt;  8: -1.984812            0   40         MARS2,NARS,YARS,FARS2,YARS2,NARS2,...</span>
+<span class="co">#&gt;  9: -1.937834            0   31          TAF4,TAF7,TAF9,GTF2E1,GTF2F2,TBP,...</span>
+<span class="co">#&gt; 10: -1.865345            3   22             RFC3,RFC5,RPA2,PCNA,MSH2,RPA1,...</span></pre></div>
 </div>
 <div id="bubble-plot-of-top-differentially-targeted-pathways" class="section level2">
 <h2 class="hasAnchor">
