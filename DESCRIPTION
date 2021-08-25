@@ -30,6 +30,13 @@ biocViews:
 	 IRanges,
 	 GenomicRanges,
 Imports: 
+         RCy3,
+	 STRINGdb,
+	 Biobase,
+	 GOstats,
+	 AnnotationDbi,
+	 IRanges,
+	 GenomicRanges,
 	 viridisLite, 
    	 matrixStats,
    	 GO.db,
