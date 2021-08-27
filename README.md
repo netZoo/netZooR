@@ -1,5 +1,5 @@
-![master](https://github.com/netZoo/netZooR/workflows/netZooR/badge.svg?branch=master)
-![devel](https://github.com/netZoo/netZooR/workflows/netZooR/badge.svg?branch=devel)
+[![master](https://github.com/netZoo/netZooR/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/netZoo/netZooR/actions/workflows/main.yml)
+[![devel](https://github.com/netZoo/netZooR/actions/workflows/main.yml/badge.svg?branch=devel)](https://github.com/netZoo/netZooR/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/netZoo/netZooR/branch/devel/graph/badge.svg)](https://codecov.io/gh/netZoo/netZooR)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <a href="https://netzoo.github.io/netZooR/"><img src="https://img.shields.io/badge/docs-passing-green"></a>
