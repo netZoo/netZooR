@@ -75,7 +75,7 @@ This function uses the result of PANDA algorithm as the input dataset to run CON
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ This function uses the result of PANDA algorithm as the input dataset to run CON
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -206,9 +206,9 @@ modeProcess<span class='op'>=</span><span class='st'>"legacy"</span>, remove_mis
 <span class='va'>treated_condor_object</span> <span class='op'>&lt;-</span> <span class='fu'><a href='condor.cluster.html'>condor.cluster</a></span><span class='op'>(</span><span class='va'>treated_condor_object</span>, project <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># package igraph and package viridisLite are already loaded with this package.</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/sjmgarnier/viridisLite'>viridisLite</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://sjmgarnier.github.io/viridisLite/'>viridisLite</a></span><span class='op'>)</span>
 <span class='va'>treated_color_num</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>treated_condor_object</span><span class='op'>$</span><span class='va'>red.memb</span><span class='op'>$</span><span class='va'>com</span><span class='op'>)</span>
-<span class='va'>treated_color</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/viridisLite/man/viridis.html'>viridis</a></span><span class='op'>(</span><span class='va'>treated_color_num</span>, alpha <span class='op'>=</span> <span class='fl'>1</span>, begin <span class='op'>=</span> <span class='fl'>0</span>, end <span class='op'>=</span> <span class='fl'>1</span>, 
+<span class='va'>treated_color</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://sjmgarnier.github.io/viridisLite/reference/viridis.html'>viridis</a></span><span class='op'>(</span><span class='va'>treated_color_num</span>, alpha <span class='op'>=</span> <span class='fl'>1</span>, begin <span class='op'>=</span> <span class='fl'>0</span>, end <span class='op'>=</span> <span class='fl'>1</span>, 
 direction <span class='op'>=</span> <span class='fl'>1</span>, option <span class='op'>=</span> <span class='st'>"D"</span><span class='op'>)</span>
 <span class='fu'><a href='condor.plot.communities.html'>condor.plot.communities</a></span><span class='op'>(</span><span class='va'>treated_condor_object</span>, color_list<span class='op'>=</span><span class='va'>treated_color</span>, 
 point.size<span class='op'>=</span><span class='fl'>0.04</span>, xlab<span class='op'>=</span><span class='st'>"Target"</span>, ylab<span class='op'>=</span><span class='st'>"Regulator"</span><span class='op'>)</span>
