@@ -53,16 +53,15 @@ jobs:
       - name: Install reticulate 2
         run: |
             library('reticulate')
-            conda_create("r-reticulate")
             py_config()
-            use_condaenv("r-reticulate")
+            use_python("/usr/bin/python3")
+            conda_create("r-reticulate")
         shell: sudo -E Rscript {0}
       - name: Install reticulate 3
         run: |
             library('reticulate')
             use_condaenv("r-reticulate")
-            py_config()
-            py_install(c("numpy","scipy","pandas"))
+            conda_install(c("numpy","scipy","pandas"))
         shell: sudo -E Rscript {0}
       - name: Install dependencies 2
         run: |
