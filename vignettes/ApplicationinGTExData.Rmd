@@ -33,7 +33,7 @@ Load some libraries. We use the data.table library for reading in large datasets
 ```{r,warning=FALSE,message=FALSE}
 library(netZooR)
 library(data.table)
-install.packages("visNetwork")
+install.packages("visNetwork",repos = "http://cran.us.r-project.org")
 library(visNetwork) # to visualize the networks
 ```
 
