@@ -55,6 +55,7 @@ jobs:
             library('reticulate')
             conda_create("r-reticulate")
             py_config()
+            use_condaenv("r-reticulate")
         shell: sudo -E Rscript {0}
       - name: Install reticulate 3
         run: |
