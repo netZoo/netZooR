@@ -61,7 +61,7 @@ jobs:
         run: |
             library('reticulate')
             use_condaenv("r-reticulate")
-            conda_install(c("numpy","scipy","pandas"))
+            py_install(c("numpy","scipy","pandas"))
         shell: sudo -E Rscript {0}
       - name: Install dependencies 2
         run: |
