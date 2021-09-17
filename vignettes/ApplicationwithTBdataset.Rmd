@@ -111,10 +111,10 @@ Refer to four input datasets files: one TB expression dataset control group , on
 retrieve the file path of these files came with the netZooR package.
 ```{r}
 # retrieve the file path of these files
-treated_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZooR", mustWork = TRUE)
-control_expression_file_path <- system.file("extdata", "expr10.txt", package = "netZooR", mustWork = TRUE)
-motif_file_path <- system.file("extdata", "chip.txt", package = "netZooR", mustWork = TRUE)
-ppi_file_path <- system.file("extdata", "ppi.txt", package = "netZooR", mustWork = TRUE)
+treated_expression_file_path <- "./expr4.txt"
+control_expression_file_path <- "./expr10.txt"
+motif_file_path <- "./chip.txt"
+ppi_file_path <- "./ppi.txt"
 ```
 
 or, download to working directory from AWS.
