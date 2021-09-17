@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -147,12 +147,12 @@
 <h3 class="hasAnchor">
 <a href="#installing" class="anchor"></a>Installing</h3>
 <p>This package could be downloaded via <code><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github()</a></code> function from <code>devtools</code> package.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># install.packages("devtools") </span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools") </span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
 <span class="co"># install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sjmgarnier/viridisLite">viridisLite</a></span><span class="op">)</span><span class="co">#To visualize communities</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://sjmgarnier.github.io/viridisLite/">viridisLite</a></span><span class="op">)</span><span class="co">#To visualize communities</span></code></pre></div>
 </div>
 </div>
 <div id="data-resources" class="section level2">
@@ -167,16 +167,16 @@
 <h3 class="hasAnchor">
 <a href="#ppi" class="anchor"></a>PPI</h3>
 <p>This package includes a function <code>source.PPI</code> may source a Protein-Protein Interactions (PPI) througt STRING database given a list of proteins of interest. The <a href="http://www.bioconductor.org/packages/release/bioc/html/STRINGdb.html">STRINGdb</a> is already loaded while loading netZooR.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># TF is a data frame with single column filled with TFs of Mycobacterium tuberculosis H37Rv.</span>
-<span class="va">PPI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/source.PPI.html">source.PPI</a></span><span class="op">(</span><span class="va">TF</span>, STRING.version<span class="op">=</span><span class="st">"10"</span>, species.index<span class="op">=</span><span class="fl">83332</span>, score_threshold<span class="op">=</span><span class="fl">0</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># TF is a data frame with single column filled with TFs of Mycobacterium tuberculosis H37Rv.</span>
+<span class="va">PPI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/source.PPI.html">source.PPI</a></span><span class="op">(</span><span class="va">TF</span>, STRING.version<span class="op">=</span><span class="st">"10"</span>, species.index<span class="op">=</span><span class="fl">83332</span>, score_threshold<span class="op">=</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="running-the-sample-tb-datasets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#running-the-sample-tb-datasets" class="anchor"></a>Running the sample TB datasets</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: igraph</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'igraph'</span>
@@ -218,99 +218,99 @@
 <span class="co">#&gt;     'browseVignettes()'. To cite Bioconductor, see</span>
 <span class="co">#&gt;     'citation("Biobase")', and for packages 'citation("pkgname")'.</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; </span></pre></div>
+<span class="co">#&gt; </span></code></pre></div>
 <p>Accessing the help pages for the usage of core functions.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="op">?</span><span class="va">panda.py</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">?</span><span class="va">panda.py</span>
 <span class="op">?</span><span class="va">create.condor.object</span>
 <span class="op">?</span><span class="va">panda.to.condor.object</span>
 <span class="op">?</span><span class="va">lioness.py</span>
 <span class="op">?</span><span class="va">alpaca</span>
 <span class="op">?</span><span class="va">panda.to.alpaca</span>
-<span class="op">?</span><span class="va">sambar</span></pre></div>
+<span class="op">?</span><span class="va">sambar</span></code></pre></div>
 <p>This package will invoke the Python in R environment through reticulate package. Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. More details can be found <a href="https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html">here</a></p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="co">#check your Python configuration and the specific version of Python in use currently</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#check your Python configuration and the specific version of Python in use currently</span>
 <span class="fu">py_config</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># reset to Python 3.X if necessary, like below:</span>
-<span class="fu">use_python</span><span class="op">(</span><span class="st">"/usr/local/bin/python3"</span><span class="op">)</span></pre></div>
+<span class="fu">use_python</span><span class="op">(</span><span class="st">"/usr/local/bin/python3"</span><span class="op">)</span></code></pre></div>
 <p>The previous command is necessary to bind R to Python since we are calling PANDA from Python because netZooPy has an optimized implementation of PANDA. Check <a href="http://netbooks.networkmedicine.org/user/marouenbg/notebooks/netZooR/panda_gtex_tutorial_server.ipynb">this tutorial</a> for an example using a pure R implementation of PANDA. Use example data sets within package to test this package. Refer to four input datasets files: one TB expression dataset control group , one TB expression dataset treated, one transcription factor binding motifs dataset, and one protein-protein interaction datasets from either inst/extdat or AWS.</p>
 <p>retrieve the file path of these files came with the netZooR package.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="co"># retrieve the file path of these files</span>
-<span class="va">treated_expression_file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"expr4.txt"</span>, package <span class="op">=</span> <span class="st">"netZooR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">control_expression_file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"expr10.txt"</span>, package <span class="op">=</span> <span class="st">"netZooR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">motif_file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"chip.txt"</span>, package <span class="op">=</span> <span class="st">"netZooR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">ppi_file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ppi.txt"</span>, package <span class="op">=</span> <span class="st">"netZooR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># retrieve the file path of these files</span>
+<span class="va">treated_expression_file_path</span> <span class="op">&lt;-</span> <span class="st">"./expr4.txt"</span>
+<span class="va">control_expression_file_path</span> <span class="op">&lt;-</span> <span class="st">"./expr10.txt"</span>
+<span class="va">motif_file_path</span> <span class="op">&lt;-</span> <span class="st">"./chip.txt"</span>
+<span class="va">ppi_file_path</span> <span class="op">&lt;-</span> <span class="st">"./ppi.txt"</span></code></pre></div>
 <p>or, download to working directory from AWS.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4.txt"</span><span class="op">)</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4.txt"</span><span class="op">)</span>
 <span class="va">treated_expression_file_path</span> <span class="op">&lt;-</span> <span class="st">"./expr4.txt"</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr10.txt"</span><span class="op">)</span>
 <span class="va">control_expression_file_path</span> <span class="op">&lt;-</span> <span class="st">"./expr10.txt"</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/chip.txt"</span><span class="op">)</span>
 <span class="va">motif_file_path</span> <span class="op">&lt;-</span> <span class="st">"./chip.txt"</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/ppi.txt"</span><span class="op">)</span>
-<span class="va">ppi_file_path</span> <span class="op">&lt;-</span> <span class="st">"./ppi.txt"</span></pre></div>
+<span class="va">ppi_file_path</span> <span class="op">&lt;-</span> <span class="st">"./ppi.txt"</span></code></pre></div>
 <div id="panda-algorithm" class="section level3">
 <h3 class="hasAnchor">
 <a href="#panda-algorithm" class="anchor"></a>PANDA algorithm</h3>
 <p>Assign the above file paths to flag <code>e</code>(refers to “expression dataset”), <code>m</code>(refers to “motif dataset”), and <code>ppi</code>(refers to “PPI” dataset), respectively. Then set option <code>rm_missing</code> to <code>TRUE</code> to run <strong>PANDA</strong> to generate an aggregate network without unmatched TF and genes.</p>
 <p>Repeat with control group.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">treated_all_panda_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">treated_expression_file_path</span>, motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span> <span class="op">)</span>
-<span class="va">control_all_panda_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">control_expression_file_path</span>,motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span> <span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">treated_all_panda_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">treated_expression_file_path</span>, motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span> <span class="op">)</span>
+<span class="va">control_all_panda_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">control_expression_file_path</span>,motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span> <span class="op">)</span></code></pre></div>
 <p>Vector <code>treated_all_panda_result</code> and vector <code>control_all_panda_result</code> below are large lists with three elements: the entire PANDA network, indegree (“to” nodes) nodes and score, outdegree (“from” nodes) nodes and score. Use <code>$panda</code>,<code>$indegree</code> and <code>$outdegree</code> to access each list item resepctively.</p>
 <p>Use <code>$panda</code>to access the entire PANDA network.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">treated_net</span> <span class="op">&lt;-</span> <span class="va">treated_all_panda_result</span><span class="op">$</span><span class="va">panda</span>
-<span class="va">control_net</span> <span class="op">&lt;-</span> <span class="va">control_all_panda_result</span><span class="op">$</span><span class="va">panda</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">treated_net</span> <span class="op">&lt;-</span> <span class="va">treated_all_panda_result</span><span class="op">$</span><span class="va">panda</span>
+<span class="va">control_net</span> <span class="op">&lt;-</span> <span class="va">control_all_panda_result</span><span class="op">$</span><span class="va">panda</span></code></pre></div>
 </div>
 <div id="panda-cytoscape-plotting" class="section level3">
 <h3 class="hasAnchor">
 <a href="#panda-cytoscape-plotting" class="anchor"></a>PANDA Cytoscape Plotting</h3>
 <p>Cytoscape is an interactivity network visualization tool highly recommanded to explore the PANDA network. Before using this function <code>plot.panda.in.cytoscape</code>, please install and launch Cytoscape (3.6.1 or greater) and keep it running whenever using.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="co"># select top 1000 edges in PANDA network by edge weight.</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># select top 1000 edges in PANDA network by edge weight.</span>
 <span class="va">panda.net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">treated_net</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">control_net</span><span class="op">$</span><span class="va">force</span>,decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,<span class="op">]</span>, <span class="fl">1000</span><span class="op">)</span>
  
 <span class="co"># run this function to create a network in Cytoscape.</span>
-<span class="fu"><a href="../reference/vis.panda.in.cytoscape.html">vis.panda.in.cytoscape</a></span><span class="op">(</span><span class="va">panda.net</span>, network.name<span class="op">=</span><span class="st">"PANDA"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/vis.panda.in.cytoscape.html">vis.panda.in.cytoscape</a></span><span class="op">(</span><span class="va">panda.net</span>, network.name<span class="op">=</span><span class="st">"PANDA"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="lioness-algorithm" class="section level3">
 <h3 class="hasAnchor">
 <a href="#lioness-algorithm" class="anchor"></a>LIONESS Algorithm</h3>
 <p>How to run LIONESS is mostly idential with method how to run PANDA in this package, unless the return values of <code><a href="../reference/lioness.py.html">lioness.py()</a></code> is a data frame where first two columns represent TFs (regulators) and Genes (targets) while the rest columns represent each sample. each cell filled with estimated score calculated by LIONESS.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="co"># Run LIONESS algorithm for the first two samples</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Run LIONESS algorithm for the first two samples</span>
 <span class="co"># removing start_sample and end_sample arguments to generate whole LIONESS network with all samples.</span>
-<span class="va">control_lioness_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lioness.py.html">lioness.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">control_expression_file_path</span>,motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span>, start_sample<span class="op">=</span><span class="fl">1</span>, end_sample<span class="op">=</span><span class="fl">2</span><span class="op">)</span></pre></div>
+<span class="va">control_lioness_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lioness.py.html">lioness.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">control_expression_file_path</span>,motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span>, start_sample<span class="op">=</span><span class="fl">1</span>, end_sample<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="condor-algorithm-and-plotting" class="section level3">
 <h3 class="hasAnchor">
 <a href="#condor-algorithm-and-plotting" class="anchor"></a>CONDOR Algorithm and plotting</h3>
 <p>PANDA network can simply be converted into condor.object by <code><a href="../reference/panda.to.condor.object.html">panda.to.condor.object(panda.net, threshold)</a></code> Defaults option <code>threshold</code> is the average of [median weight of non-prior edges] and [median weight of prior edges], all weights mentioned previous are transformationed with formula <code>w'=ln(e^w+1)</code> before calculating the median and average. But all the edges selected will remain the orginal weights calculated by PANDA.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="va">treated_condor_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.to.condor.object.html">panda.to.condor.object</a></span><span class="op">(</span><span class="va">treated_net</span>, threshold <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">treated_condor_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.to.condor.object.html">panda.to.condor.object</a></span><span class="op">(</span><span class="va">treated_net</span>, threshold <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <p>The communities structure can be plotted by igraph.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sjmgarnier/viridisLite">viridisLite</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://sjmgarnier.github.io/viridisLite/">viridisLite</a></span><span class="op">)</span>
 <span class="va">treated_condor_object</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/condor.cluster.html">condor.cluster</a></span><span class="op">(</span><span class="va">treated_condor_object</span>,project <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; [1] "modularity of projected graph 0.306134881290028"</span>
 <span class="co">#&gt; [1] "Q = 0.306345744728624"</span>
 <span class="co">#&gt; [1] "Q = 0.306345744728624"</span>
 <span class="va">treated_color_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">treated_condor_object</span><span class="op">$</span><span class="va">red.memb</span><span class="op">$</span><span class="va">com</span><span class="op">)</span>
-<span class="va">treated_color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/viridisLite/man/viridis.html">viridis</a></span><span class="op">(</span><span class="va">treated_color_num</span>, alpha <span class="op">=</span> <span class="fl">1</span>, begin <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">1</span>, direction <span class="op">=</span> <span class="fl">1</span>, option <span class="op">=</span> <span class="st">"D"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/condor.plot.communities.html">condor.plot.communities</a></span><span class="op">(</span><span class="va">treated_condor_object</span>, color_list<span class="op">=</span><span class="va">treated_color</span>, point.size<span class="op">=</span><span class="fl">0.04</span>, xlab<span class="op">=</span><span class="st">"Genes"</span>, ylab<span class="op">=</span><span class="st">"TFs"</span><span class="op">)</span></pre></div>
+<span class="va">treated_color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">viridis</a></span><span class="op">(</span><span class="va">treated_color_num</span>, alpha <span class="op">=</span> <span class="fl">1</span>, begin <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">1</span>, direction <span class="op">=</span> <span class="fl">1</span>, option <span class="op">=</span> <span class="st">"D"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/condor.plot.communities.html">condor.plot.communities</a></span><span class="op">(</span><span class="va">treated_condor_object</span>, color_list<span class="op">=</span><span class="va">treated_color</span>, point.size<span class="op">=</span><span class="fl">0.04</span>, xlab<span class="op">=</span><span class="st">"Genes"</span>, ylab<span class="op">=</span><span class="st">"TFs"</span><span class="op">)</span></code></pre></div>
 <p><img src="ApplicationwithTBdataset_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 </div>
 <div id="alpaca-algorithm" class="section level3">
 <h3 class="hasAnchor">
 <a href="#alpaca-algorithm" class="anchor"></a>ALPACA Algorithm</h3>
 <p>ALPACA community structure can also be generated from two PANDA network by <code>panda.to.alpaca</code></p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="va">alpaca</span><span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.to.alpaca.html">panda.to.alpaca</a></span><span class="op">(</span><span class="va">treated_net</span>, <span class="va">control_net</span>, <span class="cn">NULL</span>, verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alpaca</span><span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.to.alpaca.html">panda.to.alpaca</a></span><span class="op">(</span><span class="va">treated_net</span>, <span class="va">control_net</span>, <span class="cn">NULL</span>, verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Detecting communities in control network..."</span>
 <span class="co">#&gt; Weights detected. Building condor object with weighted edges.</span>
 <span class="co">#&gt; [1] "modularity of projected graph 0.482467704493567"</span>
@@ -333,7 +333,7 @@
 <span class="co">#&gt; [1] 2</span>
 <span class="co">#&gt; [1] "Merging 14 communities"</span>
 <span class="co">#&gt; [1] 1</span>
-<span class="co">#&gt; [1] "Computing node scores..."</span></pre></div>
+<span class="co">#&gt; [1] "Computing node scores..."</span></code></pre></div>
 </div>
 </div>
 <div id="more-tutorials" class="section level2">

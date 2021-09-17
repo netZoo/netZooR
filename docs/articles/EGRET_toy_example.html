@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -128,12 +128,12 @@
 <h1 class="hasAnchor">
 <a href="#installload-netzoor" class="anchor"></a>Install/load netZooR</h1>
 <p>If you do not have netZooR installed, you can install it from the development branch as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co">#install.packages("devtools")</span>
-<span class="co">#devtools::install_github("netZoo/netZooR@devel")</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#install.packages("devtools")</span>
+<span class="co">#devtools::install_github("netZoo/netZooR@devel")</span></code></pre></div>
 <p>Load the netZooR package:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="egret-input-data" class="section level1">
 <h1 class="hasAnchor">
@@ -142,45 +142,45 @@
 <h2 class="hasAnchor">
 <a href="#get-the-example-data-sets" class="anchor"></a>Get the example data sets</h2>
 <p>First download the example datasets:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_qbic.txt"</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_qbic.txt"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_genotype.vcf"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_motif_prior.txt"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_expr.txt"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_ppi_prior.txt"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_eQTL.txt"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_map.txt"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_map.txt"</span><span class="op">)</span></code></pre></div>
 <p>Read in each of the data types.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">qbic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"toy_qbic.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">qbic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"toy_qbic.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">vcf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"toy_genotype.vcf"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span>, colClasses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"character"</span>, <span class="st">"numeric"</span>, <span class="st">"character"</span>, <span class="st">"character"</span>, <span class="st">"character"</span>, <span class="st">"character"</span>, <span class="st">"character"</span>, <span class="st">"character"</span>, <span class="st">"character"</span>, <span class="st">"character"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">motif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"toy_motif_prior.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"toy_expr.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="va">ppi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"toy_ppi_prior.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span>
 <span class="va">qtl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"toy_eQTL.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">nameGeneMap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"toy_map.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
+<span class="va">nameGeneMap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"toy_map.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Let’s take a look at each of the inputs for EGRET:</p>
 </div>
 <div id="motif-prior" class="section level2">
 <h2 class="hasAnchor">
 <a href="#motif-prior" class="anchor"></a>Motif prior</h2>
 <p>The motif prior is a bipartite network represented as a 3 column data frame. Each row represents an edge in the bipartite graph, with column 1 representing source TFs, column 2 representing target genes and column 3 representing the edge weight. The edge weight represents the presence (edge weight = 1) or absence (edge weight = 0) of the motif corresponding to the TF in column 1 in the promoter region of the gene in column 2. Note that, for ease of differentiating TF nodes from gene nodes, we name TFs with the TF name, and we name genes with their ensembl id.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">motif</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">motif</span><span class="op">)</span>
 <span class="co">#&gt;    V1              V2 V3</span>
 <span class="co">#&gt; 1 AHR ENSG00000000419  0</span>
 <span class="co">#&gt; 2 AHR ENSG00000131238  0</span>
 <span class="co">#&gt; 3 AHR ENSG00000184939  0</span>
 <span class="co">#&gt; 4 AHR ENSG00000225077  0</span>
 <span class="co">#&gt; 5 AHR ENSG00000225697  1</span>
-<span class="co">#&gt; 6 AHR ENSG00000254184  0</span></pre></div>
+<span class="co">#&gt; 6 AHR ENSG00000254184  0</span></code></pre></div>
 </div>
 <div id="gene-expression" class="section level2">
 <h2 class="hasAnchor">
 <a href="#gene-expression" class="anchor"></a>Gene expression</h2>
 <p>The gene expression data represents gene expression measurements (in this case as TPMs from GTEx <a href="https://gtexportal.org/home/datasets" class="uri">https://gtexportal.org/home/datasets</a>) across several individuals. These are represented in a data frame with rows corresponding to genes and columns corresponding to samples/individuals. Row names of the data frame should be assigned gene names.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span>
 <span class="co">#&gt;                       V2       V3      V4      V5     V6       V7       V8</span>
 <span class="co">#&gt; ENSG00000225077   0.2971   0.2846   1.141  0.1843  0.000  0.05798   0.2158</span>
 <span class="co">#&gt; ENSG00000225697  12.3100  16.5400  23.050 15.4700 15.400 14.58000  26.5500</span>
@@ -270,41 +270,41 @@
 <span class="co">#&gt; ENSG00000225077  0.1284  0.2762  0.4024   0.6954  0.7493</span>
 <span class="co">#&gt; ENSG00000225697  8.4670 11.0600 16.3800  18.6600 16.6300</span>
 <span class="co">#&gt; ENSG00000254184  1.3850  1.3430  2.0000   3.8730  1.5120</span>
-<span class="co">#&gt; ENSG00000000419 73.6300 86.2600 84.8200 105.0000 99.0400</span></pre></div>
+<span class="co">#&gt; ENSG00000000419 73.6300 86.2600 84.8200 105.0000 99.0400</span></code></pre></div>
 </div>
 <div id="protein-protein-interaction-ppi-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#protein-protein-interaction-ppi-data" class="anchor"></a>Protein-protein interaction (PPI) data</h2>
 <p>The PPI prior can be obtained from interaction databases such as String (<a href="https://string-db.org/" class="uri">https://string-db.org/</a>). EGRET takes in a PPI network of TFs as a data frame in which each row represents an edge, with columns one and two corresponding to TF nodes and column 3 representing the interaction weight.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ppi</span><span class="op">)</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ppi</span><span class="op">)</span>
 <span class="co">#&gt;     V1    V2    V3</span>
 <span class="co">#&gt; 1  AHR   AHR 1.000</span>
 <span class="co">#&gt; 2  AHR  ALX3 0.179</span>
 <span class="co">#&gt; 3  AHR GATA2 0.194</span>
 <span class="co">#&gt; 4  AHR GATA4 0.150</span>
 <span class="co">#&gt; 5 ALX3   AHR 0.179</span>
-<span class="co">#&gt; 6 ALX3  ALX3 1.000</span></pre></div>
+<span class="co">#&gt; 6 ALX3  ALX3 1.000</span></code></pre></div>
 </div>
 <div id="eqtl-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#eqtl-data" class="anchor"></a>eQTL data</h2>
 <p>The eQTL data consists of eQTL variants where the eQTL variant lies within a motif within the promoter region of the eGene. These are passed to EGRET as a data frame with the following columns: (1) TF corresponding to the motif in which the eQTL variant resides, (2) eGene adjacent to the promoter, (3) position of the eQTL variant, (4) chromosome on which the eQTL variant and eGene reside, and (5) beta value for the eQTL association. The eQTL data should be from the same cell type/tissue as the gene expression data and can be obtained from databases such as GTEx (<a href="https://gtexportal.org/home/datasets" class="uri">https://gtexportal.org/home/datasets</a>).</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">qtl</span><span class="op">)</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">qtl</span><span class="op">)</span>
 <span class="co">#&gt;      V1              V2       V3    V4        V5</span>
 <span class="co">#&gt; 1  ALX3 ENSG00000131238 40563700  chr1 -0.645817</span>
 <span class="co">#&gt; 2 GATA4 ENSG00000184939 68573287 chr16  0.515920</span>
 <span class="co">#&gt; 3  ETS2 ENSG00000225077  6296238  chr1 -0.736242</span>
 <span class="co">#&gt; 4 GATA2 ENSG00000225697 48671834  chr3  0.442918</span>
-<span class="co">#&gt; 5 HOXB8 ENSG00000254184 72209959  chr7  1.365800</span></pre></div>
+<span class="co">#&gt; 5 HOXB8 ENSG00000254184 72209959  chr7  1.365800</span></code></pre></div>
 </div>
 <div id="individual-genotype" class="section level2">
 <h2 class="hasAnchor">
 <a href="#individual-genotype" class="anchor"></a>Individual genotype</h2>
 <p>The genotype data for the individual in question should be loaded as a VCF file. Columns of the VCF used include column 1 (chromosome), column 2 (variant position), column 4 (reference allele), column 5 (alternate allele) and column 10 (genotype).</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">vcf</span><span class="op">)</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">vcf</span><span class="op">)</span>
 <span class="co">#&gt;      V1       V2 V3 V4 V5 V6   V7</span>
 <span class="co">#&gt; 1  chr1 40563700  .  T  C  . PASS</span>
 <span class="co">#&gt; 2 chr16 68573287  .  T  C  . PASS</span>
@@ -322,32 +322,32 @@
 <span class="co">#&gt; 2 GT 1|1</span>
 <span class="co">#&gt; 3 GT 1|1</span>
 <span class="co">#&gt; 4 GT 1|1</span>
-<span class="co">#&gt; 5 GT 0|1</span></pre></div>
+<span class="co">#&gt; 5 GT 0|1</span></code></pre></div>
 </div>
 <div id="qbic-predictions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#qbic-predictions" class="anchor"></a>QBiC predictions</h2>
 <p>EGRET requires QBiC [1] to be run on the eQTL variants occurring in the individual(s) in question in order to determine which transcription factor’s binding is potentially disrupted due to the variant, at the location of the variant. QBiC makes use of models trained on protein binding microarray (PBM) data to predict the impact of a given variant on TF binding at that location. Some of QBiC’s models are trained on non-human PBMs. We thus require a more stringent filtering (p &lt; 1e-20) of resulting QBiC predictions from non-human models. We also require the predicted effect on binding to be negative (i.e. disruption of binding). QBiC predictions are passed to EGRET in a dataframe with the following columns: (1) variant as chr[num]_position which occurs within a motif in a promoter, (2) TF predicted to be impacted by QBiC, (3) gene adjacent to the promoter, (4) QBiC effect on binding. Note that multiple TFs can be predicted to have disrupted binding at a given variant.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">qbic</span><span class="op">)</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">qbic</span><span class="op">)</span>
 <span class="co">#&gt;               V1    V2              V3       V4</span>
 <span class="co">#&gt; 1  chr1_40563700  ALX1 ENSG00000131238 -0.72773</span>
 <span class="co">#&gt; 2  chr1_40563700  ALX3 ENSG00000131238 -0.72773</span>
 <span class="co">#&gt; 3  chr1_40563700  ALX4 ENSG00000131238 -0.72773</span>
 <span class="co">#&gt; 4 chr16_68573287 GATA4 ENSG00000184939 -2.56780</span>
 <span class="co">#&gt; 5   chr1_6296238  ETS2 ENSG00000225077 -0.59758</span>
-<span class="co">#&gt; 6  chr3_48671834 GATA2 ENSG00000225697 -2.33451</span></pre></div>
+<span class="co">#&gt; 6  chr3_48671834 GATA2 ENSG00000225697 -2.33451</span></code></pre></div>
 </div>
 </div>
 <div id="run-egret" class="section level1">
 <h1 class="hasAnchor">
 <a href="#run-egret" class="anchor"></a>Run EGRET</h1>
 <p>Set a tag for the EGRET run. The EGRET outputs will be labeled with this tag.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="va">tag</span> <span class="op">&lt;-</span> <span class="st">"my_toy_egret_run"</span></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tag</span> <span class="op">&lt;-</span> <span class="st">"my_toy_egret_run"</span></code></pre></div>
 <p>Call the runEgret function to</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="../reference/runEgret.html">runEgret</a></span><span class="op">(</span><span class="va">qtl</span>,<span class="va">vcf</span>,<span class="va">qbic</span>,<span class="va">motif</span>,<span class="va">expr</span>,<span class="va">ppi</span>,<span class="va">nameGeneMap</span>,<span class="va">tag</span><span class="op">)</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/runEgret.html">runEgret</a></span><span class="op">(</span><span class="va">qtl</span>,<span class="va">vcf</span>,<span class="va">qbic</span>,<span class="va">motif</span>,<span class="va">expr</span>,<span class="va">ppi</span>,<span class="va">nameGeneMap</span>,<span class="va">tag</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Initializing and validating"</span>
 <span class="co">#&gt; [1] "Verified sufficient samples"</span>
 <span class="co">#&gt; [1] "Normalizing networks..."</span>
@@ -357,14 +357,14 @@
 <span class="co">#&gt; [1] "Verified sufficient samples"</span>
 <span class="co">#&gt; [1] "Normalizing networks..."</span>
 <span class="co">#&gt; [1] "Learning Network..."</span>
-<span class="co">#&gt; [1] "Using tanimoto similarity"</span></pre></div>
+<span class="co">#&gt; [1] "Using tanimoto similarity"</span></code></pre></div>
 </div>
 <div id="egret-output" class="section level1">
 <h1 class="hasAnchor">
 <a href="#egret-output" class="anchor"></a>EGRET output</h1>
 <p>EGRET produces two output GRNs - a genotype specific “EGRET” network, and a genotype-agnostic baseline network (equivalent to a PANDA network).</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"my_toy_egret_run_egret.RData"</span><span class="op">)</span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"my_toy_egret_run_egret.RData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"my_toy_egret_run_panda.RData"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">regnetE</span><span class="op">)</span>
@@ -375,7 +375,6 @@
 <span class="co">#&gt; GATA2      -0.4868319      -0.7719010       3.4413886      -0.9031585</span>
 <span class="co">#&gt; GATA4       1.4572034       0.9393168      -2.8361430       1.0380431</span>
 <span class="co">#&gt; HOXB8       1.3519842      -1.3298778      -1.8452988       2.3230026</span>
-
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">regnetP</span><span class="op">)</span>
 <span class="co">#&gt;       ENSG00000000419 ENSG00000225077 ENSG00000225697 ENSG00000254184</span>
 <span class="co">#&gt; AHR        -1.8857284      -1.7359682       3.3731547      -2.7983875</span>
@@ -383,7 +382,7 @@
 <span class="co">#&gt; ETS2        0.8361299       0.8887604       0.7134097       0.5956296</span>
 <span class="co">#&gt; GATA2       0.8361299       0.8887604       0.7134097       0.5956296</span>
 <span class="co">#&gt; GATA4       1.3594558       1.2339543      -2.9404332       1.1808202</span>
-<span class="co">#&gt; HOXB8       1.5258602      -1.4063417      -1.7945491       1.2819613</span></pre></div>
+<span class="co">#&gt; HOXB8       1.5258602      -1.4063417      -1.7945491       1.2819613</span></code></pre></div>
 </div>
 <div id="references" class="section level1">
 <h1 class="hasAnchor">
