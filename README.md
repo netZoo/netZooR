@@ -140,3 +140,4 @@ The software is free and is licensed under the GNU General License v3.0, see the
 
 ## Code of conduct
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+
