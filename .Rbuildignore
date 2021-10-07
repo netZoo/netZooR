@@ -17,10 +17,10 @@ coverZoo.r
 .github
 vignettes/ApplicationinGTExData.Rmd
 vignettes/ApplicationwithTBdataset.Rmd
-tests/test-panda.R
-tests/test-lioness.R
-tests/test-egret.R
-tests/test-monster.R
-tests/test-alpaca.R
+tests/testthat/test-panda.R
+tests/testthat/test-lioness.R
+tests/testthat/test-egret.R
+tests/testthat/test-monster.R
+tests/testthat/test-alpaca.R
 vignettes/LionessApplicationinGTExData.Rmd
 vignettes/pandaRApplicationinGTExData.Rmd
