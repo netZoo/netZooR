@@ -34,7 +34,7 @@ netZooR currently integrates:
 
 * **EGRET** (Estimating the Genetic Regulatory effects on TFs) [[Weighill et al.]]() In preparation: models individual-specific gene regulatory networks using their genetic variants.
 
-* **YARN** (Yet Another RNa-seq package) [[Paulsson et al.]](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1847-x): combines quality control and preprocessing, gene filtering, and normalization steps to streamline the processig of large-scale gene expression data such as GTEx.
+* **YARN** (Yet Another RNa-seq package) [[Paulsson et al.]](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1847-x): combines quality control and preprocessing, gene filtering, and normalization steps to streamline the processing of large-scale gene expression data such as GTEx.
 
 The package also integrates additional functions to:
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
@@ -140,3 +140,4 @@ The software is free and is licensed under the GNU General License v3.0, see the
 
 ## Code of conduct
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+
