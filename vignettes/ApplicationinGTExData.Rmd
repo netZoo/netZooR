@@ -49,8 +49,8 @@ The ppi and motif priors are available in our AWS public bucket, and can be down
 
 Let's download and take a look at the priors:
 ```{r,message=FALSE}
-system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt")
-system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_GTEx.txt")
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt","motif_GTEx.txt")
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_GTEx.txt","ppi_GTEx.txt")
 motif <- read.table("./motif_GTEx.txt") 
 ppi <- read.table("./ppi_GTEx.txt")
 ppi[1:5,]
@@ -67,14 +67,14 @@ We can either
 
 Here, we use the expression data and sample ids file copy from our AWS bucket.
 ```{r,eval=FALSE}
-system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct")
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct","GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct")
 # load the GTEx expression matrix
 expr <- fread("./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct", header = TRUE, skip = 2, data.table = TRUE)
 # remove the transcript ids so that the genes match the gene ids in the tf-motif prior
 expr$Name<-sub("\\.[0-9]","", expr$Name)
 
 #downlooad and load the sample ids of LCL samples
-system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/LCL_samples.txt")
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/LCL_samples.txt","LCL_samples.txt")
 lcl_samples <-fread("./LCL_samples.txt", header = FALSE, data.table=FALSE)
 
 #select the columns of the expression matrix corresponding to the LCL samples.
@@ -95,7 +95,7 @@ Or
 
 Download our pre-processed pandaExprLCL.txt from our AWS S3 Bucket.
 ```{r,message=FALSE,warning=FALSE}
-system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprLCL.txt")
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprLCL.txt","pandaExprLCL.txt")
 ```
 
 Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior.
@@ -128,7 +128,7 @@ head(outDegreeLCL)
 Like the LCL expression data in previous section, we can either download the raw data and process;
 ```{r,eval=FALSE}
 #### skip this part if you already did same process in LCL expression data section
-system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct")
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct","GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct")
 # load the GTEx expression matrix
 expr <- fread("./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct", header = TRUE, skip = 2, data.table = TRUE)
 # remove the transcript ids so that the genes match the gene ids in the tf-motif prior
@@ -136,7 +136,7 @@ expr$Name<-sub("\\.[0-9]","", expr$Name)
 #####
 
 #load the sample ids of Whole Blood samples
-system("curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/WholeBlood_samples.txt")
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/WholeBlood_samples.txt","WholeBlood_samples.txt")
 wblood_samples <-fread("./WholeBlood_samples.txt", header = FALSE, data.table=FALSE)
 
 #select the columns of the expression matrix corresponding to the LCL samples.
@@ -154,7 +154,7 @@ write.table(clean_data_wb, file = "pandaExprWholeBlood.txt", sep = "\t", col.nam
 
 or download the whole blood expression data directly from AWS Bucket.
 ```{r,message=FALSE,warning=FALSE}
-system("curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprWholeBlood.txt")
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprWholeBlood.txt","pandaExprWholeBlood.txt")
 ```
 
 ```{r,warning=FALSE}
