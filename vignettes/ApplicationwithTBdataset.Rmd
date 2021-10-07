@@ -118,7 +118,7 @@ ppi_file_path <- "./ppi.txt"
 ```
 
 or, download to working directory from AWS.
-```{r,eval=FALSE}
+```{r,eval=TRUE}
 system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4.txt")
 treated_expression_file_path <- "./expr4.txt"
 system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr10.txt")
