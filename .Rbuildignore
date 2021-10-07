@@ -15,4 +15,5 @@ CONDUCT\.md$
 ^\.Rapp\.history
 coverZoo.r
 .github
-vignettes/
+vignettes/ApplicationinGTExData.Rmd
+vignettes/ApplicationwithTBdataset.Rmd
