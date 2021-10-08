@@ -124,7 +124,7 @@ panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu",
   }
   
   # source the pypanda from github raw website.
-  reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/panda.py",convert = TRUE)
+  reticulate::source_python("./panda.py",convert = TRUE)
   
   # invoke Python script to create a Panda object
   obj.str <-  paste("panda_obj=Panda(", expr.str, ",", motif.str,",", ppi.str, ",", computing.str, ",", precision.str, ",", savememory.str, ",", savetmp.str, "," , keepexpression.str, ",",  mode.str, ")", sep ='')
