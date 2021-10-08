@@ -1,11 +1,11 @@
 Package: netZooR
 Title: Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR, MONSTER and OTTER into one workflow
-Version: 0.99.13
+Version: 0.99.14
 Date: 2021-09-20
 Authors@R: c(person("Tian", "Wang",
-			email = "twang@hsph.harvard.edu", role = c("aut", "cre")),
+			email = "twang@hsph.harvard.edu", role = c("aut")),
 	     person("Marouen", "Ben Guebila", 
-			email = "benguebila@hsph.harvard.edu", role = c("aut","ctb")),
+			email = "benguebila@hsph.harvard.edu", role = c("aut","cre")),
 	     person("John", "Platig",
 			email="john.platig@channing.harvard.edu",role="aut"),
 	     person("Marieke", "Kuijjer",
@@ -70,4 +70,6 @@ Suggests:
     knitr,
     rmarkdown,
     pkgdown,
+VignetteEngine: knitr
+VignetteBuilder: knitr
 RoxygenNote: 7.1.2
