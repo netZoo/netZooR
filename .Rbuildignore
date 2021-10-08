@@ -24,3 +24,4 @@ tests/testthat/test-monster.R
 tests/testthat/test-alpaca.R
 vignettes/LionessApplicationinGTExData.Rmd
 vignettes/pandaRApplicationinGTExData.Rmd
+vignettes/TutorialOTTER.Rmd
