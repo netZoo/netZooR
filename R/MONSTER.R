@@ -275,7 +275,7 @@ monster <- function(expr,
 #' 
 monster.checkDataType <- function(expr){
   assert_that(is.data.frame(expr)||is.matrix(expr)||class(expr)=="ExpressionSet")
-  if(class(expr)=="ExpressionSet"){
+  if("ExpressionSet" %in% class(expr)){
     if (requireNamespace("Biobase", quietly = TRUE)) {
       expr <- Biobase::exprs(expr)
     } 
