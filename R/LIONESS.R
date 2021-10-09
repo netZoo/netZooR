@@ -99,7 +99,7 @@ lioness.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu
 
    # source the panda.py and lioness.py from GitHub raw website.
    pandapath <- system.file("extdata", "panda.py", package = "netZooR", mustWork = TRUE)
-   lionesspath <- system.file("extdata", "panda.py", package = "netZooR", mustWork = TRUE) 
+   lionesspath <- system.file("extdata", "lioness.py", package = "netZooR", mustWork = TRUE) 
    reticulate::source_python(pandapath,convert = TRUE)
    reticulate::source_python(lionesspath,convert = TRUE)
    # run py code to create an instance named "panda_ob" of Panda Class
