@@ -17,3 +17,6 @@ A ranked list of nodes.
 \description{
 This function uses the pseudo-inverse to find the optimal linear transformation mapping the community structures of two networks, then ranks nodes in the network by how much they deviate from the linear mapping.
 }
+\examples{
+a <- 1 #place holder
+}
