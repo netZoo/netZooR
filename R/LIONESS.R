@@ -98,8 +98,10 @@ lioness.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu
   
 
    # source the panda.py and lioness.py from GitHub raw website.
-   reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/panda.py",convert = TRUE)
-   reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/lioness.py",convert = TRUE)
+   pandapath <- system.file("extdata", "panda.py", package = "netZooR", mustWork = TRUE)
+   lionesspath <- system.file("extdata", "panda.py", package = "netZooR", mustWork = TRUE) 
+   reticulate::source_python(pandapath,convert = TRUE)
+   reticulate::source_python(lionesspath,convert = TRUE)
    # run py code to create an instance named "panda_ob" of Panda Class
    pandaObj.str <-  paste("panda_obj=Panda(", expr.str, ",", motif.str,",", ppi.str, ",", computing.str, ",", precision.str, ",", savememory.str, ",", savetmp.str, "," , "keep_expression_matrix=True", ",",  mode.str, ")", sep ='')
    py_run_string(pandaObj.str,local = FALSE, convert = TRUE)
