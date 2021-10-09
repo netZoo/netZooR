@@ -35,7 +35,7 @@ Compute LIONESS (Linear Interpolation to Obtain Network Estimates for Single Sam
 \examples{
 data(pandaToyData)
 linonessRes <- lioness(pandaToyData$motif,
-    pandaToyData$expression[,1:20],pandaToyData$ppi,hamming=.1,progress=FALSE,start_sample=1, end_sample=2)
+    pandaToyData$expression[,1:3],pandaToyData$ppi,hamming=.1,progress=FALSE)
 }
 \references{
 Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
