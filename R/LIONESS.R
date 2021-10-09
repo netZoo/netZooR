@@ -168,7 +168,7 @@ lioness.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu
 #' @examples
 #' data(pandaToyData)
 #' linonessRes <- lioness(pandaToyData$motif,
-#'     pandaToyData$expression[,1:20],pandaToyData$ppi,hamming=.1,progress=FALSE)
+#'     pandaToyData$expression[,1:20],pandaToyData$ppi,hamming=.1,progress=FALSE,start_sample=1, end_sample=2)
 #' @references
 #' Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 #' Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.
