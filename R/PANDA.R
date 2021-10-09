@@ -124,7 +124,7 @@ panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu",
   }
   
   # source the pypanda from github raw website.
-  pandapath <- system.file("R", "panda.py", package = "netZooR", mustWork = TRUE)
+  pandapath <- system.file("extdata", "panda.py", package = "netZooR", mustWork = TRUE)
   reticulate::source_python(pandapath,convert = TRUE)
   
   # invoke Python script to create a Panda object
