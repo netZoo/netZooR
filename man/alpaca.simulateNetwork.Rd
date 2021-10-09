@@ -29,3 +29,6 @@ A list with two elements. The first element is a four-column edge table of the s
 \description{
 This function creates a pair of networks given user-defined parameters for the modular structure of the first (healthy) network and the type of added module in the second (disease) network.
 }
+\examples{
+a <- 1 # example place holder
+}

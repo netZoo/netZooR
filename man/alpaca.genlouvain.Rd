@@ -15,3 +15,6 @@ The community membership vector
 \description{
 This function implements the Louvain optimization scheme on a general symmetric matrix. First, nodes are all placed in separate communities, and merged iteratively according to which merge moves result in the greatest increase in the modularity sum. Note that nodes are iterated in the order of the input matrix (not randomly) so that all results are reproducible. Second, the final community membership is used to form a alpaca.metanetwork whose nodes represent communities from the prevous step, and which are connected by effective edge weights. The merging process is then repeated on the alpaca.metanetwork. These two steps are repeated until the modularity sum does not increase more than a very small tolerance factor. New
 }
+\examples{
+a <- 1 # example place holder
+}

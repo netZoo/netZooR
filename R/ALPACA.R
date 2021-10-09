@@ -6,6 +6,8 @@
 #' @param verbose Indicates whether the full differential modularity matrix should also be written to a file. Defaults to FALSE.
 #'  modularity 
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its module's total differential modularity
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @importFrom utils write.table
@@ -97,6 +99,8 @@ alpaca <- function(net.table,file.stem,verbose=F)
 #' @param set.lengths The desired lengths of the top gene lists.
 #'  
 #' @return List with two elements. First element is a list of the top target genes in each cluster. Second element is a vector with the names of the gene sets. The names are in the format "number_length", where number is the module number label and length is the length of the gene set.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -135,6 +139,8 @@ alpaca.ExtractTopGenes <- function(module.result,set.lengths)
 #' @param dm.top The result of extracting the top genes of the differential modules (dm.top)
 #'  
 #' @return A vector with strings representing gene lists, each element of the vector has the genes in that GO term and community pasted together with spaces in between.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -169,6 +175,8 @@ alpaca.GOtab.to.genes <- function(go.result,dm.top)
 #' @param annot.vec A vector of gene symbols with gene identifiers as the names of the vector, that defines the translation between annotations.
 #'  
 #' @return A list of sets of gene symbols.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -194,6 +202,8 @@ alpaca.TopEnsembl.to.TopSym <- function(mod.top,annot.vec)
 #' @param file.stem The folder location and title under which all results will be stored.
 #'  
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its community's modularity in the final edge-subtracted network
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @importFrom utils write.table
@@ -239,6 +249,8 @@ alpaca.DeltaZAnalysis <- function(net.table,file.stem)
 #' @param file.stem The folder location and title under which all results will be stored.
 #'  
 #' @return List where first element is the membership vector and second element is the contribution score of each node to its community's modularity in the final edge-subtracted network
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @importFrom utils write.table
@@ -276,6 +288,8 @@ alpaca.DeltaZAnalysis.Louvain <- function(net.table,file.stem)
 #' @param net.table A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the control or healthy network, and the fourth column contains the edge weights for the disease network or network of interest.
 #'  
 #' @return Vector of nodes ordered by how much they change their community membership between the two networks.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -313,6 +327,8 @@ alpaca.RotationAnalysis <- function(net.table)
 #' @param net.table A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the control or healthy network, and the fourth column contains the edge weights for the disease network or network of interest.
 #'  
 #' @return Vector of nodes ordered by how much they change their community membership between the two networks.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -344,6 +360,8 @@ alpaca.RotationAnalysis.Louvain <- function(net.table)
 #' @param net.frame A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the network of interest.
 #'  
 #' @return List where first element is the community membership vector and second element is the contribution score of each node to its community's portion of the bipartite modularity.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -399,6 +417,8 @@ alpaca.WBM.louvain <- function(net.frame)
 #' @param edge.mat A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the network of interest.
 #'  
 #' @return Modularity matrix with rows representing TFs ("from" nodes) and columns repesenting targets ("to" nodes)
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -429,6 +449,8 @@ alpaca.computeWBMmat <- function(edge.mat)
 #' @param x Tagged node identifier
 #'  
 #' @return Untagged node name
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -446,6 +468,8 @@ alpaca.node.to.gene <- function(x){strsplit(x,split="_")[[1]][1]}
 #' @param comm.nums A vector of names for the gene sets in the input parameter "gene.list". These are used to create the table of final results.
 #'  
 #' @return A table whose rows represent enriched GO terms (p_adj<0.05) and columns describe useful properties, like the name of the GO term, the label of the gene set which is enriched in that GO term, the adjusted p-value and Odds Ratio.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -494,6 +518,8 @@ alpaca.list.to.go <- function(gene.list,univ.vec,comm.nums){
 #' @param true.pos The selected set of nodes being tested for enrichment among the ranked list.
 #'  
 #' @return A vector of 4 values. 1) Wilcoxon p-value, 2) KS p-value, 3) Fisher p-value, 4) Fisher odds ratio.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -571,6 +597,8 @@ alpaca.CommunityStructureRotation <- function(net1.memb,net2.memb){
 #' @param ctrl.memb The community membership for the control (healthy) network.
 #'  
 #' @return The differential modularity matrix, with rows representing "from" nodes and columns representing "to" nodes.
+#' @examples 
+#' a <- 1 # place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -670,6 +698,8 @@ alpaca.computeDWBMmat.mscale <- function(edge.mat,ctrl.memb){
 #' @param S The community membership vector from the previous round of agglomeration.
 #'  
 #' @return The differential modularity matrix, with rows representing "from" nodes and columns representing "to" nodes.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -689,6 +719,8 @@ alpaca.metanetwork <- function(J,S)
 #' @param S The community membership vector derived from the previous round of agglomeration.
 #'  
 #' @return The renumbered membership vector.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -712,6 +744,8 @@ alpaca.tidyconfig <- function(S)
 #' @param B Symmetric modularity matrix
 #'  
 #' @return The community membership vector
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -815,6 +849,8 @@ alpaca.genlouvain <- function(B)
 #' @param dens.module A vector of length num.module, indicating the edge density of each added module.
 #'  
 #' @return A list with two elements. The first element is a four-column edge table of the same form that is input into the differential modularity function. The second element is a list of all the new nodes in the modules that were added to create the disease network.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
@@ -890,6 +926,8 @@ alpaca.simulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,de
 #' @param go.term The GO Biological Process ID (string).
 #'  
 #' @return A vector of all gene symbols associated with the GO term.
+#' @examples 
+#' a <- 1 # example place holder
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph) 

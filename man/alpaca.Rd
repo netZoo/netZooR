@@ -20,3 +20,6 @@ List where first element is the membership vector and second element is the cont
 \description{
 This function compares two networks and finds the sets of nodes that best characterize the change in modular structure
 }
+\examples{
+a <- 1 # example place holder
+}
