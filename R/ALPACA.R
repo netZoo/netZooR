@@ -533,6 +533,8 @@ alpaca.TestNodeRank <- function(node.ordered,true.pos)
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
+#' @examples 
+#' a <- 1 #place holder
 #' @import org.Hs.eg.db
 #' @export
 #' 
