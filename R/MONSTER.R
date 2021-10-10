@@ -263,7 +263,7 @@ monster <- function(expr,
 #' @param expr Gene Expression dataset
 #' @return expr Gene Expression dataset in the proper form (may be the same as input)
 #' @importFrom assertthat assert_that
-#' #' @importFrom methods is
+#' @importFrom methods is
 #' @export
 #' @examples
 #' expr.matrix <- matrix(rnorm(2000),ncol=20)
