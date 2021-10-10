@@ -74,7 +74,7 @@ This function compares two networks generate by panda.py in this package and fin
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
       </span>
     </div>
 
@@ -129,6 +129,9 @@ This function compares two networks generate by panda.py in this package and fin
     <li>
       <a href="../articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
+    <li>
+      <a href="../articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -158,7 +161,12 @@ This function compares two networks generate by panda.py in this package and fin
 This function compares two networks generate by <code><a href='panda.py.html'>panda.py</a></code> in this package and finds the sets of nodes that best characterize the change in modular structure.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>panda.to.alpaca</span><span class='op'>(</span><span class='va'>panda.net1</span>, <span class='va'>panda.net2</span>, file.stem <span class='op'>=</span> <span class='st'>"./alpaca"</span>, verbose <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>panda.to.alpaca</span><span class='op'>(</span>
+  <span class='va'>panda.net1</span>,
+  <span class='va'>panda.net2</span>,
+  file.stem <span class='op'>=</span> <span class='st'>"./alpaca"</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

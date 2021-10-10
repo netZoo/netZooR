@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
       </span>
     </div>
 
@@ -86,6 +86,9 @@
     <li>
       <a href="../articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
+    <li>
+      <a href="../articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -119,7 +122,7 @@
 <code class="sourceCode R"><span class="co"># install.packages("devtools") </span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
 <span class="co"># install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></code></pre></div>
 <p>This vignettes can be accessed in R by using below line. when netZoooR was installed with arguments <em>“build_vignettes = TRUE”</em>.</p>
@@ -129,9 +132,9 @@
 <p>These simulated networks is available in our public AWS S3 bucket. Change the preferred working directory to store the Example_2comm.txt file, otherwise the store directory is current working directory.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/Example_2comm.txt"</span><span class="op">)</span>
-<span class="va">simp.mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"./Example_2comm.txt"</span>,header<span class="op">=</span><span class="cn">T</span><span class="op">)</span> </code></pre></div>
+<span class="va">simp.mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"./Example_2comm.txt"</span>,header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> </code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">simp.alp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alpaca.html">alpaca</a></span><span class="op">(</span><span class="va">simp.mat</span>,<span class="cn">NULL</span>,verbose<span class="op">=</span><span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">simp.alp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alpaca.html">alpaca</a></span><span class="op">(</span><span class="va">simp.mat</span>,<span class="cn">NULL</span>,verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "Detecting communities in control network..."
 ## [1] "modularity of projected graph 3.88578058618802e-16"
 ## [1] "Q = 0.0263157894736842"

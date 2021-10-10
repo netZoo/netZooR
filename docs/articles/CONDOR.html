@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
       </span>
     </div>
 
@@ -85,6 +85,9 @@
     </li>
     <li>
       <a href="../articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
+    </li>
+    <li>
+      <a href="../articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a>
     </li>
   </ul>
 </li>
@@ -149,7 +152,7 @@ The code in <strong>condor.modularity.max</strong> is an implementation of the m
 <code class="sourceCode R"><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condor.cluster.html">condor.cluster</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "modularity of projected graph 0"
 ## [1] "Q = 0"
-## [1] "Q = 0.173553719008264"
+## [1] "Q = 0.15702479338843"
 ## [1] "Q = 0.231404958677686"
 ## [1] "Q = 0.231404958677686"</code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -170,9 +173,9 @@ The code in <strong>condor.modularity.max</strong> is an implementation of the m
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gtoy</span> <span class="op">=</span> <span class="fu">graph.edgelist</span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">elist</span><span class="op">)</span>,directed<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu">set.graph.attribute</span><span class="op">(</span><span class="va">gtoy</span>, <span class="st">"layout"</span>, <span class="fu">layout.kamada.kawai</span><span class="op">(</span><span class="va">gtoy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## IGRAPH 90a2ad3 UN-- 8 11 -- 
+<pre><code>## IGRAPH 98cd9ee UN-- 8 11 -- 
 ## + attr: layout (g/n), name (v/c)
-## + edges from 90a2ad3 (vertex names):
+## + edges from 98cd9ee (vertex names):
 ##  [1] Alice--Bob    Alice--John   Alice--Ed     Bob  --Sue    John --Sue   
 ##  [6] Sue  --Hank   John --Janine Ed   --Janine Hank --Janine Ed   --Mary  
 ## [11] Hank --Mary</code></pre>
@@ -194,7 +197,7 @@ The code in <strong>condor.modularity.max</strong> is an implementation of the m
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">small1976</span><span class="op">)</span>
 <span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create.condor.object.html">create.condor.object</a></span><span class="op">(</span><span class="va">small1976</span><span class="op">)</span>
-<span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condor.cluster.html">condor.cluster</a></span><span class="op">(</span><span class="va">condor.object</span>, project<span class="op">=</span><span class="cn">F</span><span class="op">)</span></code></pre></div>
+<span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condor.cluster.html">condor.cluster</a></span><span class="op">(</span><span class="va">condor.object</span>, project<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "modularity of projected graph 0.525346928655047"
 ## [1] "Q = 0.52666696475026"
 ## [1] "Q = 0.52666696475026"</code></pre>

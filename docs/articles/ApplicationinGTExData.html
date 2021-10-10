@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
       </span>
     </div>
 
@@ -86,6 +86,9 @@
     <li>
       <a href="../articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
+    <li>
+      <a href="../articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -135,10 +138,10 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com">data.table</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"visNetwork"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"visNetwork"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; The downloaded binary packages are in</span>
-<span class="co">#&gt;  /var/folders/jh/345y9vmx0l7d63r5b05dwp080000gn/T//RtmpXIHoQM/downloaded_packages</span>
+<span class="co">#&gt;  /var/folders/jh/345y9vmx0l7d63r5b05dwp080000gn/T//RtmpPZmOfk/downloaded_packages</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://datastorm-open.github.io/visNetwork/">visNetwork</a></span><span class="op">)</span> <span class="co"># to visualize the networks</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># point R to your python 3 installation. Make sure that this is the installation that has all the required python libraries (numpy, scipy, etc) installed. netZooR uses a python implementation of PANDA under the hood.</span>
@@ -147,8 +150,8 @@
 <p>The ppi and motif priors are available in our AWS public bucket, and can be downloaded into current working directory.</p>
 <p>Let’s download and take a look at the priors:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_GTEx.txt"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt"</span>,<span class="st">"motif_GTEx.txt"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_GTEx.txt"</span>,<span class="st">"ppi_GTEx.txt"</span><span class="op">)</span>
 <span class="va">motif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"./motif_GTEx.txt"</span><span class="op">)</span> 
 <span class="va">ppi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"./ppi_GTEx.txt"</span><span class="op">)</span>
 <span class="va">ppi</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>
@@ -173,14 +176,14 @@
 </ol>
 <p>Here, we use the expression data and sample ids file copy from our AWS bucket.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>,<span class="st">"GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span><span class="op">)</span>
 <span class="co"># load the GTEx expression matrix</span>
 <span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="st">"./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">2</span>, data.table <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co"># remove the transcript ids so that the genes match the gene ids in the tf-motif prior</span>
 <span class="va">expr</span><span class="op">$</span><span class="va">Name</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"\\.[0-9]"</span>,<span class="st">""</span>, <span class="va">expr</span><span class="op">$</span><span class="va">Name</span><span class="op">)</span>
 
 <span class="co">#downlooad and load the sample ids of LCL samples</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/LCL_samples.txt"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/LCL_samples.txt"</span>,<span class="st">"LCL_samples.txt"</span><span class="op">)</span>
 <span class="va">lcl_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="st">"./LCL_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co">#select the columns of the expression matrix corresponding to the LCL samples.</span>
@@ -197,7 +200,7 @@
 <p>Or</p>
 <p>Download our pre-processed pandaExprLCL.txt from our AWS S3 Bucket.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprLCL.txt"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprLCL.txt"</span>,<span class="st">"pandaExprLCL.txt"</span><span class="op">)</span></code></pre></div>
 <p>Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">panda_results_LCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprLCL.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -245,7 +248,7 @@
 <p>Like the LCL expression data in previous section, we can either download the raw data and process;</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#### skip this part if you already did same process in LCL expression data section</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>,<span class="st">"GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span><span class="op">)</span>
 <span class="co"># load the GTEx expression matrix</span>
 <span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="st">"./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">2</span>, data.table <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co"># remove the transcript ids so that the genes match the gene ids in the tf-motif prior</span>
@@ -253,7 +256,7 @@
 <span class="co">#####</span>
 
 <span class="co">#load the sample ids of Whole Blood samples</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/WholeBlood_samples.txt"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/WholeBlood_samples.txt"</span>,<span class="st">"WholeBlood_samples.txt"</span><span class="op">)</span>
 <span class="va">wblood_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="st">"./WholeBlood_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co">#select the columns of the expression matrix corresponding to the LCL samples.</span>
@@ -269,7 +272,7 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="va">clean_data_wb</span>, file <span class="op">=</span> <span class="st">"pandaExprWholeBlood.txt"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, col.names <span class="op">=</span> <span class="cn">FALSE</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>or download the whole blood expression data directly from AWS Bucket.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprWholeBlood.txt"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprWholeBlood.txt"</span>,<span class="st">"pandaExprWholeBlood.txt"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#run PANDA</span>
 <span class="va">panda_results_wblood</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprWholeBlood.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
