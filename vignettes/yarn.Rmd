@@ -65,33 +65,33 @@ load("skin.rdata")
 
 2. Check mis-annotation of gender or other phenotypes using group-specific genes
 ```{r checkMisAnnotation}
-checkMisAnnotation(skin,"GENDER",controlGenes="Y",legendPosition="topleft")
+yarn::checkMisAnnotation(skin,"GENDER",controlGenes="Y",legendPosition="topleft")
 ```
 
 3. Decide what sub-groups should be merged
 ```{r checkTissuesToMerge}
-checkTissuesToMerge(skin,"SMTS","SMTSD")
+yarn::checkTissuesToMerge(skin,"SMTS","SMTSD")
 ```
 
 4. Filter lowly expressed genes
 ```{r filterGenes}
-skin_filtered = filterLowGenes(skin,"SMTSD")
+skin_filtered = yarn::filterLowGenes(skin,"SMTSD")
 dim(skin)
 dim(skin_filtered)
 ```
 
 Or group specific genes
 ```{r filter}
-tmp = filterGenes(skin,labels=c("X","Y","MT"),featureName = "chromosome_name")
+tmp = yarn::filterGenes(skin,labels=c("X","Y","MT"),featureName = "chromosome_name")
 # Keep only the sex names
-tmp = filterGenes(skin,labels=c("X","Y","MT"),featureName = "chromosome_name",keepOnly=TRUE)
+tmp = yarn::filterGenes(skin,labels=c("X","Y","MT"),featureName = "chromosome_name",keepOnly=TRUE)
 ```
 
 5. Normalize in a tissue or group-aware manner
 ```{r density}
-plotDensity(skin_filtered,"SMTSD",main=expression('log'[2]*' raw expression'))
-skin_filtered = normalizeTissueAware(skin_filtered,"SMTSD")
-plotDensity(skin_filtered,"SMTSD",normalized=TRUE,main="Normalized")
+yarn::plotDensity(skin_filtered,"SMTSD",main=expression('log'[2]*' raw expression'))
+skin_filtered = yarn::normalizeTissueAware(skin_filtered,"SMTSD")
+yarn::plotDensity(skin_filtered,"SMTSD",normalized=TRUE,main="Normalized")
 ```
 
 ## Helper functions
@@ -102,13 +102,13 @@ We include, `plotCMDS`, `plotDensity`, `plotHeatmap`.
 `plotCMDS` - PCoA / Classical Multi-Dimensional Scaling of the most variable genes. 
 ```{r}
 data(skin)
-res = plotCMDS(skin,pch=21,bg=factor(pData(skin)$SMTSD))
+res = yarn::plotCMDS(skin,pch=21,bg=factor(pData(skin)$SMTSD))
 ```
 
 `plotDensity` - Density plots colored by phenotype of choosing. Allows for inspection of global trend differences.
 ```{r}
-filtData = filterLowGenes(skin,"SMTSD")
-plotDensity(filtData,groups="SMTSD",legendPos="topleft")
+filtData = yarn::filterLowGenes(skin,"SMTSD")
+yarn::plotDensity(filtData,groups="SMTSD",legendPos="topleft")
 ```
 
 `plotHeatmap` - Heatmap of the most variable genes.
@@ -117,7 +117,7 @@ library(RColorBrewer)
 tissues = pData(skin)$SMTSD
 heatmapColColors=brewer.pal(12,"Set3")[as.integer(factor(tissues))]
 heatmapCols = colorRampPalette(brewer.pal(9, "RdBu"))(50)
-plotHeatmap(skin,normalized=FALSE,log=TRUE,trace="none",n=10,
+yarn::plotHeatmap(skin,normalized=FALSE,log=TRUE,trace="none",n=10,
  col = heatmapCols,ColSideColors = heatmapColColors,cexRow = 0.25,cexCol = 0.25)
 ```
 
