@@ -13,7 +13,6 @@
 #' @importFrom utils write.table
 #' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
-#' placeholder for yarn
 #' @import yarn 
 #' @export
 #' 
