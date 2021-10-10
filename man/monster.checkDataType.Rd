@@ -23,5 +23,4 @@ data(yeast)
 class(yeast$exp.cc)
 monster.checkDataType(yeast$exp.cc)
 #TRUE
-
 }

@@ -81,7 +81,7 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory
     N = max(blues)
     
     #Sparse matrix with the upper right block of the true Adjacency matrix. Notice the dimension is reds x blues
-    sM = sparseMatrix(i=reds,j=blues,x=weights,dims=c(length(unique(reds)),length(unique(blues))),index1=T);
+    sM = sparseMatrix(i=reds,j=blues,x=weights,dims=c(length(unique(reds)),length(unique(blues))),index1=TRUE);
     #Project into gene space, projected adjacency matrix has dim = genes x genes
     gM = t(sM) %*% sM;
     rm(sM)

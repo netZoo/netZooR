@@ -133,7 +133,7 @@ panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu",
   # run Python code
   py_run_string(obj.str)
   # run PAMDA
-  if(save_memory == F){
+  if(save_memory == FALSE){
     
     py_run_string("panda_network=panda_obj.export_panda_results",local = FALSE, convert = TRUE)
     # convert python object to R vector
@@ -153,13 +153,13 @@ panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu",
     # in-degree of panda network
     py_run_string(paste("indegree=panda_obj.return_panda_indegree()"))
     indegree_net <- py$indegree
-    indegree_net <- as.data.frame(cbind(Target = rownames(indegree_net), Target_Score = indegree_net$force), stringsAsFactors =F)
+    indegree_net <- as.data.frame(cbind(Target = rownames(indegree_net), Target_Score = indegree_net$force), stringsAsFactors =FALSE)
     indegree_net$`Target_Score` <- as.numeric(indegree_net$`Target_Score`)
     
     # out-degree of panda netwook
     py_run_string(paste("outdegree=panda_obj.return_panda_outdegree()"))
     outdegree_net <- py$outdegree
-    outdegree_net <- as.data.frame(cbind(Regulator = rownames(outdegree_net), Regulator_Score = outdegree_net$force), stringsAsFactors =F)
+    outdegree_net <- as.data.frame(cbind(Regulator = rownames(outdegree_net), Regulator_Score = outdegree_net$force), stringsAsFactors =FALSE)
     outdegree_net$`Regulator_Score` <- as.numeric(outdegree_net$`Regulator_Score`)
     
     if( length(intersect(panda_net$Gene, panda_net$TF))>0){

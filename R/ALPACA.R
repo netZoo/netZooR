@@ -13,6 +13,7 @@
 #' @importFrom utils write.table
 #' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
+#' @import yarn # placeholder for yarn
 #' @export
 #' 
 
@@ -487,7 +488,7 @@ alpaca.list.to.go <- function(gene.list,univ.vec,comm.nums){
   univ.entrez <- base.entrez[base.sym %in% univ.vec]
   comm.entrez <- base.entrez[base.sym %in% gene.list[[1]]]
   
-  #params<- new("GOHyperGParams",geneIds = comm.entrez, universeGeneIds = univ.entrez, ontology= "BP", pvalueCutoff = 1, conditional = T, testDirection="over", annotation="org.Hs.eg.db")
+  #params<- new("GOHyperGParams",geneIds = comm.entrez, universeGeneIds = univ.entrez, ontology= "BP", pvalueCutoff = 1, conditional =TRUE, testDirection="over", annotation="org.Hs.eg.db")
   
   go.tab <- NULL
   for (i in 1:length(gene.list))
@@ -495,7 +496,7 @@ alpaca.list.to.go <- function(gene.list,univ.vec,comm.nums){
     print(i)
     comm.entrez <- base.entrez[base.sym %in% gene.list[[i]]]
     if (length(comm.entrez)>3){
-      params<- new("GOHyperGParams",geneIds = comm.entrez, universeGeneIds = univ.entrez, ontology= "BP", pvalueCutoff = 1, conditional = T, testDirection="over", annotation="org.Hs.eg.db")
+      params<- new("GOHyperGParams",geneIds = comm.entrez, universeGeneIds = univ.entrez, ontology= "BP", pvalueCutoff = 1, conditional =TRUE, testDirection="over", annotation="org.Hs.eg.db")
       go.res <- hyperGTest(params)
       this.df <- summary(go.res)
       this.tab <- this.df[this.df[,5]>1,]

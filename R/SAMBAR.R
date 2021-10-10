@@ -163,7 +163,7 @@ sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("
   patmut0 <- which(patmutrate==0)
   # remove patients with mutationrate==0
   if(length(patmut0)>0){
-    mutlength <- mutlength[,-patmut0,drop=F]
+    mutlength <- mutlength[,-patmut0,drop=FALSE]
     patmutrate <- patmutrate[-patmut0]
   }
   

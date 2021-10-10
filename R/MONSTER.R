@@ -272,7 +272,7 @@ monster <- function(expr,
 #' class(yeast$exp.cc)
 #' monster.checkDataType(yeast$exp.cc)
 #' #TRUE
-#' 
+#' @import methods
 monster.checkDataType <- function(expr){
   assert_that(is.data.frame(expr)||is.matrix(expr)||is(expr,"ExpressionSet"))
   if("ExpressionSet" %in% class(expr)){
