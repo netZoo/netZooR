@@ -41,8 +41,8 @@ We will make use of the `skin` dataset for examples. The `skin` dataset is a sma
 
 ```{r,echo=FALSE,include=FALSE}
 library(netZooR)
-download.file("https://netzoo.s3.us-east-2.amazonaws.com/netzoocloud/testdata/yarn/skin.rdata","../data/skin.rdata")
-data(skin)
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netzoocloud/testdata/yarn/skin.rdata","skin.rdata")
+load("skin.rdata")
 ```
 ```{r}
 skin
@@ -60,7 +60,7 @@ library(netZooR)
 For computational reasons we load the sample skin data instead of having the user download the 
 ```R
 library(netZooR)
-data(skin)
+load("skin.rdata")
 ```
 
 2. Check mis-annotation of gender or other phenotypes using group-specific genes
