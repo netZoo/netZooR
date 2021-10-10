@@ -15,12 +15,12 @@ The goal of yarn is to expedite large RNA-seq analyses using a combination of pr
 
 ## Installation
 
-You can install yarn from github with:
+You can install yarn from github through netZooR with:
 
 ```R
 if (!requireNamespace("BiocManager", quietly=TRUE))
     install.packages("BiocManager")
-BiocManager::install("yarn")
+BiocManager::install("netZooR")
 ```
 
 ## Quick Introduction
@@ -41,6 +41,7 @@ We will make use of the `skin` dataset for examples. The `skin` dataset is a sma
 
 ```{r,echo=FALSE,include=FALSE}
 library(netZooR)
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netzoocloud/testdata/yarn/skin.rdata","../data/skin.rdata")
 data(skin)
 ```
 ```{r}
