@@ -32,12 +32,12 @@ We will show how ALPACA can find changes in modular structure between two simula
 These simulated networks is available in our public AWS S3 bucket. Change the preferred working directory to store the Example_2comm.txt file, otherwise the store directory is current working directory.
 ```{r}
 system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/Example_2comm.txt")
-simp.mat <- read.table("./Example_2comm.txt",header=T) 
+simp.mat <- read.table("./Example_2comm.txt",header=TRUE) 
 ```
 
 
 ```{r,echo=TRUE,message=FALSE,warning=FALSE}
-simp.alp <- alpaca(simp.mat,NULL,verbose=F)
+simp.alp <- alpaca(simp.mat,NULL,verbose=FALSE)
 simp.alp2 <- simp.alp[[1]]
 simp.memb <- as.vector(simp.alp2)
 names(simp.memb) <- names(simp.alp2)

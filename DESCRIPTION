@@ -31,7 +31,6 @@ Imports: RCy3,
 	 Biobase,
 	 GOstats,
 	 AnnotationDbi,
-	 GenomicRanges,
 	 viridisLite, 
    	 matrixStats,
    	 GO.db,
@@ -58,7 +57,8 @@ Imports: RCy3,
    	 methods,
          dplyr,
          pandaR,
-	 yarn,
+         graphics,
+         yarn,
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
