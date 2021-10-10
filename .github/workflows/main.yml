@@ -30,7 +30,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         r-version: [3.6,4]
-        python-version: [3.9]
 
     steps:
       - uses: actions/checkout@v2
@@ -55,15 +54,14 @@ jobs:
         run: |
             library('reticulate')
             py_config()
-            conda_create("r-reticulate")
+            use_python("/usr/bin/python3")
         shell: sudo -E Rscript {0}
       - name: Install reticulate 3
         run: |
             library('reticulate')
-            use_condaenv("r-reticulate")
-            conda_install("r-reticulate","numpy")
-            conda_install("r-reticulate","scipy")
-            conda_install("r-reticulate","pandas")
+            py_install("numpy")
+            py_install("scipy")
+            py_install("pandas")
         shell: sudo -E Rscript {0}
       - name: Install dependencies 2
         run: |
