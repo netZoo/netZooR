@@ -16,7 +16,7 @@
 #' @export
 #' 
 
-alpaca <- function(net.table,file.stem,verbose=F)
+alpaca <- function(net.table,file.stem,verbose=FALSE)
 {
   net.table[,1] <- paste(net.table[,1],"A",sep="_")
   net.table[,2] <- paste(net.table[,2],"B",sep="_")
@@ -26,7 +26,7 @@ alpaca <- function(net.table,file.stem,verbose=F)
   
   ctrl.elist <- data.frame(red=ctrl.pos[,2],blue=ctrl.pos[,1],weights=ctrl.pos[,3])
   ctrl.condor <- create.condor.object(ctrl.elist)
-  ctrl.condor <- condor.cluster(ctrl.condor,project=F)
+  ctrl.condor <- condor.cluster(ctrl.condor,project=FALSE)
   ctrl.memb <- c(ctrl.condor$red.memb[,2],ctrl.condor$blue.memb[,2])
   names(ctrl.memb) <- c(as.character(ctrl.condor$red.memb[,1]),as.character(ctrl.condor$blue.memb[,1]))
   if (!(is.null(file.stem))) write.table(ctrl.memb, paste(c(file.stem,"_ALPACA_ctrl_memb.txt"),collapse=""),row.names=T,col.names=F,quote=F,sep="\t")

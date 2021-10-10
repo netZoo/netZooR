@@ -26,11 +26,9 @@
 #' # run this function to create a network in Cytoscape.
 #' vis.panda.in.cytoscape(panda.net, network.name="PANDA")
 #' }
-#' @return NULL
-#' 
+#' @return PANDA network in Cytoscape
 #' @import RCy3
 #' @export 
-#' 
 vis.panda.in.cytoscape <- function(panda.net, network_name="PANDA"){
   # launch Cytoscape 3.6.1 or greater
   cytoscapePing ()

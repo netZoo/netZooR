@@ -95,7 +95,7 @@ Monster is optimized to run on multiple cores, if available.  We can specify the
 ## Running MONSTER
 
 ```{r, message=F}
-yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
+yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=1, alphaw=1)
 ```
 
@@ -120,7 +120,7 @@ $$\hat{dTFI_{j}}=\frac{\sum_{i=1}^{m}I\left(i\ne j\right)\hat{\tau}_{i,j}^{2}}{\
 
 We can view the $dTFI$ with the generic `plot` function
 
-```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=F}
+```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
 monster.plot.monsterAnalysis(monsterRes)
 ```
 
@@ -130,7 +130,7 @@ Due to the complex nature of the structure of gene regulatory networks, it is no
 
 Adding the argument `rescale='significance'`, sorts the x-axis so that the most significant transcription factors are on the left.
 
-```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=F}
+```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
 monster.plot.monsterAnalysis(monsterRes, rescale='significance')
 ```
 
@@ -145,7 +145,7 @@ $$\textbf{B}=\textbf{AT} + \textbf{E}$$
 where $\textbf{E}$ is the $p\times m$ error matrix which we are minimizing.
 
 
-```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=F}
+```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
 library(gplots)
 heatmap.2(slot(monsterRes, 'tm'), col = "bluered",
 density.info="none",  
@@ -161,7 +161,7 @@ This transition may also be depicted as a graph, displaying the gain or loss of 
 
 `MONSTER` contains the function `transitionNetworkPlot` to makes use of the `igraph` package to display the transition in network states.  Since this graph is complete with negative edgeweights allowed, the argument `numEdges=20` (default is 100 edges) is used to specify the number of top transitions to display.
 
-```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=F}
+```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
 monster.transitionNetworkPlot(monsterRes, numEdges=20)
 ```
 
@@ -169,7 +169,7 @@ A network visualization of the strongest 20 transitions identified based on the 
 
 Furthermore, we are often interested in correlated targetting pattern sharing.  To find clusters of transcription factor transitions, we can plot the set of TFs onto the first two principal components taken from the transition matrix.
 
-```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=F}
+```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
     require(ggplot2)
     tm.pca <- princomp(slot(monsterRes, 'tm'))
     odsm <- apply(slot(monsterRes, 'tm'),2,function(x){t(x)%*%x})

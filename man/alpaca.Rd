@@ -4,7 +4,7 @@
 \alias{alpaca}
 \title{Main ALPACA function}
 \usage{
-alpaca(net.table, file.stem, verbose = F)
+alpaca(net.table, file.stem, verbose = FALSE)
 }
 \arguments{
 \item{net.table}{A table of edges, with the first column representing the TFs ("from" nodes) and the second column representing the targets ("to" nodes). The third column contains the edge weights corresponding to the control or healthy network, and the fourth column contains the edge weights for the disease network or network of interest.}

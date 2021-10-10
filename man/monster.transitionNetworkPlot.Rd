@@ -32,6 +32,9 @@ if the number of permutations is not large enough to sample the null, that is wh
 prior to calling MONSTER to get reproducible results. If rescale is set to another value such as 'none', it will
 produce deterministic results between two identical MONSTER runs.}
 }
+\value{
+plot the transition matrix (directed graph) as a network.
+}
 \description{
 This function uses igraph to plot the transition matrix (directed graph) as a network.
 The edges in the network should be read as A 'positively/negatively contributes to' the 

@@ -562,6 +562,7 @@ monster.transitionPCAPlot <-    function(monsterObj,
 #' produce deterministic results between two identical MONSTER runs.
 #' @importFrom igraph graph.data.frame plot.igraph V E V<- E<-
 #' @export
+#' @return plot the transition matrix (directed graph) as a network.
 #' @examples
 #' # data(yeast)
 #' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
