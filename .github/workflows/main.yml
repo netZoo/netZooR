@@ -60,9 +60,9 @@ jobs:
       - name: Install reticulate 3
         run: |
             library('reticulate')
-            virtualenv_install("numpy")
-            virtualenv_install("scipy")
-            virtualenv_install("pandas")
+            virtualenv_install("r-reticulate","numpy")
+            virtualenv_install("r-reticulate","scipy")
+            virtualenv_install("r-reticulate","pandas")
         shell: sudo -E Rscript {0}
       - name: Install dependencies 2
         run: |
