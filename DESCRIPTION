@@ -1,6 +1,6 @@
 Package: netZooR
 Title: Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR, MONSTER, OTTER, EGRET, and YARN into one workflow
-Version: 0.99.41
+Version: 0.99.42
 Date: 2021-09-20
 Authors@R: c(person("Tian", "Wang",
 			email = "twang@hsph.harvard.edu", role = c("aut")),
@@ -59,6 +59,7 @@ Imports: RCy3,
          pandaR,
          graphics,
          yarn,
+         methods,
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
