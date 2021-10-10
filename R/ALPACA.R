@@ -731,12 +731,12 @@ alpaca.metanetwork <- function(J,S)
 
 alpaca.tidyconfig <- function(S)
 {
-  T <- rep(0,length(S))
+  TT <- rep(0,length(S))
   for (i in 1:length(S))
   {
-    if (T[i]==0) T[S==S[i]] <- max(T)+1
+    if (TT[i]==0) TT[S==S[i]] <- max(TT)+1
   }
-  T
+  TT
 }
 
 #' Generalized Louvain optimization
