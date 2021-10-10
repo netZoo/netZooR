@@ -263,6 +263,7 @@ monster <- function(expr,
 #' @param expr Gene Expression dataset
 #' @return expr Gene Expression dataset in the proper form (may be the same as input)
 #' @importFrom assertthat assert_that
+#' #' @importFrom methods is
 #' @export
 #' @examples
 #' expr.matrix <- matrix(rnorm(2000),ncol=20)
@@ -272,7 +273,6 @@ monster <- function(expr,
 #' class(yeast$exp.cc)
 #' monster.checkDataType(yeast$exp.cc)
 #' #TRUE
-#' @import methods
 monster.checkDataType <- function(expr){
   assert_that(is.data.frame(expr)||is.matrix(expr)||is(expr,"ExpressionSet"))
   if("ExpressionSet" %in% class(expr)){
