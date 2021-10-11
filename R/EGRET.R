@@ -45,6 +45,7 @@
 #' tag <- "my_toy_egret_run"
 #' runEgret(qtl,vcf,qbic,motif,expr,ppi,nameGeneMap,tag)
 #' @export
+#' @importFrom pandaR panda
 
 runEgret <- function(b,v,q,m,e,p,g,t){
   
