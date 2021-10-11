@@ -1,11 +1,11 @@
 Package: netZooR
-Title: Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR, MONSTER and OTTER into one workflow
-Version: 0.99.5
-Date: 2020-11-20
+Title: Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR, MONSTER, OTTER, EGRET, and YARN into one workflow
+Version: 0.99.49
+Date: 2021-09-20
 Authors@R: c(person("Tian", "Wang",
-			email = "twang@hsph.harvard.edu", role = c("aut", "cre")),
+			email = "twang@hsph.harvard.edu", role = c("aut")),
 	     person("Marouen", "Ben Guebila", 
-			email = "benguebila@hsph.harvard.edu", role = c("aut","ctb")),
+			email = "marouen.b.guebila@gmail.com", role = c("aut","cre")),
 	     person("John", "Platig",
 			email="john.platig@channing.harvard.edu",role="aut"),
 	     person("Marieke", "Kuijjer",
@@ -25,15 +25,12 @@ biocViews:
 	 NetworkInference,
 	 Network,
 	 GeneRegulation,
-	 yarn,
 Imports: RCy3,
 	 viridisLite, 
    	 STRINGdb,
 	 Biobase,
 	 GOstats,
 	 AnnotationDbi,
-	 IRanges,
-	 GenomicRanges,
 	 viridisLite, 
    	 matrixStats,
    	 GO.db,
@@ -59,9 +56,9 @@ Imports: RCy3,
    	 tidyr,
    	 methods,
          dplyr,
-	 yarn,
-Remotes: jnpaulson/pandaR,
-         PadiLab/CRANE,
+         pandaR,
+         graphics,
+         yarn,
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -70,6 +67,6 @@ Suggests:
     knitr,
     rmarkdown,
     pkgdown,
-    markdown,
+VignetteEngine: knitr
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2

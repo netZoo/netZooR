@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
       </span>
     </div>
 
@@ -126,6 +126,9 @@
     </li>
     <li>
       <a href="../articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
+    </li>
+    <li>
+      <a href="../articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a>
     </li>
   </ul>
 </li>
@@ -201,7 +204,7 @@ Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pandaToyData</span><span class='op'>)</span>
 <span class='va'>linonessRes</span> <span class='op'>&lt;-</span> <span class='fu'>lioness</span><span class='op'>(</span><span class='va'>pandaToyData</span><span class='op'>$</span><span class='va'>motif</span>,
-    <span class='va'>pandaToyData</span><span class='op'>$</span><span class='va'>expression</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>20</span><span class='op'>]</span>,<span class='va'>pandaToyData</span><span class='op'>$</span><span class='va'>ppi</span>,hamming<span class='op'>=</span><span class='fl'>.1</span>,progress<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+    <span class='va'>pandaToyData</span><span class='op'>$</span><span class='va'>expression</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>,<span class='va'>pandaToyData</span><span class='op'>$</span><span class='va'>ppi</span>,hamming<span class='op'>=</span><span class='fl'>.1</span>,progress<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

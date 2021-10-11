@@ -7,7 +7,8 @@ test_that("lioness.py() function works", {
   expect_error(lioness.py())
   
   # input file path
-  T4_expression_file_path <- system.file("extdata", "expr4.txt", package = "netZooR", mustWork = TRUE)
+  system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4.txt")
+  T4_expression_file_path <- "./expr4.txt"
   motif_file_path <- system.file("extdata", "chip.txt", package = "netZooR", mustWork = TRUE)
   ppi_file_path <- "./ppi.txt"
   

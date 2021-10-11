@@ -263,6 +263,7 @@ monster <- function(expr,
 #' @param expr Gene Expression dataset
 #' @return expr Gene Expression dataset in the proper form (may be the same as input)
 #' @importFrom assertthat assert_that
+#' @importFrom methods is
 #' @export
 #' @examples
 #' expr.matrix <- matrix(rnorm(2000),ncol=20)
@@ -272,10 +273,9 @@ monster <- function(expr,
 #' class(yeast$exp.cc)
 #' monster.checkDataType(yeast$exp.cc)
 #' #TRUE
-#' 
 monster.checkDataType <- function(expr){
-  assert_that(is.data.frame(expr)||is.matrix(expr)||class(expr)=="ExpressionSet")
-  if(class(expr)=="ExpressionSet"){
+  assert_that(is.data.frame(expr)||is.matrix(expr)||is(expr,"ExpressionSet"))
+  if("ExpressionSet" %in% class(expr)){
     if (requireNamespace("Biobase", quietly = TRUE)) {
       expr <- Biobase::exprs(expr)
     } 
@@ -562,6 +562,7 @@ monster.transitionPCAPlot <-    function(monsterObj,
 #' produce deterministic results between two identical MONSTER runs.
 #' @importFrom igraph graph.data.frame plot.igraph V E V<- E<-
 #' @export
+#' @return plot the transition matrix (directed graph) as a network.
 #' @examples
 #' # data(yeast)
 #' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)

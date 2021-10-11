@@ -43,7 +43,7 @@
 #' qtl <- read.table("toy_eQTL.txt", header = FALSE)
 #' nameGeneMap <- read.table("toy_map.txt", header = FALSE)
 #' tag <- "my_toy_egret_run"
-#' runEgret(qtl,vcf,qbic,motif,expr,ppi,nameGeneMap,tag)
+#' #runEgret(qtl,vcf,qbic,motif,expr,ppi,nameGeneMap,tag)
 #' @export
 
 runEgret <- function(b,v,q,m,e,p,g,t){
@@ -119,8 +119,7 @@ runEgret <- function(b,v,q,m,e,p,g,t){
   filenameE <- paste0(tag,"_egret.RData")
   regnetE <- resultsE@regNet
   save(regnetE, file = filenameE)
-
+  
 }
-
 
 

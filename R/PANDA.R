@@ -21,7 +21,7 @@
 #' @param modeProcess 'legacy' refers to the processing mode in netZooPy<=0.5, 'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros; 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes. Default values is 'union'.
 #' @param remove_missing Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is 'FALSE'.
 #' 
-#' @return When save_memory=FALSE(default), this function will return a list of three items：
+#' @return When save_memory=FALSE(default), this function will return a list of three items: 
 #'          Use \code{$panda} to access the standard output of PANDA as data frame, which consists of four columns: 
 #'          "TF", "Gene", "Motif" using 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".
 #' 
@@ -124,7 +124,8 @@ panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu",
   }
   
   # source the pypanda from github raw website.
-  reticulate::source_python("https://raw.githubusercontent.com/netZoo/netZooPy/netZoo/panda.py",convert = TRUE)
+  pandapath <- system.file("extdata", "panda.py", package = "netZooR", mustWork = TRUE)
+  reticulate::source_python(pandapath,convert = TRUE)
   
   # invoke Python script to create a Panda object
   obj.str <-  paste("panda_obj=Panda(", expr.str, ",", motif.str,",", ppi.str, ",", computing.str, ",", precision.str, ",", savememory.str, ",", savetmp.str, "," , keepexpression.str, ",",  mode.str, ")", sep ='')
@@ -132,7 +133,7 @@ panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu",
   # run Python code
   py_run_string(obj.str)
   # run PAMDA
-  if(save_memory == F){
+  if(save_memory == FALSE){
     
     py_run_string("panda_network=panda_obj.export_panda_results",local = FALSE, convert = TRUE)
     # convert python object to R vector
@@ -152,13 +153,13 @@ panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu",
     # in-degree of panda network
     py_run_string(paste("indegree=panda_obj.return_panda_indegree()"))
     indegree_net <- py$indegree
-    indegree_net <- as.data.frame(cbind(Target = rownames(indegree_net), Target_Score = indegree_net$force), stringsAsFactors =F)
+    indegree_net <- as.data.frame(cbind(Target = rownames(indegree_net), Target_Score = indegree_net$force), stringsAsFactors =FALSE)
     indegree_net$`Target_Score` <- as.numeric(indegree_net$`Target_Score`)
     
     # out-degree of panda netwook
     py_run_string(paste("outdegree=panda_obj.return_panda_outdegree()"))
     outdegree_net <- py$outdegree
-    outdegree_net <- as.data.frame(cbind(Regulator = rownames(outdegree_net), Regulator_Score = outdegree_net$force), stringsAsFactors =F)
+    outdegree_net <- as.data.frame(cbind(Regulator = rownames(outdegree_net), Regulator_Score = outdegree_net$force), stringsAsFactors =FALSE)
     outdegree_net$`Regulator_Score` <- as.numeric(outdegree_net$`Regulator_Score`)
     
     if( length(intersect(panda_net$Gene, panda_net$TF))>0){

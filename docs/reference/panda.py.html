@@ -76,7 +76,7 @@ This function is designed to run the a derived PANDA implementation in Python Li
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
       </span>
     </div>
 
@@ -130,6 +130,9 @@ This function is designed to run the a derived PANDA implementation in Python Li
     </li>
     <li>
       <a href="../articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
+    </li>
+    <li>
+      <a href="../articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a>
     </li>
   </ul>
 </li>
@@ -224,7 +227,7 @@ Also, this can be generated with a list of proteins of interest by <code><a href
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>When save_memory=FALSE(default), this function will return a list of three items：
+    <p>When save_memory=FALSE(default), this function will return a list of three items: 
          Use <code>$panda</code> to access the standard output of PANDA as data frame, which consists of four columns: 
          "TF", "Gene", "Motif" using 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".</p>
 <p>Use <code>$indegree</code> to access the indegree of PANDA network as data frame, which consists of two columns: "Gene", "Score".</p>

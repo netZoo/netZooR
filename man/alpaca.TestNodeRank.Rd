@@ -17,3 +17,6 @@ A vector of 4 values. 1) Wilcoxon p-value, 2) KS p-value, 3) Fisher p-value, 4) 
 \description{
 This function computes the enrichment of selected nodes in a ranked list, using Wilcoxon, Kolmogorov-Smirnov, and Fisher exact tests.
 }
+\examples{
+a <- 1 # example place holder
+}

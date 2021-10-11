@@ -35,7 +35,7 @@
 #' alpaca<- panda.to.alpaca(treated_panda_net, control_panda_net, "./TB", verbose=TRUE)
 #' 
 #' @export
-panda.to.alpaca <- function(panda.net1, panda.net2, file.stem = "./alpaca", verbose = F){
+panda.to.alpaca <- function(panda.net1, panda.net2, file.stem = "./alpaca", verbose = FALSE){
   # remove "Motif" column
   panda.net1 <- panda.net1[,c("TF","Gene","Score")]
   panda.net2 <- panda.net2[,c("TF","Gene","Score")]

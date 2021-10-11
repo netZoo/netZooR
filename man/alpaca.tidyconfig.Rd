@@ -15,3 +15,6 @@ The renumbered membership vector.
 \description{
 This is a helper function alpaca.genlouvain. It re-numbers the communities so that they run from 1 to N increasing through the vector.
 }
+\examples{
+a <- 1 # example place holder
+}

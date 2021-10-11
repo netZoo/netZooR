@@ -1,9 +1,9 @@
 
 #' Identify differential edges in two PANDA networks
 #'
-#'To determine the probability that an edge is “different” between the networks, 
+#'To determine the probability that an edge is "different" between the networks, 
 #'we first subtracted the z-score weight values estimated by PANDA for the two networks and then determined the value of the inverse cumulative distribution for this difference. 
-#'The product of these two probabilities represents the probability than an edge is both “supported” and “different.” 
+#'The product of these two probabilities represents the probability than an edge is both "supported" and "different."
 #'We select edges for which this combined probability is greater than a threshold probability (default value is 0.8).
 #'
 #' @param panda.net1 vector indicating the PANDA networks of one condition or phenotype.

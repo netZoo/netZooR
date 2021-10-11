@@ -13,12 +13,10 @@
 #' # then plot two PANDA network in Cytoscape.
 #' vis.diff.panda.in.cytoscape(merged.panda,condition_name = "condition1", network_name="diff.PANDA" )
 #' }
-#' @return NULL
-#' 
+#' @return Plot two PANDA networsk in Cytoscape
 #' @import RCy3
 #' @export 
 #' 
-
 vis.diff.panda.in.cytoscape <- function(merged_panda, condition_name = "cond.1", network_name="diff.PANDA"){
 # plot 
 # launch Cytoscape 3.6.1 or greater

@@ -11,6 +11,9 @@ vis.panda.in.cytoscape(panda.net, network_name = "PANDA")
 
 \item{network_name}{Character string indicating the name of Cytoscape network.}
 }
+\value{
+PANDA network in Cytoscape
+}
 \description{
 This function is able to modify PANDA network and plot in Cytoscape. Please make sure that Cytoscape 
 is installed and open it before calling this function.

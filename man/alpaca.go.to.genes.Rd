@@ -15,3 +15,6 @@ A vector of all gene symbols associated with the GO term.
 \description{
 This function extracts all the gene symbols associated with a GO term and its descendants. (v1)
 }
+\examples{
+a <- 1 # example place holder
+}

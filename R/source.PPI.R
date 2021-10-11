@@ -32,7 +32,7 @@ source.PPI <- function(TF, STRING.version="10", species.index, ...){
   # change the colname to "TF"
   colnames(TF) <- "TF"
   # map the TF to STRINGdb dataset
-  TF_mapped <-  string_db$map(TF,"TF",removeUnmappedRows=F)
+  TF_mapped <-  string_db$map(TF,"TF",removeUnmappedRows=FALSE)
   # collect the interactions between the TF of interest
   ppi_tmp <- string_db$get_interactions(TF_mapped$STRING_id)[,c(1,2)]
   # store the PPI by using original identifier.

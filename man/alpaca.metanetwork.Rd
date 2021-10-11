@@ -17,3 +17,6 @@ The differential modularity matrix, with rows representing "from" nodes and colu
 \description{
 Computes the "effective" adjacency matrix of a alpaca.metanetwork whose nodes represent communities in the larger input matrix.
 }
+\examples{
+a <- 1 # example place holder
+}

@@ -17,3 +17,6 @@ List where first element is the membership vector and second element is the cont
 \description{
 Takes two networks, subtracts edges individually, and then clusters the subtracted network using CONDOR.
 }
+\examples{
+a <- 1 # example place holder
+}

@@ -17,3 +17,6 @@ A list of sets of gene symbols.
 \description{
 Takes a list of gene sets named using gene identifiers and converts them to a list of symbols given a user-defined annotation table.
 }
+\examples{
+a <- 1 # example place holder
+}
