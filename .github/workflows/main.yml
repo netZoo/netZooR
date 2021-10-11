@@ -43,6 +43,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
             sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libopenblas-base libatlas3-base
+            pip3 install pandas scipy numpy
       - name: Install reticulate 1
         run: |
             La_library()
@@ -55,14 +56,10 @@ jobs:
             library('reticulate')
             py_config()
             use_python("/usr/bin/python3")
-            virtualenv_create("r-reticulate")
         shell: sudo -E Rscript {0}
       - name: Install reticulate 3
         run: |
             library('reticulate')
-            virtualenv_install("r-reticulate","numpy")
-            virtualenv_install("r-reticulate","scipy")
-            virtualenv_install("r-reticulate","pandas")
         shell: sudo -E Rscript {0}
       - name: Install dependencies 2
         run: |
@@ -74,7 +71,6 @@ jobs:
         run: |
             library('reticulate')
             py_config()
-            use_virtualenv("r-reticulate")
             rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
         shell: sudo -E Rscript {0}
       - name: Report coverage
