@@ -59,7 +59,6 @@ Imports: RCy3,
          pandaR,
          graphics,
          yarn,
-         pandaR,
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
