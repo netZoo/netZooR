@@ -112,11 +112,11 @@ runEgret <- function(b,v,q,m,e,p,g,t){
   write.table(combined, file = priorfile, col.names = TRUE, row.names = FALSE, sep = "\t", quote = FALSE)
   
   # Run message passing
-  resultsP <- panda(as.data.frame(motif), expr=expr, ppi=ppiFiltered,progress=TRUE, remove.missing.ppi = TRUE, remove.missing.motif = TRUE, remove.missing.genes = TRUE, mode='legacy')
+  resultsP <- panda(as.data.frame(motif), expr=expr, ppi=ppiFiltered,progress=TRUE, remove.missing.ppi = TRUE, remove.missing.motif = TRUE, remove.missing.genes = TRUE, mode="legacy")
   filenameP <- paste0(tag,"_panda.RData")
   regnetP <- resultsP@regNet
   save(regnetP, file = filenameP)
-  resultsE <- panda(as.data.frame(egretPrior), expr=expr, ppi=ppiFiltered,progress=TRUE, remove.missing.ppi = TRUE, remove.missing.motif = TRUE, remove.missing.genes = TRUE, mode='legacy')
+  resultsE <- panda(as.data.frame(egretPrior), expr=expr, ppi=ppiFiltered,progress=TRUE, remove.missing.ppi = TRUE, remove.missing.motif = TRUE, remove.missing.genes = TRUE, mode="legacy")
   filenameE <- paste0(tag,"_egret.RData")
   regnetE <- resultsE@regNet
   save(regnetE, file = filenameE)
