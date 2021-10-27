@@ -9,7 +9,7 @@ createDiffPandaStyle(style_name = "Diff.PandaStyle", condition_name = "cond.1")
 \arguments{
 \item{style_name}{Character string indicating the style name. Defaults to "Diff.PandaStyle"}
 
-\item{condition_name}{string vector indicating the same condition name used in \code{\link{panda.diff.edges}} and \code{\link{vis.diff.panda.in.cytoscape}},
+\item{condition_name}{string vector indicating the same condition name used in \code{\link{pandaDiffEdges}} and \code{\link{visDiffPandaInCytoscape}},
 and all edges belong to this condition or phenotype will be represented as purple, otherwise, green.}
 }
 \value{

@@ -13,7 +13,7 @@ visDiffPandaInCytoscape(
 \arguments{
 \item{merged_panda}{vector indicating the merged PANDA networks in data frame structure type.}
 
-\item{condition_name}{string vector indicating the same condition name used in \code{\link{panda.diff.edges}}.}
+\item{condition_name}{string vector indicating the same condition name used in \code{\link{pandaDiffEdges}}.}
 
 \item{network_name}{Character string indicating the name of Cytoscape network.}
 }
@@ -26,8 +26,8 @@ is installed and open it before calling this function.
 }
 \examples{
 \dontrun{
-# create a merged PANDA network from two conditions by running \code{\link{panda.diff.edges}}
-merged.panda <- panda.diff.edges(panda.net1, panda.net2, condition_name="condition1")
+# create a merged PANDA network from two conditions by running \code{\link{pandaDiffEdges}}
+merged.panda <- pandaDiffEdges(panda.net1, panda.net2, condition_name="condition1")
 # then plot two PANDA network in Cytoscape.
 visDiffPandaInCytoscape(merged.panda,condition_name = "condition1", network_name="diff.PANDA" )
 }
