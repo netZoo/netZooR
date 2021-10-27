@@ -76,7 +76,10 @@ alpaca <- function(net.table,file.stem,verbose=FALSE)
         } else if (length(this.tfs)==1) {
             tf.sums <- sum(dwbm[this.tfs,this.genes])
             gene.sums <- dwbm[this.tfs,this.genes]
-        } 
+        } else if (length(this.genes)==1){
+            gene.sums <- sum(dwbm[this.tfs,this.genes])
+            tf.sums <- dwbm[this.tfs,this.genes]
+        }
       this.denom <- sum(dwbm[this.tfs,this.genes])
       louv.Ascores <- c(louv.Ascores,tf.sums/this.denom)
       louv.Bscores <- c(louv.Bscores,gene.sums/this.denom)
