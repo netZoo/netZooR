@@ -961,7 +961,7 @@ monsterMonsterNI <- function(motif.data,
     }
     result=consensus
   } else if (method=="pearson"){
-    tfNames = levels(yeast$motif$TF)
+    tfNames = levels(motif.data$TF)
     result <- t(cor(t(expr.data),t(expr.data[rownames(expr.data)%in%tfNames,]))^2)
     if(score=="motifincluded"){
       result <- as.matrix(consensus + consensusRange*regulatory.network)
