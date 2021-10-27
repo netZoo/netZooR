@@ -21,3 +21,4 @@ tests/testthat/test-egret.R
 tests/testthat/test-monster.R
 tests/testthat/test-alpaca.R
 LICENSE
+netZooR.Rcheck/

@@ -13,8 +13,8 @@ test_that("MONSTER function works", {
   
   # analyzes a bi-partite network by monster.transformation.matrix() function.
  
-  #cc.net.1 <- suppressWarnings(monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])) # suppress Warning messages glm.fit: fitted probabilities numerically 0 or 1 occurred
-  #cc.net.2 <- suppressWarnings(monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50]))
+  #cc.net.1 <- suppressWarnings(monsterMonsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])) # suppress Warning messages glm.fit: fitted probabilities numerically 0 or 1 occurred
+  #cc.net.2 <- suppressWarnings(monsterMonsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50]))
   # error:  Error in svd(X) : infinite or missing values in 'x' 
   #expect_equal(monster.transformation.matrix(cc.net.1, cc.net.2), monsterTM)
   
@@ -29,39 +29,39 @@ test_that("MONSTER function works", {
   data("monsterRes")
   
   # Transformation matrix plot
-  expect_error(monster.hcl.heatmap.plot(monsterRes), NA)
+  expect_error(monsterHclHeatmapPlot(monsterRes), NA)
   graphics.off()
   
   # Principal Components plot of transformation matrix
   clusters <- kmeans(slot(monsterRes, 'tm'),3)$cluster 
-  expect_error(monster.transitionPCAPlot(monsterRes, title="PCA Plot of Transition - Cell Cycle vs Stress Response", 
+  expect_error(monsterTransitionPCAPlot(monsterRes, title="PCA Plot of Transition - Cell Cycle vs Stress Response", 
                             clusters=clusters), NA)
   
   graphics.off()
   
   # plot the transition matrix as a network
-  expect_error(monster.transitionNetworkPlot(monsterRes), NA)
+  expect_error(monsterTransitionNetworkPlot(monsterRes), NA)
   graphics.off()
   
   # plots the Off diagonal mass of an observed Transition Matrix compared to a set of null TMs
-  expect_error(monster.dTFIPlot(monsterRes), NA)
+  expect_error(monsterdTFIPlot(monsterRes), NA)
   
   # Calculate p-values for a tranformation matrix
-  expect_equal(monster.calculate.tm.p.values(monsterRes), monster_tm_pval)
+  expect_equal(monsterdTFIPlotmonsterCalculateTmPValues(monsterRes), monster_tm_pval)
   
   # Bipartite Edge Reconstruction from Expression data with method = "pearson":
   # error here:  Error in rownames(expr.data) %in% tfNames : object 'tfNames' not found 
-  cc.net_pearson <- monster.monsterNI(yeast$motif, yeast$exp.cc, method = "pearson", score="na")
+  cc.net_pearson <- monsterMonsterNI(yeast$motif, yeast$exp.cc, method = "pearson", score="na")
   
   # Bipartite Edge Reconstruction from Expression data with other methods:
-  expect_equal(monster.monsterNI(yeast$motif, yeast$exp.cc, method = "cd"), cc.net_cd, tolerance = 1e-3)
+  expect_equal(monsterMonsterNI(yeast$motif, yeast$exp.cc, method = "cd"), cc.net_cd, tolerance = 1e-3)
   
   # Bipartite Edge Reconstruction from Expression data (composite method with direct/indirect)
-  monsterRes_bereFull<- monster.bereFull(yeast$motif, yeast$exp.cc, alpha=.5)
+  monsterRes_bereFull<- monsterBereFull(yeast$motif, yeast$exp.cc, alpha=.5)
   expect_equal(monsterRes_bereFull[1,1], 105770, tolerance=1e-7)
   
   # summarizes the results of a MONSTER analysis
-  expect_error(monster.print.monsterAnalysis(monsterRes),NA)
+  expect_error(monsterPrintMonsterAnalysis(monsterRes),NA)
 
 })
 

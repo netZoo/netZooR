@@ -5,7 +5,7 @@
 #' \href{http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033}{[(Platig et al. 2016)])}
 #' This function uses the result of PANDA algorithm as the input dataset to run CONDOR algorithm. More about \href{https://github.com/jplatig/condor}{condor} package and usage.
 #'  
-#' @param panda.net Data Frame indicating the result of PANDA regulatory network, created by \code{\link{panda.py}}
+#' @param panda.net Data Frame indicating the result of PANDA regulatory network, created by \code{\link{pandaPy}}
 #' @param threshold Numeric vector of the customered threshold to select edges. Default value is the the midpoint between 
 #' the median edge-weight of prior ( 3rd column "Motif" is 1.0) edges 
 #' and the median edge-weight of non-prior edges (3rd column "Motif" is 0.0) in PANDA network.
@@ -23,7 +23,7 @@
 #' 
 #' 
 #' # Run PANDA to construct the treated network
-#' treated_all_panda_result <- panda.py(expr_file = treated_expression_file_path, 
+#' treated_all_panda_result <- pandaPy(expr_file = treated_expression_file_path, 
 #' motif_file= motif_file_path, ppi_file = ppi_file_path, 
 #' modeProcess="legacy", remove_missing = TRUE )
 #' 

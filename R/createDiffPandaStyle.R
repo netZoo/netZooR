@@ -2,7 +2,7 @@
 #'
 #'This function is able to create a Cytoscape visual style for two PANDA networks output.
 #' @param style_name Character string indicating the style name. Defaults to "Diff.PandaStyle"
-#' @param condition_name string vector indicating the same condition name used in \code{\link{panda.diff.edges}} and \code{\link{vis.diff.panda.in.cytoscape}},
+#' @param condition_name string vector indicating the same condition name used in \code{\link{pandaDiffEdges}} and \code{\link{visDiffPandaInCytoscape}},
 #'        and all edges belong to this condition or phenotype will be represented as purple, otherwise, green.
 #'
 #' @return a visual style in Cytoscape Control Panel under "Style" button.
