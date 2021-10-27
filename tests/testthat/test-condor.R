@@ -70,7 +70,7 @@ test_that("CONDOR functions work", {
    condor.object6 <- createCondorObject(small1976)
    condor.object6 <- condorCluster(condor.object6, project=FALSE)
    par(mar=c(1,1,1,1))
-   expect_error(condor.plot.heatmap(condor.object6),NA)
+   expect_error(condorPlotHeatmap(condor.object6),NA)
    graphics.off()
   
   

@@ -24,7 +24,7 @@ pandaPy(
 When this argument is not provided, analysis will continue with Pearson correlation matrix.}
 
 \item{ppi_file}{An optional character string indicating the file path of protein-protein interaction edge dataset.
-Also, this can be generated with a list of proteins of interest by \code{\link{source.PPI}}.}
+Also, this can be generated with a list of proteins of interest by \code{\link{sourcePPI}}.}
 
 \item{computing}{'cpu' uses Central Processing Unit (CPU) to run PANDA; 'gpu' use the Graphical Processing Unit (GPU) to run PANDA. The default value is "cpu".}
 
