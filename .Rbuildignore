@@ -22,6 +22,3 @@ tests/testthat/test-lioness.R
 tests/testthat/test-egret.R
 tests/testthat/test-monster.R
 tests/testthat/test-alpaca.R
-vignettes/LionessApplicationinGTExData.Rmd
-vignettes/pandaRApplicationinGTExData.Rmd
-vignettes/TutorialOTTER.Rmd

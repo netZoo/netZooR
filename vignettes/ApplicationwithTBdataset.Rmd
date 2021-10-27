@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# netZooR
+# Introduction
 
 netZooR is an R package which consists of  seven main algorithms and is able to construct, analyse and plot gene regulatory networks.
 
@@ -35,7 +35,7 @@ netZooR is an R package which consists of  seven main algorithms and is able to 
 * **OTTER**(Optimization to Estimate Regulation) [publication in preparation]: models gene regulation estimation as a graph matrching problem
 
 
-## Getting Started
+## Installation
 
 ### Prerequisites
 
@@ -54,7 +54,7 @@ The required Python packages are: [pandas](https://pandas.pydata.org/), [numpy](
 ### Installing
 This package could be downloaded via `install_github()` function from `devtools` package.
 
-```{r,eval=FALSE}
+```R
 # install.packages("devtools") 
 library(devtools)
 # install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
@@ -70,7 +70,7 @@ Here is some pre-prepared specie-sepcific PANDA-ready transcription factor bindi
 ### PPI
 This package includes a function `source.PPI` may source a Protein-Protein Interactions (PPI) througt STRING database given a list of proteins of interest. The [STRINGdb](http://www.bioconductor.org/packages/release/bioc/html/STRINGdb.html) is already loaded while loading netZooR.
 
-```{r,eval=FALSE}
+```R
 # TF is a data frame with single column filled with TFs of Mycobacterium tuberculosis H37Rv.
 PPI <- source.PPI(TF, STRING.version="10", species.index=83332, score_threshold=0)
 ```
@@ -83,20 +83,20 @@ library(netZooR)
 ```
 
 Accessing the help pages for the  usage of core functions.
-```{r,eval=FALSE}
-?panda.py
-?create.condor.object
-?panda.to.condor.object
-?lioness.py
+```R
+?pandaPy
+?createCondorObject
+?pandaToCondorObject
+?lionessPy
 ?alpaca
-?panda.to.alpaca
+?pandaToAlpaca
 ?sambar
 ```
 
 This package will invoke the Python in R environment through reticulate package.
 Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. 
 More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html)
-```{r,eval=FALSE}
+```R
 #check your Python configuration and the specific version of Python in use currently
 py_config()
 
@@ -111,22 +111,10 @@ Refer to four input datasets files: one TB expression dataset control group , on
 retrieve the file path of these files came with the netZooR package.
 ```{r}
 # retrieve the file path of these files
-treated_expression_file_path <- "./expr4.txt"
-control_expression_file_path <- "./expr10.txt"
-motif_file_path <- "./chip.txt"
-ppi_file_path <- "./ppi.txt"
-```
-
-or, download to working directory from AWS.
-```{r,eval=TRUE}
-system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4.txt")
-treated_expression_file_path <- "./expr4.txt"
-system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr10.txt")
-control_expression_file_path <- "./expr10.txt"
-system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/chip.txt")
-motif_file_path <- "./chip.txt"
-system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/ppi.txt")
-ppi_file_path <- "./ppi.txt"
+treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", package = "netZooR", mustWork = TRUE)
+control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", mustWork = TRUE)
+motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
+ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 ```
 
 ### PANDA algorithm
@@ -135,8 +123,8 @@ Assign the above file paths to flag `e`(refers to "expression dataset"), `m`(ref
 
 Repeat with control group. 
 ```{r,message=FALSE,results="hide"}
-treated_all_panda_result <- panda.py(expr_file = treated_expression_file_path, motif_file = motif_file_path, ppi_file= ppi_file_path,modeProcess="legacy",  remove_missing = TRUE )
-control_all_panda_result <- panda.py(expr_file = control_expression_file_path,motif_file = motif_file_path, ppi_file= ppi_file_path,modeProcess="legacy",  remove_missing = TRUE )
+treated_all_panda_result <- pandaPy(expr_file = treated_expression_file_path, motif_file = motif_file_path, ppi_file= ppi_file_path,modeProcess="legacy",  remove_missing = TRUE )
+control_all_panda_result <- pandaPy(expr_file = control_expression_file_path,motif_file = motif_file_path, ppi_file= ppi_file_path,modeProcess="legacy",  remove_missing = TRUE )
 ```
 
 Vector `treated_all_panda_result` and vector `control_all_panda_result` below are large lists with three elements: the entire PANDA network, indegree ("to" nodes) nodes and score, outdegree ("from" nodes) nodes and score. Use `$panda`,`$indegree` and `$outdegree` to access each list item resepctively.
@@ -150,7 +138,7 @@ control_net <- control_all_panda_result$panda
 ### PANDA Cytoscape Plotting
 Cytoscape is an interactivity network visualization tool highly recommanded to explore the PANDA network. Before using this function `plot.panda.in.cytoscape`, please install and launch Cytoscape (3.6.1 or greater) and keep it running whenever using.
 
-```{r,eval=FALSE}
+```R
 # select top 1000 edges in PANDA network by edge weight.
 panda.net <- head(treated_net[order(control_net$force,decreasing = TRUE),], 1000)
  
@@ -159,42 +147,48 @@ vis.panda.in.cytoscape(panda.net, network.name="PANDA")
 ```
 
 ### LIONESS Algorithm 
-How to run LIONESS is mostly idential with method how to run PANDA in this package, unless the return values of `lioness.py()` is a data frame where first two columns represent TFs (regulators) and Genes (targets) while the rest columns represent each sample. each cell filled with estimated score calculated by LIONESS.
+How to run LIONESS is mostly idential with method how to run PANDA in this package, unless the return values of `lionessPy()` is a data frame where first two columns represent TFs (regulators) and Genes (targets) while the rest columns represent each sample. each cell filled with estimated score calculated by LIONESS.
 
 ```{r,results="hide",message=FALSE}
 # Run LIONESS algorithm for the first two samples
 # removing start_sample and end_sample arguments to generate whole LIONESS network with all samples.
-control_lioness_result <- lioness.py(expr_file = control_expression_file_path,motif_file = motif_file_path, ppi_file= ppi_file_path,modeProcess="legacy",  remove_missing = TRUE, start_sample=1, end_sample=2)
+control_lioness_result <- lionessPy(expr_file = control_expression_file_path,motif_file = motif_file_path, ppi_file= ppi_file_path,modeProcess="legacy",  remove_missing = TRUE, start_sample=1, end_sample=2)
 ```
 
 ### CONDOR Algorithm and plotting
-PANDA network can simply be converted into condor.object by `panda.to.condor.object(panda.net, threshold)`
+PANDA network can simply be converted into condor.object by `pandaToCondorObject(panda.net, threshold)`
 Defaults option  `threshold` is the average of [median weight of non-prior edges] and [median weight of prior edges], all weights mentioned previous are transformationed with formula `w'=ln(e^w+1)` before calculating the median and average. But all the edges selected will remain the orginal weights calculated by PANDA.
 
 ```{r}
-treated_condor_object <- panda.to.condor.object(treated_net, threshold = 0)
+treated_condor_object <- pandaToCondorObject(treated_net, threshold = 0)
 ```
 
 The communities structure can be plotted by igraph.
 ```{r}
 library(viridisLite)
-treated_condor_object <-condor.cluster(treated_condor_object,project = FALSE)
+treated_condor_object <-condorCluster(treated_condor_object,project = FALSE)
 treated_color_num <- max(treated_condor_object$red.memb$com)
 treated_color <- viridis(treated_color_num, alpha = 1, begin = 0, end = 1, direction = 1, option = "D")
-condor.plot.communities(treated_condor_object, color_list=treated_color, point.size=0.04, xlab="Genes", ylab="TFs")
+condorPlotCommunities(treated_condor_object, color_list=treated_color, point.size=0.04, xlab="Genes", ylab="TFs")
 ```
 
 ### ALPACA Algorithm
 
-ALPACA community structure can also be generated from two PANDA network by `panda.to.alpaca`
+ALPACA community structure can also be generated from two PANDA network by `pandaToAlpaca`
 
 ```{r}
-alpaca<- panda.to.alpaca(treated_net, control_net, NULL, verbose=FALSE)
+alpaca<- pandaToAlpaca(treated_net, control_net, NULL, verbose=FALSE)
 ```
 
 ## More tutorials
 
 Browse with `browseVignettes("netZooR")`
+
+## Information
+
+```{r}
+sessionInfo()
+```
 
 ## Note
 If there is an error like `Error in fetch(key) : lazy-load database.rdb' is corrupt` when accessing the help pages of functions in this package after being loaded. It's [a limitation of base R](https://github.com/r-lib/devtools/issues/1660) and has not been solved yet. Restart R session and re-load this package will help.

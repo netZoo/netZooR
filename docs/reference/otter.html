@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.50</span>
       </span>
     </div>
 
@@ -100,46 +100,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/ALPACA.html">Detecting differential modules using ALPACA</a>
-    </li>
-    <li>
-      <a href="../articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
-    </li>
-    <li>
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
-    </li>
-    <li>
-      <a href="../articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
-    </li>
-    <li>
-      <a href="../articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a>
-    </li>
-    <li>
-      <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
-    </li>
-    <li>
-      <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
-    </li>
-    <li>
-      <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
-    </li>
-    <li>
-      <a href="../articles/TutorialOTTER.html">Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER</a>
-    </li>
-    <li>
-      <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
-    </li>
-    <li>
-      <a href="../articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
-    </li>
-    <li>
-      <a href="../articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a>
     </li>
   </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/netZoo/netZooR/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -154,7 +126,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Run OTTER in R</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/netZoo/netZooR/blob/master/R/OTTER.R'><code>R/OTTER.R</code></a></small>
     <div class="hidden name"><code>otter.Rd</code></div>
     </div>
 
@@ -216,7 +188,7 @@ matrix of size (t,g), g=number of genes, t=number of TFs</p></td>
     <p>Inputs:</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples">
+    <pre class="examples"><div class='input'>
 <span class='va'>W</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span><span class='op'>(</span><span class='fl'>100</span>, rate<span class='op'>=</span><span class='fl'>.1</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>
 <span class='va'>C</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span><span class='op'>(</span><span class='fl'>100</span>, rate<span class='op'>=</span><span class='fl'>.1</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>
 <span class='va'>P</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span><span class='op'>(</span><span class='fl'>100</span>, rate<span class='op'>=</span><span class='fl'>.1</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>
@@ -224,7 +196,7 @@ matrix of size (t,g), g=number of genes, t=number of TFs</p></td>
 <span class='co'># Run OTTER algorithm</span>
 <span class='va'>W</span> <span class='op'>&lt;-</span> <span class='fu'>otter</span><span class='op'>(</span><span class='va'>W</span>, <span class='va'>P</span>, <span class='va'>C</span><span class='op'>)</span>
  
-</pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -26,8 +26,8 @@ alpaca <- function(net.table,file.stem,verbose=FALSE)
   ctrl.pos <- net.table[net.table[,3]>=0,1:3]
   
   ctrl.elist <- data.frame(red=ctrl.pos[,2],blue=ctrl.pos[,1],weights=ctrl.pos[,3])
-  ctrl.condor <- create.condor.object(ctrl.elist)
-  ctrl.condor <- condor.cluster(ctrl.condor,project=FALSE)
+  ctrl.condor <- createCondorObject(ctrl.elist)
+  ctrl.condor <- condorCluster(ctrl.condor,project=FALSE)
   ctrl.memb <- c(ctrl.condor$red.memb[,2],ctrl.condor$blue.memb[,2])
   names(ctrl.memb) <- c(as.character(ctrl.condor$red.memb[,1]),as.character(ctrl.condor$blue.memb[,1]))
   if (!(is.null(file.stem))) write.table(ctrl.memb, paste(c(file.stem,"_ALPACA_ctrl_memb.txt"),collapse=""),row.names=TRUE,col.names=FALSE,quote=FALSE,sep="\t")
@@ -44,7 +44,7 @@ alpaca <- function(net.table,file.stem,verbose=FALSE)
   }
   
   print("Computing differential modularity matrix...")
-  dwbm <- alpaca.computeDWBMmat.mscale(pos.table,ctrl.memb[V(pos.graph)$name])
+  dwbm <- alpacacomputeDWBMmatmscale(pos.table,ctrl.memb[V(pos.graph)$name])
   if (verbose) 
   {write.table(dwbm, paste(c(file.stem,"_DWBM.txt"),collapse=""),row.names=TRUE,col.names=TRUE,quote=FALSE,sep="\t")
     write.table(rownames(dwbm),paste(c(file.stem,"_DWBM_rownames.txt"),collapse=""),row.names=TRUE,col.names=TRUE,quote=FALSE,sep="\t")
@@ -58,7 +58,7 @@ alpaca <- function(net.table,file.stem,verbose=FALSE)
   this.B[(ntfs+1):(ntfs+ngenes),1:ntfs] <- t(dwbm)
   
   print("Computing differential modules...")
-  louv.memb <- alpaca.genlouvain(this.B)
+  louv.memb <- alpacagenlouvain(this.B)
   names(louv.memb) <- c(rownames(dwbm),colnames(dwbm))
   
   print("Computing node scores...")
@@ -112,7 +112,7 @@ alpaca <- function(net.table,file.stem,verbose=FALSE)
 #' @export
 #' 
 
-alpaca.ExtractTopGenes <- function(module.result,set.lengths)
+alpacaExtractTopGenes <- function(module.result,set.lengths)
 {
   mod.memb <- module.result[[1]]
   mod.scores <- module.result[[2]]
@@ -130,7 +130,7 @@ alpaca.ExtractTopGenes <- function(module.result,set.lengths)
     for (j in 1:length(set.lengths))
     {
       count <- count+1
-      if (length(this.comm.ord)<set.lengths[j]) mod.top[[count]] <-sapply(this.comm.ord,alpaca.node.to.gene) else mod.top[[count]] <- sapply(this.comm.ord[1:set.lengths[j]],alpaca.node.to.gene)
+      if (length(this.comm.ord)<set.lengths[j]) mod.top[[count]] <-sapply(this.comm.ord,alpacanodetogene) else mod.top[[count]] <- sapply(this.comm.ord[1:set.lengths[j]],alpacanodetogene)
     }
   }
   list(mod.top,mod.top.names)
@@ -139,7 +139,7 @@ alpaca.ExtractTopGenes <- function(module.result,set.lengths)
 #' The top GO term associated genes in each module
 #'
 #' Get all the genes in the top-scoring lists which are annotated with the enriched GO terms. Only GO terms with at least 3 genes in the overlap are included.
-#' @param go.result The result of the GO term analysis (alpaca.list.to.go)
+#' @param go.result The result of the GO term analysis (alpacalisttogo)
 #' @param dm.top The result of extracting the top genes of the differential modules (dm.top)
 #'  
 #' @return A vector with strings representing gene lists, each element of the vector has the genes in that GO term and community pasted together with spaces in between.
@@ -153,7 +153,7 @@ alpaca.ExtractTopGenes <- function(module.result,set.lengths)
 #' @export
 #' 
 
-alpaca.GOtab.to.genes <- function(go.result,dm.top)
+alpacaGOtabtogenes <- function(go.result,dm.top)
 {
   names(dm.top[[1]]) <- dm.top[[2]]
   dm.go.genes <- NULL
@@ -162,7 +162,7 @@ alpaca.GOtab.to.genes <- function(go.result,dm.top)
     if (i %% 10 ==0) print(i)
     if (go.result[i,7]>2){
       this.go.id <- as.character(go.result[i,3])
-      this.genes <- alpaca.go.to.genes(this.go.id)
+      this.genes <- alpacagotogenes(this.go.id)
       this.label <- as.character(go.result[i,1])
       comm.top <- dm.top[[1]][[this.label]]
       dm.go.genes <- c(dm.go.genes,paste(intersect(comm.top,this.genes),collapse=" "))
@@ -188,7 +188,7 @@ alpaca.GOtab.to.genes <- function(go.result,dm.top)
 #' @export
 #' 
 
-alpaca.TopEnsembl.to.TopSym <- function(mod.top,annot.vec)
+alpacaTopEnsembltoTopSym <- function(mod.top,annot.vec)
 {
   res.sym <- NULL
   for (i in 1:length(mod.top))
@@ -216,7 +216,7 @@ alpaca.TopEnsembl.to.TopSym <- function(mod.top,annot.vec)
 #' @export
 #' 
 
-alpaca.DeltaZAnalysis <- function(net.table,file.stem)
+alpacaDeltaZAnalysis <- function(net.table,file.stem)
 {
   net.table[,1] <- paste(net.table[,1],"A",sep="_")
   net.table[,2] <- paste(net.table[,2],"B",sep="_")
@@ -227,12 +227,12 @@ alpaca.DeltaZAnalysis <- function(net.table,file.stem)
   delz.tab <- cbind(net.table[net.delz>0,1:2],net.delz[net.delz>0])
   
   delz.elist <- data.frame(red=delz.tab[,2],blue=delz.tab[,1],weights=delz.tab[,3])
-  delz.condor <- create.condor.object(delz.elist)
-  delz.condor <- condor.cluster(delz.condor,project=FALSE)
+  delz.condor <- createCondorObject(delz.elist)
+  delz.condor <- condorCluster(delz.condor,project=FALSE)
   delz.memb <- c(delz.condor$red.memb[,2],delz.condor$blue.memb[,2])
   names(delz.memb) <- c(as.character(delz.condor$red.memb[,1]),as.character(delz.condor$blue.memb[,1])) 
   
-  delz.core <- condor.qscore(delz.condor)
+  delz.core <- condorQscore(delz.condor)
   delz.A <- delz.core$qscores$blue.qscore
   delz.B <- delz.core$qscores$red.qscore
   delz.scores <- c(delz.A[,3],delz.B[,3])
@@ -263,7 +263,7 @@ alpaca.DeltaZAnalysis <- function(net.table,file.stem)
 #' @export
 #' 
 
-alpaca.DeltaZAnalysis.Louvain <- function(net.table,file.stem)
+alpacaDeltaZAnalysisLouvain <- function(net.table,file.stem)
 {
   net.table[,1] <- paste(net.table[,1],"A",sep="_")
   net.table[,2] <- paste(net.table[,2],"B",sep="_")
@@ -273,7 +273,7 @@ alpaca.DeltaZAnalysis.Louvain <- function(net.table,file.stem)
   net.delz <- as.numeric(net.table[,4])-as.numeric(net.table[,3])
   delz.tab <- data.frame(TF=net.table[net.delz>0,1],Targ=net.table[net.delz>0,2],wts=net.delz[net.delz>0])
   
-  delz.res <- alpaca.WBM.louvain(delz.tab)
+  delz.res <- alpacaWBMlouvain(delz.tab)
   delz.memb <- delz.res[[1]]
   
   delz.scores <- delz.res[[2]]
@@ -301,7 +301,7 @@ alpaca.DeltaZAnalysis.Louvain <- function(net.table,file.stem)
 #' @export
 #' 
 
-alpaca.RotationAnalysis <- function(net.table)
+alpacaRotationAnalysis <- function(net.table)
 {
   
   net.table[,1] <- paste(net.table[,1],"A",sep="_")
@@ -311,18 +311,18 @@ alpaca.RotationAnalysis <- function(net.table)
   net2 <- net.table[net.table[,4]>0,c(1:2,4)]
   
   net1.elist <- data.frame(red=net1[,2],blue=net1[,1],weights=net1[,3])
-  net1.condor <- create.condor.object(net1.elist)
-  net1.condor <- condor.cluster(net1.condor,project=FALSE)
+  net1.condor <- createCondorObject(net1.elist)
+  net1.condor <- condorCluster(net1.condor,project=FALSE)
   net1.memb <- c(net1.condor$red.memb[,2],net1.condor$blue.memb[,2])
   names(net1.memb) <- c(as.character(net1.condor$red.memb[,1]),as.character(net1.condor$blue.memb[,1])) 
   
   net2.elist <- data.frame(red=net2[,2],blue=net2[,1],weights=net2[,3])
-  net2.condor <- create.condor.object(net2.elist)
-  net2.condor <- condor.cluster(net2.condor,project=FALSE)
+  net2.condor <- createCondorObject(net2.elist)
+  net2.condor <- condorCluster(net2.condor,project=FALSE)
   net2.memb <- c(net2.condor$red.memb[,2],net2.condor$blue.memb[,2])
   names(net2.memb) <- c(as.character(net2.condor$red.memb[,1]),as.character(net2.condor$blue.memb[,1])) 
   
-  alpaca.CommunityStructureRotation(net1.memb,net2.memb)
+  alpacaCommunityStructureRotation(net1.memb,net2.memb)
 }
 
 #' Community comparison method (CONDOR optimizaton)
@@ -340,7 +340,7 @@ alpaca.RotationAnalysis <- function(net.table)
 #' @export
 #' 
 
-alpaca.RotationAnalysis.Louvain <- function(net.table)
+alpacaRotationAnalysisLouvain <- function(net.table)
 {
   
   net.table[,1] <- paste(net.table[,1],"A",sep="_")
@@ -349,13 +349,13 @@ alpaca.RotationAnalysis.Louvain <- function(net.table)
   net1 <- net.table[net.table[,3]>0,1:3]
   net2 <- net.table[net.table[,4]>0,c(1:2,4)]
   
-  net1.res <- alpaca.WBM.louvain(net1)
+  net1.res <- alpacaWBMlouvain(net1)
   net1.memb <- net1.res[[1]]
   
-  net2.res <- alpaca.WBM.louvain(net2)
+  net2.res <- alpacaWBMlouvain(net2)
   net2.memb <- net2.res[[1]]
   
-  alpaca.CommunityStructureRotation(net1.memb,net2.memb)
+  alpacaCommunityStructureRotation(net1.memb,net2.memb)
 }
 
 #' Generalized Louvain method for bipartite networks
@@ -373,17 +373,17 @@ alpaca.RotationAnalysis.Louvain <- function(net.table)
 #' @export
 #' 
 
-alpaca.WBM.louvain <- function(net.frame)
+alpacaWBMlouvain <- function(net.frame)
 {
-  wbm.mat <- alpaca.computeWBMmat(net.frame)
+  wbm.mat <- alpacacomputeWBMmat(net.frame)
   ntfs <- nrow(wbm.mat)
   ngenes <- ncol(wbm.mat)
   this.B <- array(0,dim=c(ntfs+ngenes,ntfs+ngenes))
   this.B[1:ntfs,(ntfs+1):(ntfs+ngenes)] <- wbm.mat
   this.B[(ntfs+1):(ntfs+ngenes),1:ntfs] <- t(wbm.mat)
   
-  print("Running alpaca.genlouvain...")
-  louv.memb1 <- alpaca.genlouvain(this.B)
+  print("Running alpacagenlouvain...")
+  louv.memb1 <- alpacagenlouvain(this.B)
   louv.memb <- as.vector(louv.memb1)
   names(louv.memb) <- c(rownames(wbm.mat),colnames(wbm.mat))
   
@@ -430,7 +430,7 @@ alpaca.WBM.louvain <- function(net.frame)
 #' @export
 #' 
 
-alpaca.computeWBMmat <- function(edge.mat)
+alpacacomputeWBMmat <- function(edge.mat)
 {
   red.nodes <- unique(edge.mat[,1])
   blue.nodes <- unique(edge.mat[,2])
@@ -462,7 +462,7 @@ alpaca.computeWBMmat <- function(edge.mat)
 #' @export
 #' 
 
-alpaca.node.to.gene <- function(x){strsplit(x,split="_")[[1]][1]}
+alpacanodetogene <- function(x){strsplit(x,split="_")[[1]][1]}
 
 #' GO term enrichment for a list of gene sets
 #'
@@ -482,7 +482,7 @@ alpaca.node.to.gene <- function(x){strsplit(x,split="_")[[1]][1]}
 #' @export
 #' 
 
-alpaca.list.to.go <- function(gene.list,univ.vec,comm.nums){
+alpacalisttogo <- function(gene.list,univ.vec,comm.nums){
   
   xx <- AnnotationDbi::as.list(org.Hs.egSYMBOL)
   base.sym <- unlist(xx)
@@ -531,7 +531,7 @@ alpaca.list.to.go <- function(gene.list,univ.vec,comm.nums){
 #' @export
 #' 
 
-alpaca.TestNodeRank <- function(node.ordered,true.pos)
+alpacaTestNodeRank <- function(node.ordered,true.pos)
 {
   node.ind <- rev(1:length(node.ordered))
   names(node.ind) <- node.ordered
@@ -569,7 +569,7 @@ alpaca.TestNodeRank <- function(node.ordered,true.pos)
 #' @export
 #' 
 
-alpaca.CommunityStructureRotation <- function(net1.memb,net2.memb){
+alpacaCommunityStructureRotation <- function(net1.memb,net2.memb){
   
   net1.mat <- array(0,dim=c(length(net1.memb),max(net1.memb)))
   rownames(net1.mat) <- names(net1.memb)
@@ -610,7 +610,7 @@ alpaca.CommunityStructureRotation <- function(net1.memb,net2.memb){
 #' @export
 #' 
 
-alpaca.computeDWBMmat.mscale <- function(edge.mat,ctrl.memb){
+alpacacomputeDWBMmatmscale <- function(edge.mat,ctrl.memb){
   
   graph.nodes <- names(ctrl.memb)
   all.A <- intersect(graph.nodes,unique(edge.mat[,1]))
@@ -695,9 +695,9 @@ alpaca.computeDWBMmat.mscale <- function(edge.mat,ctrl.memb){
 }
 
 
-#' Create alpaca.metanetwork for Louvain optimization
+#' Create alpacametanetwork for Louvain optimization
 #'
-#' Computes the "effective" adjacency matrix of a alpaca.metanetwork whose nodes represent communities in the larger input matrix.
+#' Computes the "effective" adjacency matrix of a alpacametanetwork whose nodes represent communities in the larger input matrix.
 #' @param J The modularity matrix
 #' @param S The community membership vector from the previous round of agglomeration.
 #'  
@@ -711,7 +711,7 @@ alpaca.computeDWBMmat.mscale <- function(edge.mat,ctrl.memb){
 #' @export
 #' 
 
-alpaca.metanetwork <- function(J,S)
+alpacametanetwork <- function(J,S)
 {
   PP <- sparseMatrix(i=1:length(S),j=S,x=1)
   t(PP) %*% J %*% PP 
@@ -719,7 +719,7 @@ alpaca.metanetwork <- function(J,S)
 
 #' Renumbering community membership vector
 #'
-#' This is a helper function alpaca.genlouvain. It re-numbers the communities so that they run from 1 to N increasing through the vector.
+#' This is a helper function alpacagenlouvain. It re-numbers the communities so that they run from 1 to N increasing through the vector.
 #' @param S The community membership vector derived from the previous round of agglomeration.
 #'  
 #' @return The renumbered membership vector.
@@ -732,7 +732,7 @@ alpaca.metanetwork <- function(J,S)
 #' @export
 #' 
 
-alpaca.tidyconfig <- function(S)
+alpacatidyconfig <- function(S)
 {
   TT <- rep(0,length(S))
   for (i in 1:length(S))
@@ -744,7 +744,7 @@ alpaca.tidyconfig <- function(S)
 
 #' Generalized Louvain optimization
 #'
-#' This function implements the Louvain optimization scheme on a general symmetric matrix. First, nodes are all placed in separate communities, and merged iteratively according to which merge moves result in the greatest increase in the modularity sum. Note that nodes are iterated in the order of the input matrix (not randomly) so that all results are reproducible. Second, the final community membership is used to form a alpaca.metanetwork whose nodes represent communities from the prevous step, and which are connected by effective edge weights. The merging process is then repeated on the alpaca.metanetwork. These two steps are repeated until the modularity sum does not increase more than a very small tolerance factor. New
+#' This function implements the Louvain optimization scheme on a general symmetric matrix. First, nodes are all placed in separate communities, and merged iteratively according to which merge moves result in the greatest increase in the modularity sum. Note that nodes are iterated in the order of the input matrix (not randomly) so that all results are reproducible. Second, the final community membership is used to form a alpacametanetwork whose nodes represent communities from the prevous step, and which are connected by effective edge weights. The merging process is then repeated on the alpacametanetwork. These two steps are repeated until the modularity sum does not increase more than a very small tolerance factor. New
 #' @param B Symmetric modularity matrix
 #'  
 #' @return The community membership vector
@@ -757,7 +757,7 @@ alpaca.tidyconfig <- function(S)
 #' @export
 #' 
 
-alpaca.genlouvain <- function(B)
+alpacagenlouvain <- function(B)
 {
   eps <- 2e-16
   if (sum(B-t(B))>0) B <- (B+t(B))/2  #force symmetric matrix
@@ -827,7 +827,7 @@ alpaca.genlouvain <- function(B)
       }
     }
     
-    y <- alpaca.tidyconfig(y)
+    y <- alpacatidyconfig(y)
     for (i in 1:length(y))
     {
       S[S==i] <- y[i]
@@ -839,7 +839,7 @@ alpaca.genlouvain <- function(B)
       return(S)
     }
     
-    M <- alpaca.metanetwork(B,S2)		
+    M <- alpacametanetwork(B,S2)		
   }
 }
 
@@ -862,7 +862,7 @@ alpaca.genlouvain <- function(B)
 #' @export
 #' 
 
-alpaca.simulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,dens.module)
+alpacasimulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,dens.module)
 {
   if (length(size.module)==2) size.module <- rbind(size.module,c(0,0))
   
@@ -941,7 +941,7 @@ alpaca.simulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,de
 #' @export
 #' 
 
-alpaca.go.to.genes <- function(go.term)
+alpacagotogenes <- function(go.term)
 {
   GOoffspring <- AnnotationDbi::as.list(GOBPOFFSPRING)
   kids <- GOoffspring[[go.term]]

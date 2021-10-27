@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.50</span>
       </span>
     </div>
 
@@ -54,45 +54,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/ALPACA.html">Detecting differential modules using ALPACA</a>
-    </li>
-    <li>
-      <a href="articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
-    </li>
-    <li>
       <a href="articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
-    </li>
-    <li>
-      <a href="articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
-    </li>
-    <li>
-      <a href="articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a>
-    </li>
-    <li>
-      <a href="articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
-    </li>
-    <li>
-      <a href="articles/MONSTER.html">An Introduction to the MONSTER Package</a>
-    </li>
-    <li>
-      <a href="articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
-    </li>
-    <li>
-      <a href="articles/TutorialOTTER.html">Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER</a>
-    </li>
-    <li>
-      <a href="articles/pandaR.html">An Introduction to the pandaR Package</a>
-    </li>
-    <li>
-      <a href="articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
-    </li>
-    <li>
-      <a href="articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a>
     </li>
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/netZoo/netZooR/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -144,7 +118,7 @@
 <p>To use PANDA and LIONESS, there are two options:</p>
 <ol>
 <li>
-<p>Use <code><a href="reference/panda.py.html">panda.py()</a></code> and <code><a href="reference/lioness.py.html">lioness.py()</a></code> by invoking the respective Python implementations in <a href="(https://github.com/netZoo/netZooPy/tree/netZoo)">netZooPy</a>. Because the native R linear algebra libraries can be slow, this way is recommended for faster analysis. However, optimized parallel libraries can give reasonable run times (option ii). To invoke Python scripts, there are some requirements to meet before using netZooR:</p>
+<p>Use <code>panda.py()</code> and <code>lioness.py()</code> by invoking the respective Python implementations in <a href="(https://github.com/netZoo/netZooPy/tree/netZoo)">netZooPy</a>. Because the native R linear algebra libraries can be slow, this way is recommended for faster analysis. However, optimized parallel libraries can give reasonable run times (option ii). To invoke Python scripts, there are some requirements to meet before using netZooR:</p>
 <p>a) <a href="https://www.python.org/downloads/"><strong>Python</strong></a> (&gt;= 3.5.0) installed;</p>
 <p>b) Python libraries <a href="https://pandas.pydata.org/">pandas</a>, <a href="https://numpy.org/">numpy</a>, and <a href="https://www.scipy.org/">scipy</a> installed;</p>
 <p>c) Internet access as package <code>reticulate</code> will link the R wrapper to the Python scripts located <a href="https://github.com/netZoo/netZooPy/tree/netZoo">here</a> for those two methods.</p>
@@ -155,7 +129,7 @@
 </li>
 </ol>
 </li>
-<li><p>Most of plotting function can be realized by functions in <a href="https://igraph.org/redirect.html">igraph</a>, which will be loaded with netZooR through <code><a href="https://rdrr.io/r/base/library.html">library(netZooR)</a></code>. Some plotting functions like <code><a href="reference/vis.panda.in.cytoscape.html">vis.panda.in.cytoscape()</a></code> and <code><a href="reference/vis.diff.panda.in.cytoscape.html">vis.diff.panda.in.cytoscape()</a></code> are able to plot interactive PANDA networks in <a href="https://cytoscape.org/">Cytoscape</a>, but installation of Cytoscape is required before using these plotting functions. Also, please make sure that Cytoscape is open when these functions are called.</p></li>
+<li><p>Most of plotting function can be realized by functions in <a href="https://igraph.org/redirect.html">igraph</a>, which will be loaded with netZooR through <code><a href="https://rdrr.io/r/base/library.html">library(netZooR)</a></code>. Some plotting functions like <code>vis.panda.in.cytoscape()</code> and <code>vis.diff.panda.in.cytoscape()</code> are able to plot interactive PANDA networks in <a href="https://cytoscape.org/">Cytoscape</a>, but installation of Cytoscape is required before using these plotting functions. Also, please make sure that Cytoscape is open when these functions are called.</p></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools") </span>
@@ -185,7 +159,7 @@
 <div id="tutorials" class="section level2">
 <h2 class="hasAnchor">
 <a href="#tutorials" class="anchor"></a>Tutorials</h2>
-<p>For more details please refer to the <a href="https://netzoo.github.io/netZooR/">documentation website</a>. Tutorials are available at the top navigation bar <strong>Articles/</strong> for basic usage and application cases. Or use <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("netZooR")</a></code> after installing the package. Also check <a href="http://netbooks.networkmedicine.org">netbooks</a> to go through the tutorials on a jupyter notebook cloud server.</p>
+<p>For more details please refer to the <a href="https://netzoo.github.io/netZooR/">documentation website</a>. Tutorials are available at the top navigation bar <strong>Articles/</strong> for basic usage and application cases. Or use <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("netZooR")</a></code> after installing the package. Also check <a href="http://netbooks.networkmedicine.org">netbooks</a> to go through the tutorials on a Jupyter notebook cloud server.</p>
 </div>
 <div id="contribution-and-development" class="section level2">
 <h2 class="hasAnchor">
@@ -229,7 +203,16 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://github.com/netZoo/netZooR/">https://​github.com/​netZoo/​netZooR/​</a>
+</li>
+<li>Report a bug at <br><a href="https://github.com/netZoo/netZooR/issues">https://​github.com/​netZoo/​netZooR/​issues</a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>

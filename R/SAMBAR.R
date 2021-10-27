@@ -6,7 +6,7 @@
 #
 # OBS! cagenes should be optional
 # dependencies: utils
-sambar.convertgmt <- function(signature, cagenes){
+sambarConvertgmt <- function(signature, cagenes){
   
   # determine the maximum number of genes a signature can have in the .gmt file
   ncols <- scan(signature, what="character")
@@ -46,7 +46,7 @@ sambar.convertgmt <- function(signature, cagenes){
 #' @return Mutation rate-adjusted gene mutation scores.
 #' @export
 #
-sambar.corgenelength <- function(x, cagenes, exonsize){
+sambarCorgenelength <- function(x, cagenes, exonsize){
   
   # subset mutation data to cancer-associated genes
   x <- x[,which(colnames(x) %in% cagenes)]
@@ -63,12 +63,12 @@ sambar.corgenelength <- function(x, cagenes, exonsize){
 }
 
 #' De-sparsify gene-level mutation scores into gene set-level mutation scores.
-#' @param edgx A binary matrix containing information on which genes belong to which gene sets. Output from the sambar.convertgmt function.
+#' @param edgx A binary matrix containing information on which genes belong to which gene sets. Output from the sambarConvertgmt function.
 #' @param mutratecorx Gene-level mutation scores corrected for the number of gene sets each gene belongs to (from sambar function).
 #' @return De-sparsified mutation data.
 #' @export
 #
-sambar.desparsify <- function(edgx, mutratecorx){ # edgx=edg, mutratecorx=mutratecor
+sambarDesparsify <- function(edgx, mutratecorx){ # edgx=edg, mutratecorx=mutratecor
   
   # de-sparsify the data
   despar <- matrix(, nrow=nrow(edgx), ncol=ncol(mutratecorx))
@@ -149,10 +149,10 @@ NULL
 sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package = "netZooR", mustWork = TRUE), cangenes=genes, kmin=2, kmax=4){
   
   # convert gmt file to binary matrix, subset to cancer-associated genes
-  edg <- sambar.convertgmt(signature=signatureset, cagenes=cangenes)
+  edg <- sambarConvertgmt(signature=signatureset, cagenes=cangenes)
   
   # correct number of mutations for gene length (returns gene mutation scores)
-  mutlength <- sambar.corgenelength(x=mutdata, cagenes=cangenes, exonsize=esize)
+  mutlength <- sambarCorgenelength(x=mutdata, cagenes=cangenes, exonsize=esize)
   
   # transform mutlength
   mutlength <- t(mutlength)
@@ -180,7 +180,7 @@ sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("
   mutratecor <- mutrate/genefreq
   
   # summarize gene mutation scores into pathway mutation scores
-  signpat <- sambar.desparsify(edgx=edg, mutratecorx=mutratecor)
+  signpat <- sambarDesparsify(edgx=edg, mutratecorx=mutratecor)
   
   # calculate binomial distance between samples
   distance <- vegan::vegdist(t(signpat), method="binomial")

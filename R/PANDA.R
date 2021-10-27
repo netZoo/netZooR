@@ -45,7 +45,7 @@
 #' 
 #' 
 #' # Run PANDA for treated and control network
-#' treated_all_panda_result <- panda.py(expr_file = treated_expression_file_path, 
+#' treated_all_panda_result <- pandaPy(expr_file = treated_expression_file_path, 
 #' motif_file = motif_file_path, ppi_file = ppi_file_path, 
 #' modeProcess="legacy", remove_missing = TRUE )
 #' 
@@ -63,7 +63,7 @@
 #'
 
 
-panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE){
+pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE){
   
   if(missing(expr_file)){
     stop("Please provide the path of gene expression data file to 'expr_file' variable") }
