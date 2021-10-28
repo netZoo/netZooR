@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.63</span>
       </span>
     </div>
 
@@ -92,7 +92,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/netZoo/netZooR/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -110,7 +117,7 @@
             
             <h4 class="date">2020-9-22</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/netZoo/netZooR/blob/master/vignettes/TutorialOTTER.Rmd"><code>vignettes/TutorialOTTER.Rmd</code></a></small>
       <div class="hidden name"><code>TutorialOTTER.Rmd</code></div>
 
     </div>
@@ -287,16 +294,16 @@
 <span class="va">top</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">$</span><span class="va">Score</span>,decreasing<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">]</span>
 <span class="va">lcl_vis_top</span> <span class="op">&lt;-</span> <span class="va">lcl_vis</span><span class="op">[</span><span class="va">top</span>,<span class="op">]</span>
 <span class="co"># Plot in cytoscape (open the cytoscape software before running this command)</span>
-<span class="fu"><a href="../reference/vis.panda.in.cytoscape.html">vis.panda.in.cytoscape</a></span><span class="op">(</span><span class="va">lcl_vis_top</span>, network_name<span class="op">=</span><span class="st">"LCL"</span><span class="op">)</span>
+<span class="fu">vis.panda.in.cytoscape</span><span class="op">(</span><span class="va">lcl_vis_top</span>, network_name<span class="op">=</span><span class="st">"LCL"</span><span class="op">)</span>
 <span class="co"># Here we will load a customized visual style for our network, in which TF nodes are orange circles, target gene nodes are blue squares, and edges shade and width are the edge weight (likelyhood of regulatory interaction between the TF and gene). You can further customize the network style directly from Cytoscape.</span>
-<span class="fu"><a href="../reference/create.panda.style.html">create.panda.style</a></span><span class="op">(</span>style_name<span class="op">=</span><span class="st">"PandaStyle"</span><span class="op">)</span></code></pre></div>
+<span class="fu">create.panda.style</span><span class="op">(</span>style_name<span class="op">=</span><span class="st">"PandaStyle"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="plot-the-top-differential-edges-betwen-lcl-and-wb" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-the-top-differential-edges-betwen-lcl-and-wb" class="anchor"></a>Plot the top differential edges betwen LCL and WB</h2>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Select the top differential edge weights betweeen LCL and whole blood</span>
-<span class="va">diffRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.diff.edges.html">panda.diff.edges</a></span><span class="op">(</span><span class="va">lcl_vis</span>, <span class="va">wb_vis</span>, condition_name<span class="op">=</span><span class="st">"LCL"</span><span class="op">)</span>
+<span class="va">diffRes</span> <span class="op">&lt;-</span> <span class="fu">panda.diff.edges</span><span class="op">(</span><span class="va">lcl_vis</span>, <span class="va">wb_vis</span>, condition_name<span class="op">=</span><span class="st">"LCL"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">diffRes</span><span class="op">)</span>
 <span class="co"># Number of differential edges is:</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">diffRes</span><span class="op">)</span>
@@ -311,9 +318,9 @@
 <span class="va">diffRes_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/rbindlist.html">rbind</a></span><span class="op">(</span><span class="va">diffResLCL</span>, <span class="va">diffResWB</span><span class="op">)</span>
 <span class="co"># Plot the network</span>
 <span class="co"># Purple edges indicate higher edge weight in the defined "condition_name" parameter (LCL in our example), and green edges indicate higher edge weight in the other condition (whole blood in our example).</span>
-<span class="fu"><a href="../reference/vis.diff.panda.in.cytoscape.html">vis.diff.panda.in.cytoscape</a></span><span class="op">(</span><span class="va">diffRes_vis</span>, condition_name <span class="op">=</span> <span class="st">"LCL"</span>, network_name<span class="op">=</span><span class="st">"diff.PANDA"</span><span class="op">)</span>
+<span class="fu">vis.diff.panda.in.cytoscape</span><span class="op">(</span><span class="va">diffRes_vis</span>, condition_name <span class="op">=</span> <span class="st">"LCL"</span>, network_name<span class="op">=</span><span class="st">"diff.PANDA"</span><span class="op">)</span>
 <span class="co"># Apply the style to the network</span>
-<span class="fu"><a href="../reference/create.diff.panda.style.html">create.diff.panda.style</a></span><span class="op">(</span>style_name<span class="op">=</span><span class="st">"Diff.PandaStyle"</span>, condition_name<span class="op">=</span><span class="st">"LCL"</span><span class="op">)</span></code></pre></div>
+<span class="fu">create.diff.panda.style</span><span class="op">(</span>style_name<span class="op">=</span><span class="st">"Diff.PandaStyle"</span>, condition_name<span class="op">=</span><span class="st">"LCL"</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="calculating-degree" class="section level1">
@@ -350,34 +357,34 @@
 <span class="va">fgseaRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">degreeDiff_all</span>, minSize<span class="op">=</span><span class="fl">15</span>, maxSize<span class="op">=</span><span class="fl">500</span>, nperm<span class="op">=</span><span class="fl">1000</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span>
 <span class="co">#&gt;                                          pathway        pval       padj</span>
-<span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.006651885 0.03098378</span>
-<span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.218691589 0.36176085</span>
-<span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.068376068 0.15258621</span>
-<span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.370449679 0.53745568</span>
-<span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.049568966 0.13095085</span>
-<span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.311158798 0.46673820</span>
+<span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.002155172 0.01318632</span>
+<span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.230912477 0.37496797</span>
+<span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.067622951 0.14961578</span>
+<span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.386752137 0.56110761</span>
+<span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.042600897 0.10928056</span>
+<span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.303687636 0.45553145</span>
 <span class="co">#&gt;            ES       NES nMoreExtreme size                          leadingEdge</span>
-<span class="co">#&gt; 1:  0.4360719  1.790237            2   58    HK1,ENO2,ENO1,ALDOC,BPGM,PFKM,...</span>
-<span class="co">#&gt; 2: -0.3428560 -1.173624          116   29  DLST,PCK2,SUCLG2P2,MDH2,FH,IDH2,...</span>
-<span class="co">#&gt; 3:  0.4435710  1.431221           31   21   ALDOC,PFKM,PFKP,ALDOA,PFKL,GPI,...</span>
-<span class="co">#&gt; 4:  0.3180477  1.045757          172   22   UGT1A1,UGT1A10,UGT1A6,CRYL1,UGT2B7</span>
-<span class="co">#&gt; 5:  0.4118882  1.471866           22   31 HK1,ALDOC,PFKFB4,PFKM,MTMR2,PFKP,...</span>
-<span class="co">#&gt; 6:  0.3247973  1.103168          144   25      GLB1,HK1,PFKM,PFKP,PFKL,GAA,...</span>
+<span class="co">#&gt; 1:  0.4360719  1.796341            0   58    HK1,ENO2,ENO1,ALDOC,BPGM,PFKM,...</span>
+<span class="co">#&gt; 2: -0.3428560 -1.165665          123   29  DLST,PCK2,SUCLG2P2,MDH2,FH,IDH2,...</span>
+<span class="co">#&gt; 3:  0.4435710  1.449911           32   21   ALDOC,PFKM,PFKP,ALDOA,PFKL,GPI,...</span>
+<span class="co">#&gt; 4:  0.3180477  1.048826          180   22   UGT1A1,UGT1A10,UGT1A6,CRYL1,UGT2B7</span>
+<span class="co">#&gt; 5:  0.4118882  1.471222           18   31 HK1,ALDOC,PFKFB4,PFKM,MTMR2,PFKP,...</span>
+<span class="co">#&gt; 6:  0.3247973  1.099503          139   25      GLB1,HK1,PFKM,PFKP,PFKL,GAA,...</span>
 <span class="co"># Subset to pathways with FDR &lt; 0.05</span>
 <span class="va">sig</span> <span class="op">&lt;-</span> <span class="va">fgseaRes</span><span class="op">[</span><span class="va">fgseaRes</span><span class="op">$</span><span class="va">padj</span> <span class="op">&lt;</span> <span class="fl">0.05</span>,<span class="op">]</span>
 <span class="co"># Get the top 10 significant pathways enriched for genes having lower targeting in LCLs  </span>
 <span class="va">sig</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">sig</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>,<span class="op">]</span>
 <span class="co">#&gt;                             pathway        pval       padj         ES       NES</span>
-<span class="co">#&gt;  1:            KEGG_DNA_REPLICATION 0.001876173 0.01644370 -0.7725018 -2.752726</span>
-<span class="co">#&gt;  2:                 KEGG_CELL_CYCLE 0.001821494 0.01644370 -0.5948628 -2.733174</span>
-<span class="co">#&gt;  3:                KEGG_SPLICEOSOME 0.001811594 0.01644370 -0.5766563 -2.645798</span>
-<span class="co">#&gt;  4:             KEGG_PROTEIN_EXPORT 0.001824818 0.01644370 -0.6851677 -2.215613</span>
-<span class="co">#&gt;  5: KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001851852 0.01644370 -0.5785505 -2.151968</span>
-<span class="co">#&gt;  6:       KEGG_BASE_EXCISION_REPAIR 0.001862197 0.01644370 -0.5965607 -2.114768</span>
-<span class="co">#&gt;  7:      KEGG_PYRIMIDINE_METABOLISM 0.001838235 0.01644370 -0.4606911 -2.012108</span>
-<span class="co">#&gt;  8:            KEGG_MISMATCH_REPAIR 0.003738318 0.02363151 -0.6107380 -1.944694</span>
-<span class="co">#&gt;  9:             KEGG_RNA_POLYMERASE 0.001926782 0.01644370 -0.5731001 -1.927974</span>
-<span class="co">#&gt; 10:      KEGG_N_GLYCAN_BIOSYNTHESIS 0.001821494 0.01644370 -0.4815544 -1.825275</span>
+<span class="co">#&gt;  1:            KEGG_DNA_REPLICATION 0.001814882 0.01318632 -0.7725018 -2.715459</span>
+<span class="co">#&gt;  2:                 KEGG_CELL_CYCLE 0.001858736 0.01318632 -0.5948628 -2.701375</span>
+<span class="co">#&gt;  3:                KEGG_SPLICEOSOME 0.001876173 0.01318632 -0.5766563 -2.609398</span>
+<span class="co">#&gt;  4:             KEGG_PROTEIN_EXPORT 0.001872659 0.01318632 -0.6851677 -2.211105</span>
+<span class="co">#&gt;  5: KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001811594 0.01318632 -0.5785505 -2.131283</span>
+<span class="co">#&gt;  6:       KEGG_BASE_EXCISION_REPAIR 0.001824818 0.01318632 -0.5965607 -2.081540</span>
+<span class="co">#&gt;  7:      KEGG_PYRIMIDINE_METABOLISM 0.001862197 0.01318632 -0.4606911 -1.991167</span>
+<span class="co">#&gt;  8:            KEGG_MISMATCH_REPAIR 0.001872659 0.01318632 -0.6107380 -1.948421</span>
+<span class="co">#&gt;  9:             KEGG_RNA_POLYMERASE 0.003780718 0.02027840 -0.5731001 -1.938175</span>
+<span class="co">#&gt; 10:      KEGG_N_GLYCAN_BIOSYNTHESIS 0.001834862 0.01318632 -0.4815544 -1.818312</span>
 <span class="co">#&gt;     nMoreExtreme size                                    leadingEdge</span>
 <span class="co">#&gt;  1:            0   34             RFC5,RFC3,FEN1,MCM7,POLE2,DNA2,...</span>
 <span class="co">#&gt;  2:            0  121          ORC6,CDC7,CDC20,PKMYT1,CCNE1,ORC1,...</span>
@@ -386,8 +393,8 @@
 <span class="co">#&gt;  5:            0   41             RFC5,RFC3,POLE2,CCNH,RFC4,PCNA,...</span>
 <span class="co">#&gt;  6:            0   33           FEN1,HMGB1,MUTYH,UNG,POLE2,NEIL3,...</span>
 <span class="co">#&gt;  7:            0   90         POLR2D,DUT,POLE2,PRIM1,DTYMK,DHODH,...</span>
-<span class="co">#&gt;  8:            1   22              RFC5,RFC3,RFC4,PCNA,EXO1,RFC2,...</span>
-<span class="co">#&gt;  9:            0   28 POLR2D,POLR3B,POLR2H,POLR2L,POLR3GL,POLR2J,...</span>
+<span class="co">#&gt;  8:            0   22              RFC5,RFC3,RFC4,PCNA,EXO1,RFC2,...</span>
+<span class="co">#&gt;  9:            1   28 POLR2D,POLR3B,POLR2H,POLR2L,POLR3GL,POLR2J,...</span>
 <span class="co">#&gt; 10:            0   45         B4GALT2,DPM3,ALG14,FUT8,ALG6,MGAT2,...</span></code></pre></div>
 </div>
 <div id="bubble-plot-of-top-differentially-targeted-pathways" class="section level2">
