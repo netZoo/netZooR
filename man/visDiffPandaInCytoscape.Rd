@@ -25,7 +25,7 @@ This function is able to modify PANDA network and plot in Cytoscape. Please make
 is installed and open it before calling this function.
 }
 \examples{
-\dontrun{
+\donttest{
 # create a merged PANDA network from two conditions by running \code{\link{pandaDiffEdges}}
 merged.panda <- pandaDiffEdges(panda.net1, panda.net2, condition_name="condition1")
 # then plot two PANDA network in Cytoscape.

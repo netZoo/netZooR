@@ -1,0 +1,199 @@
+---
+title: "Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R"
+author: Deborah Weighill
+date: "2019-11-06"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ApplicationinGTExData}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Introduction
+In this vignette, we will demonstrate the functionalities of netZooR. 
+
+# PANDA
+
+## PANDA Overview
+PANDA (Passing Attributes between Networks for Data Assimilation) is a method for constructing gene regulatory networks. It uses message passing to find congruence between 3 different data layers: protein-protein interaction (PPI), gene expression, and transcription factor (TF) motif data.
+
+More details can be found in the published paper https://doi.org/10.1371/journal.pone.0064832.
+
+## Running a single PANDA analysis
+
+Load some libraries. We use the data.table library for reading in large datasets as it is more efficient.
+```{r,warning=FALSE,message=FALSE}
+library(netZooR)
+library(data.table)
+install.packages("visNetwork",repos = "http://cran.us.r-project.org")
+library(visNetwork) # to visualize the networks
+```
+
+```{r,eval=FALSE}
+# point R to your python 3 installation. Make sure that this is the installation that has all the required python libraries (numpy, scipy, etc) installed. netZooR uses a python implementation of PANDA under the hood.
+#use_python("/usr/bin/python3") # for example, you can check the installation with py_config()
+```
+
+The previous command is necessary to bind R to Python since we are calling PANDA from Python because netZooPy has an optimized implementation of PANDA. Check [this tutorial](http://netbooks.networkmedicine.org/user/marouenbg/notebooks/netZooR/panda_gtex_tutorial_server.ipynb) for an example using a pure R implementation of PANDA.
+Now we locate our ppi and motif priors. The ppi represents physical interactions between transcription factor proteins, and is an undirected network. The motif prior represents putative regulation events where a transcription factor binds in the promotor of a gene to regulate its expression, as predicted by the presence of transcription factor binding motifs in the promotor region of the gene. The motif prior is thus a directed network linking transcription factors to their predicted gene targets. These are small example priors for the purposes of demonstrating this method. 
+
+The ppi and motif priors are available in our AWS public bucket, and can be downloaded into current working directory.
+
+Let's download and take a look at the priors:
+```{r,message=FALSE}
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt","motif_GTEx.txt")
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_GTEx.txt","ppi_GTEx.txt")
+motif <- read.table("./motif_GTEx.txt") 
+ppi <- read.table("./ppi_GTEx.txt")
+ppi[1:5,]
+motif[1:5,]
+```
+
+Now we locate out expression data. 
+
+As example, We will use a portion of the GTEx (Genotype-Tissue Expression) version 7 RNA-Seq data, read in the expression data and the list of LCL samples. Then parse the expression data.
+
+We can either 
+
+1) downlaod the file GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct from from https://gtexportal.org/home/datasets or in our AWS bucket and place it in the folder "expressionData". We will initially use the LCL RNA-seq data to create a regulatory network for this cell line. Later, we will also generate a regulatory network for whole blood for comaprison. 
+
+Here, we use the expression data and sample ids file copy from our AWS bucket.
+```{r,eval=FALSE}
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct","GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct")
+# load the GTEx expression matrix
+expr <- fread("./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct", header = TRUE, skip = 2, data.table = TRUE)
+# remove the transcript ids so that the genes match the gene ids in the tf-motif prior
+expr$Name<-sub("\\.[0-9]","", expr$Name)
+
+#downlooad and load the sample ids of LCL samples
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/LCL_samples.txt","LCL_samples.txt")
+lcl_samples <-fread("./LCL_samples.txt", header = FALSE, data.table=FALSE)
+
+#select the columns of the expression matrix corresponding to the LCL samples.
+lcl_expr <- expr[,union("Name",intersect(c(lcl_samples[1:149,]),colnames(expr))), with=FALSE]
+
+#determine the number of non-NA/non-zero rows in the expression data. This is to be able to ensure that PANDA will have enough values in the vectors to calculate pearson correlations between gene expression profiles in the construction of the gene co-exression prior.
+zero_na_counts <- apply(lcl_expr, MARGIN = 1, FUN = function(x) length(x[(!is.na(x)| x!=0) ]))
+
+#maintain only genes with at least 20 valid gene expression entries
+clean_data <- lcl_expr[zero_na_counts > 20,]
+
+#write the cleaned expression data to a file, ready to be passed as an argument to the PANDA algorithm.
+write.table(clean_data, file = "pandaExprLCL.txt", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
+
+```
+
+Or
+
+Download our pre-processed pandaExprLCL.txt from our AWS S3 Bucket.
+```{r,message=FALSE,warning=FALSE}
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprLCL.txt","pandaExprLCL.txt")
+```
+
+Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior.
+```{r,message=FALSE,warning=FALSE}
+panda_results_LCL <- pandaPy(expr_file = "./pandaExprLCL.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
+```
+
+Let's take a look at the results. The output contains a list of three data frames:
+
+* data frame containing the regulatory network (bipartite graph) with edge weights representing the "likelihood" that a transcription factor binds the promotor of and regulates the expression of a gene.  
+* data frame odf the in-degrees of genes (sum of the weights of inbound edges around a gene)
+* data frame of the out-degrees of TFs (sum of the weights of outbound edges around a TF)
+
+```{r}
+# the bipartite regulatory network
+regNetLCL <- panda_results_LCL$panda
+regNetLCL[1:5,]
+
+# gene in-degree
+inDegreeLCL <- panda_results_LCL$indegree
+head(inDegreeLCL)
+
+# TF out-degree
+outDegreeLCL <- panda_results_LCL$outdegree
+head(outDegreeLCL)
+```
+
+## Run another PANDA analysis on Whole Blood Samples
+
+Like the LCL expression data in previous section, we can either download the raw data and process;
+```{r,eval=FALSE}
+#### skip this part if you already did same process in LCL expression data section
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct","GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct")
+# load the GTEx expression matrix
+expr <- fread("./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct", header = TRUE, skip = 2, data.table = TRUE)
+# remove the transcript ids so that the genes match the gene ids in the tf-motif prior
+expr$Name<-sub("\\.[0-9]","", expr$Name)
+#####
+
+#load the sample ids of Whole Blood samples
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/WholeBlood_samples.txt","WholeBlood_samples.txt")
+wblood_samples <-fread("./WholeBlood_samples.txt", header = FALSE, data.table=FALSE)
+
+#select the columns of the expression matrix corresponding to the LCL samples.
+wblood_expr <- expr[,union("Name",intersect(c(wblood_samples[1:149,]),colnames(expr))), with=FALSE]
+
+#determine the number of non-NA/non-zero rows in the expression data. This is to be able to ensure that PANDA will have enough values in the vectors to calculate pearson correlations between gene expression profiles in the construction of the gene co-exression prior.
+zero_na_counts_wblood <- apply(wblood_expr, MARGIN = 1, FUN = function(x) length(x[(!is.na(x)| x!=0) ]))
+
+#maintain only genes with at least 20 valid gene expression entries
+clean_data_wb <- wblood_expr[zero_na_counts_wblood > 20,]
+
+#write the cleaned expression data to a file, ready to be passed as an argument to the PANDA algorithm.
+write.table(clean_data_wb, file = "pandaExprWholeBlood.txt", sep = "\t", col.names = FALSE, row.names = FALSE, quote = FALSE)
+```
+
+or download the whole blood expression data directly from AWS Bucket.
+```{r,message=FALSE,warning=FALSE}
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprWholeBlood.txt","pandaExprWholeBlood.txt")
+```
+
+```{r,warning=FALSE}
+#run PANDA
+panda_results_wblood <- pandaPy(expr_file = "./pandaExprWholeBlood.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
+```
+
+```{r,eval=FALSE}
+install.packages("visNetwork",repos = "http://cran.us.r-project.org",dependencies=TRUE)
+library(visNetwork)
+edges <- head(panda_results_wblood$panda[order(panda_results_wblood$panda$Score,decreasing = TRUE),], 500)
+colnames(edges) <- c("from","to","motif","force")
+nodes <- data.frame(id = unique(as.vector(as.matrix(edges[,c(1,2)]))))
+nodes$group <- ifelse(nodes$id %in% edges$from, "TF", "gene")
+
+net <- visNetwork(nodes, edges, width = "100%")
+net <- visGroups(net, groupname = "TF", shape = "square",
+                     color = list(background = "teal", border="black"))
+net <- visGroups(net, groupname = "gene", shape = "dot",       
+                     color = list(background = "gold", border="black"))
+visLegend(net, main="Legend", position="right", ncol=1) 
+```
+
+# LIONESS
+
+LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples) is a method for creating sample-specific networks. When applied to a PANDA regulatory network, the result is a set of gene regulatory networks, one for each sample in the gene expression dataset. More information on LIONESS can be found in the published paper: https://doi.org/10.1016/j.isci.2019.03.021
+
+Running LIONESS with netZoo is simple, and very similar to running PANDA:
+
+```{r,echo = T,results= 'hide'}
+lionessLCL <- lionessPy(expr_file = "pandaExprLCL.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
+```
+
+The result is a data frame in which the first colum  contains TFs, the second column contains genes and each subsequent column contains the edge weight for that particular TF-gene pair in a particular sample.
+
+```{r}
+lionessLCL[1:5,1:10]
+```
+
+
+
+

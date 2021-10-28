@@ -6,7 +6,7 @@
 #' @param panda.net Character string indicating the input PANDA network in data frame structure type.
 #' @param network_name Character string indicating the name of Cytoscape network. 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # refer to the input datasets files of control TB dataset in inst/extdat as example
 #' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", 
 #' package = "netZooR", mustWork = TRUE)

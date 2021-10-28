@@ -7,7 +7,7 @@
 #' @param condition_name string vector indicating the same condition name used in \code{\link{pandaDiffEdges}}. 
 #' @param network_name Character string indicating the name of Cytoscape network.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # create a merged PANDA network from two conditions by running \code{\link{pandaDiffEdges}}
 #' merged.panda <- pandaDiffEdges(panda.net1, panda.net2, condition_name="condition1")
 #' # then plot two PANDA network in Cytoscape.

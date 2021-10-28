@@ -30,15 +30,15 @@
 #' @examples
 #'
 #' # refer to the input datasets files of control in inst/extdat as example
-#' control_expression_file_path <- system.file("extdata", "expr10_matched.txt", package = "netZooR", 
+#' control_expression_file_path <- system.file("extdata", "expr10_reduced.txt", package = "netZooR", 
 #' mustWork = TRUE)
-#' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
-#' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
+#' motif_file_path <- system.file("extdata", "chip_reduced.txt", package = "netZooR", mustWork = TRUE)
+#' ppi_file_path <- system.file("extdata", "ppi_reduced.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' # Run LIONESS algorithm
 #' control_lioness_result <- lionessPy(expr_file = control_expression_file_path, 
 #' motif_file = motif_file_path, ppi_file = ppi_file_path, 
-#' modeProcess="intersection",start_sample=1, end_sample=1, precision="single")
+#' modeProcess="union",start_sample=1, end_sample=1, precision="single")
 #'  
 #' @import reticulate
 #' @export

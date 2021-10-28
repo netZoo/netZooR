@@ -3,6 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   ALPACA: ALPACA.html
+  ApplicationinGTExData: ApplicationinGTExData.html
   ApplicationwithTBdataset: ApplicationwithTBdataset.html
   CONDOR: CONDOR.html
   EGRET_toy_example: EGRET_toy_example.html
@@ -13,5 +14,5 @@ articles:
   pandaR: pandaR.html
   pandaRApplicationinGTExData: pandaRApplicationinGTExData.html
   yarn: yarn.html
-last_built: 2021-10-28T00:38Z
+last_built: 2021-10-28T01:37Z
 

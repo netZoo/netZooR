@@ -78,7 +78,7 @@ targeting of B in the target state." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.59</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.61</span>
       </span>
     </div>
 
@@ -102,6 +102,9 @@ targeting of B in the target state." />
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/ALPACA.html">Detecting differential modules using ALPACA</a>
+    </li>
+    <li>
+      <a href="../articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
     <li>
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
@@ -212,14 +215,14 @@ produce deterministic results between two identical MONSTER runs.</p></td>
     <p>plot the transition matrix (directed graph) as a network.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># data(yeast)</span>
+    <pre class="examples"><span class='co'># data(yeast)</span>
 <span class='co'># yeast$exp.cc[is.na(yeast$exp.cc)] &lt;- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)</span>
 <span class='co'># design &lt;- c(rep(0,20),rep(NA,10),rep(1,20))</span>
 <span class='co'># monsterRes &lt;- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' </span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>
 <span class='fu'>monstertransitionNetworkPlot</span><span class='op'>(</span><span class='va'>monsterRes</span>, rescale<span class='op'>=</span><span class='st'>'significance'</span><span class='op'>)</span>
-</div><div class='img'><img src='monstertransitionNetworkPlot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>monstertransitionNetworkPlot</span><span class='op'>(</span><span class='va'>monsterRes</span>, rescale<span class='op'>=</span><span class='st'>'none'</span><span class='op'>)</span>
-</div><div class='img'><img src='monstertransitionNetworkPlot-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>monstertransitionNetworkPlot</span><span class='op'>(</span><span class='va'>monsterRes</span>, rescale<span class='op'>=</span><span class='st'>'none'</span><span class='op'>)</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

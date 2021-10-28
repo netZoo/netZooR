@@ -19,7 +19,7 @@ This function is able to modify PANDA network and plot in Cytoscape. Please make
 is installed and open it before calling this function.
 }
 \examples{
-\dontrun{
+\donttest{
 # refer to the input datasets files of control TB dataset in inst/extdat as example
 control_expression_file_path <- system.file("extdata", "expr10_matched.txt", 
 package = "netZooR", mustWork = TRUE)

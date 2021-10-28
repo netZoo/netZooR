@@ -162,7 +162,7 @@ This transition may also be depicted as a graph, displaying the gain or loss of 
 `MONSTER` contains the function `transitionNetworkPlot` to makes use of the `igraph` package to display the transition in network states.  Since this graph is complete with negative edgeweights allowed, the argument `numEdges=20` (default is 100 edges) is used to specify the number of top transitions to display.
 
 ```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
-monsterTransitionNetworkPlot(monsterRes, numEdges=20)
+monstertransitionNetworkPlot(monsterRes, numEdges=20)
 ```
 
 A network visualization of the strongest 20 transitions identified based on the transition matrix above. Arrows indicate a change in edges from a transcription factor in the network of the first 10 timepoints in the Yeast Cell Cycle to resemble those of a transcription factor in the last 10 timepoints in the Yeast Cell Cycle. Edges are sized according to the magnitude of the transition and nodes (TFs) are sized by the dTFI for that TF. The gain of targeting features is indicated by the color blue while the loss of features is indicated by red.
