@@ -23,6 +23,9 @@ tests/testthat/test-alpaca.R
 tests/testthat/test.source.PPI.R
 tests/testthat/test-pandatoalpaca.R
 tests/testthat/test-pandatocondorobject.R
+tests/testthat/test-pandadiffedges.R
+tests/testthat/test-sambar.R
+tests/testthat/test-otter.R
 LICENSE
 netZooR.Rcheck/
 vignettes/ApplicationwithTBdataset.Rmd
