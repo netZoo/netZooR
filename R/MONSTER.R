@@ -352,7 +352,7 @@ monsterTransformationMatrix <- function(network.1, network.2, by.tfs=TRUE, stand
   if (method == "ols"){
     net2.star <- vapply(seq_len(ncol(net1)), function(i,x,y){
       lm(y[,i]~x[,i])$resid
-    }, x=net1, y=net2, FUN.VALUE = numeric(1000))
+    }, x=net1, y=net2, FUN.VALUE = numeric(dim(cc.net.1)[2]))
     tf.trans.matrix <- ginv(t(net1)%*%net1)%*%t(net1)%*%net2.star
     colnames(tf.trans.matrix) <- colnames(net1)
     rownames(tf.trans.matrix) <- colnames(net1)
@@ -362,7 +362,7 @@ monsterTransformationMatrix <- function(network.1, network.2, by.tfs=TRUE, stand
   if (method == "L1"){
     net2.star <- vapply(seq_len(ncol(net1)), function(i,x,y){
       lm(y[,i]~x[,i])$resid
-    }, x=net1, y=net2, FUN.VALUE = numeric(1000))
+    }, x=net1, y=net2, FUN.VALUE = numeric(dim(cc.net.1)[2]))
     tf.trans.matrix <- vapply(seq_len(ncol(net1)), function(i){
       z <- optL1(net2.star[,i], net1, fold=5, minlambda1=1, 
                  maxlambda1=2, model="linear", standardize=TRUE)

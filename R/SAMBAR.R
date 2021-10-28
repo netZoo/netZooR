@@ -71,7 +71,7 @@ sambarDesparsify <- function(edgx, mutratecorx){ # edgx=edg, mutratecorx=mutrate
   despar <- matrix(, nrow=nrow(edgx), ncol=ncol(mutratecorx))
   row.names(despar) <- row.names(edgx)
   colnames(despar) <- colnames(mutratecorx)
-  for (p in 1:ncol(despar)){
+  for (p in seq_len(ncol(despar))){
     for (s in seq_len(nrow(despar))){
       junk <- edgx[s,]
       junk <- names(junk[which(junk==1)]) # check which genes are in signature
@@ -146,7 +146,8 @@ NULL
 #' data("exon.size")
 #' data("mut.ucec")
 #' data("genes")
-#' sambar(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package="netZooR", mustWork=TRUE), 
+#' sambar(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", 
+#' "h.all.v6.1.symbols.gmt", package="netZooR", mustWork=TRUE), 
 #'        cangenes=genes, kmin=2, kmax=4)
 #' @export
 sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package = "netZooR", mustWork = TRUE), cangenes=genes, kmin=2, kmax=4){

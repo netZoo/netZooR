@@ -97,7 +97,7 @@ runEgret <- function(b,v,q,m,e,p,g,t){
   vcf$snp_id <- snp_ids
   qbic_ag$alt_allele_count <- vcf$alt_allele_count[match(qbic_ag$snpID, vcf$snp_id)]
   qtl$alt_allele_count <- vcf$alt_allele_count[match(qtl$snpID, vcf$snp_id)]
-  QTL_tf_gene_pairs <- dplyr::distinct(qtl[,c(1:7)])
+  QTL_tf_gene_pairs <- dplyr::distinct(qtl[,seq_len(7)])
   QTL_tf_gene_pairs$edgeE <- rep(1,nrow(QTL_tf_gene_pairs))
   QTL_tf_gene_pairs$alt_allele_count[is.na(QTL_tf_gene_pairs$alt_allele_count)] <- 0
   QTL_tf_gene_pairs$qtlTF <- paste0(QTL_tf_gene_pairs$tf,QTL_tf_gene_pairs$snpID)

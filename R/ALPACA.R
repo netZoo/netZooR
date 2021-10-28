@@ -41,7 +41,7 @@ alpaca <- function(net.table,file.stem,verbose=FALSE)
     if (length(setdiff(V(pos.graph)$name,names(ctrl.memb)))>0)
     {
     uncounted <- setdiff(V(pos.graph)$name,names(ctrl.memb))
-    unc.memb <- sample(1:max(ctrl.memb),length(uncounted),replace=TRUE)
+    unc.memb <- sample(seq_len(max(ctrl.memb)),length(uncounted),replace=TRUE)
     names(unc.memb) <- uncounted
     ctrl.memb <- c(ctrl.memb,unc.memb)
     }
@@ -491,7 +491,7 @@ alpacaListToGo <- function(gene.list,univ.vec,comm.nums){
   #params<- new("GOHyperGParams",geneIds = comm.entrez, universeGeneIds = univ.entrez, ontology= "BP", pvalueCutoff = 1, conditional =TRUE, testDirection="over", annotation="org.Hs.eg.db")
   
   go.tab <- NULL
-  for (i in 1:length(gene.list))
+  for (i in seq_len(length(gene.list)))
   {
     print(i)
     comm.entrez <- base.entrez[base.sym %in% gene.list[[i]]]
@@ -529,7 +529,7 @@ alpacaListToGo <- function(gene.list,univ.vec,comm.nums){
 
 alpacaTestNodeRank <- function(node.ordered,true.pos)
 {
-  node.ind <- rev(1:length(node.ordered))
+  node.ind <- rev(seq_len(length(node.ordered)))
   names(node.ind) <- node.ordered
   
   node.neg <- node.ordered[!(node.ordered %in% true.pos)]
@@ -538,7 +538,7 @@ alpacaTestNodeRank <- function(node.ordered,true.pos)
   wil.p <- wilcox.test(node.ind[node.pos], node.ind[node.neg],exact=FALSE,alternative="greater",conf.int=TRUE)$p.value 
   ks.p <- ks.test(node.ind[node.pos],node.ind[node.neg],exact=FALSE,alternative="less")$p.value
   
-  top10perc <- node.ordered[1:floor(0.1*length(node.ordered))]
+  top10perc <- node.ordered[seq_len(floor(0.1*length(node.ordered)))]
   a <- length(intersect(true.pos,top10perc))
   b <- length(top10perc)-a
   c <- length(intersect(true.pos,node.ordered))-a
@@ -568,11 +568,11 @@ alpacaCommunityStructureRotation <- function(net1.memb,net2.memb){
   
   net1.mat <- array(0,dim=c(length(net1.memb),max(net1.memb)))
   rownames(net1.mat) <- names(net1.memb)
-  net1.mat[cbind(1:length(net1.memb),net1.memb)] <- 1
+  net1.mat[cbind(seq_len(length(net1.memb),net1.memb))] <- 1
   
   net2.mat <- array(0,dim=c(length(net2.memb),max(net2.memb)))
   rownames(net2.mat) <- names(net2.memb)
-  net2.mat[cbind(1:length(net2.memb),net2.memb)] <- 1
+  net2.mat[cbind(seq_len(length(net2.memb),net2.memb))] <- 1
   
   common.nodes <- intersect(rownames(net1.mat),rownames(net2.mat))
   net1.comm <- net1.mat[common.nodes,]
@@ -582,7 +582,7 @@ alpacaCommunityStructureRotation <- function(net1.memb,net2.memb){
   net1.inv <- net1.svd$v %*% diag(net1.svd$d^(-1)) %*% t(net1.svd$u)
   rot.mat <- as.matrix(net1.inv) %*% as.matrix(net2.comm)
   
-  node.scores <- apply(cbind(net1.comm,net2.comm),1,function(x){as.vector(as.numeric(x[1:ncol(net1.comm)])) %*% rot.mat %*% as.numeric(x[(ncol(net1.comm)+1):(ncol(net1.comm)+ncol(net2.comm))])})
+  node.scores <- apply(cbind(net1.comm,net2.comm),1,function(x){as.vector(as.numeric(x[seq_len(ncol(net1.comm))])) %*% rot.mat %*% as.numeric(x[(ncol(net1.comm)+1):(ncol(net1.comm)+ncol(net2.comm))])})
   
   node.scores1 <- (max(node.scores)-node.scores)/(max(node.scores)-min(node.scores))
   
@@ -628,7 +628,7 @@ alpacaComputeDWBMmatmScale <- function(edge.mat,ctrl.memb){
   
   Dij <- A.cond
   
-  for (i in 1:(max(ctrl.memb)-1))
+  for (i in seq_len((max(ctrl.memb)-1)))
   {
     #print(i)
     mod1.A <- intersect(names(ctrl.memb)[ctrl.memb==i],all.A)
@@ -666,7 +666,7 @@ alpacaComputeDWBMmatmScale <- function(edge.mat,ctrl.memb){
     }	
   }
   
-  for (i in 1:max(ctrl.memb))
+  for (i in seq_len(max(ctrl.memb)))
   {
     mod1.A <- intersect(names(ctrl.memb)[ctrl.memb==i],all.A)
     mod1.B <- intersect(names(ctrl.memb)[ctrl.memb==i],all.B)
@@ -706,7 +706,7 @@ alpacaComputeDWBMmatmScale <- function(edge.mat,ctrl.memb){
 
 alpacaMetaNetwork <- function(J,S)
 {
-  PP <- sparseMatrix(i=1:length(S),j=S,x=1)
+  PP <- sparseMatrix(i=seq_len(length(S)),j=S,x=1)
   t(PP) %*% J %*% PP 
 }
 
@@ -728,7 +728,7 @@ alpacaMetaNetwork <- function(J,S)
 alpacaTidyConfig <- function(S)
 {
   TT <- rep(0,length(S))
-  for (i in 1:length(S))
+  for (i in seq_len(length(S)))
   {
     if (TT[i]==0) TT[S==S[i]] <- max(TT)+1
   }
@@ -756,11 +756,11 @@ alpacaGenLouvain <- function(B)
   M <- B
   
   n <- nrow(B)
-  S <- t(1:n)
+  S <- t(seq_len(n))
   
   dtot <- 0
   
-  S2 <- 1:n
+  S2 <- seq_len(n)
   Sb <- NULL
   
   n.outer <- 0
@@ -780,7 +780,7 @@ alpacaGenLouvain <- function(B)
     
     yb <- NULL
     
-    G <- sparseMatrix(i=1:length(y),j=y,x=1)
+    G <- sparseMatrix(i=seq_len(length(y)),j=y,x=1)
     dstep <- 1
     nsteps <- 0
     
@@ -795,8 +795,8 @@ alpacaGenLouvain <- function(B)
         return(0)
       }
       
-      #ord.i <- sample(1:nrow(M),nrow(M),replace=FALSE)
-      ord.i <- 1:nrow(M)
+      #ord.i <- sample(seq_len(nrow(M)),nrow(M),replace=FALSE)
+      ord.i <- seq_len(nrow(M))
       
       for (i in ord.i)  
       {
@@ -820,7 +820,7 @@ alpacaGenLouvain <- function(B)
     }
     
     y <- alpacaTidyConfig(y)
-    for (i in 1:length(y))
+    for (i in seq_len(length(y)))
     {
       S[S==i] <- y[i]
       S2[S2==i] <- y[i]
@@ -858,17 +858,17 @@ alpacaSimulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,den
   if (length(size.module)==2) size.module <- rbind(size.module,c(0,0))
   
   num.comm <- nrow(comm.sizes)
-  net1.Anodes <- paste("A",1:sum(comm.sizes[,1]),sep="")
-  net1.Bnodes <- paste("B",1:sum(comm.sizes[,2]),sep="")
+  net1.Anodes <- paste("A",seq_len(sum(comm.sizes[,1]),sep=""))
+  net1.Bnodes <- paste("B",seq_len(sum(comm.sizes[,2]),sep=""))
   A.comm <- B.comm <- NULL
-  for (i in 1:num.comm)
+  for (i in seq_len(num.comm))
   {
-    A.comm[[i]] <- net1.Anodes[(sum(comm.sizes[1:i,1])+1-comm.sizes[i,1]):sum(comm.sizes[1:i,1])]
-    B.comm[[i]] <- net1.Bnodes[(sum(comm.sizes[1:i,2])+1-comm.sizes[i,2]):sum(comm.sizes[1:i,2])]
+    A.comm[[i]] <- net1.Anodes[(sum(comm.sizes[seq_len(i),1])+1-comm.sizes[i,1]):sum(comm.sizes[seq_len(i),1])]
+    B.comm[[i]] <- net1.Bnodes[(sum(comm.sizes[seq_len(i),2])+1-comm.sizes[i,2]):sum(comm.sizes[seq_len(i),2])]
   }
   
   A.memb <- B.memb <- NULL
-  for (i in 1:length(A.comm))
+  for (i in seq_len(length(A.comm)))
   {
     A.memb <- rbind(A.memb,cbind(A.comm[[i]],rep(i,length(A.comm[[i]]))))
     B.memb <- rbind(B.memb,cbind(B.comm[[i]],rep(i,length(B.comm[[i]]))))
@@ -876,18 +876,18 @@ alpacaSimulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,den
   
   all.edges <- NULL
   weights.mat <- NULL
-  for (i in 1:nrow(comm.sizes))
+  for (i in seq_len(nrow(comm.sizes)))
   {
     this.A.comm <- A.comm[[i]]
-    for (j in 1:nrow(comm.sizes))
+    for (j in seq_len(nrow(comm.sizes)))
     {
       this.B.comm <- B.comm[[j]]
       this.edges <- NULL
-      for (k in 1:length(this.A.comm))
+      for (k in seq_len(length(this.A.comm)))
         this.edges <- rbind(this.edges,cbind(rep(this.A.comm[k],length(this.B.comm)),this.B.comm))
       this.weights <- array(0,dim=c(nrow(this.edges),2))
-      this.weights[sample(1:nrow(this.edges),edge.mat[i,j],replace=FALSE),1] <- 1
-      this.weights[sample(1:nrow(this.edges),edge.mat[i,j],replace=FALSE),2] <- 1
+      this.weights[sample(seq_len(nrow(this.edges)),edge.mat[i,j],replace=FALSE),1] <- 1
+      this.weights[sample(seq_len(nrow(this.edges)),edge.mat[i,j],replace=FALSE),2] <- 1
       
       all.edges <- rbind(all.edges,this.edges)
       weights.mat <- rbind(weights.mat,this.weights)
@@ -895,7 +895,7 @@ alpacaSimulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,den
   }
   
   new.module <- NULL
-  for (i in 1:num.module)
+  for (i in seq_len(num.module))
   {
     this.sizes <- size.module[i,]
     this.dens <- dens.module[i]
