@@ -199,9 +199,9 @@ ks.permute = function(A,B,nsamp=1000){
   n = length(A)
   ks_out = vector()
   all <- c(A,B)
-  for(i in 1:nsamp){
+  for(i in seq_len(nsamp)){
     #randomly choose n values from all, assign the rest to B_rand
-    aind = sample(1:length(all),n)
+    aind = sample(seq_len(length(all)),n)
     A_rand = all[aind]
     B_rand = all[-aind]
     #note: ks.test will throw a warning because of ties. This is expected.
@@ -215,9 +215,9 @@ wilcox.permute= function(A,B,nsamp=1000){
   n = length(A)
   w_out = vector()
   all <- c(A,B)
-  for(i in 1:nsamp){
+  for(i in seq_len(nsamp)){
     #randomly choose n values from all, assign the rest to B_rand
-    aind = sample(1:length(all),n)
+    aind = sample(seq_len(length(all)),n)
     A_rand = all[aind]
     B_rand = all[-aind]
     #note: wilcoxon.test will throw a warning because of ties. This is expected.
@@ -321,12 +321,12 @@ plot.enrich.hist = function(qik_enrich_out,ks=TRUE,wilcoxon=TRUE,...){
 #' elist <- data.frame(red=reds[r],blue=blues[b])
 #' condor.object <- createCondorObject(elist)
 #' #randomly assign blues to their own community
-#' T0 <- data.frame(nodes=blues,coms=1:4)
+#' T0 <- data.frame(nodes=blues,coms=seq_len(4))
 #' condor.object <- condorMatrixModularity(condor.object,T0=T0)
 #' @import nnet
 #' @export
 #' 
-condorMatrixModularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,deltaQmin="default"){
+condorMatrixModularity = function(condor.object,T0=cbind(seq_len(q),rep(1,q)),weights=1,deltaQmin="default"){
   
   #assign convergence parameter
   if(deltaQmin == "default"){
@@ -372,7 +372,7 @@ condorMatrixModularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1
   blue.names <- levels(factor(esub[,2]))
   #ensure that nrows > ncols
   if(length(red.names) < length(blue.names)){
-    stop("Adjacency matrix dimension error: This code requires nrows > ncols")
+    stop("Adjacency matrix dimension mismatch: This code requires nrows > ncols")
   }
   
   #The upper right block of the true Adjacency matrix. notices the dimension is reds x blues
@@ -391,7 +391,7 @@ condorMatrixModularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1
   T0[,1] = as.integer(factor(T0[,1]))
   T0 = T0[order(T0[,1]),]
   Tind <- data.matrix(T0)
-  Rind = data.matrix(cbind(1:p,rep(0,length=p)))
+  Rind = data.matrix(cbind(seq_len(p),rep(0,length=p)))
   cs = sort(unique(Tind[,2]))
   
   #variables to track modularity changes after each loop
@@ -428,8 +428,8 @@ condorMatrixModularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1
     #Special condition if all nodes are stuck in one large community,
     #if TRUE, randomly assign two nodes to new communities.
     if(iter > 1 && length(unique(c(Rind[,2],Tind[,2]))) == 1){
-      random_nodes <- sample(1:nrow(Rind),2)
-      Rind[random_nodes,2] <- max(c(Rind[,2],Tind[,2])) + 1:2
+      random_nodes <- sample(seq_len(nrow(Rind)),2)
+      Rind[random_nodes,2] <- max(c(Rind[,2],Tind[,2])) + seq_len(2)
     }
     
     #Check to see if new communities should be made
@@ -481,7 +481,7 @@ condorMatrixModularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1
   
   #__________end_while_____________
   
-  cs <- 1:ncol(Tm)
+  cs <- seq_len(ncol(Tm))
   if(any(sort(unique(Tind[,2])) != sort(unique(Rind[,2])))){stop("number of red and blue communities unequal")}
   #drop empty communities
   qcom_temp <- cbind(Qcom,cs)
@@ -550,7 +550,7 @@ condorMatrixModularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1
 #' @import nnet
 #' @export
 #' 
-condorModularityMax = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,deltaQmin="default"){
+condorModularityMax = function(condor.object,T0=cbind(seq_len(q),rep(1,q)),weights=1,deltaQmin="default"){
   
   #assign convergence parameter
   if(deltaQmin == "default"){
@@ -578,7 +578,7 @@ condorModularityMax = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,de
   blue.names <- levels(factor(esub[,2]))
   #ensure that nrows > ncols
   if(length(red.names) < length(blue.names)){
-    stop("Adjacency matrix dimension error: This code requires nrows > ncols")
+    stop("Adjacency matrix dimension mismatch: This code requires nrows > ncols")
   }
   
   #Sparse matrix with the upper right block of the true Adjacency matrix. notices the dimension is reds x blues
@@ -598,7 +598,7 @@ condorModularityMax = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,de
   #initialize community assignments for red and blue nodes.
   T0[,1] = as.integer(factor(T0[,1]))
   Tmat <- T0
-  R = cbind(1:p,rep(0,length=p))
+  R = cbind(seq_len(p),rep(0,length=p))
   cs = sort(unique(Tmat[,2]))
   #variables to track modularity changes after each loop
   Qhist <- vector();
@@ -609,7 +609,7 @@ condorModularityMax = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,de
   while(deltaQ > deltaQmin){
     btr <- BTR <- bt <- BT <- vector();
     #calculate T tilde
-    for(i in 1:p){
+    for(i in seq_len(p)){
       if(i %% 2500 == 0){print(sprintf("%s%% through iteration %s",round(i/p*100,digits=1),iter))}
       #find the optimal community for node i
       bt <- rep(0,length(cs))
@@ -636,7 +636,7 @@ condorModularityMax = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,de
       #BT <- rbind(BT,bt)
     }
     #calculate R tilde, i.e., B_transpose * R
-    for(j in 1:q)
+    for(j in seq_len(q))
     {
       #initialize jth row of (B_transpose) * R
       btr = rep(0,length(cs))
@@ -745,7 +745,7 @@ condorPlotCommunities = function(condor.object,color_list,point.size=0.01,
                                    xlab="SNP",ylab="Gene"){
   
   dt0 <- data.table(condor.object$edges)
-  setnames(dt0,1:2,c("SNP","gene"))
+  setnames(dt0,seq_len(2),c("SNP","gene"))
   dt1 <- data.table(condor.object$red.memb)
   setnames(dt1,c("SNP","red.memb"))
   dt2 <- data.table(condor.object$blue.memb)
@@ -768,12 +768,12 @@ condorPlotCommunities = function(condor.object,color_list,point.size=0.01,
   #select all links that connect nodes in the same community
   setkey(eqtl_block,"blue.memb","red.memb")
   #make new index for each node that will correspond to it's row/col number
-  red_tmp <- data.table(rindx=1:nlevels(eqtl_block$SNP),SNP=unique(eqtl_block$SNP))
+  red_tmp <- data.table(rindx=seq_len(nlevels(eqtl_block$SNP)),SNP=unique(eqtl_block$SNP))
   red_indx <- merge(red_tmp,unique(eqtl_block,by="SNP")[,c("SNP","red.memb"),with=FALSE],by="SNP")
   red_indx[,red.com.size:=length(unique(SNP)),by=red.memb]
   red_indx[red.com.size > 1,rindx:=sample(x=rindx),by=red.memb][,red.memb:=NULL,]
   setkey(red_indx,"SNP")
-  blue_tmp <- data.table(bindx=1:nlevels(eqtl_block$gene),gene=unique(eqtl_block$gene))
+  blue_tmp <- data.table(bindx=seq_len(nlevels(eqtl_block$gene)),gene=unique(eqtl_block$gene))
   blue_indx <- merge(blue_tmp,unique(eqtl_block,by="gene")[,c("gene","blue.memb"),with=FALSE],by="gene")
   #shuffle nodes within each community to make density homogeneous
   blue_indx[,blue.com.size:=length(unique(gene)),by=blue.memb]
@@ -810,7 +810,7 @@ condorPlotCommunities = function(condor.object,color_list,point.size=0.01,
   cs <- cumsum(rle(sort(m2[!duplicated(SNP)]$red.memb))$lengths)
   lens <- rle(sort(m2[!duplicated(SNP)]$red.memb))$lengths
   lpts <- cs - lens/2
-  axis(1,at=lpts,labels=1:length(color_list),lwd.ticks=-0.1,cex.axis=1.25,padj=0.25,font=2)
+  axis(1,at=lpts,labels=seq_len(length(color_list)),lwd.ticks=-0.1,cex.axis=1.25,padj=0.25,font=2)
   #dev.off()
 }
 
@@ -927,13 +927,13 @@ condorQscore = function(condor.object){
   T2 = sparseMatrix(i=t1[,1],j=t1[,2],x=1,dims=c(max(t1[,1]),max(t1[,2])),index1=TRUE);
   Qcoms <- condor.object$Qcoms
   Qjk = vector(length=q)
-  for(j in 1:max(t1[,1])){
+  for(j in seq_len(max(t1[,1]))){
     if(j %% 1000 == 0){print(paste(j,t1[j,]))}
     Bj = A[,j] - (ki*dj[j])/m;
     Qjk[j] = ((Rtrans[t1[j,2],] %*% Bj)/(2*m))*(1/Qcoms[t1[j,2],1])
   }  
   Qik = vector(length=p)
-  for(i in 1:max(r1[,1])){
+  for(i in seq_len(max(r1[,1]))){
     if(i %% 1000 == 0){print(i)}
     Bi = A[i,] - (ki[i]*dj)/m;
     Qik[i] = ((Bi %*% T2[,r1[i,2]])/(2*m))*(1/Qcoms[r1[i,2],1])  

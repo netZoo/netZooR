@@ -72,14 +72,16 @@ design <- c(rep(0,20),rep(NA,10),rep(1,20))
 yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 # Example with provided networks
+\donttest{
 pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
-case=pandaResult@regNet
-nelemReg=dim(pandaResult@regNet)[1]*dim(pandaResult@regNet)[2]
-nGenes=length(colnames(pandaResult@regNet))
+case=get_regNet(pandaResult)
+nelemReg=dim(get_regNet(pandaResult))[1]*dim(get_regNet(pandaResult))[2]
+nGenes=length(colnames(get_regNet(pandaResult)))
 control=matrix(rexp(nelemReg, rate=.1), ncol=nGenes)
 colnames(control) = colnames(case)
 rownames(control) = rownames(case) 
 expr = as.data.frame(cbind(control,case))
 design=c(rep(0,nGenes),rep(1, nGenes))
 monsterRes <- monster(expr, design, motif=NA, nullPerms=10, numMaxCores=1, mode='regNet')
+}
 }

@@ -1,6 +1,6 @@
 context("test CONDOR result")
 
-test_that("CONDOR functions work", {
+test_that("Test CONDOR functions", {
   
   load("./testDataset.RData")
   

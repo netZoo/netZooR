@@ -7,7 +7,7 @@
 alpacaGOtabtogenes(go.result, dm.top)
 }
 \arguments{
-\item{go.result}{The result of the GO term analysis (alpacalisttogo)}
+\item{go.result}{The result of the GO term analysis (alpacaListToGo)}
 
 \item{dm.top}{The result of extracting the top genes of the differential modules (dm.top)}
 }

@@ -6,7 +6,7 @@
 \usage{
 condorModularityMax(
   condor.object,
-  T0 = cbind(1:q, rep(1, q)),
+  T0 = cbind(seq_len(q), rep(1, q)),
   weights = 1,
   deltaQmin = "default"
 )

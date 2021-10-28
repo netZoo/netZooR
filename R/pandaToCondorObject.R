@@ -70,7 +70,7 @@ pandaToCondorObject <- function(panda.net, threshold){
   # if the threshold (cutoff) of edge-weight is provided. 
   # when the customed threshold is out of range, print out error message.
    if (threshold > max(panda.net$Score) || threshold < min(panda.net$Score) ) {
-    stop(paste("Please provide the edge-weight threshold between ", min(panda.net$Score)," and ", max(panda.net$Score)))
+    stop("Please provide the edge-weight threshold between ", min(panda.net$Score)," and ", max(panda.net$Score))
   }
   else {
     panda.trans <- panda.net[panda.net$Score >= threshold, c('TF',"Gene","Score")]

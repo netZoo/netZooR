@@ -105,6 +105,15 @@ Or use `browseVignettes("netZooR")` after installing the package. Also check [ne
 
 ## Contribution and Development
 Contributions are welcome! The contribution guide to netZooR can be found [here](https://netzoo.github.io/contribute/contribute/). 
+
+We follow the [Bioconductor code guidelines](https://bioconductor.org/packages/devel/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html). Before pushing a contribution, please run
+
+```r
+library(BiocCheck)
+BiocCheck("packageDirOrTarball")
+```
+And resolve any warnings, notes, and errors before committing the code.
+
 After adding new features or optimizing a function in the package, please re-build the package and run `R CMD check .` in the terminal or follow the instructions below before doing the pull request to the devel branch.
 To run only the tests:
 ```r

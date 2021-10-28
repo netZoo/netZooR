@@ -30,16 +30,17 @@
 #' @examples
 #'
 #' # refer to the input datasets files of control in inst/extdat as example
-#' #control_expression_file_path <- system.file("extdata", "expr10_reduced.txt", package = "netZooR", 
-#' #mustWork = TRUE)
-#' #motif_file_path <- system.file("extdata", "chip_reduced.txt", package = "netZooR", mustWork = TRUE)
-#' #ppi_file_path <- system.file("extdata", "ppi_reduced.txt", package = "netZooR", mustWork = TRUE)
+#' control_expression_file_path <- system.file("extdata", "expr10_reduced.txt", package = "netZooR", 
+#'     mustWork = TRUE)
+#' motif_file_path <- system.file("extdata", "chip_reduced.txt", package = "netZooR", mustWork = TRUE)
+#'     ppi_file_path <- system.file("extdata", "ppi_reduced.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' # Run LIONESS algorithm
-#' #control_lioness_result <- lionessPy(expr_file = control_expression_file_path, 
-#' #motif_file = motif_file_path, ppi_file = ppi_file_path, 
-#' #modeProcess="union",start_sample=1, end_sample=1, precision="single")
-#'  
+#' \donttest{
+#' control_lioness_result <- lionessPy(expr_file = control_expression_file_path, 
+#'     motif_file = motif_file_path, ppi_file = ppi_file_path, 
+#'     modeProcess="union",start_sample=1, end_sample=1, precision="single")
+#' }
 #' @import reticulate
 #' @export
 lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double", save_tmp=TRUE, modeProcess="union", remove_missing=FALSE, start_sample=1, end_sample="None", save_single_network=FALSE, save_dir="lioness_output", save_fmt='npy'){
@@ -166,9 +167,9 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
 #' "coregNet" is the coregulatory network\cr
 #' "coopNet" is the cooperative network
 #' @examples
-#' #data(pandaToyData)
-#' #linonessRes <- lioness(pandaToyData$motif,
-#' #    pandaToyData$expression[,1:3],pandaToyData$ppi,hamming=1,progress=FALSE)
+#' data(pandaToyData)
+#' linonessRes <- lioness(pandaToyData$motif,
+#'     pandaToyData$expression[,1:3],pandaToyData$ppi,hamming=1,progress=FALSE)
 #' @references
 #' Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 #' Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.

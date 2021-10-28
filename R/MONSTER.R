@@ -1,5 +1,7 @@
 monsterAnalysis <- setClass("monsterAnalysis", slots=c("tm","nullTM","numGenes","numSamples"))
 setMethod("show","monsterAnalysis",function(object){monsterPrintMonsterAnalysis(object)})
+setGeneric("get_tm", function(object) standardGeneric("get_tm"))
+setMethod("get_tm", "monsterAnalysis", function(object){object@tm})
 
 #' monsterPlotMonsterAnalysis
 #'
@@ -89,16 +91,18 @@ monsterPrintMonsterAnalysis <- function(x, ...){
 #' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 #' # Example with provided networks
+#' \donttest{
 #' pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
-#' case=pandaResult@regNet
-#' nelemReg=dim(pandaResult@regNet)[1]*dim(pandaResult@regNet)[2]
-#' nGenes=length(colnames(pandaResult@regNet))
+#' case=get_regNet(pandaResult)
+#' nelemReg=dim(get_regNet(pandaResult))[1]*dim(get_regNet(pandaResult))[2]
+#' nGenes=length(colnames(get_regNet(pandaResult)))
 #' control=matrix(rexp(nelemReg, rate=.1), ncol=nGenes)
 #' colnames(control) = colnames(case)
 #' rownames(control) = rownames(case) 
 #' expr = as.data.frame(cbind(control,case))
 #' design=c(rep(0,nGenes),rep(1, nGenes))
 #' monsterRes <- monster(expr, design, motif=NA, nullPerms=10, numMaxCores=1, mode='regNet')
+#' }
 
 monster <- function(expr, 
                     design, 
@@ -165,7 +169,7 @@ monster <- function(expr,
   nullExpr <- expr
   if(numMaxCores == 1){
     transMatrices=list()
-    for(i in 1:iters){
+    for(i in seq_len(iters)){
       print(paste0("Running iteration ", i))
       if(i!=1){
         if(mode == 'regNet'){
@@ -204,7 +208,7 @@ monster <- function(expr,
     }
     print(Sys.time()-strt)
   }else{
-    transMatrices <- foreach(i=1:iters,
+    transMatrices <- foreach(i=seq_len(iters),
                              .packages=c("netZooR","reshape2","penalized","MASS")) %dopar% {
                                print(paste0("Running iteration ", i))
                                if(i!=1){
@@ -345,7 +349,7 @@ monsterTransformationMatrix <- function(network.1, network.2, by.tfs=TRUE, stand
     tf.trans.matrix <- svd.net2$v %*% diag(1/svd.net2$d) %*% t(svd.net2$u) %*% net1
   }
   if (method == "ols"){
-    net2.star <- sapply(1:ncol(net1), function(i,x,y){
+    net2.star <- vapply(seq_len(ncol(net1)), function(i,x,y){
       lm(y[,i]~x[,i])$resid
     }, net1, net2)
     tf.trans.matrix <- ginv(t(net1)%*%net1)%*%t(net1)%*%net2.star
@@ -355,10 +359,10 @@ monsterTransformationMatrix <- function(network.1, network.2, by.tfs=TRUE, stand
     
   }
   if (method == "L1"){
-    net2.star <- sapply(1:ncol(net1), function(i,x,y){
+    net2.star <- vapply(seq_len(ncol(net1)), function(i,x,y){
       lm(y[,i]~x[,i])$resid
     }, net1, net2)
-    tf.trans.matrix <- sapply(1:ncol(net1), function(i){
+    tf.trans.matrix <- vapply(seq_len(ncol(net1)), function(i){
       z <- optL1(net2.star[,i], net1, fold=5, minlambda1=1, 
                  maxlambda1=2, model="linear", standardize=TRUE)
       coefficients(z$fullfit, "penalized")
@@ -523,7 +527,7 @@ monsterHclHeatmapPlot <- function(monsterObj, method="pearson"){
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
 #' # Color the nodes according to cluster membership
-#' clusters <- kmeans(slot(monsterRes, 'tm'),3)$cluster 
+#' clusters <- kmeans(get_tm(monsterRes),3)$cluster 
 #' monsterTransitionPCAPlot(monsterRes, 
 #' title="PCA Plot of Transition - Cell Cycle vs Stress Response", 
 #' clusters=clusters)
@@ -575,8 +579,8 @@ monsterTransitionPCAPlot <-    function(monsterObj,
 monstertransitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10, rescale='significance'){
   ## Calculate p-values for off-diagonals
   transitionSigmas <- function(tm.observed, tm.null){
-    tm.null.mean <- apply(simplify2array(tm.null), 1:2, mean)
-    tm.null.sd <- apply(simplify2array(tm.null), 1:2, sd)
+    tm.null.mean <- apply(simplify2array(tm.null), seq_len(2), mean)
+    tm.null.sd <- apply(simplify2array(tm.null), seq_len(2), sd)
     sigmas <- (tm.observed - tm.null.mean)/tm.null.sd
   }
   
@@ -595,7 +599,7 @@ monstertransitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10,
   dTFI_pVals_All <- 1-2*abs(.5-monsterCalculateTmPvalues(monsterObj, 
                                                              method="z-score"))
   if(rescale=='significance'){
-    topTFsIncluded <- names(sort(dTFI_pVals_All)[1:numTopTFs])
+    topTFsIncluded <- names(sort(dTFI_pVals_All)[seq_len(numTopTFs)])
     topTFIndices <- 2>(is.na(match(adj.combined[,1],topTFsIncluded)) + 
                          is.na(match(adj.combined[,2],topTFsIncluded)))
     adj.combined <- adj.combined[topTFIndices,]
@@ -659,10 +663,10 @@ monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight
   
   ssodm <- apply(monsterObj@tm,2,function(x){t(x)%*%x})
   
-  p.values <- 1-pnorm(sapply(seq_along(ssodm),function(i){
+  p.values <- 1-pnorm(vapply(seq_along(ssodm),function(i){
     (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
   }))
-  t.values <- sapply(seq_along(ssodm),function(i){
+  t.values <- vapply(seq_along(ssodm),function(i){
     (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
   })
   
@@ -695,7 +699,7 @@ monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight
     geom_point(aes(color=factor(Var2), alpha = .5*as.numeric(factor(Var2))), size=2) +
     scale_color_manual(values = c("blue", "red")) +
     scale_alpha(guide = "none") +
-    scale_x_discrete(limits = x.axis.order[1:nTFs] ) +
+    scale_x_discrete(limits = x.axis.order[seq_len(nTFs)] ) +
     theme_classic() +
     theme(legend.title=element_blank(),
           axis.text.x = element_text(colour = 1+x.axis.order%in%highlight.tfs, 
@@ -735,11 +739,11 @@ monsterCalculateTmPvalues <- function(monsterObj, method="z-score"){
   
   # Get p-value (rank of observed within null ssodm)
   if(method=="non-parametric"){
-    p.values <- sapply(seq_along(ssodm),function(i){
+    p.values <- vapply(seq_along(ssodm),function(i){
       1-findInterval(ssodm[i], null.ssodm.matrix[i,])/num.iterations
     })
   } else if (method=="z-score"){
-    p.values <- pnorm(sapply(seq_along(ssodm),function(i){
+    p.values <- pnorm(vapply(seq_along(ssodm),function(i){
       (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
     }))
   } else {
@@ -770,7 +774,6 @@ globalVariables(c("Var1", "Var2","value","variable","xend","yend","y","Comp.1", 
 #' @param randomize logical indicating randomization by genes, within genes or none
 #' @param score String to indicate whether motif information will be 
 #' readded upon completion of the algorithm
-#' @param alphaw A weight parameter specifying proportion of weight 
 #' to give to indirect compared to direct evidence.  See documentation.
 #' @param regularization String parameter indicating one of "none", "L1", "L2"
 #' @param cpp logical use C++ for maximum speed, set to false if unable to run.
@@ -799,7 +802,7 @@ monsterMonsterNI <- function(motif.data,
   tf.names   <- sort(unique(motif.data[,1]))
   num.TFs    <- length(tf.names)
   if (is.null(expr.data)){
-    stop("Error: Expression data null")
+    stop("Expression data null")
   } else {
     # Use the motif data AND the expr data (if provided) for the gene list
     gene.names <- sort(intersect(motif.data[,2],rownames(expr.data)))
@@ -825,14 +828,14 @@ monsterMonsterNI <- function(motif.data,
   
   # Bad data checking
   if (num.genes==0){
-    stop("Error validating data.  No matched genes.\n
+    stop("Validating data.  No matched genes.\n
             Please ensure that gene names in expression 
             file match gene names in motif file.")
   }
   
   strt<-Sys.time()
   if(num.conditions==0) {
-    stop("Error: Number of samples = 0")
+    stop("Number of samples = 0")
     gene.coreg <- diag(num.genes)
   } else if(num.conditions<3) {
     stop('Not enough expression conditions detected to calculate correlation.')

@@ -6,7 +6,7 @@
 \usage{
 condorMatrixModularity(
   condor.object,
-  T0 = cbind(1:q, rep(1, q)),
+  T0 = cbind(seq_len(q), rep(1, q)),
   weights = 1,
   deltaQmin = "default"
 )
@@ -65,6 +65,6 @@ blues <- c("Bob","John","Ed","Hank")
 elist <- data.frame(red=reds[r],blue=blues[b])
 condor.object <- createCondorObject(elist)
 #randomly assign blues to their own community
-T0 <- data.frame(nodes=blues,coms=1:4)
+T0 <- data.frame(nodes=blues,coms=seq_len(4))
 condor.object <- condorMatrixModularity(condor.object,T0=T0)
 }

@@ -30,10 +30,12 @@ TF <-data.frame(motif[,1])
 # create PPI data frame by searching in STRING version 10 
 # and specifying specie to "Mycobacterium tuberculosis H37Rv".
 # STRING verison 11 is only accessible to R 4.0.
-#if(R.Version()$major=="3"){PPI <- sourcePPI(TF, STRING.version="10", 
-#species.index=83332, score_threshold=0)}
-#if(R.Version()$major=="4"){PPI <- sourcePPI(TF, STRING.version="11", 
-#species.index=83332, score_threshold=0)}
-# write out locally then can be used in \code{\link{panda.py}}.
+\donttest{
+if(R.Version()$major=="3"){PPI <- sourcePPI(TF, STRING.version="10", 
+species.index=83332, score_threshold=0)}
+if(R.Version()$major=="4"){PPI <- sourcePPI(TF, STRING.version="11", 
+species.index=83332, score_threshold=0)}
+}
+# write out locally then can be used in \code{\link{pandaPy}}.
 
 }

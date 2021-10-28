@@ -33,9 +33,9 @@ corresponding to each of the N samples in the expression data set.\cr
 Compute LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples)
 }
 \examples{
-#data(pandaToyData)
-#linonessRes <- lioness(pandaToyData$motif,
-#    pandaToyData$expression[,1:3],pandaToyData$ppi,hamming=1,progress=FALSE)
+data(pandaToyData)
+linonessRes <- lioness(pandaToyData$motif,
+    pandaToyData$expression[,1:3],pandaToyData$ppi,hamming=1,progress=FALSE)
 }
 \references{
 Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
