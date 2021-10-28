@@ -41,3 +41,5 @@ vignettes/pandaRApplicationinGTExData.Rmd
 vignettes/yarn.Rmd
 notes.md
 R/pandaDiffEdges.R
+R/createDiffPandaStyle.R
+R/visDiffPandaInCytoscape.R
