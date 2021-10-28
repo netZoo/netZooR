@@ -75,7 +75,7 @@ We select edges for which this combined probability is greater than a threshold 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.50</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.58</span>
       </span>
     </div>
 
@@ -99,6 +99,9 @@ We select edges for which this combined probability is greater than a threshold 
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
+    </li>
+    <li>
+      <a href="../articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
     </li>
   </ul>
 </li>
@@ -180,17 +183,17 @@ package <span class='op'>=</span> <span class='st'>"netZooR"</span>, mustWork <s
 
 
 <span class='co'># Run PANDA for treated and control network</span>
-<span class='va'>treated_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'>panda.py</span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>treated_expression_file_path</span>, 
+<span class='va'>treated_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pandaPy.html'>pandaPy</a></span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>treated_expression_file_path</span>, 
 motif_file<span class='op'>=</span> <span class='va'>motif_file_path</span>, ppi_file <span class='op'>=</span> <span class='va'>ppi_file_path</span>, modeProcess<span class='op'>=</span><span class='st'>"legacy"</span>, remove_missing <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in panda.py(expr_file = treated_expression_file_path, motif_file = motif_file_path,     ppi_file = ppi_file_path, modeProcess = "legacy", remove_missing = TRUE): could not find function "panda.py"</span></div><div class='input'><span class='va'>control_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'>panda.py</span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>control_expression_file_path</span>, 
+</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA...</span></div><div class='input'><span class='va'>control_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pandaPy.html'>pandaPy</a></span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>control_expression_file_path</span>, 
 motif_file<span class='op'>=</span> <span class='va'>motif_file_path</span>, ppi_file<span class='op'>=</span> <span class='va'>ppi_file_path</span>, modeProcess<span class='op'>=</span><span class='st'>"legacy"</span>, remove_missing <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in panda.py(expr_file = control_expression_file_path, motif_file = motif_file_path,     ppi_file = ppi_file_path, modeProcess = "legacy", remove_missing = TRUE): could not find function "panda.py"</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA...</span></div><div class='input'>
 <span class='co'># access PANDA regulatory network</span>
 <span class='va'>treated_net</span> <span class='op'>&lt;-</span> <span class='va'>treated_all_panda_result</span><span class='op'>$</span><span class='va'>panda</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'treated_all_panda_result' not found</span></div><div class='input'><span class='va'>control_net</span> <span class='op'>&lt;-</span> <span class='va'>control_all_panda_result</span><span class='op'>$</span><span class='va'>panda</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'control_all_panda_result' not found</span></div><div class='input'>
+<span class='va'>control_net</span> <span class='op'>&lt;-</span> <span class='va'>control_all_panda_result</span><span class='op'>$</span><span class='va'>panda</span>
+
 <span class='va'>merged.panda</span> <span class='op'>&lt;-</span> <span class='fu'>pandaDiffEdges</span><span class='op'>(</span><span class='va'>treated_net</span>, <span class='va'>control_net</span>, condition_name<span class='op'>=</span><span class='st'>"treated"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in merge(panda.net1, panda.net2, by = c("TF", "Gene")): object 'treated_net' not found</span></div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

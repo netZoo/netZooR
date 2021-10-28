@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.50</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.58</span>
       </span>
     </div>
 
@@ -96,6 +96,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
+    </li>
+    <li>
+      <a href="../articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
     </li>
   </ul>
 </li>
@@ -177,10 +180,10 @@ false, gives gene by gene transformation matrix</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>)</span>
 <span class='va'>cc.net.1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='monsterMonsterNI.html'>monsterMonsterNI</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>,<span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>20</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Time difference of 0.08846593 secs
-#&gt; Time difference of 0.07279301 secs</div><div class='input'><span class='va'>cc.net.2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='monsterMonsterNI.html'>monsterMonsterNI</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>,<span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>,<span class='fl'>31</span><span class='op'>:</span><span class='fl'>50</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Time difference of 0.086097 secs
-#&gt; Time difference of 0.07324791 secs</div><div class='input'><span class='fu'>monsterTransformationMatrix</span><span class='op'>(</span><span class='va'>cc.net.1</span>, <span class='va'>cc.net.2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Time difference of 0.09294105 secs
+#&gt; Time difference of 0.09567809 secs</div><div class='input'><span class='va'>cc.net.2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='monsterMonsterNI.html'>monsterMonsterNI</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>,<span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>,<span class='fl'>31</span><span class='op'>:</span><span class='fl'>50</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Time difference of 0.121294 secs
+#&gt; Time difference of 0.09858823 secs</div><div class='input'><span class='fu'>monsterTransformationMatrix</span><span class='op'>(</span><span class='va'>cc.net.1</span>, <span class='va'>cc.net.2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "Using OLS method"</div><div class='output co'>#&gt;               YBL005W       YBR083W       YBR240C       YCR106W       YDL056W
 #&gt; YBL005W  0.0000000000 -5.230999e-02 -4.616050e-02 -0.0568845578  3.434095e-02
 #&gt; YBR083W  0.0144183765  0.000000e+00  1.844380e-04 -0.0103175357  4.212441e-03

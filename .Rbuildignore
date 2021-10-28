@@ -22,3 +22,4 @@ tests/testthat/test-monster.R
 tests/testthat/test-alpaca.R
 LICENSE
 netZooR.Rcheck/
+vignettes/ApplicationwithTBdataset.Rmd

@@ -3,5 +3,6 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   ApplicationwithTBdataset: ApplicationwithTBdataset.html
-last_built: 2021-10-27T20:30Z
+  CONDOR: CONDOR.html
+last_built: 2021-10-27T23:54Z
 

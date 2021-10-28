@@ -75,7 +75,7 @@ This function uses the result of PANDA algorithm as the input dataset to run CON
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.50</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.58</span>
       </span>
     </div>
 
@@ -99,6 +99,9 @@ This function uses the result of PANDA algorithm as the input dataset to run CON
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
+    </li>
+    <li>
+      <a href="../articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
     </li>
   </ul>
 </li>
@@ -142,7 +145,7 @@ This function uses the result of PANDA algorithm as the input dataset to run CON
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>panda.net</th>
-      <td><p>Data Frame indicating the result of PANDA regulatory network, created by <code>panda.py</code></p></td>
+      <td><p>Data Frame indicating the result of PANDA regulatory network, created by <code><a href='pandaPy.html'>pandaPy</a></code></p></td>
     </tr>
     <tr>
       <th>threshold</th>
@@ -167,27 +170,29 @@ package <span class='op'>=</span> <span class='st'>"netZooR"</span>, mustWork <s
 
 
 <span class='co'># Run PANDA to construct the treated network</span>
-<span class='va'>treated_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'>panda.py</span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>treated_expression_file_path</span>, 
+<span class='va'>treated_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pandaPy.html'>pandaPy</a></span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>treated_expression_file_path</span>, 
 motif_file<span class='op'>=</span> <span class='va'>motif_file_path</span>, ppi_file <span class='op'>=</span> <span class='va'>ppi_file_path</span>, 
 modeProcess<span class='op'>=</span><span class='st'>"legacy"</span>, remove_missing <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in panda.py(expr_file = treated_expression_file_path, motif_file = motif_file_path,     ppi_file = ppi_file_path, modeProcess = "legacy", remove_missing = TRUE): could not find function "panda.py"</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA...</span></div><div class='input'>
 <span class='co'># access PANDA regulatory network</span>
 <span class='va'>treated_net</span> <span class='op'>&lt;-</span> <span class='va'>treated_all_panda_result</span><span class='op'>$</span><span class='va'>panda</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'treated_all_panda_result' not found</span></div><div class='input'>
+
 <span class='co'># Obtain the condor.object from PANDA network</span>
 <span class='va'>treated_condor_object</span> <span class='op'>&lt;-</span> <span class='fu'>pandaToCondorObject</span><span class='op'>(</span><span class='va'>treated_net</span>, threshold <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in pandaToCondorObject(treated_net, threshold = 0): object 'treated_net' not found</span></div><div class='input'>
+
 <span class='co'># cluster condor.object</span>
 <span class='va'>treated_condor_object</span> <span class='op'>&lt;-</span> <span class='fu'><a href='condorCluster.html'>condorCluster</a></span><span class='op'>(</span><span class='va'>treated_condor_object</span>, project <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in condorCluster(treated_condor_object, project = FALSE): object 'treated_condor_object' not found</span></div><div class='input'>
+</div><div class='output co'>#&gt; [1] "modularity of projected graph 0.306134881290028"
+#&gt; [1] "Q = 0.306345744728624"
+#&gt; [1] "Q = 0.306345744728624"</div><div class='input'>
 <span class='co'># package igraph and package viridisLite are already loaded with this package.</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://sjmgarnier.github.io/viridisLite/'>viridisLite</a></span><span class='op'>)</span>
 <span class='va'>treated_color_num</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>treated_condor_object</span><span class='op'>$</span><span class='va'>red.memb</span><span class='op'>$</span><span class='va'>com</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'treated_condor_object' not found</span></div><div class='input'><span class='va'>treated_color</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://sjmgarnier.github.io/viridisLite/reference/viridis.html'>viridis</a></span><span class='op'>(</span><span class='va'>treated_color_num</span>, alpha <span class='op'>=</span> <span class='fl'>1</span>, begin <span class='op'>=</span> <span class='fl'>0</span>, end <span class='op'>=</span> <span class='fl'>1</span>, 
+<span class='va'>treated_color</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://sjmgarnier.github.io/viridisLite/reference/viridis.html'>viridis</a></span><span class='op'>(</span><span class='va'>treated_color_num</span>, alpha <span class='op'>=</span> <span class='fl'>1</span>, begin <span class='op'>=</span> <span class='fl'>0</span>, end <span class='op'>=</span> <span class='fl'>1</span>, 
 direction <span class='op'>=</span> <span class='fl'>1</span>, option <span class='op'>=</span> <span class='st'>"D"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in viridis(treated_color_num, alpha = 1, begin = 0, end = 1, direction = 1,     option = "D"): object 'treated_color_num' not found</span></div><div class='input'><span class='fu'><a href='condorPlotCommunities.html'>condorPlotCommunities</a></span><span class='op'>(</span><span class='va'>treated_condor_object</span>, color_list<span class='op'>=</span><span class='va'>treated_color</span>, 
+<span class='fu'><a href='condorPlotCommunities.html'>condorPlotCommunities</a></span><span class='op'>(</span><span class='va'>treated_condor_object</span>, color_list<span class='op'>=</span><span class='va'>treated_color</span>, 
 point.size<span class='op'>=</span><span class='fl'>0.04</span>, xlab<span class='op'>=</span><span class='st'>"Target"</span>, ylab<span class='op'>=</span><span class='st'>"Regulator"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in data.table(condor.object$edges): object 'treated_condor_object' not found</span></div><div class='input'>
+</div><div class='img'><img src='pandaToCondorObject-1.png' alt='' width='700' height='433' /></div><div class='input'>
 
 </div></pre>
   </div>
