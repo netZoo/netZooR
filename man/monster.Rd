@@ -41,7 +41,8 @@ environment.  Set to 1 to avoid parallelization, NA will take the default parall
 which to save MONSTER results, default is NA and results are not saved.}
 
 \item{alphaw}{A weight parameter between 0 and 1 specifying proportion of weight 
-to give to indirect compared to direct evidence. The default is 0.5 to give an equal weight to direct and indirect evidence.}
+to give to indirect compared to direct evidence. The default is 0.5 to give an 
+equal weight to direct and indirect evidence.}
 
 \item{mode}{A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
 ('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA.}

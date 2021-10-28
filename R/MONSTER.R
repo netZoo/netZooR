@@ -74,7 +74,8 @@ monsterPrintMonsterAnalysis <- function(x, ...){
 #' @param outputDir character vector specifying a directory or path in which 
 #' which to save MONSTER results, default is NA and results are not saved.
 #' @param alphaw A weight parameter between 0 and 1 specifying proportion of weight 
-#' to give to indirect compared to direct evidence. The default is 0.5 to give an equal weight to direct and indirect evidence.
+#' to give to indirect compared to direct evidence. The default is 0.5 to give an 
+#' equal weight to direct and indirect evidence.
 #' @param mode A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
 #' ('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA.
 #' @export
@@ -771,6 +772,9 @@ globalVariables(c("Var1", "Var2","value","variable","xend","yend","y","Comp.1", 
 #' in the paper (please see Schlauch et al., 2017,  https://doi.org/10.1186/s12918-017-0517-y)
 #' @param ni.coefficient.cutoff numeric to specify a p-value cutoff at the network
 #' inference step.  Default is NA, indicating inclusion of all coefficients.
+#' @param alphaw A weight parameter between 0 and 1 specifying proportion of weight 
+#' to give to indirect compared to direct evidence. The default is 0.5 to give an 
+#' equal weight to direct and indirect evidence.
 #' @param randomize logical indicating randomization by genes, within genes or none
 #' @param score String to indicate whether motif information will be 
 #' readded upon completion of the algorithm
@@ -1093,6 +1097,8 @@ globalVariables(c("expr.data","lambda","rcpp_ccorr","GENE", "TF","value"))
 #' @name monsterRes
 #' @usage data(monsterRes)
 #' @format MONSTER obj
+#' #' @references Schlauch, Daniel, et al. "Estimating drivers of cell state transitions using gene regulatory network models." BMC systems biology 11.1 (2017): 1-10.
+#' 
 NULL
 
 #' Toy data derived from three gene expression datasets and a mapping from transcription factors to genes.

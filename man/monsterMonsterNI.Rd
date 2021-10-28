@@ -37,6 +37,10 @@ in the paper (please see Schlauch et al., 2017,  https://doi.org/10.1186/s12918-
 \item{ni.coefficient.cutoff}{numeric to specify a p-value cutoff at the network
 inference step.  Default is NA, indicating inclusion of all coefficients.}
 
+\item{alphaw}{A weight parameter between 0 and 1 specifying proportion of weight 
+to give to indirect compared to direct evidence. The default is 0.5 to give an 
+equal weight to direct and indirect evidence.}
+
 \item{regularization}{String parameter indicating one of "none", "L1", "L2"}
 
 \item{score}{String to indicate whether motif information will be 

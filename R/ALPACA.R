@@ -10,7 +10,7 @@
 #' example_path <- system.file("extdata", "Example_2comm.txt", 
 #' package = "netZooR", mustWork = TRUE)
 #' simp.mat <- read.table(example_path,header=TRUE) 
-#' simp.alp <- alpaca(simp.mat,NULL,verbose=F)
+#' simp.alp <- alpaca(simp.mat,NULL,verbose=FALSE)
 #' @import igraph
 #' @import Matrix
 #' @importFrom utils write.table

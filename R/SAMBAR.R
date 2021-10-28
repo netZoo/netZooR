@@ -204,3 +204,42 @@ sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("
 }
 
 globalVariables(c("exon.size", "genes", "mut.ucec"))
+
+#' Exon sizes.
+#'
+#' This data is a toy example data for SAMBAR, it contains length of Exons.
+#' @docType data
+#' @keywords datasets
+#' @name exon.size
+#' @usage data(exon.size)
+#' @format A list containing Exon sizes for 23459 genes
+#' @return A list of length 1
+#' @references Kuijjer, Marieke Lydia, et al. "Cancer subtype identification using somatic mutation data." British journal of cancer 118.11 (2018): 1492-1501.
+#' 
+NULL
+
+#' Gene names.
+#'
+#' This data is a toy example data for SAMBAR, it contains gene annotations
+#' @docType data
+#' @keywords datasets
+#' @name exon.size
+#' @usage data(genes)
+#' @format A vector containing names of 23459 genes
+#' @return A vector of length 23459
+#' @references Kuijjer, Marieke Lydia, et al. "Cancer subtype identification using somatic mutation data." British journal of cancer 118.11 (2018): 1492-1501.
+#' 
+NULL
+
+#' Gene names.
+#'
+#' This data is a toy example data for SAMBAR, it contains gene annotations
+#' @docType data
+#' @keywords datasets
+#' @name mut.ucec
+#' @usage data(mut.ucec)
+#' @format A binary dataframe where 1 indicates a mutation and 0 otherwise.
+#' @return A table of 19754 genes by 248 samples
+#' @references Kuijjer, Marieke Lydia, et al. "Cancer subtype identification using somatic mutation data." British journal of cancer 118.11 (2018): 1492-1501.
+#' 
+NULL

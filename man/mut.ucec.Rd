@@ -6,13 +6,25 @@
 \title{Example of mutation data}
 \format{
 A table with 248 rows and 19754 columns
+
+A binary dataframe where 1 indicates a mutation and 0 otherwise.
 }
 \usage{
 data(mut.ucec)
+
+data(mut.ucec)
+}
+\value{
+A table of 19754 genes by 248 samples
 }
 \description{
 Somatic mutations of Uterine Corpus Endometrial Carcinoma from The Cancer Genome Atlas.
 Data were downloaded and pre-processed as described in
 \href{https://doi.org/10.1101/228031}{Kuijjer et al.}
+
+This data is a toy example data for SAMBAR, it contains gene annotations
+}
+\references{
+Kuijjer, Marieke Lydia, et al. "Cancer subtype identification using somatic mutation data." British journal of cancer 118.11 (2018): 1492-1501.
 }
 \keyword{datasets}

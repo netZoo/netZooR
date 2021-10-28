@@ -24,5 +24,5 @@ This function compares two networks and finds the sets of nodes that best charac
 example_path <- system.file("extdata", "Example_2comm.txt", 
 package = "netZooR", mustWork = TRUE)
 simp.mat <- read.table(example_path,header=TRUE) 
-simp.alp <- alpaca(simp.mat,NULL,verbose=F)
+simp.alp <- alpaca(simp.mat,NULL,verbose=FALSE)
 }
