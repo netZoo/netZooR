@@ -45,6 +45,7 @@
 #' 
 #' 
 #' # Run PANDA for treated and control network
+#' \donttest{
 #' treated_all_panda_result <- pandaPy(expr_file = treated_expression_file_path, 
 #' motif_file = motif_file_path, ppi_file = ppi_file_path, 
 #' modeProcess="legacy", remove_missing = TRUE )
@@ -57,6 +58,7 @@
 #' 
 #' # access PANDA regulatory outdegree networks
 #' outdegree_net <- treated_all_panda_result$outdegree
+#' }
 #' 
 #' @import reticulate
 #' @export
