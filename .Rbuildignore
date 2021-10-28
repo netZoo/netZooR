@@ -20,6 +20,9 @@ tests/testthat/test-lioness.R
 tests/testthat/test-egret.R
 tests/testthat/test-monster.R
 tests/testthat/test-alpaca.R
+tests/testthat/test.source.PPI.R
+tests/testthat/test-pandatoalpaca.R
+tests/testthat/test-pandatocondorobject.R
 LICENSE
 netZooR.Rcheck/
 vignettes/ApplicationwithTBdataset.Rmd
