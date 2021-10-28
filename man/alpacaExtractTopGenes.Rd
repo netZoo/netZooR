@@ -18,5 +18,9 @@ List with two elements. First element is a list of the top target genes in each 
 This function outputs the top target genes in each module, ranked by their contribution to the differential modularity of the particular module in which they belong.
 }
 \examples{
-a <- 1 # example place holder
+example_path <- system.file("extdata", "Example_2comm.txt", 
+package = "netZooR", mustWork = TRUE)
+simp.mat <- read.table(example_path,header=TRUE) 
+simp.alp <- alpaca(simp.mat,NULL,verbose=FALSE)
+alpacaExtractTopGenes(simp.alp, set.lengths=c(2,2))
 }

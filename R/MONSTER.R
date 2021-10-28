@@ -352,7 +352,7 @@ monsterTransformationMatrix <- function(network.1, network.2, by.tfs=TRUE, stand
   if (method == "ols"){
     net2.star <- vapply(seq_len(ncol(net1)), function(i,x,y){
       lm(y[,i]~x[,i])$resid
-    }, net1, net2)
+    }, x=net1, y=net2, FUN.VALUE = numeric(1000))
     tf.trans.matrix <- ginv(t(net1)%*%net1)%*%t(net1)%*%net2.star
     colnames(tf.trans.matrix) <- colnames(net1)
     rownames(tf.trans.matrix) <- colnames(net1)
@@ -362,12 +362,12 @@ monsterTransformationMatrix <- function(network.1, network.2, by.tfs=TRUE, stand
   if (method == "L1"){
     net2.star <- vapply(seq_len(ncol(net1)), function(i,x,y){
       lm(y[,i]~x[,i])$resid
-    }, net1, net2)
+    }, x=net1, y=net2, FUN.VALUE = numeric(1000))
     tf.trans.matrix <- vapply(seq_len(ncol(net1)), function(i){
       z <- optL1(net2.star[,i], net1, fold=5, minlambda1=1, 
                  maxlambda1=2, model="linear", standardize=TRUE)
       coefficients(z$fullfit, "penalized")
-    })
+    }, FUN.VALUE = numeric(1))
     colnames(tf.trans.matrix) <- rownames(tf.trans.matrix)
     print("Using L1 method")
     
@@ -666,10 +666,10 @@ monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight
   
   p.values <- 1-pnorm(vapply(seq_along(ssodm),function(i){
     (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-  }))
+  }, FUN.VALUE = numeric(1)))
   t.values <- vapply(seq_along(ssodm),function(i){
     (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-  })
+  }, FUN.VALUE = numeric(1))
   
   # Process the data for ggplot2
   combined.mat <- cbind(null.ssodm.matrix, ssodm)
@@ -742,11 +742,11 @@ monsterCalculateTmPvalues <- function(monsterObj, method="z-score"){
   if(method=="non-parametric"){
     p.values <- vapply(seq_along(ssodm),function(i){
       1-findInterval(ssodm[i], null.ssodm.matrix[i,])/num.iterations
-    })
+    }, FUN.VALUE = numeric(1))
   } else if (method=="z-score"){
     p.values <- pnorm(vapply(seq_along(ssodm),function(i){
       (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-    }))
+    }, FUN.VALUE = numeric(1)))
   } else {
     print('Undefined method')
   }

@@ -108,12 +108,16 @@ alpaca <- function(net.table,file.stem,verbose=FALSE)
 #'  
 #' @return List with two elements. First element is a list of the top target genes in each cluster. Second element is a vector with the names of the gene sets. The names are in the format "number_length", where number is the module number label and length is the length of the gene set.
 #' @examples 
-#' a <- 1 # example place holder
+#' example_path <- system.file("extdata", "Example_2comm.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' simp.mat <- read.table(example_path,header=TRUE) 
+#' simp.alp <- alpaca(simp.mat,NULL,verbose=FALSE)
+#' alpacaExtractTopGenes(simp.alp, set.lengths=c(2,2))
 #' @import igraph
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
-#' 
+#' @export
 
 alpacaExtractTopGenes <- function(module.result,set.lengths)
 {
@@ -133,7 +137,7 @@ alpacaExtractTopGenes <- function(module.result,set.lengths)
     for (j in seq_len(length(set.lengths)))
     {
       count <- count+1
-      if (length(this.comm.ord)<set.lengths[j]) mod.top[[count]] <-vapply(this.comm.ord,alpacaNodeToGene) else mod.top[[count]] <- vapply(this.comm.ord[seq_len(set.lengths[j])],alpacaNodeToGene)
+      if (length(this.comm.ord)<set.lengths[j]) mod.top[[count]] <-vapply(this.comm.ord,alpacaNodeToGene, FUN.VALUE=character(1)) else mod.top[[count]] <- vapply(this.comm.ord[seq_len(set.lengths[j])],alpacaNodeToGene, FUN.VALUE=character(1))
     }
   }
   list(mod.top,mod.top.names)
@@ -192,7 +196,7 @@ alpacaGOtabtogenes <- function(go.result,dm.top)
 alpacaTopEnsembltoTopSym <- function(mod.top,annot.vec)
 {
   res.sym <- NULL
-  for (i in seq_len(ength(mod.top)))
+  for (i in seq_len(length(mod.top)))
   {
     x <- mod.top[[i]]
     res.sym[[i]] <- annot.vec[x[x %in% names(annot.vec)]]
