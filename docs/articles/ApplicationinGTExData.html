@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.61</span>
       </span>
     </div>
 
@@ -92,7 +92,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/netZoo/netZooR/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -110,7 +117,7 @@
             
             <h4 class="date">2019-11-06</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/netZoo/netZooR/blob/master/vignettes/ApplicationinGTExData.Rmd"><code>vignettes/ApplicationinGTExData.Rmd</code></a></small>
       <div class="hidden name"><code>ApplicationinGTExData.Rmd</code></div>
 
     </div>
@@ -141,7 +148,7 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"visNetwork"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; The downloaded binary packages are in</span>
-<span class="co">#&gt;  /var/folders/jh/345y9vmx0l7d63r5b05dwp080000gn/T//RtmpPZmOfk/downloaded_packages</span>
+<span class="co">#&gt;  /var/folders/jh/345y9vmx0l7d63r5b05dwp080000gn/T//RtmpyZh5vu/downloaded_packages</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://datastorm-open.github.io/visNetwork/">visNetwork</a></span><span class="op">)</span> <span class="co"># to visualize the networks</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># point R to your python 3 installation. Make sure that this is the installation that has all the required python libraries (numpy, scipy, etc) installed. netZooR uses a python implementation of PANDA under the hood.</span>
@@ -150,7 +157,8 @@
 <p>The ppi and motif priors are available in our AWS public bucket, and can be downloaded into current working directory.</p>
 <p>Let’s download and take a look at the priors:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt"</span>,<span class="st">"motif_GTEx.txt"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>timeout<span class="op">=</span><span class="fl">600</span><span class="op">)</span> <span class="co"># set timeout for file download</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt"</span>,<span class="st">"motif_GTEx.txt"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_GTEx.txt"</span>,<span class="st">"ppi_GTEx.txt"</span><span class="op">)</span>
 <span class="va">motif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"./motif_GTEx.txt"</span><span class="op">)</span> 
 <span class="va">ppi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"./ppi_GTEx.txt"</span><span class="op">)</span>
@@ -203,7 +211,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprLCL.txt"</span>,<span class="st">"pandaExprLCL.txt"</span><span class="op">)</span></code></pre></div>
 <p>Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">panda_results_LCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprLCL.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">panda_results_LCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pandaPy.html">pandaPy</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprLCL.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Let’s take a look at the results. The output contains a list of three data frames:</p>
 <ul>
 <li>data frame containing the regulatory network (bipartite graph) with edge weights representing the “likelihood” that a transcription factor binds the promotor of and regulates the expression of a gene.<br>
@@ -275,7 +283,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/pandaExprWholeBlood.txt"</span>,<span class="st">"pandaExprWholeBlood.txt"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#run PANDA</span>
-<span class="va">panda_results_wblood</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprWholeBlood.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">panda_results_wblood</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pandaPy.html">pandaPy</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprWholeBlood.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span>
 <span class="co">#&gt; ...Finish PANDA...</span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -300,7 +308,7 @@
 <p>LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples) is a method for creating sample-specific networks. When applied to a PANDA regulatory network, the result is a set of gene regulatory networks, one for each sample in the gene expression dataset. More information on LIONESS can be found in the published paper: <a href="https://doi.org/10.1016/j.isci.2019.03.021" class="uri">https://doi.org/10.1016/j.isci.2019.03.021</a></p>
 <p>Running LIONESS with netZoo is simple, and very similar to running PANDA:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lionessLCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lioness.py.html">lioness.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"pandaExprLCL.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">lionessLCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lionessPy.html">lionessPy</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"pandaExprLCL.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></code></pre></div>
 <p>The result is a data frame in which the first colum contains TFs, the second column contains genes and each subsequent column contains the edge weight for that particular TF-gene pair in a particular sample.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">

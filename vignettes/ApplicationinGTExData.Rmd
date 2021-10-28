@@ -49,6 +49,7 @@ The ppi and motif priors are available in our AWS public bucket, and can be down
 
 Let's download and take a look at the priors:
 ```{r,message=FALSE}
+options(timeout=600) # set timeout for file download
 download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt","motif_GTEx.txt")
 download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_GTEx.txt","ppi_GTEx.txt")
 motif <- read.table("./motif_GTEx.txt") 

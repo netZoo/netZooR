@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.59</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.61</span>
       </span>
     </div>
 
@@ -55,6 +55,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/ALPACA.html">Detecting differential modules using ALPACA</a>
+    </li>
+    <li>
+      <a href="../articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
     <li>
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
@@ -273,7 +276,7 @@
 <p>Cytoscape is an interactivity network visualization tool highly recommanded to explore the PANDA network. Before using this function <code>plot.panda.in.cytoscape</code>, please install and launch Cytoscape (3.6.1 or greater) and keep it running whenever using.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># select top 1000 edges in PANDA network by edge weight.</span>
-<span class="va">panda.net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">treated_net</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">control_net</span><span class="op">$</span><span class="va">force</span>,decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,<span class="op">]</span>, <span class="fl">1000</span><span class="op">)</span>
+<span class="va">panda.net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">treated_net</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">control_net</span><span class="op">$</span><span class="va">force</span>,decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,<span class="op">]</span>, <span class="fl">1000</span><span class="op">)</span>
  
 <span class="co"># run this function to create a network in Cytoscape.</span>
 <span class="fu">vis.panda.in.cytoscape</span><span class="op">(</span><span class="va">panda.net</span>, network.name<span class="op">=</span><span class="st">"PANDA"</span><span class="op">)</span></code></pre></div>
@@ -362,7 +365,7 @@
 <span class="co">#&gt; [8] base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] viridisLite_0.4.0   netZooR_0.99.59     yarn_1.18.0        </span>
+<span class="co">#&gt; [1] viridisLite_0.4.0   netZooR_0.99.61     yarn_1.18.0        </span>
 <span class="co">#&gt; [4] pandaR_1.19.4       Biobase_2.52.0      BiocGenerics_0.38.0</span>
 <span class="co">#&gt; [7] reticulate_1.22     igraph_1.2.6       </span>
 <span class="co">#&gt; </span>
