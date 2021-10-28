@@ -40,5 +40,4 @@ vignettes/pandaR.Rmd
 vignettes/pandaRApplicationinGTExData.Rmd
 vignettes/yarn.Rmd
 notes.md
-R/visDiffPandaInCytoscape.Rd
-R/visPandaInCytoscape.Rd
+R/pandaDiffEdges.R
