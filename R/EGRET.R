@@ -28,15 +28,25 @@
 #' @examples
 #' 
 #' # Run EGRET algorithm
-#' toy_qbic_path <- system.file("extdata", "toy_qbic.txt", package = "netZooR", mustWork = TRUE)
-#' toy_genotype_path <- system.file("extdata", "toy_genotype.vcf", package = "netZooR", mustWork = TRUE)
-#' toy_motif_path <- system.file("extdata", "toy_motif_prior.txt", package = "netZooR", mustWork = TRUE)
-#' toy_expr_path <- system.file("extdata", "toy_expr.txt", package = "netZooR", mustWork = TRUE)
-#' toy_ppi_path <- system.file("extdata", "toy_ppi_prior.txt", package = "netZooR", mustWork = TRUE)
-#' toy_eqtl_path <- system.file("extdata", "toy_eQTL.txt", package = "netZooR", mustWork = TRUE)
-#' toy_map_path <- system.file("extdata", "toy_map.txt", package = "netZooR", mustWork = TRUE)
+#' toy_qbic_path <- system.file("extdata", "toy_qbic.txt", package = "netZooR", 
+#' mustWork = TRUE)
+#' toy_genotype_path <- system.file("extdata", "toy_genotype.vcf", 
+#' package = "netZooR", mustWork = TRUE)
+#' toy_motif_path <- system.file("extdata", "toy_motif_prior.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' toy_expr_path <- system.file("extdata", "toy_expr.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' toy_ppi_path <- system.file("extdata", "toy_ppi_prior.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' toy_eqtl_path <- system.file("extdata", "toy_eQTL.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' toy_map_path <- system.file("extdata", "toy_map.txt", 
+#' package = "netZooR", mustWork = TRUE)
 #' qbic <- read.table(file = toy_qbic_path, header = FALSE)
-#' vcf <- read.table(toy_genotype_path, header = FALSE, sep = "\t", stringsAsFactors = FALSE, colClasses = c("character", "numeric", "character", "character", "character", "character", "character", "character", "character", "character"))
+#' vcf <- read.table(toy_genotype_path, header = FALSE, sep = "\t", 
+#' stringsAsFactors = FALSE, 
+#' colClasses = c("character", "numeric", "character", "character", "character", 
+#' "character", "character", "character", "character", "character"))
 #' motif <- read.table(toy_motif_path, sep = "\t", header = FALSE)
 #' expr <- read.table(toy_expr_path, header = FALSE, sep = "\t", row.names = 1)
 #' ppi <- read.table(toy_ppi_path, header = FALSE, sep = "\t")
