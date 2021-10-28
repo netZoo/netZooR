@@ -23,6 +23,7 @@
 #' 
 #' 
 #' # Run PANDA to construct the treated network
+#' \donttest{
 #' treated_all_panda_result <- pandaPy(expr_file = treated_expression_file_path, 
 #' motif_file= motif_file_path, ppi_file = ppi_file_path, 
 #' modeProcess="legacy", remove_missing = TRUE )
@@ -43,7 +44,7 @@
 #' direction = 1, option = "D")
 #' condorPlotCommunities(treated_condor_object, color_list=treated_color, 
 #' point.size=0.04, xlab="Target", ylab="Regulator")
-#' 
+#' }
 #' 
 #' @export
 #'

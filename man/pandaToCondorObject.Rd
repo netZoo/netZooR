@@ -33,6 +33,7 @@ ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", 
 
 
 # Run PANDA to construct the treated network
+\donttest{
 treated_all_panda_result <- pandaPy(expr_file = treated_expression_file_path, 
 motif_file= motif_file_path, ppi_file = ppi_file_path, 
 modeProcess="legacy", remove_missing = TRUE )
@@ -53,6 +54,6 @@ treated_color <- viridis(treated_color_num, alpha = 1, begin = 0, end = 1,
 direction = 1, option = "D")
 condorPlotCommunities(treated_condor_object, color_list=treated_color, 
 point.size=0.04, xlab="Target", ylab="Regulator")
-
+}
 
 }
