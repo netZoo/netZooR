@@ -2,7 +2,16 @@ pandoc: 2.8.1
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  ALPACA: ALPACA.html
   ApplicationwithTBdataset: ApplicationwithTBdataset.html
   CONDOR: CONDOR.html
-last_built: 2021-10-27T23:54Z
+  EGRET_toy_example: EGRET_toy_example.html
+  LionessApplicationinGTExData: LionessApplicationinGTExData.html
+  MONSTER: MONSTER.html
+  SAMBAR: SAMBAR.html
+  TutorialOTTER: TutorialOTTER.html
+  pandaR: pandaR.html
+  pandaRApplicationinGTExData: pandaRApplicationinGTExData.html
+  yarn: yarn.html
+last_built: 2021-10-28T00:38Z
 

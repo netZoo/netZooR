@@ -85,7 +85,7 @@ BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y"
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.58</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.59</span>
       </span>
     </div>
 
@@ -108,10 +108,37 @@ BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y"
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/ALPACA.html">Detecting differential modules using ALPACA</a>
+    </li>
+    <li>
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
     </li>
     <li>
       <a href="../articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
+    </li>
+    <li>
+      <a href="../articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a>
+    </li>
+    <li>
+      <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
+    </li>
+    <li>
+      <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+    </li>
+    <li>
+      <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
+    </li>
+    <li>
+      <a href="../articles/TutorialOTTER.html">Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER</a>
+    </li>
+    <li>
+      <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
+    </li>
+    <li>
+      <a href="../articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
+    </li>
+    <li>
+      <a href="../articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a>
     </li>
   </ul>
 </li>
@@ -238,12 +265,12 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 1"
 #&gt; [1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 6.29425e-05 secs
+#&gt; Time difference of 6.79493e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 5.507469e-05 secs
+#&gt; Time difference of 5.602837e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Using OLS method"
@@ -251,12 +278,12 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 2"
 #&gt; [1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 5.292892e-05 secs
+#&gt; Time difference of 6.914139e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 6.198883e-05 secs
+#&gt; Time difference of 0.0001130104 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Using OLS method"
@@ -264,12 +291,12 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 3"
 #&gt; [1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 6.29425e-05 secs
+#&gt; Time difference of 5.602837e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 6.41346e-05 secs
+#&gt; Time difference of 5.698204e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; ................[1] "Using OLS method"
@@ -277,12 +304,12 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 4"
 #&gt; [1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 5.698204e-05 secs
+#&gt; Time difference of 5.793571e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 5.38826e-05 secs
+#&gt; Time difference of 5.698204e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Using OLS method"
@@ -290,12 +317,12 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 5"
 #&gt; [1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 5.197525e-05 secs
+#&gt; Time difference of 7.390976e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 6.699562e-05 secs
+#&gt; Time difference of 6.29425e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; ................[1] "Using OLS method"
@@ -303,12 +330,12 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 6"
 #&gt; [1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 6.985664e-05 secs
+#&gt; Time difference of 5.102158e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 5.984306e-05 secs
+#&gt; Time difference of 7.390976e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Using OLS method"
@@ -316,12 +343,12 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 7"
 #&gt; [1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 4.506111e-05 secs
+#&gt; Time difference of 7.796288e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 0.0001881123 secs
+#&gt; Time difference of 6.79493e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Using OLS method"
@@ -329,12 +356,12 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 8"
 #&gt; [1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 5.888939e-05 secs
+#&gt; Time difference of 6.198883e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; ................[1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 7.200241e-05 secs
+#&gt; Time difference of 6.318092e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Using OLS method"
@@ -342,7 +369,7 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 9"
 #&gt; [1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 5.793571e-05 secs
+#&gt; Time difference of 7.915497e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Initializing and validating"
@@ -355,12 +382,12 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 10"
 #&gt; [1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 8.416176e-05 secs
+#&gt; Time difference of 5.00679e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 6.79493e-05 secs
+#&gt; Time difference of 6.890297e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Using OLS method"
@@ -368,17 +395,17 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 11"
 #&gt; [1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 6.79493e-05 secs
+#&gt; Time difference of 6.198883e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Initializing and validating"
 #&gt; [1] "Verified adequate samples, calculating correlation matrix"
-#&gt; Time difference of 7.009506e-05 secs
+#&gt; Time difference of 8.201599e-05 secs
 #&gt; [1] "More data cleaning"
 #&gt; [1] "Main calculation"
 #&gt; .....</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; ...........[1] "Using OLS method"
 #&gt; [1] "Finished running iteration 11"
-#&gt; Time difference of 4.63148 secs</div><div class='input'><span class='co'># Example with provided networks</span>
+#&gt; Time difference of 4.817335 secs</div><div class='input'><span class='co'># Example with provided networks</span>
 <span class='va'>pandaResult</span> <span class='op'>&lt;-</span> <span class='fu'>panda</span><span class='op'>(</span><span class='va'>pandaToyData</span><span class='op'>$</span><span class='va'>motif</span>, <span class='va'>pandaToyData</span><span class='op'>$</span><span class='va'>expression</span>, <span class='va'>pandaToyData</span><span class='op'>$</span><span class='va'>ppi</span><span class='op'>)</span>
 <span class='va'>case</span><span class='op'>=</span><span class='va'>pandaResult</span><span class='op'>@</span><span class='va'>regNet</span>
 <span class='va'>nelemReg</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>pandaResult</span><span class='op'>@</span><span class='va'>regNet</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>pandaResult</span><span class='op'>@</span><span class='va'>regNet</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>
@@ -423,7 +450,7 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an e
 #&gt; [1] "Running iteration 11"
 #&gt; [1] "Using OLS method"
 #&gt; [1] "Finished running iteration 11"
-#&gt; Time difference of 1.045348 secs</div></pre>
+#&gt; Time difference of 1.091371 secs</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

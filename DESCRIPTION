@@ -1,9 +1,9 @@
 Package: netZooR
 Title: Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR, MONSTER, OTTER, EGRET, and YARN into one workflow
-Version: 0.99.58
+Version: 0.99.60
 Date: 2021-09-20
 Authors@R: c(person("Tian", "Wang",
-			email = "twang@hsph.harvard.edu", role = c("aut")),
+			email = "tian.wang@bc.edu", role = c("aut")),
 	     person("Marouen", "Ben Guebila", 
 			email = "marouen.b.guebila@gmail.com", role = c("aut","cre")),
 	     person("John", "Platig",
@@ -20,7 +20,8 @@ Description: PANDA(Passing Attributes between Networks for Data Assimilation) is
 Depends: R (>= 4.1.0),
    	 igraph,
 	 reticulate,
-         pandaR
+         pandaR,
+         yarn
 biocViews:
 	 NetworkInference,
 	 Network,
@@ -59,8 +60,7 @@ Imports: RCy3,
    	 tidyr,
    	 methods,
          dplyr,
-         graphics,
-         yarn
+         graphics
 License: GPL-3
 Encoding: UTF-8
 LazyData: false

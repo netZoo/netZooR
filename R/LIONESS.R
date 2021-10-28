@@ -38,7 +38,7 @@
 #' # Run LIONESS algorithm
 #' control_lioness_result <- lionessPy(expr_file = control_expression_file_path, 
 #' motif_file = motif_file_path, ppi_file = ppi_file_path, 
-#' modeProcess="union",start_sample=1, end_sample=2)
+#' modeProcess="intersection",start_sample=1, end_sample=1, precision="single")
 #'  
 #' @import reticulate
 #' @export
@@ -168,7 +168,7 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
 #' @examples
 #' data(pandaToyData)
 #' linonessRes <- lioness(pandaToyData$motif,
-#'     pandaToyData$expression[,1:3],pandaToyData$ppi,hamming=.1,progress=FALSE)
+#'     pandaToyData$expression[,1:3],pandaToyData$ppi,hamming=1,progress=FALSE)
 #' @references
 #' Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 #' Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.

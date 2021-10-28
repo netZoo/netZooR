@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.58</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.59</span>
       </span>
     </div>
 
@@ -54,10 +54,37 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/ALPACA.html">Detecting differential modules using ALPACA</a>
+    </li>
+    <li>
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
     </li>
     <li>
       <a href="../articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
+    </li>
+    <li>
+      <a href="../articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a>
+    </li>
+    <li>
+      <a href="../articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
+    </li>
+    <li>
+      <a href="../articles/MONSTER.html">An Introduction to the MONSTER Package</a>
+    </li>
+    <li>
+      <a href="../articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
+    </li>
+    <li>
+      <a href="../articles/TutorialOTTER.html">Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER</a>
+    </li>
+    <li>
+      <a href="../articles/pandaR.html">An Introduction to the pandaR Package</a>
+    </li>
+    <li>
+      <a href="../articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
+    </li>
+    <li>
+      <a href="../articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a>
     </li>
   </ul>
 </li>
@@ -197,10 +224,11 @@
 <span class="co">#&gt;     Vignettes contain introductory material; view with</span>
 <span class="co">#&gt;     'browseVignettes()'. To cite Bioconductor, see</span>
 <span class="co">#&gt;     'citation("Biobase")', and for packages 'citation("pkgname")'.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
+<span class="co">#&gt; Loading required package: yarn</span>
 <span class="co">#&gt; Setting options('download.file.method.GEOquery'='auto')</span>
-<span class="co">#&gt; Setting options('GEOquery.inmemory.gpl'=FALSE)</span></code></pre></div>
+<span class="co">#&gt; Setting options('GEOquery.inmemory.gpl'=FALSE)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span></code></pre></div>
 <p>Accessing the help pages for the usage of core functions.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">?</span><span class="va">pandaPy</span>
@@ -334,9 +362,9 @@
 <span class="co">#&gt; [8] base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] viridisLite_0.4.0   netZooR_0.99.58     pandaR_1.19.4      </span>
-<span class="co">#&gt; [4] Biobase_2.52.0      BiocGenerics_0.38.0 reticulate_1.22    </span>
-<span class="co">#&gt; [7] igraph_1.2.6       </span>
+<span class="co">#&gt; [1] viridisLite_0.4.0   netZooR_0.99.59     yarn_1.18.0        </span>
+<span class="co">#&gt; [4] pandaR_1.19.4       Biobase_2.52.0      BiocGenerics_0.38.0</span>
+<span class="co">#&gt; [7] reticulate_1.22     igraph_1.2.6       </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
 <span class="co">#&gt;   [1] utf8_1.2.2                  proto_1.0.0                </span>
@@ -349,7 +377,7 @@
 <span class="co">#&gt;  [15] chron_2.3-56                pbdZMQ_0.3-5               </span>
 <span class="co">#&gt;  [17] colorspace_2.0-2            Category_2.58.0            </span>
 <span class="co">#&gt;  [19] filelock_1.0.2              highr_0.9                  </span>
-<span class="co">#&gt;  [21] knitr_1.34                  dplR_1.7.2                 </span>
+<span class="co">#&gt;  [21] dplR_1.7.2                  knitr_1.34                 </span>
 <span class="co">#&gt;  [23] uuid_0.1-4                  stats4_4.1.1               </span>
 <span class="co">#&gt;  [25] MatrixGenerics_1.4.3        repr_1.1.3                 </span>
 <span class="co">#&gt;  [27] GenomeInfoDbData_1.2.6      bit64_4.0.5                </span>
@@ -369,21 +397,21 @@
 <span class="co">#&gt;  [55] splines_4.1.1               rtracklayer_1.52.1         </span>
 <span class="co">#&gt;  [57] GEOquery_2.60.0             hexbin_1.28.2              </span>
 <span class="co">#&gt;  [59] reshape2_1.4.4              yaml_2.2.1                 </span>
-<span class="co">#&gt;  [61] GenomicFeatures_1.44.2      backports_1.2.1            </span>
+<span class="co">#&gt;  [61] backports_1.2.1             GenomicFeatures_1.44.2     </span>
 <span class="co">#&gt;  [63] RBGL_1.68.0                 tools_4.1.1                </span>
 <span class="co">#&gt;  [65] nor1mix_1.3-0               ggplot2_3.3.5              </span>
 <span class="co">#&gt;  [67] ellipsis_0.3.2              gplots_3.1.1               </span>
 <span class="co">#&gt;  [69] RColorBrewer_1.1-2          ggdendro_0.1.22            </span>
 <span class="co">#&gt;  [71] siggenes_1.66.0             STRINGdb_2.4.1             </span>
-<span class="co">#&gt;  [73] gsubfn_0.7                  Rcpp_1.0.7                 </span>
-<span class="co">#&gt;  [75] hash_2.2.6.1                plyr_1.8.6                 </span>
+<span class="co">#&gt;  [73] gsubfn_0.7                  hash_2.2.6.1               </span>
+<span class="co">#&gt;  [75] Rcpp_1.0.7                  plyr_1.8.6                 </span>
 <span class="co">#&gt;  [77] base64enc_0.1-3             sparseMatrixStats_1.4.2    </span>
 <span class="co">#&gt;  [79] progress_1.2.2              zlibbioc_1.38.0            </span>
 <span class="co">#&gt;  [81] purrr_0.3.4                 RCurl_1.98-1.5             </span>
-<span class="co">#&gt;  [83] prettyunits_1.1.1           openssl_1.4.5              </span>
-<span class="co">#&gt;  [85] sqldf_0.4-11                bumphunter_1.34.0          </span>
-<span class="co">#&gt;  [87] S4Vectors_0.30.0            SummarizedExperiment_1.22.0</span>
-<span class="co">#&gt;  [89] cluster_2.1.2               here_1.0.1                 </span>
+<span class="co">#&gt;  [83] prettyunits_1.1.1           sqldf_0.4-11               </span>
+<span class="co">#&gt;  [85] openssl_1.4.5               bumphunter_1.34.0          </span>
+<span class="co">#&gt;  [87] S4Vectors_0.30.0            cluster_2.1.2              </span>
+<span class="co">#&gt;  [89] SummarizedExperiment_1.22.0 here_1.0.1                 </span>
 <span class="co">#&gt;  [91] fs_1.5.0                    magrittr_2.0.1             </span>
 <span class="co">#&gt;  [93] data.table_1.14.0           matrixStats_0.61.0         </span>
 <span class="co">#&gt;  [95] hms_1.1.0                   evaluate_0.14              </span>
@@ -394,11 +422,11 @@
 <span class="co">#&gt; [105] RCy3_2.12.4                 KernSmooth_2.23-20         </span>
 <span class="co">#&gt; [107] crayon_1.4.1                R.oo_1.24.0                </span>
 <span class="co">#&gt; [109] htmltools_0.5.2             GOstats_2.58.0             </span>
-<span class="co">#&gt; [111] tzdb_0.1.2                  mgcv_1.8-36                </span>
+<span class="co">#&gt; [111] mgcv_1.8-36                 tzdb_0.1.2                 </span>
 <span class="co">#&gt; [113] tidyr_1.1.3                 DBI_1.1.1                  </span>
 <span class="co">#&gt; [115] dbplyr_2.1.1                MASS_7.3-54                </span>
-<span class="co">#&gt; [117] rappdirs_0.3.3              readr_2.0.1                </span>
-<span class="co">#&gt; [119] Matrix_1.3-4                permute_0.9-5              </span>
+<span class="co">#&gt; [117] rappdirs_0.3.3              Matrix_1.3-4               </span>
+<span class="co">#&gt; [119] readr_2.0.1                 permute_0.9-5              </span>
 <span class="co">#&gt; [121] quantro_1.26.0              uchardet_1.1.0             </span>
 <span class="co">#&gt; [123] quadprog_1.5-8              R.methodsS3_1.8.1          </span>
 <span class="co">#&gt; [125] GenomicRanges_1.44.0        pkgconfig_2.0.3            </span>
@@ -417,22 +445,21 @@
 <span class="co">#&gt; [151] GSEABase_1.54.0             restfulr_0.0.13            </span>
 <span class="co">#&gt; [153] curl_4.3.2                  Rsamtools_2.8.0            </span>
 <span class="co">#&gt; [155] gtools_3.9.2                rjson_0.2.20               </span>
-<span class="co">#&gt; [157] yarn_1.18.0                 lifecycle_1.0.0            </span>
-<span class="co">#&gt; [159] nlme_3.1-152                jsonlite_1.7.2             </span>
-<span class="co">#&gt; [161] Rhdf5lib_1.14.2             desc_1.3.0                 </span>
-<span class="co">#&gt; [163] askpass_1.1                 limma_3.48.3               </span>
-<span class="co">#&gt; [165] fansi_0.5.0                 pillar_1.6.2               </span>
-<span class="co">#&gt; [167] lattice_0.20-44             KEGGREST_1.32.0            </span>
+<span class="co">#&gt; [157] lifecycle_1.0.0             nlme_3.1-152               </span>
+<span class="co">#&gt; [159] jsonlite_1.7.2              Rhdf5lib_1.14.2            </span>
+<span class="co">#&gt; [161] desc_1.3.0                  askpass_1.1                </span>
+<span class="co">#&gt; [163] limma_3.48.3                fansi_0.5.0                </span>
+<span class="co">#&gt; [165] pillar_1.6.2                lattice_0.20-44            </span>
+<span class="co">#&gt; [167] plotrix_3.8-2               KEGGREST_1.32.0            </span>
 <span class="co">#&gt; [169] fastmap_1.1.0               httr_1.4.2                 </span>
-<span class="co">#&gt; [171] plotrix_3.8-2               survival_3.2-11            </span>
-<span class="co">#&gt; [173] GO.db_3.13.0                glue_1.4.2                 </span>
-<span class="co">#&gt; [175] png_0.1-7                   iterators_1.0.13           </span>
-<span class="co">#&gt; [177] bit_4.0.4                   Rgraphviz_2.36.0           </span>
-<span class="co">#&gt; [179] stringi_1.7.4               HDF5Array_1.20.0           </span>
-<span class="co">#&gt; [181] blob_1.2.2                  textshaping_0.3.5          </span>
-<span class="co">#&gt; [183] org.Hs.eg.db_3.13.0         caTools_1.18.2             </span>
-<span class="co">#&gt; [185] memoise_2.0.0               IRkernel_1.2               </span>
-<span class="co">#&gt; [187] dplyr_1.0.7</span></code></pre></div>
+<span class="co">#&gt; [171] survival_3.2-11             GO.db_3.13.0               </span>
+<span class="co">#&gt; [173] glue_1.4.2                  png_0.1-7                  </span>
+<span class="co">#&gt; [175] iterators_1.0.13            bit_4.0.4                  </span>
+<span class="co">#&gt; [177] Rgraphviz_2.36.0            stringi_1.7.4              </span>
+<span class="co">#&gt; [179] HDF5Array_1.20.0            blob_1.2.2                 </span>
+<span class="co">#&gt; [181] textshaping_0.3.5           org.Hs.eg.db_3.13.0        </span>
+<span class="co">#&gt; [183] caTools_1.18.2              memoise_2.0.0              </span>
+<span class="co">#&gt; [185] IRkernel_1.2                dplyr_1.0.7</span></code></pre></div>
 </div>
 <div id="note" class="section level2">
 <h2 class="hasAnchor">

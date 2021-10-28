@@ -23,3 +23,14 @@ tests/testthat/test-alpaca.R
 LICENSE
 netZooR.Rcheck/
 vignettes/ApplicationwithTBdataset.Rmd
+vignettes/ALPACA.Rmd
+vignettes/ApplicationinGTExData.Rmd
+vignettes/EGRET_toy_example.Rmd
+vignettes/LionessApplicationinGTExData.Rmd
+vignettes/MONSTER.Rmd
+vignettes/SAMBAR.Rmd
+vignettes/TutorialOTTER.Rmd
+vignettes/pandaR.Rmd
+vignettes/pandaRApplicationinGTExData.Rmd
+vignettes/yarn.Rmd
+notes.md

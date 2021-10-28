@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.59</span>
       </span>
     </div>
 
@@ -55,9 +55,6 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/ALPACA.html">Detecting differential modules using ALPACA</a>
-    </li>
-    <li>
-      <a href="../articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
     </li>
     <li>
       <a href="../articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
@@ -92,7 +89,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/netZoo/netZooR/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -110,7 +114,7 @@
             
             <h4 class="date">2020-10-19</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/netZoo/netZooR/blob/master/vignettes/LionessApplicationinGTExData.Rmd"><code>vignettes/LionessApplicationinGTExData.Rmd</code></a></small>
       <div class="hidden name"><code>LionessApplicationinGTExData.Rmd</code></div>
 
     </div>
@@ -240,7 +244,7 @@
 <span class="va">age</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">age</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">design</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="op">~</span> <span class="va">stage</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span><span class="op">)</span>
 <span class="co"># Run limma</span>
-<span class="va">fitGood</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/lmFit.html">lmFit</a></span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">lioness</span><span class="op">)</span>,<span class="va">design</span><span class="op">)</span>
+<span class="va">fitGood</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/lmFit.html">lmFit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">lioness</span><span class="op">)</span>,<span class="va">design</span><span class="op">)</span>
 <span class="va">fitGood</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/ebayes.html">eBayes</a></span><span class="op">(</span><span class="va">fitGood</span><span class="op">)</span>
 <span class="va">tb</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/toptable.html">topTable</a></span><span class="op">(</span><span class="va">fitGood</span>,coef<span class="op">=</span><span class="st">"genderFEMALE"</span>,number<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span>
@@ -257,7 +261,7 @@
 <a href="#visualize-the-top-edges-with-differential-weights-by-sex" class="anchor"></a>Visualize the top edges with differential weights by sex</h2>
 <p>We select the top 50 edges with differential edge weights by sex and convert them into an igraph graph.data.frame object for visualization. We color edges red if they have higher coefficients in the female group, and blue if they have higher coefficients in the male group.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">toptable_edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/tstrsplit.html">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span>, <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">toptable_edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span>, <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/cbind.html">cbind</a></span><span class="op">(</span><span class="va">toptable_edges</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>,<span class="op">]</span>, <span class="va">tb</span><span class="op">$</span><span class="va">logFC</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span><span class="op">]</span><span class="op">)</span>
 <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html">graph.data.frame</a></span><span class="op">(</span><span class="va">z</span>, directed<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">z</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>
@@ -321,34 +325,34 @@
 <span class="va">pathways</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/gmtPathways.html">gmtPathways</a></span><span class="op">(</span><span class="st">"./c2.cp.kegg.v7.0.symbols.gmt"</span><span class="op">)</span>
 <span class="va">fgseaRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">indegree_rank</span>, minSize<span class="op">=</span><span class="fl">15</span>, maxSize<span class="op">=</span><span class="fl">500</span>, nperm<span class="op">=</span><span class="fl">1000</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span>
-<span class="co">#&gt;                                 pathway       pval      padj         ES</span>
-<span class="co">#&gt; 1:      KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.13469388 0.2398707  0.3240518</span>
-<span class="co">#&gt; 2:         KEGG_CITRATE_CYCLE_TCA_CYCLE 0.55737705 0.6765111 -0.2702159</span>
-<span class="co">#&gt; 3:       KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.23140496 0.3596946  0.3795079</span>
-<span class="co">#&gt; 4: KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.04770992 0.1115570  0.4200039</span>
-<span class="co">#&gt; 5:            KEGG_GALACTOSE_METABOLISM 0.86159844 0.9383161 -0.2250237</span>
-<span class="co">#&gt; 6:           KEGG_FATTY_ACID_METABOLISM 0.16110020 0.2757544  0.3533304</span>
+<span class="co">#&gt;                                 pathway      pval      padj         ES</span>
+<span class="co">#&gt; 1:      KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.1406250 0.2457074  0.3240518</span>
+<span class="co">#&gt; 2:         KEGG_CITRATE_CYCLE_TCA_CYCLE 0.5688259 0.7103730 -0.2702159</span>
+<span class="co">#&gt; 3:       KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.1940000 0.3115758  0.3795079</span>
+<span class="co">#&gt; 4: KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.0513834 0.1150699  0.4200039</span>
+<span class="co">#&gt; 5:            KEGG_GALACTOSE_METABOLISM 0.8408644 0.9256605 -0.2250237</span>
+<span class="co">#&gt; 6:           KEGG_FATTY_ACID_METABOLISM 0.1342412 0.2425495  0.3533304</span>
 <span class="co">#&gt;           NES nMoreExtreme size                            leadingEdge</span>
-<span class="co">#&gt; 1:  1.2494431           65   47  ALDOB,TPI1,ALDH3A1,BPGM,PKLR,PDHB,...</span>
-<span class="co">#&gt; 2: -0.9421750          271   29      SDHA,CS,OGDH,PDHA1,ACO2,OGDHL,...</span>
-<span class="co">#&gt; 3:  1.1938707          111   21   ALDOB,DERA,RPE,TALDO1,PGM2,ALDOC,...</span>
-<span class="co">#&gt; 4:  1.4743002           24   30   ALDOB,TSTA3,MTMR6,TPI1,FPGT,PMM2,...</span>
-<span class="co">#&gt; 5: -0.7198514          441   20            HK1,GLA,GANC,PFKL,UGP2,PFKM</span>
-<span class="co">#&gt; 6:  1.2604816           81   33 GCDH,ACAT2,ACOX3,EHHADH,ECHS1,CPT2,...</span>
+<span class="co">#&gt; 1:  1.2518682           71   47  ALDOB,TPI1,ALDH3A1,BPGM,PKLR,PDHB,...</span>
+<span class="co">#&gt; 2: -0.9389469          280   29      SDHA,CS,OGDH,PDHA1,ACO2,OGDHL,...</span>
+<span class="co">#&gt; 3:  1.2140115           96   21   ALDOB,DERA,RPE,TALDO1,PGM2,ALDOC,...</span>
+<span class="co">#&gt; 4:  1.4683458           25   30   ALDOB,TSTA3,MTMR6,TPI1,FPGT,PMM2,...</span>
+<span class="co">#&gt; 5: -0.7208050          427   20            HK1,GLA,GANC,PFKL,UGP2,PFKM</span>
+<span class="co">#&gt; 6:  1.2695437           68   33 GCDH,ACAT2,ACOX3,EHHADH,ECHS1,CPT2,...</span>
 <span class="co"># Subset to pathways with FDR &lt; 0.05</span>
 <span class="va">sig</span> <span class="op">&lt;-</span> <span class="va">fgseaRes</span><span class="op">[</span><span class="va">fgseaRes</span><span class="op">$</span><span class="va">padj</span> <span class="op">&lt;</span> <span class="fl">0.05</span>,<span class="op">]</span>
 <span class="co"># Top 10 pathways enriched in females</span>
 <span class="va">sig</span><span class="op">$</span><span class="va">pathway</span><span class="op">[</span><span class="va">sig</span><span class="op">$</span><span class="va">NES</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>
 <span class="co">#&gt;  [1] "KEGG_STEROID_HORMONE_BIOSYNTHESIS"                </span>
 <span class="co">#&gt;  [2] "KEGG_OXIDATIVE_PHOSPHORYLATION"                   </span>
-<span class="co">#&gt;  [3] "KEGG_PYRIMIDINE_METABOLISM"                       </span>
-<span class="co">#&gt;  [4] "KEGG_TERPENOID_BACKBONE_BIOSYNTHESIS"             </span>
-<span class="co">#&gt;  [5] "KEGG_METABOLISM_OF_XENOBIOTICS_BY_CYTOCHROME_P450"</span>
-<span class="co">#&gt;  [6] "KEGG_DRUG_METABOLISM_CYTOCHROME_P450"             </span>
-<span class="co">#&gt;  [7] "KEGG_RIBOSOME"                                    </span>
-<span class="co">#&gt;  [8] "KEGG_PROTEASOME"                                  </span>
-<span class="co">#&gt;  [9] "KEGG_PROTEIN_EXPORT"                              </span>
-<span class="co">#&gt; [10] "KEGG_PEROXISOME"</span>
+<span class="co">#&gt;  [3] "KEGG_TERPENOID_BACKBONE_BIOSYNTHESIS"             </span>
+<span class="co">#&gt;  [4] "KEGG_METABOLISM_OF_XENOBIOTICS_BY_CYTOCHROME_P450"</span>
+<span class="co">#&gt;  [5] "KEGG_RIBOSOME"                                    </span>
+<span class="co">#&gt;  [6] "KEGG_PROTEASOME"                                  </span>
+<span class="co">#&gt;  [7] "KEGG_PROTEIN_EXPORT"                              </span>
+<span class="co">#&gt;  [8] "KEGG_PEROXISOME"                                  </span>
+<span class="co">#&gt;  [9] "KEGG_ALZHEIMERS_DISEASE"                          </span>
+<span class="co">#&gt; [10] "KEGG_PARKINSONS_DISEASE"</span>
 <span class="co"># Top 10 pathways enriched in males</span>
 <span class="va">sig</span><span class="op">$</span><span class="va">pathway</span><span class="op">[</span><span class="va">sig</span><span class="op">$</span><span class="va">NES</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>
 <span class="co">#&gt;  [1] "KEGG_INOSITOL_PHOSPHATE_METABOLISM"        </span>
@@ -388,7 +392,7 @@
 <span class="va">dat</span><span class="op">$</span><span class="va">NAME</span> <span class="op">&lt;-</span> <span class="va">a</span>
 <span class="co"># Determine what signatures to plot (based on FDR cut)</span>
 <span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">dat</span><span class="op">[</span>,<span class="st">"padj"</span><span class="op">]</span><span class="op">&lt;</span><span class="va">fdrcut</span>,<span class="op">]</span>
-<span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">dat2</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">[</span>,<span class="st">"padj"</span><span class="op">]</span><span class="op">)</span>,<span class="op">]</span> 
+<span class="va">dat2</span> <span class="op">&lt;-</span> <span class="va">dat2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">[</span>,<span class="st">"padj"</span><span class="op">]</span><span class="op">)</span>,<span class="op">]</span> 
 <span class="va">dat2</span><span class="op">$</span><span class="va">signature</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">$</span><span class="va">NAME</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">$</span><span class="va">NAME</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># Determine what labels to color</span>
 <span class="va">sign_neg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">[</span>,<span class="st">"NES"</span><span class="op">]</span><span class="op">&lt;</span><span class="fl">0</span><span class="op">)</span>

@@ -1,0 +1,187 @@
+---
+title: "An Introduction to the MONSTER Package"
+author: "Daniel Schlauch"
+date: "2017-09-22"
+output: rmarkdown::html_document
+vignette: >
+    %\VignetteIndexEntry{MONSTER}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Using MONSTER
+
+MONSTER (MOdeling Network State Transitions from Expression and Regulatory data) is a tool for identifying the transcription factor drivers of state change.
+
+Specific cellular states are often associated with distinct gene expression patterns. These states are plastic, changing during development, or in the transition from health to disease. One relatively simple extension of this concept is to recognize that we can classify different cell-types by their active gene regulatory networks and that, consequently, transitions between cellular states can be modeled by changes in these underlying regulatory networks. This package is an implementation of MONSTER, MOdeling Network State Transitions from Expression and Regulatory data, a regression-based method for inferring transcription factor drivers of cell state conditions at the gene regulatory network level.
+
+MONSTER takes in sequence motif data linking transcription factors (TFs) to genes and gene expression from two conditions. The goal is generate bipartite networks from the gene expression data which quantify evidence of the regulatory roles of each of the TFs to each of the genes. Next, critical TFs are identified by computing a transition matrix, which maps the gene regulatory network in the first state to the gene regulatory network in the second state.
+
+
+## Installing netZooR
+
+Install and load netZooR package
+```{r,eval = FALSE}
+# install.packages("devtools") 
+library(devtools)
+# install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
+devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
+```
+
+```{r,message=FALSE,warning=FALSE}
+library(netZooR)
+```
+
+## Input files
+
+In this demo, we use the included Yeast dataset, containing three separate Yeast datasets, and a sequence motif object.  The `yeast` dataset includes three separate experimental designs each involving microarray assays of 2555 genes of yeast (Saccharomyces cerevisiae).  `yeast$exp.ko` is a set of 106 gene expression samples of following a number of gene knockouts.  `yeast$exp.cc` is a set of 50 gene expression samples taken sets of two across 25 timepoints spanning the cellular cycle. `yeast$exp.sr` is a set of 173 gene expression samples collected under conditions of stress such as heat shock.  Each expression dataset has been normalized and scaled.
+
+In this tutorial, we will run `monster` to identify suspected TF drivers of the change from the early cell cycle to late cell cycle. 
+
+First, we load the data included in the `netZooR` package
+
+```{r, message=F}
+data(yeast)
+```
+
+Next, we create our design vector indicating to which group each sample belongs.  This vector must contain only 0's and 1's (NAs allowed). 
+
+In this example we are running the analysis on the first 10 timepoints compared to the last 10 timepoints, ignoring the middle 5 for the purposes of simplicity in this tutorial.  Each timepoint contains two samples.
+
+```{r, message=F}
+design <- c(rep(0,20),rep(NA,10),rep(1,20))
+```
+
+The main method in MONSTER is the `monster` function.  This function has three required arguments, 
+
+* A gene expression matrix, `yeast$exp.cc` 
+* A motif mapping data.frame, `yeast$motif`
+* A design integer vector, `design` 
+
+The gene expression argument may be a `matrix`, a `data.frame` or an `ExpressionSet`.  In this example, `yeast$exp.cc` is a `data.frame` consisting of 2555 rows and 50 columns.
+
+The first five rows and columns can be seen
+```{r}
+yeast$exp.cc[1:5,1:5]
+```
+
+The motif mapping data.frame tells the MONSTER algorithm which genes contain likely transcription factor binding sites in the vicinity of their promoter. This serves as the regulatory prior and informs the initial network inference method by supplying a partial list of TF targeting.
+
+This data.frame contains 3 columns, where each row is a specific edge in the prior network.  
+
+* Column 1 specifies the transcription factor for the edge.
+* Column 2 specifies the targeted gene for the edge
+* Column 3 defines the strength of the edge.  By default, in unweighted graphs, this column may be populated entirely with 1's.
+
+The set of unique TFs in column 1 and unique genes in column 2 serve to determine the set of TFs and genes that are used in the downstream analysis.
+
+The first five rows and columns of the example motif `data.frame` can be seen
+
+```{r}
+yeast$motif[1:5,]
+```
+
+MONSTER tests the statistical significance of its results by permuting the samples `n` times and rerunning the analysis for each permutation.  By default, the number of permutations is set to be 100 and can be manually set via the argument `nullPerms`.
+
+Monster is optimized to run on multiple cores, if available.  We can specify the maximum number of cores which are available to run the algorithm.  If `numMaxCores` unspecified, MONSTER will check available resources and run on all but four of the available cores.
+
+## Running MONSTER
+
+```{r, message=F}
+yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
+monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=1, alphaw=1)
+```
+
+We can print the details of the analysis result
+```{r, message=F}
+monsterRes
+```
+
+
+In addition to the three required arguments, we have specified that we will compute 100 randomized runs of the analysis to estimate our result's statistical signficance.  MONSTER makes use of parallelization, and we have specified that 4 cores will be used in this analysis to reduce computation time.
+
+Our result comes in the form of a monster object, `monsterRes`, which contains the estimated transition matrix as well as the transition matrices from the 100 null transitions.
+
+## Visualizing MONSTER results
+
+Many different plotting options are available in the MONSTER package which make use of additional libraries such as ggplot and igraph.  Typically, we are interested in features of the transition matrix, particularly with respect to the distribution of those features under the null.
+
+***
+
+The main plot function is the dTFI plot, utilizing the `ggplot` library. Of interest is the degree to which the observed transition matrix differs from those obtained via random premutations of the samples.  We quantify this difference via differential TF Involvement, $dTFI$, defined as the sum of squared off-diagonal elements in each column of the transition matrix,
+$$\hat{dTFI_{j}}=\frac{\sum_{i=1}^{m}I\left(i\ne j\right)\hat{\tau}_{i,j}^{2}}{\sum_{i=1}^{m}\hat{\tau}_{i,j}^{2}}$$
+
+We can view the $dTFI$ with the generic `plot` function
+
+```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
+monsterPlotMonsterAnalysis(monsterRes)
+```
+
+In this plot, we have the $dTFI$ for each transcription factor along the x-axis.  The observed values are shown in red and the null values are shown in blue.  
+
+Due to the complex nature of the structure of gene regulatory networks, it is not uncommon to see transcription factors which exhibit a high degree of transitional change, but which is not statistically significant due to the high variability of that particular TF (e.g. YDR463W).  Conversely, some TFs show weak changes, but those changes are large compared to the changes observed in null transitions (e.g. YKL062W).  Ideally, we are most interested in TFs which demonstrate large changes in targetting pattern which is found to be strongly significant (e.g. YJL056C).
+
+Adding the argument `rescale='significance'`, sorts the x-axis so that the most significant transcription factors are on the left.
+
+```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
+monsterPlotMonsterAnalysis(monsterRes, rescale='significance')
+```
+
+Our top hit here is YDL056W, which reassuringly is established in the literature as being involved in regulation of cell cycle progression from G1 to S phase [Koch C, et al. (1993)]
+
+***
+
+The dTFI plot focuses primarily on individual transcription factors which have systematically changed their targetting patterns between groups. To dive further into the mechanisms, we may be specifically interested in which TFs are acquiring the targetting signatures of which other TFs. We can visualize the transition matrix in a number of ways using MONSTER.  
+
+First, using the package `gplots`, we can simply plot the transition matrix. The `heatmap.2` function will show the $m\times m$ transition matrix in the form of a square heatmap with $m$ being the number of transcription factors.  Intuitively, this is the operator, $\textbf{T}$, on which we transform gene regulatory network $\textbf{A}$ (The first 10 timepoints in the Yeast Cell Cycle) to network $\textbf{B}$ (The last 10 timepoints in the Yeast Cell Cycle) via the equation
+$$\textbf{B}=\textbf{AT} + \textbf{E}$$
+where $\textbf{E}$ is the $p\times m$ error matrix which we are minimizing.
+
+
+```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
+library(gplots)
+heatmap.2(slot(monsterRes, 'tm'), col = "bluered",
+density.info="none",  
+trace="none", 
+dendrogram='none',     
+Rowv=FALSE,
+Colv=FALSE)
+```
+
+In examining this heatmap, we are interested in strong deviations from the identity matrix.  The diagonal is removed for visualization purposes.  We can see that the cell cycle change is strong driven by a handful of transcription factors.  Specifically, YBL005W, YLR228C, YLR451W and YML0051W.
+
+This transition may also be depicted as a graph, displaying the gain or loss of features between transcription factors.  Recall, that a large deviation from zero off of the diagonal indicates that the targetting pattern of one transcription factor is being "transferred" to another transcription factor as we move from the initial state to the final state.
+
+`MONSTER` contains the function `transitionNetworkPlot` to makes use of the `igraph` package to display the transition in network states.  Since this graph is complete with negative edgeweights allowed, the argument `numEdges=20` (default is 100 edges) is used to specify the number of top transitions to display.
+
+```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
+monsterTransitionNetworkPlot(monsterRes, numEdges=20)
+```
+
+A network visualization of the strongest 20 transitions identified based on the transition matrix above. Arrows indicate a change in edges from a transcription factor in the network of the first 10 timepoints in the Yeast Cell Cycle to resemble those of a transcription factor in the last 10 timepoints in the Yeast Cell Cycle. Edges are sized according to the magnitude of the transition and nodes (TFs) are sized by the dTFI for that TF. The gain of targeting features is indicated by the color blue while the loss of features is indicated by red.
+
+Furthermore, we are often interested in correlated targetting pattern sharing.  To find clusters of transcription factor transitions, we can plot the set of TFs onto the first two principal components taken from the transition matrix.
+
+```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
+    require(ggplot2)
+    tm.pca <- princomp(slot(monsterRes, 'tm'))
+    odsm <- apply(slot(monsterRes, 'tm'),2,function(x){t(x)%*%x})
+    odsm.scaled <- (odsm-mean(odsm))/sd(odsm)+4
+    scores.pca <- as.data.frame(tm.pca$scores)
+    scores.pca <- cbind(scores.pca,'node.names'=rownames(scores.pca))
+    ggplot(data = scores.pca, aes(x = Comp.1, y = Comp.2, label = node.names)) +
+        geom_hline(yintercept = 0, colour = "gray65") +
+        geom_vline(xintercept = 0, colour = "gray65") +
+        geom_text(size = odsm.scaled) +
+        expand_limits(x=c(-.6,.7))+
+        ggtitle("PCA of transitions of Cell Cycle Transcription Factors in Yeast")
+```
+
+The above plot can also be achieved using the included `MONSTER` function, `monster.transitionPCAPlot(monsterRes)`.
