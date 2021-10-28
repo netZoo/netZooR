@@ -24,6 +24,7 @@
 #' 
 #' 
 #' # Run PANDA for treated and control network
+#' \donttest{
 #' treated_panda_net <- pandaPy(expr_file = treated_expression_file_path, 
 #' motif_file = motif_file_path, ppi_file = ppi_file_path, 
 #' modeProcess="legacy", remove_missing = TRUE )$panda
@@ -33,6 +34,7 @@
 #'  
 #' # Run ALPACA
 #' alpaca<- pandaToAlpaca(treated_panda_net, control_panda_net, "./TB", verbose=TRUE)
+#' }
 #' 
 #' @export
 pandaToAlpaca <- function(panda.net1, panda.net2, file.stem = "./alpaca", verbose = FALSE){
