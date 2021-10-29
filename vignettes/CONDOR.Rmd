@@ -16,12 +16,19 @@ vignette: |
 ## Introduction
 COmplex Network Description Of Regulators (CONDOR) implements methods for clustering bipartite networks and estimating the contribution of each node to its community's modularity. For an application of this method to identify diesease-associated single nucleotide polymorphisms, see (https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033).
 
+## Installation
+CONDOR can be installed through netZooR as follows:
+
+```R
+remotes::install_github("netZoo/netZooR", build_vignettes = FALSE)
+```
+
 ## Implementing the Bipartite Modularity Maximization
-The code in **condor.modularity.max** is an implementation of the method described in Michael Barber's paper **Modularity and community detection in bipartite networks** (Phys. Rev. E 76, 066102 (2007)). A few general comments:
+The code in **condorModularityMax** is an implementation of the method described in Michael Barber's paper **Modularity and community detection in bipartite networks** (Phys. Rev. E 76, 066102 (2007)). A few general comments:
 \begin{itemize}
 -  Maximizing bipartite modularity is an NP-hard problem
 -  This method is heuristic and can depend on initial assignments of the nodes to communities
--  For the implementation in **condor.cluster**, I use a non-bipartite community detection method from the **igraph** package to use as initial assignments of nodes to communities, which are then used in **condor.modularity.max**.
+-  For the implementation in **condorCluster**, I use a non-bipartite community detection method from the **igraph** package to use as initial assignments of nodes to communities, which are then used in **condorModularityMax**.
 -  Community structure is designed to cluster networks that form a giant connected component. All of the analysis in this package uses the giant connected component.
 \end{itemize}
 ## Workflow
@@ -36,17 +43,17 @@ reds <- c("Alice","Sue","Janine","Mary")
 blues <- c("Bob","John","Ed","Hank")
 elist <- data.frame(red=reds[r], blue=blues[b])
 ```
-In **elist**, notice all nodes of the same type--women and men in this case--appear in the same column together. This is a requirement. **create.condor.object** will throw an error if a node appears in both columns. 
+In **elist**, notice all nodes of the same type--women and men in this case--appear in the same column together. This is a requirement. **createCondorObject** will throw an error if a node appears in both columns. 
 ```{r,message=FALSE,warning=FALSE}
-condor.object <- create.condor.object(elist)
+condor.object <- createCondorObject(elist)
 ```
 A condor.object is just a list. You can look at the different items using **names**
 ```{r,message=FALSE,warning=FALSE}
 names(condor.object)
 ```
-**condor.cluster** will cluster the nodes and produce the overall modularity along with two community membership **data.frames**:
+**condorCluster** will cluster the nodes and produce the overall modularity along with two community membership **data.frames**:
 ```{r,message=FALSE,warning=FALSE}
-condor.object <- condor.cluster(condor.object)
+condor.object <- condorCluster(condor.object)
 print(condor.object$red.memb)
 print(condor.object$blue.memb)
 ```
@@ -64,24 +71,24 @@ plot(gtoy,vertex.label.dist=2)
 
 To get each node's modularity contribution (as a fraction of the community's modularity), run
 ```{r,message=FALSE,warning=FALSE}
-condor.object <- condor.qscore(condor.object)
+condor.object <- condorQscore(condor.object)
 ```
-If you have a subset of nodes that you think are more likely to lie at the cores of your communities, you can test this using **condor.core.enrich**:
+If you have a subset of nodes that you think are more likely to lie at the cores of your communities, you can test this using **condorCoreEnrich**:
 
 ```{r fig=TRUE,message=FALSE,warning=FALSE}
 q_women <- condor.object$qscores$red.qscore
-core_stats <- condor.core.enrich(test_nodes=c("Alice","Mary"),
+core_stats <- condorCoreEnrich(test_nodes=c("Alice","Mary"),
                                  q=q_women,perm=TRUE,plot.hist=TRUE)
 ```
 
 **condor** also works on weighted bipartite networks. The package comes with a quantitative pollination network data set (Small 1976) taken from the NCEAS interaction webs data base, containing interactions between 13 plants and 34 pollinators.
 ```{r,message=FALSE,warning=FALSE}
 data(small1976)
-condor.object <- create.condor.object(small1976)
-condor.object <- condor.cluster(condor.object, project=FALSE)
+condor.object <- createCondorObject(small1976)
+condor.object <- condorCluster(condor.object, project=FALSE)
 ```
 
 ```{r fig=TRUE,message=FALSE,warning=FALSE}
-condor.plot.heatmap(condor.object)
+condorPlotHeatmap(condor.object)
 ```
 

@@ -33,3 +33,11 @@ A list of samples and the subtypes to which these samples are assigned, for each
 \description{
 Main SAMBAR function.
 }
+\examples{
+data("exon.size")
+data("mut.ucec")
+data("genes")
+sambar(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", 
+"h.all.v6.1.symbols.gmt", package="netZooR", mustWork=TRUE), 
+       cangenes=genes, kmin=2, kmax=4)
+}

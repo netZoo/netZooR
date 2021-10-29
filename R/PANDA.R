@@ -10,7 +10,7 @@
 #' @param motif_file An optional character string indicating the file path of a prior transcription factor binding motifs dataset.
 #'          When this argument is not provided, analysis will continue with Pearson correlation matrix.
 #' @param ppi_file An optional character string indicating the file path of protein-protein interaction edge dataset.
-#'          Also, this can be generated with a list of proteins of interest by \code{\link{source.PPI}}.
+#'          Also, this can be generated with a list of proteins of interest by \code{\link{sourcePPI}}.
 #'          
 #' @param computing 'cpu' uses Central Processing Unit (CPU) to run PANDA; 'gpu' use the Graphical Processing Unit (GPU) to run PANDA. The default value is "cpu".
 #' 
@@ -45,7 +45,8 @@
 #' 
 #' 
 #' # Run PANDA for treated and control network
-#' treated_all_panda_result <- panda.py(expr_file = treated_expression_file_path, 
+#' \donttest{
+#' treated_all_panda_result <- pandaPy(expr_file = treated_expression_file_path, 
 #' motif_file = motif_file_path, ppi_file = ppi_file_path, 
 #' modeProcess="legacy", remove_missing = TRUE )
 #' 
@@ -57,13 +58,14 @@
 #' 
 #' # access PANDA regulatory outdegree networks
 #' outdegree_net <- treated_all_panda_result$outdegree
+#' }
 #' 
 #' @import reticulate
 #' @export
 #'
 
 
-panda.py <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE){
+pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE){
   
   if(missing(expr_file)){
     stop("Please provide the path of gene expression data file to 'expr_file' variable") }

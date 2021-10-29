@@ -1,7 +1,21 @@
 monsterAnalysis <- setClass("monsterAnalysis", slots=c("tm","nullTM","numGenes","numSamples"))
-setMethod("show","monsterAnalysis",function(object){monster.print.monsterAnalysis(object)})
+setMethod("show","monsterAnalysis",function(object){monsterPrintMonsterAnalysis(object)})
 
-#' monster.plot.monsterAnalysis
+#' monsterGetTm
+#'
+#' acessor for the transition matrix in MONSTER object
+#'
+#' @param x an object of class "monsterAnalysis"
+#' @export
+#' @return Transition matrix
+#' @examples
+#' data(monsterRes)
+#' tm <- monsterGetTm(monsterRes)
+monsterGetTm <- function(x){
+    x@tm
+}
+
+#' monsterPlotMonsterAnalysis
 #'
 #' plots the sum of squares of off diagonal mass (differential TF Involvement)
 #'
@@ -15,11 +29,12 @@ setMethod("show","monsterAnalysis",function(object){monster.print.monsterAnalysi
 #' design <- c(rep(1,25),rep(0,10),rep(NA,15))
 #' monsterRes <- monster(yeast$exp.cc, design,
 #' yeast$motif, nullPerms=10, numMaxCores=1)
-#' monster.plot.monsterAnalysis(monsterRes)
-monster.plot.monsterAnalysis <- function(x, ...){
-  monster.dTFIPlot(x,...)
+#' monsterPlotMonsterAnalysis(monsterRes)
+monsterPlotMonsterAnalysis <- function(x, ...){
+  monsterdTFIPlot(x,...)
 }
-#' monster.print.monsterAnalysis
+
+#' monsterPrintMonsterAnalysis
 #'
 #' summarizes the results of a MONSTER analysis
 #'
@@ -32,7 +47,7 @@ monster.plot.monsterAnalysis <- function(x, ...){
 #' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' design <- c(rep(1,25),rep(0,10),rep(NA,15))
 #' monster(yeast$exp.cc,design,yeast$motif, nullPerms=10, numMaxCores=1)
-monster.print.monsterAnalysis <- function(x, ...){
+monsterPrintMonsterAnalysis <- function(x, ...){
   cat("MONSTER object\n")
   cat(paste(x@numGenes, "genes\n"))
   cat(paste(x@numSamples[1],"baseline samples\n"))
@@ -72,7 +87,8 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' @param outputDir character vector specifying a directory or path in which 
 #' which to save MONSTER results, default is NA and results are not saved.
 #' @param alphaw A weight parameter between 0 and 1 specifying proportion of weight 
-#' to give to indirect compared to direct evidence. The default is 0.5 to give an equal weight to direct and indirect evidence.
+#' to give to indirect compared to direct evidence. The default is 0.5 to give an 
+#' equal weight to direct and indirect evidence.
 #' @param mode A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
 #' ('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA.
 #' @export
@@ -89,16 +105,18 @@ monster.print.monsterAnalysis <- function(x, ...){
 #' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 #' # Example with provided networks
+#' \donttest{
 #' pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
-#' case=pandaResult@regNet
-#' nelemReg=dim(pandaResult@regNet)[1]*dim(pandaResult@regNet)[2]
-#' nGenes=length(colnames(pandaResult@regNet))
+#' case=getRegNet(pandaResult)
+#' nelemReg=dim(getRegNet(pandaResult))[1]*dim(getRegNet(pandaResult))[2]
+#' nGenes=length(colnames(getRegNet(pandaResult)))
 #' control=matrix(rexp(nelemReg, rate=.1), ncol=nGenes)
 #' colnames(control) = colnames(case)
 #' rownames(control) = rownames(case) 
 #' expr = as.data.frame(cbind(control,case))
 #' design=c(rep(0,nGenes),rep(1, nGenes))
 #' monsterRes <- monster(expr, design, motif=NA, nullPerms=10, numMaxCores=1, mode='regNet')
+#' }
 
 monster <- function(expr, 
                     design, 
@@ -123,7 +141,7 @@ monster <- function(expr,
     }
   }
   # Data type checking
-  expr <- monster.checkDataType(expr)
+  expr <- monsterCheckDataType(expr)
   # Parallelize
   # Initiate cluster
   if(!is.na(numMaxCores) && numMaxCores > 1){
@@ -165,7 +183,7 @@ monster <- function(expr,
   nullExpr <- expr
   if(numMaxCores == 1){
     transMatrices=list()
-    for(i in 1:iters){
+    for(i in seq_len(iters)){
       print(paste0("Running iteration ", i))
       if(i!=1){
         if(mode == 'regNet'){
@@ -180,12 +198,12 @@ monster <- function(expr,
         nullExprCases <- nullExpr[,design==1]
         nullExprControls <- nullExpr[,design==0]
         
-        tmpNetCases <- monster.monsterNI(motif, nullExprCases, 
+        tmpNetCases <- monsterMonsterNI(motif, nullExprCases, 
                                          method=ni_method, regularization="none",
                                          score="none", ni.coefficient.cutoff,
                                          verbose=TRUE, randomize = "none", cpp=FALSE,
                                          alphaw)
-        tmpNetControls <- monster.monsterNI(motif, nullExprControls, 
+        tmpNetControls <- monsterMonsterNI(motif, nullExprControls, 
                                             method=ni_method, regularization="none",
                                             score="none", ni.coefficient.cutoff,
                                             verbose=TRUE, randomize = "none", cpp=FALSE,
@@ -194,7 +212,7 @@ monster <- function(expr,
         tmpNetCases    = nullExpr[,design==1]
         tmpNetControls = nullExpr[,design==0]
       }
-      transitionMatrix <- monster.transformation.matrix(
+      transitionMatrix <- monsterTransformationMatrix(
         tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
       print(paste("Finished running iteration", i))
       if (!is.na(outputDir)){
@@ -204,7 +222,7 @@ monster <- function(expr,
     }
     print(Sys.time()-strt)
   }else{
-    transMatrices <- foreach(i=1:iters,
+    transMatrices <- foreach(i=seq_len(iters),
                              .packages=c("netZooR","reshape2","penalized","MASS")) %dopar% {
                                print(paste0("Running iteration ", i))
                                if(i!=1){
@@ -220,12 +238,12 @@ monster <- function(expr,
                                  nullExprCases <- nullExpr[,design==1]
                                  nullExprControls <- nullExpr[,design==0]
                                  
-                                 tmpNetCases <- monster.monsterNI(motif, nullExprCases, 
+                                 tmpNetCases <- monsterMonsterNI(motif, nullExprCases, 
                                                                   method=ni_method, regularization="none",
                                                                   score="none", ni.coefficient.cutoff,
                                                                   verbose = FALSE, randomize = "none",
                                                                   alphaw)
-                                 tmpNetControls <- monster.monsterNI(motif, nullExprControls, 
+                                 tmpNetControls <- monsterMonsterNI(motif, nullExprControls, 
                                                                      method=ni_method, regularization="none",
                                                                      score="none", ni.coefficient.cutoff,
                                                                      verbose = FALSE, randomize = "none",
@@ -234,7 +252,7 @@ monster <- function(expr,
                                  tmpNetCases    = nullExpr[,design==1]
                                  tmpNetControls = nullExpr[,design==0]
                                }
-                               transitionMatrix <- monster.transformation.matrix(
+                               transitionMatrix <- monsterTransformationMatrix(
                                  tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
                                print(paste("Finished running iteration", i))
                                if (!is.na(outputDir)){
@@ -267,13 +285,13 @@ monster <- function(expr,
 #' @export
 #' @examples
 #' expr.matrix <- matrix(rnorm(2000),ncol=20)
-#' monster.checkDataType(expr.matrix)
+#' monsterCheckDataType(expr.matrix)
 #' #TRUE
 #' data(yeast)
 #' class(yeast$exp.cc)
-#' monster.checkDataType(yeast$exp.cc)
+#' monsterCheckDataType(yeast$exp.cc)
 #' #TRUE
-monster.checkDataType <- function(expr){
+monsterCheckDataType <- function(expr){
   assert_that(is.data.frame(expr)||is.matrix(expr)||is(expr,"ExpressionSet"))
   if("ExpressionSet" %in% class(expr)){
     if (requireNamespace("Biobase", quietly = TRUE)) {
@@ -308,11 +326,11 @@ globalVariables("i")
 #' @export
 #' @examples
 #' data(yeast)
-#' cc.net.1 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
-#' cc.net.2 <- monster.monsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])
-#' monster.transformation.matrix(cc.net.1, cc.net.2)
+#' cc.net.1 <- monsterMonsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])
+#' cc.net.2 <- monsterMonsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50])
+#' monsterTransformationMatrix(cc.net.1, cc.net.2)
 
-monster.transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, standardize=FALSE, 
+monsterTransformationMatrix <- function(network.1, network.2, by.tfs=TRUE, standardize=FALSE, 
                                           remove.diagonal=TRUE, method="ols"){
   if(is.list(network.1)&&is.list(network.2)){
     if(by.tfs){
@@ -345,9 +363,9 @@ monster.transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, sta
     tf.trans.matrix <- svd.net2$v %*% diag(1/svd.net2$d) %*% t(svd.net2$u) %*% net1
   }
   if (method == "ols"){
-    net2.star <- sapply(1:ncol(net1), function(i,x,y){
+    net2.star <- vapply(seq_len(ncol(net1)), function(i,x,y){
       lm(y[,i]~x[,i])$resid
-    }, net1, net2)
+    }, x=net1, y=net2, FUN.VALUE = numeric(dim(net1)[1]))
     tf.trans.matrix <- ginv(t(net1)%*%net1)%*%t(net1)%*%net2.star
     colnames(tf.trans.matrix) <- colnames(net1)
     rownames(tf.trans.matrix) <- colnames(net1)
@@ -355,14 +373,14 @@ monster.transformation.matrix <- function(network.1, network.2, by.tfs=TRUE, sta
     
   }
   if (method == "L1"){
-    net2.star <- sapply(1:ncol(net1), function(i,x,y){
+    net2.star <- vapply(seq_len(ncol(net1)), function(i,x,y){
       lm(y[,i]~x[,i])$resid
-    }, net1, net2)
-    tf.trans.matrix <- sapply(1:ncol(net1), function(i){
+    }, x=net1, y=net2, FUN.VALUE = numeric(dim(net1)[1]))
+    tf.trans.matrix <- vapply(seq_len(ncol(net1)), function(i){
       z <- optL1(net2.star[,i], net1, fold=5, minlambda1=1, 
                  maxlambda1=2, model="linear", standardize=TRUE)
       coefficients(z$fullfit, "penalized")
-    })
+    }, FUN.VALUE = numeric(1))
     colnames(tf.trans.matrix) <- rownames(tf.trans.matrix)
     print("Using L1 method")
     
@@ -430,8 +448,8 @@ kabsch <- function(P,Q){
 #' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=10, numMaxCores=1)
 #' data(monsterRes)
-#' monster.hcl.heatmap.plot(monsterRes)
-monster.hcl.heatmap.plot <- function(monsterObj, method="pearson"){
+#' monsterHclHeatmapPlot(monsterRes)
+monsterHclHeatmapPlot <- function(monsterObj, method="pearson"){
   x <- monsterObj@tm
   if(method=="pearson"){
     dist.func <- function(y) as.dist(cor(y))
@@ -523,11 +541,11 @@ monster.hcl.heatmap.plot <- function(monsterObj, method="pearson"){
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
 #' # Color the nodes according to cluster membership
-#' clusters <- kmeans(slot(monsterRes, 'tm'),3)$cluster 
-#' monster.transitionPCAPlot(monsterRes, 
+#' clusters <- kmeans(monsterGetTm(monsterRes),3)$cluster 
+#' monsterTransitionPCAPlot(monsterRes, 
 #' title="PCA Plot of Transition - Cell Cycle vs Stress Response", 
 #' clusters=clusters)
-monster.transitionPCAPlot <-    function(monsterObj, 
+monsterTransitionPCAPlot <-    function(monsterObj, 
                                          title="PCA Plot of Transition", 
                                          clusters=1, alpha=1){
   tm.pca <- princomp(monsterObj@tm)
@@ -569,14 +587,14 @@ monster.transitionPCAPlot <-    function(monsterObj,
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
-#' monster.transitionNetworkPlot(monsterRes, rescale='significance')
-#' monster.transitionNetworkPlot(monsterRes, rescale='none')
+#' monsterTransitionNetworkPlot(monsterRes, rescale='significance')
+#' monsterTransitionNetworkPlot(monsterRes, rescale='none')
 
-monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10, rescale='significance'){
+monsterTransitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10, rescale='significance'){
   ## Calculate p-values for off-diagonals
   transitionSigmas <- function(tm.observed, tm.null){
-    tm.null.mean <- apply(simplify2array(tm.null), 1:2, mean)
-    tm.null.sd <- apply(simplify2array(tm.null), 1:2, sd)
+    tm.null.mean <- apply(simplify2array(tm.null), seq_len(2), mean)
+    tm.null.sd <- apply(simplify2array(tm.null), seq_len(2), sd)
     sigmas <- (tm.observed - tm.null.mean)/tm.null.sd
   }
   
@@ -592,10 +610,10 @@ monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10
   
   # adj.combined[,1] <- mappings[match(adj.combined[,1], mappings[,1]),2]
   # adj.combined[,2] <- mappings[match(adj.combined[,2], mappings[,1]),2]
-  dTFI_pVals_All <- 1-2*abs(.5-monster.calculate.tm.p.values(monsterObj, 
+  dTFI_pVals_All <- 1-2*abs(.5-monsterCalculateTmPValues(monsterObj, 
                                                              method="z-score"))
   if(rescale=='significance'){
-    topTFsIncluded <- names(sort(dTFI_pVals_All)[1:numTopTFs])
+    topTFsIncluded <- names(sort(dTFI_pVals_All)[seq_len(numTopTFs)])
     topTFIndices <- 2>(is.na(match(adj.combined[,1],topTFsIncluded)) + 
                          is.na(match(adj.combined[,2],topTFsIncluded)))
     adj.combined <- adj.combined[topTFIndices,]
@@ -643,8 +661,8 @@ monster.transitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
-#' monster.dTFIPlot(monsterRes)
-monster.dTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight.tfs=NA,
+#' monsterdTFIPlot(monsterRes)
+monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight.tfs=NA,
                              nTFs=-1){
   if(is.na(plot.title)){
     plot.title <- "Differential TF Involvement"
@@ -659,12 +677,15 @@ monster.dTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highligh
   
   ssodm <- apply(monsterObj@tm,2,function(x){t(x)%*%x})
   
-  p.values <- 1-pnorm(sapply(seq_along(ssodm),function(i){
+  seqssdom <- seq_along(ssodm)
+  names(seqssdom) <- names(ssodm)
+  p.values <- 1-pnorm(vapply(seqssdom,function(i){
     (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-  }))
-  t.values <- sapply(seq_along(ssodm),function(i){
+  }, FUN.VALUE = numeric(1), USE.NAMES = TRUE))
+  
+  t.values <- vapply(seqssdom,function(i){
     (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-  })
+  }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
   
   # Process the data for ggplot2
   combined.mat <- cbind(null.ssodm.matrix, ssodm)
@@ -695,7 +716,7 @@ monster.dTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highligh
     geom_point(aes(color=factor(Var2), alpha = .5*as.numeric(factor(Var2))), size=2) +
     scale_color_manual(values = c("blue", "red")) +
     scale_alpha(guide = "none") +
-    scale_x_discrete(limits = x.axis.order[1:nTFs] ) +
+    scale_x_discrete(limits = x.axis.order[seq_len(nTFs)] ) +
     theme_classic() +
     theme(legend.title=element_blank(),
           axis.text.x = element_text(colour = 1+x.axis.order%in%highlight.tfs, 
@@ -721,8 +742,8 @@ monster.dTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highligh
 #' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
 #' data(monsterRes)
-#' monster.calculate.tm.p.values(monsterRes)
-monster.calculate.tm.p.values <- function(monsterObj, method="z-score"){
+#' monsterCalculateTmPValues(monsterRes)
+monsterCalculateTmPValues <- function(monsterObj, method="z-score"){
   num.iterations <- length(monsterObj@nullTM)
   # Calculate the off-diagonal squared mass for each transition matrix
   null.SSODM <- lapply(monsterObj@nullTM,function(x){
@@ -735,13 +756,17 @@ monster.calculate.tm.p.values <- function(monsterObj, method="z-score"){
   
   # Get p-value (rank of observed within null ssodm)
   if(method=="non-parametric"){
-    p.values <- sapply(seq_along(ssodm),function(i){
+    seqssodm <- seq_along(ssodm)
+    names(seqssodm) <- names(ssodm)
+    p.values <- vapply(seqssodm,function(i){
       1-findInterval(ssodm[i], null.ssodm.matrix[i,])/num.iterations
-    })
+    }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
   } else if (method=="z-score"){
-    p.values <- pnorm(sapply(seq_along(ssodm),function(i){
+    seqssdom=seq_along(ssodm)
+    names(seqssdom)=names(ssodm)
+    p.values <- pnorm(vapply(seqssdom,function(i){
       (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-    }))
+    }, FUN.VALUE = numeric(1), USE.NAMES = TRUE))
   } else {
     print('Undefined method')
   }
@@ -767,10 +792,12 @@ globalVariables(c("Var1", "Var2","value","variable","xend","yend","y","Comp.1", 
 #' in the paper (please see Schlauch et al., 2017,  https://doi.org/10.1186/s12918-017-0517-y)
 #' @param ni.coefficient.cutoff numeric to specify a p-value cutoff at the network
 #' inference step.  Default is NA, indicating inclusion of all coefficients.
+#' @param alphaw A weight parameter between 0 and 1 specifying proportion of weight 
+#' to give to indirect compared to direct evidence. The default is 0.5 to give an 
+#' equal weight to direct and indirect evidence.
 #' @param randomize logical indicating randomization by genes, within genes or none
 #' @param score String to indicate whether motif information will be 
 #' readded upon completion of the algorithm
-#' @param alphaw A weight parameter specifying proportion of weight 
 #' to give to indirect compared to direct evidence.  See documentation.
 #' @param regularization String parameter indicating one of "none", "L1", "L2"
 #' @param cpp logical use C++ for maximum speed, set to false if unable to run.
@@ -781,9 +808,9 @@ globalVariables(c("Var1", "Var2","value","variable","xend","yend","y","Comp.1", 
 #' @importFrom reshape2 dcast
 #' @examples
 #' data(yeast)
-#' cc.net <- monster.monsterNI(yeast$motif,yeast$exp.cc)
+#' cc.net <- monsterMonsterNI(yeast$motif,yeast$exp.cc)
 
-monster.monsterNI <- function(motif.data, 
+monsterMonsterNI <- function(motif.data, 
                               expr.data,
                               verbose=FALSE,
                               randomize="none",
@@ -799,7 +826,7 @@ monster.monsterNI <- function(motif.data,
   tf.names   <- sort(unique(motif.data[,1]))
   num.TFs    <- length(tf.names)
   if (is.null(expr.data)){
-    stop("Error: Expression data null")
+    stop("Expression data null")
   } else {
     # Use the motif data AND the expr data (if provided) for the gene list
     gene.names <- sort(intersect(motif.data[,2],rownames(expr.data)))
@@ -825,14 +852,14 @@ monster.monsterNI <- function(motif.data,
   
   # Bad data checking
   if (num.genes==0){
-    stop("Error validating data.  No matched genes.\n
+    stop("Validating data.  No matched genes.\n
             Please ensure that gene names in expression 
             file match gene names in motif file.")
   }
   
   strt<-Sys.time()
   if(num.conditions==0) {
-    stop("Error: Number of samples = 0")
+    stop("Number of samples = 0")
     gene.coreg <- diag(num.genes)
   } else if(num.conditions<3) {
     stop('Not enough expression conditions detected to calculate correlation.')
@@ -961,7 +988,7 @@ monster.monsterNI <- function(motif.data,
     }
     result=consensus
   } else if (method=="pearson"){
-    tfNames = levels(yeast$motif$TF)
+    tfNames = levels(motif.data$TF)
     result <- t(cor(t(expr.data),t(expr.data[rownames(expr.data)%in%tfNames,]))^2)
     if(score=="motifincluded"){
       result <- as.matrix(consensus + consensusRange*regulatory.network)
@@ -994,7 +1021,7 @@ monster.monsterNI <- function(motif.data,
 #' This function generates a complete bipartite network from 
 #' gene expression data and sequence motif data. This NI method
 #' serves as a default method for inferring bipartite networks
-#' in MONSTER.  Running monster.bereFull can generate these networks
+#' in MONSTER.  Running monsterBereFull can generate these networks
 #' independently from the larger MONSTER method.
 #'
 #' @param motif.data A motif dataset, a data.frame, matrix or exprSet 
@@ -1014,8 +1041,8 @@ monster.monsterNI <- function(motif.data,
 #' @return An matrix or data.frame
 #' @examples
 #' data(yeast)
-#' monsterRes <- monster.bereFull(yeast$motif, yeast$exp.cc, alpha=.5)
-monster.bereFull <- function(motif.data, 
+#' monsterRes <- monsterBereFull(yeast$motif, yeast$exp.cc, alpha=.5)
+monsterBereFull <- function(motif.data, 
                              expr.data, 
                              alpha=.5, 
                              lambda=10, 
@@ -1090,6 +1117,8 @@ globalVariables(c("expr.data","lambda","rcpp_ccorr","GENE", "TF","value"))
 #' @name monsterRes
 #' @usage data(monsterRes)
 #' @format MONSTER obj
+#' #' @references Schlauch, Daniel, et al. "Estimating drivers of cell state transitions using gene regulatory network models." BMC systems biology 11.1 (2017): 1-10.
+#' 
 NULL
 
 #' Toy data derived from three gene expression datasets and a mapping from transcription factors to genes.

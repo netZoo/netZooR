@@ -6,6 +6,7 @@
 \title{MONSTER results from example cell-cycle yeast transition}
 \format{
 MONSTER obj
+#' @references Schlauch, Daniel, et al. "Estimating drivers of cell state transitions using gene regulatory network models." BMC systems biology 11.1 (2017): 1-10.
 }
 \usage{
 data(monsterRes)

@@ -2,7 +2,7 @@
 #' 
 #' This function performs community structure clustering using
 #' the bipartite modularity described in
-#' \code{\link{condor.modularity.max}}. This function uses a standard
+#' \code{\link{condorModularityMax}}. This function uses a standard
 #' (non-bipartite) community structure clustering of the uni-partite,
 #' weighted projection of the original bipartite graph as an initial
 #' guess for the bipartite modularity.
@@ -19,8 +19,8 @@
 #' are projected and clustered using \code{cs.method}. If FALSE, the 
 #' complete bipartite network is clustered using the unipartite clustering 
 #' methods listed in \code{cs.method}.
-#' @param low.memory If TRUE, uses \code{\link{condor.modularity.max}}
-#' instead of \code{\link{condor.matrix.modularity}}. This is a slower
+#' @param low.memory If TRUE, uses \code{\link{condorModularityMax}}
+#' instead of \code{\link{condorMatrixModularity}}. This is a slower
 #' implementation of the modularity maximization, which does not store any
 #' matrices in memory. Useful on a machine with low RAM. However, runtimes
 #' are (much) longer.
@@ -28,7 +28,7 @@
 #' in the modularity for each iteration. Default is min(10^{-4},1/(number of edges)),
 #' with number of edges determined by \code{nrow(condor.object$edges)}. User can
 #' set this parameter by passing a numeric value to deltaQmin.
-#' @return \code{condor.object} with \code{\link{condor.modularity.max}} output
+#' @return \code{condor.object} with \code{\link{condorModularityMax}} output
 #' included.
 #' @examples 
 #' r = c(1,1,1,2,2,2,3,3,3,4,4);
@@ -36,13 +36,13 @@
 #' reds <- c("Alice","Sue","Janine","Mary")
 #' blues <- c("Bob","John","Ed","Hank")
 #' elist <- data.frame(red=reds[r],blue=blues[b])
-#' condor.object <- create.condor.object(elist)
-#' condor.object <- condor.cluster(condor.object)
+#' condor.object <- createCondorObject(elist)
+#' condor.object <- condorCluster(condor.object)
 #' @import igraph
 #' @import Matrix
 #' @export
 #' 
-condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=FALSE,deltaQmin="default"){
+condorCluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=FALSE,deltaQmin="default"){
   
   elist <- condor.object$edges
   
@@ -119,10 +119,10 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory
   }
   #run bipartite modularity maximization using initial assignments T0
   if(low.memory){
-    condor.object <- condor.modularity.max(condor.object,T0=T0,weights=weights,deltaQmin=deltaQmin)
+    condor.object <- condorModularityMax(condor.object,T0=T0,weights=weights,deltaQmin=deltaQmin)
   }
   if(!low.memory){
-    condor.object <- condor.matrix.modularity(condor.object,T0=T0,weights=weights,deltaQmin=deltaQmin)
+    condor.object <- condorMatrixModularity(condor.object,T0=T0,weights=weights,deltaQmin=deltaQmin)
   }
   
   
@@ -158,14 +158,14 @@ condor.cluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory
 #' reds <- c("Alice","Sue","Janine","Mary")
 #' blues <- c("Bob","John","Ed","Hank")
 #' elist <- data.frame(red=reds[r],blue=blues[b])
-#' condor.object <- create.condor.object(elist)
-#' condor.object <- condor.cluster(condor.object)
-#' condor.object <- condor.qscore(condor.object) 
+#' condor.object <- createCondorObject(elist)
+#' condor.object <- condorCluster(condor.object)
+#' condor.object <- condorQscore(condor.object) 
 #' q_in <- condor.object$qscores$red.qscore
-#' out <- condor.core.enrich(c("Alice","Mary"),q=q_in,perm=TRUE,plot.hist=TRUE)
+#' out <- condorCoreEnrich(c("Alice","Mary"),q=q_in,perm=TRUE,plot.hist=TRUE)
 #' @export
 #' 
-condor.core.enrich = function(test_nodes,q,perm=FALSE,plot.hist=FALSE,nsamp=1000){
+condorCoreEnrich = function(test_nodes,q,perm=FALSE,plot.hist=FALSE,nsamp=1000){
   qtest <- q[q[,1] %in% test_nodes,3]
   #
   qall <- q[,3]
@@ -199,9 +199,9 @@ ks.permute = function(A,B,nsamp=1000){
   n = length(A)
   ks_out = vector()
   all <- c(A,B)
-  for(i in 1:nsamp){
+  for(i in seq_len(nsamp)){
     #randomly choose n values from all, assign the rest to B_rand
-    aind = sample(1:length(all),n)
+    aind = sample(seq_len(length(all)),n)
     A_rand = all[aind]
     B_rand = all[-aind]
     #note: ks.test will throw a warning because of ties. This is expected.
@@ -215,9 +215,9 @@ wilcox.permute= function(A,B,nsamp=1000){
   n = length(A)
   w_out = vector()
   all <- c(A,B)
-  for(i in 1:nsamp){
+  for(i in seq_len(nsamp)){
     #randomly choose n values from all, assign the rest to B_rand
-    aind = sample(1:length(all),n)
+    aind = sample(seq_len(length(all)),n)
     A_rand = all[aind]
     B_rand = all[-aind]
     #note: wilcoxon.test will throw a warning because of ties. This is expected.
@@ -287,18 +287,18 @@ plot.enrich.hist = function(qik_enrich_out,ks=TRUE,wilcoxon=TRUE,...){
 #' modules. Rather, it simply continues to iterate until the difference in 
 #' modularity between iterations is less that 10^-4. Starting from a random 
 #' initial condition, this could take some time. Use 
-#' \code{\link{condor.cluster}} for quicker runtimes and likely better 
+#' \code{\link{condorCluster}} for quicker runtimes and likely better 
 #' clustering, it initializes the blue 
 #' node memberships by projecting the blue nodes into a unipartite "blue" 
 #' network and then identify communities in that network using a standard 
 #' unipartite community detection algorithm run on the projected network.
-#' See \code{\link{condor.cluster}} for more details on that.
+#' See \code{\link{condorCluster}} for more details on that.
 #' This function loads the entire adjacency matrix in memory, so if your
 #' network has more than ~50,000 nodes, you may want to use
-#' \code{\link{condor.modularity.max}}, which is slower, but does not store
+#' \code{\link{condorModularityMax}}, which is slower, but does not store
 #' the matrices in memory. Or, of course, you could move to a larger machine.
 #' @param condor.object is a list created by 
-#' \code{\link{create.condor.object}}. \code{condor.object$edges} must 
+#' \code{\link{createCondorObject}}. \code{condor.object$edges} must 
 #' contain the edges in the giant connected component of a bipartite network 
 #' @param T0 is a two column data.frame with the initial community 
 #' assignment for each "blue" node, assuming there are more reds than blues, 
@@ -319,14 +319,14 @@ plot.enrich.hist = function(qik_enrich_out,ks=TRUE,wilcoxon=TRUE,...){
 #' reds <- c("Alice","Sue","Janine","Mary")
 #' blues <- c("Bob","John","Ed","Hank")
 #' elist <- data.frame(red=reds[r],blue=blues[b])
-#' condor.object <- create.condor.object(elist)
+#' condor.object <- createCondorObject(elist)
 #' #randomly assign blues to their own community
-#' T0 <- data.frame(nodes=blues,coms=1:4)
-#' condor.object <- condor.matrix.modularity(condor.object,T0=T0)
+#' T0 <- data.frame(nodes=blues,coms=seq_len(4))
+#' condor.object <- condorMatrixModularity(condor.object,T0=T0)
 #' @import nnet
 #' @export
 #' 
-condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,deltaQmin="default"){
+condorMatrixModularity = function(condor.object,T0=cbind(seq_len(q),rep(1,q)),weights=1,deltaQmin="default"){
   
   #assign convergence parameter
   if(deltaQmin == "default"){
@@ -372,7 +372,7 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
   blue.names <- levels(factor(esub[,2]))
   #ensure that nrows > ncols
   if(length(red.names) < length(blue.names)){
-    stop("Adjacency matrix dimension error: This code requires nrows > ncols")
+    stop("Adjacency matrix dimension mismatch: This code requires nrows > ncols")
   }
   
   #The upper right block of the true Adjacency matrix. notices the dimension is reds x blues
@@ -391,7 +391,7 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
   T0[,1] = as.integer(factor(T0[,1]))
   T0 = T0[order(T0[,1]),]
   Tind <- data.matrix(T0)
-  Rind = data.matrix(cbind(1:p,rep(0,length=p)))
+  Rind = data.matrix(cbind(seq_len(p),rep(0,length=p)))
   cs = sort(unique(Tind[,2]))
   
   #variables to track modularity changes after each loop
@@ -428,8 +428,8 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
     #Special condition if all nodes are stuck in one large community,
     #if TRUE, randomly assign two nodes to new communities.
     if(iter > 1 && length(unique(c(Rind[,2],Tind[,2]))) == 1){
-      random_nodes <- sample(1:nrow(Rind),2)
-      Rind[random_nodes,2] <- max(c(Rind[,2],Tind[,2])) + 1:2
+      random_nodes <- sample(seq_len(nrow(Rind)),2)
+      Rind[random_nodes,2] <- max(c(Rind[,2],Tind[,2])) + seq_len(2)
     }
     
     #Check to see if new communities should be made
@@ -481,7 +481,7 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
   
   #__________end_while_____________
   
-  cs <- 1:ncol(Tm)
+  cs <- seq_len(ncol(Tm))
   if(any(sort(unique(Tind[,2])) != sort(unique(Rind[,2])))){stop("number of red and blue communities unequal")}
   #drop empty communities
   qcom_temp <- cbind(Qcom,cs)
@@ -514,14 +514,14 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
 #' modules. Rather, it simply continues to iterate until the difference in 
 #' modularity between iterations is less that 10^-4. Starting from a random 
 #' initial condition, this could take some time. Use 
-#' \code{\link{condor.cluster}} for quicker runtimes and likely better 
+#' \code{\link{condorCluster}} for quicker runtimes and likely better 
 #' clustering, it initializes the blue 
 #' node memberships by projecting the blue nodes into a unipartite "blue" 
 #' network and then identify communities in that network using a standard 
 #' unipartite community detection algorithm run on the projected network.
-#' See \code{\link{condor.cluster}} for more details that.
+#' See \code{\link{condorCluster}} for more details that.
 #' @param condor.object is a list created by 
-#' \code{\link{create.condor.object}}. \code{condor.object$edges} must 
+#' \code{\link{createCondorObject}}. \code{condor.object$edges} must 
 #' contain the edges in the giant connected component of a bipartite network 
 #' @param T0 is a two column data.frame with the initial community 
 #' assignment for each "blue" node, assuming there are more reds than blues, 
@@ -542,15 +542,15 @@ condor.matrix.modularity = function(condor.object,T0=cbind(1:q,rep(1,q)),weights
 #' reds <- c("Alice","Sue","Janine","Mary")
 #' blues <- c("Bob","John","Ed","Hank")
 #' elist <- data.frame(red=reds[r],blue=blues[b])
-#' condor.object <- create.condor.object(elist)
+#' condor.object <- createCondorObject(elist)
 #' #randomly assign blues to their own community
 #' T0 <- data.frame(nodes=blues,coms=1)
-#' condor.object <- condor.modularity.max(condor.object,T0=T0)
+#' condor.object <- condorModularityMax(condor.object,T0=T0)
 #' @import Matrix
 #' @import nnet
 #' @export
 #' 
-condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,deltaQmin="default"){
+condorModularityMax = function(condor.object,T0=cbind(seq_len(q),rep(1,q)),weights=1,deltaQmin="default"){
   
   #assign convergence parameter
   if(deltaQmin == "default"){
@@ -578,7 +578,7 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,
   blue.names <- levels(factor(esub[,2]))
   #ensure that nrows > ncols
   if(length(red.names) < length(blue.names)){
-    stop("Adjacency matrix dimension error: This code requires nrows > ncols")
+    stop("Adjacency matrix dimension mismatch: This code requires nrows > ncols")
   }
   
   #Sparse matrix with the upper right block of the true Adjacency matrix. notices the dimension is reds x blues
@@ -598,7 +598,7 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,
   #initialize community assignments for red and blue nodes.
   T0[,1] = as.integer(factor(T0[,1]))
   Tmat <- T0
-  R = cbind(1:p,rep(0,length=p))
+  R = cbind(seq_len(p),rep(0,length=p))
   cs = sort(unique(Tmat[,2]))
   #variables to track modularity changes after each loop
   Qhist <- vector();
@@ -609,7 +609,7 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,
   while(deltaQ > deltaQmin){
     btr <- BTR <- bt <- BT <- vector();
     #calculate T tilde
-    for(i in 1:p){
+    for(i in seq_len(p)){
       if(i %% 2500 == 0){print(sprintf("%s%% through iteration %s",round(i/p*100,digits=1),iter))}
       #find the optimal community for node i
       bt <- rep(0,length(cs))
@@ -636,7 +636,7 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,
       #BT <- rbind(BT,bt)
     }
     #calculate R tilde, i.e., B_transpose * R
-    for(j in 1:q)
+    for(j in seq_len(q))
     {
       #initialize jth row of (B_transpose) * R
       btr = rep(0,length(cs))
@@ -712,8 +712,8 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,
 #' This function will generate the network link 'heatmap' with colored dots
 #' representing within-community links and black dots between-community 
 #' links
-#' @param condor.object output of either \code{\link{condor.cluster}} or 
-#' \code{\link{condor.modularity.max}}
+#' @param condor.object output of either \code{\link{condorCluster}} or 
+#' \code{\link{condorModularityMax}}
 #' @param color_list vector of colors accepted by \code{col} inside the 
 #' \code{\link[graphics]{plot}} function. There must be as many colors as 
 #' communities.
@@ -732,20 +732,20 @@ condor.modularity.max = function(condor.object,T0=cbind(1:q,rep(1,q)),weights=1,
 #' reds <- c("Alice","Sue","Janine","Mary")
 #' blues <- c("Bob","John","Ed","Hank")
 #' elist <- data.frame(red=reds[r],blue=blues[b])
-#' condor.object <- create.condor.object(elist)
-#' condor.object <- condor.cluster(condor.object)
-#' condor.plot.communities(condor.object,
+#' condor.object <- createCondorObject(elist)
+#' condor.object <- condorCluster(condor.object)
+#' condorPlotCommunities(condor.object,
 #' color_list=c("darkgreen","darkorange"),point.size=2,
 #' xlab="Women",ylab="Men")
 #' @rawNamespace import(data.table, except= c(dcast,melt))
 #' @importFrom graphics axis box hist mtext par plot points rect
 #' @export
 #'  
-condor.plot.communities = function(condor.object,color_list,point.size=0.01,
+condorPlotCommunities = function(condor.object,color_list,point.size=0.01,
                                    xlab="SNP",ylab="Gene"){
   
   dt0 <- data.table(condor.object$edges)
-  setnames(dt0,1:2,c("SNP","gene"))
+  setnames(dt0,seq_len(2),c("SNP","gene"))
   dt1 <- data.table(condor.object$red.memb)
   setnames(dt1,c("SNP","red.memb"))
   dt2 <- data.table(condor.object$blue.memb)
@@ -768,12 +768,12 @@ condor.plot.communities = function(condor.object,color_list,point.size=0.01,
   #select all links that connect nodes in the same community
   setkey(eqtl_block,"blue.memb","red.memb")
   #make new index for each node that will correspond to it's row/col number
-  red_tmp <- data.table(rindx=1:nlevels(eqtl_block$SNP),SNP=unique(eqtl_block$SNP))
+  red_tmp <- data.table(rindx=seq_len(nlevels(eqtl_block$SNP)),SNP=unique(eqtl_block$SNP))
   red_indx <- merge(red_tmp,unique(eqtl_block,by="SNP")[,c("SNP","red.memb"),with=FALSE],by="SNP")
   red_indx[,red.com.size:=length(unique(SNP)),by=red.memb]
   red_indx[red.com.size > 1,rindx:=sample(x=rindx),by=red.memb][,red.memb:=NULL,]
   setkey(red_indx,"SNP")
-  blue_tmp <- data.table(bindx=1:nlevels(eqtl_block$gene),gene=unique(eqtl_block$gene))
+  blue_tmp <- data.table(bindx=seq_len(nlevels(eqtl_block$gene)),gene=unique(eqtl_block$gene))
   blue_indx <- merge(blue_tmp,unique(eqtl_block,by="gene")[,c("gene","blue.memb"),with=FALSE],by="gene")
   #shuffle nodes within each community to make density homogeneous
   blue_indx[,blue.com.size:=length(unique(gene)),by=blue.memb]
@@ -810,7 +810,7 @@ condor.plot.communities = function(condor.object,color_list,point.size=0.01,
   cs <- cumsum(rle(sort(m2[!duplicated(SNP)]$red.memb))$lengths)
   lens <- rle(sort(m2[!duplicated(SNP)]$red.memb))$lengths
   lpts <- cs - lens/2
-  axis(1,at=lpts,labels=1:length(color_list),lwd.ticks=-0.1,cex.axis=1.25,padj=0.25,font=2)
+  axis(1,at=lpts,labels=seq_len(length(color_list)),lwd.ticks=-0.1,cex.axis=1.25,padj=0.25,font=2)
   #dev.off()
 }
 
@@ -819,21 +819,21 @@ condor.plot.communities = function(condor.object,color_list,point.size=0.01,
 #' Plot weighted adjacency matrix with links grouped by community
 #' 
 #' This function will generate the network link 'heatmap' for a weighted network
-#' @param condor.object output of either \code{\link{condor.cluster}} or 
-#' \code{\link{condor.modularity.max}}
+#' @param condor.object output of either \code{\link{condorCluster}} or 
+#' \code{\link{condorModularityMax}}
 #' @param main plot title
 #' @param xlab x axis label
 #' @param ylab y axis label
 #' @return produces a \code{\link[graphics]{plot}} output.
 #' @examples
 #' data(small1976)
-#' condor.object <- create.condor.object(small1976)
-#' condor.object <- condor.cluster(condor.object, project=FALSE)
-#' condor.plot.heatmap(condor.object)
+#' condor.object <- createCondorObject(small1976)
+#' condor.object <- condorCluster(condor.object, project=FALSE)
+#' condorPlotHeatmap(condor.object)
 #' @import gplots
 #' @export
 #'  
-condor.plot.heatmap = function(condor.object, main="", xlab="blues", ylab="reds"){
+condorPlotHeatmap = function(condor.object, main="", xlab="blues", ylab="reds"){
   bo <- condor.object
   attach(bo)
   # convert edge lists to adjacency matrices (n reds x m blues)
@@ -865,8 +865,8 @@ condor.plot.heatmap = function(condor.object, main="", xlab="blues", ylab="reds"
 #'
 #'Qscore is designed to calculate the fraction of the modularity 
 #'contributed by each node to its community's modularity 
-#' @param condor.object output of \code{\link{condor.cluster}} or 
-#' \code{\link{condor.modularity.max}}
+#' @param condor.object output of \code{\link{condorCluster}} or 
+#' \code{\link{condorModularityMax}}
 #' @return condor.object list has \code{condor.object$qscores} added to it.
 #' this includes two data.frames, \code{blue.qscore} and \code{red.qscore}
 #' which have the qscore for each red and blue node.
@@ -877,18 +877,18 @@ condor.plot.heatmap = function(condor.object, main="", xlab="blues", ylab="reds"
 #' reds <- c("Alice","Sue","Janine","Mary")
 #' blues <- c("Bob","John","Ed","Hank")
 #' elist <- data.frame(red=reds[r],blue=blues[b])
-#' condor.object <- create.condor.object(elist)
-#' condor.object <- condor.cluster(condor.object)
-#' condor.object <- condor.qscore(condor.object)   
+#' condor.object <- createCondorObject(elist)
+#' condor.object <- condorCluster(condor.object)
+#' condor.object <- condorQscore(condor.object)   
 #' 
 #' @import igraph
 #' @import Matrix
 #' @export
 #' 
-condor.qscore = function(condor.object){
+condorQscore = function(condor.object){
   
   if(is.null(condor.object$red.memb) | is.null(condor.object$blue.memb)){
-    stop("Community Memberships missing. Run condor.cluster or condor.modularity.max first!")
+    stop("Community Memberships missing. Run condorCluster or condorModularityMax first!")
   }
   bo <- condor.object
   bo$blue.memb <- bo$blue.memb[order(bo$blue.memb[,"blue.names"]),]
@@ -927,13 +927,13 @@ condor.qscore = function(condor.object){
   T2 = sparseMatrix(i=t1[,1],j=t1[,2],x=1,dims=c(max(t1[,1]),max(t1[,2])),index1=TRUE);
   Qcoms <- condor.object$Qcoms
   Qjk = vector(length=q)
-  for(j in 1:max(t1[,1])){
+  for(j in seq_len(max(t1[,1]))){
     if(j %% 1000 == 0){print(paste(j,t1[j,]))}
     Bj = A[,j] - (ki*dj[j])/m;
     Qjk[j] = ((Rtrans[t1[j,2],] %*% Bj)/(2*m))*(1/Qcoms[t1[j,2],1])
   }  
   Qik = vector(length=p)
-  for(i in 1:max(r1[,1])){
+  for(i in seq_len(max(r1[,1]))){
     if(i %% 1000 == 0){print(i)}
     Bi = A[i,] - (ki[i]*dj)/m;
     Qik[i] = ((Bi %*% T2[,r1[i,2]])/(2*m))*(1/Qcoms[r1[i,2],1])  
@@ -959,27 +959,27 @@ condor.qscore = function(condor.object){
 #' with V(g)$color to identify red/blue node names
 #' @return edges corresponding to graph G. If return.gcc=TRUE, includes only
 #' those edges in the giant connected component.
-#' @return Qcoms output from \code{\link{condor.cluster}} or 
-#' \code{\link{condor.modularity.max}}
-#' @return modularity \code{NULL} output from \code{\link{condor.cluster}} 
-#' or \code{\link{condor.modularity.max}}
-#' @return red.memb \code{NULL} output from \code{\link{condor.cluster}} 
-#' or \code{\link{condor.modularity.max}}
-#' @return blue.memb \code{NULL} output from \code{\link{condor.cluster}} 
-#' or \code{\link{condor.modularity.max}}
-#' @return qscores \code{NULL} output from \code{\link{condor.qscore}} 
+#' @return Qcoms output from \code{\link{condorCluster}} or 
+#' \code{\link{condorModularityMax}}
+#' @return modularity \code{NULL} output from \code{\link{condorCluster}} 
+#' or \code{\link{condorModularityMax}}
+#' @return red.memb \code{NULL} output from \code{\link{condorCluster}} 
+#' or \code{\link{condorModularityMax}}
+#' @return blue.memb \code{NULL} output from \code{\link{condorCluster}} 
+#' or \code{\link{condorModularityMax}}
+#' @return qscores \code{NULL} output from \code{\link{condorQscore}} 
 #' @examples 
 #' r = c(1,1,1,2,2,2,3,3,3,4,4);
 #' b = c(1,2,3,1,2,4,2,3,4,3,4);
 #' reds <- c("Alice","Sue","Janine","Mary")
 #' blues <- c("Bob","John","Ed","Hank")
 #' elist <- data.frame(red=reds[r],blue=blues[b])
-#' condor.object <- create.condor.object(elist)
+#' condor.object <- createCondorObject(elist)
 #' 
 #' @import igraph
 #' @export 
 #' 
-create.condor.object <- function(edgelist,return.gcc=TRUE){
+createCondorObject <- function(edgelist,return.gcc=TRUE){
   
   # make sure first to columns are of class character
   edgelist[, 1] <- as.character(edgelist[, 1])

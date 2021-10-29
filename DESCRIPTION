@@ -1,9 +1,9 @@
 Package: netZooR
 Title: Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR, MONSTER, OTTER, EGRET, and YARN into one workflow
-Version: 0.99.49
+Version: 0.99.79
 Date: 2021-09-20
 Authors@R: c(person("Tian", "Wang",
-			email = "twang@hsph.harvard.edu", role = c("aut")),
+			email = "tian.wang@bc.edu", role = c("aut")),
 	     person("Marouen", "Ben Guebila", 
 			email = "marouen.b.guebila@gmail.com", role = c("aut","cre")),
 	     person("John", "Platig",
@@ -17,21 +17,25 @@ Authors@R: c(person("Tian", "Wang",
              person("Deborah", "Weighill",
                         email = "",role = "aut"))
 Description: PANDA(Passing Attributes between Networks for Data Assimilation) is a message-passing model to reconstruction gene regulatory network. It integrates multiple sources of biological data, including protein-protein interaction data, gene expression data, and sequence motif information to reconstruct genome-wide, condition-specific regulatory networks.[(Glass et al. 2013)]. LIONESS(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks by applying linear interpolation to the predictions made by existing aggregate network inference approaches. CONDOR(COmplex Network Description Of Regulators)is a bipartite community structure analysis tool of biological networks, especially eQTL networks, including a method for scoring nodes based on their modularity contribution.[(Platig et al. 2016). ALPACA(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules.[(Padi and Quackenbush 2018)]. This package integrates pypanda--the Python implementation of PANDA and LIONESS(https://github.com/davidvi/pypanda),the R implementation of CONDOR(https://github.com/jplatig/condor) and the R implementation of ALPACA (https://github.com/meghapadi/ALPACA) into one workflow. Each tool can be call in this package by one function, and the relevant output could be accessible in current R session for downstream analysis. 
-Depends: R (>= 3.3),
+Depends: R (>= 4.1.0),
    	 igraph,
 	 reticulate,
-	 pandaR,
+         pandaR,
+         yarn
 biocViews:
 	 NetworkInference,
 	 Network,
 	 GeneRegulation,
+         GeneExpression, 
+         Transcription, 
+         Microarray,   
+         GraphAndNetwork
 Imports: RCy3,
 	 viridisLite, 
    	 STRINGdb,
 	 Biobase,
 	 GOstats,
 	 AnnotationDbi,
-	 viridisLite, 
    	 matrixStats,
    	 GO.db,
 	 org.Hs.eg.db,
@@ -56,17 +60,16 @@ Imports: RCy3,
    	 tidyr,
    	 methods,
          dplyr,
-         pandaR,
-         graphics,
-         yarn,
+         graphics
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
     rmarkdown,
-    pkgdown,
+    pkgdown
 VignetteEngine: knitr
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2
+BugReports: https://github.com/netZoo/netZooR/issues

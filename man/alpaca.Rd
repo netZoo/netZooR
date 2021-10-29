@@ -21,5 +21,8 @@ List where first element is the membership vector and second element is the cont
 This function compares two networks and finds the sets of nodes that best characterize the change in modular structure
 }
 \examples{
-a <- 1 # example place holder
+example_path <- system.file("extdata", "Example_2comm.txt", 
+package = "netZooR", mustWork = TRUE)
+simp.mat <- read.table(example_path,header=TRUE) 
+simp.alp <- alpaca(simp.mat,NULL,verbose=FALSE)
 }

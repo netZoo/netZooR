@@ -41,7 +41,7 @@ We will make use of the `skin` dataset for examples. The `skin` dataset is a sma
 
 ```{r,echo=FALSE,include=FALSE}
 library(netZooR)
-download.file("https://netzoo.s3.us-east-2.amazonaws.com/netzoocloud/testdata/yarn/skin.rdata","skin.rdata")
+download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/skin.rdata","skin.rdata")
 load("skin.rdata")
 ```
 ```{r}

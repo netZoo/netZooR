@@ -8,7 +8,7 @@
 [![discussions](https://img.shields.io/badge/netZooR-discussions-orange)](https://github.com/netZoo/netZooR/discussions)
 
 
-netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v3.6 + R v4.0)
+netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v4.1)
 
 ## Description
 netZooR is an R package to reconstruct, analyse, and plot biological networks.
@@ -45,7 +45,7 @@ The package also integrates additional functions to:
 
 ## Requirements, installation and basic configuration.
 
-- netZooR is compatible with R (>= 3.3.3) including R (>= 4.0),  click [here](https://www.r-project.org/) for more installation details.
+- netZooR is compatible with R (>= 4.1),  click [here](https://www.r-project.org/) for more installation details.
 
 - To use PANDA and LIONESS, there are two options: 
 
@@ -101,10 +101,19 @@ To report a bug, please open a new [issue](https://github.com/netZoo/netZooR/iss
 
 ## Tutorials
 For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/). Tutorials are available at the top navigation bar **Articles/** for basic usage and application cases.
-Or use `browseVignettes("netZooR")` after installing the package. Also check [netbooks](http://netbooks.networkmedicine.org) to go through the  tutorials on a jupyter notebook cloud server.
+Or use `browseVignettes("netZooR")` after installing the package. Also check [netbooks](http://netbooks.networkmedicine.org) to go through the  tutorials on a Jupyter notebook cloud server.
 
 ## Contribution and Development
 Contributions are welcome! The contribution guide to netZooR can be found [here](https://netzoo.github.io/contribute/contribute/). 
+
+We follow the [Bioconductor code guidelines](https://bioconductor.org/packages/devel/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html). Before pushing a contribution, please run
+
+```r
+library(BiocCheck)
+BiocCheck("packageDirOrTarball")
+```
+And resolve any warnings, notes, and errors before committing the code.
+
 After adding new features or optimizing a function in the package, please re-build the package and run `R CMD check .` in the terminal or follow the instructions below before doing the pull request to the devel branch.
 To run only the tests:
 ```r

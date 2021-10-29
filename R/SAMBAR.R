@@ -2,11 +2,10 @@
 #' @param signature A file containing gene sets (signatures) in .gmt format. These gene sets will be used to de-sparsify the gene-level mutation scores.
 #' @param cagenes A vector of genes, for example of cancer-associated genes. This will be used to subset the gene-level mutation data to.
 #' @return A matrix containing gene set mutation scores.
-#' @export
 #
 # OBS! cagenes should be optional
 # dependencies: utils
-sambar.convertgmt <- function(signature, cagenes){
+sambarConvertgmt <- function(signature, cagenes){
   
   # determine the maximum number of genes a signature can have in the .gmt file
   ncols <- scan(signature, what="character")
@@ -25,7 +24,7 @@ sambar.convertgmt <- function(signature, cagenes){
   signmat <- matrix(0, nrow(sign), length(allgenes))
   row.names(signmat) <- row.names(sign)
   colnames(signmat) <- allgenes
-  for(i in 1:nrow(sign)){
+  for(i in seq_len(nrow(sign))){
     signmat[i,which(allgenes %in% sign[i,])] <- 1
   }
   
@@ -44,9 +43,8 @@ sambar.convertgmt <- function(signature, cagenes){
 #' @param cagenes A vector of genes, for example of cancer-associated genes. This will be used to subset the gene-level mutation data to.
 #' @param exonsize A vector of gene lengths. This will be used to normalize the gene mutation scores.
 #' @return Mutation rate-adjusted gene mutation scores.
-#' @export
 #
-sambar.corgenelength <- function(x, cagenes, exonsize){
+sambarCorgenelength <- function(x, cagenes, exonsize){
   
   # subset mutation data to cancer-associated genes
   x <- x[,which(colnames(x) %in% cagenes)]
@@ -63,19 +61,18 @@ sambar.corgenelength <- function(x, cagenes, exonsize){
 }
 
 #' De-sparsify gene-level mutation scores into gene set-level mutation scores.
-#' @param edgx A binary matrix containing information on which genes belong to which gene sets. Output from the sambar.convertgmt function.
+#' @param edgx A binary matrix containing information on which genes belong to which gene sets. Output from the sambarConvertgmt function.
 #' @param mutratecorx Gene-level mutation scores corrected for the number of gene sets each gene belongs to (from sambar function).
 #' @return De-sparsified mutation data.
-#' @export
 #
-sambar.desparsify <- function(edgx, mutratecorx){ # edgx=edg, mutratecorx=mutratecor
+sambarDesparsify <- function(edgx, mutratecorx){ # edgx=edg, mutratecorx=mutratecor
   
   # de-sparsify the data
   despar <- matrix(, nrow=nrow(edgx), ncol=ncol(mutratecorx))
   row.names(despar) <- row.names(edgx)
   colnames(despar) <- colnames(mutratecorx)
-  for (p in 1:ncol(despar)){
-    for (s in 1:nrow(despar)){
+  for (p in seq_len(ncol(despar))){
+    for (s in seq_len(nrow(despar))){
       junk <- edgx[s,]
       junk <- names(junk[which(junk==1)]) # check which genes are in signature
       pjunk <- mutratecorx[,p]
@@ -145,14 +142,21 @@ NULL
 #' @rawNamespace import(vegan, except=diversity)
 #' @rawNamespace import(stats, except= c(cov2cor,decompose,toeplitz,lowess,update,spectrum))
 #' @return A list of samples and the subtypes to which these samples are assigned, for each k.
+#' @examples 
+#' data("exon.size")
+#' data("mut.ucec")
+#' data("genes")
+#' sambar(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", 
+#' "h.all.v6.1.symbols.gmt", package="netZooR", mustWork=TRUE), 
+#'        cangenes=genes, kmin=2, kmax=4)
 #' @export
 sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("extdata", "h.all.v6.1.symbols.gmt", package = "netZooR", mustWork = TRUE), cangenes=genes, kmin=2, kmax=4){
   
   # convert gmt file to binary matrix, subset to cancer-associated genes
-  edg <- sambar.convertgmt(signature=signatureset, cagenes=cangenes)
+  edg <- sambarConvertgmt(signature=signatureset, cagenes=cangenes)
   
   # correct number of mutations for gene length (returns gene mutation scores)
-  mutlength <- sambar.corgenelength(x=mutdata, cagenes=cangenes, exonsize=esize)
+  mutlength <- sambarCorgenelength(x=mutdata, cagenes=cangenes, exonsize=esize)
   
   # transform mutlength
   mutlength <- t(mutlength)
@@ -169,7 +173,7 @@ sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("
   
   # correct for mutation rate		
   mutrate <- mutlength
-  for (p in 1:ncol(mutlength)){
+  for (p in seq_len(ncol(mutlength))){
     mutrate[,p] <- mutlength[,p]/patmutrate[p]
   }
   
@@ -180,7 +184,7 @@ sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("
   mutratecor <- mutrate/genefreq
   
   # summarize gene mutation scores into pathway mutation scores
-  signpat <- sambar.desparsify(edgx=edg, mutratecorx=mutratecor)
+  signpat <- sambarDesparsify(edgx=edg, mutratecorx=mutratecor)
   
   # calculate binomial distance between samples
   distance <- vegan::vegdist(t(signpat), method="binomial")
@@ -201,3 +205,42 @@ sambar <- function(mutdata=mut.ucec, esize=exon.size, signatureset=system.file("
 }
 
 globalVariables(c("exon.size", "genes", "mut.ucec"))
+
+#' Exon sizes.
+#'
+#' This data is a toy example data for SAMBAR, it contains length of Exons.
+#' @docType data
+#' @keywords datasets
+#' @name exon.size
+#' @usage data(exon.size)
+#' @format A list containing Exon sizes for 23459 genes
+#' @return A list of length 1
+#' @references Kuijjer, Marieke Lydia, et al. "Cancer subtype identification using somatic mutation data." British journal of cancer 118.11 (2018): 1492-1501.
+#' 
+NULL
+
+#' Gene names.
+#'
+#' This data is a toy example data for SAMBAR, it contains gene annotations
+#' @docType data
+#' @keywords datasets
+#' @name exon.size
+#' @usage data(genes)
+#' @format A vector containing names of 23459 genes
+#' @return A vector of length 23459
+#' @references Kuijjer, Marieke Lydia, et al. "Cancer subtype identification using somatic mutation data." British journal of cancer 118.11 (2018): 1492-1501.
+#' 
+NULL
+
+#' Gene names.
+#'
+#' This data is a toy example data for SAMBAR, it contains gene annotations
+#' @docType data
+#' @keywords datasets
+#' @name mut.ucec
+#' @usage data(mut.ucec)
+#' @format A binary dataframe where 1 indicates a mutation and 0 otherwise.
+#' @return A table of 19754 genes by 248 samples
+#' @references Kuijjer, Marieke Lydia, et al. "Cancer subtype identification using somatic mutation data." British journal of cancer 118.11 (2018): 1492-1501.
+#' 
+NULL

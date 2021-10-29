@@ -104,7 +104,7 @@ Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi
 
 ```{r}
 pandaLCL <- panda(motif, lcl_exp, ppi, mode="intersection")
-pandaWB <- panda(motif, wb_exp, ppi, mode="intersection")
+pandaWB  <- panda(motif, wb_exp, ppi, mode="intersection")
 pandaLCL
 pandaWB
 ```
@@ -126,7 +126,7 @@ Download Cytoscape from: https://cytoscape.org and have the software open before
 ```{r}
 # We will use the function vis.panda.in.cytoscape to plot a set of nodes and edges on Cytoscape. The input for this function is a data.frame of edges to plot with 4 columns: "tf", "gene", "motif" (TF motif present or not on gene promoter), "force" (edge weight calculated by PANDA).
 lcl_vis <- reshape2::melt(pandaLCL@regNet)
-wb_vis <- reshape2::melt(pandaWB@regNet)
+wb_vis  <- reshape2::melt(pandaWB@regNet)
 lcl_vis <- data.frame("TF"=as.character(lcl_vis[,1]),"Gene"=as.character(lcl_vis[,2]),"Motif"=NA,"Score"=as.numeric(lcl_vis[,3]),stringsAsFactors = FALSE)
 wb_vis <- data.frame("TF"=as.character(wb_vis[,1]),"Gene"=as.character(wb_vis[,2]),"Motif"=NA,"Score"=as.numeric(wb_vis[,3]),stringsAsFactors = FALSE)
 head(lcl_vis)
@@ -138,15 +138,15 @@ n=200 # number of edges to plot
 top <- order(lcl_vis$Score,decreasing=T)[1:n]
 lcl_vis_top <- lcl_vis[top,]
 # Plot in cytoscape (open Cytoscape before running this command)
-vis.panda.in.cytoscape(lcl_vis_top, network_name="LCL")
+visPandaInCytoscape(lcl_vis_top, network_name="LCL")
 # Here we will load a customized visual style for our network, in which TF nodes are orange circles, target gene nodes are blue squares, and edges shade and width are the edge weight (likelyhood of regulatory interaction between the TF and gene). You can further customize the network style directly from Cytoscape.
-create.panda.style(style_name="PandaStyle")
+createPandaStyle(style_name="PandaStyle")
 ```
 
 ## Plot the top differential edges betwen LCL and WB
 ```{r,eval=FALSE,warning=FALSE, message=FALSE}
 # Select the top differential edge weights betweeen LCL and whole blood
-diffRes <- panda.diff.edges(lcl_vis, wb_vis, condition_name="LCL")
+diffRes <- pandaDiffEdges(lcl_vis, wb_vis, condition_name="LCL")
 head(diffRes)
 # Number of differential edges is:
 nrow(diffRes)
@@ -161,9 +161,9 @@ diffResWB <- diffResWB[order(diffResWB$Score,decreasing=TRUE),][1:n,]
 diffRes_vis <- rbind(diffResLCL, diffResWB)
 # Plot the network (open Cytoscape before running this command)
 # Purple edges indicate higher edge weight in the defined "condition_name" parameter (LCL in our example), and green edges indicate higher edge weight in the other condition (whole blood in our example).
-vis.diff.panda.in.cytoscape(diffRes_vis, condition_name = "LCL", network_name="diff.PANDA")
+visDiffPandaInCytoscape(diffRes_vis, condition_name = "LCL", network_name="diff.PANDA")
 # Apply the style to the network
-create.diff.panda.style(style_name="Diff.PandaStyle", condition_name="LCL")
+createDiffPandaStyle(style_name="Diff.PandaStyle", condition_name="LCL")
 ```
 
 # Calculating degree  
@@ -172,9 +172,9 @@ create.diff.panda.style(style_name="Diff.PandaStyle", condition_name="LCL")
 
 ```{r}
 lcl_outdegree <- calcDegree(pandaLCL, type="tf")
-wb_outdegree <- calcDegree(pandaWB, type="tf")
-lcl_indegree <- calcDegree(pandaLCL, type="gene")
-wb_indegree <- calcDegree(pandaWB, type="gene")
+wb_outdegree  <- calcDegree(pandaWB, type="tf")
+lcl_indegree  <- calcDegree(pandaLCL, type="gene")
+wb_indegree   <- calcDegree(pandaWB, type="gene")
 # Calculate the gene in-degree difference for two different panda regulatory networks (LCL minus whole blood)
 degreeDiff <- calcDegreeDifference(pandaLCL, pandaWB, type="gene")
 head(degreeDiff)

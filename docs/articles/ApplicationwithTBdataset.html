@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.65</span>
       </span>
     </div>
 
@@ -92,7 +92,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/netZoo/netZooR/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -110,16 +117,16 @@
             
             <h4 class="date">2019-10-16</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/netZoo/netZooR/blob/master/vignettes/ApplicationwithTBdataset.Rmd"><code>vignettes/ApplicationwithTBdataset.Rmd</code></a></small>
       <div class="hidden name"><code>ApplicationwithTBdataset.Rmd</code></div>
 
     </div>
 
     
     
-<div id="netzoor" class="section level1">
+<div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#netzoor" class="anchor"></a>netZooR</h1>
+<a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>netZooR is an R package which consists of seven main algorithms and is able to construct, analyse and plot gene regulatory networks.</p>
 <ul>
 <li><p><strong>PANDA</strong>(Passing Attributes between Networks for Data Assimilation) is a message-passing model to gene regulatory network reconstruction. It integrates multiple sources of biological data, including protein-protein interaction, gene expression, and transcription factor binding motifs information to reconstruct genome-wide, condition-specific regulatory networks.<a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832">[Glass et al. 2013]</a></p></li>
@@ -130,9 +137,9 @@
 <li><p><strong>MONSTER</strong>(Modeling Network State Transitions from Expression and Regulatory data)<a href="https://doi.org/10.1186/s12918-017-0517-y">[Schlauch et al.]</a>: infers transcription factor which drivers of cell state conditions at the gene regulatory network level.</p></li>
 <li><p><strong>OTTER</strong>(Optimization to Estimate Regulation) [publication in preparation]: models gene regulation estimation as a graph matrching problem</p></li>
 </ul>
-<div id="getting-started" class="section level2">
+<div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting Started</h2>
+<a href="#installation" class="anchor"></a>Installation</h2>
 <div id="prerequisites" class="section level3">
 <h3 class="hasAnchor">
 <a href="#prerequisites" class="anchor"></a>Prerequisites</h3>
@@ -172,7 +179,7 @@
 <p>This package includes a function <code>source.PPI</code> may source a Protein-Protein Interactions (PPI) througt STRING database given a list of proteins of interest. The <a href="http://www.bioconductor.org/packages/release/bioc/html/STRINGdb.html">STRINGdb</a> is already loaded while loading netZooR.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># TF is a data frame with single column filled with TFs of Mycobacterium tuberculosis H37Rv.</span>
-<span class="va">PPI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/source.PPI.html">source.PPI</a></span><span class="op">(</span><span class="va">TF</span>, STRING.version<span class="op">=</span><span class="st">"10"</span>, species.index<span class="op">=</span><span class="fl">83332</span>, score_threshold<span class="op">=</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
+<span class="va">PPI</span> <span class="op">&lt;-</span> <span class="fu">source.PPI</span><span class="op">(</span><span class="va">TF</span>, STRING.version<span class="op">=</span><span class="st">"10"</span>, species.index<span class="op">=</span><span class="fl">83332</span>, score_threshold<span class="op">=</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="running-the-sample-tb-datasets" class="section level2">
@@ -220,18 +227,19 @@
 <span class="co">#&gt;     Vignettes contain introductory material; view with</span>
 <span class="co">#&gt;     'browseVignettes()'. To cite Bioconductor, see</span>
 <span class="co">#&gt;     'citation("Biobase")', and for packages 'citation("pkgname")'.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
+<span class="co">#&gt; Loading required package: yarn</span>
 <span class="co">#&gt; Setting options('download.file.method.GEOquery'='auto')</span>
-<span class="co">#&gt; Setting options('GEOquery.inmemory.gpl'=FALSE)</span></code></pre></div>
+<span class="co">#&gt; Setting options('GEOquery.inmemory.gpl'=FALSE)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span></code></pre></div>
 <p>Accessing the help pages for the usage of core functions.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">?</span><span class="va">panda.py</span>
-<span class="op">?</span><span class="va">create.condor.object</span>
-<span class="op">?</span><span class="va">panda.to.condor.object</span>
-<span class="op">?</span><span class="va">lioness.py</span>
+<code class="sourceCode R"><span class="op">?</span><span class="va">pandaPy</span>
+<span class="op">?</span><span class="va">createCondorObject</span>
+<span class="op">?</span><span class="va">pandaToCondorObject</span>
+<span class="op">?</span><span class="va">lionessPy</span>
 <span class="op">?</span><span class="va">alpaca</span>
-<span class="op">?</span><span class="va">panda.to.alpaca</span>
+<span class="op">?</span><span class="va">pandaToAlpaca</span>
 <span class="op">?</span><span class="va">sambar</span></code></pre></div>
 <p>This package will invoke the Python in R environment through reticulate package. Configure which version of Python to use if necessary, here in netZooR, Python 3.X is required. More details can be found <a href="https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html">here</a></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -244,31 +252,21 @@
 <p>retrieve the file path of these files came with the netZooR package.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve the file path of these files</span>
-<span class="va">treated_expression_file_path</span> <span class="op">&lt;-</span> <span class="st">"./expr4.txt"</span>
-<span class="va">control_expression_file_path</span> <span class="op">&lt;-</span> <span class="st">"./expr10.txt"</span>
-<span class="va">motif_file_path</span> <span class="op">&lt;-</span> <span class="st">"./chip.txt"</span>
-<span class="va">ppi_file_path</span> <span class="op">&lt;-</span> <span class="st">"./ppi.txt"</span></code></pre></div>
-<p>or, download to working directory from AWS.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4.txt"</span><span class="op">)</span>
-<span class="va">treated_expression_file_path</span> <span class="op">&lt;-</span> <span class="st">"./expr4.txt"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr10.txt"</span><span class="op">)</span>
-<span class="va">control_expression_file_path</span> <span class="op">&lt;-</span> <span class="st">"./expr10.txt"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/chip.txt"</span><span class="op">)</span>
-<span class="va">motif_file_path</span> <span class="op">&lt;-</span> <span class="st">"./chip.txt"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/ppi.txt"</span><span class="op">)</span>
-<span class="va">ppi_file_path</span> <span class="op">&lt;-</span> <span class="st">"./ppi.txt"</span></code></pre></div>
+<span class="va">treated_expression_file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"expr4_matched.txt"</span>, package <span class="op">=</span> <span class="st">"netZooR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">control_expression_file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"expr10_matched.txt"</span>, package <span class="op">=</span> <span class="st">"netZooR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">motif_file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"chip_matched.txt"</span>, package <span class="op">=</span> <span class="st">"netZooR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">ppi_file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ppi_matched.txt"</span>, package <span class="op">=</span> <span class="st">"netZooR"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div id="panda-algorithm" class="section level3">
 <h3 class="hasAnchor">
 <a href="#panda-algorithm" class="anchor"></a>PANDA algorithm</h3>
 <p>Assign the above file paths to flag <code>e</code>(refers to “expression dataset”), <code>m</code>(refers to “motif dataset”), and <code>ppi</code>(refers to “PPI” dataset), respectively. Then set option <code>rm_missing</code> to <code>TRUE</code> to run <strong>PANDA</strong> to generate an aggregate network without unmatched TF and genes.</p>
 <p>Repeat with control group.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">treated_all_panda_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">treated_expression_file_path</span>, motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span> <span class="op">)</span>
-<span class="va">control_all_panda_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.py.html">panda.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">control_expression_file_path</span>,motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span> <span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">treated_all_panda_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pandaPy.html">pandaPy</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">treated_expression_file_path</span>, motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span> <span class="op">)</span>
+<span class="va">control_all_panda_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pandaPy.html">pandaPy</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">control_expression_file_path</span>,motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span> <span class="op">)</span></code></pre></div>
 <p>Vector <code>treated_all_panda_result</code> and vector <code>control_all_panda_result</code> below are large lists with three elements: the entire PANDA network, indegree (“to” nodes) nodes and score, outdegree (“from” nodes) nodes and score. Use <code>$panda</code>,<code>$indegree</code> and <code>$outdegree</code> to access each list item resepctively.</p>
 <p>Use <code>$panda</code>to access the entire PANDA network.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">treated_net</span> <span class="op">&lt;-</span> <span class="va">treated_all_panda_result</span><span class="op">$</span><span class="va">panda</span>
 <span class="va">control_net</span> <span class="op">&lt;-</span> <span class="va">control_all_panda_result</span><span class="op">$</span><span class="va">panda</span></code></pre></div>
 </div>
@@ -276,46 +274,46 @@
 <h3 class="hasAnchor">
 <a href="#panda-cytoscape-plotting" class="anchor"></a>PANDA Cytoscape Plotting</h3>
 <p>Cytoscape is an interactivity network visualization tool highly recommanded to explore the PANDA network. Before using this function <code>plot.panda.in.cytoscape</code>, please install and launch Cytoscape (3.6.1 or greater) and keep it running whenever using.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># select top 1000 edges in PANDA network by edge weight.</span>
 <span class="va">panda.net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">treated_net</span><span class="op">[</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html">order</a></span><span class="op">(</span><span class="va">control_net</span><span class="op">$</span><span class="va">force</span>,decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,<span class="op">]</span>, <span class="fl">1000</span><span class="op">)</span>
  
 <span class="co"># run this function to create a network in Cytoscape.</span>
-<span class="fu"><a href="../reference/vis.panda.in.cytoscape.html">vis.panda.in.cytoscape</a></span><span class="op">(</span><span class="va">panda.net</span>, network.name<span class="op">=</span><span class="st">"PANDA"</span><span class="op">)</span></code></pre></div>
+<span class="fu">vis.panda.in.cytoscape</span><span class="op">(</span><span class="va">panda.net</span>, network.name<span class="op">=</span><span class="st">"PANDA"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="lioness-algorithm" class="section level3">
 <h3 class="hasAnchor">
 <a href="#lioness-algorithm" class="anchor"></a>LIONESS Algorithm</h3>
-<p>How to run LIONESS is mostly idential with method how to run PANDA in this package, unless the return values of <code><a href="../reference/lioness.py.html">lioness.py()</a></code> is a data frame where first two columns represent TFs (regulators) and Genes (targets) while the rest columns represent each sample. each cell filled with estimated score calculated by LIONESS.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p>How to run LIONESS is mostly idential with method how to run PANDA in this package, unless the return values of <code><a href="../reference/lionessPy.html">lionessPy()</a></code> is a data frame where first two columns represent TFs (regulators) and Genes (targets) while the rest columns represent each sample. each cell filled with estimated score calculated by LIONESS.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Run LIONESS algorithm for the first two samples</span>
 <span class="co"># removing start_sample and end_sample arguments to generate whole LIONESS network with all samples.</span>
-<span class="va">control_lioness_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lioness.py.html">lioness.py</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">control_expression_file_path</span>,motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span>, start_sample<span class="op">=</span><span class="fl">1</span>, end_sample<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<span class="va">control_lioness_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lionessPy.html">lionessPy</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="va">control_expression_file_path</span>,motif_file <span class="op">=</span> <span class="va">motif_file_path</span>, ppi_file<span class="op">=</span> <span class="va">ppi_file_path</span>,modeProcess<span class="op">=</span><span class="st">"legacy"</span>,  remove_missing <span class="op">=</span> <span class="cn">TRUE</span>, start_sample<span class="op">=</span><span class="fl">1</span>, end_sample<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="condor-algorithm-and-plotting" class="section level3">
 <h3 class="hasAnchor">
 <a href="#condor-algorithm-and-plotting" class="anchor"></a>CONDOR Algorithm and plotting</h3>
-<p>PANDA network can simply be converted into condor.object by <code><a href="../reference/panda.to.condor.object.html">panda.to.condor.object(panda.net, threshold)</a></code> Defaults option <code>threshold</code> is the average of [median weight of non-prior edges] and [median weight of prior edges], all weights mentioned previous are transformationed with formula <code>w'=ln(e^w+1)</code> before calculating the median and average. But all the edges selected will remain the orginal weights calculated by PANDA.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">treated_condor_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.to.condor.object.html">panda.to.condor.object</a></span><span class="op">(</span><span class="va">treated_net</span>, threshold <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+<p>PANDA network can simply be converted into condor.object by <code><a href="../reference/pandaToCondorObject.html">pandaToCondorObject(panda.net, threshold)</a></code> Defaults option <code>threshold</code> is the average of [median weight of non-prior edges] and [median weight of prior edges], all weights mentioned previous are transformationed with formula <code>w'=ln(e^w+1)</code> before calculating the median and average. But all the edges selected will remain the orginal weights calculated by PANDA.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">treated_condor_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pandaToCondorObject.html">pandaToCondorObject</a></span><span class="op">(</span><span class="va">treated_net</span>, threshold <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <p>The communities structure can be plotted by igraph.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://sjmgarnier.github.io/viridisLite/">viridisLite</a></span><span class="op">)</span>
-<span class="va">treated_condor_object</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/condor.cluster.html">condor.cluster</a></span><span class="op">(</span><span class="va">treated_condor_object</span>,project <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">treated_condor_object</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/condorCluster.html">condorCluster</a></span><span class="op">(</span><span class="va">treated_condor_object</span>,project <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; [1] "modularity of projected graph 0.306134881290028"</span>
 <span class="co">#&gt; [1] "Q = 0.306345744728624"</span>
 <span class="co">#&gt; [1] "Q = 0.306345744728624"</span>
 <span class="va">treated_color_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">treated_condor_object</span><span class="op">$</span><span class="va">red.memb</span><span class="op">$</span><span class="va">com</span><span class="op">)</span>
 <span class="va">treated_color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">viridis</a></span><span class="op">(</span><span class="va">treated_color_num</span>, alpha <span class="op">=</span> <span class="fl">1</span>, begin <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">1</span>, direction <span class="op">=</span> <span class="fl">1</span>, option <span class="op">=</span> <span class="st">"D"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/condor.plot.communities.html">condor.plot.communities</a></span><span class="op">(</span><span class="va">treated_condor_object</span>, color_list<span class="op">=</span><span class="va">treated_color</span>, point.size<span class="op">=</span><span class="fl">0.04</span>, xlab<span class="op">=</span><span class="st">"Genes"</span>, ylab<span class="op">=</span><span class="st">"TFs"</span><span class="op">)</span></code></pre></div>
-<p><img src="ApplicationwithTBdataset_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<span class="fu"><a href="../reference/condorPlotCommunities.html">condorPlotCommunities</a></span><span class="op">(</span><span class="va">treated_condor_object</span>, color_list<span class="op">=</span><span class="va">treated_color</span>, point.size<span class="op">=</span><span class="fl">0.04</span>, xlab<span class="op">=</span><span class="st">"Genes"</span>, ylab<span class="op">=</span><span class="st">"TFs"</span><span class="op">)</span></code></pre></div>
+<p><img src="ApplicationwithTBdataset_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 <div id="alpaca-algorithm" class="section level3">
 <h3 class="hasAnchor">
 <a href="#alpaca-algorithm" class="anchor"></a>ALPACA Algorithm</h3>
-<p>ALPACA community structure can also be generated from two PANDA network by <code>panda.to.alpaca</code></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">alpaca</span><span class="op">&lt;-</span> <span class="fu"><a href="../reference/panda.to.alpaca.html">panda.to.alpaca</a></span><span class="op">(</span><span class="va">treated_net</span>, <span class="va">control_net</span>, <span class="cn">NULL</span>, verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
+<p>ALPACA community structure can also be generated from two PANDA network by <code>pandaToAlpaca</code></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">alpaca</span><span class="op">&lt;-</span> <span class="fu"><a href="../reference/pandaToAlpaca.html">pandaToAlpaca</a></span><span class="op">(</span><span class="va">treated_net</span>, <span class="va">control_net</span>, <span class="cn">NULL</span>, verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Detecting communities in control network..."</span>
 <span class="co">#&gt; Weights detected. Building condor object with weighted edges.</span>
 <span class="co">#&gt; [1] "modularity of projected graph 0.482467704493567"</span>
@@ -345,6 +343,126 @@
 <h2 class="hasAnchor">
 <a href="#more-tutorials" class="anchor"></a>More tutorials</h2>
 <p>Browse with <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes("netZooR")</a></code></p>
+</div>
+<div id="information" class="section level2">
+<h2 class="hasAnchor">
+<a href="#information" class="anchor"></a>Information</h2>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; R version 4.1.1 (2021-08-10)</span>
+<span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
+<span class="co">#&gt; Running under: macOS Mojave 10.14.6</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Matrix products: default</span>
+<span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib</span>
+<span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; locale:</span>
+<span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; attached base packages:</span>
+<span class="co">#&gt; [1] parallel  stats     graphics  grDevices utils     datasets  methods  </span>
+<span class="co">#&gt; [8] base     </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; other attached packages:</span>
+<span class="co">#&gt; [1] viridisLite_0.4.0   netZooR_0.99.65     yarn_1.18.0        </span>
+<span class="co">#&gt; [4] pandaR_1.19.4       Biobase_2.52.0      BiocGenerics_0.38.0</span>
+<span class="co">#&gt; [7] reticulate_1.22     igraph_1.2.6       </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; loaded via a namespace (and not attached):</span>
+<span class="co">#&gt;   [1] utf8_1.2.2                  proto_1.0.0                </span>
+<span class="co">#&gt;   [3] R.utils_2.10.1              RUnit_0.4.32               </span>
+<span class="co">#&gt;   [5] tidyselect_1.1.1            RSQLite_2.2.8              </span>
+<span class="co">#&gt;   [7] AnnotationDbi_1.54.1        grid_4.1.1                 </span>
+<span class="co">#&gt;   [9] BiocParallel_1.26.2         munsell_0.5.0              </span>
+<span class="co">#&gt;  [11] base64url_1.4               codetools_0.2-18           </span>
+<span class="co">#&gt;  [13] ragg_1.1.3                  preprocessCore_1.54.0      </span>
+<span class="co">#&gt;  [15] chron_2.3-56                pbdZMQ_0.3-5               </span>
+<span class="co">#&gt;  [17] colorspace_2.0-2            Category_2.58.0            </span>
+<span class="co">#&gt;  [19] filelock_1.0.2              highr_0.9                  </span>
+<span class="co">#&gt;  [21] dplR_1.7.2                  knitr_1.34                 </span>
+<span class="co">#&gt;  [23] uuid_0.1-4                  stats4_4.1.1               </span>
+<span class="co">#&gt;  [25] MatrixGenerics_1.4.3        repr_1.1.3                 </span>
+<span class="co">#&gt;  [27] GenomeInfoDbData_1.2.6      bit64_4.0.5                </span>
+<span class="co">#&gt;  [29] rhdf5_2.36.0                rprojroot_2.0.2            </span>
+<span class="co">#&gt;  [31] downloader_0.4              vctrs_0.3.8                </span>
+<span class="co">#&gt;  [33] generics_0.1.0              xfun_0.26                  </span>
+<span class="co">#&gt;  [35] BiocFileCache_2.0.0         R6_2.5.1                   </span>
+<span class="co">#&gt;  [37] doParallel_1.0.16           GenomeInfoDb_1.28.4        </span>
+<span class="co">#&gt;  [39] illuminaio_0.34.0           RJSONIO_1.3-1.6            </span>
+<span class="co">#&gt;  [41] locfit_1.5-9.4              bitops_1.0-7               </span>
+<span class="co">#&gt;  [43] rhdf5filters_1.4.0          cachem_1.0.6               </span>
+<span class="co">#&gt;  [45] reshape_0.8.8               DelayedArray_0.18.0        </span>
+<span class="co">#&gt;  [47] assertthat_0.2.1            BiocIO_1.2.0               </span>
+<span class="co">#&gt;  [49] scales_1.1.1                nnet_7.3-16                </span>
+<span class="co">#&gt;  [51] gtable_0.3.0                rlang_0.4.11               </span>
+<span class="co">#&gt;  [53] genefilter_1.74.0           systemfonts_1.0.2          </span>
+<span class="co">#&gt;  [55] splines_4.1.1               rtracklayer_1.52.1         </span>
+<span class="co">#&gt;  [57] GEOquery_2.60.0             hexbin_1.28.2              </span>
+<span class="co">#&gt;  [59] reshape2_1.4.4              yaml_2.2.1                 </span>
+<span class="co">#&gt;  [61] backports_1.2.1             GenomicFeatures_1.44.2     </span>
+<span class="co">#&gt;  [63] RBGL_1.68.0                 tools_4.1.1                </span>
+<span class="co">#&gt;  [65] nor1mix_1.3-0               ggplot2_3.3.5              </span>
+<span class="co">#&gt;  [67] ellipsis_0.3.2              gplots_3.1.1               </span>
+<span class="co">#&gt;  [69] RColorBrewer_1.1-2          ggdendro_0.1.22            </span>
+<span class="co">#&gt;  [71] siggenes_1.66.0             STRINGdb_2.4.1             </span>
+<span class="co">#&gt;  [73] gsubfn_0.7                  hash_2.2.6.1               </span>
+<span class="co">#&gt;  [75] Rcpp_1.0.7                  plyr_1.8.6                 </span>
+<span class="co">#&gt;  [77] base64enc_0.1-3             sparseMatrixStats_1.4.2    </span>
+<span class="co">#&gt;  [79] progress_1.2.2              zlibbioc_1.38.0            </span>
+<span class="co">#&gt;  [81] purrr_0.3.4                 RCurl_1.98-1.5             </span>
+<span class="co">#&gt;  [83] prettyunits_1.1.1           sqldf_0.4-11               </span>
+<span class="co">#&gt;  [85] openssl_1.4.5               bumphunter_1.34.0          </span>
+<span class="co">#&gt;  [87] S4Vectors_0.30.0            cluster_2.1.2              </span>
+<span class="co">#&gt;  [89] SummarizedExperiment_1.22.0 here_1.0.1                 </span>
+<span class="co">#&gt;  [91] fs_1.5.0                    magrittr_2.0.1             </span>
+<span class="co">#&gt;  [93] data.table_1.14.0           matrixStats_0.61.0         </span>
+<span class="co">#&gt;  [95] hms_1.1.0                   evaluate_0.14              </span>
+<span class="co">#&gt;  [97] xtable_1.8-4                XML_3.99-0.8               </span>
+<span class="co">#&gt;  [99] mclust_5.4.7                IRanges_2.26.0             </span>
+<span class="co">#&gt; [101] compiler_4.1.1              biomaRt_2.48.3             </span>
+<span class="co">#&gt; [103] minfi_1.38.0                tibble_3.1.4               </span>
+<span class="co">#&gt; [105] RCy3_2.12.4                 KernSmooth_2.23-20         </span>
+<span class="co">#&gt; [107] crayon_1.4.1                R.oo_1.24.0                </span>
+<span class="co">#&gt; [109] htmltools_0.5.2             GOstats_2.58.0             </span>
+<span class="co">#&gt; [111] mgcv_1.8-36                 tzdb_0.1.2                 </span>
+<span class="co">#&gt; [113] tidyr_1.1.3                 DBI_1.1.1                  </span>
+<span class="co">#&gt; [115] dbplyr_2.1.1                MASS_7.3-54                </span>
+<span class="co">#&gt; [117] rappdirs_0.3.3              Matrix_1.3-4               </span>
+<span class="co">#&gt; [119] readr_2.0.1                 permute_0.9-5              </span>
+<span class="co">#&gt; [121] quantro_1.26.0              uchardet_1.1.0             </span>
+<span class="co">#&gt; [123] quadprog_1.5-8              R.methodsS3_1.8.1          </span>
+<span class="co">#&gt; [125] GenomicRanges_1.44.0        pkgconfig_2.0.3            </span>
+<span class="co">#&gt; [127] pkgdown_1.6.1               GenomicAlignments_1.28.0   </span>
+<span class="co">#&gt; [129] signal_0.7-7                IRdisplay_1.0              </span>
+<span class="co">#&gt; [131] xml2_1.3.2                  foreach_1.5.1              </span>
+<span class="co">#&gt; [133] annotate_1.70.0             penalized_0.9-51           </span>
+<span class="co">#&gt; [135] rngtools_1.5                multtest_2.48.0            </span>
+<span class="co">#&gt; [137] beanplot_1.2                XVector_0.32.0             </span>
+<span class="co">#&gt; [139] AnnotationForge_1.34.0      doRNG_1.8.2                </span>
+<span class="co">#&gt; [141] scrime_1.3.5                stringr_1.4.0              </span>
+<span class="co">#&gt; [143] digest_0.6.27               vegan_2.5-7                </span>
+<span class="co">#&gt; [145] graph_1.70.0                Biostrings_2.60.2          </span>
+<span class="co">#&gt; [147] rmarkdown_2.11              base64_2.0                 </span>
+<span class="co">#&gt; [149] edgeR_3.34.1                DelayedMatrixStats_1.14.3  </span>
+<span class="co">#&gt; [151] GSEABase_1.54.0             restfulr_0.0.13            </span>
+<span class="co">#&gt; [153] curl_4.3.2                  Rsamtools_2.8.0            </span>
+<span class="co">#&gt; [155] gtools_3.9.2                rjson_0.2.20               </span>
+<span class="co">#&gt; [157] lifecycle_1.0.0             nlme_3.1-152               </span>
+<span class="co">#&gt; [159] jsonlite_1.7.2              Rhdf5lib_1.14.2            </span>
+<span class="co">#&gt; [161] desc_1.3.0                  askpass_1.1                </span>
+<span class="co">#&gt; [163] limma_3.48.3                fansi_0.5.0                </span>
+<span class="co">#&gt; [165] pillar_1.6.2                lattice_0.20-44            </span>
+<span class="co">#&gt; [167] plotrix_3.8-2               KEGGREST_1.32.0            </span>
+<span class="co">#&gt; [169] fastmap_1.1.0               httr_1.4.2                 </span>
+<span class="co">#&gt; [171] survival_3.2-11             GO.db_3.13.0               </span>
+<span class="co">#&gt; [173] glue_1.4.2                  png_0.1-7                  </span>
+<span class="co">#&gt; [175] iterators_1.0.13            bit_4.0.4                  </span>
+<span class="co">#&gt; [177] Rgraphviz_2.36.0            stringi_1.7.4              </span>
+<span class="co">#&gt; [179] HDF5Array_1.20.0            blob_1.2.2                 </span>
+<span class="co">#&gt; [181] textshaping_0.3.5           org.Hs.eg.db_3.13.0        </span>
+<span class="co">#&gt; [183] caTools_1.18.2              memoise_2.0.0              </span>
+<span class="co">#&gt; [185] IRkernel_1.2                dplyr_1.0.7</span></code></pre></div>
 </div>
 <div id="note" class="section level2">
 <h2 class="hasAnchor">

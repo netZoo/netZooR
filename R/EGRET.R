@@ -28,22 +28,34 @@
 #' @examples
 #' 
 #' # Run EGRET algorithm
-#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_qbic.txt")
-#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_genotype.vcf")
-#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_motif_prior.txt")
-#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_expr.txt")
-#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_ppi_prior.txt")
-#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_eQTL.txt")
-#' system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/EGRET/toy_map.txt")
-#' qbic <- read.table(file = "toy_qbic.txt", header = FALSE)
-#' vcf <- read.table("toy_genotype.vcf", header = FALSE, sep = "\t", stringsAsFactors = FALSE, colClasses = c("character", "numeric", "character", "character", "character", "character", "character", "character", "character", "character"))
-#' motif <- read.table("toy_motif_prior.txt", sep = "\t", header = FALSE)
-#' expr <- read.table("toy_expr.txt", header = FALSE, sep = "\t", row.names = 1)
-#' ppi <- read.table("toy_ppi_prior.txt", header = FALSE, sep = "\t")
-#' qtl <- read.table("toy_eQTL.txt", header = FALSE)
-#' nameGeneMap <- read.table("toy_map.txt", header = FALSE)
+#' toy_qbic_path <- system.file("extdata", "toy_qbic.txt", package = "netZooR", 
+#' mustWork = TRUE)
+#' toy_genotype_path <- system.file("extdata", "toy_genotype.vcf", 
+#' package = "netZooR", mustWork = TRUE)
+#' toy_motif_path <- system.file("extdata", "toy_motif_prior.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' toy_expr_path <- system.file("extdata", "toy_expr.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' toy_ppi_path <- system.file("extdata", "toy_ppi_prior.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' toy_eqtl_path <- system.file("extdata", "toy_eQTL.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' toy_map_path <- system.file("extdata", "toy_map.txt", 
+#' package = "netZooR", mustWork = TRUE)
+#' qbic <- read.table(file = toy_qbic_path, header = FALSE)
+#' vcf <- read.table(toy_genotype_path, header = FALSE, sep = "\t", 
+#' stringsAsFactors = FALSE, 
+#' colClasses = c("character", "numeric", "character", "character", "character", 
+#' "character", "character", "character", "character", "character"))
+#' motif <- read.table(toy_motif_path, sep = "\t", header = FALSE)
+#' expr <- read.table(toy_expr_path, header = FALSE, sep = "\t", row.names = 1)
+#' ppi <- read.table(toy_ppi_path, header = FALSE, sep = "\t")
+#' qtl <- read.table(toy_eqtl_path, header = FALSE)
+#' nameGeneMap <- read.table(toy_map_path, header = FALSE)
 #' tag <- "my_toy_egret_run"
-#' #runEgret(qtl,vcf,qbic,motif,expr,ppi,nameGeneMap,tag)
+#' \donttest{
+#' runEgret(qtl,vcf,qbic,motif,expr,ppi,nameGeneMap,tag)
+#' }
 #' @export
 
 runEgret <- function(b,v,q,m,e,p,g,t){
@@ -85,7 +97,7 @@ runEgret <- function(b,v,q,m,e,p,g,t){
   vcf$snp_id <- snp_ids
   qbic_ag$alt_allele_count <- vcf$alt_allele_count[match(qbic_ag$snpID, vcf$snp_id)]
   qtl$alt_allele_count <- vcf$alt_allele_count[match(qtl$snpID, vcf$snp_id)]
-  QTL_tf_gene_pairs <- dplyr::distinct(qtl[,c(1:7)])
+  QTL_tf_gene_pairs <- dplyr::distinct(qtl[,seq_len(7)])
   QTL_tf_gene_pairs$edgeE <- rep(1,nrow(QTL_tf_gene_pairs))
   QTL_tf_gene_pairs$alt_allele_count[is.na(QTL_tf_gene_pairs$alt_allele_count)] <- 0
   QTL_tf_gene_pairs$qtlTF <- paste0(QTL_tf_gene_pairs$tf,QTL_tf_gene_pairs$snpID)

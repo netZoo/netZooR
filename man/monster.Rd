@@ -41,7 +41,8 @@ environment.  Set to 1 to avoid parallelization, NA will take the default parall
 which to save MONSTER results, default is NA and results are not saved.}
 
 \item{alphaw}{A weight parameter between 0 and 1 specifying proportion of weight 
-to give to indirect compared to direct evidence. The default is 0.5 to give an equal weight to direct and indirect evidence.}
+to give to indirect compared to direct evidence. The default is 0.5 to give an 
+equal weight to direct and indirect evidence.}
 
 \item{mode}{A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
 ('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA.}
@@ -72,14 +73,16 @@ design <- c(rep(0,20),rep(NA,10),rep(1,20))
 yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 # Example with provided networks
+\donttest{
 pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
-case=pandaResult@regNet
-nelemReg=dim(pandaResult@regNet)[1]*dim(pandaResult@regNet)[2]
-nGenes=length(colnames(pandaResult@regNet))
+case=getRegNet(pandaResult)
+nelemReg=dim(getRegNet(pandaResult))[1]*dim(getRegNet(pandaResult))[2]
+nGenes=length(colnames(getRegNet(pandaResult)))
 control=matrix(rexp(nelemReg, rate=.1), ncol=nGenes)
 colnames(control) = colnames(case)
 rownames(control) = rownames(case) 
 expr = as.data.frame(cbind(control,case))
 design=c(rep(0,nGenes),rep(1, nGenes))
 monsterRes <- monster(expr, design, motif=NA, nullPerms=10, numMaxCores=1, mode='regNet')
+}
 }

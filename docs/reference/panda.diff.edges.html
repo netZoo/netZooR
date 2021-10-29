@@ -75,7 +75,7 @@ We select edges for which this combined probability is greater than a threshold 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.50</span>
       </span>
     </div>
 
@@ -137,7 +137,12 @@ We select edges for which this combined probability is greater than a threshold 
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/netZoo/netZooR/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -152,7 +157,7 @@ We select edges for which this combined probability is greater than a threshold 
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Identify differential edges in two PANDA networks</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/netZoo/netZooR/blob/master/R/panda.diff.edges.R'><code>R/panda.diff.edges.R</code></a></small>
     <div class="hidden name"><code>panda.diff.edges.Rd</code></div>
     </div>
 
@@ -208,9 +213,9 @@ package <span class='op'>=</span> <span class='st'>"netZooR"</span>, mustWork <s
 
 
 <span class='co'># Run PANDA for treated and control network</span>
-<span class='va'>treated_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='panda.py.html'>panda.py</a></span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>treated_expression_file_path</span>, 
+<span class='va'>treated_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'>panda.py</span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>treated_expression_file_path</span>, 
 motif_file<span class='op'>=</span> <span class='va'>motif_file_path</span>, ppi_file <span class='op'>=</span> <span class='va'>ppi_file_path</span>, modeProcess<span class='op'>=</span><span class='st'>"legacy"</span>, remove_missing <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span>
-<span class='va'>control_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='panda.py.html'>panda.py</a></span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>control_expression_file_path</span>, 
+<span class='va'>control_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'>panda.py</span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>control_expression_file_path</span>, 
 motif_file<span class='op'>=</span> <span class='va'>motif_file_path</span>, ppi_file<span class='op'>=</span> <span class='va'>ppi_file_path</span>, modeProcess<span class='op'>=</span><span class='st'>"legacy"</span>, remove_missing <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span>
 
 <span class='co'># access PANDA regulatory network</span>

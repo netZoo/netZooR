@@ -76,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.65</span>
       </span>
     </div>
 
@@ -138,7 +138,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/netZoo/netZooR/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -153,7 +158,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Run EGRET in R</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/netZoo/netZooR/blob/master/R/EGRET.R'><code>R/EGRET.R</code></a></small>
     <div class="hidden name"><code>runEgret.Rd</code></div>
     </div>
 
@@ -236,7 +241,7 @@ The first column should contain gene IDs.</p></td>
 <span class='va'>qtl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></span><span class='op'>(</span><span class='st'>"toy_eQTL.txt"</span>, header <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>nameGeneMap</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></span><span class='op'>(</span><span class='st'>"toy_map.txt"</span>, header <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>tag</span> <span class='op'>&lt;-</span> <span class='st'>"my_toy_egret_run"</span>
-<span class='fu'>runEgret</span><span class='op'>(</span><span class='va'>qtl</span>,<span class='va'>vcf</span>,<span class='va'>qbic</span>,<span class='va'>motif</span>,<span class='va'>expr</span>,<span class='va'>ppi</span>,<span class='va'>nameGeneMap</span>,<span class='va'>tag</span><span class='op'>)</span>
+<span class='co'>#runEgret(qtl,vcf,qbic,motif,expr,ppi,nameGeneMap,tag)</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

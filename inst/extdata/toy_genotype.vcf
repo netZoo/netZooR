@@ -1,0 +1,5 @@
+chr1	40563700	.	T	C	.	PASS	MTD=cgi,bwa_freebayes,bwa_platypus,bwa_gatk,cortex,isaac_strelka;KM=11.95;KFP=0;KFF=0	GT	1|0
+chr16	68573287	.	T	C	.	PASS	MTD=cgi,bwa_freebayes,bwa_platypus,bwa_gatk,cortex,isaac_strelka;KM=8.42;KFP=0;KFF=0	GT	1|1
+chr1	6296238	.	T	G	.	PASS	MTD=isaac_strelka,bwa_freebayes,bwa_platypus,bwa_gatk;KM=8.96;KFP=0;KFF=0	GT	1|1
+chr3	48671834	.	T	C	.	PASS	MTD=cgi,bwa_freebayes,bwa_platypus,isaac_strelka,bwa_gatk;KM=13.15;KFP=0;KFF=0	GT	1|1
+chr7	72209959	.	T	G	.	PASS	MTD=isaac_strelka,bwa_freebayes,bwa_platypus,bwa_gatk;KM=14.29;KFP=0;KFF=0	GT	0|1

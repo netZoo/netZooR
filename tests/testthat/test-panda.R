@@ -4,7 +4,7 @@ test_that("panda function works", {
 
    
   # test 1: check test error message when empty inputs
-   expect_error(panda.py())
+   expect_error(pandaPy())
    
    # input file path
    system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4.txt")
@@ -14,29 +14,29 @@ test_that("panda function works", {
   
   # test 2: check message when only expression data input
   # To do 1: error occurred when only expression as input dataset
-  # expect_message(panda.py(T4_expression_file_path))
+  # expect_message(pandaPy(T4_expression_file_path))
 
   # test 3: check message when PPI is not provided, to do 2.
-  # expect_message( panda.py(T4_expression_file_path,motif_file_path),"")
+  # expect_message( pandaPy(T4_expression_file_path,motif_file_path),"")
 
   # test 4: when all arguments are default
   # computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE
    
   # *********comment below as this PANDA network is too big in size and will result jenkins memory cannot allocate isssue*************
-  # test1Panda<- panda.py(T4_expression_file_path, motif_file_path, ppi_file_path)$panda
+  # test1Panda<- pandaPy(T4_expression_file_path, motif_file_path, ppi_file_path)$panda
   # expect_equal(test1Panda[1,4],-0.23212458160041557,tolerance=1e-7)
    
    # test 5: check if PANDA result is correct when arguments settiing like below:
    # i.e computing = "cpu", save_memory =T , precision="single", save_memory = T, save_tmp=F, keep_expression_matrix = T, modeProcess = 'intersection'
-   test2Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path,precision = "single", save_memory = T, save_tmp = F,keep_expression_matrix = TRUE, modeProcess = "intersection" )$WAMpanda
+   test2Panda <- pandaPy(T4_expression_file_path, motif_file_path,ppi_file_path,precision = "single", save_memory = T, save_tmp = F,keep_expression_matrix = TRUE, modeProcess = "intersection" )$WAMpanda
    expect_equal(test2Panda[1,1],-0.26648718, tolerance=1e-5)
   
    # test 6: when processMode = legacy, remove_missing=FALSE
-   test3Panda <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = FALSE)$panda
+   test3Panda <- pandaPy(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = FALSE)$panda
    expect_equal(test3Panda[1,4],-0.06200149888611282,tolerance=1e-7)
   
    # test 7: when processMode = legacy, remove_missing=TRUE
-   test4List <- panda.py(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = TRUE)
+   test4List <- pandaPy(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = TRUE)
    test4Panda <-  test4List$panda
    
    # test 8-11: check data type in PANDA network

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.65</span>
       </span>
     </div>
 
@@ -92,7 +92,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/netZoo/netZooR/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -110,7 +117,7 @@
             
             <h4 class="date">2015-09-28</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/netZoo/netZooR/blob/master/vignettes/CONDOR.Rmd"><code>vignettes/CONDOR.Rmd</code></a></small>
       <div class="hidden name"><code>CONDOR.Rmd</code></div>
 
     </div>
@@ -122,47 +129,55 @@
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p>COmplex Network Description Of Regulators (CONDOR) implements methods for clustering bipartite networks and estimating the contribution of each node to its community’s modularity. For an application of this method to identify diesease-associated single nucleotide polymorphisms, see (<a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033" class="uri">https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033</a>).</p>
 </div>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>CONDOR can be installed through netZooR as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+</div>
 <div id="implementing-the-bipartite-modularity-maximization" class="section level2">
 <h2 class="hasAnchor">
 <a href="#implementing-the-bipartite-modularity-maximization" class="anchor"></a>Implementing the Bipartite Modularity Maximization</h2>
-The code in <strong>condor.modularity.max</strong> is an implementation of the method described in Michael Barber’s paper <strong>Modularity and community detection in bipartite networks</strong> (Phys. Rev. E 76, 066102 (2007)). A few general comments:
+The code in <strong>condorModularityMax</strong> is an implementation of the method described in Michael Barber’s paper <strong>Modularity and community detection in bipartite networks</strong> (Phys. Rev. E 76, 066102 (2007)). A few general comments:
 </div>
 <div id="workflow" class="section level2">
 <h2 class="hasAnchor">
 <a href="#workflow" class="anchor"></a>Workflow</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></code></pre></div>
 <p><strong>condor</strong> works with an edgelist (<strong>elist</strong> in the code below) as its input.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>;
 <span class="va">b</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span>;
 <span class="va">reds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Alice"</span>,<span class="st">"Sue"</span>,<span class="st">"Janine"</span>,<span class="st">"Mary"</span><span class="op">)</span>
 <span class="va">blues</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Bob"</span>,<span class="st">"John"</span>,<span class="st">"Ed"</span>,<span class="st">"Hank"</span><span class="op">)</span>
 <span class="va">elist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>red<span class="op">=</span><span class="va">reds</span><span class="op">[</span><span class="va">r</span><span class="op">]</span>, blue<span class="op">=</span><span class="va">blues</span><span class="op">[</span><span class="va">b</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>In <strong>elist</strong>, notice all nodes of the same type–women and men in this case–appear in the same column together. This is a requirement. <strong>create.condor.object</strong> will throw an error if a node appears in both columns.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create.condor.object.html">create.condor.object</a></span><span class="op">(</span><span class="va">elist</span><span class="op">)</span></code></pre></div>
-<p>A condor.object is just a list. You can look at the different items using <strong>names</strong></p>
+<p>In <strong>elist</strong>, notice all nodes of the same type–women and men in this case–appear in the same column together. This is a requirement. <strong>createCondorObject</strong> will throw an error if a node appears in both columns.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCondorObject.html">createCondorObject</a></span><span class="op">(</span><span class="va">elist</span><span class="op">)</span></code></pre></div>
+<p>A condor.object is just a list. You can look at the different items using <strong>names</strong></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "G"          "edges"      "Qcoms"      "modularity" "red.memb"  
 ## [6] "blue.memb"  "qscores"</code></pre>
-<p><strong>condor.cluster</strong> will cluster the nodes and produce the overall modularity along with two community membership <strong>data.frames</strong>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condor.cluster.html">condor.cluster</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></code></pre></div>
+<p><strong>condorCluster</strong> will cluster the nodes and produce the overall modularity along with two community membership <strong>data.frames</strong>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condorCluster.html">condorCluster</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "modularity of projected graph 0"
 ## [1] "Q = 0"
-## [1] "Q = 0.15702479338843"
+## [1] "Q = 0.132231404958678"
+## [1] "Q = 0.198347107438017"
 ## [1] "Q = 0.231404958677686"
 ## [1] "Q = 0.231404958677686"</code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">$</span><span class="va">red.memb</span><span class="op">)</span></code></pre></div>
 <pre><code>##   red.names com
 ## 1     Alice   2
 ## 2    Janine   1
 ## 3      Mary   1
 ## 4       Sue   2</code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">$</span><span class="va">blue.memb</span><span class="op">)</span></code></pre></div>
 <pre><code>##   blue.names com
 ## 1        Bob   2
@@ -170,39 +185,39 @@ The code in <strong>condor.modularity.max</strong> is an implementation of the m
 ## 3       Hank   1
 ## 4       John   2</code></pre>
 <p>Nodes in first community are {Alice, John, Bob, Sue}, nodes in second community are {Ed, Janine, Hank, Mary} based on the modularity maximization. Here’s a picture:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gtoy</span> <span class="op">=</span> <span class="fu">graph.edgelist</span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">elist</span><span class="op">)</span>,directed<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu">set.graph.attribute</span><span class="op">(</span><span class="va">gtoy</span>, <span class="st">"layout"</span>, <span class="fu">layout.kamada.kawai</span><span class="op">(</span><span class="va">gtoy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## IGRAPH 98cd9ee UN-- 8 11 -- 
+<pre><code>## IGRAPH 01e634e UN-- 8 11 -- 
 ## + attr: layout (g/n), name (v/c)
-## + edges from 98cd9ee (vertex names):
+## + edges from 01e634e (vertex names):
 ##  [1] Alice--Bob    Alice--John   Alice--Ed     Bob  --Sue    John --Sue   
 ##  [6] Sue  --Hank   John --Janine Ed   --Janine Hank --Janine Ed   --Mary  
 ## [11] Hank --Mary</code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">V</span><span class="op">(</span><span class="va">gtoy</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">reds</span>,<span class="va">blues</span><span class="op">)</span><span class="op">]</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"red"</span>,<span class="fl">4</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"blue"</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">V</span><span class="op">(</span><span class="va">gtoy</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">reds</span>,<span class="va">blues</span><span class="op">)</span><span class="op">]</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"red"</span>,<span class="fl">4</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"blue"</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">gtoy</span>,vertex.label.dist<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="CONDOR_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>To get each node’s modularity contribution (as a fraction of the community’s modularity), run</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condor.qscore.html">condor.qscore</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></code></pre></div>
-<p>If you have a subset of nodes that you think are more likely to lie at the cores of your communities, you can test this using <strong>condor.core.enrich</strong>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condorQscore.html">condorQscore</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></code></pre></div>
+<p>If you have a subset of nodes that you think are more likely to lie at the cores of your communities, you can test this using <strong>condorCoreEnrich</strong>:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">q_women</span> <span class="op">&lt;-</span> <span class="va">condor.object</span><span class="op">$</span><span class="va">qscores</span><span class="op">$</span><span class="va">red.qscore</span>
-<span class="va">core_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condor.core.enrich.html">condor.core.enrich</a></span><span class="op">(</span>test_nodes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Alice"</span>,<span class="st">"Mary"</span><span class="op">)</span>,
+<span class="va">core_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condorCoreEnrich.html">condorCoreEnrich</a></span><span class="op">(</span>test_nodes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Alice"</span>,<span class="st">"Mary"</span><span class="op">)</span>,
                                  q<span class="op">=</span><span class="va">q_women</span>,perm<span class="op">=</span><span class="cn">TRUE</span>,plot.hist<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="CONDOR_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p><strong>condor</strong> also works on weighted bipartite networks. The package comes with a quantitative pollination network data set (Small 1976) taken from the NCEAS interaction webs data base, containing interactions between 13 plants and 34 pollinators.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">small1976</span><span class="op">)</span>
-<span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create.condor.object.html">create.condor.object</a></span><span class="op">(</span><span class="va">small1976</span><span class="op">)</span>
-<span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condor.cluster.html">condor.cluster</a></span><span class="op">(</span><span class="va">condor.object</span>, project<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCondorObject.html">createCondorObject</a></span><span class="op">(</span><span class="va">small1976</span><span class="op">)</span>
+<span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condorCluster.html">condorCluster</a></span><span class="op">(</span><span class="va">condor.object</span>, project<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "modularity of projected graph 0.525346928655047"
 ## [1] "Q = 0.52666696475026"
 ## [1] "Q = 0.52666696475026"</code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/condor.plot.heatmap.html">condor.plot.heatmap</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/condorPlotHeatmap.html">condorPlotHeatmap</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></code></pre></div>
 <p><img src="CONDOR_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
   </div>

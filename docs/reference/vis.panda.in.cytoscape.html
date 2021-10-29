@@ -73,7 +73,7 @@ is installed and open it before calling this function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.49</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.50</span>
       </span>
     </div>
 
@@ -135,7 +135,12 @@ is installed and open it before calling this function." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/netZoo/netZooR/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -150,7 +155,7 @@ is installed and open it before calling this function." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot PANDA network in Cytoscape</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/netZoo/netZooR/blob/master/R/visPandaInCytoscape.R'><code>R/visPandaInCytoscape.R</code></a></small>
     <div class="hidden name"><code>vis.panda.in.cytoscape.Rd</code></div>
     </div>
 
@@ -187,7 +192,7 @@ package <span class='op'>=</span> <span class='st'>"netZooR"</span>, mustWork <s
 <span class='va'>ppi_file_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"ppi_matched.txt"</span>, package <span class='op'>=</span> <span class='st'>"netZooR"</span>, mustWork <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># Run PANDA algorithm</span>
-<span class='va'>control_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='panda.py.html'>panda.py</a></span><span class='op'>(</span>expr <span class='op'>=</span> <span class='va'>control_expression_file_path</span>, motif <span class='op'>=</span> <span class='va'>motif_file_path</span>, 
+<span class='va'>control_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'>panda.py</span><span class='op'>(</span>expr <span class='op'>=</span> <span class='va'>control_expression_file_path</span>, motif <span class='op'>=</span> <span class='va'>motif_file_path</span>, 
 ppi <span class='op'>=</span> <span class='va'>ppi_file_path</span>, mode_process<span class='op'>=</span><span class='st'>"legacy"</span>, rm_missing <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span>
 
 <span class='co'># access PANDA regulatory network</span>

@@ -49,6 +49,7 @@ The ppi and motif priors are available in our AWS public bucket, and can be down
 
 Let's download and take a look at the priors:
 ```{r,message=FALSE}
+options(timeout=600) # set timeout for file download
 download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/motif_GTEx.txt","motif_GTEx.txt")
 download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/ppi_GTEx.txt","ppi_GTEx.txt")
 motif <- read.table("./motif_GTEx.txt") 
@@ -100,7 +101,7 @@ download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datase
 
 Now we run PANDA, pointing it to the parsed expression data, motif prior and ppi prior.
 ```{r,message=FALSE,warning=FALSE}
-panda_results_LCL <- panda.py(expr_file = "./pandaExprLCL.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
+panda_results_LCL <- pandaPy(expr_file = "./pandaExprLCL.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
 ```
 
 Let's take a look at the results. The output contains a list of three data frames:
@@ -159,7 +160,7 @@ download.file("https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datase
 
 ```{r,warning=FALSE}
 #run PANDA
-panda_results_wblood <- panda.py(expr_file = "./pandaExprWholeBlood.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
+panda_results_wblood <- pandaPy(expr_file = "./pandaExprWholeBlood.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
 ```
 
 ```{r,eval=FALSE}
@@ -185,7 +186,7 @@ LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples) is
 Running LIONESS with netZoo is simple, and very similar to running PANDA:
 
 ```{r,echo = T,results= 'hide'}
-lionessLCL <- lioness.py(expr_file = "pandaExprLCL.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
+lionessLCL <- lionessPy(expr_file = "pandaExprLCL.txt" , motif_file = "./motif_GTEx.txt", ppi_file = "./ppi_GTEx.txt", modeProcess="legacy", remove_missing = TRUE)
 ```
 
 The result is a data frame in which the first colum  contains TFs, the second column contains genes and each subsequent column contains the edge weight for that particular TF-gene pair in a particular sample.
