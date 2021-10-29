@@ -70,19 +70,22 @@ alpaca <- function(net.table,file.stem,verbose=FALSE)
     louv.Bscores <- NULL
     for (i in seq_len(max(louv.memb)))
     {
+      print(i)
         this.comm <- names(louv.memb)[louv.memb==i]
         this.tfs <- this.comm[grep("_A$",this.comm)]
         this.genes <- this.comm[grep("_B$",this.comm)]
     if (length(this.tfs)>=1){
         if (length(this.tfs)>1){
-            tf.sums <- apply(dwbm[this.tfs,this.genes],1,sum)
-            gene.sums <- apply(dwbm[this.tfs,this.genes],2,sum)
+            if (length(this.genes)==1){
+                gene.sums <- sum(dwbm[this.tfs,this.genes])
+                tf.sums <- dwbm[this.tfs,this.genes]
+            }else if (length(this.genes)>1){
+                tf.sums <- apply(dwbm[this.tfs,this.genes],1,sum)
+                gene.sums <- apply(dwbm[this.tfs,this.genes],2,sum)
+            }
         } else if (length(this.tfs)==1) {
             tf.sums <- sum(dwbm[this.tfs,this.genes])
             gene.sums <- dwbm[this.tfs,this.genes]
-        } else if (length(this.genes)==1){
-            gene.sums <- sum(dwbm[this.tfs,this.genes])
-            tf.sums <- dwbm[this.tfs,this.genes]
         }
       this.denom <- sum(dwbm[this.tfs,this.genes])
       louv.Ascores <- c(louv.Ascores,tf.sums/this.denom)
