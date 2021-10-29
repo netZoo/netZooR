@@ -587,10 +587,10 @@ monsterTransitionPCAPlot <-    function(monsterObj,
 #' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
-#' monstertransitionNetworkPlot(monsterRes, rescale='significance')
-#' monstertransitionNetworkPlot(monsterRes, rescale='none')
+#' monsterTransitionNetworkPlot(monsterRes, rescale='significance')
+#' monsterTransitionNetworkPlot(monsterRes, rescale='none')
 
-monstertransitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10, rescale='significance'){
+monsterTransitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10, rescale='significance'){
   ## Calculate p-values for off-diagonals
   transitionSigmas <- function(tm.observed, tm.null){
     tm.null.mean <- apply(simplify2array(tm.null), seq_len(2), mean)
@@ -610,7 +610,7 @@ monstertransitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10,
   
   # adj.combined[,1] <- mappings[match(adj.combined[,1], mappings[,1]),2]
   # adj.combined[,2] <- mappings[match(adj.combined[,2], mappings[,1]),2]
-  dTFI_pVals_All <- 1-2*abs(.5-monsterCalculateTmPvalues(monsterObj, 
+  dTFI_pVals_All <- 1-2*abs(.5-monsterCalculateTmPValues(monsterObj, 
                                                              method="z-score"))
   if(rescale=='significance'){
     topTFsIncluded <- names(sort(dTFI_pVals_All)[seq_len(numTopTFs)])
@@ -742,8 +742,8 @@ monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight
 #' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
 #' data(monsterRes)
-#' monsterCalculateTmPvalues(monsterRes)
-monsterCalculateTmPvalues <- function(monsterObj, method="z-score"){
+#' monsterCalculateTmPValues(monsterRes)
+monsterCalculateTmPValues <- function(monsterObj, method="z-score"){
   num.iterations <- length(monsterObj@nullTM)
   # Calculate the off-diagonal squared mass for each transition matrix
   null.SSODM <- lapply(monsterObj@nullTM,function(x){

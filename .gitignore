@@ -27,3 +27,6 @@ docs/reference/toy_map.txt
 docs/reference/toy_motif_prior.txt
 docs/reference/toy_ppi_prior.txt
 docs/reference/toy_qbic.txt
+tests/testthat/*.RData
+tests/testthat/*.txt
+tests/testthat/*.vcf
