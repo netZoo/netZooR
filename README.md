@@ -8,7 +8,7 @@
 [![discussions](https://img.shields.io/badge/netZooR-discussions-orange)](https://github.com/netZoo/netZooR/discussions)
 
 
-netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v3.6 + R v4.0)
+netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v4.1)
 
 ## Description
 netZooR is an R package to reconstruct, analyse, and plot biological networks.
@@ -45,7 +45,7 @@ The package also integrates additional functions to:
 
 ## Requirements, installation and basic configuration.
 
-- netZooR is compatible with R (>= 3.3.3) including R (>= 4.0),  click [here](https://www.r-project.org/) for more installation details.
+- netZooR is compatible with R (>= 4.1),  click [here](https://www.r-project.org/) for more installation details.
 
 - To use PANDA and LIONESS, there are two options: 
 
