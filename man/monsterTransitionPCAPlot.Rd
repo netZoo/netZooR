@@ -34,7 +34,7 @@ transaction matrix
 # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 data(monsterRes)
 # Color the nodes according to cluster membership
-clusters <- kmeans(get_tm(monsterRes),3)$cluster 
+clusters <- kmeans(monsterGetTm(monsterRes),3)$cluster 
 monsterTransitionPCAPlot(monsterRes, 
 title="PCA Plot of Transition - Cell Cycle vs Stress Response", 
 clusters=clusters)

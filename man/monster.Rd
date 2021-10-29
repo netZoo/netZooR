@@ -75,9 +75,9 @@ monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, n
 # Example with provided networks
 \donttest{
 pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
-case=get_regNet(pandaResult)
-nelemReg=dim(get_regNet(pandaResult))[1]*dim(get_regNet(pandaResult))[2]
-nGenes=length(colnames(get_regNet(pandaResult)))
+case=getRegNet(pandaResult)
+nelemReg=dim(getRegNet(pandaResult))[1]*dim(getRegNet(pandaResult))[2]
+nGenes=length(colnames(getRegNet(pandaResult)))
 control=matrix(rexp(nelemReg, rate=.1), ncol=nGenes)
 colnames(control) = colnames(case)
 rownames(control) = rownames(case) 

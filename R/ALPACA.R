@@ -568,11 +568,11 @@ alpacaCommunityStructureRotation <- function(net1.memb,net2.memb){
   
   net1.mat <- array(0,dim=c(length(net1.memb),max(net1.memb)))
   rownames(net1.mat) <- names(net1.memb)
-  net1.mat[cbind(seq_len(length(net1.memb),net1.memb))] <- 1
+  net1.mat[cbind(seq_len(length(net1.memb)),net1.memb)] <- 1
   
   net2.mat <- array(0,dim=c(length(net2.memb),max(net2.memb)))
   rownames(net2.mat) <- names(net2.memb)
-  net2.mat[cbind(seq_len(length(net2.memb),net2.memb))] <- 1
+  net2.mat[cbind(seq_len(length(net2.memb)),net2.memb)] <- 1
   
   common.nodes <- intersect(rownames(net1.mat),rownames(net2.mat))
   net1.comm <- net1.mat[common.nodes,]
@@ -858,8 +858,8 @@ alpacaSimulateNetwork <- function(comm.sizes,edge.mat,num.module,size.module,den
   if (length(size.module)==2) size.module <- rbind(size.module,c(0,0))
   
   num.comm <- nrow(comm.sizes)
-  net1.Anodes <- paste("A",seq_len(sum(comm.sizes[,1]),sep=""))
-  net1.Bnodes <- paste("B",seq_len(sum(comm.sizes[,2]),sep=""))
+  net1.Anodes <- paste("A",seq_len(sum(comm.sizes[,1])),sep="")
+  net1.Bnodes <- paste("B",seq_len(sum(comm.sizes[,2])),sep="")
   A.comm <- B.comm <- NULL
   for (i in seq_len(num.comm))
   {

@@ -1,7 +1,19 @@
 monsterAnalysis <- setClass("monsterAnalysis", slots=c("tm","nullTM","numGenes","numSamples"))
 setMethod("show","monsterAnalysis",function(object){monsterPrintMonsterAnalysis(object)})
-setGeneric("get_tm", function(object) standardGeneric("get_tm"))
-setMethod("get_tm", "monsterAnalysis", function(object){object@tm})
+
+#' monsterGetTm
+#'
+#' acessor for the transition matrix in MONSTER object
+#'
+#' @param x an object of class "monsterAnalysis"
+#' @export
+#' @return Transition matrix
+#' @examples
+#' data(monsterRes)
+#' tm <- monsterGetTm(monsterRes)
+monsterGetTm <- function(x){
+    x@tm
+}
 
 #' monsterPlotMonsterAnalysis
 #'
@@ -21,6 +33,7 @@ setMethod("get_tm", "monsterAnalysis", function(object){object@tm})
 monsterPlotMonsterAnalysis <- function(x, ...){
   monsterdTFIPlot(x,...)
 }
+
 #' monsterPrintMonsterAnalysis
 #'
 #' summarizes the results of a MONSTER analysis
@@ -94,9 +107,9 @@ monsterPrintMonsterAnalysis <- function(x, ...){
 #' # Example with provided networks
 #' \donttest{
 #' pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
-#' case=get_regNet(pandaResult)
-#' nelemReg=dim(get_regNet(pandaResult))[1]*dim(get_regNet(pandaResult))[2]
-#' nGenes=length(colnames(get_regNet(pandaResult)))
+#' case=getRegNet(pandaResult)
+#' nelemReg=dim(getRegNet(pandaResult))[1]*dim(getRegNet(pandaResult))[2]
+#' nGenes=length(colnames(getRegNet(pandaResult)))
 #' control=matrix(rexp(nelemReg, rate=.1), ncol=nGenes)
 #' colnames(control) = colnames(case)
 #' rownames(control) = rownames(case) 
@@ -352,7 +365,7 @@ monsterTransformationMatrix <- function(network.1, network.2, by.tfs=TRUE, stand
   if (method == "ols"){
     net2.star <- vapply(seq_len(ncol(net1)), function(i,x,y){
       lm(y[,i]~x[,i])$resid
-    }, x=net1, y=net2, FUN.VALUE = numeric(dim(cc.net.1)[2]))
+    }, x=net1, y=net2, FUN.VALUE = numeric(dim(net1)[1]))
     tf.trans.matrix <- ginv(t(net1)%*%net1)%*%t(net1)%*%net2.star
     colnames(tf.trans.matrix) <- colnames(net1)
     rownames(tf.trans.matrix) <- colnames(net1)
@@ -362,7 +375,7 @@ monsterTransformationMatrix <- function(network.1, network.2, by.tfs=TRUE, stand
   if (method == "L1"){
     net2.star <- vapply(seq_len(ncol(net1)), function(i,x,y){
       lm(y[,i]~x[,i])$resid
-    }, x=net1, y=net2, FUN.VALUE = numeric(dim(cc.net.1)[2]))
+    }, x=net1, y=net2, FUN.VALUE = numeric(dim(net1)[1]))
     tf.trans.matrix <- vapply(seq_len(ncol(net1)), function(i){
       z <- optL1(net2.star[,i], net1, fold=5, minlambda1=1, 
                  maxlambda1=2, model="linear", standardize=TRUE)
@@ -528,7 +541,7 @@ monsterHclHeatmapPlot <- function(monsterObj, method="pearson"){
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' 
 #' data(monsterRes)
 #' # Color the nodes according to cluster membership
-#' clusters <- kmeans(get_tm(monsterRes),3)$cluster 
+#' clusters <- kmeans(monsterGetTm(monsterRes),3)$cluster 
 #' monsterTransitionPCAPlot(monsterRes, 
 #' title="PCA Plot of Transition - Cell Cycle vs Stress Response", 
 #' clusters=clusters)
@@ -664,12 +677,15 @@ monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight
   
   ssodm <- apply(monsterObj@tm,2,function(x){t(x)%*%x})
   
-  p.values <- 1-pnorm(vapply(seq_along(ssodm),function(i){
+  seqssdom <- seq_along(ssodm)
+  names(seqssdom) <- names(ssodm)
+  p.values <- 1-pnorm(vapply(seqssdom,function(i){
     (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-  }, FUN.VALUE = numeric(1)))
-  t.values <- vapply(seq_along(ssodm),function(i){
+  }, FUN.VALUE = numeric(1), USE.NAMES = TRUE))
+  
+  t.values <- vapply(seqssdom,function(i){
     (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-  }, FUN.VALUE = numeric(1))
+  }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
   
   # Process the data for ggplot2
   combined.mat <- cbind(null.ssodm.matrix, ssodm)
@@ -740,13 +756,17 @@ monsterCalculateTmPvalues <- function(monsterObj, method="z-score"){
   
   # Get p-value (rank of observed within null ssodm)
   if(method=="non-parametric"){
-    p.values <- vapply(seq_along(ssodm),function(i){
+    seqssodm <- seq_along(ssodm)
+    names(seqssodm) <- names(ssodm)
+    p.values <- vapply(seqssodm,function(i){
       1-findInterval(ssodm[i], null.ssodm.matrix[i,])/num.iterations
-    }, FUN.VALUE = numeric(1))
+    }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
   } else if (method=="z-score"){
-    p.values <- pnorm(vapply(seq_along(ssodm),function(i){
+    seqssdom=seq_along(ssodm)
+    names(seqssdom)=names(ssodm)
+    p.values <- pnorm(vapply(seqssdom,function(i){
       (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-    }, FUN.VALUE = numeric(1)))
+    }, FUN.VALUE = numeric(1), USE.NAMES = TRUE))
   } else {
     print('Undefined method')
   }
