@@ -42,7 +42,9 @@
 <meta property="og:title" content="Gene length — exon.size" />
 <meta property="og:description" content="A vector of gene lengths. This will be used to normalize the gene mutation scores by the gene's length. This example is based on hg19 gene symbols. The gene length is based on the number of non-overlapping exons.
 Data were downloaded and pre-processed as described in
-Kuijjer et al." />
+Kuijjer et al.
+This data is a toy example data for SAMBAR, it contains length of Exons.
+This data is a toy example data for SAMBAR, it contains gene annotations" />
 
 
 
@@ -74,7 +76,7 @@ Kuijjer et al." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.65</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.80</span>
       </span>
     </div>
 
@@ -164,14 +166,30 @@ Kuijjer et al." />
     <p>A vector of gene lengths. This will be used to normalize the gene mutation scores by the gene's length. This example is based on hg19 gene symbols. The gene length is based on the number of non-overlapping exons.
 Data were downloaded and pre-processed as described in
 <a href='https://doi.org/10.1101/228031'>Kuijjer et al.</a></p>
+<p>This data is a toy example data for SAMBAR, it contains length of Exons.</p>
+<p>This data is a toy example data for SAMBAR, it contains gene annotations</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>exon.size</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>exon.size</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>exon.size</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>genes</span><span class='op'>)</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>A integer vector of size 23459, with gene symbols as names</p>
+<p>A list containing Exon sizes for 23459 genes</p>
+<p>A vector containing names of 23459 genes</p>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list of length 1</p>
+<p>A vector of length 23459</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Kuijjer, Marieke Lydia, et al. "Cancer subtype identification using somatic mutation data." British journal of cancer 118.11 (2018): 1492-1501.</p>
+<p>Kuijjer, Marieke Lydia, et al. "Cancer subtype identification using somatic mutation data." British journal of cancer 118.11 (2018): 1492-1501.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

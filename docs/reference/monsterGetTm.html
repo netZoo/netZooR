@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Example of a gene list — genes • netZooR</title>
+<title>monsterGetTm — monsterGetTm • netZooR</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Example of a gene list — genes" />
-<meta property="og:description" content="List of cancer-associated genes to subset the mutation data to, as described in
-Kuijjer et al." />
+<meta property="og:title" content="monsterGetTm — monsterGetTm" />
+<meta property="og:description" content="acessor for the transition matrix in MONSTER object" />
 
 
 
@@ -154,23 +153,34 @@ Kuijjer et al." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Example of a gene list</h1>
-    <small class="dont-index">Source: <a href='https://github.com/netZoo/netZooR/blob/master/R/SAMBAR.R'><code>R/SAMBAR.R</code></a></small>
-    <div class="hidden name"><code>genes.Rd</code></div>
+    <h1>monsterGetTm</h1>
+    <small class="dont-index">Source: <a href='https://github.com/netZoo/netZooR/blob/master/R/MONSTER.R'><code>R/MONSTER.R</code></a></small>
+    <div class="hidden name"><code>monsterGetTm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>List of cancer-associated genes to subset the mutation data to, as described in
-<a href='https://doi.org/10.1101/228031'>Kuijjer et al.</a></p>
+    <p>acessor for the transition matrix in MONSTER object</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>genes</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>monsterGetTm</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>an object of class "monsterAnalysis"</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector of length 2352</p>
+    <p>Transition matrix</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>
+<span class='va'>tm</span> <span class='op'>&lt;-</span> <span class='fu'>monsterGetTm</span><span class='op'>(</span><span class='va'>monsterRes</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

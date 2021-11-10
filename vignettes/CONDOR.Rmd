@@ -19,8 +19,10 @@ COmplex Network Description Of Regulators (CONDOR) implements methods for cluste
 ## Installation
 CONDOR can be installed through netZooR as follows:
 
-```R
-remotes::install_github("netZoo/netZooR", build_vignettes = FALSE)
+```{r,eval=FALSE}
+if(!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("netZooR")
 ```
 
 ## Implementing the Bipartite Modularity Maximization
@@ -90,5 +92,11 @@ condor.object <- condorCluster(condor.object, project=FALSE)
 
 ```{r fig=TRUE,message=FALSE,warning=FALSE}
 condorPlotHeatmap(condor.object)
+```
+
+
+## Session Information
+```{r}
+sessionInfo()
 ```
 

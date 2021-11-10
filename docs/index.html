@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.65</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.80</span>
       </span>
     </div>
 
@@ -113,7 +113,7 @@
   <div class="contents col-md-9">
 
 
-<p>netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v3.6 + R v4.0)</p>
+<p>netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v4.1)</p>
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"></a>Description</h2>
@@ -146,7 +146,7 @@
 <h2 class="hasAnchor">
 <a href="#requirements-installation-and-basic-configuration" class="anchor"></a>Requirements, installation and basic configuration.</h2>
 <ul>
-<li><p>netZooR is compatible with R (&gt;= 3.3.3) including R (&gt;= 4.0), click <a href="https://www.r-project.org/">here</a> for more installation details.</p></li>
+<li><p>netZooR is compatible with R (&gt;= 4.1), click <a href="https://www.r-project.org/">here</a> for more installation details.</p></li>
 <li>
 <p>To use PANDA and LIONESS, there are two options:</p>
 <ol>
@@ -197,13 +197,19 @@
 <div id="contribution-and-development" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contribution-and-development" class="anchor"></a>Contribution and Development</h2>
-<p>Contributions are welcome! The contribution guide to netZooR can be found <a href="https://netzoo.github.io/contribute/contribute/">here</a>. After adding new features or optimizing a function in the package, please re-build the package and run <code>R CMD check .</code> in the terminal or follow the instructions below before doing the pull request to the devel branch. To run only the tests:</p>
+<p>Contributions are welcome! The contribution guide to netZooR can be found <a href="https://netzoo.github.io/contribute/contribute/">here</a>.</p>
+<p>We follow the <a href="https://bioconductor.org/packages/devel/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html">Bioconductor code guidelines</a>. Before pushing a contribution, please run</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Bioconductor/BiocCheck/issues">BiocCheck</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/BiocCheck/man/BiocCheck.html">BiocCheck</a></span><span class="op">(</span><span class="st">"packageDirOrTarball"</span><span class="op">)</span></code></pre></div>
+<p>And resolve any warnings, notes, and errors before committing the code.</p>
+<p>After adding new features or optimizing a function in the package, please re-build the package and run <code>R CMD check .</code> in the terminal or follow the instructions below before doing the pull request to the devel branch. To run only the tests:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages('rcmdcheck')</span>
 <span class="co"># setwd('path/to/netZooR/root') # Set the working directory to netZooR root</span>
-<span class="fu">rcmdcheck</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rcmdcheck/man/rcmdcheck.html">rcmdcheck</a></span><span class="op">(</span>args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"--no-manual"</span>,<span class="st">"--ignore-vignettes"</span><span class="op">)</span>, error_on <span class="op">=</span> <span class="st">"error"</span>, build_args<span class="op">=</span><span class="st">"--no-build-vignettes"</span><span class="op">)</span></code></pre></div>
+<span class="fu">rcmdcheck</span><span class="fu">::</span><span class="fu"><a href="http://r-lib.github.io/rcmdcheck/reference/rcmdcheck.html">rcmdcheck</a></span><span class="op">(</span>args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"--no-manual"</span>,<span class="st">"--ignore-vignettes"</span><span class="op">)</span>, error_on <span class="op">=</span> <span class="st">"error"</span>, build_args<span class="op">=</span><span class="st">"--no-build-vignettes"</span><span class="op">)</span></code></pre></div>
 <p>To rebuild vignettes, documentation, and tests:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># document the description of function</span>
 <span class="co"># setwd('path/to/netZooR/root') # Set the working directory to netZooR root</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/document.html">document</a></span><span class="op">(</span><span class="op">)</span>
@@ -213,7 +219,7 @@
 <span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pkgdown/man/build_site.html">build_site</a></span><span class="op">(</span>examples<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># Install and build the package using devtools</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/install.html">install</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To install the dependecies</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/install.html">install</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To install the dependencies</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/build.html">build</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To build the package</span>
 <span class="co">#devtools::build(vignettes = FALSE) # You can skip building the vignettes if you are not contributing a vignette</span>
 
