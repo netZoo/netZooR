@@ -2,7 +2,6 @@
 
 export(alpaca)
 export(alpacaExtractTopGenes)
-export(alpacaTidyConfig)
 export(condorCluster)
 export(condorCoreEnrich)
 export(condorMatrixModularity)
