@@ -13,6 +13,7 @@ CONDUCT\.md$
 ^doc$
 ^Meta$
 ^\.Rapp\.history
+.Rhistory
 coverZoo.r
 .github
 tests/testthat/test-panda.R
