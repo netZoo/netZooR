@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generalized Louvain optimization — alpacagenlouvain • netZooR</title>
+<title>Generalized Louvain optimization — alpacaGenLouvain • netZooR</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Generalized Louvain optimization — alpacagenlouvain" />
-<meta property="og:description" content="This function implements the Louvain optimization scheme on a general symmetric matrix. First, nodes are all placed in separate communities, and merged iteratively according to which merge moves result in the greatest increase in the modularity sum. Note that nodes are iterated in the order of the input matrix (not randomly) so that all results are reproducible. Second, the final community membership is used to form a alpacametanetwork whose nodes represent communities from the prevous step, and which are connected by effective edge weights. The merging process is then repeated on the alpacametanetwork. These two steps are repeated until the modularity sum does not increase more than a very small tolerance factor. New" />
+<meta property="og:title" content="Generalized Louvain optimization — alpacaGenLouvain" />
+<meta property="og:description" content="This function implements the Louvain optimization scheme on a general symmetric matrix. First, nodes are all placed in separate communities, and merged iteratively according to which merge moves result in the greatest increase in the modularity sum. Note that nodes are iterated in the order of the input matrix (not randomly) so that all results are reproducible. Second, the final community membership is used to form a alpacaMetaNetwork whose nodes represent communities from the prevous step, and which are connected by effective edge weights. The merging process is then repeated on the alpacaMetaNetwork. These two steps are repeated until the modularity sum does not increase more than a very small tolerance factor. New" />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.65</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.81</span>
       </span>
     </div>
 
@@ -155,14 +155,14 @@
     <div class="page-header">
     <h1>Generalized Louvain optimization</h1>
     <small class="dont-index">Source: <a href='https://github.com/netZoo/netZooR/blob/master/R/ALPACA.R'><code>R/ALPACA.R</code></a></small>
-    <div class="hidden name"><code>alpacagenlouvain.Rd</code></div>
+    <div class="hidden name"><code>alpacaGenLouvain.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function implements the Louvain optimization scheme on a general symmetric matrix. First, nodes are all placed in separate communities, and merged iteratively according to which merge moves result in the greatest increase in the modularity sum. Note that nodes are iterated in the order of the input matrix (not randomly) so that all results are reproducible. Second, the final community membership is used to form a alpacametanetwork whose nodes represent communities from the prevous step, and which are connected by effective edge weights. The merging process is then repeated on the alpacametanetwork. These two steps are repeated until the modularity sum does not increase more than a very small tolerance factor. New</p>
+    <p>This function implements the Louvain optimization scheme on a general symmetric matrix. First, nodes are all placed in separate communities, and merged iteratively according to which merge moves result in the greatest increase in the modularity sum. Note that nodes are iterated in the order of the input matrix (not randomly) so that all results are reproducible. Second, the final community membership is used to form a alpacaMetaNetwork whose nodes represent communities from the prevous step, and which are connected by effective edge weights. The merging process is then repeated on the alpacaMetaNetwork. These two steps are repeated until the modularity sum does not increase more than a very small tolerance factor. New</p>
     </div>
 
-    <pre class="usage"><span class='fu'>alpacagenlouvain</span><span class='op'>(</span><span class='va'>B</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>alpacaGenLouvain</span><span class='op'>(</span><span class='va'>B</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,8 +178,8 @@
     <p>The community membership vector</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='co'># example place holder</span>
-</pre>
+    <pre class="examples"><div class='input'><span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='co'># example place holder</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

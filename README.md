@@ -132,7 +132,7 @@ devtools::build_vignettes() # You can skip building the vignettes if you are not
 pkgdown::build_site(examples=FALSE)
 
 # Install and build the package using devtools
-devtools::install() # To install the dependecies
+devtools::install() # To install the dependencies
 devtools::build() # To build the package
 #devtools::build(vignettes = FALSE) # You can skip building the vignettes if you are not contributing a vignette
 

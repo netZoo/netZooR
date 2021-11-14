@@ -73,7 +73,7 @@ gene expression data and sequence motif data" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.65</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.81</span>
       </span>
     </div>
 
@@ -213,8 +213,9 @@ inference step.  Default is NA, indicating inclusion of all coefficients.</p></t
     </tr>
     <tr>
       <th>alphaw</th>
-      <td><p>A weight parameter specifying proportion of weight 
-to give to indirect compared to direct evidence.  See documentation.</p></td>
+      <td><p>A weight parameter between 0 and 1 specifying proportion of weight 
+to give to indirect compared to direct evidence. The default is 0.5 to give an 
+equal weight to direct and indirect evidence.</p></td>
     </tr>
     <tr>
       <th>regularization</th>
@@ -223,7 +224,8 @@ to give to indirect compared to direct evidence.  See documentation.</p></td>
     <tr>
       <th>score</th>
       <td><p>String to indicate whether motif information will be 
-readded upon completion of the algorithm</p></td>
+readded upon completion of the algorithm
+to give to indirect compared to direct evidence.  See documentation.</p></td>
     </tr>
     <tr>
       <th>cpp</th>
@@ -236,9 +238,10 @@ readded upon completion of the algorithm</p></td>
     <p>matrix for inferred network between TFs and genes</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>)</span>
 <span class='va'>cc.net</span> <span class='op'>&lt;-</span> <span class='fu'>monsterMonsterNI</span><span class='op'>(</span><span class='va'>yeast</span><span class='op'>$</span><span class='va'>motif</span>,<span class='va'>yeast</span><span class='op'>$</span><span class='va'>exp.cc</span><span class='op'>)</span>
-</pre>
+</div><div class='output co'>#&gt; Time difference of 1.382039 secs
+#&gt; Time difference of 0.473135 secs</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

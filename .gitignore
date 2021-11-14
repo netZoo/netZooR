@@ -30,3 +30,5 @@ docs/reference/toy_qbic.txt
 tests/testthat/*.RData
 tests/testthat/*.txt
 tests/testthat/*.vcf
+/doc/
+/Meta/

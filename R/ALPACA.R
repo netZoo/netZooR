@@ -725,7 +725,6 @@ alpacaMetaNetwork <- function(J,S)
 #' @import Matrix
 #' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
-#' @export
 #' 
 
 alpacaTidyConfig <- function(S)

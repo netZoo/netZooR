@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.65</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.81</span>
       </span>
     </div>
 
@@ -205,6 +205,271 @@
 
     <p>A list of samples and the subtypes to which these samples are assigned, for each k.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"exon.size"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"mut.ucec"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"genes"</span><span class='op'>)</span>
+<span class='fu'>sambar</span><span class='op'>(</span>mutdata<span class='op'>=</span><span class='va'>mut.ucec</span>, esize<span class='op'>=</span><span class='va'>exon.size</span>, signatureset<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, 
+<span class='st'>"h.all.v6.1.symbols.gmt"</span>, package<span class='op'>=</span><span class='st'>"netZooR"</span>, mustWork<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>, 
+       cangenes<span class='op'>=</span><span class='va'>genes</span>, kmin<span class='op'>=</span><span class='fl'>2</span>, kmax<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $`2`
+#&gt; TCGA-A5-A0G3 TCGA-A5-A0G5 TCGA-A5-A0G9 TCGA-A5-A0GA TCGA-A5-A0GB TCGA-A5-A0GD 
+#&gt;            1            1            1            2            2            1 
+#&gt; TCGA-A5-A0GE TCGA-A5-A0GH TCGA-A5-A0GJ TCGA-A5-A0GM TCGA-A5-A0GN TCGA-A5-A0GQ 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-A5-A0GU TCGA-A5-A0GV TCGA-A5-A0GW TCGA-A5-A0GX TCGA-A5-A0R6 TCGA-A5-A0R7 
+#&gt;            1            1            2            1            1            1 
+#&gt; TCGA-A5-A0R8 TCGA-A5-A0R9 TCGA-A5-A0RA TCGA-A5-A0VO TCGA-A5-A0VQ TCGA-AP-A052 
+#&gt;            1            1            1            1            2            1 
+#&gt; TCGA-AP-A053 TCGA-AP-A05A TCGA-AP-A05D TCGA-AP-A05H TCGA-AP-A05J TCGA-AP-A05N 
+#&gt;            1            1            1            1            1            2 
+#&gt; TCGA-AP-A05P TCGA-AP-A0L8 TCGA-AP-A0L9 TCGA-AP-A0LD TCGA-AP-A0LE TCGA-AP-A0LF 
+#&gt;            1            1            1            1            2            1 
+#&gt; TCGA-AP-A0LG TCGA-AP-A0LH TCGA-AP-A0LI TCGA-AP-A0LJ TCGA-AP-A0LL TCGA-AP-A0LN 
+#&gt;            2            2            1            1            1            1 
+#&gt; TCGA-AP-A0LO TCGA-AP-A0LP TCGA-AP-A0LQ TCGA-AP-A0LT TCGA-AP-A0LV TCGA-AX-A05S 
+#&gt;            1            1            1            2            1            2 
+#&gt; TCGA-AX-A05T TCGA-AX-A05U TCGA-AX-A05W TCGA-AX-A05Y TCGA-AX-A060 TCGA-AX-A062 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-AX-A064 TCGA-AX-A06B TCGA-AX-A06H TCGA-AX-A0IS TCGA-AX-A0IU TCGA-AX-A0IW 
+#&gt;            2            1            2            1            1            1 
+#&gt; TCGA-AX-A1C8 TCGA-AX-A1CP TCGA-AX-A2H5 TCGA-AX-A2HF TCGA-B5-A0JN TCGA-B5-A0JR 
+#&gt;            1            1            1            1            1            2 
+#&gt; TCGA-B5-A0JS TCGA-B5-A0JV TCGA-B5-A0JZ TCGA-B5-A0K0 TCGA-B5-A0K1 TCGA-B5-A0K2 
+#&gt;            1            2            2            1            1            2 
+#&gt; TCGA-B5-A0K3 TCGA-B5-A0K4 TCGA-B5-A0K6 TCGA-B5-A0K7 TCGA-B5-A0K8 TCGA-B5-A0K9 
+#&gt;            1            1            2            2            1            2 
+#&gt; TCGA-B5-A11F TCGA-B5-A11I TCGA-B5-A11M TCGA-B5-A11O TCGA-B5-A11S TCGA-B5-A11V 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-B5-A11X TCGA-B5-A11Z TCGA-B5-A1MU TCGA-B5-A1MY TCGA-BG-A0LW TCGA-BG-A0LX 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-BG-A0M0 TCGA-BG-A0M2 TCGA-BG-A0M3 TCGA-BG-A0M4 TCGA-BG-A0M6 TCGA-BG-A0M7 
+#&gt;            1            1            1            2            1            1 
+#&gt; TCGA-BG-A0M8 TCGA-BG-A0M9 TCGA-BG-A0MC TCGA-BG-A0MG TCGA-BG-A0MI TCGA-BG-A0MO 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-BG-A0MQ TCGA-BG-A0MS TCGA-BG-A0MT TCGA-BG-A0MU TCGA-BG-A0RY TCGA-BG-A0VT 
+#&gt;            2            1            1            1            1            1 
+#&gt; TCGA-BG-A0VX TCGA-BG-A0VZ TCGA-BG-A0W1 TCGA-BG-A0W2 TCGA-BG-A0YU TCGA-BG-A0YV 
+#&gt;            1            2            1            1            1            1 
+#&gt; TCGA-BG-A186 TCGA-BG-A187 TCGA-BG-A18A TCGA-BG-A18B TCGA-BG-A18C TCGA-BG-A2AE 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-BK-A0C9 TCGA-BK-A0CA TCGA-BK-A0CB TCGA-BK-A0CC TCGA-BS-A0T9 TCGA-BS-A0TA 
+#&gt;            2            1            1            1            1            2 
+#&gt; TCGA-BS-A0TD TCGA-BS-A0TE TCGA-BS-A0TG TCGA-BS-A0TI TCGA-BS-A0TJ TCGA-BS-A0U5 
+#&gt;            1            2            1            1            2            1 
+#&gt; TCGA-BS-A0U7 TCGA-BS-A0U8 TCGA-BS-A0U9 TCGA-BS-A0UL TCGA-BS-A0UM TCGA-BS-A0UT 
+#&gt;            1            2            1            2            2            1 
+#&gt; TCGA-BS-A0V6 TCGA-BS-A0WQ TCGA-D1-A0ZO TCGA-D1-A0ZP TCGA-D1-A0ZQ TCGA-D1-A0ZR 
+#&gt;            1            1            2            1            1            1 
+#&gt; TCGA-D1-A0ZS TCGA-D1-A0ZU TCGA-D1-A0ZV TCGA-D1-A0ZZ TCGA-D1-A101 TCGA-D1-A102 
+#&gt;            1            1            1            1            2            1 
+#&gt; TCGA-D1-A15W TCGA-D1-A15Z TCGA-D1-A163 TCGA-D1-A165 TCGA-D1-A168 TCGA-D1-A169 
+#&gt;            1            1            2            1            1            1 
+#&gt; TCGA-D1-A16B TCGA-D1-A16D TCGA-D1-A16E TCGA-D1-A16G TCGA-D1-A16I TCGA-D1-A16J 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-D1-A16N TCGA-D1-A16O TCGA-D1-A16Q TCGA-D1-A16R TCGA-D1-A16S TCGA-D1-A174 
+#&gt;            1            1            1            1            1            2 
+#&gt; TCGA-D1-A176 TCGA-D1-A177 TCGA-D1-A17A TCGA-D1-A17B TCGA-D1-A17C TCGA-D1-A17D 
+#&gt;            1            2            1            2            1            2 
+#&gt; TCGA-D1-A17F TCGA-D1-A17H TCGA-D1-A17K TCGA-D1-A17L TCGA-D1-A17M TCGA-D1-A17N 
+#&gt;            1            2            1            1            2            1 
+#&gt; TCGA-D1-A17R TCGA-D1-A17S TCGA-D1-A17T TCGA-D1-A17U TCGA-D1-A1NU TCGA-DI-A0WH 
+#&gt;            2            1            1            2            1            2 
+#&gt; TCGA-DI-A1NN TCGA-E6-A1LZ TCGA-EO-A1Y5 TCGA-EO-A1Y8 TCGA-FI-A2D2 TCGA-FI-A2EW 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-FI-A2EX TCGA-FI-A2F8 TCGA-A5-A0GI TCGA-A5-A0GP TCGA-A5-A0VP TCGA-AJ-A23M 
+#&gt;            1            1            1            2            2            1 
+#&gt; TCGA-AP-A051 TCGA-AP-A054 TCGA-AP-A056 TCGA-AP-A059 TCGA-AP-A0LM TCGA-AP-A1DQ 
+#&gt;            2            2            2            2            2            1 
+#&gt; TCGA-AX-A05Z TCGA-AX-A063 TCGA-AX-A06L TCGA-AX-A0J0 TCGA-AX-A0J1 TCGA-AX-A1C7 
+#&gt;            2            2            1            2            2            1 
+#&gt; TCGA-B5-A0JT TCGA-B5-A0JY TCGA-B5-A11E TCGA-B5-A11G TCGA-B5-A11H TCGA-B5-A11J 
+#&gt;            1            2            2            2            1            2 
+#&gt; TCGA-B5-A11N TCGA-B5-A11Q TCGA-B5-A11R TCGA-B5-A11U TCGA-B5-A11W TCGA-B5-A11Y 
+#&gt;            2            1            2            1            1            2 
+#&gt; TCGA-B5-A121 TCGA-BG-A0VW TCGA-BK-A139 TCGA-BK-A13C TCGA-BS-A0TC TCGA-BS-A0UA 
+#&gt;            1            1            1            1            2            1 
+#&gt; TCGA-BS-A0UF TCGA-BS-A0UJ TCGA-BS-A0UV TCGA-BS-A0V7 TCGA-BS-A0V8 TCGA-D1-A0ZN 
+#&gt;            2            2            2            1            1            1 
+#&gt; TCGA-D1-A103 TCGA-D1-A15V TCGA-D1-A15X TCGA-D1-A160 TCGA-D1-A161 TCGA-D1-A167 
+#&gt;            2            1            2            2            1            2 
+#&gt; TCGA-D1-A16F TCGA-D1-A16X TCGA-D1-A16Y TCGA-D1-A17Q TCGA-D1-A1NX TCGA-EY-A1GS 
+#&gt;            1            2            2            2            1            2 
+#&gt; TCGA-EY-A212 
+#&gt;            1 
+#&gt; 
+#&gt; $`3`
+#&gt; TCGA-A5-A0G3 TCGA-A5-A0G5 TCGA-A5-A0G9 TCGA-A5-A0GA TCGA-A5-A0GB TCGA-A5-A0GD 
+#&gt;            1            1            2            3            3            1 
+#&gt; TCGA-A5-A0GE TCGA-A5-A0GH TCGA-A5-A0GJ TCGA-A5-A0GM TCGA-A5-A0GN TCGA-A5-A0GQ 
+#&gt;            1            2            1            1            1            2 
+#&gt; TCGA-A5-A0GU TCGA-A5-A0GV TCGA-A5-A0GW TCGA-A5-A0GX TCGA-A5-A0R6 TCGA-A5-A0R7 
+#&gt;            1            1            3            1            1            1 
+#&gt; TCGA-A5-A0R8 TCGA-A5-A0R9 TCGA-A5-A0RA TCGA-A5-A0VO TCGA-A5-A0VQ TCGA-AP-A052 
+#&gt;            1            1            1            1            3            1 
+#&gt; TCGA-AP-A053 TCGA-AP-A05A TCGA-AP-A05D TCGA-AP-A05H TCGA-AP-A05J TCGA-AP-A05N 
+#&gt;            1            1            1            1            1            3 
+#&gt; TCGA-AP-A05P TCGA-AP-A0L8 TCGA-AP-A0L9 TCGA-AP-A0LD TCGA-AP-A0LE TCGA-AP-A0LF 
+#&gt;            1            1            1            2            3            1 
+#&gt; TCGA-AP-A0LG TCGA-AP-A0LH TCGA-AP-A0LI TCGA-AP-A0LJ TCGA-AP-A0LL TCGA-AP-A0LN 
+#&gt;            3            3            1            1            1            1 
+#&gt; TCGA-AP-A0LO TCGA-AP-A0LP TCGA-AP-A0LQ TCGA-AP-A0LT TCGA-AP-A0LV TCGA-AX-A05S 
+#&gt;            1            2            1            3            1            3 
+#&gt; TCGA-AX-A05T TCGA-AX-A05U TCGA-AX-A05W TCGA-AX-A05Y TCGA-AX-A060 TCGA-AX-A062 
+#&gt;            1            1            1            2            2            1 
+#&gt; TCGA-AX-A064 TCGA-AX-A06B TCGA-AX-A06H TCGA-AX-A0IS TCGA-AX-A0IU TCGA-AX-A0IW 
+#&gt;            3            1            3            1            1            1 
+#&gt; TCGA-AX-A1C8 TCGA-AX-A1CP TCGA-AX-A2H5 TCGA-AX-A2HF TCGA-B5-A0JN TCGA-B5-A0JR 
+#&gt;            1            1            1            1            1            3 
+#&gt; TCGA-B5-A0JS TCGA-B5-A0JV TCGA-B5-A0JZ TCGA-B5-A0K0 TCGA-B5-A0K1 TCGA-B5-A0K2 
+#&gt;            1            3            3            1            1            3 
+#&gt; TCGA-B5-A0K3 TCGA-B5-A0K4 TCGA-B5-A0K6 TCGA-B5-A0K7 TCGA-B5-A0K8 TCGA-B5-A0K9 
+#&gt;            1            1            3            3            1            3 
+#&gt; TCGA-B5-A11F TCGA-B5-A11I TCGA-B5-A11M TCGA-B5-A11O TCGA-B5-A11S TCGA-B5-A11V 
+#&gt;            1            1            1            2            1            1 
+#&gt; TCGA-B5-A11X TCGA-B5-A11Z TCGA-B5-A1MU TCGA-B5-A1MY TCGA-BG-A0LW TCGA-BG-A0LX 
+#&gt;            1            1            1            1            1            2 
+#&gt; TCGA-BG-A0M0 TCGA-BG-A0M2 TCGA-BG-A0M3 TCGA-BG-A0M4 TCGA-BG-A0M6 TCGA-BG-A0M7 
+#&gt;            2            1            1            3            1            1 
+#&gt; TCGA-BG-A0M8 TCGA-BG-A0M9 TCGA-BG-A0MC TCGA-BG-A0MG TCGA-BG-A0MI TCGA-BG-A0MO 
+#&gt;            1            2            1            1            1            1 
+#&gt; TCGA-BG-A0MQ TCGA-BG-A0MS TCGA-BG-A0MT TCGA-BG-A0MU TCGA-BG-A0RY TCGA-BG-A0VT 
+#&gt;            3            1            1            1            1            1 
+#&gt; TCGA-BG-A0VX TCGA-BG-A0VZ TCGA-BG-A0W1 TCGA-BG-A0W2 TCGA-BG-A0YU TCGA-BG-A0YV 
+#&gt;            1            3            1            1            1            1 
+#&gt; TCGA-BG-A186 TCGA-BG-A187 TCGA-BG-A18A TCGA-BG-A18B TCGA-BG-A18C TCGA-BG-A2AE 
+#&gt;            1            1            1            2            1            1 
+#&gt; TCGA-BK-A0C9 TCGA-BK-A0CA TCGA-BK-A0CB TCGA-BK-A0CC TCGA-BS-A0T9 TCGA-BS-A0TA 
+#&gt;            3            1            1            1            1            3 
+#&gt; TCGA-BS-A0TD TCGA-BS-A0TE TCGA-BS-A0TG TCGA-BS-A0TI TCGA-BS-A0TJ TCGA-BS-A0U5 
+#&gt;            1            3            1            1            3            1 
+#&gt; TCGA-BS-A0U7 TCGA-BS-A0U8 TCGA-BS-A0U9 TCGA-BS-A0UL TCGA-BS-A0UM TCGA-BS-A0UT 
+#&gt;            1            3            1            3            3            1 
+#&gt; TCGA-BS-A0V6 TCGA-BS-A0WQ TCGA-D1-A0ZO TCGA-D1-A0ZP TCGA-D1-A0ZQ TCGA-D1-A0ZR 
+#&gt;            1            1            3            1            1            1 
+#&gt; TCGA-D1-A0ZS TCGA-D1-A0ZU TCGA-D1-A0ZV TCGA-D1-A0ZZ TCGA-D1-A101 TCGA-D1-A102 
+#&gt;            2            1            1            1            3            1 
+#&gt; TCGA-D1-A15W TCGA-D1-A15Z TCGA-D1-A163 TCGA-D1-A165 TCGA-D1-A168 TCGA-D1-A169 
+#&gt;            1            1            3            1            1            1 
+#&gt; TCGA-D1-A16B TCGA-D1-A16D TCGA-D1-A16E TCGA-D1-A16G TCGA-D1-A16I TCGA-D1-A16J 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-D1-A16N TCGA-D1-A16O TCGA-D1-A16Q TCGA-D1-A16R TCGA-D1-A16S TCGA-D1-A174 
+#&gt;            1            1            1            1            1            3 
+#&gt; TCGA-D1-A176 TCGA-D1-A177 TCGA-D1-A17A TCGA-D1-A17B TCGA-D1-A17C TCGA-D1-A17D 
+#&gt;            1            3            2            3            1            3 
+#&gt; TCGA-D1-A17F TCGA-D1-A17H TCGA-D1-A17K TCGA-D1-A17L TCGA-D1-A17M TCGA-D1-A17N 
+#&gt;            2            3            1            1            3            1 
+#&gt; TCGA-D1-A17R TCGA-D1-A17S TCGA-D1-A17T TCGA-D1-A17U TCGA-D1-A1NU TCGA-DI-A0WH 
+#&gt;            3            1            1            3            1            3 
+#&gt; TCGA-DI-A1NN TCGA-E6-A1LZ TCGA-EO-A1Y5 TCGA-EO-A1Y8 TCGA-FI-A2D2 TCGA-FI-A2EW 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-FI-A2EX TCGA-FI-A2F8 TCGA-A5-A0GI TCGA-A5-A0GP TCGA-A5-A0VP TCGA-AJ-A23M 
+#&gt;            1            1            2            3            3            1 
+#&gt; TCGA-AP-A051 TCGA-AP-A054 TCGA-AP-A056 TCGA-AP-A059 TCGA-AP-A0LM TCGA-AP-A1DQ 
+#&gt;            3            3            3            3            3            1 
+#&gt; TCGA-AX-A05Z TCGA-AX-A063 TCGA-AX-A06L TCGA-AX-A0J0 TCGA-AX-A0J1 TCGA-AX-A1C7 
+#&gt;            3            3            1            3            3            1 
+#&gt; TCGA-B5-A0JT TCGA-B5-A0JY TCGA-B5-A11E TCGA-B5-A11G TCGA-B5-A11H TCGA-B5-A11J 
+#&gt;            1            3            3            3            2            3 
+#&gt; TCGA-B5-A11N TCGA-B5-A11Q TCGA-B5-A11R TCGA-B5-A11U TCGA-B5-A11W TCGA-B5-A11Y 
+#&gt;            3            1            3            1            1            3 
+#&gt; TCGA-B5-A121 TCGA-BG-A0VW TCGA-BK-A139 TCGA-BK-A13C TCGA-BS-A0TC TCGA-BS-A0UA 
+#&gt;            1            2            1            1            3            2 
+#&gt; TCGA-BS-A0UF TCGA-BS-A0UJ TCGA-BS-A0UV TCGA-BS-A0V7 TCGA-BS-A0V8 TCGA-D1-A0ZN 
+#&gt;            3            3            3            1            1            1 
+#&gt; TCGA-D1-A103 TCGA-D1-A15V TCGA-D1-A15X TCGA-D1-A160 TCGA-D1-A161 TCGA-D1-A167 
+#&gt;            3            1            3            3            2            3 
+#&gt; TCGA-D1-A16F TCGA-D1-A16X TCGA-D1-A16Y TCGA-D1-A17Q TCGA-D1-A1NX TCGA-EY-A1GS 
+#&gt;            2            3            3            3            1            3 
+#&gt; TCGA-EY-A212 
+#&gt;            1 
+#&gt; 
+#&gt; $`4`
+#&gt; TCGA-A5-A0G3 TCGA-A5-A0G5 TCGA-A5-A0G9 TCGA-A5-A0GA TCGA-A5-A0GB TCGA-A5-A0GD 
+#&gt;            1            1            2            3            4            1 
+#&gt; TCGA-A5-A0GE TCGA-A5-A0GH TCGA-A5-A0GJ TCGA-A5-A0GM TCGA-A5-A0GN TCGA-A5-A0GQ 
+#&gt;            1            2            1            1            1            2 
+#&gt; TCGA-A5-A0GU TCGA-A5-A0GV TCGA-A5-A0GW TCGA-A5-A0GX TCGA-A5-A0R6 TCGA-A5-A0R7 
+#&gt;            1            1            3            1            1            1 
+#&gt; TCGA-A5-A0R8 TCGA-A5-A0R9 TCGA-A5-A0RA TCGA-A5-A0VO TCGA-A5-A0VQ TCGA-AP-A052 
+#&gt;            1            1            1            1            3            1 
+#&gt; TCGA-AP-A053 TCGA-AP-A05A TCGA-AP-A05D TCGA-AP-A05H TCGA-AP-A05J TCGA-AP-A05N 
+#&gt;            1            1            1            1            1            3 
+#&gt; TCGA-AP-A05P TCGA-AP-A0L8 TCGA-AP-A0L9 TCGA-AP-A0LD TCGA-AP-A0LE TCGA-AP-A0LF 
+#&gt;            1            1            1            2            3            1 
+#&gt; TCGA-AP-A0LG TCGA-AP-A0LH TCGA-AP-A0LI TCGA-AP-A0LJ TCGA-AP-A0LL TCGA-AP-A0LN 
+#&gt;            3            3            1            1            1            1 
+#&gt; TCGA-AP-A0LO TCGA-AP-A0LP TCGA-AP-A0LQ TCGA-AP-A0LT TCGA-AP-A0LV TCGA-AX-A05S 
+#&gt;            1            2            1            4            1            4 
+#&gt; TCGA-AX-A05T TCGA-AX-A05U TCGA-AX-A05W TCGA-AX-A05Y TCGA-AX-A060 TCGA-AX-A062 
+#&gt;            1            1            1            2            2            1 
+#&gt; TCGA-AX-A064 TCGA-AX-A06B TCGA-AX-A06H TCGA-AX-A0IS TCGA-AX-A0IU TCGA-AX-A0IW 
+#&gt;            3            1            4            1            1            1 
+#&gt; TCGA-AX-A1C8 TCGA-AX-A1CP TCGA-AX-A2H5 TCGA-AX-A2HF TCGA-B5-A0JN TCGA-B5-A0JR 
+#&gt;            1            1            1            1            1            3 
+#&gt; TCGA-B5-A0JS TCGA-B5-A0JV TCGA-B5-A0JZ TCGA-B5-A0K0 TCGA-B5-A0K1 TCGA-B5-A0K2 
+#&gt;            1            3            4            1            1            3 
+#&gt; TCGA-B5-A0K3 TCGA-B5-A0K4 TCGA-B5-A0K6 TCGA-B5-A0K7 TCGA-B5-A0K8 TCGA-B5-A0K9 
+#&gt;            1            1            4            3            1            4 
+#&gt; TCGA-B5-A11F TCGA-B5-A11I TCGA-B5-A11M TCGA-B5-A11O TCGA-B5-A11S TCGA-B5-A11V 
+#&gt;            1            1            1            2            1            1 
+#&gt; TCGA-B5-A11X TCGA-B5-A11Z TCGA-B5-A1MU TCGA-B5-A1MY TCGA-BG-A0LW TCGA-BG-A0LX 
+#&gt;            1            1            1            1            1            2 
+#&gt; TCGA-BG-A0M0 TCGA-BG-A0M2 TCGA-BG-A0M3 TCGA-BG-A0M4 TCGA-BG-A0M6 TCGA-BG-A0M7 
+#&gt;            2            1            1            4            1            1 
+#&gt; TCGA-BG-A0M8 TCGA-BG-A0M9 TCGA-BG-A0MC TCGA-BG-A0MG TCGA-BG-A0MI TCGA-BG-A0MO 
+#&gt;            1            2            1            1            1            1 
+#&gt; TCGA-BG-A0MQ TCGA-BG-A0MS TCGA-BG-A0MT TCGA-BG-A0MU TCGA-BG-A0RY TCGA-BG-A0VT 
+#&gt;            4            1            1            1            1            1 
+#&gt; TCGA-BG-A0VX TCGA-BG-A0VZ TCGA-BG-A0W1 TCGA-BG-A0W2 TCGA-BG-A0YU TCGA-BG-A0YV 
+#&gt;            1            4            1            1            1            1 
+#&gt; TCGA-BG-A186 TCGA-BG-A187 TCGA-BG-A18A TCGA-BG-A18B TCGA-BG-A18C TCGA-BG-A2AE 
+#&gt;            1            1            1            2            1            1 
+#&gt; TCGA-BK-A0C9 TCGA-BK-A0CA TCGA-BK-A0CB TCGA-BK-A0CC TCGA-BS-A0T9 TCGA-BS-A0TA 
+#&gt;            4            1            1            1            1            4 
+#&gt; TCGA-BS-A0TD TCGA-BS-A0TE TCGA-BS-A0TG TCGA-BS-A0TI TCGA-BS-A0TJ TCGA-BS-A0U5 
+#&gt;            1            3            1            1            4            1 
+#&gt; TCGA-BS-A0U7 TCGA-BS-A0U8 TCGA-BS-A0U9 TCGA-BS-A0UL TCGA-BS-A0UM TCGA-BS-A0UT 
+#&gt;            1            3            1            3            4            1 
+#&gt; TCGA-BS-A0V6 TCGA-BS-A0WQ TCGA-D1-A0ZO TCGA-D1-A0ZP TCGA-D1-A0ZQ TCGA-D1-A0ZR 
+#&gt;            1            1            4            1            1            1 
+#&gt; TCGA-D1-A0ZS TCGA-D1-A0ZU TCGA-D1-A0ZV TCGA-D1-A0ZZ TCGA-D1-A101 TCGA-D1-A102 
+#&gt;            2            1            1            1            4            1 
+#&gt; TCGA-D1-A15W TCGA-D1-A15Z TCGA-D1-A163 TCGA-D1-A165 TCGA-D1-A168 TCGA-D1-A169 
+#&gt;            1            1            4            1            1            1 
+#&gt; TCGA-D1-A16B TCGA-D1-A16D TCGA-D1-A16E TCGA-D1-A16G TCGA-D1-A16I TCGA-D1-A16J 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-D1-A16N TCGA-D1-A16O TCGA-D1-A16Q TCGA-D1-A16R TCGA-D1-A16S TCGA-D1-A174 
+#&gt;            1            1            1            1            1            4 
+#&gt; TCGA-D1-A176 TCGA-D1-A177 TCGA-D1-A17A TCGA-D1-A17B TCGA-D1-A17C TCGA-D1-A17D 
+#&gt;            1            4            2            3            1            3 
+#&gt; TCGA-D1-A17F TCGA-D1-A17H TCGA-D1-A17K TCGA-D1-A17L TCGA-D1-A17M TCGA-D1-A17N 
+#&gt;            2            4            1            1            3            1 
+#&gt; TCGA-D1-A17R TCGA-D1-A17S TCGA-D1-A17T TCGA-D1-A17U TCGA-D1-A1NU TCGA-DI-A0WH 
+#&gt;            3            1            1            3            1            4 
+#&gt; TCGA-DI-A1NN TCGA-E6-A1LZ TCGA-EO-A1Y5 TCGA-EO-A1Y8 TCGA-FI-A2D2 TCGA-FI-A2EW 
+#&gt;            1            1            1            1            1            1 
+#&gt; TCGA-FI-A2EX TCGA-FI-A2F8 TCGA-A5-A0GI TCGA-A5-A0GP TCGA-A5-A0VP TCGA-AJ-A23M 
+#&gt;            1            1            2            4            4            1 
+#&gt; TCGA-AP-A051 TCGA-AP-A054 TCGA-AP-A056 TCGA-AP-A059 TCGA-AP-A0LM TCGA-AP-A1DQ 
+#&gt;            4            4            4            4            4            1 
+#&gt; TCGA-AX-A05Z TCGA-AX-A063 TCGA-AX-A06L TCGA-AX-A0J0 TCGA-AX-A0J1 TCGA-AX-A1C7 
+#&gt;            4            4            1            4            4            1 
+#&gt; TCGA-B5-A0JT TCGA-B5-A0JY TCGA-B5-A11E TCGA-B5-A11G TCGA-B5-A11H TCGA-B5-A11J 
+#&gt;            1            4            4            3            2            3 
+#&gt; TCGA-B5-A11N TCGA-B5-A11Q TCGA-B5-A11R TCGA-B5-A11U TCGA-B5-A11W TCGA-B5-A11Y 
+#&gt;            4            1            4            1            1            4 
+#&gt; TCGA-B5-A121 TCGA-BG-A0VW TCGA-BK-A139 TCGA-BK-A13C TCGA-BS-A0TC TCGA-BS-A0UA 
+#&gt;            1            2            1            1            4            2 
+#&gt; TCGA-BS-A0UF TCGA-BS-A0UJ TCGA-BS-A0UV TCGA-BS-A0V7 TCGA-BS-A0V8 TCGA-D1-A0ZN 
+#&gt;            4            4            4            1            1            1 
+#&gt; TCGA-D1-A103 TCGA-D1-A15V TCGA-D1-A15X TCGA-D1-A160 TCGA-D1-A161 TCGA-D1-A167 
+#&gt;            4            1            4            3            2            4 
+#&gt; TCGA-D1-A16F TCGA-D1-A16X TCGA-D1-A16Y TCGA-D1-A17Q TCGA-D1-A1NX TCGA-EY-A1GS 
+#&gt;            2            4            4            4            1            3 
+#&gt; TCGA-EY-A212 
+#&gt;            1 
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
