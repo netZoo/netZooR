@@ -4,6 +4,7 @@ import time
 import pandas as pd
 from scipy.stats import zscore
 import numpy as np
+import os
 
 # this scirpt is derived from https://github.com/netZoo/netZooPy/blob/master/netZooPy/panda/panda.py
 # and https://github.com/netZoo/netZooPy/blob/master/netZooPy/panda/timer.py
@@ -91,9 +92,9 @@ class Panda(object):
         if save_tmp:
             with Timer('Saving expression matrix and normalized networks ...'):
                 if self.expression_data is not None:
-                    np.save('/tmp/expression.npy', self.expression_data.values)
-                np.save('/tmp/motif.normalized.npy', self.motif_matrix)
-                np.save('/tmp/ppi.normalized.npy', self.ppi_matrix)
+                    np.save('expression.npy', self.expression_data.values)
+                np.save('motif.normalized.npy', self.motif_matrix)
+                np.save('ppi.normalized.npy', self.ppi_matrix)
 
         # delete expression data
         del self.expression_data
