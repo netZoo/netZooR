@@ -4,6 +4,7 @@ import time
 import pandas as pd
 from scipy.stats import zscore
 import numpy as np
+import os
 
 # this scirpt is derived from https://github.com/netZoo/netZooPy/blob/master/netZooPy/panda/panda.py
 # and https://github.com/netZoo/netZooPy/blob/master/netZooPy/panda/timer.py
