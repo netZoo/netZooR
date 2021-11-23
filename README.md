@@ -79,6 +79,18 @@ remotes::install_github("netZoo/netZooR", build_vignettes = TRUE)
 library(netZooR)
 ```
 
+netZooR is also available through Biocondcutor
+
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# The following initializes usage of Bioc devel
+BiocManager::install(version='devel')
+
+BiocManager::install("netZooR")
+```
+
 For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/).
 
 This package will invoke Python programming language in R environment through [reticulate](https://rstudio.github.io/reticulate/) package, by default setting there is no additional configuration needed.
