@@ -64,6 +64,10 @@ The package also integrates additional functions to:
 
 - Most of plotting function can be realized by functions in [igraph](https://igraph.org/redirect.html), which will be loaded with netZooR through `library(netZooR)`. Some plotting functions like `vis.panda.in.cytoscape()` and `vis.diff.panda.in.cytoscape()` are able to plot interactive PANDA networks in [Cytoscape](https://cytoscape.org/), but installation of Cytoscape is required before using these plotting functions. Also, please make sure that Cytoscape is open when these functions are called.
 
+### Installation
+
+#### Using devtools/remotes
+
 ```r
 # install.packages("devtools") 
 # install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
@@ -79,7 +83,9 @@ remotes::install_github("netZoo/netZooR", build_vignettes = TRUE)
 library(netZooR)
 ```
 
-netZooR is also available through Biocondcutor
+#### Using Bioconductor
+
+netZooR is also available through [Bioconductor](https://bioconductor.org/packages/netZooR)
 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -92,6 +98,8 @@ BiocManager::install("netZooR")
 ```
 
 For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/).
+
+### Python binding
 
 This package will invoke Python programming language in R environment through [reticulate](https://rstudio.github.io/reticulate/) package, by default setting there is no additional configuration needed.
 Configuring which version of Python to use , here in netZooR, Python 3.X is required. More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html).

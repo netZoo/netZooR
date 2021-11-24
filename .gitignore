@@ -32,3 +32,6 @@ tests/testthat/*.txt
 tests/testthat/*.vcf
 /doc/
 /Meta/
+vignettes/*.npy
+docs/*.npy
+docs/reference/*.npy
