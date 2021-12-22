@@ -89,7 +89,7 @@ the matrices in memory. Or, of course, you could move to a larger machine." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.85</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -240,7 +240,7 @@ set this parameter by passing a numeric value to deltaQmin.</p></td>
 <p>blue.memb community membership of the blue.nodes</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>4</span><span class='op'>)</span>;
+    <pre class="examples"><span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>4</span><span class='op'>)</span>;
 <span class='va'>b</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>;
 <span class='va'>reds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Alice"</span>,<span class='st'>"Sue"</span>,<span class='st'>"Janine"</span>,<span class='st'>"Mary"</span><span class='op'>)</span>
 <span class='va'>blues</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Bob"</span>,<span class='st'>"John"</span>,<span class='st'>"Ed"</span>,<span class='st'>"Hank"</span><span class='op'>)</span>
@@ -249,9 +249,7 @@ set this parameter by passing a numeric value to deltaQmin.</p></td>
 <span class='co'>#randomly assign blues to their own community</span>
 <span class='va'>T0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>nodes<span class='op'>=</span><span class='va'>blues</span>,coms<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>condor.object</span> <span class='op'>&lt;-</span> <span class='fu'>condorMatrixModularity</span><span class='op'>(</span><span class='va'>condor.object</span>,T0<span class='op'>=</span><span class='va'>T0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Q = 0.198347107438017"
-#&gt; [1] "Q = 0.231404958677686"
-#&gt; [1] "Q = 0.231404958677686"</div></pre>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

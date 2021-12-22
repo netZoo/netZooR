@@ -30,7 +30,7 @@ netZooR currently integrates:
 
 * **OTTER** (Optimization to Estimate Regulation) [[Weighill et al.]](https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract): models gene regulation estimation as a graph matching problem.
 
-* **CRANE** (Constrained Random Alteration of Network Edges) [[Lim et al.]](https://www.biorxiv.org/content/10.1101/2020.07.12.198747v1): generates ensembles of gene regulatory networks to identify disease modules.
+* **CRANE** (Constrained Random Alteration of Network Edges) [[Lim et al.]](https://www.frontiersin.org/articles/10.3389/fgene.2020.603264/full): generates ensembles of gene regulatory networks to identify disease modules.
 
 * **EGRET** (Estimating the Genetic Regulatory effects on TFs) [[Weighill et al.]]() In preparation: models individual-specific gene regulatory networks using their genetic variants.
 
