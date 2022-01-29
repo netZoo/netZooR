@@ -82,7 +82,6 @@ jobs:
       - name: Check
         run: |
             library('reticulate')
-            use_condaenv("r-reticulate")
             py_config()
             rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
         shell: sudo -E Rscript {0}
