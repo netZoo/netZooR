@@ -50,7 +50,7 @@ jobs:
             install.packages('reticulate', repos = "http://cran.us.r-project.org")
             library('reticulate')
         shell: Rscript {0}
-      - name: Install reticulate 2
+      - name: Install reticulate 2-1
         if: matrix.os == 'macos-latest'
         run: |
             library('reticulate')
@@ -58,6 +58,7 @@ jobs:
             use_python("/usr/local/bin/python3")
             virtualenv_create("r-reticulate")
         shell: sudo -E Rscript {0}
+      - name: Install reticulate 2-2
          if: matrix.os == 'ubuntu-latest'
          run: |
             library('reticulate')
