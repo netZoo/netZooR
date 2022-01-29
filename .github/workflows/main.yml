@@ -52,11 +52,13 @@ jobs:
         shell: Rscript {0}
       - name: Install reticulate 2
         if: matrix.os == 'macos-latest'
+        run: |
             library('reticulate')
             py_config()
             use_python("/usr/local/bin/python3")
             virtualenv_create("r-reticulate")
          if: matrix.os == 'ubuntu-latest'
+         run: |
             library('reticulate')
             py_config()
             use_python("/usr/bin/python3")
