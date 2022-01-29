@@ -51,17 +51,16 @@ jobs:
             library('reticulate')
         shell: Rscript {0}
       - name: Install reticulate 2
-        run: |
-            if: matrix.os == 'macos-latest'
-                library('reticulate')
-                py_config()
-                use_python("/usr/local/bin/python3")
-                virtualenv_create("r-reticulate")
-            if: matrix.os == 'ubuntu-latest'
-                library('reticulate')
-                py_config()
-                use_python("/usr/bin/python3")
-                virtualenv_create("r-reticulate")
+        if: matrix.os == 'macos-latest'
+            library('reticulate')
+            py_config()
+            use_python("/usr/local/bin/python3")
+            virtualenv_create("r-reticulate")
+         if: matrix.os == 'ubuntu-latest'
+            library('reticulate')
+            py_config()
+            use_python("/usr/bin/python3")
+            virtualenv_create("r-reticulate")
         shell: sudo -E Rscript {0}
       - name: Install reticulate 3
         run: |
