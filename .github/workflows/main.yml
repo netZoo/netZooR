@@ -57,6 +57,7 @@ jobs:
             py_config()
             use_python("/usr/local/bin/python3")
             virtualenv_create("r-reticulate")
+        shell: sudo -E Rscript {0}
          if: matrix.os == 'ubuntu-latest'
          run: |
             library('reticulate')
