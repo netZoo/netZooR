@@ -50,7 +50,16 @@ jobs:
             install.packages('reticulate', repos = "http://cran.us.r-project.org")
             library('reticulate')
         shell: Rscript {0}
-      - name: Install reticulate 2
+      - name: Install reticulate 2-1
+        if: matrix.os == 'macos-latest'
+        run: |
+            library('reticulate')
+            py_config()
+            use_python("/usr/local/bin/python3")
+            virtualenv_create("r-reticulate")
+        shell: sudo -E Rscript {0}
+      - name: Install reticulate 2-2
+        if: matrix.os == 'ubuntu-latest'
         run: |
             library('reticulate')
             py_config()
@@ -73,14 +82,12 @@ jobs:
       - name: Check
         run: |
             library('reticulate')
-            use_condaenv("r-reticulate")
             py_config()
             rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
         shell: sudo -E Rscript {0}
       - name: Report coverage
         run: |
             library('reticulate')
-            use_condaenv("r-reticulate")
             py_config()            
             covr::codecov()
         shell: sudo -E Rscript {0}

@@ -81,7 +81,7 @@ alpacaCrane = function(input,alp,alpha=0.1,beta=0,iteration=30,isParallel=F){
     if (i %% round(iteration/5)==0){
       print(paste("Computing Differential Score",(i/iteration)*100,"%"))
     }
-    dwbm = computeDWBMmat.mscale(pos.table,ctrl.memb[V(pos.graph)$name])
+    dwbm = alpacaComputeDWBMmatmScale(pos.table,ctrl.memb[V(pos.graph)$name])
     
     miss_tf=setdiff(tfcheck,rownames(dwbm))
     miss_g=setdiff(gcheck,colnames(dwbm))
