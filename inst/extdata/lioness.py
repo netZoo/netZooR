@@ -1,16 +1,7 @@
-from __future__ import print_function
-import os, os.path, sys
+import os, os.path
 import numpy as np
 import pandas as pd
-from .timer import Timer
-
-sys.path.insert(1, "../panda")
-from netZooPy.panda.panda import Panda
-from joblib.externals.loky import set_loky_pickler
-from joblib import parallel_backend
-from joblib import Parallel, delayed
-from joblib import wrap_non_picklable_objects
-from netZooPy.panda.calculations import compute_panda
+from .calculations import compute_panda
 
 class Lioness(Panda):
     """
