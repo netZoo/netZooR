@@ -1,8 +1,51 @@
 import os, os.path
 import numpy as np
 import pandas as pd
-from .calculations import compute_panda
+from joblib.externals.loky import set_loky_pickler
+from joblib import parallel_backend
+from joblib import Parallel, delayed
+from joblib import wrap_non_picklable_objects
 
+def compute_panda(
+    correlation_matrix,
+    ppi_matrix,
+    motif_matrix,
+    computing="cpu",
+    threshold=0.001,
+    alpha=0.1,
+):
+    """Panda network optimization
+    Args:
+        correlation_matrix (numpy float): coexpression matrix
+        ppi_matrix (numpy float): PPI network matrix
+        motif_matrix (numpy float): motif matrix
+        computing (str) : either cpu or gpu. Defaults to 'cpu'
+        threshold (float, optional): hamming distance threshold for stop. Defaults to 0.001.
+        alpha (float, optional): learning rate. Defaults to 0.1
+    """
+
+    if computing == "cpu":
+        # Initialise W and hamming
+        motif_matrix = compute_panda_cpu(
+            correlation_matrix,
+            ppi_matrix,
+            motif_matrix,
+            alpha=alpha,
+        )
+
+    elif computing == "gpu":
+        from netZooPy.panda.calculations_gpu import compute_panda_gpu
+
+        motif_matrix = compute_panda_gpu(
+            correlation_matrix,
+            ppi_matrix,
+            motif_matrix,
+            alpha=alpha,
+        )
+    else:
+        sys.error("ERROR: %s is not an existing computing device" % str(computing))
+    return motif_matrix
+    
 class Lioness(Panda):
     """
     Description:
