@@ -1,6 +1,10 @@
 import os, os.path
 import numpy as np
 import pandas as pd
+from joblib.externals.loky import set_loky_pickler
+from joblib import parallel_backend
+from joblib import Parallel, delayed
+from joblib import wrap_non_picklable_objects
 
 def compute_panda(
     correlation_matrix,
