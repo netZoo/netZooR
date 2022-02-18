@@ -421,23 +421,29 @@ craneUnipartite = function(A,alpha=0.1,isSelfLoop=F){
 alpacaComputeDifferentialScoreFromDWBM = function(dwbm,louv.memb){
   louv.Ascores <- NULL
   louv.Bscores <- NULL
-  for (i in 1:max(louv.memb)){
+  louv.Anames <- NULL
+  louv.Bnames <- NULL
+  for (i in seq_len(max(louv.memb)))
+  {
+    print(i)
     this.comm <- names(louv.memb)[louv.memb==i]
-    this.tfs <- this.comm[grep("_A",this.comm)]
-    this.genes <- this.comm[grep("_B",this.comm)]
-    if (length(this.tfs)>1){
-      tf.sums <- apply(as.matrix(dwbm[this.tfs,this.genes]),1,sum)
-      gene.sums <- apply(as.matrix(dwbm[this.tfs,this.genes]),2,sum)
-    } else {
-      tf.sums <- sum(dwbm[this.tfs,this.genes])
-      gene.sums <- dwbm[this.tfs,this.genes]
+    this.tfs <- this.comm[grep("_A$",this.comm)]
+    this.genes <- this.comm[grep("_B$",this.comm)]
+    if (length(this.tfs)>0 && length(this.genes)>0)
+    {
+      dwbm.submat <- array(dwbm[this.tfs,this.genes],dim=c(length(this.tfs),length(this.genes)))
+      tf.sums <- apply(dwbm.submat,1,sum)
+      gene.sums <- apply(dwbm.submat,2,sum)
+      this.denom <- sum(dwbm[this.tfs,this.genes])
+      louv.Ascores <- c(louv.Ascores,tf.sums/this.denom)
+      louv.Bscores <- c(louv.Bscores,gene.sums/this.denom)
+      louv.Anames <- c(louv.Anames,this.tfs)
+      louv.Bnames <- c(louv.Bnames,this.genes)
     }
-    this.denom <- sum(dwbm[this.tfs,this.genes])
-    louv.Ascores <- c(louv.Ascores,tf.sums/this.denom)
-    louv.Bscores <- c(louv.Bscores,gene.sums/this.denom)
   }
   
   louv.scores <- c(louv.Ascores,louv.Bscores)
+  names(louv.scores) <- c(louv.Anames,louv.Bnames)
   
   return(louv.scores)
 }
