@@ -12,13 +12,6 @@ test_that("lionessPy() function works", {
   motif_file_path <- system.file("extdata", "chip.txt", package = "netZooR", mustWork = TRUE)
   ppi_file_path <- "./ppi.txt"
   
-  
-T4_expression_file_path = "expr4.txt"
-motif_file_path  = "../../inst/extdata/chip.txt"
-ppi_file_path = "ppi.txt"
-panda_obj=Panda(T4_expression_file_path,motif_file_path,ppi_file_path,keep_expression_matrix=True,save_memory=False)
-lioness_obj = Lioness(panda_obj,end=1)
-  
   # test 2: check message when only expression data input
   # To do 1: error occurred when only expression as input dataset
   # expect_message(lionessPy(T4_expression_file_path))
