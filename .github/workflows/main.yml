@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [macos-latest, ubuntu-latest]
         r-version: [4.1]
 
     steps:
@@ -72,6 +72,7 @@ jobs:
             virtualenv_install("r-reticulate","numpy")
             virtualenv_install("r-reticulate","scipy")
             virtualenv_install("r-reticulate","pandas")
+            virtualenv_install("r-reticulate","joblib")
         shell: sudo -E Rscript {0}
       - name: Install dependencies 2
         run: |
