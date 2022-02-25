@@ -173,11 +173,29 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
 #' @references
 #' Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 #' Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.
-lioness <- function(motif,expr,ppi=NULL, network.inference.method, ...){
-    N <- ncol(expr)
+lioness = function(expr, motif = NULL, ppi = NULL, network.inference.method = "panda", ...){
+  N <- ncol(expr)
+  if(network.inference.method == "panda")
+  {
     fullnet <- panda(motif, expr, ppi, ...)
-    lapply(seq_len(N), function(i){
-        print(paste("Computing network for sample ",i))
-        N*fullnet@regNet - (N-1)* panda(motif, expr[,-i], ppi, ...)@regNet
-    })
+    return(lapply(seq_len(N), function(i) {
+      print(paste("Computing network for sample ", i))
+      N * fullnet@regNet - (N - 1) * panda(motif, expr[, -i], 
+                                           ppi, ...)@regNet
+    }))
+  }
+  if(network.inference.method == "pearson")
+  {
+    fullnet <- cor(t(expr))
+    
+    return(lapply(seq_len(N), function(i) {
+      print(paste("Computing network for sample ", i))
+      N * fullnet - (N - 1) * cor(t(expr[,-i]))
+    }))
+  }
+  if(!(network.inference.method %in% c("panda","pearson")))
+  {
+    stop(paste(c("The method",network.inference.method,"is not yet supported."),collapse=" "))
+    geterrmessage()
+  }
 }
