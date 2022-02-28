@@ -4,14 +4,20 @@
 \alias{lioness}
 \title{Compute LIONESS (Linear Interpolation to Obtain Network Estimates for Single Samples)}
 \usage{
-lioness(motif, expr, ppi = NULL, network.inference.method, ...)
+lioness(
+  expr,
+  motif = NULL,
+  ppi = NULL,
+  network.inference.method = "panda",
+  ...
+)
 }
 \arguments{
+\item{expr}{A mandatory expression dataset, as a genes (rows) by samples (columns) data.frame}
+
 \item{motif}{A motif dataset, a data.frame, matrix or exprSet containing 3 columns.
 Each row describes an motif associated with a transcription factor (column 1) a
 gene (column 2) and a score (column 3) for the motif.}
-
-\item{expr}{A mandatory expression dataset, as a genes (rows) by samples (columns) data.frame}
 
 \item{ppi}{A Protein-Protein interaction dataset, a data.frame containing 3 columns.
 Each row describes a protein-protein interaction between transcription factor 1(column 1),
@@ -34,8 +40,7 @@ Compute LIONESS (Linear Interpolation to Obtain Network Estimates for Single Sam
 }
 \examples{
 data(pandaToyData)
-linonessRes <- lioness(pandaToyData$motif,
-    pandaToyData$expression[,1:3],pandaToyData$ppi,hamming=1,progress=FALSE)
+lionessRes <- lioness(expr = pandaToyData$expression[,1:3], motif = pandaToyData$motif, ppi = pandaToyData$ppi,hamming=1,progress=FALSE)
 }
 \references{
 Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
