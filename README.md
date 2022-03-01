@@ -162,7 +162,7 @@ devtools::check()
 ```
 
 The master branch on github should always be in good shape, so please to pull request to the **devel** branch.
-If the contribution is specific to pandaR, please contribute to its seperate GitHub page by [pull request](https://github.com/jnpaulson/pandaR). 
+If the contribution is specific to pandaR, please contribute to its separate GitHub page by [pull request](https://github.com/jnpaulson/pandaR). 
 
 ## License
 The software is free and is licensed under the GNU General License v3.0, see the file [LICENSE](LICENSE) for details.
