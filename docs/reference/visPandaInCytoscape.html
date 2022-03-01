@@ -73,7 +73,7 @@ is installed and open it before calling this function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.81</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -184,7 +184,7 @@ is installed and open it before calling this function.</p>
     <p>PANDA network in Cytoscape</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+    <pre class="examples"><span class='co'># \donttest{</span>
 <span class='co'># refer to the input datasets files of control TB dataset in inst/extdat as example</span>
 <span class='va'>control_expression_file_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"expr10_matched.txt"</span>, 
 package <span class='op'>=</span> <span class='st'>"netZooR"</span>, mustWork <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
@@ -194,17 +194,17 @@ package <span class='op'>=</span> <span class='st'>"netZooR"</span>, mustWork <s
 <span class='co'># Run PANDA algorithm</span>
 <span class='va'>control_all_panda_result</span> <span class='op'>&lt;-</span> <span class='fu'>panda.py</span><span class='op'>(</span>expr <span class='op'>=</span> <span class='va'>control_expression_file_path</span>, motif <span class='op'>=</span> <span class='va'>motif_file_path</span>, 
 ppi <span class='op'>=</span> <span class='va'>ppi_file_path</span>, mode_process<span class='op'>=</span><span class='st'>"legacy"</span>, rm_missing <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in panda.py(expr = control_expression_file_path, motif = motif_file_path,     ppi = ppi_file_path, mode_process = "legacy", rm_missing = TRUE): could not find function "panda.py"</span></div><div class='input'>
+
 <span class='co'># access PANDA regulatory network</span>
 <span class='va'>control_net</span> <span class='op'>&lt;-</span> <span class='va'>control_all_panda_result</span><span class='op'>$</span><span class='va'>panda</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'control_all_panda_result' not found</span></div><div class='input'>
+
 <span class='co'># select top 1000 edges in PANDA network by edge weight.</span>
 <span class='va'>panda.net</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>control_net</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>control_net</span><span class='op'>$</span><span class='va'>force</span>,decreasing <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,<span class='op'>]</span>, <span class='fl'>1000</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in head(control_net[order(control_net$force, decreasing = TRUE),     ], 1000): object 'control_net' not found</span></div><div class='input'>
+
 <span class='co'># run this function to create a network in Cytoscape.</span>
 <span class='fu'>visPandaInCytoscape</span><span class='op'>(</span><span class='va'>panda.net</span>, network.name<span class='op'>=</span><span class='st'>"PANDA"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in visPandaInCytoscape(panda.net, network.name = "PANDA"): unused argument (network.name = "PANDA")</span></div><div class='input'><span class='co'># }</span>
-</div></pre>
+<span class='co'># }</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -216,7 +216,7 @@ ppi <span class='op'>=</span> <span class='va'>ppi_file_path</span>, mode_proces
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz, Deborah Weighill.</p>
+  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz, Deborah Weighill.</p>
 </div>
 
 <div class="pkgdown">

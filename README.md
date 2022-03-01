@@ -30,7 +30,7 @@ netZooR currently integrates:
 
 * **OTTER** (Optimization to Estimate Regulation) [[Weighill et al.]](https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract): models gene regulation estimation as a graph matching problem.
 
-* **CRANE** (Constrained Random Alteration of Network Edges) [[Lim et al.]](https://www.biorxiv.org/content/10.1101/2020.07.12.198747v1): generates ensembles of gene regulatory networks to identify disease modules.
+* **CRANE** (Constrained Random Alteration of Network Edges) [[Lim et al.]](https://www.frontiersin.org/articles/10.3389/fgene.2020.603264/full): generates ensembles of gene regulatory networks to identify disease modules.
 
 * **EGRET** (Estimating the Genetic Regulatory effects on TFs) [[Weighill et al.]]() In preparation: models individual-specific gene regulatory networks using their genetic variants.
 
@@ -64,6 +64,10 @@ The package also integrates additional functions to:
 
 - Most of plotting function can be realized by functions in [igraph](https://igraph.org/redirect.html), which will be loaded with netZooR through `library(netZooR)`. Some plotting functions like `vis.panda.in.cytoscape()` and `vis.diff.panda.in.cytoscape()` are able to plot interactive PANDA networks in [Cytoscape](https://cytoscape.org/), but installation of Cytoscape is required before using these plotting functions. Also, please make sure that Cytoscape is open when these functions are called.
 
+### Installation
+
+#### Using devtools/remotes
+
 ```r
 # install.packages("devtools") 
 # install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
@@ -79,7 +83,23 @@ remotes::install_github("netZoo/netZooR", build_vignettes = TRUE)
 library(netZooR)
 ```
 
+#### Using Bioconductor
+
+netZooR is also available through [Bioconductor](https://bioconductor.org/packages/netZooR)
+
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# The following initializes usage of Bioc devel
+BiocManager::install(version='devel')
+
+BiocManager::install("netZooR")
+```
+
 For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/).
+
+### Python binding
 
 This package will invoke Python programming language in R environment through [reticulate](https://rstudio.github.io/reticulate/) package, by default setting there is no additional configuration needed.
 Configuring which version of Python to use , here in netZooR, Python 3.X is required. More details can be found [here](https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html).

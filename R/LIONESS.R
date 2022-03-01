@@ -134,10 +134,12 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
    # retrieve the "total_lioness_network" attribute of instance "lionesss_obj"
    py_run_string("lioness_network = lioness_obj.export_lioness_results",local = FALSE, convert = TRUE)
    
-   # convert the python varible "lionesss_network" to a data.frame in R enviroment.
+   # convert the python variable "lionesss_network" to a data.frame in R environment.
    lioness_net <- py$lioness_network
    # cbind the first two columns of PANDA output with LIONESS output.
-   lioness_output <- cbind(panda_net[,c("TF","Gene")], lioness_net)
+   lioness_net$tf   <- panda_net$TF
+   lioness_net$gene <- panda_net$Gene
+   lioness_output   <- lioness_net
    return(lioness_output)
 }
 

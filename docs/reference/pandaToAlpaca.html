@@ -74,7 +74,7 @@ This function compares two networks generate by pandaPy in this package and find
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.81</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -195,7 +195,7 @@ This function compares two networks generate by <code><a href='pandaPy.html'>pan
 and a List where the first element is the membership vector and second element is the contribution score of each node to its module's total differential modularity</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># refer to four input datasets files in inst/extdat</span>
+    <pre class="examples"><span class='co'># refer to four input datasets files in inst/extdat</span>
 <span class='va'>treated_expression_file_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"expr4_matched.txt"</span>, 
 package <span class='op'>=</span> <span class='st'>"netZooR"</span>, mustWork <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>control_expression_file_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"expr10_matched.txt"</span>, 
@@ -209,35 +209,15 @@ package <span class='op'>=</span> <span class='st'>"netZooR"</span>, mustWork <s
 <span class='va'>treated_panda_net</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pandaPy.html'>pandaPy</a></span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>treated_expression_file_path</span>, 
 motif_file <span class='op'>=</span> <span class='va'>motif_file_path</span>, ppi_file <span class='op'>=</span> <span class='va'>ppi_file_path</span>, 
 modeProcess<span class='op'>=</span><span class='st'>"legacy"</span>, remove_missing <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span><span class='op'>$</span><span class='va'>panda</span>
-</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA...</span></div><div class='input'><span class='va'>control_panda_net</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pandaPy.html'>pandaPy</a></span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>control_expression_file_path</span>, 
+<span class='va'>control_panda_net</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pandaPy.html'>pandaPy</a></span><span class='op'>(</span>expr_file <span class='op'>=</span> <span class='va'>control_expression_file_path</span>, 
 motif_file <span class='op'>=</span> <span class='va'>motif_file_path</span>, ppi_file <span class='op'>=</span> <span class='va'>ppi_file_path</span>, 
 modeProcess<span class='op'>=</span><span class='st'>"legacy"</span>, remove_missing <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='op'>)</span><span class='op'>$</span><span class='va'>panda</span>
-</div><div class='output co'>#&gt; <span class='message'>Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></div><div class='output co'>#&gt; <span class='message'>Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns</span></div><div class='output co'>#&gt; <span class='message'>...Finish PANDA...</span></div><div class='input'> 
+ 
 <span class='co'># Run ALPACA</span>
 <span class='va'>alpaca</span><span class='op'>&lt;-</span> <span class='fu'>pandaToAlpaca</span><span class='op'>(</span><span class='va'>treated_panda_net</span>, <span class='va'>control_panda_net</span>, <span class='st'>"./TB"</span>, verbose<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Detecting communities in control network..."</div><div class='output co'>#&gt; <span class='message'>Weights detected. Building condor object with weighted edges.</span></div><div class='output co'>#&gt; [1] "modularity of projected graph 0.482467704493567"
-#&gt; [1] "Q = 0.49405163585898"
-#&gt; [1] "Q = 0.49405163585898"
-#&gt; [1] "Computing differential modularity matrix..."
-#&gt; [1] "Computing differential modules..."
-#&gt; [1] "Merging 2644 communities"
-#&gt; [1] 1
-#&gt; [1] 2
-#&gt; [1] 3
-#&gt; [1] "Merging 139 communities"
-#&gt; [1] 1
-#&gt; [1] 2
-#&gt; [1] 3
-#&gt; [1] 4
-#&gt; [1] 5
-#&gt; [1] "Merging 18 communities"
-#&gt; [1] 1
-#&gt; [1] 2
-#&gt; [1] "Merging 14 communities"
-#&gt; [1] 1
-#&gt; [1] "Computing node scores..."</div><div class='output co'>#&gt; <span class='message'>the ALPACA output located in./TB</span></div><div class='input'><span class='co'># }</span>
+<span class='co'># }</span>
 
-</div></pre>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -249,7 +229,7 @@ modeProcess<span class='op'>=</span><span class='st'>"legacy"</span>, remove_mis
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz, Deborah Weighill.</p>
+  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz, Deborah Weighill.</p>
 </div>
 
 <div class="pkgdown">
