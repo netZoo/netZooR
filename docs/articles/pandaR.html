@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
       </span>
     </div>
 
@@ -137,6 +137,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required package: igraph</code></pre>
+<pre><code>## Warning: package 'igraph' was built under R version 4.1.2</code></pre>
 <pre><code>## 
 ## Attaching package: 'igraph'</code></pre>
 <pre><code>## The following objects are masked from 'package:stats':
@@ -181,11 +182,11 @@
 <pre><code>## Setting options('GEOquery.inmemory.gpl'=FALSE)</code></pre>
 <pre><code>## </code></pre>
 <pre><code>## </code></pre>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">pandaR</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">pandaToyData</span><span class="op">)</span></code></pre></div>
 <p><strong>pandaToyData</strong> is a list containing a regulatory structure derived from sequence motif analysis, protein-protein interaction data and a gene expression. The primary function in pandaR is called with</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pandaResult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">pandaToyData</span><span class="op">$</span><span class="va">motif</span>, <span class="va">pandaToyData</span><span class="op">$</span><span class="va">expression</span>, <span class="va">pandaToyData</span><span class="op">$</span><span class="va">ppi</span><span class="op">)</span>
 <span class="va">pandaResult</span></code></pre></div>
 <pre><code>## PANDA network for1000genes and87transcription factors.</code></pre>
@@ -197,19 +198,19 @@
 <pre><code>## Regulatory graph contains 87000 edges.</code></pre>
 <pre><code>## Regulatory graph is complete.</code></pre>
 <p>Where <strong>pandaResult</strong> is a ‘panda’ object which contains <strong>data.frame</strong>s describing the complete bipartite gene regulatory network as well as complete networks for gene coregulation and transcription factor cooperation. Due to completeness, edgeweights for the regulatory network are reported for all <em>m</em>x<em>n</em> possible TF-gene edges. The distribution of these edge weights for these networks has approximate mean 0 and standard deviation 1. The edges are therefore best interpreted in a relative sense. Strongly positive values indicative of relatively larger amounts of evidence in favor a regulatory mechanism and conversely, smaller or negative values can be interpreted as lacking evidence of a shared biological role. It is naturally of interest to specify a high edge weight subset of the complete network to investigate as a set of present/absent edges. This is easily performed by using the <strong>topedges</strong> function. A network containing the top 1000 edge scores as binary edges can be obtained by:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">topNet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/topedges.html">topedges</a></span><span class="op">(</span><span class="va">pandaResult</span>, <span class="fl">1000</span><span class="op">)</span></code></pre></div>
 <p>Users may then examine the genes targeted by a transcription factor of interest.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/targetedGenes.html">targetedGenes</a></span><span class="op">(</span><span class="va">topNet</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1] "AKAP10"       "CNDP2"        "CRHR1"        "HNRNPD"       "KIAA0652"    
 ##  [6] "LOC100093631" "LOC100128811" "PRR15"        "TCF4"         "TCP11L2"     
 ## [11] "TMPRSS11B"    "VCX3B"        "WDR4"</code></pre>
 <p>The network can be further simplified by focusing only on transcription factors on interest and the genes that they are found to regulate. The <strong>subnetwork</strong> method serves this function</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">topSubnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/subnetwork.html">subnetwork</a></span><span class="op">(</span><span class="va">topNet</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AR"</span>,<span class="st">"ARID3A"</span>,<span class="st">"ELK1"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Existing R packages, such as igraph, can be used to visualize the results</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/plotGraph.html">plotGraph</a></span><span class="op">(</span><span class="va">topSubnet</span><span class="op">)</span></code></pre></div>
 <p><img src="pandaR_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
@@ -224,7 +225,7 @@
 <em>plotZbyTF</em> - Plot Z by TF outdegree quartiles</li>
 </ul>
 <p>We can compare how parameter choices effect the Z-score estimation between two PANDA runs. Additionally, we can compare two phenotypes:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">panda.res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">pandaToyData</span>, <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">motif</span>, <span class="va">expression</span>, <span class="va">ppi</span>, hamming<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">panda.res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">pandaToyData</span>, <span class="fu"><a href="https://rdrr.io/pkg/pandaR/man/panda.html">panda</a></span><span class="op">(</span><span class="va">motif</span>, <span class="va">expression</span> <span class="op">+</span> 
                    <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/prod.html">prod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">expression</span><span class="op">)</span><span class="op">)</span>,sd<span class="op">=</span><span class="fl">5</span><span class="op">)</span>, <span class="va">ppi</span>, hamming<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
@@ -264,7 +265,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz, Deborah Weighill.</p>
+  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Deborah Weighill.</p>
 </div>
 
 <div class="pkgdown">
