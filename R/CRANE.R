@@ -110,7 +110,7 @@ alpacaCrane = function(input,alp,alpha=0.1,beta=0,iteration=30,isParallel=F){
   tstat=c()
   if (identical(names(alp[[2]]),rownames(df))){
     for (i in 1:nrow(df)){
-      if (rownames(df)[i]==""){
+      if (rownames(df)[i]=="" || sd(df[i,])==0){
         isSig=c(isSig,NA)
         next
       }
