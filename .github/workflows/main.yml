@@ -88,8 +88,6 @@ jobs:
         shell: sudo -E Rscript {0}
       - name: Report coverage
         run: |
-            library('reticulate')
-            py_config()            
             covr::codecov()
-        shell: sudo -E Rscript {0}
+        shell: Rscript {0}
 
