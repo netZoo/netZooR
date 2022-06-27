@@ -89,7 +89,7 @@ jobs:
       - name: Report coverage
         run: |
             library('reticulate')
-            use_condaenv("r-reticulate")
+            use_virtualenv("r-reticulate")
             py_config()            
             covr::codecov()
         shell: sudo -E Rscript {0}
