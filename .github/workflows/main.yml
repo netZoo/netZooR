@@ -87,10 +87,7 @@ jobs:
             rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
         shell: sudo -E Rscript {0}
       - name: Report coverage
-        run: |
-            library('reticulate')
-            use_virtualenv("r-reticulate")
-            py_config()            
+        run: |           
             covr::codecov()
-        shell: sudo -E Rscript {0}
+        shell: Rscript {0}
 
