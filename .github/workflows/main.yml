@@ -36,7 +36,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up R ${{ matrix.r-version }} 
-        uses: r-lib/actions/setup-r@v1
+        uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.r-version }}
       - name: Install bash dependencies 1
@@ -87,7 +87,9 @@ jobs:
             rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
         shell: sudo -E Rscript {0}
       - name: Report coverage
-        run: |           
+        run: |
+            library('reticulate')
+            py_config()            
             covr::codecov()
-        shell: Rscript {0}
+        shell: sudo -E Rscript {0}
 
