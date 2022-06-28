@@ -45,8 +45,6 @@ jobs:
             sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libopenblas-base libatlas3-base
       - name: Install reticulate 1
         run: |
-            La_library()
-            extSoftVersion()["BLAS"]
             install.packages('reticulate', repos = "http://cran.us.r-project.org")
             library('reticulate')
         shell: Rscript {0}
