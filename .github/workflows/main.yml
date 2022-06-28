@@ -46,7 +46,7 @@ jobs:
           extra-packages: |
              any::reticulate
              any::rcmdcheck
-             covr
+             any::covr
           needs: |
              website
              coverage
