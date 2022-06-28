@@ -83,6 +83,10 @@ jobs:
         shell: sudo -E Rscript {0}
       - name: Check
         uses: r-lib/actions/check-r-package@v2
+        with:
+            args: 'c("--no-manual", "--ignore-vignettes")'
+            build_args: 'c("--no-build-vignettes")'
+            error-on: '"error"'
       - name: Show testthat output
         if: always()
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
