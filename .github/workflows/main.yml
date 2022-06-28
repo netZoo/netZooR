@@ -64,7 +64,7 @@ jobs:
             py_config()
             use_python("/usr/local/bin/python3")
             virtualenv_create("r-reticulate")
-        shell: sudo -E Rscript {0}
+        shell: Rscript {0}
       - name: Install reticulate 2-2
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -72,7 +72,7 @@ jobs:
             py_config()
             use_python("/usr/bin/python3")
             virtualenv_create("r-reticulate")
-        shell: sudo -E Rscript {0}
+        shell: Rscript {0}
       - name: Install reticulate 3
         run: |
             library('reticulate')
@@ -80,7 +80,7 @@ jobs:
             virtualenv_install("r-reticulate","scipy")
             virtualenv_install("r-reticulate","pandas")
             virtualenv_install("r-reticulate","joblib")
-        shell: sudo -E Rscript {0}
+        shell: Rscript {0}
       - name: Check
         uses: r-lib/actions/check-r-package@v2
         with:
@@ -91,6 +91,7 @@ jobs:
         if: always()
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
-      - name: Report coverage
-        uses: r-lib/actions/test-coverage@v2 
-
+       - name: Report coverage
+        run: |
+            covr::codecov()
+        shell: Rscript {0}
