@@ -82,11 +82,7 @@ jobs:
             virtualenv_install("r-reticulate","joblib")
         shell: sudo -E Rscript {0}
       - name: Check
-        run: |
-            library('reticulate')
-            py_config()
-            rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
-        shell: sudo -E Rscript {0}
+        uses: r-lib/actions/check-r-package@v2
       - name: Show testthat output
         if: always()
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
