@@ -21,7 +21,7 @@ test_that("Test CONDOR functions", {
   expect_error(condorCluster(condor.object,project = T),NA)
   
   # check modularity
-  expect_equal(condor.object$modularity,as.numeric(c("0.231404958677686","0.231404958677686")),tolerance=1e-7)
+  expect_equal(condor.object$modularity,c(0.231404958677686,0.231404958677686),tolerance=1e-7)
   
   # check community membership
   condor.red.memb <- condor.object$red.mem
