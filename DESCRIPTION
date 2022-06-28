@@ -1,6 +1,6 @@
 Package: netZooR
 Title: netZooR integrates tools for the inference and analysis of gene regulatory networks
-Version: 1.0.5
+Version: 1.0.6
 Date: 2021-09-20
 Authors@R: c(person("Marouen", "Ben Guebila",
 			email = "benguebila@hsph.harvard.edu", role = c("aut","cre")),
