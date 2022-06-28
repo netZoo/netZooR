@@ -84,6 +84,10 @@ jobs:
             py_config()
             rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
         shell: sudo -E Rscript {0}
+      - name: Show testthat output
+        if: always()
+        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash
       - name: Report coverage
         run: |
             covr::codecov()
