@@ -60,7 +60,6 @@ jobs:
             library('reticulate')
             py_config()
             use_python("/usr/local/bin/python3")
-            virtualenv_create("r-reticulate")
         shell: Rscript {0}
       - name: Install reticulate 2-2
         if: matrix.os == 'ubuntu-latest'
@@ -68,16 +67,16 @@ jobs:
             library('reticulate')
             py_config()
             use_python("/usr/bin/python3")
-            virtualenv_create("r-reticulate")
         shell: Rscript {0}
+
       - name: Install reticulate 3
         run: |
             library('reticulate')
-            virtualenv_install("r-reticulate","numpy")
-            virtualenv_install("r-reticulate","scipy")
-            virtualenv_install("r-reticulate","pandas")
-            virtualenv_install("r-reticulate","joblib")
-        shell: Rscript {0}
+            py_install("numpy")
+            py_install("scipy")
+            py_install("pandas")
+            py_install("joblib")
+
       - name: Check
         uses: r-lib/actions/check-r-package@v2
         with:

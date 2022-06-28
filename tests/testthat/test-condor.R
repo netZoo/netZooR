@@ -2,6 +2,7 @@ context("test CONDOR result")
 
 test_that("Test CONDOR functions", {
   
+  set.seed(1619)
   r = c(1,1,1,2,2,2,3,3,3,4,4);
   b = c(1,2,3,1,2,4,2,3,4,3,4);
   reds <- c("Alice","Sue","Janine","Mary")
