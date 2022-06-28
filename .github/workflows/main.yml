@@ -92,7 +92,5 @@ jobs:
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
       - name: Report coverage
-        run: |
-            covr::codecov()
-        shell: Rscript {0}
+        uses: r-lib/actions/test-coverage@v2 
 
