@@ -76,6 +76,7 @@ jobs:
             py_install("scipy")
             py_install("pandas")
             py_install("joblib")
+        shell: Rscript {0}
 
       - name: Check
         uses: r-lib/actions/check-r-package@v2
