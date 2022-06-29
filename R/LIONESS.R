@@ -169,10 +169,8 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
 #' "coregNet" is the coregulatory network\cr
 #' "coopNet" is the cooperative network
 #' @examples
-#' \donttest{
 #' data(pandaToyData)
 #' lionessRes <- lioness(expr = pandaToyData$expression[,1:3], motif = pandaToyData$motif, ppi = pandaToyData$ppi,hamming=1,progress=FALSE)
-#' }
 #' @references
 #' Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 #' Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.
