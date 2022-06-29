@@ -42,6 +42,7 @@ jobs:
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.r-version }}
+
       - name: install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -54,7 +55,7 @@ jobs:
              website
              coverage
 
-      - name: Install reticulate 3
+      - name: Install reticulate
         run: |
             library("reticulate")
             py_config()
