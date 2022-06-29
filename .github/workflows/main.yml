@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest]
+        os: [macos-latest, ubuntu-18.04]
         r-version: [4.2]
 
     steps:
@@ -62,7 +62,7 @@ jobs:
             use_python("/usr/local/bin/python3")
         shell: Rscript {0}
       - name: Install reticulate 2-2
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-18.04'
         run: |
             library('reticulate')
             py_config()
