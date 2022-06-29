@@ -19,9 +19,9 @@ test_that("Test CONDOR functions", {
   
   expect_error(condorCluster(condor.object,project = T),NA)
   
-  # check modularity
+  # check modularity (Note: CONDOR modularity in this example gives 3 communities in Ubuntu vs 2 in Macos)
   print(condor.object$modularity)
-  expect_equal(condor.object$modularity[1],0.231404958677686,tolerance=1e-7)
+  expect_equal(condor.object$modularity[2],0.231404958677686,tolerance=1e-7)
   
   # check community membership
   condor.red.memb <- condor.object$red.mem
