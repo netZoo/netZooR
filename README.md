@@ -39,7 +39,7 @@ netZooR currently integrates:
 
 * **YARN** (Yet Another RNa-seq package) [[Paulsson et al.]](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1847-x): YARN is a package that combines quality control, gene filtering, and normalization steps to streamline the preprocessing of large-scale, multi-tissue gene expression data from resources such as the Genotype-Tissue Expression (GTEx) project.  Among other steps, YARN uses principal coordinate analysis (PCoA) to determine if samples collected from different sites on the same tissue (for example, transverse and sigmoid colon) can be treated as "transcriptionally indistinguishable" and grouped together to increase power for downstream analyses. Paulsson et al. (2017) demonstrate the use of YARN to develop a pan-cancer RNA-seq dataset for 30,333 genes from 9435 samples across 38 tissues from the GTEx dataset.
 
-NetZooR also integrates additional functions to:
+netZooR also integrates additional functions to:
 
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
 
