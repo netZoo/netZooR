@@ -1,2 +1,2 @@
-tests/test-panda.R
-tests/test-lioness.R
+tests/testthat/test-panda.R
+tests/testthat/test-lioness.R
