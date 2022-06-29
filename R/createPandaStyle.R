@@ -12,7 +12,7 @@
 #' # between the TF and gene). You can further customize the network style 
 #' # directly from Cytoscape.
 #' \donttest{
-#' create.panda.style(style_name="PandaStyle")
+#' createPandaStyle(style_name="PandaStyle")
 #' }
 #' @export
 

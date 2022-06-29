@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.81</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
       </span>
     </div>
 
@@ -148,7 +148,7 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"visNetwork"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; The downloaded binary packages are in</span>
-<span class="co">#&gt;  /var/folders/jh/345y9vmx0l7d63r5b05dwp080000gn/T//RtmpcACfiZ/downloaded_packages</span>
+<span class="co">#&gt;  /var/folders/jh/345y9vmx0l7d63r5b05dwp080000gn/T//RtmpJFOFfg/downloaded_packages</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://datastorm-open.github.io/visNetwork/">visNetwork</a></span><span class="op">)</span> <span class="co"># to visualize the networks</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># point R to your python 3 installation. Make sure that this is the installation that has all the required python libraries (numpy, scipy, etc) installed. netZooR uses a python implementation of PANDA under the hood.</span>
@@ -315,18 +315,18 @@
 <p>The result is a data frame in which the first colum contains TFs, the second column contains genes and each subsequent column contains the edge weight for that particular TF-gene pair in a particular sample.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lionessLCL</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>
-<span class="co">#&gt;     TF            Gene        0          1          2          3          4  </span>
-<span class="co">#&gt; 1  AHR ENSG00000049245   59.83660   58.94746   59.85994   59.26597   56.07829</span>
-<span class="co">#&gt; 2 AIRE ENSG00000049245  -82.91891  -82.51506  -84.19484  -82.41868  -77.98084</span>
-<span class="co">#&gt; 3 ALX1 ENSG00000049245 -112.22820 -111.54828 -113.02663 -111.17812 -109.89648</span>
-<span class="co">#&gt; 4 ALX3 ENSG00000049245 -135.11048 -133.38124 -135.08914 -133.67784 -128.37243</span>
-<span class="co">#&gt; 5 ALX4 ENSG00000049245 -116.35833 -114.82369 -116.31932 -114.99477 -111.51051</span>
-<span class="co">#&gt;          5          6          7  </span>
-<span class="co">#&gt; 1   59.67067   59.28414   59.04739</span>
-<span class="co">#&gt; 2  -83.44204  -82.03309  -82.85852</span>
-<span class="co">#&gt; 3 -111.62352 -110.63462 -109.95773</span>
-<span class="co">#&gt; 4 -134.12101 -133.54933 -132.54182</span>
-<span class="co">#&gt; 5 -115.24438 -114.84256 -113.37452</span></code></pre></div>
+<span class="co">#&gt;     tf            gene          0          1          2          3        4</span>
+<span class="co">#&gt; 1  AHR ENSG00000049245 0.06820364   -1.01318 -0.1190873 -0.6471435 -4.72954</span>
+<span class="co">#&gt; 2 AIRE ENSG00000049245   3.405967   3.606517   1.341022   3.962872 10.14026</span>
+<span class="co">#&gt; 3 ALX1 ENSG00000049245  -1.564644 -0.6531037  -2.583472 0.06944336 1.548766</span>
+<span class="co">#&gt; 4 ALX3 ENSG00000049245  -2.265761  0.4374339  -1.842543  0.1693952 7.957916</span>
+<span class="co">#&gt; 5 ALX4 ENSG00000049245  -2.300186  0.1123922   -1.83354 0.01588022 5.195771</span>
+<span class="co">#&gt;            5         6          7</span>
+<span class="co">#&gt; 1 -0.1790814 -0.546194 -0.9628234</span>
+<span class="co">#&gt; 2   2.654841  4.577901   3.730394</span>
+<span class="co">#&gt; 3 -0.6345625 0.8294741   2.063451</span>
+<span class="co">#&gt; 4 -0.4487257 0.3399528   1.848871</span>
+<span class="co">#&gt; 5 -0.3720986 0.1874633   2.238461</span></code></pre></div>
 </div>
   </div>
 
@@ -341,7 +341,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz, Deborah Weighill.</p>
+  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Deborah Weighill.</p>
 </div>
 
 <div class="pkgdown">

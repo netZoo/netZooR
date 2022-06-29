@@ -134,10 +134,12 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
    # retrieve the "total_lioness_network" attribute of instance "lionesss_obj"
    py_run_string("lioness_network = lioness_obj.export_lioness_results",local = FALSE, convert = TRUE)
    
-   # convert the python varible "lionesss_network" to a data.frame in R enviroment.
+   # convert the python variable "lionesss_network" to a data.frame in R environment.
    lioness_net <- py$lioness_network
    # cbind the first two columns of PANDA output with LIONESS output.
-   lioness_output <- cbind(panda_net[,c("TF","Gene")], lioness_net)
+   lioness_net$tf   <- panda_net$TF
+   lioness_net$gene <- panda_net$Gene
+   lioness_output   <- lioness_net
    return(lioness_output)
 }
 
@@ -168,16 +170,33 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
 #' "coopNet" is the cooperative network
 #' @examples
 #' data(pandaToyData)
-#' linonessRes <- lioness(pandaToyData$motif,
-#'     pandaToyData$expression[,1:3],pandaToyData$ppi,hamming=1,progress=FALSE)
+#' lionessRes <- lioness(expr = pandaToyData$expression[,1:3], motif = pandaToyData$motif, ppi = pandaToyData$ppi,hamming=1,progress=FALSE)
 #' @references
 #' Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 #' Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.
-lioness <- function(motif,expr,ppi=NULL, network.inference.method, ...){
-    N <- ncol(expr)
+lioness = function(expr, motif = NULL, ppi = NULL, network.inference.method = "panda", ...){
+  N <- ncol(expr)
+  if(network.inference.method == "panda")
+  {
     fullnet <- panda(motif, expr, ppi, ...)
-    lapply(seq_len(N), function(i){
-        print(paste("Computing network for sample ",i))
-        N*fullnet@regNet - (N-1)* panda(motif, expr[,-i], ppi, ...)@regNet
-    })
+    return(lapply(seq_len(N), function(i) {
+      print(paste("Computing network for sample ", i))
+      N * fullnet@regNet - (N - 1) * panda(motif, expr[, -i], 
+                                           ppi, ...)@regNet
+    }))
+  }
+  if(network.inference.method == "pearson")
+  {
+    fullnet <- cor(t(expr))
+    
+    return(lapply(seq_len(N), function(i) {
+      print(paste("Computing network for sample ", i))
+      N * fullnet - (N - 1) * cor(t(expr[,-i]))
+    }))
+  }
+  if(!(network.inference.method %in% c("panda","pearson")))
+  {
+    stop(paste(c("The method",network.inference.method,"is not yet supported."),collapse=" "))
+    geterrmessage()
+  }
 }

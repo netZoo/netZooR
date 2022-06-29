@@ -73,7 +73,7 @@ transaction matrix" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.81</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
       </span>
     </div>
 
@@ -197,7 +197,7 @@ transaction matrix</p>
     <p>ggplot2 object for transition matrix PCA</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># data(yeast)</span>
+    <pre class="examples"><span class='co'># data(yeast)</span>
 <span class='co'># design &lt;- c(rep(0,20),rep(NA,10),rep(1,20))</span>
 <span class='co'># yeast$exp.cc[is.na(yeast$exp.cc)] &lt;- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)</span>
 <span class='co'># monsterRes &lt;- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)#' </span>
@@ -207,7 +207,7 @@ transaction matrix</p>
 <span class='fu'>monsterTransitionPCAPlot</span><span class='op'>(</span><span class='va'>monsterRes</span>, 
 title<span class='op'>=</span><span class='st'>"PCA Plot of Transition - Cell Cycle vs Stress Response"</span>, 
 clusters<span class='op'>=</span><span class='va'>clusters</span><span class='op'>)</span>
-</div><div class='img'><img src='monsterTransitionPCAPlot-1.png' alt='' width='700' height='433' /></div></pre>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -219,7 +219,7 @@ clusters<span class='op'>=</span><span class='va'>clusters</span><span class='op
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz, Deborah Weighill.</p>
+  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Deborah Weighill.</p>
 </div>
 
 <div class="pkgdown">
