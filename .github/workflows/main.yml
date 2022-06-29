@@ -91,6 +91,6 @@ jobs:
       - name: Report coverage
         run: |
             library('reticulate')
-            py_confg()
+            py_config()
             covr::codecov()
         shell: Rscript {0}
