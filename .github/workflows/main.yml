@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: remove rbuildignore
         run: |
-            rm .Rbuildignore 
+            rm netZooR/.Rbuildignore 
         shell: bash
 
       - uses: actions/checkout@v2
