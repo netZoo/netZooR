@@ -44,3 +44,4 @@ notes.md
 R/pandaDiffEdges.R
 R/createDiffPandaStyle.R
 R/visDiffPandaInCytoscape.R
+man/lioness.Rd
