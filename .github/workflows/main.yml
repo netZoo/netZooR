@@ -37,7 +37,13 @@ jobs:
             ls
             pwd
             ls
-            rm /home/runner/work/netZooR/netZooR/.Rbuildignore
+            cd /home/runner/work/netZooR/netZooR/
+            ls
+            pwd
+            cd /home/runner/work/netZooR/
+            ls
+            pwd
+
 
       - uses: actions/checkout@v2
         with:
