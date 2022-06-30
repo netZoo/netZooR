@@ -32,22 +32,15 @@ jobs:
         r-version: [4.2]
 
     steps:
-      - name: remove rbuildignore
-        run: |
-            ls
-            pwd
-            ls
-            cd /Users/runner/work/netZooR/netZooR/
-            ls
-            pwd
-            cd /Users/runner/work/netZooR/
-            ls
-            pwd
-
 
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: remove Rbuildignore
+        run: |
+            rm .Rbuildignore
+        shell: bash
 
       - uses: r-lib/actions/setup-pandoc@v2
 
