@@ -37,10 +37,10 @@ jobs:
             ls
             pwd
             ls
-            cd /home/runner/work/netZooR/netZooR/
+            cd /Users/runner/work/netZooR/netZooR/
             ls
             pwd
-            cd /home/runner/work/netZooR/
+            cd /Users/runner/work/netZooR/
             ls
             pwd
 
