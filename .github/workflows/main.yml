@@ -34,7 +34,10 @@ jobs:
     steps:
       - name: remove rbuildignore
         run: |
-            rm netZooR/.Rbuildignore 
+            ls
+            pwd
+            ls
+            rm netZooR/netZooR/.Rbuildignore 
 
       - uses: actions/checkout@v2
         with:
