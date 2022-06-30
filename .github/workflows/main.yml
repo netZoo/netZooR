@@ -73,6 +73,7 @@ jobs:
             error-on: '"error"'
 
       - name: Report coverage
+        if: matrix.os == 'macos-latest'
         run: |
             covr::codecov()
         shell: Rscript {0}
