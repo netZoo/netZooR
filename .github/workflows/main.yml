@@ -32,6 +32,9 @@ jobs:
         r-version: [4.2]
 
     steps:
+      - name: remove rbuildignore
+        run: |
+            rm .Rbuildignore 
 
       - uses: actions/checkout@v2
         with:
