@@ -1,7 +1,6 @@
 .DS_Store
 .Rhistory
 Untitled.R
-.Rbuildignore
 inst/doc/
 doc
 Meta
