@@ -36,7 +36,7 @@ jobs:
         run: |
             ls
             pwd
-            rm netZooR/.Rbuildignore 
+            rm ../.Rbuildignore 
         shell: bash
 
       - uses: actions/checkout@v2
