@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: remove rbuildignore
         run: |
-            rm ../.Rbuildignore 
+            rm ../../.Rbuildignore 
 
       - uses: actions/checkout@v2
         with:
