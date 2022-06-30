@@ -19,10 +19,10 @@ test_that("EGRET function works", {
   nameGeneMap <- read.table("toy_map.txt", header = FALSE)
   tag <- "my_toy_egret_run"
 
-  #runEgret(qtl,vcf,qbic,motif,expr,ppi,nameGeneMap,tag)
-  #load("EgretGT.RData")
-  #load("my_toy_egret_run_egret.RData")
-  #load("my_toy_egret_run_panda.RData")
-  #expect_equal(regnetE,regnetEServer,tolerance=1e-5)
-  #expect_equal(regnetP,regnetPServer,tolerance=1e-5)
+  runEgret(qtl,vcf,qbic,motif,expr,ppi,nameGeneMap,tag)
+  load("EgretGT.RData")
+  load("my_toy_egret_run_egret.RData")
+  load("my_toy_egret_run_panda.RData")
+  expect_equal(regnetE,regnetEServer,tolerance=1e-5)
+  expect_equal(regnetP,regnetPServer,tolerance=1e-5)
 })

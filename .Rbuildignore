@@ -33,5 +33,4 @@ notes.md
 R/createDiffPandaStyle.R
 R/visDiffPandaInCytoscape.R
 tests/testthat/test-lioness.R
-tests/testthat/test-egret.R
 tests/testthat/test.source.PPI.R
