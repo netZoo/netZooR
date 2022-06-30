@@ -37,11 +37,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: remove Rbuildignore
-        run: |
-            rm .Rbuildignore
-        shell: bash
-
       - uses: r-lib/actions/setup-pandoc@v2
 
       - name: Set up R ${{ matrix.r-version }} 
