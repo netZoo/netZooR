@@ -8,7 +8,7 @@
 [![discussions](https://img.shields.io/badge/netZooR-discussions-orange)](https://github.com/netZoo/netZooR/discussions)
 
 
-netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v4.1)
+netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v4.2)
 
 ## Description
 netZooR is an R package to reconstruct, analyse, and plot biological networks.
