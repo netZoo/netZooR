@@ -1,4 +1,3 @@
-
 #' Identify differential edges in two PANDA networks
 #'
 #'To determine the probability that an edge is "different" between the networks, 
@@ -14,7 +13,6 @@
 #' @return a data.frame with five columns: tf, gene, motif, Score and defined condition name(the row with "T" in this column means this egde belongs to first condition or phenotype,
 #' "F" means this edge belongs to the second condition or phenotype)
 #' @examples 
-#' 
 #' # refer to four input datasets files in inst/extdat
 #' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", 
 #' package = "netZooR", mustWork = TRUE)
@@ -38,6 +36,7 @@
 #' 
 #' @export
 #'
+
 pandaDiffEdges <- function(panda.net1, panda.net2, threshold=0.8, condition_name="cond.1"){
   
   # reshape two PANDA networks

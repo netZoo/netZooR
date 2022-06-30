@@ -1,6 +1,6 @@
-context("test panda.diff.edges() result")
+context("test pandaDiffEdges() result")
 
-test_that("panda.diff.edges() works or not", {
+test_that("pandaDiffEdges() works or not", {
   
   load("./testDataset.RData")
   
