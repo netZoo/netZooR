@@ -36,6 +36,7 @@ jobs:
         run: |
             ls
             pwd
+            ls
             rm ../.Rbuildignore 
         shell: bash
 
