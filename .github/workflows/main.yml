@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: remove rbuildignore
         run: |
-            rm .Rbuilignore 
+            rm .Rbuildignore 
         shell: bash
 
       - uses: actions/checkout@v2
