@@ -26,7 +26,6 @@ tests/testthat/test-pandatoalpaca.R
 tests/testthat/test-pandatocondorobject.R
 tests/testthat/test-pandadiffedges.R
 tests/testthat/test-sambar.R
-tests/testthat/test-otter.R
 tests/testthat/test-condor.R
 LICENSE
 netZooR.Rcheck/
