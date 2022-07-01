@@ -16,7 +16,7 @@ test_that("MONSTER function works", {
   expect_equal(monsterTransformationMatrix(cc.net.1, cc.net.2), monsterTM, tolerance = 2e-3)
   
   # analyzes a bi-partite network by monsterTransformationMatrix() function with method "kabsch".
-  expect_equal(monsterTransformationMatrix(cc.net.1, cc.net.2,method = "kabsch"), monsterTM_kabsch, tolerance = 2e-3)
+  expect_equal(monsterTransformationMatrix(cc.net.1, cc.net.2,method = "kabsch"), monsterTM_kabsch, tolerance = 3e-3)
   
   # to do: Add L1 method in test
   
