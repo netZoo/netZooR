@@ -13,10 +13,10 @@ test_that("MONSTER function works", {
   # analyzes a bi-partite network by monster.transformation.matrix() function.
   cc.net.1 <- suppressWarnings(monsterMonsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])) # suppress Warning messages glm.fit: fitted probabilities numerically 0 or 1 occurred
   cc.net.2 <- suppressWarnings(monsterMonsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50]))
-  expect_equal(monsterTransformationMatrix(cc.net.1, cc.net.2), monsterTM, tolerance = 1e-3)
+  expect_equal(monsterTransformationMatrix(cc.net.1, cc.net.2), monsterTM, tolerance = 2e-3)
   
   # analyzes a bi-partite network by monsterTransformationMatrix() function with method "kabsch".
-  expect_equal(monsterTransformationMatrix(cc.net.1, cc.net.2,method = "kabsch"), monsterTM_kabsch, tolerance = 1e-3)
+  expect_equal(monsterTransformationMatrix(cc.net.1, cc.net.2,method = "kabsch"), monsterTM_kabsch, tolerance = 2e-3)
   
   # to do: Add L1 method in test
   
