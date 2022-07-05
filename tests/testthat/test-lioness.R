@@ -16,7 +16,7 @@ test_that("lionessPy() function works", {
   expect_message(lionessPy(T4_expression_file_path, end_sample=1))
   
   # test 3: check message when PPI is not provided
-  expect_message(lionessPy(T4_expression_file_path,motif_file_path, end_sample=1),"")
+  expect_message(lionessPy(T4_expression_file_path,motif_file_path, end_sample=1))
   
   # test 4: when all arguments are default, except end_sample = 1 to expedite computing.
   # computing="cpu", precision="double", save_tmp=TRUE, modeProcess="union", remove_missing=FALSE, start_sample=1, end_sample=1, save_single_network=FALSE

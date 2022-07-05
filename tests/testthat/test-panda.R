@@ -17,7 +17,7 @@ test_that("panda function works", {
   expect_message(pandaPy(T4_expression_file_path))
 
   # test 3: check message when PPI is not provided, to do 2.
-  expect_message( pandaPy(T4_expression_file_path,motif_file_path),"")
+  expect_message( pandaPy(T4_expression_file_path,motif_file_path))
 
   # test 4: when all arguments are default
   # computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE
