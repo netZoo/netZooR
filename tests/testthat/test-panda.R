@@ -22,7 +22,7 @@ test_that("panda function works", {
   # test 4: when all arguments are default
   # computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE
   test1Panda<- pandaPy(T4_expression_file_path, motif_file_path, ppi_file_path)$panda
-  expect_equal(test1Panda[1,4],-0.23212458160041557,tolerance=1e-7)
+  expect_equal(test1Panda[1,4],-0.01782158,tolerance=1e-7)
    
    # test 5: check if PANDA result is correct when arguments settiing like below:
    # i.e computing = "cpu", save_memory =T , precision="single", save_memory = T, save_tmp=F, keep_expression_matrix = T, modeProcess = 'intersection'
