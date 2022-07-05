@@ -32,6 +32,9 @@ jobs:
         r-version: [4.2]
 
     steps:
+      - name: Report coverage
+        if: matrix.os == 'ubuntu-latest'
+          runs-on: self-hosted
 
       - uses: actions/checkout@v2
         with:
