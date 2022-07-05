@@ -1,7 +1,7 @@
 #' Run python implementation of LIONESS
 #'
 #' \strong{LIONESS}(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks.
-#'  \href{https://arxiv.org/abs/1505.06440}{[(LIONESS arxiv paper)])}.
+#'  \href{https://pubmed.ncbi.nlm.nih.gov/30981959/}{[(LIONESS publication)])}.
 #'
 #' @param expr_file Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).
 #' @param motif_file An optional character string indicating the file path of a prior transcription factor binding motifs dataset.
@@ -116,7 +116,7 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
    panda_net <- py$panda_network
    
    # re-assign data type of cloumn.
-   panda_net$tf <- as.character(panda_net$tf)
+   panda_net$tf   <- as.character(panda_net$tf)
    panda_net$gene <- as.character(panda_net$gene)
    
    # rename first two columns
