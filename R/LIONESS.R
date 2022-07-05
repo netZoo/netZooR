@@ -46,13 +46,17 @@
 lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double", save_tmp=TRUE, modeProcess="union", remove_missing=FALSE, start_sample=1, end_sample="None", save_single_network=FALSE, save_dir="lioness_output", save_fmt='npy'){
 
   if(missing(expr_file)){
-    stop("Please provide the gene expression value with option e, e.g. e=\"expression.txt\"") }
-  else{ expr.str <- paste("\'", expr_file, "\'", sep = '') }
+    stop("Please provide the gene expression value with option e, e.g. e=\"expression.txt\"") 
+  }else{ 
+    expr.str <- paste("\'", expr_file, "\'", sep = '') 
+  }
   
   if(is.null(motif_file)){
     motif.str <- 'None'
-    message("Prior motif network is not provided, analysis continues with Pearson correlation matrix.") }
-  else{ motif.str <- paste("\'", motif_file,"\'", sep = '') }
+    message("Prior motif network is not provided, analysis continues with Pearson correlation matrix.") 
+  }else{ 
+    motif.str <- paste("\'", motif_file,"\'", sep = '') 
+  }
   
   if(is.null(ppi_file)){
     ppi.str <- 'None'
