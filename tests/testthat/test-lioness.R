@@ -13,15 +13,13 @@ test_that("lionessPy() function works", {
   ppi_file_path <- "./ppi.txt"
   
   # test 2: check message when only expression data input
-  # To do 1: error occurred when only expression as input dataset
-  # expect_message(lionessPy(T4_expression_file_path))
+  expect_message(lionessPy(T4_expression_file_path, end_sample=1))
   
-  # test 3: check message when PPI is not provided, to do 2.
-  # expect_message(lionessPy(T4_expression_file_path,motif_file_path),"")
+  # test 3: check message when PPI is not provided
+  expect_message(lionessPy(T4_expression_file_path,motif_file_path, end_sample=1),"")
   
   # test 4: when all arguments are default, except end_sample = 1 to expedite computing.
   # computing="cpu", precision="double", save_tmp=TRUE, modeProcess="union", remove_missing=FALSE, start_sample=1, end_sample=1, save_single_network=FALSE
-  # check lioness result
   test1Lioness <- lionessPy(T4_expression_file_path, motif_file_path,ppi_file_path, end_sample=1)
   expect_equal(test1Lioness[[1,3]],-0.01674112, tolerance=1e-5)
   
@@ -35,7 +33,7 @@ test_that("lionessPy() function works", {
   test3Lioness <- lionessPy(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = FALSE,start_sample=1, end_sample=1, save_single_network=FALSE)
   expect_equal(test3Lioness[[1,3]],-0.165805,tolerance=1e-5)
   
-  # test 18: when processMode = legacy, remove_missing=TRUE
+  # test 7: when processMode = legacy, remove_missing=TRUE
   test4Lioness <- lionessPy(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = TRUE,start_sample=1, end_sample=1, save_single_network=FALSE)
   expect_equal(test4Lioness[[1,3]],-0.1407832,tolerance=1e-5)
   
@@ -43,9 +41,10 @@ test_that("lionessPy() function works", {
 })
 
 test_that("lioness() function works for network.inference.method = 'panda'", {
-  
-  print("[LIONESS] lioness() This test needs to be implemented!")
-  # expect_equal(1,-1) # dummy test failure
+  data(pandaToyData)
+  test5Lioness <- lioness(expr = pandaToyData$expression[,1:4], 
+                        motif = pandaToyData$motif, ppi = pandaToyData$ppi, network.inference.method = 'panda')
+  expect_equal(test5Lioness[[1]][1],-0.6704147,tolerance=1e-5)
 })
 
 test_that("lioness() function works for network.inference.method = 'pearson'", {
