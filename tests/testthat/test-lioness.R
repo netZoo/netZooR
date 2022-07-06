@@ -7,16 +7,16 @@ test_that("lionessPy() function works", {
   expect_error(lionessPy())
   
   # input file path
-  system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4_800.txt")
-  T4_expression_file_path <- "./expr4_800.txt"
+  system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4.txt")
+  T4_expression_file_path <- "./expr4.txt"
   motif_file_path <- system.file("extdata", "chip.txt", package = "netZooR", mustWork = TRUE)
   ppi_file_path <- "./ppi.txt"
   
   # test 2: check message when only expression data input
-  expect_message(lionessPy(T4_expression_file_path, end_sample=1, modeProcess="intersection"), regexp="motif network", fixed=TRUE)
+  expect_message(lionessPy(T4_expression_file_path, end_sample=1, save_fmt='no'), regexp="motif network", fixed=TRUE)
   
   # test 3: check message when PPI is not provided
-  expect_message(lionessPy(T4_expression_file_path,motif_file_path, end_sample=1, modeProcess="intersection"), regexp="No PPI", fixed=TRUE)
+  expect_message(lionessPy(T4_expression_file_path,motif_file_path, end_sample=1, save_fmt='no'), regexp="No PPI", fixed=TRUE)
   
   # test 4: when all arguments are default, except end_sample = 1 to expedite computing.
   # computing="cpu", precision="double", save_tmp=TRUE, modeProcess="union", remove_missing=FALSE, start_sample=1, end_sample=1, save_single_network=FALSE
