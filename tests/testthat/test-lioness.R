@@ -7,8 +7,8 @@ test_that("lionessPy() function works", {
   expect_error(lionessPy())
   
   # input file path
-  system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4.txt")
-  T4_expression_file_path <- "./expr4.txt"
+  system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4_800.txt")
+  T4_expression_file_path <- "./expr4_800.txt"
   motif_file_path <- system.file("extdata", "chip.txt", package = "netZooR", mustWork = TRUE)
   ppi_file_path <- "./ppi.txt"
   
