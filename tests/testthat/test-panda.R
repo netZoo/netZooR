@@ -14,17 +14,15 @@ test_that("panda function works", {
   
   # test 2: check message when only expression data input
   # To do 1: error occurred when only expression as input dataset
-  # expect_message(pandaPy(T4_expression_file_path))
+  expect_message(pandaPy(T4_expression_file_path))
 
   # test 3: check message when PPI is not provided, to do 2.
-  # expect_message( pandaPy(T4_expression_file_path,motif_file_path),"")
+  expect_message( pandaPy(T4_expression_file_path,motif_file_path))
 
   # test 4: when all arguments are default
   # computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE
-   
-  # *********comment below as this PANDA network is too big in size and will result jenkins memory cannot allocate isssue*************
-  # test1Panda<- pandaPy(T4_expression_file_path, motif_file_path, ppi_file_path)$panda
-  # expect_equal(test1Panda[1,4],-0.23212458160041557,tolerance=1e-7)
+  test1Panda<- pandaPy(T4_expression_file_path, motif_file_path, ppi_file_path)$panda
+  expect_equal(test1Panda[1,4],-0.01782158,tolerance=1e-7)
    
    # test 5: check if PANDA result is correct when arguments settiing like below:
    # i.e computing = "cpu", save_memory =T , precision="single", save_memory = T, save_tmp=F, keep_expression_matrix = T, modeProcess = 'intersection'

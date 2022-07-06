@@ -8,23 +8,17 @@ test_that("MONSTER function works", {
   design <- c(rep(0,20),rep(NA,10),rep(1,20))
   yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=T)
   # monster result
-  # caused server build failed for unknown reason.
   expect_equal(monster(yeast$exp.cc, design, yeast$motif, nullPerms=0, numMaxCores=1, alphaw=1), monsterRes_nP0)
   
   # analyzes a bi-partite network by monster.transformation.matrix() function.
- 
-  #cc.net.1 <- suppressWarnings(monsterMonsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])) # suppress Warning messages glm.fit: fitted probabilities numerically 0 or 1 occurred
-  #cc.net.2 <- suppressWarnings(monsterMonsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50]))
-  # error:  Error in svd(X) : infinite or missing values in 'x' 
-  #expect_equal(monster.transformation.matrix(cc.net.1, cc.net.2), monsterTM)
+  cc.net.1 <- suppressWarnings(monsterMonsterNI(yeast$motif,yeast$exp.cc[1:1000,1:20])) # suppress Warning messages glm.fit: fitted probabilities numerically 0 or 1 occurred
+  cc.net.2 <- suppressWarnings(monsterMonsterNI(yeast$motif,yeast$exp.cc[1:1000,31:50]))
+  expect_equal(monsterTransformationMatrix(cc.net.1, cc.net.2), monsterTM, tolerance = 3e-3)
   
-  # analyzes a bi-partite network by monster.transformation.matrix() function with method "kabsch".
-  # error in server
-  #expect_equal(monster.transformation.matrix(cc.net.1, cc.net.2,method = "kabsch"), monsterTM_kabsch)
+  # analyzes a bi-partite network by monsterTransformationMatrix() function with method "kabsch".
+  expect_equal(monsterTransformationMatrix(cc.net.1, cc.net.2,method = "kabsch"), monsterTM_kabsch, tolerance = 3e-3)
   
-  # analyzes a bi-partite network by monster.transformation.matrix() function with method "L1".
-  # to do: error  Error: $ operator not defined for this S4 class 
-  #monsterTM_L1 <- monster.transformation.matrix(cc.net.1, cc.net.2,method = "L1")
+  # to do: Add L1 method in test
   
   data("monsterRes")
   
