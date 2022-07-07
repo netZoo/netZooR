@@ -144,12 +144,21 @@ pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", 
     # re-assign data type
     panda_net$tf <- as.character(panda_net$tf)
     panda_net$gene <- as.character(panda_net$gene)
-    panda_net$motif <- as.numeric(panda_net$motif)
+    if("motif" %in% names(panda_net)){
+      panda_net$motif <- as.numeric(panda_net$motif)
+    }
     panda_net$force <- as.numeric(panda_net$force)
-    # adjust column order
-    panda_net <- panda_net[,c("tf","gene","motif","force")]
-    # rename the PANDA output colnames
-    colnames(panda_net) <- c("TF","Gene","Motif","Score")
+    if("motif" %in% names(panda_net)){
+      # adjust column order
+      panda_net <- panda_net[,c("tf","gene","motif","force")]
+      # rename the PANDA output colnames
+      colnames(panda_net) <- c("TF","Gene","Motif","Score")
+    }else{
+      # adjust column order
+      panda_net <- panda_net[,c("tf","gene","force")]
+      # rename the PANDA output colnames
+      colnames(panda_net) <- c("TF","Gene","Score")
+    }
     
     
     # in-degree of panda network

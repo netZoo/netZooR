@@ -29,59 +29,52 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        r-version: [4.1]
+        r-version: [4.2]
 
     steps:
+
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
       - name: Set up R ${{ matrix.r-version }} 
-        uses: r-lib/actions/setup-r@v1
+        uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.r-version }}
-      - name: Install bash dependencies 1
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-            sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libopenblas-base libatlas3-base
-      - name: Install reticulate 1
-        run: |
-            La_library()
-            extSoftVersion()["BLAS"]
-            install.packages('reticulate', repos = "http://cran.us.r-project.org")
-            library('reticulate')
-        shell: Rscript {0}
-      - name: Install reticulate 2
-        run: |
-            library('reticulate')
-            py_config()
-            use_python("/usr/bin/python3")
-            virtualenv_create("r-reticulate")
-        shell: sudo -E Rscript {0}
-      - name: Install reticulate 3
-        run: |
-            library('reticulate')
-            virtualenv_install("r-reticulate","numpy")
-            virtualenv_install("r-reticulate","scipy")
-            virtualenv_install("r-reticulate","pandas")
-        shell: sudo -E Rscript {0}
-      - name: Install dependencies 2
-        run: |
-            install.packages(c("remotes", "rcmdcheck"), repos = "http://cran.us.r-project.org")
-            remotes::install_cran("covr") 
-            remotes::install_deps(dep = T)
-        shell: Rscript {0}
-      - name: Check
-        run: |
-            library('reticulate')
-            use_condaenv("r-reticulate")
-            py_config()
-            rcmdcheck::rcmdcheck(args = c("--no-manual","--ignore-vignettes"), error_on = "error", build_args="--no-build-vignettes")
-        shell: sudo -E Rscript {0}
-      - name: Report coverage
-        run: |
-            library('reticulate')
-            use_condaenv("r-reticulate")
-            py_config()            
-            covr::codecov()
-        shell: sudo -E Rscript {0}
 
+      - name: install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          cache-version: 1
+          extra-packages: |
+             any::reticulate
+             any::rcmdcheck
+             any::covr
+          needs: |
+             website
+             coverage
+
+      - name: Install reticulate
+        run: |
+            library("reticulate")
+            py_config()
+            py_install("numpy")
+            py_install("scipy")
+            py_install("pandas")
+            py_install("joblib")
+        shell: Rscript {0}
+
+      - name: Check
+        uses: r-lib/actions/check-r-package@v2
+        with:
+            args: 'c("--no-manual", "--ignore-vignettes")'
+            build_args: 'c("--no-build-vignettes")'
+            error-on: '"error"'
+
+      - name: Report coverage
+        if: matrix.os == 'macos-latest'
+        run: |
+            covr::codecov()
+        shell: Rscript {0}

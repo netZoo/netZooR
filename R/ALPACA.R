@@ -68,32 +68,29 @@ alpaca <- function(net.table,file.stem,verbose=FALSE)
     print("Computing node scores...")
     louv.Ascores <- NULL
     louv.Bscores <- NULL
+    louv.Anames <- NULL
+    louv.Bnames <- NULL
     for (i in seq_len(max(louv.memb)))
     {
-      print(i)
+        print(i)
         this.comm <- names(louv.memb)[louv.memb==i]
         this.tfs <- this.comm[grep("_A$",this.comm)]
         this.genes <- this.comm[grep("_B$",this.comm)]
-    if (length(this.tfs)>=1){
-        if (length(this.tfs)>1){
-            if (length(this.genes)==1){
-                gene.sums <- sum(dwbm[this.tfs,this.genes])
-                tf.sums <- dwbm[this.tfs,this.genes]
-            }else if (length(this.genes)>1){
-                tf.sums <- apply(dwbm[this.tfs,this.genes],1,sum)
-                gene.sums <- apply(dwbm[this.tfs,this.genes],2,sum)
-            }
-        } else if (length(this.tfs)==1) {
-            tf.sums <- sum(dwbm[this.tfs,this.genes])
-            gene.sums <- dwbm[this.tfs,this.genes]
-        }
-      this.denom <- sum(dwbm[this.tfs,this.genes])
-      louv.Ascores <- c(louv.Ascores,tf.sums/this.denom)
-      louv.Bscores <- c(louv.Bscores,gene.sums/this.denom)
+        if (length(this.tfs)>0 && length(this.genes)>0)
+        {
+          dwbm.submat <- array(dwbm[this.tfs,this.genes],dim=c(length(this.tfs),length(this.genes)))
+          tf.sums <- apply(dwbm.submat,1,sum)
+          gene.sums <- apply(dwbm.submat,2,sum)
+          this.denom <- sum(dwbm[this.tfs,this.genes])
+          louv.Ascores <- c(louv.Ascores,tf.sums/this.denom)
+          louv.Bscores <- c(louv.Bscores,gene.sums/this.denom)
+          louv.Anames <- c(louv.Anames,this.tfs)
+          louv.Bnames <- c(louv.Bnames,this.genes)
         }
     }
   
     louv.scores <- c(louv.Ascores,louv.Bscores)
+    names(louv.scores) <- c(louv.Anames,louv.Bnames)
   
     if (!is.null(file.stem)) {
         write.table(cbind(names(louv.memb), as.vector(louv.memb)),paste(c(file.stem,"_ALPACA_final_memb.txt"),collapse=""),col.names=FALSE,row.names=FALSE,quote=FALSE,sep="\t")

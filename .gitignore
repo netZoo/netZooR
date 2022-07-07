@@ -1,7 +1,6 @@
 .DS_Store
 .Rhistory
 Untitled.R
-.Rbuildignore
 inst/doc/
 doc
 Meta
@@ -32,3 +31,6 @@ tests/testthat/*.txt
 tests/testthat/*.vcf
 /doc/
 /Meta/
+vignettes/*.npy
+docs/*.npy
+docs/reference/*.npy

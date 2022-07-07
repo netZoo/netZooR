@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR, MONSTER, OTTER, EGRET, and YARN into one workflow • netZooR</title>
+<title>netZooR integrates tools for the inference and analysis of gene regulatory networks. • netZooR</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Integrate methods: PANDA, LIONESS, CONDOR, ALPACA, SAMBAR, MONSTER, OTTER, EGRET, and YARN into one workflow">
-<meta property="og:description" content="PANDA(Passing Attributes between Networks for Data Assimilation) is a message-passing model to reconstruction gene regulatory network. It integrates multiple sources of biological data, including protein-protein interaction data, gene expression data, and sequence motif information to reconstruct genome-wide, condition-specific regulatory networks.[(Glass et al. 2013)]. LIONESS(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks by applying linear interpolation to the predictions made by existing aggregate network inference approaches. CONDOR(COmplex Network Description Of Regulators)is a bipartite community structure analysis tool of biological networks, especially eQTL networks, including a method for scoring nodes based on their modularity contribution.[(Platig et al. 2016). ALPACA(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules.[(Padi and Quackenbush 2018)]. This package integrates pypanda--the Python implementation of PANDA and LIONESS(https://github.com/davidvi/pypanda),the R implementation of CONDOR(https://github.com/jplatig/condor) and the R implementation of ALPACA (https://github.com/meghapadi/ALPACA) into one workflow. Each tool can be call in this package by one function, and the relevant output could be accessible in current R session for downstream analysis. ">
+<script src="pkgdown.js"></script><meta property="og:title" content="netZooR integrates tools for the inference and analysis of gene regulatory networks.">
+<meta property="og:description" content="PANDA (Passing Attributes between Networks for Data Assimilation) is a message-passing algorithm to reconstruct gene regulatory network. It integrates multiple sources of biological data, including protein-protein interaction data, gene expression data, and sequence motif information to reconstruct genome-wide, condition-specific regulatory networks.[(Glass et al. 2013)]. LIONESS(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks by applying linear interpolation to the predictions made by existing aggregate network inference approaches. CONDOR(COmplex Network Description Of Regulators)is a bipartite community structure analysis tool of biological networks, especially eQTL networks, including a method for scoring nodes based on their modularity contribution.[(Platig et al. 2016). ALPACA(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules.[(Padi and Quackenbush 2018)]. This package integrates pypanda--the Python implementation of PANDA and LIONESS(https://github.com/davidvi/pypanda),the R implementation of CONDOR(https://github.com/jplatig/condor) and the R implementation of ALPACA (https://github.com/meghapadi/ALPACA) into one workflow. Each tool can be call in this package by one function, and the relevant output could be accessible in current R session for downstream analysis. ">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.81</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
       </span>
     </div>
 
@@ -131,7 +131,7 @@
 <li><p><strong>SAMBAR</strong> (Subtyping Agglomerated Mutations By Annotation Relations) <a href="https://www.nature.com/articles/s41416-018-0109-7">[Kuijjer et al.]</a>: identifies subtypes based on somatic mutation data.</p></li>
 <li><p><strong>MONSTER</strong> (Modeling Network State Transitions from Expression and Regulatory data) <a href="https://doi.org/10.1186/s12918-017-0517-y">[Schlauch et al.]</a>: infers transcription factor drivers of cell state conditions at the gene regulatory network level.</p></li>
 <li><p><strong>OTTER</strong> (Optimization to Estimate Regulation) <a href="https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract">[Weighill et al.]</a>: models gene regulation estimation as a graph matching problem.</p></li>
-<li><p><strong>CRANE</strong> (Constrained Random Alteration of Network Edges) <a href="https://www.biorxiv.org/content/10.1101/2020.07.12.198747v1">[Lim et al.]</a>: generates ensembles of gene regulatory networks to identify disease modules.</p></li>
+<li><p><strong>CRANE</strong> (Constrained Random Alteration of Network Edges) <a href="https://www.frontiersin.org/articles/10.3389/fgene.2020.603264/full">[Lim et al.]</a>: generates ensembles of gene regulatory networks to identify disease modules.</p></li>
 <li><p><strong>EGRET</strong> (Estimating the Genetic Regulatory effects on TFs) <a href="">[Weighill et al.]</a> In preparation: models individual-specific gene regulatory networks using their genetic variants.</p></li>
 <li><p><strong>YARN</strong> (Yet Another RNa-seq package) <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1847-x">[Paulsson et al.]</a>: combines quality control and preprocessing, gene filtering, and normalization steps to streamline the processing of large-scale gene expression data such as GTEx.</p></li>
 </ul>
@@ -164,6 +164,12 @@
 </li>
 <li><p>Most of plotting function can be realized by functions in <a href="https://igraph.org/redirect.html">igraph</a>, which will be loaded with netZooR through <code><a href="https://rdrr.io/r/base/library.html">library(netZooR)</a></code>. Some plotting functions like <code>vis.panda.in.cytoscape()</code> and <code>vis.diff.panda.in.cytoscape()</code> are able to plot interactive PANDA networks in <a href="https://cytoscape.org/">Cytoscape</a>, but installation of Cytoscape is required before using these plotting functions. Also, please make sure that Cytoscape is open when these functions are called.</p></li>
 </ul>
+<div id="installation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h3>
+<div id="using-devtoolsremotes" class="section level4">
+<h4 class="hasAnchor">
+<a href="#using-devtoolsremotes" class="anchor"></a>Using devtools/remotes</h4>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools") </span>
 <span class="co"># install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.</span>
@@ -175,14 +181,33 @@
 <span class="co"># install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"netZoo/netZooR"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></code></pre></div>
-<p>For more details please refer to the <a href="https://netzoo.github.io/netZooR/">documentation website</a>.</p>
-<p>This package will invoke Python programming language in R environment through <a href="https://rstudio.github.io/reticulate/">reticulate</a> package, by default setting there is no additional configuration needed. Configuring which version of Python to use , here in netZooR, Python 3.X is required. More details can be found <a href="https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html">here</a>.</p>
+</div>
+<div id="using-bioconductor" class="section level4">
+<h4 class="hasAnchor">
+<a href="#using-bioconductor" class="anchor"></a>Using Bioconductor</h4>
+<p>netZooR is also available through <a href="https://bioconductor.org/packages/netZooR">Bioconductor</a></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
+
+<span class="co"># The following initializes usage of Bioc devel</span>
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span>version<span class="op">=</span><span class="st">'devel'</span><span class="op">)</span>
+
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"netZooR"</span><span class="op">)</span></code></pre></div>
+<p>For more details please refer to the <a href="https://netzoo.github.io/netZooR/">documentation website</a>.</p>
+</div>
+</div>
+<div id="python-binding" class="section level3">
+<h3 class="hasAnchor">
+<a href="#python-binding" class="anchor"></a>Python binding</h3>
+<p>This package will invoke Python programming language in R environment through <a href="https://rstudio.github.io/reticulate/">reticulate</a> package, by default setting there is no additional configuration needed. Configuring which version of Python to use , here in netZooR, Python 3.X is required. More details can be found <a href="https://cran.r-project.org/web/packages/reticulate/vignettes/versions.html">here</a>.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#check your Python configuration and the specific version of Python in use currently</span>
 <span class="fu">py_config</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># reset to Python 3.X if necessary, like below:</span>
 <span class="co"># use_python("/usr/local/bin/python3")</span></code></pre></div>
+</div>
 </div>
 <div id="help" class="section level2">
 <h2 class="hasAnchor">
@@ -199,17 +224,17 @@
 <a href="#contribution-and-development" class="anchor"></a>Contribution and Development</h2>
 <p>Contributions are welcome! The contribution guide to netZooR can be found <a href="https://netzoo.github.io/contribute/contribute/">here</a>.</p>
 <p>We follow the <a href="https://bioconductor.org/packages/devel/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html">Bioconductor code guidelines</a>. Before pushing a contribution, please run</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Bioconductor/BiocCheck/issues">BiocCheck</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/BiocCheck/man/BiocCheck.html">BiocCheck</a></span><span class="op">(</span><span class="st">"packageDirOrTarball"</span><span class="op">)</span></code></pre></div>
 <p>And resolve any warnings, notes, and errors before committing the code.</p>
 <p>After adding new features or optimizing a function in the package, please re-build the package and run <code>R CMD check .</code> in the terminal or follow the instructions below before doing the pull request to the devel branch. To run only the tests:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages('rcmdcheck')</span>
 <span class="co"># setwd('path/to/netZooR/root') # Set the working directory to netZooR root</span>
 <span class="fu">rcmdcheck</span><span class="fu">::</span><span class="fu"><a href="http://r-lib.github.io/rcmdcheck/reference/rcmdcheck.html">rcmdcheck</a></span><span class="op">(</span>args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"--no-manual"</span>,<span class="st">"--ignore-vignettes"</span><span class="op">)</span>, error_on <span class="op">=</span> <span class="st">"error"</span>, build_args<span class="op">=</span><span class="st">"--no-build-vignettes"</span><span class="op">)</span></code></pre></div>
 <p>To rebuild vignettes, documentation, and tests:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># document the description of function</span>
 <span class="co"># setwd('path/to/netZooR/root') # Set the working directory to netZooR root</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/document.html">document</a></span><span class="op">(</span><span class="op">)</span>
@@ -226,7 +251,7 @@
 <span class="co"># CMD check, if passed all tests here, it means this package is ready to pull request to the devel branch. Otherwise, fix the bug before pulling request.</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/check.html">check</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#devtools::check(vignettes = FALSE) #You can skip building the vignettes if you are not contributing a vignette</span></code></pre></div>
-<p>The master branch on github should always be in good shape, so please to pull request to the <strong>devel</strong> branch. If the contribution is specific to pandaR, please contribute to its seperate GitHub page by <a href="https://github.com/jnpaulson/pandaR">pull request</a>.</p>
+<p>The master branch on github should always be in good shape, so please to pull request to the <strong>devel</strong> branch. If the contribution is specific to pandaR, please contribute to its separate GitHub page by <a href="https://github.com/jnpaulson/pandaR">pull request</a>.</p>
 </div>
 <div id="license" class="section level2">
 <h2 class="hasAnchor">
@@ -245,6 +270,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from BIOC at <br><a href="https://www.bioconductor.org/packages/netZooR">https://​www.bioconductor.org/​packages/​netZooR</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/netZoo/netZooR/">https://​github.com/​netZoo/​netZooR/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/netZoo/netZooR/issues">https://​github.com/​netZoo/​netZooR/​issues</a>
@@ -260,11 +287,11 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Tian Wang <br><small class="roles"> Author </small>  </li>
 <li>Marouen Ben Guebila <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Tian Wang <br><small class="roles"> Author </small>  </li>
 <li>John Platig <br><small class="roles"> Author </small>  </li>
 <li>Marieke Kuijjer <br><small class="roles"> Author </small>  </li>
-<li>Magha Padi <br><small class="roles"> Author </small>  </li>
+<li>Megha Padi <br><small class="roles"> Author </small>  </li>
 <li>Rebekka Burkholz <br><small class="roles"> Author </small>  </li>
 <li>Deborah Weighill <br><small class="roles"> Author </small>  </li>
 </ul>
@@ -288,7 +315,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Tian Wang, Marouen Ben Guebila, John Platig, Marieke Kuijjer, Magha Padi, Rebekka Burkholz, Deborah Weighill.</p>
+  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Deborah Weighill.</p>
 </div>
 
 <div class="pkgdown">
