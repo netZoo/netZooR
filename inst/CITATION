@@ -1,0 +1,12 @@
+citEntry(entry="article",
+         title = "The Network Zoo: a multilingual package for the inference and analysis of biological networks",
+         author = personList( as.person("Marouen Ben Guebila"),
+                              as.person("Tian Wang"),
+                              as.person("John Quackenbush")),
+         year = 2022,
+         journal = "bioRxiv",
+         doi = "10.1101/2022.05.30.494077",
+         textVersion = 
+         paste("Ben Guebila, M, Wang, T., Quackenbush, J.", 
+               "The Network Zoo: a multilingual package for the inference and analysis of biological networks",
+                "bioRxiv, 2022" ) )
