@@ -1,22 +1,24 @@
 Package: netZooR
-Title: netZooR integrates tools for the inference and analysis of gene regulatory networks
-Version: 1.0.11
-Date: 2022-06-20
+Title: Unified methods for the inference and analysis of gene regulatory networks
+Version: 1.1.12
+Date: 2022-07-07
 Authors@R: c(person("Marouen", "Ben Guebila",
-			email = "benguebila@hsph.harvard.edu", role = c("aut","cre")),
+			email = "benguebila@hsph.harvard.edu", role = c("aut","cre"), comment = c(ORCID = "0000-0001-5934-966X")),
 	     person("Tian", "Wang", 
-			email = "tian.wang@bc.edu", role = c("aut")),
+			email = "tian.wang@bc.edu", role = c("aut"), comment = c(ORCID = "0000-0002-2767-3243")),
 	     person("John", "Platig",
-			email="john.platig@channing.harvard.edu",role="aut"),
+			email="john.platig@channing.harvard.edu", role="aut"),
 	     person("Marieke", "Kuijjer",
-			email = "marieke.kuijjer@ncmm.uio.no", role = "aut"),
+			email = "marieke.kuijjer@ncmm.uio.no", role = "aut", comment = c(ORCID = "0000-0001-6280-3130")),
 	     person("Megha", "Padi",
-			email = "mpadi@email.arizona.edu", role = "aut"),
+			email = "mpadi@email.arizona.edu", role = "aut", comment = c(ORCID = "0000-0002-3446-4562")),
 	     person("Rebekka", "Burkholz",
 			email = "rburkholz@hsph.harvard.edu",role = "aut"),
-             person("Deborah", "Weighill",
-                        email = "",role = "aut"))
-Description: PANDA (Passing Attributes between Networks for Data Assimilation) is a message-passing algorithm to reconstruct gene regulatory network. It integrates multiple sources of biological data, including protein-protein interaction data, gene expression data, and sequence motif information to reconstruct genome-wide, condition-specific regulatory networks.[(Glass et al. 2013)]. LIONESS(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks by applying linear interpolation to the predictions made by existing aggregate network inference approaches. CONDOR(COmplex Network Description Of Regulators)is a bipartite community structure analysis tool of biological networks, especially eQTL networks, including a method for scoring nodes based on their modularity contribution.[(Platig et al. 2016). ALPACA(ALtered Partitions Across Community Architectures) is a method for comparing two genome-scale networks derived from different phenotypic states to identify condition-specific modules.[(Padi and Quackenbush 2018)]. This package integrates pypanda--the Python implementation of PANDA and LIONESS(https://github.com/davidvi/pypanda),the R implementation of CONDOR(https://github.com/jplatig/condor) and the R implementation of ALPACA (https://github.com/meghapadi/ALPACA) into one workflow. Each tool can be call in this package by one function, and the relevant output could be accessible in current R session for downstream analysis. 
+         person("Des", "Weighill",
+                        email = "",role = "aut", comment = c(ORCID = "0000-0003-4979-5871")),
+		 person("Kate", "Shutta",
+                        email = "",role = "ctb", comment = c(ORCID = "0000-0003-0402-3771")))
+Description: netZooR unifies the implementations of several Network Zoo methods (netzoo, netzoo.github.io) into a single package by creating interfaces between network inference and network analysis methods. Currently, the package has 3 methods for network inference including PANDA and its optimized implementation OTTER (network reconstruction using mutliple lines of biological evidence), LIONESS (single-sample network inference), and EGRET (genotype-specific networks). Network analysis methods include CONDOR (community detection), ALPACA (differential community detection), CRANE (significance estimation of differential modules), MONSTER (estimation of network transition states). In addition, YARN allows to process gene expresssion data for tissue-specific analyses and SAMBAR infers missing mutation data based on pathway information.
 Depends: R (>= 4.1.0),
    	 igraph,
 	 reticulate,
@@ -73,3 +75,4 @@ VignetteEngine: knitr
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2
 BugReports: https://github.com/netZoo/netZooR/issues
+URL: https://github.com/netZoo/netZooR, https://netzoo.github.io/
