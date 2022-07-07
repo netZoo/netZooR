@@ -1,4 +1,4 @@
-CHANGES IN VERSION 1.0.11
+CHANGES IN VERSION 1.1.12
 --------------------------
 
     o Reactivated unit tests for Ubuntu GitHub actions.
