@@ -26,11 +26,11 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 300
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
         r-version: [4.2]
-        timeout-minutes: 300
 
     steps:
 
