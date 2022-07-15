@@ -32,3 +32,4 @@ vignettes/yarn.Rmd
 notes.md
 R/createDiffPandaStyle.R
 R/visDiffPandaInCytoscape.R
+tests/testthat/test-monster.R
