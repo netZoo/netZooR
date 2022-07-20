@@ -59,7 +59,7 @@ test_that("panda function works", {
    
    expect_equal(class(test4Outdegree$`Regulator`), "character")
    expect_equal(class(test4Outdegree$`Regulator_Score`), "numeric")
-   expect_equal(test4Outdegree[1,2], -12.23053,tolerance=1e-7)
+   expect_equal(test4Outdegree[1,2], -12.23053,tolerance=1e-6)
   
 
 })
