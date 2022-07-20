@@ -26,6 +26,7 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 300
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
@@ -55,6 +56,12 @@ jobs:
           needs: |
              website
              coverage
+
+      - name: Install blas/lapack
+        run: |
+            La_library()
+            extSoftVersion()["BLAS"]
+        shell: Rscript {0}
 
       - name: Install reticulate
         run: |
