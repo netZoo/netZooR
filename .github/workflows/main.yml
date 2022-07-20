@@ -57,12 +57,6 @@ jobs:
              website
              coverage
 
-      - name: Install blas/lapack
-        run: |
-            La_library()
-            extSoftVersion()["BLAS"]
-        shell: Rscript {0}
-
       - name: Install reticulate
         run: |
             library("reticulate")
