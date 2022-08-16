@@ -65,7 +65,7 @@
 #'
 
 
-pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE){
+pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE, with_header=FALSE){
   
   if(missing(expr_file)){
     stop("Please provide the path of gene expression data file to 'expr_file' variable") }
@@ -106,6 +106,13 @@ pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", 
     keepexpression.str <- "keep_expression_matrix=True"
   } else{ keepexpression.str <- "keep_expression_matrix=False" }
   
+  # with header option
+  if(with_header==FALSE){
+    withheader.str <- "with_header=False"
+  }else if (with_header==TRUE){
+    withheader.str <- "with_header=True"   
+  }
+  
   # when pre-processing mode is legacy
   if(modeProcess == "legacy"){
     
@@ -130,7 +137,9 @@ pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", 
   reticulate::source_python(pandapath,convert = TRUE)
   
   # invoke Python script to create a Panda object
-  obj.str <-  paste("panda_obj=Panda(", expr.str, ",", motif.str,",", ppi.str, ",", computing.str, ",", precision.str, ",", savememory.str, ",", savetmp.str, "," , keepexpression.str, ",",  mode.str, ")", sep ='')
+  obj.str <-  paste("panda_obj=Panda(", expr.str, ",", motif.str,",", ppi.str, ",", 
+                    computing.str, ",", precision.str, ",", savememory.str, ",", savetmp.str, "," , 
+                    keepexpression.str, ",",  mode.str, "," , withheader.str, ")", sep ='')
   
   # run Python code
   py_run_string(obj.str)

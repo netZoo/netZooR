@@ -14,7 +14,8 @@ pandaPy(
   save_tmp = TRUE,
   keep_expression_matrix = FALSE,
   modeProcess = "union",
-  remove_missing = FALSE
+  remove_missing = FALSE,
+  with_header = FALSE
 )
 }
 \arguments{

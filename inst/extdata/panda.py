@@ -296,60 +296,95 @@ def normalize_network(x):
     )
     return normalized_matrix
 
+
 class Panda(object):
-    """
-    Description:
-        Using PANDA to infer gene regulatory network.
+    """ 
+    Using PANDA to infer gene regulatory network.
         1. Reading in input data (expression data, motif prior, TF PPI data)
         2. Computing coexpression network
         3. Normalizing networks
         4. Running PANDA algorithm
         5. Writing out PANDA network
-    Inputs:
-        object: Panda object.
-    Outputs:
-        object: Panda result object
-        object.panda_network: adjacency matrix of resulting network
-     Methods:
-        __init__                    : Intialize instance of Panda class.
-        __remove_missing            : Removes the gens and TFs that are not present in one of the priors. Works only if modeProcess='legacy'.
-        _normalize_network          : Standardizes the input data matrices.
-        processData                 : Processes data files into data matrices.
-        panda_loop                  : The PANDA algorithm.
-        __pearson_results_data_frame: Saves PANDA network in edges format.
-        save_panda_results          : Saves PANDA network.
-        top_network_plot            : Selects top genes to plot.
-        __shape_plot_network        : Creates network plot.
-        __create_plot               : Runs network plot.
-        return_panda_indegree       : computes indegree of panda network, only if save_memory = False.
-        return_panda_outdegree      : computes outdegree of panda network, only if save_memory = False.
-    Example:
-        Import the classes in the pypanda library:
-        from netZooPy.panda.panda import Panda
-        Run the Panda algorithm, leave out motif and PPI data to use Pearson correlation network:
-        panda_obj = Panda('../../tests/ToyData/ToyExpressionData.txt', '../../tests/ToyData/ToyMotifData.txt', '../../tests/ToyData/ToyPPIData.txt', remove_missing=False)
-        Save the results:
-        panda_obj.save_panda_results('Toy_Panda.pairs.txt')
-        Return a network plot:
-        panda_obj.top_network_plot(top=70, file='top_genes.png')
-        Calculate in- and outdegrees for further analysis:
-        indegree = panda_obj.return_panda_indegree()
-        outdegree = panda_obj.return_panda_outdegree()
-        Toy data:
-        The example gene expression data that we have available here contains gene expression profiles for different samples in the columns. Of note, this is just a small subset of a larger gene expression dataset. We provided these "toy" data so that the user can test the method.
-        However, if you plan to model gene regulatory networks on your own dataset, you should use your own expression data as input.
-        Sample PANDA results:
-        TF  Gene  Motif Force
-        ---------------------
-        CEBPA	AACSL	0.0	-0.951416589143
-        CREB1	AACSL	0.0	-0.904241609324
-        DDIT3	AACSL	0.0	-0.956471642313
-        E2F1	AACSL	1.0	3.6853160511
-        EGR1	AACSL	0.0	-0.695698519643
-     Authors:
-       Cho-Yi Chen, David Vi, Alessandro Marin, Marouen Ben Guebila, Daniel Morgan
-    Reference:
-        Glass, Kimberly, et al. "Passing messages between biological networks to refine predicted interactions." PloS one 8.5 (2013): e64832.
+
+
+    Parameters
+    ----------
+
+            expression_file : str
+                Path to file containing the gene expression data or pandas dataframe. By default, the expression file does not have a header, and the cells ares separated by a tab.
+            motif_file : str 
+                Path to file containing the transcription factor DNA binding motif data in the form of
+                TF-gene-weight(0/1) as a tab-separated file without a header or pandas dataframe.
+                If set to none, the gene coexpression matrix is returned as a result network.
+            ppi_file : str
+                Path to file containing the PPI data. or pandas dataframe. 
+                The PPI can be symmetrical, if not, it will be transformed into a symmetrical adjacency matrix.
+            computing : str
+                'cpu' uses Central Processing Unit (CPU) to run PANDA.
+                'gpu' use the Graphical Processing Unit (GPU) to run PANDA.
+            precision : str
+                - 'double' computes the regulatory network in double precision (15 decimal digits).
+                - 'single' computes the regulatory network in single precision (7 decimal digits) which is fastaer, requires half the memory but less accurate.
+            save_memory : bool
+                - True : removes temporary results from memory. The result network is weighted adjacency matrix of size (nTFs, nGenes).
+                - False: keeps the temporary files in memory. The result network has 4 columns in the form gene - TF - weight in motif prior - PANDA edge.
+            save_tmp : bool
+                Save temporary variables.
+            remove_missing : bool
+                Removes the gens and TFs that are not present in one of the priors. Works only if modeProcess='legacy'.
+            keep_expression_matrix : bool
+                Keeps the input expression matrix in the result Panda object.
+            modeProcess : str
+                The input data processing mode.
+                - 'legacy': refers to the processing mode in netZooPy<=0.5
+                - (Default)'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros.
+                - 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes.
+            alpha : str
+                Learning rate (default: 0.1)
+            start : int
+                First sample of the expression dataset. This replicates the behavior of Lioness (default : 1)
+            end : int
+            Last sample of the expression dataset. This replicates the behavior of Lioness (default : None )
+
+    Examples
+    --------
+
+        >>> #Import the classes in the pypanda library:  
+        >>> from netZooPy.panda.panda import Panda
+        >>> #Run the Panda algorithm, leave out motif and PPI data to use Pearson correlation network:
+        >>> panda_obj = Panda('../../tests/ToyData/ToyExpressionData.txt', '../../tests/ToyData/ToyMotifData.txt', '../../tests/ToyData/ToyPPIData.txt', remove_missing=False)
+        >>> #Save the results:
+        >>> panda_obj.save_panda_results('Toy_Panda.pairs.txt')
+        >>> #Return a network plot:
+        >>> panda_obj.top_network_plot(top=70, file='top_genes.png')
+        >>> #Calculate in- and outdegrees for further analysis:
+        >>> indegree = panda_obj.return_panda_indegree()
+        >>> outdegree = panda_obj.return_panda_outdegree()
+
+
+    Notes
+    ------
+
+    Toy data:The example gene expression data that we have available here contains gene expression profiles 
+    for different samples in the columns. Of note, this is just a small subset of a larger gene 
+    expression dataset. We provided these "toy" data so that the user can test the method.
+
+
+    Sample PANDA results:\b
+        - TF    Gene    Motif   Force\n
+        - CEBPA AACSL	0.0	-0.951416589143\n
+        - CREB1 AACSL	0.0	-0.904241609324\n
+        - DDIT3 AACSL	0.0	-0.956471642313\n
+        - E2F1  AACSL	1.0	3.685316051\n
+        - EGR1  AACSL	0.0	-0.695698519643
+
+    References
+    ----------
+    .. [1]__ Glass, Kimberly, et al. "Passing messages between biological networks to refine predicted interactions." 
+        PloS one 8.5 (2013): e64832.
+
+    Authors: Cho-Yi Chen, David Vi, Alessandro Marin, Marouen Ben Guebila, Daniel Morgan
+       
     """
 
     def __init__(
@@ -367,31 +402,9 @@ class Panda(object):
         alpha=0.1,
         start=1,
         end=None,
+        with_header=False
     ):
-        """
-        Description:
-            Intialize instance of Panda class and load data.
-        Inputs:
-            expression_file : Path to file containing the gene expression data or pandas dataframe. By default, the expression file does not have a header, and the cells ares separated by a tab.
-            motif_file      : Path to file containing the transcription factor DNA binding motif data in the form of TF-gene-weight(0/1) or pandas dataframe.
-                              If set to none, the gene coexpression matrix is returned as a result network.
-            ppi_file        : Path to file containing the PPI data. or pandas dataframe. The PPI can be symmetrical, if not, it will be transformed into a symmetrical adjacency matrix.
-            computing       : 'cpu' uses Central Processing Unit (CPU) to run PANDA.
-                              'gpu' use the Graphical Processing Unit (GPU) to run PANDA.
-            precision       : 'double' computes the regulatory network in double precision (15 decimal digits).
-                              'single' computes the regulatory network in single precision (7 decimal digits) which is fastaer, requires half the memory but less accurate.
-            save_memory     : True : removes temporary results from memory. The result network is weighted adjacency matrix of size (nTFs, nGenes).
-                              False: keeps the temporary files in memory. The result network has 4 columns in the form gene - TF - weight in motif prior - PANDA edge.
-            save_tmp        : Save temporary variables.
-            remove_missing  : Removes the gens and TFs that are not present in one of the priors. Works only if modeProcess='legacy'.
-            keep_expression_matrix: Keeps the input expression matrix in the result Panda object.
-            modeProcess     : The input data processing mode.
-                              'legacy': refers to the processing mode in netZooPy<=0.5
-                              (Default)'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros.
-                              'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes.
-            alpha           : Learning rate (default: 0.1)
-            start           : First sample of the expression dataset. This replicates the behavior of Lioness (default : 1)
-            end             : Last sample of the expression dataset. This replicates the behavior of Lioness (default : None )
+        """ Intialize instance of Panda class and load data.
         """
         # Read data
         self.processData(
@@ -402,8 +415,10 @@ class Panda(object):
             remove_missing,
             keep_expression_matrix,
             start=start,
-            end=end
+            end=end,
+            with_header=with_header
         )
+        print(modeProcess,motif_file,expression_file,ppi_file,save_memory,remove_missing,keep_expression_matrix)
         if hasattr(self, "export_panda_results"):
             return
 
@@ -426,7 +441,8 @@ class Panda(object):
         # Clean up useless variables to release memory
         # =====================================================================
         self.tfs, self.genes = self.unique_tfs, self.gene_names
-        if save_memory:
+
+        if (save_memory==True):
             print("Clearing motif and ppi data, unique tfs, and gene names for speed")
             del self.unique_tfs, self.gene_names, self.motif_matrix_unnormalized
 
@@ -468,9 +484,7 @@ class Panda(object):
             )
 
     def __remove_missing(self):
-        """
-        Description:
-            Removes the gens and TFs that are not present in one of the priors. Works only if modeProcess='legacy'.
+        """ Removes the genes and TFs that are not present in one of the priors. Works only if modeProcess='legacy'.
         """
         if self.expression_data is not None:
             print("Remove expression not in motif:")
@@ -517,13 +531,17 @@ class Panda(object):
         return None
 
     def _normalize_network(self, x):
-        """
-        Description:
-            Standardizes the input data matrices.
-        Inputs:
-            x     : Input adjacency matrix.
-        Outputs:
-            normalized_matrix: Standardized adjacency matrix.
+        """Standardizes the input data matrices.
+
+        Parameters
+        ----------
+            x     : array
+                Input adjacency matrix.
+
+        Returns
+        -------
+            normalized_matrix: array
+                Standardized adjacency matrix.
         """
         normalized_matrix = normalize_network(x)
         return normalized_matrix
@@ -538,19 +556,37 @@ class Panda(object):
         keep_expression_matrix,
         start=1,
         end=None,
+        with_header = False,
     ):
+        """ Processes data files into data matrices.
+
+        Parameters
+        ----------
+
+            expression_file : str
+                Path to file containing the gene expression data or pandas dataframe. 
+                By default, the expression file does not have a header, and the cells ares separated by a tab.
+                Pass `with_header=True` if the expression data includes the sample names 
+            motif_file : str 
+                Path to file containing the transcription factor DNA binding motif data in the form of
+                TF-gene-weight(0/1) or pandas dataframe.
+                If set to none, the gene coexpression matrix is returned as a result network.
+            ppi_file : str
+                Path to file containing the PPI data. or pandas dataframe. 
+                The PPI can be symmetrical, if not, it will be transformed into a symmetrical adjacency matrix. 
+            remove_missing : bool
+                Removes the gens and TFs that are not present in one of the priors. Works only if modeProcess='legacy'.
+            keep_expression_matrix : bool
+                Keeps the input expression matrix in the result Panda object.
+            modeProcess : str
+                The input data processing mode.
+                - 'legacy': refers to the processing mode in netZooPy<=0.5
+                - (Default)'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros.
+                - 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes.
+            with_header: bool
+                pass True when the expression file has a header with the sample names
         """
-        Description:
-            Processes data files into data matrices.
-        Inputs:
-            modeProcess           : Input adjacency matrix.
-            expression_file       : Path to file containing the gene expression data.
-            motif_file            : Path to file containing the transcription factor DNA binding motif data in the form of TF-gene-weight(0/1).
-                                    If set to none, the gene coexpression matrix is returned as a result network.
-            ppi_file              : Path to file containing the PPI data.
-            remove_missing  : Removes the gens and TFs that are not present in one of the priors. Works only if modeProcess='legacy'.
-            keep_expression_matrix: Keeps the input expression matrix in the result Panda object.
-        """
+
         # if modeProcess=="legacy":
         # =====================================================================
         # Data loading
@@ -585,12 +621,19 @@ class Panda(object):
 
         if type(expression_file) is str:
             with Timer("Loading expression data ..."):
-                self.expression_data = pd.read_csv(
-                    expression_file, sep="\t", header=None, index_col=0
-                )
+                if with_header:
+                    # Read data with header
+                    self.expression_data = pd.read_csv(
+                        expression_file, sep="\t", index_col=0
+                    )
+                else:
+                    self.expression_data = pd.read_csv(
+                        expression_file, sep="\t", header=None, index_col=0
+                    )
 
                 self.expression_data = self.expression_data.iloc[:, (start-1):end]
                 self.expression_genes = self.expression_data.index.tolist()
+                self.expression_samples = self.expression_data.columns.astype(str)
                 # self.num_genes = len(self.gene_names)
                 # print('Expression matrix:', self.expression_data.shape)
         elif type(expression_file) is not str:
@@ -601,6 +644,7 @@ class Panda(object):
                     )
                 self.expression_data = expression_file.iloc[:, (start-1):end]  # pd.read_csv(expression_file, sep='\t', header=None, index_col=0)
                 self.expression_genes = self.expression_data.index.tolist()
+                self.expression_samples = self.expression_data.columns.astype(str)
                 # self.num_genes = len(self.gene_names)
                 # print('Expression matrix:', self.expression_data.shape)
             else:
@@ -646,6 +690,7 @@ class Panda(object):
 
         if modeProcess == "legacy" and remove_missing and motif_file is not None:
             self.__remove_missing()
+            print('new case')
         if modeProcess == "legacy" and remove_missing==False:
             if expression_file is not None:
                 self.gene_names = (
@@ -761,20 +806,19 @@ class Panda(object):
     def panda_loop(
         self, correlation_matrix, motif_matrix, ppi_matrix, computing="cpu", alpha=0.1
     ):
-        """
-        Description:
-            The PANDA algorithm.
-        Inputs:
-            correlation_matrix: Input coexpression matrix.
-            motif_matrix      : Input motif regulation prior network.
-            ppi_matrix        : Input PPI matrix.
-            computing         : 'cpu' uses Central Processing Unit (CPU) to run PANDA.
-                                'gpu' use the Graphical Processing Unit (GPU) to run PANDA.
-        Methods (these are no longer used here, but defined in calculations.py):
-            t_function      : Continuous Tanimoto similarity function computed on the CPU.
-            update_diagonal : Updates the diagonal of the input matrix in the message passing computed on the CPU.
-            gt_function     : Continuous Tanimoto similarity function computed on the GPU.
-            gupdate_diagonal: Updates the diagonal of the input matrix in the message passing computed on the GPU.
+        """ The PANDA algorithm.
+
+        Parameters
+        ----------
+            correlation_matrix: array
+                Input coexpression matrix.
+            motif_matrix      : array
+                Input motif regulation prior network.
+            ppi_matrix        : array
+                Input PPI matrix.
+            computing         : str
+                'cpu' uses Central Processing Unit (CPU) to run PANDA.
+                'gpu' use the Graphical Processing Unit (GPU) to run PANDA.
         """
 
 
@@ -803,18 +847,13 @@ class Panda(object):
         return motif_matrix
 
     def __pearson_results_data_frame(self):
-        """
-        Description:
-            Saves PANDA network in edges format.
+        """ Saves PANDA network in edges format.
         """
         genes_1 = np.tile(self.gene_names, (len(self.gene_names), 1)).flatten()
         genes_2 = (
             np.tile(self.gene_names, (len(self.gene_names), 1)).transpose().flatten()
         )
         self.flat_panda_network = self.panda_network.transpose().flatten()
-        print(genes_1)
-        print(genes_2)
-        print((self.flat_panda_network).shape)
         self.export_panda_results = pd.DataFrame(
             {"tf": genes_1, "gene": genes_2, "force": self.flat_panda_network}
         )
@@ -822,11 +861,12 @@ class Panda(object):
         return None
 
     def save_panda_results(self, path="panda.npy"):
-        """
-        Description:
-            Saves PANDA network.
-        Inputs:
-            path: Path to save the network.
+        """ Saves PANDA network.
+
+        Parameters
+        ----------
+            path: str
+                Path to save the network.
         """
         with Timer("Saving PANDA network to %s ..." % path):
             # Because there are two modes of operation (save_memory), save to file will be different
@@ -845,13 +885,16 @@ class Panda(object):
                 np.save(path, toexport)
 
     def top_network_plot(self, top=100, file="panda_top_100.png", plot_bipart=False):
-        """
-        Description:
-            Selects top genes.
-        Inputs:
-            top        : Top number of genes to plot.
-            file       : File to save the network plot.
-            plot_bipart: Plot the network as a bipartite layout.
+        """ Selects top genes.
+
+        Parameters
+        ----------
+            top        : int
+                Top number of genes to plot.
+            file       : str
+                File to save the network plot.
+            plot_bipart: bool
+                Plot the network as a bipartite layout.
         """
         if not hasattr(self, "export_panda_results"):
             raise AttributeError(
@@ -879,13 +922,16 @@ class Panda(object):
     def __shape_plot_network(
         self, subset_panda_results, file="panda.png", plot_bipart=False
     ):
-        """
-        Description:
-            Creates plot.
-        Inputs:
-            subset_panda_results : Reduced PANDA network to the top genes.
-            file                 : File to save the network plot.
-            plot_bipart: Plot the network as a bipartite layout.
+        """ Creates plot.
+
+        Parameters
+        -----------
+            subset_panda_results : array
+                Reduced PANDA network to the top genes.
+            file                 : str
+                File to save the network plot.
+            plot_bipart: bool
+                Plot the network as a bipartite layout.
         """
         # reshape data for networkx
         unique_genes = list(
@@ -915,15 +961,21 @@ class Panda(object):
         return None
 
     def __create_plot(self, unique_genes, links, file="panda.png", plot_bipart=False):
-        """
-        Description:
-            Runs the plot.
-        Inputs:
-            unique_genes : Unique list of PANDA genes.
-            links        : Edges of the subset PANDA network to the top genes.
-            file         : File to save the network plot.
-            plot_bipart  : Plot the network as a bipartite layout.
-        Methods:
+        """ Runs the plot.
+
+        Parameters
+        ----------
+            unique_genes : list
+                Unique list of PANDA genes.
+            links        : list
+                Edges of the subset PANDA network to the top genes.
+            file         : str
+                File to save the network plot.
+            plot_bipart  : bool
+                Plot the network as a bipartite layout.
+
+        Notes
+        -----
             split_label: Splits the plot label over several lines for plotting purposes.
         """
         import networkx as nx
@@ -950,12 +1002,15 @@ class Panda(object):
         labels = {}
 
         def split_label(label):
-            """
-            Description: Splits the plot label over several lines for plotting purposes.
-            Inputs:
+            """ Splits the plot label over several lines for plotting purposes.
+
+            Parameters
+            ----------
                 label: Input label text.
-            Outputs:
-                label: Output label text divided over several lines.
+
+            Returns:
+                label: _
+                    Output label text divided over several lines.
             """
             ll = len(label)
             if ll > 6:
@@ -998,9 +1053,7 @@ class Panda(object):
         return None
 
     def return_panda_indegree(self):
-        """
-        Description:
-            computes indegree of PANDA network, only if save_memory = False.
+        """ Computes indegree of PANDA network, only if save_memory = False.
         """
         export_panda_results_pd = pd.DataFrame(
             self.export_panda_results, columns=["tf", "gene", "motif", "force"]
@@ -1010,9 +1063,7 @@ class Panda(object):
         return self.panda_indegree
 
     def return_panda_outdegree(self):
-        """
-        Description:
-            computes outdegree of PANDA network, only if save_memory = False.
+        """ computes outdegree of PANDA network, only if save_memory = False.
         """
         export_panda_results_pd = pd.DataFrame(
             self.export_panda_results, columns=["tf", "gene", "motif", "force"]
