@@ -1,7 +1,7 @@
 #' Run python implementation of LIONESS
 #'
 #' \strong{LIONESS}(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks.
-#'  \href{https://arxiv.org/abs/1505.06440}{[(LIONESS arxiv paper)])}.
+#'  \href{https://pubmed.ncbi.nlm.nih.gov/30981959/}{[(LIONESS publication)])}.
 #'
 #' @param expr_file Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).
 #' @param motif_file An optional character string indicating the file path of a prior transcription factor binding motifs dataset.
@@ -46,13 +46,17 @@
 lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double", save_tmp=TRUE, modeProcess="union", remove_missing=FALSE, start_sample=1, end_sample="None", save_single_network=FALSE, save_dir="lioness_output", save_fmt='npy'){
 
   if(missing(expr_file)){
-    stop("Please provide the gene expression value with option e, e.g. e=\"expression.txt\"") }
-  else{ expr.str <- paste("\'", expr_file, "\'", sep = '') }
+    stop("Please provide the gene expression value with option e, e.g. e=\"expression.txt\"") 
+  }else{ 
+    expr.str <- paste("\'", expr_file, "\'", sep = '') 
+  }
   
   if(is.null(motif_file)){
     motif.str <- 'None'
-    message("Prior motif network is not provided, analysis continues with Pearson correlation matrix.") }
-  else{ motif.str <- paste("\'", motif_file,"\'", sep = '') }
+    message("Prior motif network is not provided, analysis continues with Pearson correlation matrix.") 
+  }else{ 
+    motif.str <- paste("\'", motif_file,"\'", sep = '') 
+  }
   
   if(is.null(ppi_file)){
     ppi.str <- 'None'
@@ -112,7 +116,7 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
    panda_net <- py$panda_network
    
    # re-assign data type of cloumn.
-   panda_net$tf <- as.character(panda_net$tf)
+   panda_net$tf   <- as.character(panda_net$tf)
    panda_net$gene <- as.character(panda_net$gene)
    
    # rename first two columns
@@ -128,8 +132,10 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
    # create an instance named "lioness_obj" of Lioness Class.
    # when save_single_network = TRUE
    if(save_single_network==TRUE){
-   py_run_string(paste("lioness_obj = Lioness(panda_obj", " , " , "computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample, " , " ,'save_single_network= True', " , ", "save_dir='", save_dir, "' , " , "save_fmt='" , save_fmt, "' )",sep = "" ))
-   } else {py_run_string(paste("lioness_obj = Lioness(panda_obj", " , " , "computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample,  ")",sep = "" ))}
+     py_run_string(paste("lioness_obj = Lioness(panda_obj", " , " , "computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample, " , ", "save_dir='", save_dir, "' , " , "save_fmt='" , save_fmt, "' )",sep = "" ))
+   }else{
+     py_run_string(paste("lioness_obj = Lioness(panda_obj", " , " , "computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample,  ")",sep = "" ))
+  }
    
    # retrieve the "total_lioness_network" attribute of instance "lionesss_obj"
    py_run_string("lioness_network = lioness_obj.export_lioness_results",local = FALSE, convert = TRUE)

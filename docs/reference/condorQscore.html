@@ -73,7 +73,7 @@ contributed by each node to its community's modularity" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.16</span>
       </span>
     </div>
 
@@ -133,6 +133,9 @@ contributed by each node to its community's modularity" />
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -183,16 +186,20 @@ this includes two data.frames, <code>blue.qscore</code> and <code>red.qscore</co
 which have the qscore for each red and blue node.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>4</span><span class='op'>)</span>;
+    <pre class="examples"><div class='input'><span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>4</span><span class='op'>)</span>;
 <span class='va'>b</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>;
 <span class='va'>reds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Alice"</span>,<span class='st'>"Sue"</span>,<span class='st'>"Janine"</span>,<span class='st'>"Mary"</span><span class='op'>)</span>
 <span class='va'>blues</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Bob"</span>,<span class='st'>"John"</span>,<span class='st'>"Ed"</span>,<span class='st'>"Hank"</span><span class='op'>)</span>
 <span class='va'>elist</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>red<span class='op'>=</span><span class='va'>reds</span><span class='op'>[</span><span class='va'>r</span><span class='op'>]</span>,blue<span class='op'>=</span><span class='va'>blues</span><span class='op'>[</span><span class='va'>b</span><span class='op'>]</span><span class='op'>)</span>
 <span class='va'>condor.object</span> <span class='op'>&lt;-</span> <span class='fu'><a href='createCondorObject.html'>createCondorObject</a></span><span class='op'>(</span><span class='va'>elist</span><span class='op'>)</span>
 <span class='va'>condor.object</span> <span class='op'>&lt;-</span> <span class='fu'><a href='condorCluster.html'>condorCluster</a></span><span class='op'>(</span><span class='va'>condor.object</span><span class='op'>)</span>
-<span class='va'>condor.object</span> <span class='op'>&lt;-</span> <span class='fu'>condorQscore</span><span class='op'>(</span><span class='va'>condor.object</span><span class='op'>)</span>   
+</div><div class='output co'>#&gt; [1] "modularity of projected graph 0"
+#&gt; [1] "Q = 0"
+#&gt; [1] "Q = 0.198347107438017"
+#&gt; [1] "Q = 0.231404958677686"
+#&gt; [1] "Q = 0.231404958677686"</div><div class='input'><span class='va'>condor.object</span> <span class='op'>&lt;-</span> <span class='fu'>condorQscore</span><span class='op'>(</span><span class='va'>condor.object</span><span class='op'>)</span>   
 
-</pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -204,7 +211,7 @@ which have the qscore for each red and blue node.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Deborah Weighill.</p>
+  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Des Weighill.</p>
 </div>
 
 <div class="pkgdown">

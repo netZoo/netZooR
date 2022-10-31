@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.16</span>
       </span>
     </div>
 
@@ -91,6 +91,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -115,7 +118,7 @@
       <h1 data-toc-skip>YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</h1>
                         <h4 class="author">Joseph N. Paulson &amp; John Quackenbush</h4>
             
-            <h4 class="date">2022-06-16</h4>
+            <h4 class="date">2022-08-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/netZoo/netZooR/blob/master/vignettes/yarn.Rmd"><code>vignettes/yarn.Rmd</code></a></small>
       <div class="hidden name"><code>yarn.Rmd</code></div>
@@ -176,13 +179,13 @@
 <li>First always remember to have the library loaded.</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/netZoo/netZooR">netZooR</a></span><span class="op">)</span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li>Download the GTEx gene count data as an ExpressionSet object or load the sample skin dataset.</li>
 </ol>
 <p>For computational reasons we load the sample skin data instead of having the user download the</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/netZoo/netZooR">netZooR</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"skin.rdata"</span><span class="op">)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Check mis-annotation of gender or other phenotypes using group-specific genes</li>
@@ -270,9 +273,9 @@
 ## [8] base     
 ## 
 ## other attached packages:
-## [1] RColorBrewer_1.1-2  netZooR_1.0.4       yarn_1.18.0        
+## [1] RColorBrewer_1.1-2  netZooR_1.1.16      yarn_1.18.0        
 ## [4] pandaR_1.19.5       Biobase_2.52.0      BiocGenerics_0.38.0
-## [7] reticulate_1.22     igraph_1.3.2       
+## [7] reticulate_1.22     igraph_1.3.4       
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] utf8_1.2.2                  proto_1.0.0                
@@ -383,7 +386,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Deborah Weighill.</p>
+  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Des Weighill.</p>
 </div>
 
 <div class="pkgdown">
