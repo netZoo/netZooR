@@ -1,5 +1,10 @@
 # Function to implement DRAGON: https://arxiv.org/abs/2104.01690
 
+# to add to dependencies:
+
+library(matrixcalc)
+
+
 # helper functions as in the netzooPy impl
 # def Scale(X):
 #   X_temp = X
@@ -39,11 +44,11 @@ scale = function(x,bias=F)
 
 VarS = function(x)
 { 
-  x = matrix(c(1,2,3,1,5,12),nrow=3,byrow=T)
   # x is an n x p matrix of data
   # xbar = np.mean(X, 0)
   # n = X.shape[0]
   n = nrow(x)
+  p = ncol(x)
   # x_minus_xbar = X - xbar
   x_minus_xbar = apply(x,2,function(x){x-mean(x)}) # center
   # sanity check
@@ -86,33 +91,54 @@ VarS = function(x)
 #   n = X.shape[0]
 # #x_minus_xbar = X - xbar
 # wbar = np.cov(X.T, bias=True) #x_minus_xbar.T@x_minus_xbar/n
-# ES2 = wbar**2*n**2/(n-1)**2
+# ES2 = wbar**2*n**2/(n-1)**2 #
 # return(ES2)
 
 EsqS = function(x)
 {
-  # following E[x^2] = Var(x) - E[x]^2
-  return(VarS(x) - mean(x)^2)
+  n = nrow(x)
+  wbar = (n-1)/n*cov(x)
+  ES2 = wbar^2*n^2/((n-1)^2)
+  return(ES2)
+  # this code matches with the python output
 }
 
-#     def risk(lam):
-#R = const + ((1.-lam[0]**2)*T1_1 + (1.-lam[1]**2)*T1_2
-#             + (1.-lam[0]**2)**2*T2_1 + (1.-lam[1]**2)**2*T2_2
-#             + (1.-lam[0]**2)*(1.-lam[1]**2)*T3 + lam[0]*lam[1]*T4)     #reparametrize lamx = 1-lamx**2 for better optimization
+# def risk_orig(lam):
+#   R = const + (lam[0]*T1_1 + lam[1]*T1_2
+#                + lam[0]**2*T2_1 + lam[1]**2*T2_2
+#                + lam[0]*lam[1]*T3 + np.sqrt(1-lam[0])*np.sqrt(1-lam[1])*T4)     #reparametrize lamx = 1-lamx**2 for better optimization
 # return(R)
 
-risk = function(lambda1, lambda2, t11, t12, t21, t22, t3, t4)
+risk_orig = function(lambda1, lambda2, t11, t12, t21, t22, t3, t4)
 {
+  print("[dragonR] risk_orig(): This is not the reparameterized version.")
+  
   return(lambda1*t11 + lambda2*t12 + 
            lambda1^2*t21 + lambda2^2*t22 + 
            lambda1*lambda2*t3 + 
            sqrt(1-lambda1)*sqrt(1-lambda2)*t4)
 }
 
+# def risk(lam):
+#   R = const + ((1.-lam[0]**2)*T1_1 + (1.-lam[1]**2)*T1_2
+#                + (1.-lam[0]**2)**2*T2_1 + (1.-lam[1]**2)**2*T2_2
+#                + (1.-lam[0]**2)*(1.-lam[1]**2)*T3 + lam[0]*lam[1]*T4)     #reparametrize lamx = 1-lamx**2 for better optimization
+# return(R)
+
+# reparameterize gamma1 = (1-lambda1^2), gamma2 = (1-lambda2^2)
+risk = function(gamma1, gamma2, t11, t12, t21, t22, t3, t4)
+{
+  R = (1-gamma1^2)*t11 + (1-gamma2^2)*t12 +
+    (1-gamma1^2)^2*t21 + (1-gamma2^2)^2*t22 +
+    (1-gamma1^2)*(1-gamma2^2)*t3 + gamma1*gamma2*t4
+  return(R)
+}
+
 # def estimate_penalty_parameters_dragon(X1, X2):
 estimatePenaltyParameters = function(X1,X2)
 {
-  
+  X1 = matrix(c(1,2,3,1,5,12),nrow=3,byrow=T)
+  X2 = matrix(c(9,7,8),nrow=3,byrow=T)
   # X1 is omics matrix 1, dimensions n x p1 
   # X2 is omics matrix 2, dimensions n x p2
   # The matrices should have the same ordering by samples
@@ -130,41 +156,63 @@ estimatePenaltyParameters = function(X1,X2)
   # varS = VarS(X)
   # eSqs = EsqS(X)
   
-  varX = VarS(X)
+  varS = VarS(X)
   esqS = EsqS(X)
   
   # IDs = np.cumsum([p1,p2])
-  IDs = cumsum(c(1:p1,1:p2))
+  IDs = cumsum(c(p1,p2))
   
   # varS1 = varS[0:IDs[0],0:IDs[0]]
+  varS1 = varS[1:IDs[1],1:IDs[1]]
   # varS12 = varS[0:IDs[0],IDs[0]:IDs[1]]
+  varS12 = varS[1:IDs[1],(IDs[1]+1):IDs[2]]
   # varS2 = varS[IDs[0]:IDs[1],IDs[0]:IDs[1]]
-  # 
+  varS2 = varS[(IDs[1]+1):IDs[2],(IDs[1]+1):IDs[2]]
   # eSqs1 = eSqs[0:IDs[0],0:IDs[0]]
+  esqS1 = esqS[1:IDs[1],1:IDs[1]]
   # eSqs12 = eSqs[0:IDs[0],IDs[0]:IDs[1]]
+  esqS12 = esqS[1:IDs[1],(IDs[1]+1):IDs[2]]
   # eSqs2 = eSqs[IDs[0]:IDs[1],IDs[0]:IDs[1]]
+  esqS2 =  esqS[(IDs[1]+1):IDs[2],(IDs[1]+1):IDs[2]]
   # 
   # const = (np.sum(varS1) + np.sum(varS2) - 2.*np.sum(varS12)
   #          + 4.*np.sum(eSqs12))
+  print("I did not include the constant because I think we don't need it for the optimization")
+  
   # T1_1 = -2.*(np.sum(varS1) - np.trace(varS1) + np.sum(eSqs12))
+  T1_1 = -2*sum(varS1) - matrix.trace(as.matrix(varS1)) - sum(esqS12)
   # T1_2 = -2.*(np.sum(varS2) - np.trace(varS2) + np.sum(eSqs12))
+  T1_2 = -2*sum(varS2) - matrix.trace(as.matrix(varS2))
   # T2_1 = np.sum(eSqs1) - np.trace(eSqs1)
+  T2_1 = sum(esqS1) - matrix.trace(as.matrix(esqS1))
   # T2_2 = np.sum(eSqs2) - np.trace(eSqs2)
+  T2_2 = sum(esqS2) - matrix.trace(as.matrix(esqS2))
   # T3 = 2.*np.sum(eSqs12)
+  T3 = 2*sum(esqS12)
   # T4 = 4.*(np.sum(varS12)-np.sum(eSqs12))
-  # 
-  # def risk(lam):
-  #   R = const + ((1.-lam[0]**2)*T1_1 + (1.-lam[1]**2)*T1_2
-  #                + (1.-lam[0]**2)**2*T2_1 + (1.-lam[1]**2)**2*T2_2
-  #                + (1.-lam[0]**2)*(1.-lam[1]**2)*T3 + lam[0]*lam[1]*T4)     #reparametrize lamx = 1-lamx**2 for better optimization
-  # return(R)
-  # 
+  T4 = 4*sum(varS12)-sum(esqS12)
+  
   # x = np.arange(0., 1.01, 0.01)
+  x = seq(0,1.01,by=0.01)
+  meshgrid = matrix(nrow = length(x),ncol=length(x))
+  for(i in 1:length(x))
+  {
+    for(j in 1:length(x))
+      meshgrid[i,j] = risk(gamma1=x[i],
+                           gamma2=x[j],
+                           t11=T1_1,
+                           t12=T1_2,
+                           t21=T2_1,
+                           t22=T2_2,
+                           t3=T3,
+                           t4=T4)
+  }
   # lamgrid = meshgrid(x, x)
   # risk_grid = risk(lamgrid)
   # indices = np.unravel_index(np.argmin(risk_grid.T, axis=None), risk_grid.shape)
   # lams = [x[indices[0]],x[indices[1]]]
   # 
+  print("I think round 1 is seeding nad then we use optimization")
   # res = minimize(risk, lams, method='L-BFGS-B',#'TNC',#'SLSQP',
   #                tol=1e-12,
   #                bounds = [[0.,1.],[0.,1.]])
