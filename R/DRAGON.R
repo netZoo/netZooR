@@ -126,11 +126,14 @@ risk_orig = function(lambda1, lambda2, t11, t12, t21, t22, t3, t4)
 # return(R)
 
 # reparameterize gamma1 = (1-lambda1^2), gamma2 = (1-lambda2^2)
-risk = function(gamma1, gamma2, t11, t12, t21, t22, t3, t4)
+risk = function(gamma, const, t11, t12, t21, t22, t3, t4)
 {
-  R = (1-gamma1^2)*t11 + (1-gamma2^2)*t12 +
+  gamma1 = gamma[1]
+  gamma2 = gamma[2]
+  
+  R = const + (1-gamma1^2)*t11 + (1-gamma2^2)*t12 +
     (1-gamma1^2)^2*t21 + (1-gamma2^2)^2*t22 +
-    (1-gamma1^2)*(1-gamma2^2)*t3 + gamma1*gamma2*t4
+     (1-gamma1^2)*(1-gamma2^2)*t3 + gamma1*gamma2*t4
   return(R)
 }
 
@@ -180,9 +183,9 @@ estimatePenaltyParameters = function(X1,X2)
   print("I did not include the constant because I think we don't need it for the optimization")
   
   # T1_1 = -2.*(np.sum(varS1) - np.trace(varS1) + np.sum(eSqs12))
-  T1_1 = -2*sum(varS1) - matrix.trace(as.matrix(varS1)) - sum(esqS12)
+  T1_1 = -2*(sum(varS1) - matrix.trace(as.matrix(varS1)) + sum(esqS12))
   # T1_2 = -2.*(np.sum(varS2) - np.trace(varS2) + np.sum(eSqs12))
-  T1_2 = -2*sum(varS2) - matrix.trace(as.matrix(varS2))
+  T1_2 = -2*(sum(varS2) - matrix.trace(as.matrix(varS2)) + sum(esqS12))
   # T2_1 = np.sum(eSqs1) - np.trace(eSqs1)
   T2_1 = sum(esqS1) - matrix.trace(as.matrix(esqS1))
   # T2_2 = np.sum(eSqs2) - np.trace(eSqs2)
@@ -192,14 +195,17 @@ estimatePenaltyParameters = function(X1,X2)
   # T4 = 4.*(np.sum(varS12)-np.sum(eSqs12))
   T4 = 4*sum(varS12)-sum(esqS12)
   
+  const = (sum(varS1) + sum(varS2) - 2*sum(varS12)
+           + 4*sum(esqS12))
+  
   # x = np.arange(0., 1.01, 0.01)
-  x = seq(0,1.01,by=0.01)
-  meshgrid = matrix(nrow = length(x),ncol=length(x))
+  x = seq(0,1,by=0.01)
+  riskgrid = matrix(nrow = length(x),ncol=length(x))
   for(i in 1:length(x))
   {
     for(j in 1:length(x))
-      meshgrid[i,j] = risk(gamma1=x[i],
-                           gamma2=x[j],
+      riskgrid[i,j] = risk(gamma=c(x[i],x[j]),
+                           const = const,
                            t11=T1_1,
                            t12=T1_2,
                            t21=T2_1,
@@ -207,16 +213,35 @@ estimatePenaltyParameters = function(X1,X2)
                            t3=T3,
                            t4=T4)
   }
+  
+  dim(riskgrid)
   # lamgrid = meshgrid(x, x)
   # risk_grid = risk(lamgrid)
   # indices = np.unravel_index(np.argmin(risk_grid.T, axis=None), risk_grid.shape)
   # lams = [x[indices[0]],x[indices[1]]]
   # 
-  print("I think round 1 is seeding nad then we use optimization")
+  lams = x[arrayInd(which(riskgrid == min(riskgrid)),.dim=c(101,101))]
+  print("round 1 is seeding and then we use optimization")
+  lams
+  
   # res = minimize(risk, lams, method='L-BFGS-B',#'TNC',#'SLSQP',
   #                tol=1e-12,
   #                bounds = [[0.,1.],[0.,1.]])
-  # 
+  
+  # python result:  array([0.79372539, 0.        ])
+  res = optim(lams,risk, 
+              const=const,
+              t11=T1_1,
+              t12=T1_2,
+              t21=T2_1,
+              t22=T2_2,
+              t3=T3,
+              t4=T4,
+              method="L-BFGS-B",
+              lower=c(0,0),
+              upper=c(1,1),
+              control = list(pgtol = 1e-12))
+  
   # penalty_parameters = (1.-res.x[0]**2), (1.-res.x[1]**2)
   # 
   # def risk_orig(lam):
