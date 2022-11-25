@@ -133,6 +133,14 @@ BiocManager::install("netZooR")
 
 For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/).
 
+#### Using bioconda
+
+netZooR is also available through [Bioconda](https://bioconda.github.io/recipes/bioconductor-netzoor/README.html#package-bioconductor-netzoor)
+
+```bash
+conda install bioconductor-netzoor
+```
+
 ### Python binding
 
 This package will invoke Python programming language in R environment through [reticulate](https://rstudio.github.io/reticulate/) package, by default setting there is no additional configuration needed.
