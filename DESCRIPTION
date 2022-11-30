@@ -64,7 +64,8 @@ Imports: RCy3,
    	 tidyr,
    	 methods,
          dplyr,
-         graphics
+         graphics,
+	 matrixcalc
 License: GPL-3
 Encoding: UTF-8
 LazyData: false
