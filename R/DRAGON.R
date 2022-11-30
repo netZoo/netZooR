@@ -133,7 +133,7 @@ risk = function(gamma, const, t11, t12, t21, t22, t3, t4)
   
   R = const + (1-gamma1^2)*t11 + (1-gamma2^2)*t12 +
     (1-gamma1^2)^2*t21 + (1-gamma2^2)^2*t22 +
-     (1-gamma1^2)*(1-gamma2^2)*t3 + gamma1*gamma2*t4
+     (1-gamma1^2)*(1-gamma2^2)*t3 + gamma1*gamma2*t4 
   return(R)
 }
 
@@ -242,6 +242,7 @@ estimatePenaltyParameters = function(X1,X2)
               upper=c(1,1),
               control = list(pgtol = 1e-12))
   
+  return(res)
   # penalty_parameters = (1.-res.x[0]**2), (1.-res.x[1]**2)
   # 
   # def risk_orig(lam):
@@ -253,6 +254,62 @@ estimatePenaltyParameters = function(X1,X2)
   # return(penalty_parameters, risk_grid_orig)
   # 
 }
+
+get_shrunken_covariance_dragon = function(X1,X2, lambdas)
+{
+  n = nrow(X1)
+  p1 = ncol(X1)
+  p2 = ncol(X2)
+  p = p1 + p2
+  X = cbind.data.frame(X1,X2)
+  S = cov(X) # the R implementation of cov() uses the unbiased (1/(n-1)); we need the unbiased version for the lemma of Ledoit and Wolf
+  
+  # target matrix
+  Targ = diag(diag(S))
+  Sigma = matrix(nrow=p, ncol=p)
+  
+  # Sigma = np.zeros((p,p))
+  # IDs = np.cumsum([0,p1,p2])
+  IDs = c(cumsum(c(p1,p2)))
+  
+  idx1 = 1:IDs[1]
+  idx2 = (IDs[1]+1):IDs[2]
+  
+  # Fill in Sigma_11
+  Sigma[idx1,idx1] = (1-lambdas[1])*S[idx1,idx1] + lambdas[1]*Targ[idx1,idx1]
+  
+  # Fill in Sigma_22
+  Sigma[idx2,idx2] = (1-lambdas[2])*S[idx2,idx2] + lambdas[2]*Targ[idx2,idx2]
+  
+  # Fill in Sigma_12 
+  Sigma[idx1,idx2] = sqrt((1-lambdas[1])*(1-lambdas[2]))*S[idx1,idx2] + sqrt(lambdas[1]*lambdas[2])*Targ[idx1,idx2]
+  
+  # Fill in Sigma_21
+  Sigma[idx2,idx1] = sqrt((1-lambdas[1])*(1-lambdas[2]))*S[idx2,idx1] + sqrt(lambdas[1]*lambdas[2])*Targ[idx2,idx1]
+  
+  return(Sigma)
+}
+
+get_partial_correlation_from_precision = function(Theta)
+{
+  
+}
+  
+get_precision_matrix_dragon = function(X1, X2, lambdas)
+{
+  
+}
+
+get_partial_correlation_dragon = function(X1,X2,lambdas)
+{
+  
+}
+
+estimate_kappa = function(n, p, lambda0, seed)
+{
+  
+}
+  
 
 dragon = function()
 {

@@ -1,4 +1,5 @@
-# test dragon
+# unit-tests for DRAGON
+
 context("test DRAGON helper functions")
 
 test_that("[DRAGON] scale() function yields expected results", {
@@ -42,12 +43,29 @@ test_that("[DRAGON] risk() function calculates correct risk",{
   T22 = 6
   T3 = 7
   T4 = 8
+  const = 1
+  
   # manual calc
-  R_hand = (1-Gamma1^2)*T11 + (1-Gamma2^2)*T12 + 
+  R_hand = 1+(1-Gamma1^2)*T11 + (1-Gamma2^2)*T12 + 
     (1-Gamma1^2)^2*T21 +(1-Gamma2^2)^2*T22 +
     (1-Gamma1^2)*(1-Gamma2^2)*T3 + 
     Gamma1*Gamma2*T4
-  R = risk(Gamma1,Gamma2,T11,T12,T21,T22,T3,T4)
+  R = risk(c(Gamma1,Gamma2),const,T11,T12,T21,T22,T3,T4)
   expect_equal(R,R_hand, tolerance = 1e-15)
 }
 )
+
+test_that("[DRAGON] get_shrunken_covariance_dragon() function returns the right values",{
+  # confirm that matches python results  
+  myX = matrix(c(1,2,9,3,1,7,5,12,8),byrow=T,ncol=3)
+  X1 = as.matrix(myX[,1:2])
+  X2 = as.matrix(myX[,3])
+  lambdas = c(0.25,0.5)
+  res = get_shrunken_covariance_dragon(X1,X2,lambdas)
+  res_py = as.matrix(read.csv("tests/testthat/dragon-test-files/dragon_test_get_shrunken_covariance.csv",row.names=1))
+  expect_equal(as.vector(res),as.vector(res_py),tolerance = 1e-15) 
+}
+)
+
+#testing format
+#test_that(,{})
