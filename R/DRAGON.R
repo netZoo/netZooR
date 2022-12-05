@@ -290,26 +290,52 @@ get_shrunken_covariance_dragon = function(X1,X2, lambdas)
   return(Sigma)
 }
 
-get_partial_correlation_from_precision = function(Theta)
-{
-  
-}
-  
 get_precision_matrix_dragon = function(X1, X2, lambdas)
 {
-  
+   Sigma = get_shrunken_covariance_dragon(X1, X2, lambdas)
+   Theta = solve(Sigma)
+   return(Theta)
+   
+   # in the python implementation, mean is also returned. Omitting here
+  #  X = np.hstack((X1, X2))
+  #  mu = np.mean(X, axis=0)
+}
+
+get_partial_correlation_from_precision = function(Theta,selfEdges=F)
+{
+  # by default, does not return self edges (diagonal is set to zero)
+  ggm = -cov2cor(Theta)
+  if(!selfEdges)
+    ggm[diag(ggm)] = 0
+  return(ggm)
 }
 
 get_partial_correlation_dragon = function(X1,X2,lambdas)
 {
-  
+  Theta = get_precision_matrix_dragon(X1, X2, lambdas)
+  ggm = get_partial_correlation_from_precision(Theta)
+  return(ggm)
 }
 
-estimate_kappa = function(n, p, lambda0, seed)
+# The functions below are for p-value estimation on the DRAGON results
+
+# The functions logli, estimate_kappa, and estimate_p_values are for benchmarking
+# with standard GGM; omitting here
+# logli = function(X, Theta, mu)
+# estimate_kappa = function(n, p, lambda0, seed)
+# estimate_p_values(r, n, lambda0, kappa='estimate', seed=1): 
+
+# def estimate_kappa_dragon(n, p1, p2, lambdas, seed, simultaneous = False):
+estimate_kappa_dragon = function(n, p1, n2, lambdas, seed, simultaneous = F)
 {
   
 }
+
+# def estimate_p_values_dragon(r, n, p1, p2, lambdas, kappa='estimate', seed=1, simultaneous = False):
+estimate_p_values_dragon = function(r, n, p1, p2, lambdas, kappa="estimate",seed=1, simultaneous = F)
+{
   
+}
 
 dragon = function()
 {
