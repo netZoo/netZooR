@@ -325,6 +325,25 @@ get_partial_correlation_dragon = function(X1,X2,lambdas)
 # estimate_kappa = function(n, p, lambda0, seed)
 # estimate_p_values(r, n, lambda0, kappa='estimate', seed=1): 
 
+log_lik_shrunken = function(kappa, p, lambda, rhos)
+{
+  # kappa is to be optimized, so comes first in the arguments
+  # p is fixed (number of predictors)
+  # lambda is fixed (as estimated by DRAGON)
+  # rhos is fixed (observed partial correlations from the data)
+  mysum = 0
+  
+  for(i in 1:p)
+  {
+    first_term = (kappa-3)/2*log((1-lambda)^2-rhos[i]^2)
+    second_term = lbeta(1/2, (kappa-1)/2)
+    third_term = (kappa-2)*log(1-lambda)
+    mysum = mysum + first_term - second_term - third_term
+  }
+  
+  return(mysum)
+}
+                   
 # def estimate_kappa_dragon(n, p1, p2, lambdas, seed, simultaneous = False):
 estimate_kappa_dragon = function(n, p1, n2, lambdas, seed, simultaneous = F)
 {

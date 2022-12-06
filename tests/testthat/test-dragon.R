@@ -62,10 +62,23 @@ test_that("[DRAGON] get_shrunken_covariance_dragon() function returns the right 
   X2 = as.matrix(myX[,3])
   lambdas = c(0.25,0.5)
   res = get_shrunken_covariance_dragon(X1,X2,lambdas)
-  res_py = as.matrix(read.csv("dragon-test-files/dragon_test_get_shrunken_covariance.csv",row.names=1))
+  res_py = as.matrix(read.csv("./testdata/dragon-test-files/dragon_test_get_shrunken_covariance.csv",row.names=1))
   expect_equal(as.vector(res),as.vector(res_py),tolerance = 1e-15) 
 }
 )
+
+# test log likelihood function
+test_that("[DRAGON] Log likelihood function for estimation of kappa is correct",{
+  # log_lik_shrunken = function(kappa, p, lambda, rhos)
+  kappa = 10
+  p = 100
+  lambda = 0.1
+  rhos = runif(n = 100, min = -0.9, max = 0.9) # equation is valid for [-(1-lambda),(1-lambda)]
+  log_lik_shrunken(kappa = kappa, 
+                   p = p,
+                   lambda = lambda,
+                   rhos = rhos)
+})
 
 #testing format
 #test_that(,{})
