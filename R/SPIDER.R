@@ -1,204 +1,287 @@
-#' Run Python implementation PANDA in R
-#' 
-#' \strong{PANDA}(Passing Attributes between Networks for Data Assimilation) is a message-passing model 
-#' to reconstruct gene regulatory network, which integrates multiple sources of biological data-including protein-protein interaction data,
-#' gene expression data, and transcription factor binding motifs data to reconstruct genome-wide, condition-specific regulatory networks.
-#' \href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832}{[(Glass et al. 2013)])}
-#' This function is designed to run the a derived PANDA implementation in Python Library "netZooPy" \href{https://github.com/netZoo/netZooPy}{netZooPy}.
+#' Seeding PANDA Interactions to Derive Epigenetic Regulation
 #'
-#' @param expr_file Character string indicating the file path of expression values file, with each gene(in rows) across samples(in columns).
-#' @param motif_file An optional character string indicating the file path of a prior transcription factor binding motifs dataset.
-#'          When this argument is not provided, analysis will continue with Pearson correlation matrix.
-#' @param ppi_file An optional character string indicating the file path of protein-protein interaction edge dataset.
-#'          Also, this can be generated with a list of proteins of interest by \code{\link{sourcePPI}}.
-#'          
-#' @param computing 'cpu' uses Central Processing Unit (CPU) to run PANDA; 'gpu' use the Graphical Processing Unit (GPU) to run PANDA. The default value is "cpu".
-#' 
-#' @param precision 'double' computes the regulatory network in double precision (15 decimal digits); 'single' computes the regulatory network in single precision (7 decimal digits) which is fastaer, requires half the memory but less accurate. The default value is 'double'. 
-#' @param save_memory 'TRUE' removes temporary results from memory. The result network is weighted adjacency matrix of size (nTFs, nGenes); 'FALSE' keeps the temporary files in memory. The result network has 4 columns in the form gene - TF - weight in motif prior - PANDA edge. PANDA indegree/outdegree of panda network, only if save_memory = FALSE. The default value is 'FALSE'.
-#' @param save_tmp 'TRUE' saves middle data like expression matrix and normalized networks; 'FALSE' deletes the middle data. The default value is 'TURE'.
-#' @param keep_expression_matrix 'TRUE' keeps the input expression matrix as an attribute in the result Panda object.'FALSE' deletes the expression matrix attribute in the Panda object. The default value is 'FALSE'.
-#' @param modeProcess 'legacy' refers to the processing mode in netZooPy<=0.5, 'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros; 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes. Default values is 'union'.
-#' @param remove_missing Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is 'FALSE'.
-#' 
-#' @return When save_memory=FALSE(default), this function will return a list of three items: 
-#'          Use \code{$panda} to access the standard output of PANDA as data frame, which consists of four columns: 
-#'          "TF", "Gene", "Motif" using 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".
-#' 
-#'          Use \code{$indegree} to access the indegree of PANDA network as data frame, which consists of two columns: "Gene", "Score".
-#' 
-#'          Use \code{$outdegree} to access the outdegree of PANDA network as data frame, which consists of two columns: "TF", "Score".
-#'          
-#'          When save_memory=TRUE, this function will return a weigheted adjacency matirx of size (nTFs, nGenes), use \code{$WAMpanda} to access.
-#' 
-#' @examples 
-
-#' # take the treated TB dataset as example here.
-#' # refer to the datasets files path in inst/extdat
-#' 
-#' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt", 
-#' package = "netZooR", mustWork = TRUE)
-#' treated_expression_file_path <- system.file("extdata", "expr4_matched.txt",
-#'  package = "netZooR", mustWork = TRUE)
-#' motif_file_path <- system.file("extdata", "chip_matched.txt", package = "netZooR", mustWork = TRUE)
-#' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
-#' 
-#' 
-#' # Run PANDA for treated and control network
-#' \donttest{
-#' treated_all_panda_result <- pandaPy(expr_file = treated_expression_file_path, 
-#' motif_file = motif_file_path, ppi_file = ppi_file_path, 
-#' modeProcess="legacy", remove_missing = TRUE )
-#' 
-#' # access PANDA regulatory network
-#' treated_net <- treated_all_panda_result$panda
-#' 
-#' # access PANDA regulatory indegree network.
-#' indegree_net <- treated_all_panda_result$indegree
-#' 
-#' # access PANDA regulatory outdegree networks
-#' outdegree_net <- treated_all_panda_result$outdegree
-#' }
-#' 
-#' @import reticulate
+#' This function runs the SPIDER algorithm
+#'
+#' @param motif A motif dataset, a data.frame, matrix or exprSet containing 3 columns.
+#' Each row describes an motif associated with a transcription factor (column 1) a
+#' gene (column 2) and a score (column 3) for the motif.
+#' @param expr An expression dataset, as a genes (rows) by samples (columns) data.frame
+#' @param ppi A Protein-Protein interaction dataset, a data.frame containing 3 columns.
+#' Each row describes a protein-protein interaction between transcription factor 1(column 1),
+#' transcription factor 2 (column 2) and a score (column 3) for the interaction.
+#' @param alpha value to be used for update variable, alpha (default=0.1)
+#' @param hamming value at which to terminate the process based on hamming distance (default 10^-3)
+#' @param iter sets the maximum number of iterations SPIDER can run before exiting.
+#' @param progress Boolean to indicate printing of output for algorithm progress.
+#' @param output a vector containing which networks to return.  Options include "regulatory",
+#' "coregulatory", "cooperative".
+#' @param zScale Boolean to indicate use of z-scores in output.  False will use [0,1] scale.
+#' @param randomize method by which to randomize gene expression matrix.  Default "None".  Must
+#' be one of "None", "within.gene", "by.genes".  "within.gene" randomization scrambles each row
+#' of the gene expression matrix, "by.gene" scrambles gene labels.
+#' @param cor.method Correlation method, default is "pearson".
+#' @param scale.by.present Boolean to indicate scaling of correlations by percentage of positive samples.
+#' @param remove.missing.ppi Boolean to indicate whether TFs in the PPI but not in the motif data should be
+#' removed. Only when mode=='legacy'.
+#' @param remove.missing.motif Boolean to indicate whether genes targeted in the motif data but not the
+#' expression data should be removed. Only when mode=='legacy'.
+#' @param remove.missing.genes Boolean to indicate whether genes in the expression data but lacking
+#' information from the motif prior should be removed. Only when mode=='legacy'.
+#' @param edgelist Boolean to indicate if edge lists instead of matrices should be returned. 
+#' @param mode The data alignment mode. The mode 'union' takes the union of the genes in the expression matrix and the motif
+#' and the union of TFs in the ppi and motif and fills the matrics with zeros for nonintersecting TFs and gens, 'intersection' 
+#' takes the intersection of genes and TFs and removes nonintersecting sets, 'legacy' is the old behavior with version 1.19.3.
+#' #' Parameters remove.missing.ppi, remove.missingmotif, remove.missing.genes work only with mode=='legacy'.
+#' @keywords keywords
+#' @importFrom matrixStats rowSds
+#' @importFrom matrixStats colSds
+#' @importFrom Biobase assayData
+#' @importFrom reshape melt.array
 #' @export
-#'
-
-
-pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double",save_memory=FALSE, save_tmp=TRUE, keep_expression_matrix=FALSE, modeProcess="union", remove_missing=FALSE, with_header=FALSE){
+#' @return An object of class "panda" containing matrices describing networks achieved by convergence
+#' with SPIDER algorithm.\cr
+#' "regNet" is the regulatory network\cr
+#' "coregNet" is the coregulatory network\cr
+#' "coopNet" is the cooperative network
+#' @examples
+#' data(pandaToyData)
+#' spiderRes <- spider(pandaToyData$motif,
+#'            pandaToyData$expression,pandaToyData$ppi,hamming=.1,progress=TRUE)
+#' @references
+#' Sonawane, Abhijeet Rajendra, et al. "Constructing gene regulatory networks using epigenetic data." npj Systems Biology and Applications 7.1 (2021): 1-13.
+spider <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
+                  iter=NA,output=c('regulatory','coexpression','cooperative'),
+                  zScale=TRUE,progress=FALSE,randomize=c("None", "within.gene", "by.gene"),cor.method="pearson",
+                  scale.by.present=FALSE,edgelist=FALSE,remove.missing.ppi=FALSE,
+                  remove.missing.motif=FALSE,remove.missing.genes=FALSE,mode="union"){
   
-  if(missing(expr_file)){
-    stop("Please provide the path of gene expression data file to 'expr_file' variable") }
-  else{ expr.str <- paste("\'", expr_file, "\'", sep = '') }
+  randomize <- match.arg(randomize)  
+  if(progress)
+    print('Initializing and validating')
   
-  if(is.null(motif_file)){
-    motif.str <- 'None'
-    message("The prior motif network is not provided, so analysis continues with Pearson correlation matrix and gene coexpression mastrix is returned as a result network") 
-  } else{ motif.str <- paste("\'", motif_file,"\'", sep = '') }
+  if(class(expr)=="ExpressionSet")
+    expr <- assayData(expr)[["exprs"]]
   
-  if(is.null(ppi_file)){
-    ppi.str <- 'None'
-    message("No protein-protein interaction network provided.")
-  } else{ ppi.str <- paste("\'", ppi_file, "\'", sep = '') }
-  
-  # computing variable
-  if(computing=="gpu"){
-    computing.str <- "computing='gpu'"
-  } else{ computing.str <- "computing='cpu'"}
-  
-  # precision variable
-  if(precision == "single" ){
-    precision.str <- "precision='single'"
-  } else{ precision.str <- "precision='double'"}
-  
-  # save_memory variable
-  if(save_memory==TRUE){
-    savememory.str <- "save_memory= True"
-  } else{ savememory.str <- "save_memory=False" }
-  
-  # save_tmp variable
-  if(save_tmp==FALSE){
-    savetmp.str <- "save_tmp= False"
-  } else{ savetmp.str <- "save_tmp=True" }
-  
-  # keep_expression_matrix variable
-  if(keep_expression_matrix==TRUE){
-    keepexpression.str <- "keep_expression_matrix=True"
-  } else{ keepexpression.str <- "keep_expression_matrix=False" }
-  
-  # with header option
-  if(with_header==FALSE){
-    withheader.str <- "with_header=False"
-  }else if (with_header==TRUE){
-    withheader.str <- "with_header=True"   
-  }
-  
-  # when pre-processing mode is legacy
-  if(modeProcess == "legacy"){
-    
-    if(remove_missing == TRUE){
-      message("Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes")
-      mode.str <- "modeProcess ='legacy', remove_missing = True"  
-    } else{ message("Use the legacy mode (netZooPy version <= 0.5) to pre-process the input dataset and keep all the unmatched TFs or Genes")
-      mode.str <- "modeProcess ='legacy', remove_missing = False"}
-  }
-  
-  # when pre-processing mode is union
-  else if(modeProcess == "union"){
-    mode.str <- "modeProcess ='union'"
-  }
-  
-  else if(modeProcess == "intersection"){
-    mode.str <- "modeProcess ='intersection'"
-  }
-  
-  # source the pypanda from github raw website.
-  pandapath <- system.file("extdata", "panda.py", package = "netZooR", mustWork = TRUE)
-  reticulate::source_python(pandapath,convert = TRUE)
-  
-  # invoke Python script to create a Panda object
-  obj.str <-  paste("panda_obj=Panda(", expr.str, ",", motif.str,",", ppi.str, ",", 
-                    computing.str, ",", precision.str, ",", savememory.str, ",", savetmp.str, "," , 
-                    keepexpression.str, ",",  mode.str, "," , withheader.str, ")", sep ='')
-  
-  # run Python code
-  py_run_string(obj.str)
-  # run PAMDA
-  if(save_memory == FALSE){
-    
-    py_run_string("panda_network=panda_obj.export_panda_results",local = FALSE, convert = TRUE)
-    # convert python object to R vector
-    panda_net <- py$panda_network
-    
-    # re-assign data type
-    panda_net$tf <- as.character(panda_net$tf)
-    panda_net$gene <- as.character(panda_net$gene)
-    if("motif" %in% names(panda_net)){
-      panda_net$motif <- as.numeric(panda_net$motif)
+  if (is.null(expr)){
+    # Use only the motif data here for the gene list
+    num.conditions <- 0
+    if (randomize!="None"){
+      warning("Randomization ignored because gene expression is not used.")
+      randomize <- "None"
     }
-    panda_net$force <- as.numeric(panda_net$force)
-    if("motif" %in% names(panda_net)){
-      # adjust column order
-      panda_net <- panda_net[,c("tf","gene","motif","force")]
-      # rename the PANDA output colnames
-      colnames(panda_net) <- c("TF","Gene","Motif","Score")
-    }else{
-      # adjust column order
-      panda_net <- panda_net[,c("tf","gene","force")]
-      # rename the PANDA output colnames
-      colnames(panda_net) <- c("TF","Gene","Score")
+  } else {
+    if(mode=='legacy'){
+      if(remove.missing.genes){
+        # remove genes from expression data that are not in the motif data
+        n <- nrow(expr)
+        expr <- expr[which(rownames(expr)%in%motif[,2]),]
+        message(sprintf("%s genes removed that were not present in motif", n-nrow(expr)))
+      }
+      if(remove.missing.motif){
+        # remove genes from motif data that are not in the expression data
+        n <- nrow(motif)
+        motif <- motif[which(motif[,2]%in%rownames(expr)),]
+        message(sprintf("%s motif edges removed that targeted genes missing in expression data", n-nrow(motif)))
+      }
+      # Use the motif data AND the expr data (if provided) for the gene list
+      # Keep everything sorted alphabetically
+      expr <- expr[order(rownames(expr)),]
+    }else if(mode=='union'){
+      gene.names=unique(union(rownames(expr),unique(motif[,2])))
+      tf.names  =unique(union(unique(ppi[,1]),unique(motif[,1])))
+      num.TFs    <- length(tf.names)
+      num.genes  <- length(gene.names)
+      # gene expression matrix
+      expr1=as.data.frame(matrix(0,num.genes,ncol(expr)))
+      rownames(expr1)=gene.names
+      expr1[which(gene.names%in%rownames(expr)),]=expr[]
+      expr=expr1
+      #PPI matrix
+      tfCoopNetwork <- matrix(0,num.TFs,num.TFs)
+      colnames(tfCoopNetwork)=tf.names
+      rownames(tfCoopNetwork)=tf.names
+      Idx1 <- match(ppi[,1], tf.names);
+      Idx2 <- match(ppi[,2], tf.names);
+      Idx <- (Idx2-1)*num.TFs+Idx1;
+      tfCoopNetwork[Idx] <- ppi[,3];
+      Idx <- (Idx1-1)*num.TFs+Idx2;
+      tfCoopNetwork[Idx] <- ppi[,3];
+      #Motif matrix
+      regulatoryNetwork=matrix(0,num.TFs,num.genes)
+      colnames(regulatoryNetwork)=gene.names
+      rownames(regulatoryNetwork)=tf.names
+      Idx1=match(motif[,1], tf.names);
+      Idx2=match(motif[,2], gene.names);
+      Idx=(Idx2-1)*num.TFs+Idx1;
+      regulatoryNetwork[Idx]=motif[,3]
+    }else if(mode=='intersection'){
+      gene.names=unique(intersect(rownames(expr),unique(motif[,2])))
+      tf.names  =unique(intersect(unique(ppi[,1]),unique(motif[,1])))
+      num.TFs    <- length(tf.names)
+      num.genes  <- length(gene.names)
+      # gene expression matrix
+      expr1=as.data.frame(matrix(0,num.genes,ncol(expr)))
+      rownames(expr1)=gene.names
+      interGeneNames=gene.names[which(gene.names%in%rownames(expr))]
+      expr1[interGeneNames,]=expr[interGeneNames,]
+      expr=expr1
+      #PPI matrix
+      tfCoopNetwork <- matrix(0,num.TFs,num.TFs)
+      colnames(tfCoopNetwork)=tf.names
+      rownames(tfCoopNetwork)=tf.names
+      Idx1 <- match(ppi[,1], tf.names);
+      Idx2 <- match(ppi[,2], tf.names);
+      Idx <- (Idx2-1)*num.TFs+Idx1;
+      indIdx=!is.na(Idx)
+      Idx=Idx[indIdx] #remove missing TFs
+      tfCoopNetwork[Idx] <- ppi[indIdx,3];
+      Idx <- (Idx1-1)*num.TFs+Idx2;
+      indIdx=!is.na(Idx)
+      Idx=Idx[indIdx] #remove missing TFs
+      tfCoopNetwork[Idx] <- ppi[indIdx,3];
+      #Motif matrix
+      regulatoryNetwork=matrix(0,num.TFs,num.genes)
+      colnames(regulatoryNetwork)=gene.names
+      rownames(regulatoryNetwork)=tf.names
+      Idx1=match(motif[,1], tf.names);
+      Idx2=match(motif[,2], gene.names);
+      Idx=(Idx2-1)*num.TFs+Idx1;
+      indIdx=!is.na(Idx)
+      Idx=Idx[indIdx] #remove missing genes
+      regulatoryNetwork[Idx]=motif[indIdx,3];          
     }
-    
-    
-    # in-degree of panda network
-    py_run_string(paste("indegree=panda_obj.return_panda_indegree()"))
-    indegree_net <- py$indegree
-    indegree_net <- as.data.frame(cbind(Target = rownames(indegree_net), Target_Score = indegree_net$force), stringsAsFactors =FALSE)
-    indegree_net$`Target_Score` <- as.numeric(indegree_net$`Target_Score`)
-    
-    # out-degree of panda netwook
-    py_run_string(paste("outdegree=panda_obj.return_panda_outdegree()"))
-    outdegree_net <- py$outdegree
-    outdegree_net <- as.data.frame(cbind(Regulator = rownames(outdegree_net), Regulator_Score = outdegree_net$force), stringsAsFactors =FALSE)
-    outdegree_net$`Regulator_Score` <- as.numeric(outdegree_net$`Regulator_Score`)
-    
-    if( length(intersect(panda_net$Gene, panda_net$TF))>0){
-      panda_net$TF <- paste('reg_', panda_net$TF, sep='')
-      panda_net$Gene <- paste('tar_', panda_net$Gene, sep='')
-      message("Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns" )
+    num.conditions <- ncol(expr)
+    if (randomize=='within.gene'){
+      expr <- t(apply(expr, 1, sample))
+      if(progress)
+        print("Randomizing by reordering each gene's expression")
+    } else if (randomize=='by.gene'){
+      rownames(expr) <- sample(rownames(expr))
+      expr           <- expr[order(rownames(expr)),]
+      if(progress)
+        print("Randomizing by reordering each gene labels")
     }
-    
-    output <- list("panda" = panda_net, "indegree" = indegree_net, "outdegree" = outdegree_net)
-    
-    
-  } else{ py_run_string("panda_network=panda_obj.panda_network",local = FALSE, convert = TRUE) 
-    panda_net <- py$panda_network
-    # weighted adjacency matrix of PANDA network 
-    output <- list("WAMpanda" = panda_net)
   }
   
-  message ("...Finish PANDA...")
-  return(output)
-}  
-
-
+  if (mode=='legacy'){
+    # Create vectors for TF names and Gene names from motif dataset
+    tf.names   <- sort(unique(motif[,1]))
+    gene.names <- sort(unique(rownames(expr)))
+    num.TFs    <- length(tf.names)
+    num.genes  <- length(gene.names)
+  }
+  
+  # Bad data checking
+  if (num.genes==0){
+    stop("Error validating data.  No matched genes.\n  Please ensure that gene names in expression data match gene names in motif data")
+  }
+  
+  if(num.conditions==0) {
+    warning('No expression data given.  SPIDER will run based on an identity co-regulation matrix')
+    geneCoreg <- diag(num.genes)
+  } else if(num.conditions<3) {
+    warning('Not enough expression conditions detected to calculate correlation. Co-regulation network will be initialized to an identity matrix.')
+    geneCoreg <- diag(num.genes)
+  } else {
+    
+    if(scale.by.present){
+      num.positive=(expr>0)%*%t((expr>0))
+      geneCoreg <- cor(t(expr), method=cor.method, use="pairwise.complete.obs")*(num.positive/num.conditions)
+    } else {
+      geneCoreg <- cor(t(expr), method=cor.method, use="pairwise.complete.obs")
+    }
+    if(progress)
+      print('Verified sufficient samples')
+  }
+  if (any(is.na(geneCoreg))){ #check for NA and replace them by zero
+    diag(geneCoreg)=1
+    geneCoreg[is.na(geneCoreg)]=0
+  }
+  
+  if (any(duplicated(motif))) {
+    warning("Duplicate edges have been found in the motif data. Weights will be summed.")
+    motif <- aggregate(motif[,3], by=list(motif[,1], motif[,2]), FUN=sum)
+  }
+  
+  # Prior Regulatory Network
+  if(mode=='legacy'){
+    Idx1=match(motif[,1], tf.names);
+    Idx2=match(motif[,2], gene.names);
+    Idx=(Idx2-1)*num.TFs+Idx1;
+    regulatoryNetwork=matrix(data=0, num.TFs, num.genes);
+    regulatoryNetwork[Idx]=motif[,3]
+    colnames(regulatoryNetwork) <- gene.names
+    rownames(regulatoryNetwork) <- tf.names
+    # PPI data
+    # If no ppi data is given, we use the identity matrix
+    tfCoopNetwork <- diag(num.TFs)
+    # Else we convert our two-column data.frame to a matrix
+    if (!is.null(ppi)){
+      if(any(duplicated(ppi))){
+        warning("Duplicate edges have been found in the PPI data. Weights will be summed.")
+        ppi <- aggregate(ppi[,3], by=list(ppi[,1], ppi[,2]), FUN=sum)
+      }
+      if(remove.missing.ppi){
+        # remove edges in the PPI data that target TFs not in the motif
+        n <- nrow(ppi)
+        ppi <- ppi[which(ppi[,1]%in%tf.names & ppi[,2]%in%tf.names),]
+        message(sprintf("%s PPI edges removed that were not present in motif", n-nrow(ppi)))
+      }
+      Idx1 <- match(ppi[,1], tf.names);
+      Idx2 <- match(ppi[,2], tf.names);
+      Idx <- (Idx2-1)*num.TFs+Idx1;
+      tfCoopNetwork[Idx] <- ppi[,3];
+      Idx <- (Idx1-1)*num.TFs+Idx2;
+      tfCoopNetwork[Idx] <- ppi[,3];
+    }
+    colnames(tfCoopNetwork) <- tf.names
+    rownames(tfCoopNetwork) <- tf.names
+  }
+  
+  ## Run SPIDER ##
+  tic=proc.time()[3]
+  
+  if(progress)
+    print('Normalizing networks...')
+  regulatoryNetwork = normalizeNetwork(regulatoryNetwork)
+  tfCoopNetwork     = normalizeNetwork(tfCoopNetwork)
+  geneCoreg         = normalizeNetwork(geneCoreg)
+  
+  if(progress)
+    print('Learning Network...')
+  
+  minusAlpha = 1-alpha
+  step=0
+  hamming_cur=1
+  if(progress)
+    print("Using tanimoto similarity")
+  while(hamming_cur>hamming){
+    if ((!is.na(iter))&&step>=iter){
+      print(paste("Reached maximum iterations, iter =",iter),sep="")
+      break
+    }
+    Responsibility=tanimoto(tfCoopNetwork, regulatoryNetwork)
+    Availability=tanimoto(regulatoryNetwork, geneCoreg)
+    RA = 0.5*(Responsibility+Availability)
+    
+    hamming_cur=sum(abs(regulatoryNetwork-RA))/(num.TFs*num.genes)
+    regulatoryNetwork=minusAlpha*regulatoryNetwork + alpha*RA
+    
+    ppi=tanimoto(regulatoryNetwork, t(regulatoryNetwork))
+    ppi=update.diagonal(ppi, num.TFs, alpha, step)
+    tfCoopNetwork=minusAlpha*tfCoopNetwork + alpha*ppi
+    
+    CoReg2=tanimoto(t(regulatoryNetwork), regulatoryNetwork)
+    CoReg2=update.diagonal(CoReg2, num.genes, alpha, step)
+    geneCoreg=minusAlpha*geneCoreg + alpha*CoReg2
+    
+    if(progress)
+      message("Iteration", step,": hamming distance =", round(hamming_cur,5))
+    step=step+1
+  }
+  
+  toc=proc.time()[3] - tic
+  if(progress)
+    message("Successfully ran SPIDER on ", num.genes, " Genes and ", num.TFs, " TFs.\nTime elapsed:", round(toc,2), "seconds.")
+  prepResult(zScale, output, regulatoryNetwork, geneCoreg, tfCoopNetwork, edgelist, motif)
+}
