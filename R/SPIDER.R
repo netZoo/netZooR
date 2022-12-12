@@ -5,6 +5,8 @@
 #' @param motif A motif dataset, a data.frame, matrix or exprSet containing 3 columns.
 #' Each row describes an motif associated with a transcription factor (column 1) a
 #' gene (column 2) and a score (column 3) for the motif.
+#' @param epifilter A binary matrix that is of the same size as motif that will be used as a mask to filter motif
+#' for open chromatin region. Motif interactions that fall in open chromatin region will be kept and the others are removed.
 #' @param expr An expression dataset, as a genes (rows) by samples (columns) data.frame
 #' @param ppi A Protein-Protein interaction dataset, a data.frame containing 3 columns.
 #' Each row describes a protein-protein interaction between transcription factor 1(column 1),
@@ -45,11 +47,11 @@
 #' "coopNet" is the cooperative network
 #' @examples
 #' data(pandaToyData)
-#' spiderRes <- spider(pandaToyData$motif,
+#' spiderRes <- spider(pandaToyData$motif, pandaToyData$epifilter
 #'            pandaToyData$expression,pandaToyData$ppi,hamming=.1,progress=TRUE)
 #' @references
 #' Sonawane, Abhijeet Rajendra, et al. "Constructing gene regulatory networks using epigenetic data." npj Systems Biology and Applications 7.1 (2021): 1-13.
-spider <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
+spider <- function(motif,expr=NULL,epifilter=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
                   iter=NA,output=c('regulatory','coexpression','cooperative'),
                   zScale=TRUE,progress=FALSE,randomize=c("None", "within.gene", "by.gene"),cor.method="pearson",
                   scale.by.present=FALSE,edgelist=FALSE,remove.missing.ppi=FALSE,
@@ -58,6 +60,10 @@ spider <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
   randomize <- match.arg(randomize)  
   if(progress)
     print('Initializing and validating')
+  
+  if(epifilter[c(1,2),] ~= motif[c(1,2),]){
+    stop('Chromatin accessibility data does not match motif data size and order.')
+  }
   
   if(class(expr)=="ExpressionSet")
     expr <- assayData(expr)[["exprs"]]
@@ -81,6 +87,7 @@ spider <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
         # remove genes from motif data that are not in the expression data
         n <- nrow(motif)
         motif <- motif[which(motif[,2]%in%rownames(expr)),]
+        epifilter <- epifilter[which(motif[,2]%in%rownames(expr)),]
         message(sprintf("%s motif edges removed that targeted genes missing in expression data", n-nrow(motif)))
       }
       # Use the motif data AND the expr data (if provided) for the gene list
@@ -113,7 +120,7 @@ spider <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
       Idx1=match(motif[,1], tf.names);
       Idx2=match(motif[,2], gene.names);
       Idx=(Idx2-1)*num.TFs+Idx1;
-      regulatoryNetwork[Idx]=motif[,3]
+      regulatoryNetwork[Idx]=motif[,3]*epifilter[,3]
     }else if(mode=='intersection'){
       gene.names=unique(intersect(rownames(expr),unique(motif[,2])))
       tf.names  =unique(intersect(unique(ppi[,1]),unique(motif[,1])))
@@ -148,7 +155,7 @@ spider <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
       Idx=(Idx2-1)*num.TFs+Idx1;
       indIdx=!is.na(Idx)
       Idx=Idx[indIdx] #remove missing genes
-      regulatoryNetwork[Idx]=motif[indIdx,3];          
+      regulatoryNetwork[Idx]=motif[indIdx,3]*epifilter[indIdx,3];          
     }
     num.conditions <- ncol(expr)
     if (randomize=='within.gene'){
