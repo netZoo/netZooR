@@ -248,6 +248,9 @@ spider <- function(motif,expr=NULL,epifilter=NULL,ppi=NULL,alpha=0.1,hamming=0.0
   ## Run SPIDER ##
   tic=proc.time()[3]
   
+  # adjusting degree distribution
+  regulatoryNetwork = degreeAdjust(regulatoryNetwork)
+  
   if(progress)
     print('Normalizing networks...')
   regulatoryNetwork = normalizeNetwork(regulatoryNetwork)
@@ -291,4 +294,15 @@ spider <- function(motif,expr=NULL,epifilter=NULL,ppi=NULL,alpha=0.1,hamming=0.0
   if(progress)
     message("Successfully ran SPIDER on ", num.genes, " Genes and ", num.TFs, " TFs.\nTime elapsed:", round(toc,2), "seconds.")
   prepResult(zScale, output, regulatoryNetwork, geneCoreg, tfCoopNetwork, edgelist, motif)
+}
+
+#' Function to adjust the degree so that the hub nodes are not penalized in z-score transformation
+#'
+#' @param A Input adjacency matrix
+degreeAdjust <- function(A){
+  k1 <- colSums(A)/dim(A,1)
+  k2 <- rowSums(A)/dim(A,2)
+  B <- (matrix(replicate(dim(A,2),k1),nrow=dim(A,1)))^2
+  B <- B + (matrix(t(replicate(dim(A,2),k2)),nrow=dim(A,1)))^2
+  A <- A * sqrt(B);
 }
