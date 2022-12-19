@@ -56,7 +56,7 @@ A data frame with columns representing each sample, rows representing the regula
 }
 \description{
 \strong{LIONESS}(Linear Interpolation to Obtain Network Estimates for Single Samples) is a method to estimate sample-specific regulatory networks.
- \href{https://arxiv.org/abs/1505.06440}{[(LIONESS arxiv paper)])}.
+ \href{https://pubmed.ncbi.nlm.nih.gov/30981959/}{[(LIONESS publication)])}.
 }
 \examples{
 
