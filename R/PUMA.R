@@ -1,15 +1,15 @@
 #' PANDA using microRNA associations
 #'
-#' This function runs the PUMA algorithm
+#' This function runs the PUMA algorithm to predict a miRNA-gene regulatory network
 #'
-#' @param motif A motif dataset, a data.frame, matrix or exprSet containing 3 columns.
-#' Each row describes an motif associated with a transcription factor (column 1) a
-#' gene (column 2) and a score (column 3) for the motif.
+#' @param motif A miRNA target dataset, a data.frame, matrix or exprSet containing 3 columns.
+#' Each row describes the association between a miRNA (column 1) its target
+#' gene (column 2) and a score (column 3) for the association from TargetScan or miRanda
 #' @param expr An expression dataset, as a genes (rows) by samples (columns) data.frame
-#' @param ppi A Protein-Protein interaction dataset, a data.frame containing 3 columns.
-#' Each row describes a protein-protein interaction between transcription factor 1(column 1),
-#' transcription factor 2 (column 2) and a score (column 3) for the interaction.
+#' @param ppi This can be set to 1) NULL which will be encoded as an identity matrix between miRNAs in PUMA for now. 
+#' Or 2) it can include a set of TF interactions, or 3) a mix of TFs and miRNAs.
 #' @param alpha value to be used for update variable, alpha (default=0.1)
+#' @param mir_file list of miRNA to filter the PPI matrix and prevent update of miRNA edges.
 #' @param hamming value at which to terminate the process based on hamming distance (default 10^-3)
 #' @param iter sets the maximum number of iterations PUMA can run before exiting.
 #' @param progress Boolean to indicate printing of output for algorithm progress.
@@ -21,7 +21,7 @@
 #' of the gene expression matrix, "by.gene" scrambles gene labels.
 #' @param cor.method Correlation method, default is "pearson".
 #' @param scale.by.present Boolean to indicate scaling of correlations by percentage of positive samples.
-#' @param remove.missing.ppi Boolean to indicate whether TFs in the PPI but not in the motif data should be
+#' @param remove.missing.ppi Boolean to indicate whether miRNAs in the PPI but not in the motif data should be
 #' removed. Only when mode=='legacy'.
 #' @param remove.missing.motif Boolean to indicate whether genes targeted in the motif data but not the
 #' expression data should be removed. Only when mode=='legacy'.
@@ -42,14 +42,14 @@
 #' with PUMA algorithm.\cr
 #' "regNet" is the regulatory network\cr
 #' "coregNet" is the coregulatory network\cr
-#' "coopNet" is the cooperative network
+#' "coopNet" is the cooperative network which is not updated for miRNAs
 #' @examples
 #' data(pandaToyData)
 #' pumaRes <- puma(pandaToyData$motif,
-#'            pandaToyData$expression,pandaToyData$ppi,hamming=.1,progress=TRUE)
+#'            pandaToyData$expression,NULL,hamming=.1,progress=TRUE)
 #' @references
 #' Kuijjer, Marieke L., et al. "PUMA: PANDA using microRNA associations." Bioinformatics 36.18 (2020): 4765-4773.
-puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
+puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,mir_file,hamming=0.001,
                   iter=NA,output=c('regulatory','coexpression','cooperative'),
                   zScale=TRUE,progress=FALSE,randomize=c("None", "within.gene", "by.gene"),cor.method="pearson",
                   scale.by.present=FALSE,edgelist=FALSE,remove.missing.ppi=FALSE,
@@ -133,11 +133,11 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
       Idx2 <- match(ppi[,2], tf.names);
       Idx <- (Idx2-1)*num.TFs+Idx1;
       indIdx=!is.na(Idx)
-      Idx=Idx[indIdx] #remove missing TFs
+      Idx=Idx[indIdx] #remove missing miRNAs
       tfCoopNetwork[Idx] <- ppi[indIdx,3];
       Idx <- (Idx1-1)*num.TFs+Idx2;
       indIdx=!is.na(Idx)
-      Idx=Idx[indIdx] #remove missing TFs
+      Idx=Idx[indIdx] #remove missing miRNAs
       tfCoopNetwork[Idx] <- ppi[indIdx,3];
       #Motif matrix
       regulatoryNetwork=matrix(0,num.TFs,num.genes)
@@ -177,7 +177,7 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
   }
   
   if(num.conditions==0) {
-    warning('No expression data given.  PUMA will run based on an identity co-regulation matrix')
+    warning('No expression data given. PUMA will run based on an identity co-regulation matrix')
     geneCoreg <- diag(num.genes)
   } else if(num.conditions<3) {
     warning('Not enough expression conditions detected to calculate correlation. Co-regulation network will be initialized to an identity matrix.')
@@ -238,6 +238,15 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
     rownames(tfCoopNetwork) <- tf.names
   }
   
+  if(mir_file != NULL){
+    mirIndex = match(mir_file,tf.names)
+    tfCoopNetwork[mirIndex,] = 0
+    tfCoopNetwork[,mirIndex] = 0
+    seqs = seq(1, num.tfs*num.tfs, num.tfs+1)
+    tfCoopNetwork[seqs] <- 1
+    # tfCoopNetwork has now a diagonal of 1 and all entries are zeros 
+    # for miRNA-miRNA interactions and TF-miRNA interactions
+  }
   ## Run PUMA ##
   tic=proc.time()[3]
   
@@ -255,6 +264,9 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
   hamming_cur=1
   if(progress)
     print("Using tanimoto similarity")
+  
+  TFCoopInit = tfCoopNetwork # Save normalized cooperativity network
+  
   while(hamming_cur>hamming){
     if ((!is.na(iter))&&step>=iter){
       print(paste("Reached maximum iterations, iter =",iter),sep="")
@@ -275,6 +287,13 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
     CoReg2=update.diagonal(CoReg2, num.genes, alpha, step)
     geneCoreg=minusAlpha*geneCoreg + alpha*CoReg2
     
+    #PUMA step to skip update of PPI matrix for miRNA interactions
+    seqs = seq(1, num.tfs*num.tfs, num.tfs+1)
+    savediag = tfCoopNetwork[seqs] # save diagonal
+    tfCoopNetwork[mirIndex,] <- TFCoopInit[mirIndex,]
+    tfCoopNetwork[,mirIndex] <- TFCoopInit[,mirIndex]
+    tfCoopNetwork[seqs] <- savediag # put back saved diagonal
+    
     if(progress)
       message("Iteration", step,": hamming distance =", round(hamming_cur,5))
     step=step+1
@@ -282,6 +301,6 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
   
   toc=proc.time()[3] - tic
   if(progress)
-    message("Successfully ran PUMA on ", num.genes, " Genes and ", num.TFs, " TFs.\nTime elapsed:", round(toc,2), "seconds.")
+    message("Successfully ran PUMA on ", num.genes, " Genes and ", num.TFs, " miRNAs.\nTime elapsed:", round(toc,2), "seconds.")
   prepResult(zScale, output, regulatoryNetwork, geneCoreg, tfCoopNetwork, edgelist, motif)
 }
