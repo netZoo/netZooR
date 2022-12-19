@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">netZooR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.16</span>
       </span>
     </div>
 
@@ -91,6 +91,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -147,7 +150,7 @@ The code in <strong>condorModularityMax</strong> is an implementation of the met
 <h2 class="hasAnchor">
 <a href="#workflow" class="anchor"></a>Workflow</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">netZooR</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/netZoo/netZooR">netZooR</a></span><span class="op">)</span></code></pre></div>
 <p><strong>condor</strong> works with an edgelist (<strong>elist</strong> in the code below) as its input.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>;
@@ -168,30 +171,30 @@ The code in <strong>condorModularityMax</strong> is an implementation of the met
 <code class="sourceCode R"><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condorCluster.html">condorCluster</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "modularity of projected graph 0"
 ## [1] "Q = 0"
-## [1] "Q = 0.198347107438017"
-## [1] "Q = 0.231404958677686"
-## [1] "Q = 0.231404958677686"</code></pre>
+## [1] "Q = 0.132231404958678"
+## [1] "Q = 0.148760330578512"
+## [1] "Q = 0.148760330578512"</code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">$</span><span class="va">red.memb</span><span class="op">)</span></code></pre></div>
 <pre><code>##   red.names com
 ## 1     Alice   1
-## 2    Janine   2
-## 3      Mary   2
-## 4       Sue   1</code></pre>
+## 2    Janine   1
+## 3      Mary   1
+## 4       Sue   2</code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">$</span><span class="va">blue.memb</span><span class="op">)</span></code></pre></div>
 <pre><code>##   blue.names com
-## 1        Bob   1
-## 2         Ed   2
+## 1        Bob   2
+## 2         Ed   1
 ## 3       Hank   2
-## 4       John   1</code></pre>
+## 4       John   2</code></pre>
 <p>Nodes in first community are {Alice, John, Bob, Sue}, nodes in second community are {Ed, Janine, Hank, Mary} based on the modularity maximization. Here’s a picture:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gtoy</span> <span class="op">=</span> <span class="fu">graph.edgelist</span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">elist</span><span class="op">)</span>,directed<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu">set.graph.attribute</span><span class="op">(</span><span class="va">gtoy</span>, <span class="st">"layout"</span>, <span class="fu">layout.kamada.kawai</span><span class="op">(</span><span class="va">gtoy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## IGRAPH 694fdca UN-- 8 11 -- 
+<pre><code>## IGRAPH d53f3f0 UN-- 8 11 -- 
 ## + attr: layout (g/n), name (v/c)
-## + edges from 694fdca (vertex names):
+## + edges from d53f3f0 (vertex names):
 ##  [1] Alice--Bob    Alice--John   Alice--Ed     Bob  --Sue    John --Sue   
 ##  [6] Sue  --Hank   John --Janine Ed   --Janine Hank --Janine Ed   --Mary  
 ## [11] Hank --Mary</code></pre>
@@ -242,7 +245,7 @@ The code in <strong>condorModularityMax</strong> is an implementation of the met
 ## [8] base     
 ## 
 ## other attached packages:
-## [1] netZooR_1.0.4       yarn_1.18.0         pandaR_1.19.5      
+## [1] netZooR_1.1.16      yarn_1.18.0         pandaR_1.19.5      
 ## [4] Biobase_2.52.0      BiocGenerics_0.38.0 reticulate_1.22    
 ## [7] igraph_1.2.6       
 ## 
@@ -356,7 +359,7 @@ The code in <strong>condorModularityMax</strong> is an implementation of the met
 
 
       <footer><div class="copyright">
-  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Deborah Weighill.</p>
+  <p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Des Weighill.</p>
 </div>
 
 <div class="pkgdown">
