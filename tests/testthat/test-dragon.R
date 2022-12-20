@@ -1,7 +1,7 @@
 # unit-tests for DRAGON
 context("test DRAGON helper functions")
 
-source("../../R/DRAGON.R")
+# source("../../R/DRAGON.R")
 
 test_that("[DRAGON] scale() function yields expected results", {
   x = seq(1:100)
