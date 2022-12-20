@@ -180,8 +180,7 @@ estimatePenaltyParameters = function(X1,X2)
   # 
   # const = (np.sum(varS1) + np.sum(varS2) - 2.*np.sum(varS12)
   #          + 4.*np.sum(eSqs12))
-  print("I did not include the constant because I think we don't need it for the optimization")
-  
+
   # T1_1 = -2.*(np.sum(varS1) - np.trace(varS1) + np.sum(eSqs12))
   T1_1 = -2*(sum(varS1) - matrix.trace(as.matrix(varS1)) + sum(esqS12))
   # T1_2 = -2.*(np.sum(varS2) - np.trace(varS2) + np.sum(eSqs12))
@@ -221,7 +220,7 @@ estimatePenaltyParameters = function(X1,X2)
   # lams = [x[indices[0]],x[indices[1]]]
   # 
   lams = x[arrayInd(which(riskgrid == min(riskgrid)),.dim=c(101,101))]
-  print("round 1 is seeding and then we use optimization")
+  # this is seeding with grid search and then we use optimization
   lams
   
   # res = minimize(risk, lams, method='L-BFGS-B',#'TNC',#'SLSQP',

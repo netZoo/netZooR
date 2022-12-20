@@ -1,6 +1,7 @@
 # unit-tests for DRAGON
-
 context("test DRAGON helper functions")
+
+source("../../R/DRAGON.R")
 
 test_that("[DRAGON] scale() function yields expected results", {
   x = seq(1:100)
@@ -62,7 +63,7 @@ test_that("[DRAGON] get_shrunken_covariance_dragon() function returns the right 
   X2 = as.matrix(myX[,3])
   lambdas = c(0.25,0.5)
   res = get_shrunken_covariance_dragon(X1,X2,lambdas)
-  res_py = as.matrix(read.csv("./testdata/dragon-test-files/dragon_test_get_shrunken_covariance.csv",row.names=1))
+  res_py = as.matrix(read.csv("./dragon_test_get_shrunken_covariance.csv",row.names=1))
   expect_equal(as.vector(res),as.vector(res_py),tolerance = 1e-15) 
 }
 )
