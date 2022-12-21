@@ -25,7 +25,8 @@ Depends: R (>= 4.1.0),
    	 igraph,
 	 reticulate,
          pandaR,
-         yarn
+         yarn,
+         matrixcalc
 biocViews:
 	 NetworkInference,
 	 Network,
@@ -75,6 +76,6 @@ Suggests:
     pkgdown
 VignetteEngine: knitr
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 BugReports: https://github.com/netZoo/netZooR/issues
 URL: https://github.com/netZoo/netZooR, https://netzoo.github.io/
