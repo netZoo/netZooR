@@ -355,16 +355,22 @@ estimate_p_values_dragon = function(r, n, p1, p2, lambdas, kappa="estimate",seed
 #' 
 #' Description: Estimates a multi-omic Gaussian graphical model for two input layers of paired omic data.
 #'
-#' @param layer1 : first layer of omics data
-#' @param layer2 : second layer of omics data
-#' @param pval : calculate p-values for network edges
-#' @param gradient : method for estimating parameters of p-value distribution. default = "finite_difference"; other option = "exact"
-#' @return cov : the shrunken covariance matrix
-#' @return prec: the shrunken precision matrix
-#' @return ggm: the shrunken Gaussian graphical model (matrix of partial correlations). Self-edges are set to zero.
-#' @return lambdas: vector of parameters (lambda1, lambda2) corresponding to omic-specific shrinkage
+#' @param layer1 : first layer of omics data; rows: samples (order must match layer2), columns: variables
+#' @param layer2 : second layer of omics data; rows: samples (order must match layer1), columns: variables.
+#' @param pval : calculate p-values for network edges. Not yet implemented in R; available in netZooPy.
+#' @param gradient : method for estimating parameters of p-value distribution, applies only if p-val == T. default = "finite_difference"; other option = "exact"
+#' @return A list of model results. cov : the shrunken covariance matrix
+#' \itemize{
+#'  \item{\code{cov}}{  the shrunken covariance matrix}
+#'  \item{\code{prec}}{  the shrunken precision matrix}
+#'  \item{\code{ggm}}{ the shrunken Gaussian graphical model; matrix of partial correlations. Self-edges (diagonal elements) are set to zero.}
+#'  \item{\code{lambdas}}{  Vector of omics-specific tuning parameters (lambda1, lambda2) for \code{layer1} and \code{layer2}}
+#'  \item{\code{gammas}}{  Reparameterized tuning parameters; gamma = 1 - lambda^2}
+#'  \item{\code{risk_grid}}{  Risk grid, for assessing optimization. Grid boundaries are in terms of gamma.}
+#' }
+#' 
 #' @export
-dragon = function(layer1,layer2,pval = F,gradient = "finite_difference", verbose = T)
+dragon = function(layer1,layer2,pval = F,gradient = "finite_difference", verbose = F)
 {
   if(verbose)
     print("[netZooR::dragon] Estimating penalty parameters...")
