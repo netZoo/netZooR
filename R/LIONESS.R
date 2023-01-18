@@ -132,9 +132,9 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
    # create an instance named "lioness_obj" of Lioness Class.
    # when save_single_network = TRUE
    if(save_single_network==TRUE){
-     py_run_string(paste("lioness_obj = Lioness(panda_obj", " , " , "computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample, " , ", "save_dir='", save_dir, "' , " , "save_fmt='" , save_fmt, "' , " , "save_single = TRUE )",sep = "" ))
+     py_run_string(paste("lioness_obj = Lioness(panda_obj,computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample, " , ", "save_dir='", save_dir, "' , " , "save_fmt='" , save_fmt, "' , " , "save_single = True )",sep = "" ))
    }else if(save_single_network==FALSE){
-     py_run_string(paste("lioness_obj = Lioness(panda_obj", " , " , "computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample, " , ", "save_single = FALSE )",sep = "" ))
+     py_run_string(paste("lioness_obj = Lioness(panda_obj,computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample, " , ", "save_single = False )",sep = "" ))
   }
    
    # retrieve the "total_lioness_network" attribute of instance "lionesss_obj"
