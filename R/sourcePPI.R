@@ -1,7 +1,7 @@
 #' Source the Protein-Protein interaction in STRING database
 #' 
 #' This function uses a list of Transcription Factors (TF) of interest to source the Protein-Protein interactions (PPI) from STRING database 
-#' Important: this function produces a unweighted network, and does not support weighted PPI edges for the moment
+#' Important: this function produces an unweighted network, and does not support weighted PPI edges for the moment
 #'
 #' @param TF a data frame with one column indicating the TF of interest
 #' @param STRING.version a numeric vector indicating the STRING version. Default valuve is 10
