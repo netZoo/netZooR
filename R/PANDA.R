@@ -20,7 +20,7 @@
 #' @param keep_expression_matrix 'TRUE' keeps the input expression matrix as an attribute in the result Panda object.'FALSE' deletes the expression matrix attribute in the Panda object. The default value is 'FALSE'.
 #' @param modeProcess 'legacy' refers to the processing mode in netZooPy<=0.5, 'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros; 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes. Default values is 'union'.
 #' @param remove_missing Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is 'FALSE'.
-#' 
+#' @param with_header if TRUE reads header of expression matrix
 #' @return When save_memory=FALSE(default), this function will return a list of three items: 
 #'          Use \code{$panda} to access the standard output of PANDA as data frame, which consists of four columns: 
 #'          "TF", "Gene", "Motif" using 0 or 1 to indicate if this edge belongs to prior motif dataset, and "Score".
