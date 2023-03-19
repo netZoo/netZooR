@@ -39,6 +39,7 @@ export(pandaToCondorObject)
 export(runEgret)
 export(sambar)
 export(sourcePPI)
+export(spider)
 export(visPandaInCytoscape)
 import(AnnotationDbi, except= select)
 
