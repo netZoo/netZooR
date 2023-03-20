@@ -21,7 +21,7 @@ dragon(
 
 \item{gradient}{: method for estimating parameters of p-value distribution, applies only if p-val == TRUE. default = "finite_difference"; other option = "exact"}
 
-\item{verbose:}{verbosity level (TRUE/FALSE)}
+\item{verbose}{: verbosity level (TRUE/FALSE)}
 }
 \value{
 A list of model results. cov : the shrunken covariance matrix

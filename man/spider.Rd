@@ -88,7 +88,7 @@ This function runs the SPIDER algorithm
 }
 \examples{
 data(pandaToyData)
-spiderRes <- spider(pandaToyData$motif, pandaToyData$epifilter
+spiderRes <- spider(pandaToyData$motif, pandaToyData$epifilter,
            pandaToyData$expression,pandaToyData$ppi,hamming=.1,progress=TRUE)
 }
 \references{

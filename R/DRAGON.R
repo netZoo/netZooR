@@ -358,8 +358,8 @@ estimate_p_values_dragon = function(r, n, p1, p2, lambdas, kappa="estimate",seed
 #' @param layer1 : first layer of omics data; rows: samples (order must match layer2), columns: variables
 #' @param layer2 : second layer of omics data; rows: samples (order must match layer1), columns: variables.
 #' @param pval : calculate p-values for network edges. Not yet implemented in R; available in netZooPy.
-#' @param verbose: verbosity level (TRUE/FALSE)
 #' @param gradient : method for estimating parameters of p-value distribution, applies only if p-val == TRUE. default = "finite_difference"; other option = "exact"
+#' @param verbose : verbosity level (TRUE/FALSE)
 #' @return A list of model results. cov : the shrunken covariance matrix
 #' \itemize{
 #'  \item{\code{cov}}{  the shrunken covariance matrix}

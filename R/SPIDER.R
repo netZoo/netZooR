@@ -47,7 +47,7 @@
 #' "coopNet" is the cooperative network
 #' @examples
 #' data(pandaToyData)
-#' spiderRes <- spider(pandaToyData$motif, pandaToyData$epifilter
+#' spiderRes <- spider(pandaToyData$motif, pandaToyData$epifilter,
 #'            pandaToyData$expression,pandaToyData$ppi,hamming=.1,progress=TRUE)
 #' @references
 #' Sonawane, Abhijeet Rajendra, et al. "Constructing gene regulatory networks using epigenetic data." npj Systems Biology and Applications 7.1 (2021): 1-13.
