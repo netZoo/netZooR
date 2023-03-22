@@ -6,7 +6,7 @@
 [![tutorials](https://img.shields.io/badge/netZooR-tutorials-9cf)](https://github.com/netZoo/netZooR/tree/master/vignettes)
 [![Netbooks](https://img.shields.io/badge/netZooR-Netbooks-ff69b4)](http://netbooks.networkmedicine.org/user/marouenbg/notebooks/Welcome_to_netBooks.ipynb?)
 [![discussions](https://img.shields.io/badge/netZooR-discussions-orange)](https://github.com/netZoo/netZooR/discussions)
-
+[![DOI](https://zenodo.org/badge/190646802.svg)](https://zenodo.org/badge/latestdoi/190646802)
 
 netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v4.2)
 

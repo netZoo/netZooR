@@ -132,9 +132,9 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
    # create an instance named "lioness_obj" of Lioness Class.
    # when save_single_network = TRUE
    if(save_single_network==TRUE){
-     py_run_string(paste("lioness_obj = Lioness(panda_obj", " , " , "computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample, " , ", "save_dir='", save_dir, "' , " , "save_fmt='" , save_fmt, "' )",sep = "" ))
-   }else{
-     py_run_string(paste("lioness_obj = Lioness(panda_obj", " , " , "computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample,  ")",sep = "" ))
+     py_run_string(paste("lioness_obj = Lioness(panda_obj,computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample, " , ", "save_dir='", save_dir, "' , " , "save_fmt='" , save_fmt, "' , " , "save_single = True )",sep = "" ))
+   }else if(save_single_network==FALSE){
+     py_run_string(paste("lioness_obj = Lioness(panda_obj,computing='", computing, "' , ","start=", start_sample," , ", "end=" ,end_sample, " , ", "save_single = False )",sep = "" ))
   }
    
    # retrieve the "total_lioness_network" attribute of instance "lionesss_obj"
@@ -161,6 +161,8 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
 #' transcription factor 2 (column 2) and a score (column 3) for the interaction.
 #' @param network.inference.method String specifying choice of network inference method. Default is "panda".
 #' Options include "pearson". 
+#' @param ncores int specifying the number of cores to be used. Default is 1. 
+#' (Note: constructing panda networks can be memory-intensive, and the number of cores should take into consideration available memory.)
 #' @param ... additional arguments for panda analysis
 #' @keywords keywords
 #' @importFrom matrixStats rowSds
@@ -168,6 +170,7 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
 #' @importFrom Biobase assayData
 #' @importFrom reshape melt.array
 #' @importFrom pandaR panda
+#' @importFrom parallel mclapply
 #' @export
 #' @return A list of length N, containing objects of class "panda" 
 #' corresponding to each of the N samples in the expression data set.\cr
@@ -180,25 +183,30 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
 #' @references
 #' Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 #' Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.
-lioness = function(expr, motif = NULL, ppi = NULL, network.inference.method = "panda", ...){
+#' Kuijjer, M.L., Hsieh, PH., Quackenbush, J. et al. lionessR: single sample network inference in R. BMC Cancer 19, 1003 (2019). https://doi.org/10.1186/s12885-019-6235-7
+lioness = function(expr, motif = NULL, ppi = NULL, network.inference.method = "panda", ncores = 1, ...){
   N <- ncol(expr)
+  if(ncores < 1){
+    print('Setting number of cores to 1.')
+    ncores <- 1
+  }
   if(network.inference.method == "panda")
   {
     fullnet <- panda(motif, expr, ppi, ...)
-    return(lapply(seq_len(N), function(i) {
+    return(mclapply(seq_len(N), function(i) {
       print(paste("Computing network for sample ", i))
       N * fullnet@regNet - (N - 1) * panda(motif, expr[, -i], 
                                            ppi, ...)@regNet
-    }))
+    }, mc.cores = ncores))
   }
   if(network.inference.method == "pearson")
   {
     fullnet <- cor(t(expr))
     
-    return(lapply(seq_len(N), function(i) {
+    return(mclapply(seq_len(N), function(i) {
       print(paste("Computing network for sample ", i))
       N * fullnet - (N - 1) * cor(t(expr[,-i]))
-    }))
+    }, mc.cores = ncores))
   }
   if(!(network.inference.method %in% c("panda","pearson")))
   {
