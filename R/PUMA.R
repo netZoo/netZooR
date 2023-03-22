@@ -304,3 +304,122 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,mir_file,hamming=0.001,
     message("Successfully ran PUMA on ", num.genes, " Genes and ", num.TFs, " miRNAs.\nTime elapsed:", round(toc,2), "seconds.")
   prepResult(zScale, output, regulatoryNetwork, geneCoreg, tfCoopNetwork, edgelist, motif)
 }
+
+
+normalizeNetwork<-function(X){
+  X <- as.matrix(X)
+  
+  nr = nrow(X)
+  nc = ncol(X)
+  dm = c(nr,nc)
+  
+  # overall values
+  mu0=mean(X)
+  std0=sd(X)*sqrt((nr*nc-1)/(nr*nc))
+  
+  # operations on rows
+  mu1=rowMeans(X) # operations on rows
+  std1=rowSds(X)*sqrt((nc-1)/nc)
+  
+  mu1=rep(mu1, nc)
+  dim(mu1) = dm
+  std1=rep(std1,nc)
+  dim(std1)= dm
+  
+  Z1=(X-mu1)/std1
+  
+  # operations on columns
+  mu2=colMeans(X) # operations on columns
+  std2=colSds(X)*sqrt((nr-1)/nr)
+  
+  mu2 = rep(mu2, each=nr)
+  dim(mu2) = dm
+  std2= rep(std2, each=nr)
+  dim(std2) = dm
+  
+  Z2=(X-mu2)/std2
+  
+  # combine and return
+  normMat=Z1/sqrt(2)+Z2/sqrt(2)
+  
+  # checks and defaults for missing data
+  Z0=(X-mu0)/std0;
+  f1=is.na(Z1); f2=is.na(Z2);
+  normMat[f1]=Z2[f1]/sqrt(2)+Z0[f1]/sqrt(2);
+  normMat[f2]=Z1[f2]/sqrt(2)+Z0[f2]/sqrt(2);
+  normMat[f1 & f2]=2*Z0[f1 & f2]/sqrt(2);
+  
+  normMat
+}
+
+tanimoto<-function(X,Y){
+  
+  nc = ncol(Y)
+  nr = nrow(X)
+  dm = c(nr,nc)
+  
+  Amat=(X %*% Y)
+  Bmat=colSums(Y*Y)
+  
+  Bmat = rep(Bmat,each=nr)
+  dim(Bmat) = dm
+  #Bmat=matrix(rep(Bmat, each=nr), dm)
+  
+  Cmat=rowSums(X*X)
+  Cmat=rep(Cmat,nc)
+  dim(Cmat) = dm
+  #Cmat=matrix(rep(Cmat, nc), dm)
+  
+  den = (Bmat+Cmat-abs(Amat))
+  Amat=Amat/sqrt(den)
+  
+  return(Amat)
+}
+
+update.diagonal<-function(diagMat, num, alpha, step){
+  seqs = seq(1, num*num, num+1)
+  diagMat[seqs]=NaN;
+  diagstd=rowSds(diagMat,na.rm=TRUE)
+  diagstd[is.na(diagstd)]=0#replace NA with zeros
+  diagstd=diagstd*sqrt( (num-2)/(num-1) );
+  diagMat[seqs]=diagstd*num*exp(2*alpha*step);
+  return(diagMat);
+}
+
+prepResult <- function(zScale, output, regulatoryNetwork, geneCoreg, tfCoopNetwork, edgelist, motif){
+  resList <- list()
+  numGenes = dim(geneCoreg)[1]
+  numTFs   = dim(tfCoopNetwork)[1]
+  numEdges = sum(regulatoryNetwork!=0)
+  if (!zScale){
+    regulatoryNetwork <- pnorm(regulatoryNetwork)
+    geneCoreg         <- pnorm(geneCoreg)
+    tfCoopNetwork     <- pnorm(tfCoopNetwork)
+  }
+  if("regulatory"%in%output){
+    if(edgelist){
+      regulatoryNetwork <- melt.array(regulatoryNetwork)
+      colnames(regulatoryNetwork) <- c("TF", "Gene", "Score")
+      regulatoryNetwork$Motif <- as.numeric(with(regulatoryNetwork, paste0(TF, Gene))%in%paste0(motif[,1],motif[,2]))
+    }
+    resList$regNet <- regulatoryNetwork
+  }
+  if("coexpression"%in%output){
+    if(edgelist){
+      geneCoreg <- melt.array(geneCoreg)
+      colnames(geneCoreg) <- c("Gene.x", "Gene.y", "Score")
+    }
+    resList$coregNet <- geneCoreg
+  }
+  if("cooperative"%in%output){
+    if(edgelist){
+      tfCoopNetwork <- melt.array(tfCoopNetwork)
+      colnames(tfCoopNetwork) <- c("TF.x", "TF.y", "Score")
+    }
+    resList$coopNet <- tfCoopNetwork
+  }
+  pandaObj(regNet=regulatoryNetwork, coregNet=geneCoreg, coopNet=tfCoopNetwork, numGenes=numGenes, numTFs=numTFs, numEdges=numEdges)
+}
+
+pandaObj <- setClass("panda", slots=c("regNet","coregNet","coopNet","numGenes","numTFs","numEdges"))
+setMethod("show","panda",function(object){print.panda(object)})
