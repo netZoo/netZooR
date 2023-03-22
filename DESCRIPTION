@@ -1,7 +1,7 @@
 Package: netZooR
 Type: Package
 Title: Unified methods for the inference and analysis of gene regulatory networks
-Version: 1.3.14
+Version: 1.3.15
 Date: 2023-03-16
 Authors@R: c(person("Marouen", "Ben Guebila",
 			email = "benguebila@hsph.harvard.edu", role = c("aut","cre"), comment = c(ORCID = "0000-0001-5934-966X")),
@@ -37,12 +37,12 @@ biocViews:
          GraphAndNetwork
 Imports: RCy3,
 	 viridisLite, 
-   	 STRINGdb,
+   STRINGdb,
 	 Biobase,
 	 GOstats,
 	 AnnotationDbi,
-   	 matrixStats,
-   	 GO.db,
+   matrixStats,
+   GO.db,
 	 org.Hs.eg.db,
 	 Matrix,
 	 gplots,
@@ -51,21 +51,21 @@ Imports: RCy3,
 	 vegan,
 	 stats,
 	 utils,
-   	 reshape,
-   	 reshape2,
-   	 penalized,
-   	 parallel,
-   	 doParallel,
-   	 foreach,
-   	 ggplot2,
-   	 ggdendro,
-   	 grid,
-   	 MASS,
-   	 assertthat,
-   	 tidyr,
-   	 methods,
-         dplyr,
-         graphics
+   reshape,
+   reshape2,
+   penalized,
+   parallel,
+   doParallel,
+   foreach,
+   ggplot2,
+   ggdendro,
+   grid,
+   MASS,
+   assertthat,
+   tidyr,
+   methods,
+   dplyr,
+   graphics
 License: GPL-3
 Encoding: UTF-8
 LazyData: false
