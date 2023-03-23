@@ -9,6 +9,7 @@ lioness(
   motif = NULL,
   ppi = NULL,
   network.inference.method = "panda",
+  ncores = 1,
   ...
 )
 }
@@ -25,6 +26,9 @@ transcription factor 2 (column 2) and a score (column 3) for the interaction.}
 
 \item{network.inference.method}{String specifying choice of network inference method. Default is "panda".
 Options include "pearson".}
+
+\item{ncores}{int specifying the number of cores to be used. Default is 1. 
+(Note: constructing panda networks can be memory-intensive, and the number of cores should take into consideration available memory.)}
 
 \item{...}{additional arguments for panda analysis}
 }
@@ -45,5 +49,6 @@ lionessRes <- lioness(expr = pandaToyData$expression[,1:3], motif = pandaToyData
 \references{
 Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.
+Kuijjer, M.L., Hsieh, PH., Quackenbush, J. et al. lionessR: single sample network inference in R. BMC Cancer 19, 1003 (2019). https://doi.org/10.1186/s12885-019-6235-7
 }
 \keyword{keywords}
