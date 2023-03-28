@@ -23,5 +23,5 @@ yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 design <- c(rep(1,25),rep(0,10),rep(NA,15))
 monsterRes <- monster(yeast$exp.cc, design,
 yeast$motif, nullPerms=10, numMaxCores=1)
-monsterPlotMonsterAnalysis(monsterRes)
+#monsterPlotMonsterAnalysis(monsterRes)
 }
