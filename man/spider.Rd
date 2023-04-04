@@ -91,8 +91,8 @@ data(pandaToyData)
 pandaToyData$epifilter = pandaToyData$motif
 nind=floor(runif(5000, min=1, max=dim(pandaToyData$epifilter)[1]))
 pandaToyData$epifilter[nind,3] = 0
-spiderRes <- spider(pandaToyData$motif,pandaToyData$expression,
-                    pandaToyData$epifilter,pandaToyData$ppi,hamming=.1,progress=TRUE)
+#spiderRes <- spider(pandaToyData$motif,pandaToyData$expression,
+#                    pandaToyData$epifilter,pandaToyData$ppi,hamming=.1,progress=TRUE)
 }
 \references{
 Sonawane, Abhijeet Rajendra, et al. "Constructing gene regulatory networks using epigenetic data." npj Systems Biology and Applications 7.1 (2021): 1-13.
