@@ -103,7 +103,7 @@ monsterPrintMonsterAnalysis <- function(x, ...){
 #' data(yeast)
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
-#' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
+#' #monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 #' # Example with provided networks
 #' \donttest{
 #' pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
