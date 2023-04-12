@@ -58,7 +58,7 @@ More details can be found in the published paper https://doi.org/10.1371/journal
 ## Building a PANDA regulatory network
 
 Now we locate our ppi and motif priors. The ppi represents physical interactions between transcription factor proteins, and is an undirected network. The transcription factor motif prior represents putative regulation events where a transcription factor binds in the promotor of a gene to regulate its expression, as predicted by the presence of transcription factor binding motifs in the promotor region of the gene. The motif prior is thus a directed network linking transcription factors to their predicted gene targets. These are small example priors for the purposes of demonstrating this method. A complete set of motif priors by species can be downloaded from: https://sites.google.com/a/channing.harvard.edu/kimberlyglass/tools/resources  
-The function source.PPI can be used to source the protein-protein interaction in the STRING database.
+The function sourcePPI() can be used to source the protein-protein interaction network from the STRING database, but it does so only to produce an unweighted network that aggregates all types of interactions not only the physical interaction subnetwork. Please refer to STRINGdb website or R package to specify a PPI network suited for your application.
 
 Let's take a look at the priors:
 
