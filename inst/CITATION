@@ -7,7 +7,7 @@ citEntry(entry="article",
                               as.person("John Quackenbush")),
          year = 2023,
          journal = "Genome Biology",
-         doi = "10.1186/s13059-023-02877-1 7",
+         doi = "10.1186/s13059-023-02877-1",
          textVersion =
          paste("Ben Guebila, M., Wang, T., Lopes-Ramos, C.L., Fanfani, V., Quackenbush, J.",
                "The Network Zoo: a multilingual package for the inference and analysis of gene regulatory networks",
