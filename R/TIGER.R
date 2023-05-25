@@ -51,6 +51,7 @@
 #' @export
 #'
 #' @examples
+#' TIGER(expr,prior)
 TIGER = function(expr,prior,method="VB",
                      signed=TRUE,baseline=TRUE,psis_loo = FALSE,
                      seed=123,out_path=NULL,out_size = 300,
@@ -67,6 +68,8 @@ TIGER = function(expr,prior,method="VB",
   if (signed){
     prior = prior.pp(prior[TF.name,TG.name],expr)
     P = prior
+    TF.name = rownames(P)
+    TG.name = colnames(P)
   }else{
     P = prior[TF.name,TG.name]
   }
@@ -173,7 +176,6 @@ TIGER = function(expr,prior,method="VB",
 #' @return An adjacency matrix with rows as TFs and columns as genes.
 #' @export
 #'
-#' @examples
 el2adj = function(el){
   el = as.data.frame(el)
   all.A = unique(el[,1])
@@ -194,7 +196,6 @@ el2adj = function(el){
 #' second column is gene name, and third column is edge weight.
 #' @export
 #'
-#' @examples
 adj2el = function(adj){
   el = matrix(NA,nrow(adj)*ncol(adj),3)
   el[,1]=rep(row.names(adj), ncol(adj))
@@ -216,7 +217,6 @@ adj2el = function(adj){
 #' @return A VIPER required regulon object
 #' @export
 #'
-#' @examples
 el2regulon = function(el) {
   regulon_list = split(el, el$from)
   viper_regulons = lapply(regulon_list, function(regulon) {
@@ -234,7 +234,6 @@ el2regulon = function(el) {
 #' @return A VIPER required regulon object.
 #' @export
 #'
-#' @examples
 adj2regulon = function(adj){
   el = adj2el(adj)
   el = el[el[,3]!=0,]
@@ -251,7 +250,6 @@ adj2regulon = function(adj){
 #' @return A filtered prior network (adjacency matrix).
 #' @export
 #'
-#' @examples
 prior.pp = function(prior,expr){
 
   # filter tfs and tgs
