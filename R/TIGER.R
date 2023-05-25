@@ -51,6 +51,8 @@
 #' @export
 #'
 #' @examples
+#' data(expr)
+#' data(prior)
 #' TIGER(expr,prior)
 TIGER = function(expr,prior,method="VB",
                      signed=TRUE,baseline=TRUE,psis_loo = FALSE,
