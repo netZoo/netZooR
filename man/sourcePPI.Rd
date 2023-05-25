@@ -19,7 +19,9 @@ sourcePPI(TF, STRING.version = "10", species.index, ...)
 A PPI data.frame which contains three columns: "from" and "to" indicating the direction of protein-protein interaction, and "score" indicating the interaction score between two proteins.
 }
 \description{
-This function is able to use a list of Transcription Factors(TF) of interest to source the Protein-Protein interactions (PPI)in STRING database
+This function uses a list of Transcription Factors (TF) of interest to source the Protein-Protein interactions (PPI) from STRING database using all types of interactions not only the physical subnetwork
+Important: this function produces a simple unweighted network for tutorial purposes, and does not support weighted PPI edges for the moment.
+For more complex PPI network modeling, consider pulling the PPI network directly from STRINGdb directly or through their R package.
 }
 \examples{
 # the example motif file
