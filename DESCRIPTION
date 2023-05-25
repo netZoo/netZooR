@@ -26,7 +26,8 @@ Depends: R (>= 4.2.0),
 	 reticulate,
          pandaR,
          yarn,
-         matrixcalc
+         matrixcalc,
+		     cmdstanr
 biocViews:
 	 NetworkInference,
 	 Network,
@@ -67,7 +68,6 @@ Imports:
     methods,
     dplyr,
     graphics,
-    cmdstanr,
     GeneNet,
     loo
 License: GPL-3
