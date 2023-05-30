@@ -73,7 +73,7 @@ information from the motif prior should be removed. Only when mode=='legacy'.}
 
 \item{mode}{The data alignment mode. The mode 'union' takes the union of the genes in the expression matrix and the motif
 and the union of TFs in the ppi and motif and fills the matrics with zeros for nonintersecting TFs and gens, 'intersection' 
-takes the intersection of genes and TFs and removes nonintersecting sets, 'legacy' is the old behavior with version 1.19.3.
+takes the intersection of genes and TFs and removes nonintersecting sets, 'legacy' is the old behavior with PANDAR version 1.19.3.
 #' Parameters remove.missing.ppi, remove.missingmotif, remove.missing.genes work only with mode=='legacy'.}
 }
 \value{
@@ -88,8 +88,11 @@ This function runs the SPIDER algorithm
 }
 \examples{
 data(pandaToyData)
-spiderRes <- spider(pandaToyData$motif, pandaToyData$epifilter,
-           pandaToyData$expression,pandaToyData$ppi,hamming=.1,progress=TRUE)
+pandaToyData$epifilter = pandaToyData$motif
+nind=floor(runif(5000, min=1, max=dim(pandaToyData$epifilter)[1]))
+pandaToyData$epifilter[nind,3] = 0
+#spiderRes <- spider(pandaToyData$motif,pandaToyData$expression,
+#                    pandaToyData$epifilter,pandaToyData$ppi,hamming=.1,progress=TRUE)
 }
 \references{
 Sonawane, Abhijeet Rajendra, et al. "Constructing gene regulatory networks using epigenetic data." npj Systems Biology and Applications 7.1 (2021): 1-13.

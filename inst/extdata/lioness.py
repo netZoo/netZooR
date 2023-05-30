@@ -417,18 +417,22 @@ class Lioness(Panda):
                     # first dataframe is made of tf and gene names
                     indDF = pd.DataFrame([total_tfs, total_genes], index=["tf", "gene"])
                     # concatenate with dataframe of data, rows are samples, columns the edges
-                    indDF = indDF.append(
-                        pd.DataFrame(self.total_lioness_network, index = self.expression_samples[self.indexes])
-                    ).transpose()
+                    indDF = pd.concat([indDF, pd.DataFrame(self.total_lioness_network, index = self.expression_samples[self.indexes])], axis = 0).T
+                    # TODO: remove this with next release
+                    #indDF = indDF.append(
+                    #    pd.DataFrame(self.total_lioness_network, index = self.expression_samples[self.indexes])
+                    #).transpose()
                 else:  # if equal to None to be specific
                     total_genes1 = gene_names * len(gene_names)
                     total_genes2 = [i for i in gene_names for _ in range(len(gene_names))]
                     indDF = pd.DataFrame(
                         [total_genes1, total_genes2], index=["gene1", "gene2"]
                     )
-                    indDF = indDF.append(
-                        pd.DataFrame(self.total_lioness_network, index = self.expression_samples[self.indexes])
-                    ).transpose()
+                    indDF = pd.concat([indDF, pd.DataFrame(self.total_lioness_network, index = self.expression_samples[self.indexes])], axis = 0).T
+                    # TODO: remove this with next release
+                    #indDF = indDF.append(
+                    #    pd.DataFrame(self.total_lioness_network, index = self.expression_samples[self.indexes])
+                    #).transpose()
                 
                 # keep the df as the export results
                 self.export_lioness_results = indDF
