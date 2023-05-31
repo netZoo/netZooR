@@ -51,9 +51,9 @@
 #' @export
 #'
 #' @examples
-#' data(expr)
-#' data(prior)
-#' TIGER(expr,prior)
+#' data(TIGER_expr)
+#' data(TIGER_prior)
+#' TIGER(TIGER_expr,TIGER_prior)
 TIGER = function(expr,prior,method="VB",
                      signed=TRUE,baseline=TRUE,psis_loo = FALSE,
                      seed=123,out_path=NULL,out_size = 300,
@@ -282,6 +282,28 @@ prior.pp = function(prior,expr){
 
   return(A_ij)
 }
+
+
+#' TIGER example prior network
+#'
+#' @format ## `TIGER_prior`
+#' A prior network matrix with 14 rows (TFs) and 1772 columns (genes)
+#' 
+#' @source <https://zenodo.org/record/7425777>
+#' @name TIGER_prior
+#' @usage data(TIGER_prior)
+"TIGER_prior"
+
+#' TIGER example expression matrix
+#'
+#' @format ## `TIGER_expr`
+#' A gene expression matrix with 1780 rows (genes) and 16 columns (samples)
+#' 
+#' @source <https://zenodo.org/record/7425777>
+#' @name TIGER_expr
+#' @usage data(TIGER_expr)
+"TIGER_expr"
+
 
 
 
