@@ -45,8 +45,9 @@
 #' "coopNet" is the cooperative network which is not updated for miRNAs
 #' @examples
 #' data(pandaToyData)
+#' mirs = c("AHR","AR","ARID3A","ARNT","BRCA1","CEBPA","CREB1","DDIT3")
 #' pumaRes <- puma(pandaToyData$motif,
-#'            pandaToyData$expression,NULL,hamming=.1,progress=TRUE)
+#'            pandaToyData$expression,NULL,mir_file=mirs,hamming=.1,progress=TRUE)
 #' @references
 #' Kuijjer, Marieke L., et al. "PUMA: PANDA using microRNA associations." Bioinformatics 36.18 (2020): 4765-4773.
 puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,mir_file,hamming=0.001,
@@ -238,11 +239,11 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,mir_file,hamming=0.001,
     rownames(tfCoopNetwork) <- tf.names
   }
   
-  if(mir_file != NULL){
+  if(!is.null(mir_file)){
     mirIndex = match(mir_file,tf.names)
     tfCoopNetwork[mirIndex,] = 0
     tfCoopNetwork[,mirIndex] = 0
-    seqs = seq(1, num.tfs*num.tfs, num.tfs+1)
+    seqs = seq(1, num.TFs*num.TFs, num.TFs+1)
     tfCoopNetwork[seqs] <- 1
     # tfCoopNetwork has now a diagonal of 1 and all entries are zeros 
     # for miRNA-miRNA interactions and TF-miRNA interactions
@@ -288,7 +289,7 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,mir_file,hamming=0.001,
     geneCoreg=minusAlpha*geneCoreg + alpha*CoReg2
     
     #PUMA step to skip update of PPI matrix for miRNA interactions
-    seqs = seq(1, num.tfs*num.tfs, num.tfs+1)
+    seqs = seq(1, num.TFs*num.TFs, num.TFs+1)
     savediag = tfCoopNetwork[seqs] # save diagonal
     tfCoopNetwork[mirIndex,] <- TFCoopInit[mirIndex,]
     tfCoopNetwork[,mirIndex] <- TFCoopInit[,mirIndex]
