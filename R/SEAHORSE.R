@@ -59,26 +59,38 @@
 
 # Function to run GSEA for a numeric phenotype
 gsea_numeric <- function(expression, pheno, pathways, results){
-  phenotype_vector = as.numeric(pheno[,1])
+  output_seahorse = list()
+  output_seahorse$cor = list()
+  output_seahorse$GSEA = list()
+  
+  phenotype_vector = as.numeric(pheno)
   cor = unlist(apply(expression, MARGIN=1, function(x){cor(as.numeric(x), phenotype_vector, use="pairwise.complete.obs")}))
-  results$phenotype_association[[names(pheno)]] = cor
+  output_seahorse$cor = cor
   
   # Run GSEA
   cor_rank = sort(cor, decreasing = T)
   fgseaRes <- fgsea(pathways, cor_rank, minSize=15, maxSize=500)
-  results$GSEA[[names(pheno)]] = fgseaRes
+  output_seahorse$GSEA = fgseaRes
+  
+  return(output_seahorse)
 }
 
 # Function to run GSEA for a categorical phenotype
 gsea_categorical <- function(expression, pheno, pathways, results){
-  phenotype_vector = factor(as.character(pheno[,1]))
+  output_seahorse = list()
+  output_seahorse$cor = list()
+  output_seahorse$GSEA = list()
+  
+  phenotype_vector = factor(as.character(pheno))
   cor = unlist(apply(expression, MARGIN=1, function(x){anova(lm(as.numeric(x)~phenotype_vector))$`Pr(>F)`[1]}))
-  results$phenotype_association[[names(pheno)]] = cor
+  output_seahorse$cor = cor
   
   # Run GSEA
   cor_rank = sort(cor, decreasing = T)
   fgseaRes <- fgsea(pathways, cor_rank, minSize=15, maxSize=500, scoreType = "pos")
-  results$GSEA[[names(pheno)]] = fgseaRes
+  output_seahorse$GSEA = fgseaRes
+  
+  return(output_seahorse)
 }
 
 # Main SEAHORSE function
@@ -96,11 +108,14 @@ seahorse <- function(expression, phenotype, phenotype_dictionary, pathways){
   results$GSEA = list()
   
   for (i in 1:ncol(phenotype)){
-    pheno = data.frame(phenotype[,i])
-    names(pheno) = colnames(phenotype)[i]
+    pheno = phenotype[,i]
+    pheno_name = colnames(phenotype)[i]
+    
     if (phenotype_dictionary[i] == "numeric"){
-      gsea_numeric(expression, pheno, pathways, results)
-      }else {gsea_categorical(expression, pheno, pathways, results)}
+      output_seahorse = gsea_numeric(expression, pheno, pathways, results)
+    }else {output_seahorse = gsea_categorical(expression, pheno, pathways, results)}
+    results$phenotype_association[[pheno_name]] = output_seahorse$cor
+    results$GSEA[[pheno_name]] = output_seahorse$GSEA
   }
   return(results)
 }
