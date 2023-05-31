@@ -86,8 +86,11 @@ This function runs the PUMA algorithm to predict a miRNA-gene regulatory network
 }
 \examples{
 data(pandaToyData)
+pandaToyData$expression,NULL,hamming=.1,progress=TRUE)
+=======
+mirs = c("AHR","AR","ARID3A","ARNT","BRCA1","CEBPA","CREB1","DDIT3")
 pumaRes <- puma(pandaToyData$motif,
-           pandaToyData$expression,NULL,hamming=.1,progress=TRUE)
+           pandaToyData$expression,NULL,mir_file=mirs,hamming=.1,progress=TRUE)
 }
 \references{
 Kuijjer, Marieke L., et al. "PUMA: PANDA using microRNA associations." Bioinformatics 36.18 (2020): 4765-4773.
