@@ -41,7 +41,7 @@ Also, this can be generated with a list of proteins of interest by \code{\link{s
 
 \item{remove_missing}{Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is 'FALSE'.}
 
-\item{with_header}{if TRUE reads header of expression matrix}
+\item{with_header}{Boolean to read gene expression file with a header for sample names}
 }
 \value{
 When save_memory=FALSE(default), this function will return a list of three items: 
