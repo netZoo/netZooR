@@ -2,7 +2,7 @@ Package: netZooR
 Type: Package
 Title: Unified methods for the inference and analysis of gene regulatory networks
 Version: 1.4.0
-Date: 2023-03-27
+Date: 2023-06-03
 Authors@R: c(person("Marouen", "Ben Guebila",
 			email = "benguebila@hsph.harvard.edu", role = c("aut","cre"), comment = c(ORCID = "0000-0001-5934-966X")),
 	     person("Tian", "Wang", 
