@@ -23,16 +23,16 @@
 #' 
 #' 
 #' # Run PANDA for treated and control network
-#' treated_all_panda_result <- pandaPy(expr_file = treated_expression_file_path, 
-#' motif_file= motif_file_path, ppi_file = ppi_file_path, modeProcess="legacy", remove_missing = TRUE )
-#' control_all_panda_result <- pandaPy(expr_file = control_expression_file_path, 
-#' motif_file= motif_file_path, ppi_file= ppi_file_path, modeProcess="legacy", remove_missing = TRUE )
+#' #treated_all_panda_result <- pandaPy(expr_file = treated_expression_file_path, 
+#' #motif_file= motif_file_path, ppi_file = ppi_file_path, modeProcess="legacy", remove_missing = TRUE )
+#' #control_all_panda_result <- pandaPy(expr_file = control_expression_file_path, 
+#' #motif_file= motif_file_path, ppi_file= ppi_file_path, modeProcess="legacy", remove_missing = TRUE )
 #' 
 #' # access PANDA regulatory network
-#' treated_net <- treated_all_panda_result$panda
-#' control_net <- control_all_panda_result$panda
+#' #treated_net <- treated_all_panda_result$panda
+#' #control_net <- control_all_panda_result$panda
 #' 
-#' merged.panda <- pandaDiffEdges(treated_net, control_net, condition_name="treated")
+#' #merged.panda <- pandaDiffEdges(treated_net, control_net, condition_name="treated")
 #' 
 #' @export
 #'
