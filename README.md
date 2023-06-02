@@ -84,6 +84,11 @@ netZooR currently integrates:
 <b>DRAGON</b> (Determining Regulatory Associations using Graphical models on Omics Networks) <a href="https://arxiv.org/abs/2104.01690">Shutta et al.</a> is a method for estimating multiomic Gaussian graphical models (GGMs, also known as partial correlation networks) that incorporate two different omics data types. DRAGON builds off of the popular covariance shrinkage method of Ledoit and Wolf with an optimization approach that explicitly accounts for the differences in two separate omics "layers" in the shrinkage estimator. The resulting sparse covariance matrix is then inverted to obtain a precision matrix estimate and a corresponding GGM.  Although GGMs assume normally distributed data, DRAGON can be used on any type of continuous data by transforming data to approximate normality prior to network estimation. Currently, DRAGON can be applied to estimate networks with two different types of omics data. Investigators interested in applying DRAGON to more than two types of omics data can consider estimating pairwise networks and "chaining" them together.
 </details>
 
+<details>
+<summary>TIGER</summary>
+<b>TIGER</b> (Transcription Inference using Gene Expression and Regulatory Data) <a href="https://www.biorxiv.org/content/10.1101/2022.12.12.520141v1">Chen et al.</a> is a Bayesian matrix factorization framework that combines prior TF binding knowledge, such as from the DoRothEA database, with gene expression data from experiments. It estimates individual-level TF activities (TFA) and context-specific gene regulatory networks (GRN). Unlike other methods, TIGER can flexibly model activation and inhibition events, prioritize essential edges, shrink irrelevant edges towards zero using a sparse Bayesian prior, and simultaneously estimate TF activity levels and the underlying regulatory network. It is important to note that TIGER works most appropriately with large sample size datasets like TCGA to include a wide range of TFs due to its lower rank constraint.
+</details>
+
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
 
 * Plot one PANDA network in [Cytoscape](https://cytoscape.org/).
