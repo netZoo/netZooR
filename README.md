@@ -89,6 +89,11 @@ netZooR currently integrates:
 <b>TIGER</b> (Transcription Inference using Gene Expression and Regulatory Data) <a href="https://www.biorxiv.org/content/10.1101/2022.12.12.520141v1">Chen et al.</a> is a Bayesian matrix factorization framework that combines prior TF binding knowledge, such as from the DoRothEA database, with gene expression data from experiments. It estimates individual-level TF activities (TFA) and context-specific gene regulatory networks (GRN). Unlike other methods, TIGER can flexibly model activation and inhibition events, prioritize essential edges, shrink irrelevant edges towards zero using a sparse Bayesian prior, and simultaneously estimate TF activity levels and the underlying regulatory network. It is important to note that TIGER works most appropriately with large sample size datasets like TCGA to include a wide range of TFs due to its lower rank constraint.
 </details>
 
+<details>
+<summary>COBRA</summary>
+<b>COBRA</b> (Higher Order Batch Correction To Preserve Network Correlationn) is a method to correct for batch effetcs in gene coexpression network. In fact, residual batch effects can persist in gene coexpression networks even after correcting for them at the gene expression level. COBRA addresses this shortcoming by decomposing the coexpression matrix into independent components for each covariate.
+</details>
+
 * Source protein-protein interaction network from [STRINGdb](https://string-db.org/) based on a list of protein of interest.
 
 * Plot one PANDA network in [Cytoscape](https://cytoscape.org/).
