@@ -45,6 +45,7 @@ library(netZooR)
 library(fgsea)
 library(ggplot2)
 library(reshape2)
+library('visNetwork') # For network visualization
 ```
 
 
@@ -119,53 +120,91 @@ regNetWB <- pandaWB@regNet
 ```
 
 # Visualizing networks in Cytoscape
-In this section we will visualize parts of the network using the Cytoscape software.
-Download Cytoscape from: https://cytoscape.org and have the software open before calling the function.
-
-## Preparing data to plot
+In this section we will visualize parts of the network using the visNetwork package.
+Because the network is at the scale of the genome, we select only the top 200 edges by edge weight for visualization.
 ```{r}
-# We will use the function vis.panda.in.cytoscape to plot a set of nodes and edges on Cytoscape. The input for this function is a data.frame of edges to plot with 4 columns: "tf", "gene", "motif" (TF motif present or not on gene promoter), "force" (edge weight calculated by PANDA).
-lcl_vis <- reshape2::melt(pandaLCL@regNet)
-wb_vis  <- reshape2::melt(pandaWB@regNet)
-lcl_vis <- data.frame("TF"=as.character(lcl_vis[,1]),"Gene"=as.character(lcl_vis[,2]),"Motif"=NA,"Score"=as.numeric(lcl_vis[,3]),stringsAsFactors = FALSE)
-wb_vis <- data.frame("TF"=as.character(wb_vis[,1]),"Gene"=as.character(wb_vis[,2]),"Motif"=NA,"Score"=as.numeric(wb_vis[,3]),stringsAsFactors = FALSE)
-head(lcl_vis)
+nDiffs= 200 # top edges to plot (top edges with largest absolute value)
+diffNet = pandaLCL@regNet
+nTFs  = dim(diffNet)[1]
 ```
 
-## Plot the 200 highest edge weights
+VisNetwork requires an edges dataframe describing the edges in the network and a nodes dataframe describing the nodes in the network. The edges dataframe is constriucted as follows.
+
 ```{r,eval=FALSE}
-n=200 # number of edges to plot 
-top <- order(lcl_vis$Score,decreasing=T)[1:n]
-lcl_vis_top <- lcl_vis[top,]
-# Plot in cytoscape (open Cytoscape before running this command)
-visPandaInCytoscape(lcl_vis_top, network_name="LCL")
-# Here we will load a customized visual style for our network, in which TF nodes are orange circles, target gene nodes are blue squares, and edges shade and width are the edge weight (likelyhood of regulatory interaction between the TF and gene). You can further customize the network style directly from Cytoscape.
-createPandaStyle(style_name="PandaStyle")
+edges           = matrix(0L, nDiffs, 3)
+colnames(edges) = c("from","to","value")
+edges = as.data.frame(edges)
+aa    = order(as.matrix(abs(diffNet)), decreasing = TRUE)
+bb    = sort(as.matrix(abs(diffNet)), decreasing = TRUE)
+edges$value  = as.matrix(diffNet)[aa[1:nDiffs]]
+geneIdsTop   = (aa[1:nDiffs] %/% dim(diffNet)[1]) + 1
+tfIdsTop     = aa[1:nDiffs] %% dim(diffNet)[1]
+tfIdsTop[tfIdsTop == 0] = nTFs
+edges$to     = colnames(diffNet)[geneIdsTop]
+edges$from   = rownames(diffNet)[tfIdsTop]                                  
+edges$arrows = "to"   
+edges$value  = edges$value
 ```
 
+The nodes dataframe describes TF and gene nodes.
+```{r,eval=FALSE}
+nodes       = data.frame(id = unique(as.vector(as.matrix(edges[,c(1,2)]))), 
+                    label=unique(as.vector(as.matrix(edges[,c(1,2)]))))
+nodes$group = ifelse(nodes$id %in% edges$from, "TF", "gene")
+```
+
+Finally, we plot the network.
+```{r,eval=FALSE}
+net <- visNetwork(nodes, edges, width = "100%")
+net <- visGroups(net, groupname = "TF", shape = "triangle",
+                 color = list(background = "purple", border="black"))
+net <- visGroups(net, groupname = "gene", shape = "dot",       
+                 color = list(background = "teal", border="black"))
+visLegend(net, main="Legend", position="right", ncol=1) 
+```
 ## Plot the top differential edges betwen LCL and WB
+
+In this case study, we are interested in comapring LCL cell lines and their tissue of origin which is blood. Therefore we can also plot the differential network between them. We define the differential network as the difference between both networks.
+
 ```{r,eval=FALSE,warning=FALSE, message=FALSE}
-# Select the top differential edge weights betweeen LCL and whole blood
-diffRes <- pandaDiffEdges(lcl_vis, wb_vis, condition_name="LCL")
-head(diffRes)
-# Number of differential edges is:
-nrow(diffRes)
-# Select the top differential edges higher in LCL to plot in Cytoscape
-n=200 # number of edges to select from each condition
-diffResLCL <- diffRes[diffRes$LCL=="T",]
-diffResLCL <- diffResLCL[order(diffResLCL$Score,decreasing=TRUE),][1:n,]
-# Select the top differential edges higher in whole blood to plot in Cytoscape
-diffResWB <- diffRes[diffRes$LCL=="F",]
-diffResWB <- diffResWB[order(diffResWB$Score,decreasing=TRUE),][1:n,]
-# Combine top differential edges in LCL and WB to plot in Cytoscape
-diffRes_vis <- rbind(diffResLCL, diffResWB)
-# Plot the network (open Cytoscape before running this command)
-# Purple edges indicate higher edge weight in the defined "condition_name" parameter (LCL in our example), and green edges indicate higher edge weight in the other condition (whole blood in our example).
-visDiffPandaInCytoscape(diffRes_vis, condition_name = "LCL", network_name="diff.PANDA")
-# Apply the style to the network
-createDiffPandaStyle(style_name="Diff.PandaStyle", condition_name="LCL")
+nDiffs= 200 # top edges to plot (top edges with largest absolute value)
+diffNet = pandaLCL@regNet - pandaWB@regNet
 ```
 
+Then, we define the edges dataframe.
+```{r,eval=FALSE,warning=FALSE, message=FALSE}
+edges           = matrix(0L, nDiffs, 3)
+colnames(edges) = c("from","to","value")
+edges = as.data.frame(edges)
+aa    = order(as.matrix(abs(diffNet)), decreasing = TRUE)
+bb    = sort(as.matrix(abs(diffNet)), decreasing = TRUE)
+edges$value  = as.matrix(diffNet)[aa[1:nDiffs]]
+geneIdsTop   = (aa[1:nDiffs] %/% dim(diffNet)[1]) + 1
+tfIdsTop     = aa[1:nDiffs] %% dim(diffNet)[1]
+tfIdsTop[tfIdsTop == 0] = nTFs
+edges$to     = colnames(diffNet)[geneIdsTop]
+edges$from   = rownames(diffNet)[tfIdsTop]                                  
+edges$arrows = "to"   
+edges$color  = ifelse(edges$value > 0, "green", "red")
+edges$value  = abs(edges$value)
+```
+
+Then, the nodes dataframe.
+```{r,eval=FALSE,warning=FALSE, message=FALSE}
+nodes       = data.frame(id = unique(as.vector(as.matrix(edges[,c(1,2)]))), 
+                    label=unique(as.vector(as.matrix(edges[,c(1,2)]))))
+nodes$group = ifelse(nodes$id %in% edges$from, "TF", "gene")
+```
+
+Finally, we plot the network.
+```{r,eval=FALSE,warning=FALSE, message=FALSE}
+net <- visNetwork(nodes, edges, width = "100%")
+net <- visGroups(net, groupname = "TF", shape = "triangle",
+                 color = list(background = "purple", border="black"))
+net <- visGroups(net, groupname = "gene", shape = "dot",       
+                 color = list(background = "teal", border="black"))
+visLegend(net, main="Legend", position="right", ncol=1) 
+```
 # Calculating degree  
 * out-degrees of TFs: sum of the weights of outbound edges around a TF
 * in-degrees of genes: sum of the weights of inbound edges around a gene
