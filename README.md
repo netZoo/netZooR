@@ -156,7 +156,7 @@ For more details please refer to the [documentation website](https://netzoo.gith
 netZooR is also available through [Bioconda](https://bioconda.github.io/recipes/bioconductor-netzoor/README.html#package-bioconductor-netzoor)
 
 ```bash
-conda install bioconductor-netzoor
+conda install -c bioconda bioconductor-netzoor
 ```
 
 ### Python binding
