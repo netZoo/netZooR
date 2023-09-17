@@ -14,8 +14,8 @@
 #'
 #' Outputs:
 #' @return psi : impact of each covariate on the eigenvalues as a matrix of size (q, n)
-#' @return Q   : eigenvectors corresponding to non-zero eigenvalues as a list of length n
-#' @return D   : diagonal matrix of the original eigenvalues as a matrix of size (n, n)
+#' @return Q   : eigenvectors corresponding to non-zero eigenvalues as a matrix of size (g, n)
+#' @return D   : non-zero eigenvalues as a list of length n
 #' @return G   : (standardized) gene expression as a matrix of size (g, n)
 #'
 #' @examples
@@ -28,9 +28,8 @@
 #'
 #' # Run COBRA algorithm
 #' cobra_output <- cobra(X, expressionData)
-#'  
-#'  
-
+#'
+#' @export  
 cobra <- function(X, expressionData, standardize=T){
   numSamples <- ncol(expressionData)
   N <- min(ncol(expressionData),nrow(expressionData))
