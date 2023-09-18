@@ -30,6 +30,7 @@
 #' cobra_output <- cobra(X, expressionData)
 #'
 #' @export  
+
 cobra <- function(X, expressionData, standardize=T){
   numSamples <- ncol(expressionData)
   N <- min(ncol(expressionData),nrow(expressionData))
