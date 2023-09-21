@@ -8,6 +8,7 @@ TIGER(
   expr,
   prior,
   method = "VB",
+  TFexpressed = TRUE,
   signed = TRUE,
   baseline = TRUE,
   psis_loo = FALSE,
@@ -19,7 +20,8 @@ TIGER(
   a_alpha = 1,
   b_alpha = 1,
   sigmaZ = 10,
-  sigmaB = 1
+  sigmaB = 1,
+  tol = 0.005
 )
 }
 \arguments{
@@ -30,6 +32,8 @@ and columns are sampeles (cells).}
 and columns target genes.}
 
 \item{method}{Method used for Bayesian inference. "VB" or "MCMC". Defaults to "VB".}
+
+\item{TFexpressed}{TF mRNA needs to be expressed or not. Defaults to TRUE.}
 
 \item{signed}{Prior network is signed or not. Defaults to TRUE.}
 
@@ -55,6 +59,8 @@ validation to check model fitting or not. Defaults to FALSE.}
 \item{sigmaZ}{Standard deviation of TF activity Z. Default = 10.}
 
 \item{sigmaB}{Standard deviation of baseline term. Default = 1.}
+
+\item{tol}{Convergence tolerance on ELBO.. Default = 0.005.}
 }
 \value{
 A TIGER list object.

@@ -69,9 +69,10 @@ Imports:
     methods,
     dplyr,
     graphics,
-	cmdstanr,
+    cmdstanr,
     GeneNet,
-    loo
+    loo,
+    rARPACK
 License: GPL-3
 Encoding: UTF-8
 LazyData: false
