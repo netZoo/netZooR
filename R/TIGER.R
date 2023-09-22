@@ -55,8 +55,8 @@
 #' @examples
 #' data(TIGER_expr)
 #' data(TIGER_prior)
-#' TIGER(TIGER_expr,TIGER_prior)
-TIGER = function(expr,prior,method="VB",TFexpressed = TRUE,
+#' tiger(TIGER_expr,TIGER_prior)
+tiger = function(expr,prior,method="VB",TFexpressed = TRUE,
                  signed=TRUE,baseline=TRUE,psis_loo = FALSE,
                  seed=123,out_path=NULL,out_size = 300,
                  a_sigma=1,b_sigma=1,a_alpha=1,b_alpha=1,
@@ -75,7 +75,7 @@ TIGER = function(expr,prior,method="VB",TFexpressed = TRUE,
   
   #0. prepare stan input
   if (signed){
-    prior2 = prior.pp(prior[TF.name,TG.name],expr)
+    prior2 = priorPp(prior[TF.name,TG.name],expr)
     if (nrow(prior2)!=length(TF.name)){
       TFnotExp = setdiff(TF.name,rownames(prior2))
       TFnotExpEdge = prior[TFnotExp,colnames(prior2),drop=F]
@@ -292,7 +292,7 @@ adj2regulon = function(adj){
 #' @return A filtered prior network (adjacency matrix).
 #' @export
 #'
-prior.pp = function(prior,expr){
+priorPp = function(prior,expr){
   
   # filter tfs and tgs
   tf = intersect(rownames(prior),rownames(expr)) ## TF needs to express

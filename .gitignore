@@ -34,3 +34,4 @@ tests/testthat/*.vcf
 vignettes/*.npy
 docs/*.npy
 docs/reference/*.npy
+docs
