@@ -72,7 +72,7 @@ Imports:
     cmdstanr,
     GeneNet,
     loo,
-    rARPACK
+    RSpectra
 License: GPL-3
 Encoding: UTF-8
 LazyData: false
