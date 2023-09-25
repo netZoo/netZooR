@@ -45,7 +45,7 @@ cobra <- function(X, expressionData, standardize=T){
     G <- as.matrix(G)
   }
   
-  eigenG <- eigs_sym(tcrossprod(G),N)
+  eigenG <- rARPACK::eigs_sym(tcrossprod(G),N)
   
   Q <- eigenG$vectors
   D <- diag(eigenG$values)
