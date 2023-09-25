@@ -24,11 +24,11 @@ Description: netZooR unifies the implementations of several Network Zoo methods 
 Depends: R (>= 4.2.0),
    	 igraph,
 	 reticulate,
-         pandaR,
          yarn,
          matrixcalc
 Remotes: 
-	 stan-dev/cmdstanr 
+	 stan-dev/cmdstanr,
+	 jnpaulson/pandaR 
 biocViews:
 	 NetworkInference,
 	 Network,
