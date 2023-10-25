@@ -10,7 +10,7 @@
 #' Inputs:
 #' @param X               : design matrix of size (n, q), n = number of samples, q = number of covariates
 #' @param expressionData  : gene expression as a matrix of size (g, n), g = number of genes
-#' @param standardize     : boolean flag to standardize the gene expression as a pre-processing step
+#' @param method     : if pearson, the decomposition of the co-expression matrix is compouted. If pcor, cobra decompose the (regularized) partial co-expression
 #'
 #' Outputs:
 #' @return psi : impact of each covariate on the eigenvalues as a matrix of size (q, n)
@@ -31,21 +31,26 @@
 #'
 #' @export  
 
-cobra <- function(X, expressionData, standardize=T){
+cobra <- function(X, expressionData, method = "pearson"){
+  
+  if(!(method %in% c("pearson", "pcor"))){
+    stop("Only Pearson and pcor methods are supported. Please make sure to provide a valid method argument.")
+  }
+  
   numSamples <- ncol(expressionData)
   N <- min(ncol(expressionData),nrow(expressionData))
-  
-  if (standardize){
+  C <- 0
+  if(method == "pearson"){
     G_star <- expressionData-rowMeans(expressionData)
     G <- (G_star/sqrt(rowSums(G_star^2)))
     G <- as.matrix(G)
-  } else {
-    G <- expressionData
-    G <- (G/sqrt(rowSums(G^2)))
-    G <- as.matrix(G)
+    C <- tcrossprod(G)
+  }
+  if(method == "pcor"){
+   C <- pcor.shrink(t(expressionData))
   }
   
-  eigenG <- rARPACK::eigs_sym(tcrossprod(G),N)
+  eigenG <- rARPACK::eigs_sym(C,N)
   
   Q <- eigenG$vectors
   D <- diag(eigenG$values)
