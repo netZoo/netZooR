@@ -73,7 +73,8 @@ Imports:
     cmdstanr,
     GeneNet,
     loo,
-    rARPACK
+    rARPACK,
+    corpcor
 License: GPL-3
 Encoding: UTF-8
 LazyData: false

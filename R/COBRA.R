@@ -31,9 +31,9 @@
 #'
 #' @export  
 
-cobra <- function(X, expressionData, method = "pearson"){
+cobra <- function(X, expressionData, method = "pearson", layer2 = NULL){
   
-  if(!(method %in% c("pearson", "pcor"))){
+  if(!(method %in% c("pearson", "pcorsh", "dragon"))){
     stop("Only Pearson and pcor methods are supported. Please make sure to provide a valid method argument.")
   }
   
@@ -42,12 +42,20 @@ cobra <- function(X, expressionData, method = "pearson"){
   C <- 0
   if(method == "pearson"){
     G_star <- expressionData-rowMeans(expressionData)
-    G <- (G_star/sqrt(rowSums(G_star^2)))
-    G <- as.matrix(G)
-    C <- tcrossprod(G)
+    expressionData <- (G_star/sqrt(rowSums(G_star^2)))
+    expressionData <- as.matrix(expressionData)
+    C <- tcrossprod(expressionData)
   }
-  if(method == "pcor"){
-   C <- pcor.shrink(t(expressionData))
+  if(method == "dragon"){
+    if(is.null(layer2)){
+      method <- "pcorsh"
+    }
+    else{
+      C <- dragon(t(expressionData), t(layer2), pval=FALSE)$cov
+    }
+  }
+  if(method == "pcorsh"){
+   C <- matrix(as.numeric(pcor.shrink(t(expressionData))), dim(expressionData)[1], dim(expressionData)[1])
   }
   
   eigenG <- rARPACK::eigs_sym(C,N)
@@ -57,11 +65,11 @@ cobra <- function(X, expressionData, method = "pearson"){
   
   hatmat <- ginv(crossprod(X))%*%t(X)
   Qinv <- ginv(Q) 
-  QinvG <- Qinv%*%(G)
+  QinvG <- Qinv%*%(expressionData)
   
   est <- t(sapply(seq_len(nrow(hatmat)), function(hatmatRow){
     diag(QinvG%*%(numSamples*diag(hatmat[hatmatRow,]))%*%t(QinvG))
   }))
   
-  list(psi=est, Q=Q, D=eigenG$values, G=G)
+  list(psi=est, Q=Q, D=eigenG$values, G=expressionData)
 }
