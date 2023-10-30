@@ -31,14 +31,16 @@
 #'
 #' @export  
 
-cobra <- function(X, expressionData, method = "pearson", layer2 = NULL){
+cobra <- function(X, expressionData, method = "pearson"){
   
   if(!(method %in% c("pearson", "pcorsh", "dragon"))){
     stop("Only Pearson and pcor methods are supported. Please make sure to provide a valid method argument.")
   }
   
   numSamples <- ncol(expressionData)
-  N <- min(ncol(expressionData),nrow(expressionData))
+  if(method != "dragon"){
+    N <- min(ncol(expressionData),nrow(expressionData)) 
+  }
   C <- 0
   if(method == "pearson"){
     G_star <- expressionData-rowMeans(expressionData)
@@ -47,12 +49,17 @@ cobra <- function(X, expressionData, method = "pearson", layer2 = NULL){
     C <- tcrossprod(expressionData)
   }
   if(method == "dragon"){
-    if(is.null(layer2)){
-      method <- "pcorsh"
+    if(length(expressionData) != 2){
+      stop("Dragon needs two layers, please provide a list of two matrices in expressionData or consider using the pcorsh argument")
     }
-    else{
-      C <- dragon(t(expressionData), t(layer2), pval=FALSE)$cov
+    if(dim(expressionData[[1]])[2] != dim(expressionData[[2]])[2]){
+      stop("Dragon layers in expressionData list must have the same number of samples")
     }
+    C <- dragon(t(expressionData[[1]]), layer2 = t(expressionData[[2]]), pval=FALSE)$cov
+    N <- dim(expressionData[[1]])[2]
+    numSamples <- N
+    expressionData <- rbind(expressionData[[1]], expressionData[[2]])
+    print(dim(expressionData))
   }
   if(method == "pcorsh"){
    C <- matrix(as.numeric(pcor.shrink(t(expressionData))), dim(expressionData)[1], dim(expressionData)[1])
