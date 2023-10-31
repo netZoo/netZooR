@@ -10,7 +10,7 @@
 #' Inputs:
 #' @param X               : design matrix of size (n, q), n = number of samples, q = number of covariates
 #' @param expressionData  : gene expression as a matrix of size (g, n), g = number of genes
-#' @param method     : if pearson, the decomposition of the co-expression matrix is compouted. If pcor, cobra decompose the (regularized) partial co-expression
+#' @param method     : if pearson, the decomposition of the co-expression matrix is compouted. If pcorsh, COBRA decomposes the regularized partial co-expression
 #'
 #' Outputs:
 #' @return psi : impact of each covariate on the eigenvalues as a matrix of size (q, n)
