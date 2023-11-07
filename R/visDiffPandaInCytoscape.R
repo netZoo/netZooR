@@ -14,7 +14,6 @@
 #' visDiffPandaInCytoscape(merged.panda,condition_name = "condition1", network_name="diff.PANDA" )
 #' }
 #' @return Plot two PANDA networsk in Cytoscape
-#' @import RCy3
 #' @export 
 #' 
 visDiffPandaInCytoscape <- function(merged_panda, condition_name = "cond.1", network_name="diff.PANDA"){

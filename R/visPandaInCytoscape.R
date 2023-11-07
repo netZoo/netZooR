@@ -27,7 +27,6 @@
 #' visPandaInCytoscape(panda.net, network.name="PANDA")
 #' }
 #' @return PANDA network in Cytoscape
-#' @import RCy3
 #' @export 
 visPandaInCytoscape <- function(panda.net, network_name="PANDA"){
   # launch Cytoscape 3.6.1 or greater

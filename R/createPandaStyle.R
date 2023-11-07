@@ -4,7 +4,6 @@
 #' @param style_name Character string indicating the style name. Defaults to "PandaStyle"
 #'
 #' @return A visual style in Cytoscape Control Panel under "Style" button.
-#' @import RCy3
 #' @examples
 #' # Here we will load a customized visual style for our network, in which TF 
 #' # nodes are orange circles, target gene nodes are blue squares, and edges 

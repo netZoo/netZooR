@@ -1,8 +1,8 @@
 Package: netZooR
 Type: Package
 Title: Unified methods for the inference and analysis of gene regulatory networks
-Version: 1.5.4
-Date: 2023-09-25
+Version: 1.4.0
+Date: 2023-06-03
 Authors@R: c(person("Marouen", "Ben Guebila",
 			email = "benguebila@hsph.harvard.edu", role = c("aut","cre"), comment = c(ORCID = "0000-0001-5934-966X")),
 	     person("Tian", "Wang", 
@@ -18,18 +18,19 @@ Authors@R: c(person("Marouen", "Ben Guebila",
          person("Des", "Weighill",
                         email = "",role = "aut", comment = c(ORCID = "0000-0003-4979-5871")),
 		 person("Kate", "Shutta",
-                        email = "",role = "aut", comment = c(ORCID = "0000-0003-0402-3771")))
+                        email = "",role = "aut", comment = c(ORCID = "0000-0003-0402-3771")),
+	person("Tara", "Eicher", email = "teicher@hsph.harvard.edu", role = "aut", comment = c(ORCID = "0000-0003-1809-4458")))
 Maintainer: Marouen Ben Guebila <marouen.b.guebila@gmail.com>
 Description: netZooR unifies the implementations of several Network Zoo methods (netzoo, netzoo.github.io) into a single package by creating interfaces between network inference and network analysis methods. Currently, the package has 3 methods for network inference including PANDA and its optimized implementation OTTER (network reconstruction using mutliple lines of biological evidence), LIONESS (single-sample network inference), and EGRET (genotype-specific networks). Network analysis methods include CONDOR (community detection), ALPACA (differential community detection), CRANE (significance estimation of differential modules), MONSTER (estimation of network transition states). In addition, YARN allows to process gene expresssion data for tissue-specific analyses and SAMBAR infers missing mutation data based on pathway information.
 Depends: R (>= 4.2.0),
    	 igraph,
 	 reticulate,
+         pandaR,
          yarn,
-	 pandaR,
          matrixcalc
 Remotes: 
 	 stan-dev/cmdstanr,
-	 jnpaulson/pandaR 
+	cytoscape/RCy3 
 biocViews:
 	 NetworkInference,
 	 Network,
@@ -39,7 +40,6 @@ biocViews:
          Microarray,   
          GraphAndNetwork
 Imports: 
-    RCy3,
     viridisLite,
     STRINGdb,
     Biobase,
@@ -70,10 +70,9 @@ Imports:
     methods,
     dplyr,
     graphics,
-    cmdstanr,
+	cmdstanr,
     GeneNet,
-    loo,
-    rARPACK
+    loo
 License: GPL-3
 Encoding: UTF-8
 LazyData: false
