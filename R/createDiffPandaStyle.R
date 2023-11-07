@@ -6,6 +6,7 @@
 #'        and all edges belong to this condition or phenotype will be represented as purple, otherwise, green.
 #'
 #' @return a visual style in Cytoscape Control Panel under "Style" button.
+#' @import RCy3
 #' @export
 
 createDiffPandaStyle <- function(style_name="Diff.PandaStyle", condition_name="cond.1"){

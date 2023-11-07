@@ -13,10 +13,11 @@
 #' \donttest{
 #' createPandaStyle(style_name="PandaStyle")
 #' }
+#' @import RCy3
 #' @export
 
 createPandaStyle <- function(style_name="PandaStyle"){
-  
+
   # node properties
   nodeShape <- mapVisualProperty('node shape','group','d',c("TF","Gene"),c("ELLIPSE","RECTANGLE"))
   nodeColor <- mapVisualProperty('node fill color', 'group','d', c("TF","Gene"), c('#FD7622', '#499df3'))
