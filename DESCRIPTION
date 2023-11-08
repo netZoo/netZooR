@@ -39,7 +39,8 @@ biocViews:
          Transcription, 
          Microarray,   
          GraphAndNetwork
-Imports: 
+Imports:
+    RCy3, 
     viridisLite,
     STRINGdb,
     Biobase,
