@@ -40,7 +40,6 @@ biocViews:
          Microarray,   
          GraphAndNetwork
 Imports: 
-    RCy3,
     viridisLite,
     STRINGdb,
     Biobase,
