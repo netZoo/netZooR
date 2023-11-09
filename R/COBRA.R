@@ -10,7 +10,7 @@
 #' Inputs:
 #' @param X               : design matrix of size (n, q), n = number of samples, q = number of covariates
 #' @param expressionData  : gene expression as a matrix of size (g, n), g = number of genes
-#' @param standardize     : boolean flag to standardize the gene expression as a pre-processing step
+#' @param method     : if pearson, the decomposition of the co-expression matrix is compouted. If pcorsh, COBRA decomposes the regularized partial co-expression
 #'
 #' Outputs:
 #' @return psi : impact of each covariate on the eigenvalues as a matrix of size (q, n)
@@ -31,32 +31,52 @@
 #'
 #' @export  
 
-cobra <- function(X, expressionData, standardize=T){
-  numSamples <- ncol(expressionData)
-  N <- min(ncol(expressionData),nrow(expressionData))
+cobra <- function(X, expressionData, method = "pearson"){
   
-  if (standardize){
-    G_star <- expressionData-rowMeans(expressionData)
-    G <- (G_star/sqrt(rowSums(G_star^2)))
-    G <- as.matrix(G)
-  } else {
-    G <- expressionData
-    G <- (G/sqrt(rowSums(G^2)))
-    G <- as.matrix(G)
+  if(!(method %in% c("pearson", "pcorsh", "dragon"))){
+    stop("Only Pearson and pcor methods are supported. Please make sure to provide a valid method argument.")
   }
   
-  eigenG <- rARPACK::eigs_sym(tcrossprod(G),N)
+  numSamples <- ncol(expressionData)
+  if(method != "dragon"){
+    N <- min(ncol(expressionData),nrow(expressionData)) 
+  }
+  C <- 0
+  if(method == "pearson"){
+    G_star <- expressionData-rowMeans(expressionData)
+    expressionData <- (G_star/sqrt(rowSums(G_star^2)))
+    expressionData <- as.matrix(expressionData)
+    C <- tcrossprod(expressionData)
+  }
+  if(method == "dragon"){
+    if(length(expressionData) != 2){
+      stop("Dragon needs two layers, please provide a list of two matrices in expressionData or consider using the pcorsh argument")
+    }
+    if(dim(expressionData[[1]])[2] != dim(expressionData[[2]])[2]){
+      stop("Dragon layers in expressionData list must have the same number of samples")
+    }
+    C <- dragon(t(expressionData[[1]]), layer2 = t(expressionData[[2]]), pval=FALSE)$cov
+    N <- dim(expressionData[[1]])[2]
+    numSamples <- N
+    expressionData <- rbind(expressionData[[1]], expressionData[[2]])
+    print(dim(expressionData))
+  }
+  if(method == "pcorsh"){
+   C <- matrix(as.numeric(pcor.shrink(t(expressionData))), dim(expressionData)[1], dim(expressionData)[1])
+  }
+  
+  eigenG <- rARPACK::eigs_sym(C,N)
   
   Q <- eigenG$vectors
   D <- diag(eigenG$values)
   
   hatmat <- ginv(crossprod(X))%*%t(X)
   Qinv <- ginv(Q) 
-  QinvG <- Qinv%*%(G)
+  QinvG <- Qinv%*%(expressionData)
   
   est <- t(sapply(seq_len(nrow(hatmat)), function(hatmatRow){
     diag(QinvG%*%(numSamples*diag(hatmat[hatmatRow,]))%*%t(QinvG))
   }))
   
-  list(psi=est, Q=Q, D=eigenG$values, G=G)
+  list(psi=est, Q=Q, D=eigenG$values, G=expressionData)
 }
