@@ -29,7 +29,8 @@ Depends: R (>= 4.2.0),
          matrixcalc
 Remotes: 
 	 stan-dev/cmdstanr,
-	 jnpaulson/pandaR 
+	 jnpaulson/pandaR, 
+	 cytoscape/RCy3
 biocViews:
 	 NetworkInference,
 	 Network,
@@ -38,8 +39,8 @@ biocViews:
          Transcription, 
          Microarray,   
          GraphAndNetwork
-Imports: 
-    RCy3,
+Imports:
+    RCy3, 
     viridisLite,
     STRINGdb,
     Biobase,
