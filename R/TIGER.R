@@ -55,8 +55,8 @@
 #' @examples
 #' data(TIGER_expr)
 #' data(TIGER_prior)
-#' TIGER(TIGER_expr,TIGER_prior)
-TIGER = function(expr,prior,method="VB",TFexpressed = TRUE,
+#' tiger(TIGER_expr,TIGER_prior)
+tiger = function(expr,prior,method="VB",TFexpressed = TRUE,
                  signed=TRUE,baseline=TRUE,psis_loo = FALSE,
                  seed=123,out_path=NULL,out_size = 300,
                  a_sigma=1,b_sigma=1,a_alpha=1,b_alpha=1,
@@ -75,7 +75,7 @@ TIGER = function(expr,prior,method="VB",TFexpressed = TRUE,
   
   #0. prepare stan input
   if (signed){
-    prior2 = prior.pp(prior[TF.name,TG.name],expr)
+    prior2 = priorPp(prior[TF.name,TG.name],expr)
     if (nrow(prior2)!=length(TF.name)){
       TFnotExp = setdiff(TF.name,rownames(prior2))
       TFnotExpEdge = prior[TFnotExp,colnames(prior2),drop=F]
@@ -94,7 +94,6 @@ TIGER = function(expr,prior,method="VB",TFexpressed = TRUE,
   n_genes = dim(X)[1]
   n_samples = dim(X)[2]
   n_TFs = dim(P)[1]
-  
   P = as.vector(t(P)) ## row=TG, col=TF
   P_zero = as.array(which(P==0))
   P_ones = as.array(which(P!=0))
@@ -110,14 +109,13 @@ TIGER = function(expr,prior,method="VB",TFexpressed = TRUE,
   sign = as.integer(signed)
   baseline = as.integer(baseline)
   psis_loo = as.integer(psis_loo)
-  
   data_to_model = list(n_genes = n_genes, n_samples = n_samples, n_TFs = n_TFs,X = as.matrix(X), P = P,
                        P_zero = P_zero, P_ones = P_ones,P_negs = P_negs, P_poss = P_poss, P_blur = P_blur,
                        n_zero = n_zero,n_ones = n_ones,n_negs = n_negs, n_poss = n_poss, n_blur = n_blur,
                        n_all = n_all,sign = sign,baseline = baseline,psis_loo = psis_loo,
                        sigmaZ = sigmaZ, sigmaB = sigmaB,
                        a_sigma = a_sigma,b_sigma = b_sigma,a_alpha = a_alpha,b_alpha = b_alpha)
-  
+
   #1. compile stan model, only once
   f = cmdstanr::write_stan_file(TIGER_C) # save to .stan file in root folder
   #mod = cmdstanr::cmdstan_model(f,cpp_options = list(stan_threads = TRUE)) # compile stan program, allow within-chain parallel
@@ -185,7 +183,6 @@ TIGER = function(expr,prior,method="VB",TFexpressed = TRUE,
   colnames(IW) = TF.name
   rownames(IZ) = TF.name
   colnames(IZ) = sample.name
-  
   # check model fitting
   if (psis_loo){
     message("Pareto Smooth Importance Sampling...")
@@ -265,7 +262,6 @@ el2regulon = function(el) {
     tfmode = stats::setNames(regulon$weight, regulon$to)
     list(tfmode = tfmode, likelihood = rep(1, length(tfmode)))
   })
-  
   return(viper_regulons)
 }
 
@@ -292,7 +288,7 @@ adj2regulon = function(adj){
 #' @return A filtered prior network (adjacency matrix).
 #' @export
 #'
-prior.pp = function(prior,expr){
+priorPp = function(prior,expr){
   
   # filter tfs and tgs
   tf = intersect(rownames(prior),rownames(expr)) ## TF needs to express
@@ -319,7 +315,6 @@ prior.pp = function(prior,expr){
   A_ij = P_ij
   A_ij = A_ij[rowSums(A_ij!=0)>0,]
   A_ij = A_ij[,colSums(A_ij!=0)>0]
-  
   return(A_ij)
 }
 
