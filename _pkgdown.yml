@@ -1,61 +1,140 @@
+template:
+  bootstrap: 5
 destination: docs
 reference:
 - title: Main functions
   desc:  main functions to run each algorithm
   contents:
-  - panda.py
-  - create.condor.object
-  - panda.to.condor.object
-  - lioness.py
+  - pandaPy
+  - createCondorObject
   - lioness
   - alpaca
-  - panda.to.alpaca
   - sambar
   - monster
   - otter
-- title: Plot functions
-  desc: function to plot the networks and community structures.
+  - cobra
+  - puma
+  - spider
+  - tiger
+  - runEgret
+  - dragon
+  - craneBipartite
+
+- title: PANDA
+  desc: All functions of PANDA
   contents:
-  - create.panda.style
-  - create.diff.panda.style
-  - condor.plot.communities
-  - condor.plot.heatmap
-  - starts_with("vis.")
-- title: PANDA 
-  desc: All function of PANDA
-  contents:
-  - panda.py
-  - panda.to.condor.object
-  - panda.to.alpaca
-  - panda.diff.edges
-  - create.panda.style
-  - vis.panda.in.cytoscape
-  - create.panda.style
-  - vis.diff.panda.in.cytoscape
-  - create.diff.panda.style
+  - pandaPy
+  - pandaToCondorObject
+  - pandaToAlpaca
+  - pandaDiffEdges
+  - visPandaInCytoscape
+  - createPandaStyle
+
 - title: CONDOR
-  desc: All fucntions of CONDOR
-  contents: 
+  desc: All functions of CONDOR
+  contents:
+  - createCondorObject
   - starts_with("condor")
-  - create.condor.object
-- title: LIONESS 
+
+
+- title: LIONESS
   desc: All functions of LIONESS
-  contents: 
-  - lioness.py
+  contents:
+  - lionessPy
   - lioness
+
 - title: ALPACA
   desc: All functions of ALPACA
   contents:
   - starts_with("alpaca")
-- title: SAMBAR 
+
+- title: SAMBAR
   desc: All functions of SAMBAR
   contents:
   - starts_with("sambar")
+
 - title: MONSTER
   desc: All functions of MONSTER
   contents:
   - starts_with("monster")
+
 - title: OTTER
-  desc: All functions of OTTER
+  desc: OTTER functions
   contents:
-  - starts_with("otter")
+  - otter
+
+- title : TIGER
+  desc: TIGER functions
+  contents:
+  - tiger
+  - TIGER_expr
+  - TIGER_prior
+  - adj2regulon
+  - priorPp
+
+- title : COBRA
+  desc: COBRA functions
+  contents:
+  - cobra
+
+- title: CRANE
+  desc: CRANE functions
+  contents:
+  - craneBipartite
+  - craneUnipartite
+  - elistToAdjMat
+  - elistSort
+  - elistRemoveTags
+  - elistSort
+  - isElist
+  - adjMatToElist
+  - el2adj
+  - el2regulon
+  - elistIsEdgeOrderEqual
+  - elistAddTags
+  - adj2el
+  - jutterDegree
+
+- title: DRAGON
+  desc: DRAGON functions
+  contents:
+  - dragon
+
+- title: SPIDER
+  desc: SPIDER functions
+  contents:
+  - spider
+  - degreeAdjust
+
+- title: PUMA
+  desc: PUMA functions
+  contents:
+  - puma
+
+- title: EGRET
+  desc: EGRET functions
+  contents:
+  - runEgret
+
+- title: Plotting functions
+  desc: function to plot the networks and community structures.
+  contents:
+  - createPandaStyle
+  - condorPlotCommunities
+  - condorPlotHeatmap
+
+- title: Helper functions
+  desc: miscellaneous function
+  contents:
+  - sourcePPI
+  - pandaToCondorObject
+  - pandaToAlpaca
+
+- title: Data
+  desc: Input example data files
+  contents:
+  - yeast
+  - small1976
+  - mut.ucec
+  - exon.size
+  - genes
