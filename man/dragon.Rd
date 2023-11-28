@@ -4,9 +4,6 @@
 \alias{dragon}
 \title{Run DRAGON in R.}
 \usage{
-<<<<<<< HEAD
-dragon(layer1, layer2, pval = F, gradient = "finite_difference", verbose = F)
-=======
 dragon(
   layer1,
   layer2,
@@ -14,7 +11,7 @@ dragon(
   gradient = "finite_difference",
   verbose = FALSE
 )
->>>>>>> d64817e618f3d59f34f7de43ed6c678fb63774f7
+
 }
 \arguments{
 \item{layer1}{: first layer of omics data; rows: samples (order must match layer2), columns: variables}
