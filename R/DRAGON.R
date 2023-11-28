@@ -301,7 +301,7 @@ get_partial_correlation_from_precision = function(Theta,selfEdges=F)
   # by default, does not return self edges (diagonal is set to zero)
   ggm = -cov2cor(Theta)
   if(!selfEdges)
-    ggm[diag(ggm)] = 0
+    diag(ggm) = 0
   return(ggm)
 }
 
