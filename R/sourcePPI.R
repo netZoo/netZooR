@@ -1,6 +1,8 @@
 #' Source the Protein-Protein interaction in STRING database
 #' 
-#' This function is able to use a list of Transcription Factors(TF) of interest to source the Protein-Protein interactions (PPI)in STRING database 
+#' This function uses a list of Transcription Factors (TF) of interest to source the Protein-Protein interactions (PPI) from STRING database using all types of interactions not only the physical subnetwork
+#' Important: this function produces a simple unweighted network for tutorial purposes, and does not support weighted PPI edges for the moment.
+#' For more complex PPI network modeling, consider pulling the PPI network directly from STRINGdb directly or through their R package.
 #'
 #' @param TF a data frame with one column indicating the TF of interest
 #' @param STRING.version a numeric vector indicating the STRING version. Default valuve is 10

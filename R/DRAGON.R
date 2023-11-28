@@ -5,7 +5,11 @@
 #   X_mean = np.mean(X_temp, axis=0)
 #   return (X_temp - X_mean) / X_std
 
+<<<<<<< HEAD
 scale = function(x,bias=F)
+=======
+scale = function(x,bias=FALSE)
+>>>>>>> d64817e618f3d59f34f7de43ed6c678fb63774f7
 {
   # sd does 1/(n-1), python does 1/n
   # use the bias option for exact match with python
@@ -135,8 +139,13 @@ risk = function(gamma, const, t11, t12, t21, t22, t3, t4)
 # def estimate_penalty_parameters_dragon(X1, X2):
 estimatePenaltyParameters = function(X1,X2)
 {
+<<<<<<< HEAD
   # X1 = matrix(c(1,2,3,1,5,12),nrow=3,byrow=T)
   # X2 = matrix(c(9,7,8),nrow=3,byrow=T)
+=======
+  # X1 = matrix(c(1,2,3,1,5,12),nrow=3,byrow=TRUE)
+  # X2 = matrix(c(9,7,8),nrow=3,byrow=TRUE)
+>>>>>>> d64817e618f3d59f34f7de43ed6c678fb63774f7
   # X1 is omics matrix 1, dimensions n x p1 
   # X2 is omics matrix 2, dimensions n x p2
   # The matrices should have the same ordering by samples
@@ -233,7 +242,11 @@ estimatePenaltyParameters = function(X1,X2)
               method="L-BFGS-B",
               lower=c(0,0),
               upper=c(1,1),
+<<<<<<< HEAD
               control = list(trace=T,pgtol = 1e-15))
+=======
+              control = list(trace=TRUE,pgtol = 1e-15))
+>>>>>>> d64817e618f3d59f34f7de43ed6c678fb63774f7
   
   # reparameterize
   lambdas = c(1-res$par[1]^2, 1-res$par[2]^2)
@@ -296,12 +309,16 @@ get_precision_matrix_dragon = function(X1, X2, lambdas)
   #  mu = np.mean(X, axis=0)
 }
 
+<<<<<<< HEAD
 get_partial_correlation_from_precision = function(Theta,selfEdges=F)
+=======
+get_partial_correlation_from_precision = function(Theta,selfEdges=FALSE)
+>>>>>>> d64817e618f3d59f34f7de43ed6c678fb63774f7
 {
   # by default, does not return self edges (diagonal is set to zero)
   ggm = -cov2cor(Theta)
   if(!selfEdges)
-    diag(ggm) = 0
+    ggm[diag(ggm)] = 0
   return(ggm)
 }
 
@@ -358,7 +375,12 @@ estimate_p_values_dragon = function(r, n, p1, p2, lambdas, kappa="estimate",seed
 #' @param layer1 : first layer of omics data; rows: samples (order must match layer2), columns: variables
 #' @param layer2 : second layer of omics data; rows: samples (order must match layer1), columns: variables.
 #' @param pval : calculate p-values for network edges. Not yet implemented in R; available in netZooPy.
+<<<<<<< HEAD
 #' @param gradient : method for estimating parameters of p-value distribution, applies only if p-val == T. default = "finite_difference"; other option = "exact"
+=======
+#' @param gradient : method for estimating parameters of p-value distribution, applies only if p-val == TRUE. default = "finite_difference"; other option = "exact"
+#' @param verbose : verbosity level (TRUE/FALSE)
+>>>>>>> d64817e618f3d59f34f7de43ed6c678fb63774f7
 #' @return A list of model results. cov : the shrunken covariance matrix
 #' \itemize{
 #'  \item{\code{cov}}{  the shrunken covariance matrix}
@@ -370,7 +392,11 @@ estimate_p_values_dragon = function(r, n, p1, p2, lambdas, kappa="estimate",seed
 #' }
 #' 
 #' @export
+<<<<<<< HEAD
 dragon = function(layer1,layer2,pval = F,gradient = "finite_difference", verbose = F)
+=======
+dragon = function(layer1,layer2,pval = FALSE,gradient = "finite_difference", verbose = FALSE)
+>>>>>>> d64817e618f3d59f34f7de43ed6c678fb63774f7
 {
   if(verbose)
     print("[netZooR::dragon] Estimating penalty parameters...")

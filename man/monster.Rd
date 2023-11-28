@@ -71,7 +71,7 @@ BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y
 data(yeast)
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
 yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
-monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
+#monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 # Example with provided networks
 \donttest{
 pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)

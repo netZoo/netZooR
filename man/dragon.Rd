@@ -4,7 +4,17 @@
 \alias{dragon}
 \title{Run DRAGON in R.}
 \usage{
+<<<<<<< HEAD
 dragon(layer1, layer2, pval = F, gradient = "finite_difference", verbose = F)
+=======
+dragon(
+  layer1,
+  layer2,
+  pval = FALSE,
+  gradient = "finite_difference",
+  verbose = FALSE
+)
+>>>>>>> d64817e618f3d59f34f7de43ed6c678fb63774f7
 }
 \arguments{
 \item{layer1}{: first layer of omics data; rows: samples (order must match layer2), columns: variables}
@@ -13,7 +23,9 @@ dragon(layer1, layer2, pval = F, gradient = "finite_difference", verbose = F)
 
 \item{pval}{: calculate p-values for network edges. Not yet implemented in R; available in netZooPy.}
 
-\item{gradient}{: method for estimating parameters of p-value distribution, applies only if p-val == T. default = "finite_difference"; other option = "exact"}
+\item{gradient}{: method for estimating parameters of p-value distribution, applies only if p-val == TRUE. default = "finite_difference"; other option = "exact"}
+
+\item{verbose}{: verbosity level (TRUE/FALSE)}
 }
 \value{
 A list of model results. cov : the shrunken covariance matrix
