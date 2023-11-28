@@ -11,7 +11,6 @@ dragon(
   gradient = "finite_difference",
   verbose = FALSE
 )
-
 }
 \arguments{
 \item{layer1}{: first layer of omics data; rows: samples (order must match layer2), columns: variables}
