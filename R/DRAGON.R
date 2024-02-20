@@ -5,6 +5,7 @@
 #   X_mean = np.mean(X_temp, axis=0)
 #   return (X_temp - X_mean) / X_std
 
+
 scale = function(x,bias=FALSE)
 {
   # sd does 1/(n-1), python does 1/n
@@ -234,7 +235,7 @@ estimatePenaltyParameters = function(X1,X2)
               lower=c(0,0),
               upper=c(1,1),
               control = list(trace=TRUE,pgtol = 1e-15))
-  
+
   # reparameterize
   lambdas = c(1-res$par[1]^2, 1-res$par[2]^2)
   return(list("lambdas"=lambdas,"gammas"=res$par,"optim_result"=res,"risk_grid" = riskgrid))
@@ -296,12 +297,13 @@ get_precision_matrix_dragon = function(X1, X2, lambdas)
   #  mu = np.mean(X, axis=0)
 }
 
+
 get_partial_correlation_from_precision = function(Theta,selfEdges=FALSE)
 {
   # by default, does not return self edges (diagonal is set to zero)
   ggm = -cov2cor(Theta)
   if(!selfEdges)
-    ggm[diag(ggm)] = 0
+    diag(ggm) = 0
   return(ggm)
 }
 

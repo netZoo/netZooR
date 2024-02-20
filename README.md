@@ -186,7 +186,7 @@ To report a bug, please open a new [issue](https://github.com/netZoo/netZooR/iss
 
 ## Tutorials
 For more details please refer to the [documentation website](https://netzoo.github.io/netZooR/). Tutorials are available at the top navigation bar **Articles/** for basic usage and application cases.
-Or use `browseVignettes("netZooR")` after installing the package. Also check [netbooks](http://netbooks.networkmedicine.org) to go through the  tutorials on a Jupyter notebook cloud server.
+Or use `browseVignettes("netZooR")` after installing the package. [Netbooks](http://netbooks.networkmedicine.org) deploys tutorials on a Jupyter notebook cloud server to get you running without any installation.
 
 ## Contribution and Development
 Contributions are welcome! The contribution guide to netZooR can be found [here](https://netzoo.github.io/contribute/contribute/). 
