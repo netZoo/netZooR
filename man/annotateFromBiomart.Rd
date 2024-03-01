@@ -38,9 +38,9 @@ Annotate your Expression Set with biomaRt
 }
 \examples{
 system('wget https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/bladder.rdata')
-system('mv bladder.rdata ../data/')
+system('cp bladder.rdata ../data/')
 system('wget https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/skin.rdata')
-system('mv skin.rdata ../data/')
+system('cp skin.rdata ../data/')
 data(skin)
 # subsetting and changing column name just for a silly example
 skin <- skin[1:10,]
