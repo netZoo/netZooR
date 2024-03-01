@@ -37,7 +37,6 @@ ExpressionSet object with a fuller featureData.
 Annotate your Expression Set with biomaRt
 }
 \examples{
-
 data(skin)
 # subsetting and changing column name just for a silly example
 skin <- skin[1:10,]
