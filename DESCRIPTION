@@ -1,7 +1,7 @@
 Package: netZooR
 Type: Package
 Title: Unified methods for the inference and analysis of gene regulatory networks
-Version: 1.5.7
+Version: 1.5.8
 Date: 2024-02-29
 Authors@R: c(person("Marouen", "Ben Guebila",
 			email = "benguebila@hsph.harvard.edu", role = c("aut","cre"), comment = c(ORCID = "0000-0001-5934-966X")),
@@ -25,7 +25,8 @@ Depends: R (>= 4.2.0),
    igraph,
 	 reticulate,
 	 pandaR,
-   matrixcalc
+   matrixcalc,
+   Biobase
 Remotes: 
 	 stan-dev/cmdstanr,
 	 jnpaulson/pandaR, 
@@ -74,7 +75,15 @@ Imports:
     GeneNet,
     loo,
     rARPACK,
-    corpcor
+    corpcor,
+    biomaRt,
+    downloader,
+    edgeR,
+    limma,
+    preprocessCore,
+    readr,
+    RColorBrewer,
+    quantro
 License: GPL-3
 Encoding: UTF-8
 LazyData: false
