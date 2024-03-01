@@ -37,10 +37,8 @@ ExpressionSet object with a fuller featureData.
 Annotate your Expression Set with biomaRt
 }
 \examples{
-download.file('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/bladder.rdata',destfile='data/bladder.rdata')
-system(print('hello'))
-system('ls')
-download.file('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/skin',destfile='data/skin.rdata')
+download.file('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/bladder.rdata',destfile='netZooR/data/bladder.rdata')
+download.file('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/skin',destfile='netZooR/data/skin.rdata')
 data(skin)
 # subsetting and changing column name just for a silly example
 skin <- skin[1:10,]
