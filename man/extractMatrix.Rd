@@ -23,7 +23,7 @@ If normalized = TRUE then the log paramater is ignored.
 \examples{
 
 data(skin)
-head(yarn:::extractMatrix(skin,normalized=FALSE,log=TRUE))
-head(yarn:::extractMatrix(skin,normalized=FALSE,log=FALSE))
+head(netZooR:::extractMatrix(skin,normalized=FALSE,log=TRUE))
+head(netZooR:::extractMatrix(skin,normalized=FALSE,log=FALSE))
 
 }

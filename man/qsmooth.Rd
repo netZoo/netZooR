@@ -37,6 +37,6 @@ This function was modified from github user kokrah.
 }
 \examples{
 data(skin)
-head(yarn:::qsmooth(skin,groups=pData(skin)$SMTSD))
+head(netZooR:::qsmooth(skin,groups=pData(skin)$SMTSD))
 
 }

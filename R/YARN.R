@@ -230,8 +230,8 @@ downloadGTEx <- function(type = "genes", file = NULL, ...) {
 #' @examples
 #'
 #' data(skin)
-#' head(yarn:::extractMatrix(skin,normalized=FALSE,log=TRUE))
-#' head(yarn:::extractMatrix(skin,normalized=FALSE,log=FALSE))
+#' head(netZooR:::extractMatrix(skin,normalized=FALSE,log=TRUE))
+#' head(netZooR:::extractMatrix(skin,normalized=FALSE,log=FALSE))
 #'
 extractMatrix <- function(obj, normalized = FALSE, log = TRUE) {
   if (class(obj) == "ExpressionSet") {
@@ -598,7 +598,7 @@ plotHeatmap <- function(obj, n = NULL, fun = stats::sd, normalized = TRUE,
 #' @source \href{https://raw.githubusercontent.com/kokrah/qsmooth/master/R/qsmooth.r}{Kwame Okrah's qsmooth R package}
 #' @examples
 #' data(skin)
-#' head(yarn:::qsmooth(skin,groups=pData(skin)$SMTSD))
+#' head(netZooR:::qsmooth(skin,groups=pData(skin)$SMTSD))
 #'
 qsmooth <- function(obj, groups, norm.factors = NULL, plot = FALSE,
                     window = 0.05,log=TRUE) {
