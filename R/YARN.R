@@ -20,7 +20,6 @@
 #' @importClassesFrom Biobase ExpressionSet
 #'
 #' @examples
-#'
 #' data(skin)
 #' # subsetting and changing column name just for a silly example
 #' skin <- skin[1:10,]
@@ -738,6 +737,7 @@ qstats <- function(exprs, groups, window) {
 #' \donttest{data(skin);
 #' checkMissAnnotation(skin,"GENDER");}
 system('wget https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/skin.rdata')
+system('mv skin.rdata data/')
 "skin"
 
 
@@ -765,4 +765,5 @@ system('wget https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets
 #' \donttest{data(bladder);
 #' checkMissAnnotation(bladder);}
 system('wget https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/bladder.rdata')
+system('mv bladder.rdata data/')
 "bladder"
