@@ -79,7 +79,8 @@ jobs:
             py_install("scipy")
             py_install("pandas")
             py_install("joblib")
-            library(BiocManager)
+            install.packages("BiocManager")
+            library("BiocManager")
             install("BiocFileCache")
         shell: Rscript {0}
 
