@@ -34,3 +34,5 @@ tests/testthat/*.vcf
 vignettes/*.npy
 docs/*.npy
 docs/reference/*.npy
+bladder.rdata
+skin.rdata
