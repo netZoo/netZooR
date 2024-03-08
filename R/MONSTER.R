@@ -27,9 +27,9 @@ monsterGetTm <- function(x){
 #' data(yeast)
 #' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' design <- c(rep(1,25),rep(0,10),rep(NA,15))
-#' monsterRes <- monster(yeast$exp.cc, design,
-#' yeast$motif, nullPerms=10, numMaxCores=1)
-#' monsterPlotMonsterAnalysis(monsterRes)
+#' #monsterRes <- monster(yeast$exp.cc, design,
+#' #yeast$motif, nullPerms=10, numMaxCores=1)
+#' #monsterPlotMonsterAnalysis(monsterRes)
 monsterPlotMonsterAnalysis <- function(x, ...){
   monsterdTFIPlot(x,...)
 }
@@ -46,7 +46,7 @@ monsterPlotMonsterAnalysis <- function(x, ...){
 #' data(yeast)
 #' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' design <- c(rep(1,25),rep(0,10),rep(NA,15))
-#' monster(yeast$exp.cc,design,yeast$motif, nullPerms=10, numMaxCores=1)
+#' #monster(yeast$exp.cc,design,yeast$motif, nullPerms=10, numMaxCores=1)
 monsterPrintMonsterAnalysis <- function(x, ...){
   cat("MONSTER object\n")
   cat(paste(x@numGenes, "genes\n"))
@@ -90,7 +90,8 @@ monsterPrintMonsterAnalysis <- function(x, ...){
 #' to give to indirect compared to direct evidence. The default is 0.5 to give an 
 #' equal weight to direct and indirect evidence.
 #' @param mode A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
-#' ('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA.
+#' ('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA. Gene regulatory
+#' networks are supplied in the 'expr' variable as a TF-by-Gene matrix, by concatenating the TF-by-Gene matrices of case and control, expr has size nTFs x 2nGenes.
 #' @export
 #' @import doParallel
 #' @import parallel
@@ -103,7 +104,7 @@ monsterPrintMonsterAnalysis <- function(x, ...){
 #' data(yeast)
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
-#' monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
+#' #monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 #' # Example with provided networks
 #' \donttest{
 #' pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)

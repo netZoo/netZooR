@@ -40,6 +40,8 @@ Also, this can be generated with a list of proteins of interest by \code{\link{s
 \item{modeProcess}{'legacy' refers to the processing mode in netZooPy<=0.5, 'union': takes the union of all TFs and genes across priors and fills the missing genes in the priors with zeros; 'intersection': intersects the input genes and TFs across priors and removes the missing TFs/genes. Default values is 'union'.}
 
 \item{remove_missing}{Only when modeProcess='legacy': remove_missing='TRUE' removes all unmatched TF and genes; remove_missing='FALSE' keeps all tf and genes. The default value is 'FALSE'.}
+
+\item{with_header}{Boolean to read gene expression file with a header for sample names}
 }
 \value{
 When save_memory=FALSE(default), this function will return a list of three items: 

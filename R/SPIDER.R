@@ -32,7 +32,7 @@
 #' @param edgelist Boolean to indicate if edge lists instead of matrices should be returned. 
 #' @param mode The data alignment mode. The mode 'union' takes the union of the genes in the expression matrix and the motif
 #' and the union of TFs in the ppi and motif and fills the matrics with zeros for nonintersecting TFs and gens, 'intersection' 
-#' takes the intersection of genes and TFs and removes nonintersecting sets, 'legacy' is the old behavior with version 1.19.3.
+#' takes the intersection of genes and TFs and removes nonintersecting sets, 'legacy' is the old behavior with PANDAR version 1.19.3.
 #' #' Parameters remove.missing.ppi, remove.missingmotif, remove.missing.genes work only with mode=='legacy'.
 #' @keywords keywords
 #' @importFrom matrixStats rowSds
@@ -47,8 +47,11 @@
 #' "coopNet" is the cooperative network
 #' @examples
 #' data(pandaToyData)
-#' spiderRes <- spider(pandaToyData$motif, pandaToyData$epifilter
-#'            pandaToyData$expression,pandaToyData$ppi,hamming=.1,progress=TRUE)
+#' pandaToyData$epifilter = pandaToyData$motif
+#' nind=floor(runif(5000, min=1, max=dim(pandaToyData$epifilter)[1]))
+#' pandaToyData$epifilter[nind,3] = 0
+#' spiderRes <- spider(pandaToyData$motif,pandaToyData$expression,
+#'                     pandaToyData$epifilter,pandaToyData$ppi,hamming=.1,progress=TRUE)
 #' @references
 #' Sonawane, Abhijeet Rajendra, et al. "Constructing gene regulatory networks using epigenetic data." npj Systems Biology and Applications 7.1 (2021): 1-13.
 spider <- function(motif,expr=NULL,epifilter=NULL,ppi=NULL,alpha=0.1,hamming=0.001,
@@ -61,7 +64,7 @@ spider <- function(motif,expr=NULL,epifilter=NULL,ppi=NULL,alpha=0.1,hamming=0.0
   if(progress)
     print('Initializing and validating')
   
-  if(epifilter[c(1,2),] != motif[c(1,2),]){
+  if(any(epifilter[,c(1,2)] != motif[,c(1,2)])){
     stop('Chromatin accessibility data does not match motif data size and order.')
   }
   
@@ -300,9 +303,124 @@ spider <- function(motif,expr=NULL,epifilter=NULL,ppi=NULL,alpha=0.1,hamming=0.0
 #'
 #' @param A Input adjacency matrix
 degreeAdjust <- function(A){
-  k1 <- colSums(A)/dim(A,1)
-  k2 <- rowSums(A)/dim(A,2)
-  B <- (matrix(replicate(dim(A,2),k1),nrow=dim(A,1)))^2
-  B <- B + (matrix(t(replicate(dim(A,2),k2)),nrow=dim(A,1)))^2
+  k1 <- colSums(A)/dim(A)[1]
+  k2 <- rowSums(A)/dim(A)[2]
+  B <- (matrix(replicate(dim(A)[1],k1),nrow=dim(A)[1]))^2
+  B <- B + (matrix(t(replicate(dim(A)[2],k2)),nrow=dim(A)[1]))^2
   A <- A * sqrt(B);
+}
+
+normalizeNetwork<-function(X){
+  X <- as.matrix(X)
+  
+  nr = nrow(X)
+  nc = ncol(X)
+  dm = c(nr,nc)
+  
+  # overall values
+  mu0=mean(X)
+  std0=sd(X)*sqrt((nr*nc-1)/(nr*nc))
+  
+  # operations on rows
+  mu1=rowMeans(X) # operations on rows
+  std1=rowSds(X)*sqrt((nc-1)/nc)
+  
+  mu1=rep(mu1, nc)
+  dim(mu1) = dm
+  std1=rep(std1,nc)
+  dim(std1)= dm
+  
+  Z1=(X-mu1)/std1
+  
+  # operations on columns
+  mu2=colMeans(X) # operations on columns
+  std2=colSds(X)*sqrt((nr-1)/nr)
+  
+  mu2 = rep(mu2, each=nr)
+  dim(mu2) = dm
+  std2= rep(std2, each=nr)
+  dim(std2) = dm
+  
+  Z2=(X-mu2)/std2
+  
+  # combine and return
+  normMat=Z1/sqrt(2)+Z2/sqrt(2)
+  
+  # checks and defaults for missing data
+  Z0=(X-mu0)/std0;
+  f1=is.na(Z1); f2=is.na(Z2);
+  normMat[f1]=Z2[f1]/sqrt(2)+Z0[f1]/sqrt(2);
+  normMat[f2]=Z1[f2]/sqrt(2)+Z0[f2]/sqrt(2);
+  normMat[f1 & f2]=2*Z0[f1 & f2]/sqrt(2);
+  
+  normMat
+}
+
+tanimoto<-function(X,Y){
+  
+  nc = ncol(Y)
+  nr = nrow(X)
+  dm = c(nr,nc)
+  
+  Amat=(X %*% Y)
+  Bmat=colSums(Y*Y)
+  
+  Bmat = rep(Bmat,each=nr)
+  dim(Bmat) = dm
+  #Bmat=matrix(rep(Bmat, each=nr), dm)
+  
+  Cmat=rowSums(X*X)
+  Cmat=rep(Cmat,nc)
+  dim(Cmat) = dm
+  #Cmat=matrix(rep(Cmat, nc), dm)
+  
+  den = (Bmat+Cmat-abs(Amat))
+  Amat=Amat/sqrt(den)
+  
+  return(Amat)
+}
+
+update.diagonal<-function(diagMat, num, alpha, step){
+  seqs = seq(1, num*num, num+1)
+  diagMat[seqs]=NaN;
+  diagstd=rowSds(diagMat,na.rm=TRUE)
+  diagstd[is.na(diagstd)]=0#replace NA with zeros
+  diagstd=diagstd*sqrt( (num-2)/(num-1) );
+  diagMat[seqs]=diagstd*num*exp(2*alpha*step);
+  return(diagMat);
+}
+
+prepResult <- function(zScale, output, regulatoryNetwork, geneCoreg, tfCoopNetwork, edgelist, motif){
+  resList <- list()
+  numGenes = dim(geneCoreg)[1]
+  numTFs   = dim(tfCoopNetwork)[1]
+  numEdges = sum(regulatoryNetwork!=0)
+  if (!zScale){
+    regulatoryNetwork <- pnorm(regulatoryNetwork)
+    geneCoreg         <- pnorm(geneCoreg)
+    tfCoopNetwork     <- pnorm(tfCoopNetwork)
+  }
+  if("regulatory"%in%output){
+    if(edgelist){
+      regulatoryNetwork <- melt.array(regulatoryNetwork)
+      colnames(regulatoryNetwork) <- c("TF", "Gene", "Score")
+      regulatoryNetwork$Motif <- as.numeric(with(regulatoryNetwork, paste0(TF, Gene))%in%paste0(motif[,1],motif[,2]))
+    }
+    resList$regNet <- regulatoryNetwork
+  }
+  if("coexpression"%in%output){
+    if(edgelist){
+      geneCoreg <- melt.array(geneCoreg)
+      colnames(geneCoreg) <- c("Gene.x", "Gene.y", "Score")
+    }
+    resList$coregNet <- geneCoreg
+  }
+  if("cooperative"%in%output){
+    if(edgelist){
+      tfCoopNetwork <- melt.array(tfCoopNetwork)
+      colnames(tfCoopNetwork) <- c("TF.x", "TF.y", "Score")
+    }
+    resList$coopNet <- tfCoopNetwork
+  }
+  pandaObj(regNet=regulatoryNetwork, coregNet=geneCoreg, coopNet=tfCoopNetwork, numGenes=numGenes, numTFs=numTFs, numEdges=numEdges)
 }

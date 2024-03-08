@@ -2,11 +2,14 @@ citEntry(entry="article",
          title = "The Network Zoo: a multilingual package for the inference and analysis of biological networks",
          author = personList( as.person("Marouen Ben Guebila"),
                               as.person("Tian Wang"),
+                              as.person("Camila M Lopes-Ramos"),
+                              as.person("Viola Fanfani"),
                               as.person("John Quackenbush")),
-         year = 2022,
-         journal = "bioRxiv",
-         doi = "10.1101/2022.05.30.494077",
-         textVersion = 
-         paste("Ben Guebila, M, Wang, T., Quackenbush, J.", 
-               "The Network Zoo: a multilingual package for the inference and analysis of biological networks",
-                "bioRxiv, 2022" ) )
+         year = 2023,
+         journal = "Genome Biology",
+         doi = "10.1186/s13059-023-02877-1",
+         textVersion =
+         paste("Ben Guebila, M., Wang, T., Lopes-Ramos, C.L., Fanfani, V., Quackenbush, J.",
+               "The Network Zoo: a multilingual package for the inference and analysis of gene regulatory networks",
+                "Genome Biology, 2023" ) )
+

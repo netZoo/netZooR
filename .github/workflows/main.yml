@@ -30,11 +30,11 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        r-version: [4.2]
+        r-version: [4.3]
 
     steps:
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -48,7 +48,7 @@ jobs:
       - name: install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          cache-version: 1
+          cache-version: 2
           extra-packages: |
              any::reticulate
              any::rcmdcheck
@@ -62,6 +62,14 @@ jobs:
             La_library()
             extSoftVersion()["BLAS"]
         shell: Rscript {0}
+
+      - if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get install python3-venv
+          pip install --upgrade pip
+          python3 -m venv env
+          source env/bin/activate
+          echo "VIRTUAL ENV:" $VIRTUAL_ENV
 
       - name: Install reticulate
         run: |

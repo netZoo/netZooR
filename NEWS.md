@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.3.2
+--------------------------
+
+    - R implementation of SPIDER
+    - R implementation of DRAGON
+    - header argument in pandaPy
+
 CHANGES IN VERSION 1.1.12
 --------------------------
 
@@ -7,3 +14,4 @@ CHANGES IN VERSION 1.1.12
     - Fix for CRANE significance test on constant modularity scores (detected by @talkhanz)
     - Improved method description by @kshutta
     - Fix for PANDA edge case when only expression is provided
+
