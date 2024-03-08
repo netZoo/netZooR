@@ -4,14 +4,14 @@
 \alias{cobra}
 \title{Run COBRA in R}
 \usage{
-cobra(X, expressionData, standardize = T)
+cobra(X, expressionData, method = "pearson")
 }
 \arguments{
 \item{X}{: design matrix of size (n, q), n = number of samples, q = number of covariates}
 
 \item{expressionData}{: gene expression as a matrix of size (g, n), g = number of genes}
 
-\item{standardize}{: boolean flag to standardize the gene expression as a pre-processing step
+\item{method}{: if pearson, the decomposition of the co-expression matrix is compouted. If pcorsh, COBRA decomposes the regularized partial co-expression
 
 Outputs:}
 }

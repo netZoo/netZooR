@@ -89,7 +89,11 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,mir_file,hamming=0.001,
       expr <- expr[order(rownames(expr)),]
     }else if(mode=='union'){
       gene.names=unique(union(rownames(expr),unique(motif[,2])))
-      tf.names  =unique(union(unique(ppi[,1]),unique(motif[,1])))
+      if(is.null(ppi)){
+        tf.names  = unique(motif[,1])        
+      }else{
+        tf.names  =unique(union(unique(ppi[,1]),unique(motif[,1])))
+      }
       num.TFs    <- length(tf.names)
       num.genes  <- length(gene.names)
       # gene expression matrix
@@ -117,7 +121,11 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,mir_file,hamming=0.001,
       regulatoryNetwork[Idx]=motif[,3]
     }else if(mode=='intersection'){
       gene.names=unique(intersect(rownames(expr),unique(motif[,2])))
-      tf.names  =unique(intersect(unique(ppi[,1]),unique(motif[,1])))
+      if(is.null(ppi)){
+        tf.names  =unique(motif[,1])       
+      }else{
+        tf.names  =unique(intersect(unique(ppi[,1]),unique(motif[,1])))
+      }
       num.TFs    <- length(tf.names)
       num.genes  <- length(gene.names)
       # gene expression matrix
@@ -241,6 +249,7 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,mir_file,hamming=0.001,
   
   if(!is.null(mir_file)){
     mirIndex = match(mir_file,tf.names)
+    mirIndex <- mirIndex[!is.na(mirIndex)]
     tfCoopNetwork[mirIndex,] = 0
     tfCoopNetwork[,mirIndex] = 0
     seqs = seq(1, num.TFs*num.TFs, num.TFs+1)
