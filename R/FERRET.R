@@ -109,38 +109,6 @@ DownloadFERRETData <- function(datasetName, destinationDir){
     }
     utils::unzip(zipfile = zipLoc, exdir = unzipLoc)
     
-    # # Download and unzip the data.
-    # #if(includePseudotime == TRUE){
-    #   zipLoc <- paste(destinationDir, "pseudotime.zip")
-    #   unzipLoc <- paste(destinationDir, "pseudotime/")
-    #   utils::download.file(paste(validDatasetUrls[datasetName], "pseudotime.zip"), 
-    #                 zipLoc)
-    #   if(!file.exists(unzipLoc)){
-    #     dir.create(unzipLoc)
-    #   }
-    #   utils::unzip(zipfile = zipLoc, exdir = unzipLoc)
-    # }
-    # #if(includePCA == TRUE){
-    #   zipLoc <- paste(destinationDir, "PCA.zip")
-    #   unzipLoc <- paste(destinationDir, "PCA/")
-    #   utils::download.file(paste(validDatasetUrls[datasetName], "PCA.zip"), 
-    #                 zipLoc)
-    #   if(!file.exists(unzipLoc)){
-    #     dir.create(unzipLoc)
-    #   }
-    #   utils::unzip(zipfile = zipLoc, exdir = unzipLoc)
-    # }
-    # #if(includeExpression == TRUE){
-    #   zipLoc <- paste(destinationDir, "expression.zip")
-    #   unzipLoc <- paste(destinationDir, "expression/")
-    #   utils::download.file(paste(validDatasetUrls[datasetName], "expression."), 
-    #                 zipLoc)
-    #   if(!file.exists(unzipLoc)){
-    #     dir.create(unzipLoc)
-    #   }
-    #   utils::unzip(zipfile = zipLoc, exdir = unzipLoc)
-    # }
-    # 
     message(paste("Your data are ready in", destinationDir))
   }else{
     stop(paste("Valid datasets include the following: ", paste(names(validDatasetUrls), collapse = ", ")))
