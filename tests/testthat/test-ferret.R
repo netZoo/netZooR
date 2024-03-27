@@ -266,6 +266,53 @@ test_that("[FERRET] ObtainNetworkCutoffs() function yields expected results",{
   results <- methods::new("FERRET_Results", results = list(network1, network2))
   expect_equal(ObtainNetworkCutoffs(results, 1), seq(0,2,2))
 })
+test_that("[FERRET] ScaleNetworksByPercentile() function yields expected results",{
+  
+  # Set up networks.
+  network1 <- data.frame(source = c("tfA", "tfB", "tfC"),
+                         target = c("geneA", "geneB", "geneC"),
+                         score = c(1,0,2))
+  network2 <- data.frame(source = c("tfA", "tfB", "tfC"),
+                         target = c("geneA", "geneB", "geneC"),
+                         score = c(1,1,1))
+  network3 <- data.frame(source = c("tfA", "tfB", "tfC"),
+                         target = c("geneA", "geneB", "geneC"),
+                         score = c(0,1,1))
+  
+  # Check that the network input is formatted appropriately.
+  expect_error(ScaleNetworksByPercentile(network1, 3), 
+               "networks parameter must be a list of networks with scores in the 3rd column!")
+  expect_error(ScaleNetworksByPercentile("WOOHOO", 3), 
+               "networks parameter must be a list of networks with scores in the 3rd column!")
+  expect_error(ScaleNetworksByPercentile(data.frame(source = c("tfA", "tfB", "tfC"),
+                                                    target = c("geneA", "geneB", "geneC"),
+                                                    score = c("one", "ttwo", "three")), 3), 
+               "networks parameter must be a list of networks with scores in the 3rd column!")
+  
+  # Check that number of cutoffs is formatted appropriately.
+  expect_error(ScaleNetworksByPercentile(list(network1, network2), 0), 
+               "The number of cutoffs must be an integer and must be above 1. You entered: 0")
+  expect_error(ScaleNetworksByPercentile(list(network1, network2), -1), 
+               "The number of cutoffs must be an integer and must be above 1. You entered: -1")
+  expect_error(ScaleNetworksByPercentile(list(network1, network2), 0.5), 
+               "The number of cutoffs must be an integer and must be above 1. You entered: 0.5")
+  expect_error(ScaleNetworksByPercentile(list(network1, network2), "WOOHOO"), 
+               "The number of cutoffs must be an integer and must be above 1. You entered: WOOHOO")
+  expect_error(ScaleNetworksByPercentile(list(network1, network2, network3), 3), 
+               "The number of unique positive values in each network must be greater than the number of cutoffs.")
+  expect_error(ScaleNetworksByPercentile(list(network1, network3), 2), 
+               "The number of unique positive values in each network must be greater than the number of cutoffs.")
+  
+  
+  # If there is only one cutoff, the cutoff should be at 50%.
+  scaledNetworks <- ScaleNetworksByPercentile(list(network1, network3), 1)
+  expect_equal(scaledNetworks[[1]][,3], c(0.5, 0, 0.5))
+  expect_equal(scaledNetworks[[2]][,3], c(0, 0.5, 0.5))
+  
+  # If there are two cutoffs, they should be at approximately 0.33 and 0.67.
+  scaledNetworks <- ScaleNetworksByPercentile(list(network1), 2)
+  expect_equal(scaledNetworks[[1]][,3], c(0.33, 0, 0.67), tolerance = 0.005)
+})
 test_that("[FERRET] GetEdgesAboveCutoff() function yields expected results",{
   # Test that the correct values are returned.
   network1 <- data.frame(source = c("tfA", "tfB", "tfC"),
@@ -1071,6 +1118,8 @@ test_that("[FERRET] ComputeRobustnessAUC() function yields expected results",{
   # Check that par is reset after plotting.
   suppressWarnings({
     robustness <- ComputeRobustnessAUC(results = FERRET_ResultsObj, comparisons = FERRET_Comparisons)@auc
+    robustnessPercentile <- ComputeRobustnessAUC(results = FERRET_ResultsObj, comparisons = FERRET_Comparisons,
+                                                 mode = "Percentile", numberOfCutoffs = 5)@auc
   })
   expect_equal(par()$mfrow, c(1,1))
   
@@ -1112,8 +1161,11 @@ test_that("[FERRET] ComputeRobustnessAUC() function yields expected results",{
   FERRET_ResultsObj@interpretationOfNegative <- "inhibitory"
   suppressWarnings({
     robustnessNeg <- ComputeRobustnessAUC(results = FERRET_ResultsObj, comparisons = FERRET_Comparisons, plotCurve = FALSE)@auc
+    robustnessNegPercentile <- ComputeRobustnessAUC(results = FERRET_ResultsObj, comparisons = FERRET_Comparisons, plotCurve = FALSE,
+                                                    mode = "Percentile", numberOfCutoffs = 5)@auc
   })
   expect_equal(robustness, robustnessNeg)
+  expect_equal(robustnessPercentile, robustnessNegPercentile)
   
   # Check that, if we concatenate the negatives and positives, we get the same robustness.
   net1Comp <- rbind(net1, net1Neg)
@@ -1131,8 +1183,11 @@ test_that("[FERRET] ComputeRobustnessAUC() function yields expected results",{
   FERRET_ResultsObj@interpretationOfNegative <- "inhibitory"
   suppressWarnings({
     robustnessComp <- ComputeRobustnessAUC(results = FERRET_ResultsObj, comparisons = FERRET_Comparisons, plotCurve = FALSE)@auc
+    robustnessCompPercentile <- ComputeRobustnessAUC(results = FERRET_ResultsObj, comparisons = FERRET_Comparisons, plotCurve = FALSE,
+                                                    mode = "Percentile", numberOfCutoffs = 5)@auc
   })
   expect_equal(robustness, robustnessComp)
+  expect_equal(robustnessPercentile, robustnessCompPercentile)
   
   # Check that scaling works for negative edges that represent a poor relationship.
   net1 <- data.frame(source = c(rep("tf1", 4), rep("tf2", 4), rep("tf3", 3), rep("tf4", 3), "tf3"),
@@ -1168,6 +1223,8 @@ test_that("[FERRET] ComputeRobustnessAUC() function yields expected results",{
   FERRET_ResultsObj@interpretationOfNegative <- "poor"
   suppressWarnings({
     robustness <- ComputeRobustnessAUC(results = FERRET_ResultsObj, comparisons = FERRET_Comparisons, plotCurve = FALSE)@auc
+    robustnessPercentile <- ComputeRobustnessAUC(results = FERRET_ResultsObj, comparisons = FERRET_Comparisons, plotCurve = FALSE,
+                                                 mode = "Percentile", numberOfCutoffs = 5)@auc
   })
   net1Poor <- net1
   net1Poor[,3] <- net1[,3] - 0.3
@@ -1189,8 +1246,11 @@ test_that("[FERRET] ComputeRobustnessAUC() function yields expected results",{
   FERRET_ResultsObj@interpretationOfNegative <- "poor"
   suppressWarnings({
     robustnessPoor <- ComputeRobustnessAUC(results = FERRET_ResultsObj, comparisons = FERRET_Comparisons, plotCurve = FALSE)@auc
+    robustnessPoorPercentile <- ComputeRobustnessAUC(results = FERRET_ResultsObj, comparisons = FERRET_Comparisons, plotCurve = FALSE,
+                                                     mode = "Percentile", numberOfCutoffs = 5)@auc
   })
   expect_equal(robustness, robustnessPoor)
+  expect_equal(robustnessPercentile, robustnessPoorPercentile)
 })
 test_that("[FERRET] WriteRobustnessAUC() and ReadRobustnessAUC() functions yield expected results",{
   # Check that we get the correct number of outgroup and ingroup results.

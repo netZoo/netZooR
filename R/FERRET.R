@@ -245,10 +245,11 @@ BuildComparisonObject <- function(sourceNetwork, ingroupToCompare, outgroupToCom
 #' @param ylab The label for the Y axis of the plot. Default is empty. This only
 #' needs to be set when generating the plot.
 #' @param plotCurve Whether or not to generate a plot. Default is TRUE.
+#' @param mode "Percentile" or "Score".
 #' @returns An object of type FERRET_ROC_AUC, also generates a  plot as a side effect.
 #' @export
 ComputeRobustnessAUC <- function(results, comparisons, metric = c("jaccard", "degree", "modularity", "subspace"), 
-                        k = 5, numberOfCutoffs = 10, plotCurve = TRUE, xlab = "", ylab = ""){
+                        k = 5, numberOfCutoffs = 10, plotCurve = TRUE, xlab = "", ylab = "", mode = "Score"){
   
   # Check the inputs.
   if(!is(results, "FERRET_Results") || !is(comparisons, "FERRET_Comparisons")){
@@ -284,26 +285,43 @@ ComputeRobustnessAUC <- function(results, comparisons, metric = c("jaccard", "de
       resultsScaled@results <- ScaleNetworks(networks = results@results, min = minOfAll)
     }
     
+    # Scale network in both the positive and negative directions so that the scores
+    # represent percentiles.
+    if(mode == "Percentile"){
+      resultsScaled@results <- ScaleNetworksByPercentile(networks = resultsScaled@results,
+                                                         numberOfCutoffs = numberOfCutoffs)
+    }
+    
     # Combine AUC scores if inhibitory.
     auc <- list()
     if(results@interpretationOfNegative == "inhibitory"){
       
       # First compute all ROC scores.
-      rocPositives <- ComputeRobustnessForOneEdgeType(results = GetPositive(resultsScaled), 
-                                                      comparisons = comparisons, 
+      positives <- GetPositive(resultsScaled)
+      negatives <- GetNegative(resultsScaled)
+      if(mode == "Percentile"){
+        positives@results <- ScaleNetworksByPercentile(networks = positives@results,
+                                                           numberOfCutoffs = numberOfCutoffs)
+        negatives@results <- ScaleNetworksByPercentile(networks = negatives@results,
+                                                       numberOfCutoffs = numberOfCutoffs)
+      }
+      rocPositives <- ComputeRobustnessForOneEdgeType(results = positives, 
+                                                      comparisons = comparisons,
+                                                      numberOfCutoffs = numberOfCutoffs,
                                                       metric = metric, 
-                                                      k = k, numberOfCutoffs = numberOfCutoffs, 
+                                                      k = k, 
                                                       xlab = xlab,
                                                       ylab = ylab,
                                                       plotCurve = FALSE)
-      rocNegatives <- ComputeRobustnessForOneEdgeType(results = GetNegative(resultsScaled), 
+      rocNegatives <- ComputeRobustnessForOneEdgeType(results = negatives, 
                                                       comparisons = comparisons, 
+                                                      numberOfCutoffs = numberOfCutoffs,
                                                       metric = metric, 
-                                                      k = k, numberOfCutoffs = numberOfCutoffs, 
+                                                      k = k, 
                                                       xlab = xlab,
                                                       ylab = ylab,
                                                       plotCurve = FALSE)
-      
+
       # Next, combine them by concatenation.
       rocOverall <- lapply(names(rocPositives@roc), function(metric){
         pos <- rocPositives@roc[[metric]]
@@ -317,7 +335,7 @@ ComputeRobustnessAUC <- function(results, comparisons, metric = c("jaccard", "de
         return(methods::new("FERRET_Similarities", ingroup = ingroup, outgroup = outgroup))
       })
       names(rocOverall) <- names(rocPositives@roc)
-      
+
       # Finally, compute AUC.
       if("jaccard" %in% metric){
         auc[["Jaccard"]] <- AUCTrapezoid(unname(rocOverall$Jaccard@outgroup), unname(rocOverall$Jaccard@ingroup))
@@ -353,11 +371,15 @@ ComputeRobustnessAUC <- function(results, comparisons, metric = c("jaccard", "de
   
   # Compute AUC on only the positive network (which will be the only network if
   # there are no inhibitory edges).
-  if(results@interpretationOfNegative == "poor" || minOfAll >= 0){
+  if(results@interpretationOfNegative != "inhibitory" || minOfAll >= 0){
+    if(mode == "Percentile"){
+      resultsScaled@results <- ScaleNetworksByPercentile(networks = resultsScaled@results,
+                                                         numberOfCutoffs = numberOfCutoffs)
+    }
     auc <- ComputeRobustnessForOneEdgeType(results = resultsScaled, 
                                                    comparisons = comparisons, 
                                                    metric = metric, 
-                                                   k = k, numberOfCutoffs = numberOfCutoffs, 
+                                                   k = k, numberOfCutoffs = numberOfCutoffs,
                                                    plotCurve = plotCurve, xlab = xlab,
                                                    ylab = ylab)
   }
@@ -381,6 +403,67 @@ ScaleNetworks <- function(networks, min){
   allScaledNetworks <- lapply(networks, function(network){
     networkScaled <- network
     networkScaled[,3] <- network[,3] - min
+    return(networkScaled)
+  })
+  return(allScaledNetworks)
+}
+
+# This function scales networks so that edges represent percentiles.
+#' @title ScaleNetworksByPercentile
+#' @param networks A list of unscaled networks
+#' @param numberOfCutoffs Number of quantiles to consider
+#' @returns A list of scaled networks
+ScaleNetworksByPercentile <- function(networks, numberOfCutoffs){
+
+  # Throw an error if the networks are not formatted appropriately.
+  if(!is.list(networks) || is.data.frame(networks) || (ncol(networks[[1]]) != 3) || !is.numeric(networks[[1]][,3])){
+    stop("networks parameter must be a list of networks with scores in the 3rd column!")
+  }
+  
+  # Throw an error if the number of cutoffs is below 1 or is not an integer.
+  if(!is.numeric(numberOfCutoffs) || numberOfCutoffs%%1 > 0 || numberOfCutoffs < 1){
+    stop(paste("The number of cutoffs must be an integer and must be above 1. You entered:", numberOfCutoffs))
+  }
+  
+  # Throw an error if the number of unique values in each network is not greater than the
+  # number of cutoffs.
+  for(network in networks){
+    if(length(unique(network[which(network[,3] > 0),3])) > 0 &&
+       length(unique(network[which(network[,3] >= 0),3])) < numberOfCutoffs + 1){
+      stop("The number of unique positive values in each network must be greater than the number of cutoffs.")
+    }
+  }
+  for(network in networks){
+    if(length(unique(network[which(network[,3] < 0),3])) > 0 &&
+       length(unique(network[which(network[,3] <= 0),3])) < numberOfCutoffs + 1){
+      stop("The number of unique negative values in each network must be greater than the number of cutoffs.")
+    }
+  }
+  
+  # Compute where the percentiles should be set based on the number of cutoffs.
+  percentilePiece <- 1 / (numberOfCutoffs + 1)
+  percentiles <- percentilePiece * seq(0, numberOfCutoffs)
+  
+  # Scale.
+  allScaledNetworks <- lapply(networks, function(network){
+    
+    # Compute quantiles for network if there are positive edges.
+    networkScaled <- network
+    if(length(unique(network[which(network[,3] > 0),3])) > 0){
+      quantilesPos <- quantile(network[which(network[,3] >= 0),3], percentiles)
+  
+      # Match scores to quantiles.
+      networkScaled[which(networkScaled[,3]>=0),3] <- unlist(lapply(networkScaled[which(networkScaled[,3]>=0),3], function(score){
+        
+        # Select the minimum quantile less than the score.
+        quantileDiff <- quantilesPos - score
+        quantilesWithNegativeDiff <- percentiles[which(quantileDiff <= 0)]
+        quantileDiffsWhichNegative <- quantileDiff[which(quantileDiff <= 0)]
+        matchingQuantile <- quantilesWithNegativeDiff[which.min(abs(quantileDiffsWhichNegative))]
+        return(matchingQuantile)
+      }))
+    }
+    
     return(networkScaled)
   })
   return(allScaledNetworks)
@@ -553,7 +636,6 @@ ConsolidateRobustnessHelper <- function(resultList, functionToApply, metric){
   
   # The results are a list.
   results <- list(ingroup = yConsolidated, outgroup = xBins)
-  print(results)
   return(results)
 }
 
@@ -953,18 +1035,17 @@ GetFullNetworkFromPCANetwork <- function(pcNetwork, PC, zeroCutoff = 0.001){
 #' Default is all elements.
 #' @param k is the number of eigenvectors to include in the subspace representation
 #' of each network. Default is 5.
-#' @param numberOfCutoffs The number of cutoffs to include in the AUC/ROC curve.
-#' These are determined using the range of values over all networks.
 #' @param xlab The label for the X axis of the plot. Default is empty. This only
 #' needs to be set when generating the plot.
 #' @param ylab The label for the Y axis of the plot. Default is empty. This only
 #' needs to be set when generating the plot.
 #' @param plotCurve Whether or not to generate a plot. Default is TRUE.
+#' @param mode "Percentile" or "Score".
+#' @param numberOfCutoffs Number of cutoffs to evaluate.
 #' @returns An AUC score, also generates a  plot as a side effect.
 #' @export
 ComputeRobustnessForOneEdgeType <- function(results, comparisons, metric = c("jaccard", "degree", "modularity", "subspace"), 
-                                 k = 5, numberOfCutoffs = 10, plotCurve = TRUE, xlab = "",
-                                 ylab = ""){
+                                 k = 5, plotCurve = TRUE, xlab = "", ylab = "", mode = "Score", numberOfCutoffs = 10){
   
   # Stop if no metrics were input.
   possibleMetrics <- c("jaccard", "modularity", "subspace", "degree")
@@ -972,8 +1053,17 @@ ComputeRobustnessForOneEdgeType <- function(results, comparisons, metric = c("ja
     stop(paste("Metric must be one or more of the following:", paste(possibleMetrics, collapse = ", ")))
   }
   
-  # Compute cutoffs for ROC/AUC using all results and number of cutoffs.
-  cutoffs <- ObtainNetworkCutoffs(results = results, numberOfCutoffs = numberOfCutoffs)
+  # Compute cutoffs for ROC/AUC using all results. Since these are already mapped
+  # to quantiles, we only need to look at the unique values.
+  cutoffs <- ObtainNetworkCutoffs(results, numberOfCutoffs)
+  if(mode == "Percentile"){
+    cutoffs <- seq(1, numberOfCutoffs, 1)
+    uniqueVals <- unique(results@results[[1]][,3])
+    if(length(uniqueVals) > 1){
+      cutoffs <- sort(unique(results@results[[1]][,3]))
+      cutoffs <- cutoffs[which(abs(cutoffs) > 0)]
+    }
+  }
 
   # For each metric, compute the similarities and the AUC scores.
   auc <- list()
@@ -1254,7 +1344,7 @@ ObtainNetworkCutoffs <- function(results, numberOfCutoffs){
   maxVal <- max(allWeights)
 
   # Split this value into a given number of cutoffs.
-  # If all networks are empty, set cutoffs to be 1-10. They will not be used.
+  # If all networks are empty, set cutoffs to be 1-n. They will not be used.
   cutoffs <- seq(1, numberOfCutoffs, 1)
   
   # Throw an error if there are negative values.
