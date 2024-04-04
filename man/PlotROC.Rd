@@ -13,7 +13,9 @@ PlotROC(
   ylab,
   main,
   absoluteMin = NULL,
-  absoluteMax = NULL
+  absoluteMax = NULL,
+  showCutoffs = TRUE,
+  minTextDistAsPercentage = 10
 )
 }
 \arguments{
@@ -35,6 +37,11 @@ This is a FERRET_Similarities object.}
 \item{absoluteMin}{The absolute minimum similarity in the results.}
 
 \item{absoluteMax}{The absolute maximum similarity in the results.}
+
+\item{showCutoffs}{Whether or not to show the cutoffs on the plot. Default is TRUE.}
+
+\item{minTextDistAsPercentage}{The minimum distance between text as a percentage
+of the distance in the plot. This prevents annotations from overlapping.}
 }
 \value{
 Nothing, but generates a plot as a side effect.

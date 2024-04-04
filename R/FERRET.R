@@ -126,6 +126,7 @@ DownloadFERRETData <- function(datasetName, destinationDir){
 #' @param firstColumnIsRowname Whether to consider the first column as the list of
 #' row names.
 #' @returns An object of type FERRET_Results.
+#' @export
 LoadResults <- function(resultDirectory, interpretationOfNegative = "poor",
                         firstColumnIsRowname = TRUE){
   
@@ -1226,10 +1227,16 @@ AUCTrapezoid <- function(x, y, absoluteMin = NULL, absoluteMax = NULL) {
 #' @param main This is the title of the plot.
 #' @param absoluteMin The absolute minimum similarity in the results.
 #' @param absoluteMax The absolute maximum similarity in the results.
+#' @param showCutoffs Whether or not to show the cutoffs on the plot. Default is TRUE.
+#' @param minTextDistAsPercentage The minimum distance between text as a percentage
+#' of the distance in the plot. This prevents annotations from overlapping.
 #' @returns Nothing, but generates a plot as a side effect.
 #' @export
 PlotROC <- function(averageSims, lowestSims = NULL, highestSims = NULL, auc, 
-                    xlab, ylab, main, absoluteMin = NULL, absoluteMax = NULL){
+                    xlab, ylab, main, absoluteMin = NULL, absoluteMax = NULL,
+                    showCutoffs = TRUE, minTextDistAsPercentage = 10){
+  # Set the seed.
+  set.seed(1)
   
   # Check for correct input.
   if(!is(averageSims, "FERRET_Similarities")){
@@ -1290,6 +1297,95 @@ PlotROC <- function(averageSims, lowestSims = NULL, highestSims = NULL, auc,
   
   # Add the curve.
   graphics::lines(x, y)
+  
+  # Add the cutoffs.
+  if(showCutoffs == TRUE){
+    # Bin the X and Y values.
+    percentageBins <- seq(limMin, limMax, (limMax - limMin) * (minTextDistAsPercentage / 100))
+    percentageBinsOverlap <- seq(limMin + (limMax - limMin) * (minTextDistAsPercentage / 100), 
+                                 limMax + (limMax - limMin) * (minTextDistAsPercentage / 100), 
+                                 (limMax - limMin) * (minTextDistAsPercentage / 100))
+    everyOtherBin <- percentageBins[seq(1, length(percentageBins), 2)]
+    binX <- unlist(lapply(x, function(point){
+      distFromBins <- point - percentageBins
+      minDist <- min(distFromBins[which(distFromBins >= 0)])
+      return(percentageBins[which(distFromBins == minDist)])
+    }))
+    binY <- unlist(lapply(y, function(point){
+      distFromBins <- point - percentageBins
+      minDist <- min(distFromBins[which(distFromBins >= 0)])
+      return(percentageBins[which(distFromBins == minDist)])
+    }))
+    binXOverlap <- unlist(lapply(x, function(point){
+      distFromBins <- point - percentageBinsOverlap
+      minDist <- min(distFromBins[which(distFromBins >= 0)])
+      return(percentageBinsOverlap[which(distFromBins == minDist)])
+    }))
+    binYOverlap <- unlist(lapply(y, function(point){
+      distFromBins <- point - percentageBinsOverlap
+      minDist <- min(distFromBins[which(distFromBins >= 0)])
+      return(percentageBinsOverlap[which(distFromBins == minDist)])
+    }))
+    
+    # Find only indices that do not belong to the same set of bins.
+    binFilteredIndices <- unlist(lapply(unique(percentageBins), function(xBin){
+      return(unlist(lapply(unique(percentageBins), function(yBin){
+        # Check how many values are in the bin.
+        intersectionVals <- intersect(which(binX == xBin), which(binY == yBin))
+
+        # If there are none, return NA.
+        toKeep <- NA
+        
+        # If there is one, keep it. Else, return a value at random.
+        if(length(intersectionVals) == 1){
+          print(intersectionVals)
+          toKeep <- intersectionVals
+        }else if(length(intersectionVals > 1)){
+          toKeep <- sample(intersectionVals, 1)
+        }
+        if(length(intersectionVals > 0)){
+          print(toKeep)
+        }
+        return(toKeep)
+      })))
+    }))
+    binFilteredIndices <- binFilteredIndices[which(!is.na(binFilteredIndices))]
+    xFilt <- x[binFilteredIndices]
+    yFilt <- y[binFilteredIndices]
+    binXOverlap <- binXOverlap[binFilteredIndices]
+    binYOverlap <- binYOverlap[binFilteredIndices]
+    
+    # Scan again with overlapping bins and find unique indices.
+    toKeep <- unlist(lapply(unique(percentageBinsOverlap), function(xBin){
+      return(unlist(lapply(unique(percentageBinsOverlap), function(yBin){
+        # Check how many values are in the bin.
+        intersectionVals <- intersect(which(binXOverlap == xBin), which(binYOverlap == yBin))
+        
+        # If there are none, return NA.
+        toKeep <- NA
+        
+        # If there is one, keep it. Else, return a value at random.
+        if(length(intersectionVals) == 1){
+          print(intersectionVals)
+          toKeep <- intersectionVals
+        }else if(length(intersectionVals > 1)){
+          toKeep <- sample(intersectionVals, 1)
+        }
+        if(length(intersectionVals > 0)){
+        }
+        return(toKeep)
+      })))
+    }))
+    toKeep <- toKeep[which(!is.na(toKeep))]
+    xPlot <- xFilt[toKeep]
+    yPlot <- yFilt[toKeep]
+
+    # Plot the cutoffs.
+    yshift <- (limMax - limMin)/15
+    graphics::text(x = xPlot, y = yPlot - yshift, labels = unlist(lapply(names(xPlot), 
+                                                                        function(name){return(formatC(x = as.numeric(name), digits = 2))})),
+                   cex = 0.75, pos = 4)
+  }
   
   # Add the extrapolated curve.
   graphics::lines(x = c(x[length(x)], limMax), y = c(y[length(x)], y[length(x)]),
