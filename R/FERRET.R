@@ -1206,12 +1206,9 @@ AUCTrapezoid <- function(x, y, absoluteMin = NULL, absoluteMax = NULL) {
       # Add the triangular portion.
       auc <- auc + (max(y[i], y[i-1]) - min(y[i], y[i-1])) * (x[i] - x[i-1]) / 2
     }
-    
-    # Add the extrapolated portion.
-    auc <- auc + (max_total - maxX) * (y[length(y)] - min_total)
 
     # Divide by the portion covered.
-    auc <- auc / ((max_total - min_total) * (max_total - min_total))
+    auc <- auc / ((max_total - min_total) * (maxX - minX))
   }
   return(auc)
 }
@@ -1338,13 +1335,11 @@ PlotROC <- function(averageSims, lowestSims = NULL, highestSims = NULL, auc,
         
         # If there is one, keep it. Else, return a value at random.
         if(length(intersectionVals) == 1){
-          print(intersectionVals)
           toKeep <- intersectionVals
         }else if(length(intersectionVals > 1)){
           toKeep <- sample(intersectionVals, 1)
         }
         if(length(intersectionVals > 0)){
-          print(toKeep)
         }
         return(toKeep)
       })))
@@ -1386,10 +1381,6 @@ PlotROC <- function(averageSims, lowestSims = NULL, highestSims = NULL, auc,
                                                                         function(name){return(formatC(x = as.numeric(name), digits = 2))})),
                    cex = 0.75, pos = 4)
   }
-  
-  # Add the extrapolated curve.
-  graphics::lines(x = c(x[length(x)], limMax), y = c(y[length(x)], y[length(x)]),
-                 lty = "dotted")
   
   # Add the lower boundary.
   if(!is.null(lowestSims)){
