@@ -73,7 +73,7 @@ test_that("[BLOBFISH] SignificantBreadthFirstSearch() function yields expected r
   # Ensure that, when starting from transcription factors TF2, TF3, and TF4 and removing genes A, B, and C, we obtain the correct values.
   expect_true(length(setdiff(c("tf3__geneD", "tf4__geneD"),
                              rownames(SignificantBreadthFirstSearch(networks = fullNetworks,
-                                                                    alpha = 0.4, startingNodes = c("tf2", "tf3", "tf4"),
+                                                                    alpha = 0.05, startingNodes = c("tf2", "tf3", "tf4"),
                                                                     nodesToExclude = c("geneA", "geneB", "geneC"), startFromTF = TRUE, doFDRAdjustment = TRUE,
                                                                     nullDistribution = null)))) == 0)
   

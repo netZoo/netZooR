@@ -437,7 +437,8 @@ FindConnectionsForAllHopCounts <- function(subnetworks, verbose = FALSE){
         return(connectingSubnetwork)
       })
       # Bind together the subnetwork for each gene pair.
-      return(do.call(rbind, genePairSpecificHopCountSubnetwork))
+      connectingSubnetworkAll <- do.call(rbind, genePairSpecificHopCountSubnetwork)
+      return(connectingSubnetworkAll)
     })
 
     # Bind together the subnetworks for each gene.
@@ -453,6 +454,20 @@ FindConnectionsForAllHopCounts <- function(subnetworks, verbose = FALSE){
     return(compositeSubnetwork[whichFirstEdge,])
   }))
   rownames(compositeSubnetworkDedup) <- uniqueEdges
+  
+  # Remove all genes connected to a single transcription factor. These genes were
+  # added because they are regulated by a transcription factor that co-regulates
+  # two seed genes. Similarly, remove all transcription factors connected to a 
+  # single gene.
+  geneCounts <- table(compositeSubnetworkDedup$gene)
+  tfCounts <- table(compositeSubnetworkDedup$tf)
+  genesToRemove <- names(geneCounts)[which(geneCounts == 1)]
+  genesToRemove <- setdiff(genesToRemove, names(subnetworks))
+  tfsToRemove <- names(tfCounts)[which(tfCounts == 1)]
+  compositeSubnetworkDedup <- compositeSubnetworkDedup[which(compositeSubnetworkDedup$gene %in% setdiff(names(geneCounts), 
+                                                                                                     genesToRemove)),]
+  compositeSubnetworkDedup <- compositeSubnetworkDedup[which(compositeSubnetworkDedup$tf %in% setdiff(names(tfCounts), 
+                                                                                                      tfsToRemove)),]
   return(compositeSubnetworkDedup)
 }
 
