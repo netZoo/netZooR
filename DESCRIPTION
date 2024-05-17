@@ -50,6 +50,7 @@ Imports:
     GO.db,
     org.Hs.eg.db,
     Matrix,
+    matrixTests,
     gplots,
     nnet,
     data.table,
@@ -75,7 +76,7 @@ Imports:
     GeneNet,
     loo,
     rARPACK,
-    corpcor
+    corpcor,
 License: GPL-3
 Encoding: UTF-8
 LazyData: false
@@ -87,6 +88,6 @@ Suggests:
     dorothea
 VignetteEngine: knitr
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 BugReports: https://github.com/netZoo/netZooR/issues
 URL: https://github.com/netZoo/netZooR, https://netzoo.github.io/
