@@ -487,11 +487,11 @@ FindConnectionsForAllHopCounts <- function(subnetworks, verbose = FALSE){
 #' @param vertexLabelOffset Number of pixels in the offset when plotting labels.
 #' Default is TRUE.
 #' @returns A bipartite plot of the network
+#' @export
 PlotNetwork <- function(network, genesOfInterest, geneOfInterestColor = "red",
                         tfColor = "blue", otherGenesColor = "gray", nodeSize = 1,
                         edgeWidth = 0.5, vertexLabels = NA, vertexLabelSize = 0.7,
                         vertexLabelOffset = 0.5, layoutBipartite = TRUE){
-  
   # Set the node attributes.
   uniqueNodes <- unique(c(network$tf, network$gene))
   nodeAttrs <- data.frame(node = uniqueNodes,
