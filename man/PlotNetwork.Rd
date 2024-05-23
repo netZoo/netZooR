@@ -16,7 +16,10 @@ PlotNetwork(
   vertexLabels = NA,
   vertexLabelSize = 0.7,
   vertexLabelOffset = 0.5,
-  layoutBipartite = TRUE
+  layoutBipartite = TRUE,
+  edgeColor = "gray",
+  edgeWidthHop1 = 0.5,
+  edgeColorHop1 = "gray"
 )
 }
 \arguments{
@@ -43,6 +46,12 @@ tf,gene}
 Default is TRUE.}
 
 \item{layoutBipartite}{Whether or not to layout as a bipartite graph.}
+
+\item{edgeColor}{Color of edges}
+
+\item{edgeWidthHop1}{Width of edges 1 hop away from genes of interest.}
+
+\item{edgeColorHop1}{Color of edges 1 hop away from genes of interest.}
 }
 \value{
 A bipartite plot of the network

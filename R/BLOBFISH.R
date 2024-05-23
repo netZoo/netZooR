@@ -481,6 +481,9 @@ FindConnectionsForAllHopCounts <- function(subnetworks, verbose = FALSE){
 #' @param otherGenesColor Color for the other genes
 #' @param nodeSize Size of node
 #' @param edgeWidth Width of edges
+#' @param edgeColor Color of edges
+#' @param edgeWidthHop1 Width of edges 1 hop away from genes of interest.
+#' @param edgeColorHop1 Color of edges 1 hop away from genes of interest.
 #' @param vertexLabels Which vertex labels to include. By default, none are included.
 #' @param layoutBipartite Whether or not to layout as a bipartite graph.
 #' @param vertexLabelSize The size of label to use for the vertex, as a fraction of the default.
@@ -491,7 +494,8 @@ FindConnectionsForAllHopCounts <- function(subnetworks, verbose = FALSE){
 PlotNetwork <- function(network, genesOfInterest, geneOfInterestColor = "red",
                         tfColor = "blue", otherGenesColor = "gray", nodeSize = 1,
                         edgeWidth = 0.5, vertexLabels = NA, vertexLabelSize = 0.7,
-                        vertexLabelOffset = 0.5, layoutBipartite = TRUE){
+                        vertexLabelOffset = 0.5, layoutBipartite = TRUE, edgeColor = "gray",
+                        edgeWidthHop1 = 0.5, edgeColorHop1 = "gray"){
   # Set the node attributes.
   uniqueNodes <- unique(c(network$tf, network$gene))
   nodeAttrs <- data.frame(node = uniqueNodes,
@@ -503,6 +507,12 @@ PlotNetwork <- function(network, genesOfInterest, geneOfInterestColor = "red",
   rownames(nodeAttrs) <- uniqueNodes
   nodeAttrs[which(uniqueNodes %in% network$tf), "color"] <- tfColor
   nodeAttrs[which(uniqueNodes %in% genesOfInterest), "color"] <- geneOfInterestColor
+  
+  # Add edge attributes.
+  network$color <- edgeColor
+  network$color[which(network$gene %in% genesOfInterest)]  <- edgeColorHop1
+  network$width <- edgeWidth
+  network$width[which(network$gene %in% genesOfInterest)] <- edgeWidthHop1
   
   # Create a graph object.
   graph <- igraph::graph_from_data_frame(network, vertices = nodeAttrs, directed = FALSE)
@@ -516,8 +526,8 @@ PlotNetwork <- function(network, genesOfInterest, geneOfInterestColor = "red",
   if(layoutBipartite == TRUE){
     LO <- layout_as_bipartite(graph)
     LO <- LO[,c(2,1)]
-    igraph::plot.igraph(graph, layout = LO, vertex.label = labels, edge.width = edgeWidth)
+    igraph::plot.igraph(graph, layout = LO, vertex.label = labels)
   }else{
-    igraph::plot.igraph(graph, vertex.label = labels, edge.width = edgeWidth)
+    igraph::plot.igraph(graph, vertex.label = labels)
   }
  }
