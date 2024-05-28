@@ -36,59 +36,48 @@ test_that("[BLOBFISH] SignificantBreadthFirstSearch() function yields expected r
   # Use all combined scores as the null distribution.
   null <- stats::rnorm(n = nrow(fullNetworks) * 3) / 100
   
+  # Calculate the p-values.
+  pvalues <- CalculatePValues(network = fullNetworks, pValueChunks = 2,
+                              nullDistribution = null, verbose = TRUE)
+  whichSig <- which(pvalues < 0.1)
+  significantEdges <- rownames(fullNetworks)[whichSig]
+  subnetwork <- fullNetworks[significantEdges, c(1:2)]
+  pvalues = pvalues[significantEdges]
+  
   # Test that errors are thrown when appropriate.
-  expect_error(SignificantBreadthFirstSearch(networks = fullNetworks,
-                                             alpha = 0.05, startingNodes = c("blob", "fish"),
-                                             nodesToExclude = c(), startFromTF = TRUE,
-                                             nullDistribution = null),
+  expect_error(SignificantBreadthFirstSearch(networks = subnetwork, pValues = pvalues,
+                                             startingNodes = c("blob", "fish"),
+                                             nodesToExclude = c(), startFromTF = TRUE),
                "ERROR: Starting nodes do not overlap with network nodes")
-  expect_error(SignificantBreadthFirstSearch(networks = fullNetworks,
-                                             alpha = 0.05, startingNodes = c("geneA", "geneB"),
-                                             nodesToExclude = c(), startFromTF = TRUE,
-                                             nullDistribution = null),
+  expect_error(SignificantBreadthFirstSearch(networks = subnetwork, pValues = pvalues,
+                                             startingNodes = c("geneA", "geneB"),
+                                             nodesToExclude = c(), startFromTF = TRUE),
                "ERROR: Starting nodes do not overlap with network nodes")
-  expect_error(SignificantBreadthFirstSearch(networks = fullNetworks,
-                                             alpha = 0.05, startingNodes = c("tf1", "tf2"),
-                                             nodesToExclude = c(), startFromTF = FALSE,
-                                             nullDistribution = null),
+  expect_error(SignificantBreadthFirstSearch(networks = subnetwork, pValues = pvalues,
+                                             startingNodes = c("tf1", "tf2"),
+                                             nodesToExclude = c(), startFromTF = FALSE),
                "ERROR: Starting nodes do not overlap with network nodes")
-  expect_error(SignificantBreadthFirstSearch(networks = fullNetworks,
-                                             alpha = 0.05, startingNodes = c("geneA", "geneB", "geneC"),
-                                             nodesToExclude = c("blob", "fish"), startFromTF = FALSE,
-                                             nullDistribution = null),
+  expect_error(SignificantBreadthFirstSearch(networks = subnetwork, pValues = pvalues,
+                                             startingNodes = c("geneA", "geneB", "geneC"),
+                                             nodesToExclude = c("blob", "fish"), startFromTF = FALSE),
                "ERROR: List of nodes to exclude does not overlap with network nodes")
-  expect_error(SignificantBreadthFirstSearch(networks = fullNetworks,
-                                             alpha = 0.05, startingNodes = c("geneA", "geneB", "geneC"),
-                                             nodesToExclude = c("geneA", "geneB"), startFromTF = FALSE,
-                                             nullDistribution = null),
+  expect_error(SignificantBreadthFirstSearch(networks = subnetwork, pValues = pvalues,
+                                             startingNodes = c("geneA", "geneB", "geneC"),
+                                             nodesToExclude = c("geneA", "geneB"), startFromTF = FALSE),
                "ERROR: Starting nodes cannot overlap with nodes to exclude")
   
   # Ensure that, when starting from genes A, B, and C, we obtain the correct values.
   expect_true(length(setdiff(c("tf2__geneA", "tf2__geneB", "tf3__geneA", "tf4__geneC"),
-                      rownames(SignificantBreadthFirstSearch(networks = fullNetworks,
-                                                  alpha = 0.05, startingNodes = c("geneA", "geneB", "geneC"),
-                                                  nodesToExclude = c(), startFromTF = FALSE, doFDRAdjustment = FALSE,
-                                                  nullDistribution = null)))) == 0)
+                      rownames(SignificantBreadthFirstSearch(networks = subnetwork, pValues = pvalues,
+                                                  startingNodes = c("geneA", "geneB", "geneC"),
+                                                  nodesToExclude = c(), startFromTF = FALSE)))) == 0)
   
   # Ensure that, when starting from transcription factors TF2, TF3, and TF4 and removing genes A, B, and C, we obtain the correct values.
   expect_true(length(setdiff(c("tf3__geneD", "tf4__geneD"),
-                             rownames(SignificantBreadthFirstSearch(networks = fullNetworks,
-                                                                    alpha = 0.05, startingNodes = c("tf2", "tf3", "tf4"),
-                                                                    nodesToExclude = c("geneA", "geneB", "geneC"), startFromTF = TRUE, doFDRAdjustment = TRUE,
-                                                                    nullDistribution = null)))) == 0)
-  
-  # Ensure that we obtain nothing when we include nothing significant.
-  expect_true(length(intersect(c("tf2__geneA", "tf2__geneB", "tf3__geneA", "tf4__geneC"), rownames(SignificantBreadthFirstSearch(networks = fullNetworks,
-                                                      alpha = 0.05, startingNodes = c("1", "2", "3"),
-                                                      nodesToExclude = c("geneA", "geneB", "geneC"), startFromTF = TRUE, doFDRAdjustment = FALSE,
-                                                      nullDistribution = null)))) == 0)
-  
-  # Ensure that we obtain nothing when everything is excluded.
-  expect_equal(length(rownames(SignificantBreadthFirstSearch(networks = fullNetworks,
-                                                             alpha = 0.05, startingNodes = c("tf1", "tf2", "tf3"),
-                                                             nodesToExclude = unique(fullNetworks$gene), 
-                                                             startFromTF = TRUE, doFDRAdjustment = FALSE,
-                                                             nullDistribution = null))), 0)
+                             rownames(SignificantBreadthFirstSearch(networks = subnetwork, pValues = pvalues,
+                                                                    startingNodes = c("tf2", "tf3", "tf4"),
+                                                                    nodesToExclude = c("geneA", "geneB", "geneC"), 
+                                                                    startFromTF = TRUE)))) == 0)
 })
 test_that("[BLOBFISH] FindConnectionsForAllHopCounts() function yields expected results", {
   
@@ -155,6 +144,14 @@ test_that("[BLOBFISH] FindSignificantEdgesForHop() function yields expected resu
   #  Null distribution is a narrower version of the normal distribution.
   null <- rnorm(n = nrow(fullNetworks) * 3) / 100
   
+  # Calculate the p-values.
+  pvalues <- CalculatePValues(network = fullNetworks, pValueChunks = 2,
+                              nullDistribution = null, verbose = TRUE)
+  whichSig <- which(pvalues < 0.1)
+  significantEdges <- rownames(fullNetworks)[whichSig]
+  subnetwork <- fullNetworks[significantEdges, c(1:2)]
+  pvalues = pvalues[significantEdges]
+  
   # Set up the subnetwork from the previous example.
   geneANetHop1 <- data.frame(tf = c("tf2", "tf3"), gene = c("geneA", "geneA"))
   rownames(geneANetHop1) <- paste(geneANetHop1$tf, geneANetHop1$gene, sep = "__")
@@ -187,8 +184,8 @@ test_that("[BLOBFISH] FindSignificantEdgesForHop() function yields expected resu
   
   # Test method with all genes as input.
   sigEdges <- FindSignificantEdgesForHop(geneSet = c("geneA", "geneB", "geneC", "geneD"),
-                                         combinedNetwork = fullNetworks,
-                                         alpha = 0.05, hopConstraint = 3, nullDistribution = null)
+                                         combinedNetwork = subnetwork, pValues = pvalues,
+                                         hopConstraint = 3)
   expect_true(length(setdiff(rownames(subnetworksFull$geneA[[1]]), rownames(sigEdges$geneA[[1]]))) == 0)
   expect_true(length(setdiff(rownames(subnetworksFull$geneA[[2]]), rownames(sigEdges$geneA[[2]]))) == 0)
   expect_true(length(setdiff(rownames(subnetworksFull$geneA[[3]]), rownames(sigEdges$geneA[[3]]))) == 0)
@@ -204,8 +201,7 @@ test_that("[BLOBFISH] FindSignificantEdgesForHop() function yields expected resu
   
   # Test method with only genes A, B, C.
   sigEdges <- FindSignificantEdgesForHop(geneSet = c("geneA", "geneB", "geneC"),
-                                          combinedNetwork = fullNetworks,
-                                          alpha = 0.05, hopConstraint = 3, nullDistribution = null)
+                                          combinedNetwork = subnetwork, hopConstraint = 3)
   expect_true(length(setdiff(rownames(subnetworksFull$geneA[[1]]), rownames(sigEdges$geneA[[1]]))) == 0)
   expect_true(length(setdiff(rownames(subnetworksFull$geneA[[2]]), rownames(sigEdges$geneA[[2]]))) == 0)
   expect_true(length(setdiff(rownames(subnetworksFull$geneA[[3]]), rownames(sigEdges$geneA[[3]]))) == 0)
@@ -218,8 +214,8 @@ test_that("[BLOBFISH] FindSignificantEdgesForHop() function yields expected resu
   
   # Test method with only genes A and C.
   sigEdges <- FindSignificantEdgesForHop(geneSet = c("geneA", "geneC"),
-                                          combinedNetwork = fullNetworks,
-                                          alpha = 0.4, hopConstraint = 3, nullDistribution = null)
+                                          combinedNetwork = subnetwork,
+                                          hopConstraint = 3)
   expect_true(length(setdiff(rownames(subnetworksFull$geneA[[1]]), rownames(sigEdges$geneA[[1]]))) == 0)
   expect_true(length(setdiff(rownames(subnetworksFull$geneA[[2]]), rownames(sigEdges$geneA[[2]]))) == 0)
   expect_true(length(setdiff(rownames(subnetworksFull$geneA[[3]]), rownames(sigEdges$geneA[[3]]))) == 0)
@@ -274,13 +270,13 @@ test_that("[BLOBFISH] BuildSubnetwork() function yields expected results",{
   expect_true(length(setdiff(c("tf2__geneA", "tf2__geneB", "tf3__geneA", "tf3__geneD", "tf4__geneC", "tf4__geneD"),
                              rownames(BuildSubnetwork(geneSet = c("geneA", "geneB", "geneC", "geneD"),
                                         networks = list(fullNetwork1, fullNetwork2, fullNetwork3), 
-                                        alpha = 0.05, hopConstraint = 4, nullDistribution = null)))) == 0)
+                                        alpha = 0.1, hopConstraint = 4, nullDistribution = null)))) == 0)
   
   # Obtain the overlaps for only the first two hops, for only A and C.
   expect_true(length(setdiff(c("tf3__geneA", "tf3__geneD", "tf4__geneC", "tf4__geneD"),
                              rownames(BuildSubnetwork(geneSet = c("geneA", "geneC"),
                                                       networks = list(fullNetwork1, fullNetwork2, fullNetwork3), 
-                                                      alpha = 0.05, hopConstraint = 4, nullDistribution = null)))) == 0)
+                                                      alpha = 0.1, hopConstraint = 4, nullDistribution = null)))) == 0)
 })
 test_that("[BLOBFISH] RunBLOBFISH() function yields expected results",{
   

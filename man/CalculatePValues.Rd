@@ -10,7 +10,8 @@ CalculatePValues(
   nullDistribution,
   pValueChunks = 100,
   doFDRAdjustment = TRUE,
-  pValueFile = "pvalues.RDS"
+  pValueFile = "pvalues.RDS",
+  verbose = FALSE
 )
 }
 \arguments{
@@ -27,6 +28,8 @@ parameter allows the edges to be split into chunks to prevent memory errors.}
 
 \item{pValueFile}{The file where the p-values should be saved. If NULL, they are not
 saved and need to be recalculated.}
+
+\item{verbose}{Whether or not to print detailed information about the run.}
 }
 \value{
 A vector of p-values, one for each edge.

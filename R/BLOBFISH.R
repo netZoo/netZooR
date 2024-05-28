@@ -216,19 +216,24 @@ BuildSubnetwork <- function(geneSet, networks, alpha, hopConstraint, nullDistrib
 #' @param doFDRAdjustment Whether or not to perform FDR adjustment.
 #' @param pValueFile The file where the p-values should be saved. If NULL, they are not
 #' saved and need to be recalculated.
+#' @param verbose Whether or not to print detailed information about the run.
 #' @returns A vector of p-values, one for each edge.
 #' @export
 CalculatePValues <- function(network, nullDistribution, pValueChunks = 100, 
-                             doFDRAdjustment = TRUE, pValueFile = "pvalues.RDS"){
+                             doFDRAdjustment = TRUE, pValueFile = "pvalues.RDS",
+                             verbose = FALSE){
+  
+  # Initialize p-values.
+  pValues <- rep(NA, nrow(network))
   
   # Set the initial start and end indices.
   startIndex <- 1
-  endIndex <- min(startIndex + ceiling(nrow(combinedNetwork) / pValueChunks),
-                  nrow(combinedNetwork))
+  endIndex <- min(startIndex + ceiling(nrow(network) / pValueChunks),
+                  nrow(network))
   for(i in 1:pValueChunks){
     
     # Calculate p-values for this chunk.
-    ourEdgeVals <- combinedNetwork[startIndex:endIndex, 3:ncol(combinedNetwork)]
+    ourEdgeVals <- network[startIndex:endIndex, 3:ncol(network)]
     nullEdgeVals <- t(matrix(rep(nullDistribution, 
                                  nrow(ourEdgeVals)), ncol = nrow(ourEdgeVals)))
     pValues[startIndex:endIndex] <- matrixTests::row_wilcoxon_twosample(x = ourEdgeVals, 
@@ -242,20 +247,23 @@ CalculatePValues <- function(network, nullDistribution, pValueChunks = 100,
     
     # Update indices.
     startIndex <- endIndex + 1
-    endIndex <- min(startIndex + ceiling(nrow(combinedNetwork) / pValueChunks),
-                    nrow(combinedNetwork))
+    endIndex <- min(startIndex + ceiling(nrow(network) / pValueChunks),
+                    nrow(network))
   }
   
   # Adjust the p-values.
   if(doFDRAdjustment == TRUE){
     pValues <- stats::p.adjust(pValues, method = "fdr")
   }
-  names(pValues) <- rownames(combinedNetwork)
+  names(pValues) <- rownames(network)
   
   # Save the p-values.
   if(!is.null(pValueFile)){
     saveRDS(pValues, pValueFile)
   }
+  
+  # Return the p-values.
+  return(pValues)
 }
   
 #' Find the subnetwork of significant edges n / 2 hops away from each gene.
