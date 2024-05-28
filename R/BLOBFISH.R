@@ -170,40 +170,11 @@ BuildSubnetwork <- function(geneSet, networks, alpha, hopConstraint, nullDistrib
   
   # If we are calculating p-values for the first time, calculate and save them.
   if(loadPValues == FALSE){
-    startIndex <- 1
-    endIndex <- min(startIndex + ceiling(nrow(combinedNetwork) / pValueChunks),
-                    nrow(combinedNetwork))
-    for(i in 1:pValueChunks){
-      
-      # Calculate p-values for this chunk.
-      ourEdgeVals <- combinedNetwork[startIndex:endIndex, 3:ncol(combinedNetwork)]
-      nullEdgeVals <- t(matrix(rep(nullDistribution, 
-                                   nrow(ourEdgeVals)), ncol = nrow(ourEdgeVals)))
-      pValues[startIndex:endIndex] <- matrixTests::row_wilcoxon_twosample(x = ourEdgeVals, 
-                                                                          y = nullEdgeVals, 
-                                                                          alternative = "greater")$pvalue
-      
-      # Print status.
-      if(verbose == TRUE){
-        message(paste("Completed p-values for chunk", i, "out of", pValueChunks))
-      }
-      
-      # Update indices.
-      startIndex <- endIndex + 1
-      endIndex <- min(startIndex + ceiling(nrow(combinedNetwork) / pValueChunks),
-                      nrow(combinedNetwork))
-    }
-    
-    # Adjust the p-values.
-    if(doFDRAdjustment == TRUE){
-      pValues <- stats::p.adjust(pValues, method = "fdr")
-    }
-    names(pValues) <- rownames(combinedNetwork)
-    
-    # Save the p-values.
-    if(!is.null(pValueFile)){
-      saveRDS(pValues, pValueFile)
-    }
+    pValues <- CalculatePValues(network = combinedNetwork,
+                                pValueChunks = pValueChunks,
+                                nullDistribution = nullDistribution,
+                                doFDRAdjustment = doFDRAdjustment,
+                                pValueFile = pValueFile)
   }else{
     # Read the saved p-values.
     pValues <- readRDS(pValueFile)
@@ -232,6 +203,59 @@ BuildSubnetwork <- function(geneSet, networks, alpha, hopConstraint, nullDistrib
   subnetwork <- FindConnectionsForAllHopCounts(subnetworks = significantSubnetworks,
                                                verbose = verbose)
   return(subnetwork)
+}
+
+#' Calculate p-values for all edges in the network using a Wilcoxon two-sample test
+#' for each edge.
+#' @param network A combination of PANDA-like networks, with the following format 
+#' (e.g., 3 networks), provided as a data frame:
+#' tf,gene,score1,score2,score3
+#' @param nullDistribution The null distribution, specified as a vector of values.
+#' @param pValueChunks The number of chunks to split when calculating the p-value. This
+#' parameter allows the edges to be split into chunks to prevent memory errors.
+#' @param doFDRAdjustment Whether or not to perform FDR adjustment.
+#' @param pValueFile The file where the p-values should be saved. If NULL, they are not
+#' saved and need to be recalculated.
+#' @returns A vector of p-values, one for each edge.
+#' @export
+CalculatePValues <- function(network, nullDistribution, pValueChunks = 100, 
+                             doFDRAdjustment = TRUE, pValueFile = "pvalues.RDS"){
+  
+  # Set the initial start and end indices.
+  startIndex <- 1
+  endIndex <- min(startIndex + ceiling(nrow(combinedNetwork) / pValueChunks),
+                  nrow(combinedNetwork))
+  for(i in 1:pValueChunks){
+    
+    # Calculate p-values for this chunk.
+    ourEdgeVals <- combinedNetwork[startIndex:endIndex, 3:ncol(combinedNetwork)]
+    nullEdgeVals <- t(matrix(rep(nullDistribution, 
+                                 nrow(ourEdgeVals)), ncol = nrow(ourEdgeVals)))
+    pValues[startIndex:endIndex] <- matrixTests::row_wilcoxon_twosample(x = ourEdgeVals, 
+                                                                        y = nullEdgeVals, 
+                                                                        alternative = "greater")$pvalue
+    
+    # Print status.
+    if(verbose == TRUE){
+      message(paste("Completed p-values for chunk", i, "out of", pValueChunks))
+    }
+    
+    # Update indices.
+    startIndex <- endIndex + 1
+    endIndex <- min(startIndex + ceiling(nrow(combinedNetwork) / pValueChunks),
+                    nrow(combinedNetwork))
+  }
+  
+  # Adjust the p-values.
+  if(doFDRAdjustment == TRUE){
+    pValues <- stats::p.adjust(pValues, method = "fdr")
+  }
+  names(pValues) <- rownames(combinedNetwork)
+  
+  # Save the p-values.
+  if(!is.null(pValueFile)){
+    saveRDS(pValues, pValueFile)
+  }
 }
   
 #' Find the subnetwork of significant edges n / 2 hops away from each gene.
