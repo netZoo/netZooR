@@ -7,9 +7,8 @@
 FindSignificantEdgesForHop(
   geneSet,
   combinedNetwork,
-  alpha,
   hopConstraint,
-  nullDistribution,
+  pValues,
   verbose = FALSE,
   topX = NULL
 )
@@ -20,11 +19,9 @@ FindSignificantEdgesForHop(
 \item{combinedNetwork}{A concatenation of n PANDA-like networks with the following format:
 tf,gene,score_net1, score_net2, ... , score_netn}
 
-\item{alpha}{The significance cutoff for the statistical test.}
-
 \item{hopConstraint}{The maximum number of hops to be considered for a gene.}
 
-\item{nullDistribution}{The null distribution, specified as a vector of values.}
+\item{pValues}{The p-values for all edges.}
 
 \item{verbose}{Whether or not to print detailed information about the run.}
 

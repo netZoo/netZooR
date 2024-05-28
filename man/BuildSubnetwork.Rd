@@ -11,7 +11,11 @@ BuildSubnetwork(
   hopConstraint,
   nullDistribution,
   verbose = FALSE,
-  topX = NULL
+  topX = NULL,
+  doFDRAdjustment = TRUE,
+  pValueChunks = 100,
+  loadPValues = FALSE,
+  pValueFile = "pvalues.RDS"
 )
 }
 \arguments{
@@ -30,6 +34,17 @@ Must be an even number.}
 \item{verbose}{Whether or not to print detailed information about the run.}
 
 \item{topX}{Select the X lowest significant p-values for each gene. NULL by default.}
+
+\item{doFDRAdjustment}{Whether or not to perform FDR adjustment.}
+
+\item{pValueChunks}{The number of chunks to split when calculating the p-value. This
+parameter allows the edges to be split into chunks to prevent memory errors.}
+
+\item{loadPValues}{Whether p-values should be loaded from pValueFile or re-generated.
+Default is FALSE.}
+
+\item{pValueFile}{The file where the p-values should be saved. If NULL, they are not
+saved and need to be recalculated.}
 }
 \value{
 A bipartite subnetwork in the same format as the original networks.

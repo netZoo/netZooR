@@ -10,10 +10,18 @@
 #' @param nullDistribution The null distribution, specified as a vector of values.
 #' @param verbose Whether or not to print detailed information about the run.
 #' @param topX Select the X lowest significant p-values for each gene. NULL by default.
+#' @param doFDRAdjustment Whether or not to perform FDR adjustment.
+#' @param pValueChunks The number of chunks to split when calculating the p-value. This
+#' parameter allows the edges to be split into chunks to prevent memory errors.
+#' @param pValueFile The file where the p-values should be saved. If NULL, they are not
+#' saved and need to be recalculated.
+#' @param loadPValues Whether p-values should be loaded from pValueFile or re-generated.
+#' Default is FALSE.
 #' @returns A bipartite subnetwork in the same format as the original networks.
 #' @export
 RunBLOBFISH <- function(geneSet, networks, alpha, hopConstraint, nullDistribution,
-                        verbose = FALSE, topX = NULL){
+                        verbose = FALSE, topX = NULL, doFDRAdjustment = TRUE,
+                        pValueChunks = 100, loadPValues = FALSE, pValueFile = "pvalues.RDS"){
   
   # Check for invalid inputs.
   if(!is.character(geneSet) || !is.list(networks) || !is.numeric(alpha) || !is.numeric(hopConstraint)){
@@ -39,7 +47,11 @@ RunBLOBFISH <- function(geneSet, networks, alpha, hopConstraint, nullDistributio
                                 alpha = alpha, 
                                 hopConstraint = hopConstraint,
                                 nullDistribution = nullDistribution,
-                                verbose = verbose, topX = topX)
+                                verbose = verbose, topX = topX,
+                                doFDRAdjustment = doFDRAdjustment,
+                                pValueChunks = pValueChunks, 
+                                loadPValues = loadPValues, 
+                                pValueFile = pValueFile)
   
   # Return.
   return(subnetwork)
@@ -129,46 +141,87 @@ GenerateNullPANDADistribution <- function(ppiFile, motifFile, sampSize = 20,
 #' @param nullDistribution The null distribution, specified as a vector of values.
 #' @param verbose Whether or not to print detailed information about the run.
 #' @param topX Select the X lowest significant p-values for each gene. NULL by default.
+#' @param doFDRAdjustment Whether or not to perform FDR adjustment.
+#' @param pValueChunks The number of chunks to split when calculating the p-value. This
+#' parameter allows the edges to be split into chunks to prevent memory errors.
+#' @param pValueFile The file where the p-values should be saved. If NULL, they are not
+#' saved and need to be recalculated.
+#' @param loadPValues Whether p-values should be loaded from pValueFile or re-generated.
+#' Default is FALSE.
 #' @returns A bipartite subnetwork in the same format as the original networks.
 BuildSubnetwork <- function(geneSet, networks, alpha, hopConstraint, nullDistribution,
-                            verbose = FALSE, topX = NULL){
+                            verbose = FALSE, topX = NULL, doFDRAdjustment = TRUE,
+                            pValueChunks = 100, loadPValues = FALSE, pValueFile = "pvalues.RDS"){
   
   # Name edges for each network.
   networksNamed <- lapply(networks, function(network){
     rownames(network) <- paste(network$tf, network$gene, sep = "__")
     return(network)
   })
-
+  
   # Paste together the networks.
   combinedNetwork <- networksNamed[[1]]
   for(i in 2:length(networksNamed)){
     combinedNetwork[,2+i] <- networksNamed[[i]]$score
   }
   
-  # # Find all significant edges in the network.
-  # ourEdgeVals <- combinedNetwork[, 3:ncol(combinedNetwork)]
-  # nullEdgeVals <- t(matrix(rep(nullDistribution, nrow(combinedNetwork)), ncol = nrow(combinedNetwork)))
-  # pValues <- matrixTests::row_wilcoxon_twosample(x = ourEdgeVals, y = nullEdgeVals, alternative = "greater")$pvalue
-  # 
-  # # Adjust the p-values.
-  # if(doFDRAdjustment == TRUE){
-  #   pValues <- stats::p.adjust(pValues, method = "fdr")
-  # }
-  # whichSig <- which(pValues < alpha)
-  # 
-  # # Subset the network.
-  # significantEdges <- rownames(combinedNetwork)[whichSig]
-  # subnetwork <- combinedNetwork[significantEdges, c(1:2)]
-  # if(verbose == TRUE){
-  #   message(paste("Retained", length(significantEdges), "out of", length(rownames(combinedNetwork)), "edges"))
-  # }
+  # Find all significant edges in the network.
+  pValues <- rep(NA, nrow(combinedNetwork))
+  
+  # If we are calculating p-values for the first time, calculate and save them.
+  if(loadPValues == FALSE){
+    startIndex <- 1
+    endIndex <- min(startIndex + ceiling(nrow(combinedNetwork) / pValueChunks),
+                    nrow(combinedNetwork))
+    for(i in 1:pValueChunks){
+      
+      # Calculate p-values for this chunk.
+      ourEdgeVals <- combinedNetwork[startIndex:endIndex, 3:ncol(combinedNetwork)]
+      nullEdgeVals <- t(matrix(rep(nullDistribution, 
+                                   nrow(ourEdgeVals)), ncol = nrow(ourEdgeVals)))
+      pValues[startIndex:endIndex] <- matrixTests::row_wilcoxon_twosample(x = ourEdgeVals, 
+                                                                          y = nullEdgeVals, 
+                                                                          alternative = "greater")$pvalue
+      
+      # Print status.
+      if(verbose == TRUE){
+        message(paste("Completed p-values for chunk", i, "out of", pValueChunks))
+      }
+      
+      # Update indices.
+      startIndex <- endIndex + 1
+      endIndex <- min(startIndex + ceiling(nrow(combinedNetwork) / pValueChunks),
+                      nrow(combinedNetwork))
+    }
+    
+    # Adjust the p-values.
+    if(doFDRAdjustment == TRUE){
+      pValues <- stats::p.adjust(pValues, method = "fdr")
+    }
+    names(pValues) <- rownames(combinedNetwork)
+    
+    # Save the p-values.
+    if(!is.null(pValueFile)){
+      saveRDS(pValues, pValueFile)
+    }
+  }else{
+    # Read the saved p-values.
+    pValues <- readRDS(pValueFile)
+  }
+  
+  # Subset the network.
+  whichSig <- which(pValues < alpha)
+  significantEdges <- rownames(combinedNetwork)[whichSig]
+  subnetwork <- combinedNetwork[significantEdges, c(1:2)]
+  pValues <- pValues[significantEdges]
+  if(verbose == TRUE){
+    message(paste("Retained", length(significantEdges), "out of", length(rownames(combinedNetwork)), "edges"))
+  }
   
   # For each gene, find the significant edges from each hop.
-  significantSubnetworks <- FindSignificantEdgesForHop(geneSet = geneSet,
-                                                       combinedNetwork = combinedNetwork,
-                                                       alpha = alpha,
+  significantSubnetworks <- FindSignificantEdgesForHop(geneSet = geneSet, pValues = pValues,
+                                                       combinedNetwork = subnetwork,
                                                        hopConstraint = hopConstraint / 2,
-                                                       nullDistribution = nullDistribution,
                                                        verbose = verbose, topX = topX)
   
   # Find matches for each hop. Note that we do not need to consider cases where the 
@@ -185,13 +238,12 @@ BuildSubnetwork <- function(geneSet, networks, alpha, hopConstraint, nullDistrib
 #' @param geneSet A character vector of genes comprising the targets of interest.
 #' @param combinedNetwork A concatenation of n PANDA-like networks with the following format:
 #' tf,gene,score_net1, score_net2, ... , score_netn
-#' @param alpha The significance cutoff for the statistical test.
+#' @param pValues The p-values for all edges.
 #' @param hopConstraint The maximum number of hops to be considered for a gene.
-#' @param nullDistribution The null distribution, specified as a vector of values.
 #' @param verbose Whether or not to print detailed information about the run.
 #' @param topX Select the X lowest significant p-values for each gene. NULL by default.
 #' @returns A bipartite subnetwork in the same format as the original networks.
-FindSignificantEdgesForHop <- function(geneSet, combinedNetwork, alpha, hopConstraint, nullDistribution,
+FindSignificantEdgesForHop <- function(geneSet, combinedNetwork, hopConstraint, pValues,
                                        verbose = FALSE, topX = NULL){
   # Build the significant subnetwork for each gene, up to the hop constraint.
   uniqueGeneSet <- sort(unique(geneSet))
@@ -202,13 +254,13 @@ FindSignificantEdgesForHop <- function(geneSet, combinedNetwork, alpha, hopConst
       message(paste("Evaluating hop 1 for gene", gene))
     }
     subnetwork1Hop <- SignificantBreadthFirstSearch(networks = combinedNetwork, 
-                                                    alpha = alpha, 
+                                                    pValues = pValues, 
                                                     startingNodes = gene,
                                                     nodesToExclude = c(),
-                                                    startFromTF = FALSE, doFDRAdjustment = FALSE,
-                                                    nullDistribution, verbose = verbose,
+                                                    startFromTF = FALSE, 
+                                                    verbose = verbose,
                                                     topX = topX)
-
+    
     # Set the starting and excluded set for the next hop.
     startingNodes <- unique(subnetwork1Hop$tf)
     topXNew <- NULL
@@ -234,14 +286,13 @@ FindSignificantEdgesForHop <- function(geneSet, combinedNetwork, alpha, hopConst
           message(paste("Evaluating hop", hop, "for gene", gene))
         }
         subnetworkHops <- SignificantBreadthFirstSearch(networks = combinedNetwork, 
-                                                        alpha = alpha, 
+                                                        pValues = pValues, 
                                                         startingNodes = startingNodes,
                                                         nodesToExclude = excludedSubset,
-                                                        startFromTF = TRUE, doFDRAdjustment = FALSE,
-                                                        nullDistribution = nullDistribution,
+                                                        startFromTF = TRUE, 
                                                         verbose = verbose,
                                                         topX = topXNew)
-
+        
         # Set the starting and excluded set for the next hop.
         excludedSubset <- c(excludedSubset, startingNodes)
         startingNodes <- setdiff(unique(subnetworkHops$gene), excludedSubset)
@@ -255,14 +306,13 @@ FindSignificantEdgesForHop <- function(geneSet, combinedNetwork, alpha, hopConst
           message(paste("Evaluating hop", hop, "for gene", gene))
         }
         subnetworkHops <- SignificantBreadthFirstSearch(networks = combinedNetwork, 
-                                                        alpha = alpha, 
+                                                        pValues = pValues, 
                                                         startingNodes = startingNodes,
                                                         nodesToExclude = excludedSubset,
-                                                        startFromTF = FALSE, doFDRAdjustment = FALSE,
-                                                        nullDistribution = nullDistribution,
+                                                        startFromTF = FALSE, 
                                                         verbose = verbose, 
                                                         topX = topXNew)
-
+        
         # Set the starting and excluded set for the next hop.
         excludedSubset <- c(excludedSubset, startingNodes)
         startingNodes <- setdiff(unique(subnetworkHops$tf), excludedSubset)
@@ -273,7 +323,7 @@ FindSignificantEdgesForHop <- function(geneSet, combinedNetwork, alpha, hopConst
       
       # Add to the list.
       allSubnetworksForGene[[length(allSubnetworksForGene) + 1]] <- subnetworkHops
-
+      
       # Increment hops.
       hop <- hop + 1
     }
@@ -290,7 +340,7 @@ FindSignificantEdgesForHop <- function(geneSet, combinedNetwork, alpha, hopConst
 #' @param networks A concatenation of n PANDA-like networks with the following format:
 #' tf,gene,score_net1, score_net2, ... , score_netn
 #' Edges must be specified as "tf__gene".
-#' @param alpha The significance cutoff for the statistical test.
+#' @param pValues The p-values from the original network.
 #' @param startingNodes The list of nodes from which to start.
 #' @param nodesToExclude The list of nodes to exclude from the search.
 #' @param startFromTF Whether to start from transcription factors (TRUE) or genes (FALSE).
@@ -299,9 +349,9 @@ FindSignificantEdgesForHop <- function(geneSet, combinedNetwork, alpha, hopConst
 #' @param verbose Whether or not to print detailed information about the run.
 #' @param topX Select the X lowest significant p-values for each gene. NULL by default.
 #' @returns A bipartite subnetwork in the same format as the original networks.
-SignificantBreadthFirstSearch <- function(networks, alpha, startingNodes,
-                                          nodesToExclude, startFromTF, doFDRAdjustment = FALSE,
-                                          nullDistribution, verbose = FALSE, topX = NULL){
+SignificantBreadthFirstSearch <- function(networks, pValues, startingNodes,
+                                          nodesToExclude, startFromTF, 
+                                          verbose = FALSE, topX = NULL){
   # Check that provided nodes overlap with the networks.
   if((length(setdiff(startingNodes, networks$tf)) > 0 && startFromTF == TRUE) ||
      (length(setdiff(startingNodes, networks$gene)) > 0 && startFromTF == FALSE)){
@@ -331,33 +381,24 @@ SignificantBreadthFirstSearch <- function(networks, alpha, startingNodes,
   tfLongList <- unlist(lapply(tfsToTest, function(tf){
     return(rep(tf, length(genesToTest)))
   }))
-  allEdges <- paste(tfLongList, geneLongList, sep = "__")
-
+  allPossibleEdges <- paste(tfLongList, geneLongList, sep = "__")
+  allEdges <- intersect(allPossibleEdges, rownames(networks))
+  
   # For each edge, measure its significance.
-  subnetwork <- networks[c(), 3:ncol(networks)]
+  subnetwork <- networks
   if(length(allEdges) > 0){
-    ourEdgeVals <- networks[allEdges, 3:ncol(networks)]
-    #nullDistribution <- sample(nullDistribution, size = floor(length(nullDistribution) / length(allEdges)) * length(allEdges))
-    nullEdgeVals <- t(matrix(rep(nullDistribution, length(allEdges)), ncol = length(allEdges)))
-    pValues <- matrixTests::row_wilcoxon_twosample(x = ourEdgeVals, y = nullEdgeVals, alternative = "greater")$pvalue
-
-    # Adjust the p-values.
-    if(doFDRAdjustment == TRUE){
-      pValues <- stats::p.adjust(pValues, method = "fdr")
-    }
-    whichSig <- which(pValues < alpha)
-
+    
     # If topX is specified, filter again.
-    if(!is.null(topX) && length(whichSig) > topX){
-      whichTopX <- order(pValues[whichSig])[1:topX]
-      whichSig <- whichSig[whichTopX]
+    significantEdges <- allEdges
+    if(!is.null(topX) && length(ourEdgeVals) > topX){
+      whichTopX <- order(pValues[ourEdgeVals])[1:topX]
+      significantEdges <- allEdges[whichTopX]
     }
     
     # Return the edges meeting alpha.
-    significantEdges <- allEdges[whichSig]
     subnetwork <- networks[significantEdges, c(1:2)]
     if(verbose == TRUE){
-      message(paste("Retained", length(significantEdges), "out of", length(allEdges), "edges"))
+      message(paste("Retained", length(significantEdges), "edges"))
     }
   }
   
@@ -386,7 +427,7 @@ FindConnectionsForAllHopCounts <- function(subnetworks, verbose = FALSE){
         gene1 <- names(subnetworks)[i]
         gene2 <- names(subnetworks)[j]
         connectingSubnetwork <- data.frame(tf = NA, gene = NA)[0,]
-
+        
         # If there were no edges at this hop count for one or both genes,
         # do not evaluate.
         if(length(subnetworks[[gene1]]) >= hops && length(subnetworks[[gene2]]) >= hops){
@@ -451,7 +492,7 @@ FindConnectionsForAllHopCounts <- function(subnetworks, verbose = FALSE){
             }
           }
         }
-
+        
         # Return the subnetwork, which should now contain all of the edges connecting the
         # gene pair at the prespecified number of hops.
         return(connectingSubnetwork)
@@ -460,11 +501,11 @@ FindConnectionsForAllHopCounts <- function(subnetworks, verbose = FALSE){
       connectingSubnetworkAll <- do.call(rbind, genePairSpecificHopCountSubnetwork)
       return(connectingSubnetworkAll)
     })
-
+    
     # Bind together the subnetworks for each gene.
     return(do.call(rbind, geneSpecificHopCountSubnetwork))
   })
-
+  
   # Bind together the subnetworks for each hop count.
   compositeSubnetwork <- do.call(rbind, hopCountSubnetworks)
   compositeSubnetworkEdges <- paste(compositeSubnetwork$tf, compositeSubnetwork$gene, sep = "__")
@@ -485,7 +526,7 @@ FindConnectionsForAllHopCounts <- function(subnetworks, verbose = FALSE){
   genesToRemove <- setdiff(genesToRemove, names(subnetworks))
   tfsToRemove <- names(tfCounts)[which(tfCounts == 1)]
   compositeSubnetworkDedup <- compositeSubnetworkDedup[which(compositeSubnetworkDedup$gene %in% setdiff(names(geneCounts), 
-                                                                                                     genesToRemove)),]
+                                                                                                        genesToRemove)),]
   compositeSubnetworkDedup <- compositeSubnetworkDedup[which(compositeSubnetworkDedup$tf %in% setdiff(names(tfCounts), 
                                                                                                       tfsToRemove)),]
   return(compositeSubnetworkDedup)

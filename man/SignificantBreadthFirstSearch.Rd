@@ -7,12 +7,10 @@ specified.}
 \usage{
 SignificantBreadthFirstSearch(
   networks,
-  alpha,
+  pValues,
   startingNodes,
   nodesToExclude,
   startFromTF,
-  doFDRAdjustment = FALSE,
-  nullDistribution,
   verbose = FALSE,
   topX = NULL
 )
@@ -22,7 +20,7 @@ SignificantBreadthFirstSearch(
 tf,gene,score_net1, score_net2, ... , score_netn
 Edges must be specified as "tf__gene".}
 
-\item{alpha}{The significance cutoff for the statistical test.}
+\item{pValues}{The p-values from the original network.}
 
 \item{startingNodes}{The list of nodes from which to start.}
 
@@ -30,13 +28,13 @@ Edges must be specified as "tf__gene".}
 
 \item{startFromTF}{Whether to start from transcription factors (TRUE) or genes (FALSE).}
 
-\item{doFDRAdjustment}{Whether or not to adjust the p-values using FDR.}
-
-\item{nullDistribution}{The null distribution, specified as a vector of values.}
-
 \item{verbose}{Whether or not to print detailed information about the run.}
 
 \item{topX}{Select the X lowest significant p-values for each gene. NULL by default.}
+
+\item{doFDRAdjustment}{Whether or not to adjust the p-values using FDR.}
+
+\item{nullDistribution}{The null distribution, specified as a vector of values.}
 }
 \value{
 A bipartite subnetwork in the same format as the original networks.
