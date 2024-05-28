@@ -51,44 +51,34 @@ RunBLOBFISH <- function(geneSet, networks, alpha, hopConstraint, nullDistributio
 #' the gene region, and (3) the genes regulated by the TF are not coexpressed with the
 #' gene in question. We obtain this by inputting an empty prior and an identity coexpression
 #' matrix.
-#' @param ngenes Number of genes to simulate
-#' @param nTranscriptionFactors Number of transcription factors to simulate
+#' @param ppiFile The location of the protein-protein interaction network between transcription factors.
+#' This should be a TSV file where the first two columns are the transcription
+#' factors and the third is whether there is a PPI between them.
+#' @param motif The location of the motif prior from genes to transcription factors. This should
+#' be a TSV file where the first column is the transcription factors, the
+#' second is the genes, and the third is whether the transcription factor's
+#' binding motif is in the gene promoter region.
 #' @param sampSize Number of samples to simulate
 #' @param numberOfPandas Number of null PANDA networks to generate
 #' @export
-GenerateNullPANDADistribution <- function(ngenes = 20000, nTranscriptionFactors = 600, sampSize = 20,
+GenerateNullPANDADistribution <- function(ppiFile, motifFile, sampSize = 20,
                                           numberOfPandas = 10){
   
   # Set the seed.
   set.seed(1)
   
-  # Generate a motif file where only TFs 1-3 are connected to genes.
-  motiffname <- paste0("tmpMotif.tsv")
-  motifs <- data.frame(tf = rep(paste0("tf", 1:nTranscriptionFactors), ngenes),
-                       gene = unlist(lapply(1:ngenes, function(j){
-                         return(rep(paste0("gene", j), nTranscriptionFactors))
-                       })), score = rep(0, ngenes * nTranscriptionFactors))
-  motifs[intersect(which(motifs$tf == "tf1"), which(motifs$gene == "gene1")), "score"] <- 1
-  motifs[intersect(which(motifs$tf == "tf2"), which(motifs$gene == "gene2")), "score"] <- 1
-  motifs[intersect(which(motifs$tf == "tf3"), which(motifs$gene == "gene3")), "score"] <- 1
-  write.table(motifs, motiffname, quote = FALSE, sep = "\t",
-              row.names = FALSE, col.names = FALSE)
-  
-  # Generate a PPI where TFs 1 is connected to TFs 4-5.
-  ppifname <- paste0("tmpPPI.tsv")
-  ppi <- data.frame(tf = c(paste0("tf", 1:nTranscriptionFactors), "tf1", "tf1"),
-                    gene = c(paste0("tf", 1:nTranscriptionFactors), "tf4", "tf5"), 
-                    score = rep(1, nTranscriptionFactors + 2))
-  write.table(ppi, ppifname, quote = FALSE, sep = "\t",
-              row.names = FALSE, col.names = FALSE)
+  # Read the motif.
+  motif <- read.table(motifFile, sep = "\t")
+  ppi <- read.table(ppiFile, sep = "\t")
   
   # Generate the null PANDA edges.
   nullPandas <- lapply(1:numberOfPandas, function(i){
     
     # Generate a random matrix of expression values, where any correlation that exists
     # is spurious.
+    ngenes <- length(unique(motif[,2]))
     randomExpression <- matrix(data = stats::rnorm(ngenes * sampSize), nrow = ngenes)
-    rownames(randomExpression) <- paste0("gene", 1:ngenes)
+    rownames(randomExpression) <- unique(motif[,2])
 
     # Save in a temporary file.
     fname <- paste0("tmp_", i, ".tsv")
@@ -96,25 +86,37 @@ GenerateNullPANDADistribution <- function(ngenes = 20000, nTranscriptionFactors 
                 quote = FALSE)
     
     # Run PANDA.
-    nullPanda <- pandaPy(expr_file = fname, motif_file=motiffname, ppi_file=ppifname, save_tmp=FALSE)$panda
+    nullPanda <- pandaPy(expr_file = fname, motif_file=motifFile, ppi_file=ppiFile, save_tmp=FALSE,
+                         save_memory=TRUE)$panda
     rownames(nullPanda) <- paste(nullPanda$TF, nullPanda$Gene, sep = "__")
+    hist(nullPanda[,3])
 
     # Remove file.
     unlink(fname)
     
     # Return null results.
-    tfListToExclude <- c("tf1", "tf2", "tf3", "tf4", "tf5")
-    geneListToExclude <- c("gene1", "gene2", "gene3", "gene1", "gene1")
-    rowsToExclude <- paste(tfListToExclude, geneListToExclude, sep = "__")
+    rownames(motif) <- paste(motif[,1], motif[,2], sep = "__")
+    rowsToExclude <- unlist(lapply(rownames(motif), function(edge){
+      
+      # Find other transcription factors that interact with this one.
+      tf <- strsplit(edge, "__")[[1]][1]
+      interactingTF <- unique(c(ppi[which(ppi[,2] == tf),1], ppi[which(ppi[,1] == tf),2]))
+      
+      # Create new edges including other transcription factors.
+      newEdges <- paste(interactingTF, edge, sep = "__")
+      str(newEdges)
+      
+      # Return the old and new edges.
+      return(c(edge, newEdges))
+    }))
+    
+    # Return the scores for all tf-gene relationships not in the original motif.
     return(nullPanda[setdiff(rownames(nullPanda), rowsToExclude),"Score"])
   })
-  
-  # Remove files.
-  unlink(motiffname)
-  unlink(ppifname)
 
   # Return the values.
-  return(unlist(nullPandas))
+  nullPandasAll <- unlist(nullPandas)
+  return(sample(nullPandasAll, n = length(nullPandasAll)))
 }
 
 #' Find the subnetwork of significant edges connecting the genes.
@@ -142,6 +144,24 @@ BuildSubnetwork <- function(geneSet, networks, alpha, hopConstraint, nullDistrib
   for(i in 2:length(networksNamed)){
     combinedNetwork[,2+i] <- networksNamed[[i]]$score
   }
+  
+  # # Find all significant edges in the network.
+  # ourEdgeVals <- combinedNetwork[, 3:ncol(combinedNetwork)]
+  # nullEdgeVals <- t(matrix(rep(nullDistribution, nrow(combinedNetwork)), ncol = nrow(combinedNetwork)))
+  # pValues <- matrixTests::row_wilcoxon_twosample(x = ourEdgeVals, y = nullEdgeVals, alternative = "greater")$pvalue
+  # 
+  # # Adjust the p-values.
+  # if(doFDRAdjustment == TRUE){
+  #   pValues <- stats::p.adjust(pValues, method = "fdr")
+  # }
+  # whichSig <- which(pValues < alpha)
+  # 
+  # # Subset the network.
+  # significantEdges <- rownames(combinedNetwork)[whichSig]
+  # subnetwork <- combinedNetwork[significantEdges, c(1:2)]
+  # if(verbose == TRUE){
+  #   message(paste("Retained", length(significantEdges), "out of", length(rownames(combinedNetwork)), "edges"))
+  # }
   
   # For each gene, find the significant edges from each hop.
   significantSubnetworks <- FindSignificantEdgesForHop(geneSet = geneSet,

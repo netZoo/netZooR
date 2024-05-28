@@ -10,20 +10,25 @@ gene in question. We obtain this by inputting an empty prior and an identity coe
 matrix.}
 \usage{
 GenerateNullPANDADistribution(
-  ngenes = 20000,
-  nTranscriptionFactors = 600,
+  ppiFile,
+  motifFile,
   sampSize = 20,
   numberOfPandas = 10
 )
 }
 \arguments{
-\item{ngenes}{Number of genes to simulate}
-
-\item{nTranscriptionFactors}{Number of transcription factors to simulate}
+\item{ppiFile}{The location of the protein-protein interaction network between transcription factors.
+This should be a TSV file where the first two columns are the transcription
+factors and the third is whether there is a PPI between them.}
 
 \item{sampSize}{Number of samples to simulate}
 
 \item{numberOfPandas}{Number of null PANDA networks to generate}
+
+\item{motif}{The location of the motif prior from genes to transcription factors. This should
+be a TSV file where the first column is the transcription factors, the
+second is the genes, and the third is whether the transcription factor's
+binding motif is in the gene promoter region.}
 }
 \description{
 Generate a null distribution of edge scores for PANDA-like networks; that is,
