@@ -24,13 +24,17 @@ RunBLOBFISH <- function(geneSet, networks, alpha, hopConstraint, nullDistributio
                         pValueChunks = 100, loadPValues = FALSE, pValueFile = "pvalues.RDS"){
   
   # Check for invalid inputs.
-  if(!is.character(geneSet) || !is.list(networks) || !is.numeric(alpha) || !is.numeric(hopConstraint)){
+  if(!is.character(geneSet) || (!is.list(networks) && !is.data.frame(networks)) || !is.numeric(alpha) || !is.numeric(hopConstraint)){
     stop(paste("Wrong input type! geneSet must be a character vector. networks must be a list.",
                "alpha and hopConstraint must be scalar numeric values."))
-  }else if(!is.data.frame(networks[[1]])){
+  }else if(!is.data.frame(networks) && !is.data.frame(networks[[1]])){
     stop("Each network must be a data frame.")
-  }else if(ncol(networks[[1]]) != 3 || colnames(networks[[1]])[1] != "tf" ||
-           colnames(networks[[1]])[2] != "gene" || colnames(networks[[1]])[3] != "score"){
+  }else if(!is.data.frame(networks) && (ncol(networks[[1]]) != 3 || colnames(networks[[1]])[1] != "tf" ||
+           colnames(networks[[1]])[2] != "gene" || colnames(networks[[1]])[3] != "score")){
+    stop(paste("Each network must have transcription factors in the first column,",
+               "target genes in the second column, and scores in the third column."))
+  }else if(is.data.frame(networks) && (ncol(networks) < 3 || colnames(networks)[1] != "tf" ||
+                                colnames(networks)[2] != "gene")){
     stop(paste("Each network must have transcription factors in the first column,",
                "target genes in the second column, and scores in the third column."))
   }else if(alpha > 1 || alpha <=0){
@@ -154,15 +158,17 @@ BuildSubnetwork <- function(geneSet, networks, alpha, hopConstraint, nullDistrib
                             pValueChunks = 100, loadPValues = FALSE, pValueFile = "pvalues.RDS"){
   
   # Name edges for each network.
-  networksNamed <- lapply(networks, function(network){
-    rownames(network) <- paste(network$tf, network$gene, sep = "__")
-    return(network)
-  })
-  
-  # Paste together the networks.
-  combinedNetwork <- networksNamed[[1]]
-  for(i in 2:length(networksNamed)){
-    combinedNetwork[,2+i] <- networksNamed[[i]]$score
+  combinedNetwork <- networks
+  if(!is.data.frame(combinedNetwork)){
+    networksNamed <- lapply(networks, function(network){
+      rownames(network) <- paste(network$tf, network$gene, sep = "__")
+      return(network)
+    })
+    # Paste together the networks.
+    combinedNetwork <- networksNamed[[1]]
+    for(i in 2:length(networksNamed)){
+      combinedNetwork[,2+i] <- networksNamed[[i]]$score
+    }
   }
   
   # Find all significant edges in the network.
@@ -185,7 +191,10 @@ BuildSubnetwork <- function(geneSet, networks, alpha, hopConstraint, nullDistrib
   significantEdges <- rownames(combinedNetwork)[whichSig]
   subnetwork <- combinedNetwork[significantEdges, c(1:2)]
   pValues <- pValues[significantEdges]
+  genesWithNoSigEdges <- setdiff(geneSet, subnetwork$gene)
+  geneSet <- intersect(geneSet, subnetwork$gene)
   if(verbose == TRUE){
+    message(paste("The following genes had no significant edges:", paste(genesWithNoSigEdges, collapse = ",")))
     message(paste("Retained", length(significantEdges), "out of", length(rownames(combinedNetwork)), "edges"))
   }
   
@@ -569,14 +578,13 @@ FindConnectionsForAllHopCounts <- function(subnetworks, verbose = FALSE){
 #' @param network A data frame with the following format:
 #' tf,gene
 #' @param genesOfInterest Which genes of interest to highlight
-#' @param geneOfInterestColor Color for the genes of interest
 #' @param tfColor Color for the transcription factors
-#' @param otherGenesColor Color for the other genes
+#' @param geneColorMapping Color mapping from a set of genes to a color. The
+#' nodes and edges connected to them will be this color. If NULL, all genes and
+#' their edges will be gray. The format is a data frame, where the first column ("gene")
+#' is the name of the gene and the second ("color") is the color.
 #' @param nodeSize Size of node
 #' @param edgeWidth Width of edges
-#' @param edgeColor Color of edges
-#' @param edgeWidthHop1 Width of edges 1 hop away from genes of interest.
-#' @param edgeColorHop1 Color of edges 1 hop away from genes of interest.
 #' @param vertexLabels Which vertex labels to include. By default, none are included.
 #' @param layoutBipartite Whether or not to layout as a bipartite graph.
 #' @param vertexLabelSize The size of label to use for the vertex, as a fraction of the default.
@@ -584,29 +592,39 @@ FindConnectionsForAllHopCounts <- function(subnetworks, verbose = FALSE){
 #' Default is TRUE.
 #' @returns A bipartite plot of the network
 #' @export
-PlotNetwork <- function(network, genesOfInterest, geneOfInterestColor = "red",
-                        tfColor = "blue", otherGenesColor = "gray", nodeSize = 1,
+PlotNetwork <- function(network, genesOfInterest,
+                        tfColor = "blue", nodeSize = 1,
                         edgeWidth = 0.5, vertexLabels = NA, vertexLabelSize = 0.7,
-                        vertexLabelOffset = 0.5, layoutBipartite = TRUE, edgeColor = "gray",
-                        edgeWidthHop1 = 0.5, edgeColorHop1 = "gray"){
+                        vertexLabelOffset = 0.5, layoutBipartite = TRUE, geneColorMapping = NULL){
   # Set the node attributes.
   uniqueNodes <- unique(c(network$tf, network$gene))
   nodeAttrs <- data.frame(node = uniqueNodes,
-                          color = rep(otherGenesColor, length(uniqueNodes)),
+                          color = rep("gray", length(uniqueNodes)),
                           size = rep(nodeSize, length(uniqueNodes)),
                           frame.width = rep(0, length(uniqueNodes)),
                           label.color = "black", label.cex = vertexLabelSize,
                           label.dist = vertexLabelOffset)
   rownames(nodeAttrs) <- uniqueNodes
+  
+  # Add TF colors.
   nodeAttrs[which(uniqueNodes %in% network$tf), "color"] <- tfColor
-  nodeAttrs[which(uniqueNodes %in% genesOfInterest), "color"] <- geneOfInterestColor
+  
+  # Add gene colors.
+  rownames(geneColorMapping) <- geneColorMapping$gene
+  geneColorMapping <- geneColorMapping[intersect(rownames(geneColorMapping), uniqueNodes),]
+  if(!is.null(geneColorMapping)){
+    nodeAttrs[rownames(geneColorMapping), "color"] <- geneColorMapping$color
+  }
+  str(nodeAttrs)
   
   # Add edge attributes.
-  network$color <- edgeColor
-  network$color[which(network$gene %in% genesOfInterest)]  <- edgeColorHop1
+  if(!is.null(geneColorMapping)){
+    for(gene in rownames(geneColorMapping)){
+      network[which(network$gene == gene), "color"] <- geneColorMapping[gene, "color"]
+    }
+  }
   network$width <- edgeWidth
-  network$width[which(network$gene %in% genesOfInterest)] <- edgeWidthHop1
-  
+
   # Create a graph object.
   graph <- igraph::graph_from_data_frame(network, vertices = nodeAttrs, directed = FALSE)
   V(graph)$type <- V(graph)$name %in% network$tf

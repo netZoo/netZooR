@@ -8,18 +8,14 @@ and additional genes.}
 PlotNetwork(
   network,
   genesOfInterest,
-  geneOfInterestColor = "red",
   tfColor = "blue",
-  otherGenesColor = "gray",
   nodeSize = 1,
   edgeWidth = 0.5,
   vertexLabels = NA,
   vertexLabelSize = 0.7,
   vertexLabelOffset = 0.5,
   layoutBipartite = TRUE,
-  edgeColor = "gray",
-  edgeWidthHop1 = 0.5,
-  edgeColorHop1 = "gray"
+  geneColorMapping = NULL
 )
 }
 \arguments{
@@ -28,11 +24,7 @@ tf,gene}
 
 \item{genesOfInterest}{Which genes of interest to highlight}
 
-\item{geneOfInterestColor}{Color for the genes of interest}
-
 \item{tfColor}{Color for the transcription factors}
-
-\item{otherGenesColor}{Color for the other genes}
 
 \item{nodeSize}{Size of node}
 
@@ -47,11 +39,10 @@ Default is TRUE.}
 
 \item{layoutBipartite}{Whether or not to layout as a bipartite graph.}
 
-\item{edgeColor}{Color of edges}
-
-\item{edgeWidthHop1}{Width of edges 1 hop away from genes of interest.}
-
-\item{edgeColorHop1}{Color of edges 1 hop away from genes of interest.}
+\item{geneColorMapping}{Color mapping from a set of genes to a color. The
+nodes and edges connected to them will be this color. If NULL, all genes and
+their edges will be gray. The format is a data frame, where the first column ("gene")
+is the name of the gene and the second ("color") is the color.}
 }
 \value{
 A bipartite plot of the network
