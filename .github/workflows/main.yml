@@ -30,7 +30,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        r-version: [4.2]
+        r-version: [4.3]
 
     steps:
 
