@@ -1,3 +1,5 @@
+library(fgsea)
+
 #' Given a set of genes of interest, full bipartite networks with scores (one network for each sample), a significance
 #' cutoff for statistical testing, and a hop constraint, BLOBFISH finds a subnetwork of
 #' significant edges connecting the genes.
@@ -70,7 +72,7 @@ RunBLOBFISH <- function(geneSet, networks, alpha, hopConstraint, nullDistributio
 #' @param ppiFile The location of the protein-protein interaction network between transcription factors.
 #' This should be a TSV file where the first two columns are the transcription
 #' factors and the third is whether there is a PPI between them.
-#' @param motif The location of the motif prior from genes to transcription factors. This should
+#' @param motifFile The location of the motif prior from genes to transcription factors. This should
 #' be a TSV file where the first column is the transcription factors, the
 #' second is the genes, and the third is whether the transcription factor's
 #' binding motif is in the gene promoter region.
@@ -120,8 +122,7 @@ GenerateNullPANDADistribution <- function(ppiFile, motifFile, sampSize = 20,
       
       # Create new edges including other transcription factors.
       newEdges <- paste(interactingTF, edge, sep = "__")
-      str(newEdges)
-      
+
       # Return the old and new edges.
       return(c(edge, newEdges))
     }))
@@ -239,12 +240,14 @@ CalculatePValues <- function(network, nullDistribution, pValueChunks = 100,
   startIndex <- 1
   endIndex <- min(startIndex + ceiling(nrow(network) / pValueChunks),
                   nrow(network))
-  for(i in 1:pValueChunks){
+  i <- 1
+  while(i < pValueChunks && startIndex <= endIndex){
     
     # Calculate p-values for this chunk.
     ourEdgeVals <- network[startIndex:endIndex, 3:ncol(network)]
     nullEdgeVals <- t(matrix(rep(nullDistribution, 
                                  nrow(ourEdgeVals)), ncol = nrow(ourEdgeVals)))
+
     pValues[startIndex:endIndex] <- matrixTests::row_wilcoxon_twosample(x = ourEdgeVals, 
                                                                         y = nullEdgeVals, 
                                                                         alternative = "greater")$pvalue
@@ -258,6 +261,7 @@ CalculatePValues <- function(network, nullDistribution, pValueChunks = 100,
     startIndex <- endIndex + 1
     endIndex <- min(startIndex + ceiling(nrow(network) / pValueChunks),
                     nrow(network))
+    i <- i + 1
   }
   
   # Adjust the p-values.
@@ -385,8 +389,6 @@ FindSignificantEdgesForHop <- function(geneSet, combinedNetwork, hopConstraint, 
 #' @param startingNodes The list of nodes from which to start.
 #' @param nodesToExclude The list of nodes to exclude from the search.
 #' @param startFromTF Whether to start from transcription factors (TRUE) or genes (FALSE).
-#' @param doFDRAdjustment Whether or not to adjust the p-values using FDR.
-#' @param nullDistribution The null distribution, specified as a vector of values.
 #' @param verbose Whether or not to print detailed information about the run.
 #' @param topX Select the X lowest significant p-values for each gene. NULL by default.
 #' @returns A bipartite subnetwork in the same format as the original networks.
@@ -615,8 +617,7 @@ PlotNetwork <- function(network, genesOfInterest,
   if(!is.null(geneColorMapping)){
     nodeAttrs[rownames(geneColorMapping), "color"] <- geneColorMapping$color
   }
-  str(nodeAttrs)
-  
+
   # Add edge attributes.
   if(!is.null(geneColorMapping)){
     for(gene in rownames(geneColorMapping)){
