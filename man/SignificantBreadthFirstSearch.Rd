@@ -31,10 +31,6 @@ Edges must be specified as "tf__gene".}
 \item{verbose}{Whether or not to print detailed information about the run.}
 
 \item{topX}{Select the X lowest significant p-values for each gene. NULL by default.}
-
-\item{doFDRAdjustment}{Whether or not to adjust the p-values using FDR.}
-
-\item{nullDistribution}{The null distribution, specified as a vector of values.}
 }
 \value{
 A bipartite subnetwork in the same format as the original networks.
