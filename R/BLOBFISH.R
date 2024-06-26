@@ -1,5 +1,3 @@
-library(fgsea)
-
 #' Given a set of genes of interest, full bipartite networks with scores (one network for each sample), a significance
 #' cutoff for statistical testing, and a hop constraint, BLOBFISH finds a subnetwork of
 #' significant edges connecting the genes.
@@ -247,7 +245,6 @@ CalculatePValues <- function(network, nullDistribution, pValueChunks = 100,
     ourEdgeVals <- network[startIndex:endIndex, 3:ncol(network)]
     nullEdgeVals <- t(matrix(rep(nullDistribution, 
                                  nrow(ourEdgeVals)), ncol = nrow(ourEdgeVals)))
-
     pValues[startIndex:endIndex] <- matrixTests::row_wilcoxon_twosample(x = ourEdgeVals, 
                                                                         y = nullEdgeVals, 
                                                                         alternative = "greater")$pvalue
