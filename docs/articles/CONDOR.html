@@ -8,8 +8,8 @@
 <meta name="description" content="netZooR">
 <title>Using CONDOR for community detection in bipartite graphs • netZooR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Using CONDOR for community detection in bipartite graphs">
 <meta property="og:description" content="netZooR">
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">netZooR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.17</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -158,26 +158,26 @@ overall modularity along with two community membership
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">$</span><span class="va">red.memb</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   red.names com</span></span>
-<span><span class="co">## 1     Alice   2</span></span>
-<span><span class="co">## 2    Janine   1</span></span>
-<span><span class="co">## 3      Mary   1</span></span>
-<span><span class="co">## 4       Sue   2</span></span></code></pre>
+<span><span class="co">## 1     Alice   1</span></span>
+<span><span class="co">## 2    Janine   2</span></span>
+<span><span class="co">## 3      Mary   2</span></span>
+<span><span class="co">## 4       Sue   1</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">$</span><span class="va">blue.memb</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   blue.names com</span></span>
-<span><span class="co">## 1        Bob   2</span></span>
-<span><span class="co">## 2         Ed   1</span></span>
-<span><span class="co">## 3       Hank   1</span></span>
-<span><span class="co">## 4       John   2</span></span></code></pre>
+<span><span class="co">## 1        Bob   1</span></span>
+<span><span class="co">## 2         Ed   2</span></span>
+<span><span class="co">## 3       Hank   2</span></span>
+<span><span class="co">## 4       John   1</span></span></code></pre>
 <p>Nodes in first community are {Alice, John, Bob, Sue}, nodes in second
 community are {Ed, Janine, Hank, Mary} based on the modularity
 maximization. Here’s a picture:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gtoy</span> <span class="op">=</span> <span class="fu"><a href="https://r.igraph.org/reference/graph_from_edgelist.html" class="external-link">graph.edgelist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">elist</span><span class="op">)</span>,directed<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://r.igraph.org/reference/set_graph_attr.html" class="external-link">set.graph.attribute</a></span><span class="op">(</span><span class="va">gtoy</span>, <span class="st">"layout"</span>, <span class="fu"><a href="https://r.igraph.org/reference/layout.deprecated.html" class="external-link">layout.kamada.kawai</a></span><span class="op">(</span><span class="va">gtoy</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## IGRAPH e547bf1 UN-- 8 11 -- </span></span>
+<code class="sourceCode R"><span><span class="va">gtoy</span> <span class="op">=</span> <span class="fu"><a href="https://r.igraph.org/reference/graph.edgelist.html" class="external-link">graph.edgelist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">elist</span><span class="op">)</span>,directed<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://r.igraph.org/reference/set.graph.attribute.html" class="external-link">set.graph.attribute</a></span><span class="op">(</span><span class="va">gtoy</span>, <span class="st">"layout"</span>, <span class="fu"><a href="https://r.igraph.org/reference/layout.deprecated.html" class="external-link">layout.kamada.kawai</a></span><span class="op">(</span><span class="va">gtoy</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## IGRAPH 3435006 UN-- 8 11 -- </span></span>
 <span><span class="co">## + attr: layout (g/n), name (v/c)</span></span>
-<span><span class="co">## + edges from e547bf1 (vertex names):</span></span>
+<span><span class="co">## + edges from 3435006 (vertex names):</span></span>
 <span><span class="co">##  [1] Alice--Bob    Alice--John   Alice--Ed     Bob  --Sue    John --Sue   </span></span>
 <span><span class="co">##  [6] Sue  --Hank   John --Janine Ed   --Janine Hank --Janine Ed   --Mary  </span></span>
 <span><span class="co">## [11] Hank --Mary</span></span></code></pre>
@@ -206,9 +206,9 @@ interactions between 13 plants and 34 pollinators.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">small1976</span><span class="op">)</span></span>
 <span><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCondorObject.html">createCondorObject</a></span><span class="op">(</span><span class="va">small1976</span><span class="op">)</span></span>
 <span><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condorCluster.html">condorCluster</a></span><span class="op">(</span><span class="va">condor.object</span>, project<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "modularity of projected graph 0.525346928655047"</span></span>
-<span><span class="co">## [1] "Q = 0.52666696475026"</span></span>
-<span><span class="co">## [1] "Q = 0.52666696475026"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "modularity of projected graph 0.523013747073361"</span></span>
+<span><span class="co">## [1] "Q = 0.524618317507804"</span></span>
+<span><span class="co">## [1] "Q = 0.524618317507804"</span></span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/condorPlotHeatmap.html">condorPlotHeatmap</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CONDOR_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
@@ -218,123 +218,127 @@ interactions between 13 plants and 34 pollinators.</p>
 </h2>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.2.2 (2022-10-31)</span></span>
-<span><span class="co">## Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
-<span><span class="co">## Running under: macOS Big Sur ... 10.16</span></span>
+<pre><code><span><span class="co">## R version 4.3.2 (2023-10-31)</span></span>
+<span><span class="co">## Platform: aarch64-apple-darwin20 (64-bit)</span></span>
+<span><span class="co">## Running under: macOS Sonoma 14.1.2</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
-<span><span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span></span>
-<span><span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span></span>
+<span><span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib </span></span>
+<span><span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
 <span><span class="co">## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## time zone: America/New_York</span></span>
+<span><span class="co">## tzcode source: internal</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## attached base packages:</span></span>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] netZooR_1.5.0       matrixcalc_1.0-6    yarn_1.24.0        </span></span>
-<span><span class="co">## [4] pandaR_1.19.6       Biobase_2.58.0      BiocGenerics_0.44.0</span></span>
-<span><span class="co">## [7] reticulate_1.32.0   igraph_1.5.1       </span></span>
+<span><span class="co">## [1] netZooR_1.5.17      matrixcalc_1.0-6    pandaR_1.34.0      </span></span>
+<span><span class="co">## [4] Biobase_2.62.0      BiocGenerics_0.48.1 reticulate_1.35.0  </span></span>
+<span><span class="co">## [7] igraph_2.0.3       </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##   [1] utf8_1.2.3                  proto_1.0.0                </span></span>
-<span><span class="co">##   [3] RUnit_0.4.32                tidyselect_1.2.0           </span></span>
-<span><span class="co">##   [5] RSQLite_2.3.1               AnnotationDbi_1.60.0       </span></span>
-<span><span class="co">##   [7] grid_4.2.2                  BiocParallel_1.32.4        </span></span>
-<span><span class="co">##   [9] munsell_0.5.0               base64url_1.4              </span></span>
-<span><span class="co">##  [11] codetools_0.2-19            ragg_1.2.5                 </span></span>
-<span><span class="co">##  [13] preprocessCore_1.60.1       chron_2.3-61               </span></span>
-<span><span class="co">##  [15] pbdZMQ_0.3-10               colorspace_2.1-0           </span></span>
-<span><span class="co">##  [17] Category_2.64.0             filelock_1.0.2             </span></span>
-<span><span class="co">##  [19] knitr_1.44                  uuid_1.1-1                 </span></span>
-<span><span class="co">##  [21] rstudioapi_0.15.0           stats4_4.2.2               </span></span>
-<span><span class="co">##  [23] MatrixGenerics_1.10.0       repr_1.1.6                 </span></span>
-<span><span class="co">##  [25] GenomeInfoDbData_1.2.9      farver_2.1.1               </span></span>
-<span><span class="co">##  [27] bit64_4.0.5                 rhdf5_2.42.0               </span></span>
-<span><span class="co">##  [29] rprojroot_2.0.3             downloader_0.4             </span></span>
-<span><span class="co">##  [31] vctrs_0.6.3                 generics_0.1.3             </span></span>
-<span><span class="co">##  [33] xfun_0.40                   BiocFileCache_2.6.0        </span></span>
-<span><span class="co">##  [35] R6_2.5.1                    doParallel_1.0.17          </span></span>
-<span><span class="co">##  [37] GenomeInfoDb_1.34.4         illuminaio_0.40.0          </span></span>
-<span><span class="co">##  [39] RJSONIO_1.3-1.8             locfit_1.5-9.8             </span></span>
-<span><span class="co">##  [41] bitops_1.0-7                rhdf5filters_1.10.0        </span></span>
-<span><span class="co">##  [43] cachem_1.0.8                reshape_0.8.9              </span></span>
-<span><span class="co">##  [45] DelayedArray_0.24.0         assertthat_0.2.1           </span></span>
-<span><span class="co">##  [47] BiocIO_1.8.0                scales_1.2.1               </span></span>
-<span><span class="co">##  [49] nnet_7.3-19                 gtable_0.3.4               </span></span>
-<span><span class="co">##  [51] processx_3.8.2              rlang_1.1.1                </span></span>
-<span><span class="co">##  [53] genefilter_1.80.2           systemfonts_1.0.4          </span></span>
-<span><span class="co">##  [55] splines_4.2.2               rtracklayer_1.58.0         </span></span>
-<span><span class="co">##  [57] GEOquery_2.66.0             hexbin_1.28.3              </span></span>
-<span><span class="co">##  [59] checkmate_2.2.0             abind_1.4-5                </span></span>
-<span><span class="co">##  [61] reshape2_1.4.4              yaml_2.3.7                 </span></span>
-<span><span class="co">##  [63] backports_1.4.1             GenomicFeatures_1.50.3     </span></span>
-<span><span class="co">##  [65] RBGL_1.74.0                 tensorA_0.36.2             </span></span>
-<span><span class="co">##  [67] tools_4.2.2                 nor1mix_1.3-0              </span></span>
-<span><span class="co">##  [69] ggplot2_3.4.3               gplots_3.1.3               </span></span>
-<span><span class="co">##  [71] posterior_1.4.1             jquerylib_0.1.4            </span></span>
-<span><span class="co">##  [73] RColorBrewer_1.1-3          ggdendro_0.1.23            </span></span>
-<span><span class="co">##  [75] siggenes_1.72.0             STRINGdb_2.10.0            </span></span>
-<span><span class="co">##  [77] gsubfn_0.7                  hash_2.2.6.3               </span></span>
-<span><span class="co">##  [79] Rcpp_1.0.11                 plyr_1.8.8                 </span></span>
-<span><span class="co">##  [81] base64enc_0.1-3             sparseMatrixStats_1.10.0   </span></span>
-<span><span class="co">##  [83] progress_1.2.2              zlibbioc_1.44.0            </span></span>
-<span><span class="co">##  [85] purrr_1.0.2                 RCurl_1.98-1.12            </span></span>
-<span><span class="co">##  [87] ps_1.7.5                    prettyunits_1.1.1          </span></span>
-<span><span class="co">##  [89] sqldf_0.4-11                openssl_2.1.0              </span></span>
-<span><span class="co">##  [91] bumphunter_1.40.0           S4Vectors_0.36.1           </span></span>
-<span><span class="co">##  [93] cluster_2.1.4               SummarizedExperiment_1.28.0</span></span>
-<span><span class="co">##  [95] fs_1.6.3                    magrittr_2.0.3             </span></span>
-<span><span class="co">##  [97] data.table_1.14.8           matrixStats_1.0.0          </span></span>
-<span><span class="co">##  [99] hms_1.1.3                   evaluate_0.21              </span></span>
-<span><span class="co">## [101] xtable_1.8-4                XML_3.99-0.14              </span></span>
-<span><span class="co">## [103] mclust_6.0.0                IRanges_2.32.0             </span></span>
-<span><span class="co">## [105] compiler_4.2.2              biomaRt_2.54.0             </span></span>
-<span><span class="co">## [107] minfi_1.44.0                tibble_3.2.1               </span></span>
-<span><span class="co">## [109] RCy3_2.18.0                 KernSmooth_2.23-22         </span></span>
-<span><span class="co">## [111] crayon_1.5.2                htmltools_0.5.6            </span></span>
-<span><span class="co">## [113] GOstats_2.64.0              mgcv_1.9-0                 </span></span>
-<span><span class="co">## [115] tzdb_0.4.0                  tidyr_1.3.0                </span></span>
-<span><span class="co">## [117] DBI_1.1.3                   dbplyr_2.3.3               </span></span>
-<span><span class="co">## [119] MASS_7.3-60                 rappdirs_0.3.3             </span></span>
-<span><span class="co">## [121] Matrix_1.6-1.1              readr_2.1.4                </span></span>
-<span><span class="co">## [123] permute_0.9-7               cli_3.6.1                  </span></span>
-<span><span class="co">## [125] quantro_1.32.0              uchardet_1.1.1             </span></span>
-<span><span class="co">## [127] quadprog_1.5-8              parallel_4.2.2             </span></span>
-<span><span class="co">## [129] GenomicRanges_1.50.2        pkgconfig_2.0.3            </span></span>
-<span><span class="co">## [131] pkgdown_2.0.7               GenomicAlignments_1.34.0   </span></span>
-<span><span class="co">## [133] IRdisplay_1.1               xml2_1.3.5                 </span></span>
-<span><span class="co">## [135] foreach_1.5.2               annotate_1.76.0            </span></span>
-<span><span class="co">## [137] penalized_0.9-52            bslib_0.5.1                </span></span>
-<span><span class="co">## [139] rngtools_1.5.2              multtest_2.54.0            </span></span>
-<span><span class="co">## [141] beanplot_1.3.1              XVector_0.38.0             </span></span>
-<span><span class="co">## [143] AnnotationForge_1.40.0      doRNG_1.8.6                </span></span>
-<span><span class="co">## [145] scrime_1.3.5                distributional_0.3.2       </span></span>
-<span><span class="co">## [147] stringr_1.5.0               digest_0.6.33              </span></span>
-<span><span class="co">## [149] vegan_2.6-4                 graph_1.76.0               </span></span>
-<span><span class="co">## [151] Biostrings_2.66.0           rmarkdown_2.25             </span></span>
-<span><span class="co">## [153] base64_2.0.1                edgeR_3.40.1               </span></span>
-<span><span class="co">## [155] DelayedMatrixStats_1.20.0   GSEABase_1.60.0            </span></span>
-<span><span class="co">## [157] restfulr_0.0.15             curl_5.0.2                 </span></span>
-<span><span class="co">## [159] Rsamtools_2.14.0            gtools_3.9.4               </span></span>
-<span><span class="co">## [161] rjson_0.2.21                lifecycle_1.0.3            </span></span>
-<span><span class="co">## [163] nlme_3.1-163                jsonlite_1.8.7             </span></span>
-<span><span class="co">## [165] cmdstanr_0.6.1.9000         Rhdf5lib_1.20.0            </span></span>
-<span><span class="co">## [167] viridisLite_0.4.2           desc_1.4.2                 </span></span>
-<span><span class="co">## [169] askpass_1.2.0               limma_3.54.0               </span></span>
-<span><span class="co">## [171] fansi_1.0.4                 pillar_1.9.0               </span></span>
-<span><span class="co">## [173] lattice_0.21-8              plotrix_3.8-2              </span></span>
-<span><span class="co">## [175] KEGGREST_1.38.0             fastmap_1.1.1              </span></span>
-<span><span class="co">## [177] httr_1.4.7                  survival_3.5-7             </span></span>
-<span><span class="co">## [179] GO.db_3.16.0                glue_1.6.2                 </span></span>
-<span><span class="co">## [181] png_0.1-8                   iterators_1.0.14           </span></span>
-<span><span class="co">## [183] bit_4.0.5                   Rgraphviz_2.42.0           </span></span>
-<span><span class="co">## [185] stringi_1.7.12              sass_0.4.7                 </span></span>
-<span><span class="co">## [187] HDF5Array_1.26.0            blob_1.2.4                 </span></span>
-<span><span class="co">## [189] textshaping_0.3.6           org.Hs.eg.db_3.16.0        </span></span>
-<span><span class="co">## [191] caTools_1.18.2              memoise_2.0.1              </span></span>
-<span><span class="co">## [193] IRkernel_1.3.2              dplyr_1.1.3</span></span></code></pre>
+<span><span class="co">##   [1] STRINGdb_2.14.3             fs_1.6.3                   </span></span>
+<span><span class="co">##   [3] matrixStats_1.2.0           bitops_1.0-7               </span></span>
+<span><span class="co">##   [5] httr_1.4.7                  RColorBrewer_1.1-3         </span></span>
+<span><span class="co">##   [7] doParallel_1.0.17           Rgraphviz_2.46.0           </span></span>
+<span><span class="co">##   [9] repr_1.1.7                  tools_4.3.2                </span></span>
+<span><span class="co">##  [11] doRNG_1.8.6                 backports_1.4.1            </span></span>
+<span><span class="co">##  [13] utf8_1.2.4                  R6_2.5.1                   </span></span>
+<span><span class="co">##  [15] vegan_2.6-4                 HDF5Array_1.30.1           </span></span>
+<span><span class="co">##  [17] mgcv_1.9-1                  rhdf5filters_1.14.1        </span></span>
+<span><span class="co">##  [19] permute_0.9-7               prettyunits_1.2.0          </span></span>
+<span><span class="co">##  [21] base64_2.0.1                preprocessCore_1.64.0      </span></span>
+<span><span class="co">##  [23] cli_3.6.2                   textshaping_0.3.7          </span></span>
+<span><span class="co">##  [25] penalized_0.9-52            sass_0.4.9                 </span></span>
+<span><span class="co">##  [27] readr_2.1.5                 genefilter_1.84.0          </span></span>
+<span><span class="co">##  [29] askpass_1.2.0               pkgdown_2.0.7              </span></span>
+<span><span class="co">##  [31] Rsamtools_2.18.0            systemfonts_1.0.6          </span></span>
+<span><span class="co">##  [33] pbdZMQ_0.3-11               siggenes_1.76.0            </span></span>
+<span><span class="co">##  [35] illuminaio_0.44.0           AnnotationForge_1.44.0     </span></span>
+<span><span class="co">##  [37] scrime_1.3.5                plotrix_3.8-4              </span></span>
+<span><span class="co">##  [39] limma_3.58.1                rstudioapi_0.16.0          </span></span>
+<span><span class="co">##  [41] RSQLite_2.3.5               generics_0.1.3             </span></span>
+<span><span class="co">##  [43] GOstats_2.68.0              quantro_1.36.0             </span></span>
+<span><span class="co">##  [45] BiocIO_1.12.0               gtools_3.9.5               </span></span>
+<span><span class="co">##  [47] distributional_0.4.0        dplyr_1.1.4                </span></span>
+<span><span class="co">##  [49] GO.db_3.18.0                Matrix_1.6-5               </span></span>
+<span><span class="co">##  [51] fansi_1.0.6                 S4Vectors_0.40.2           </span></span>
+<span><span class="co">##  [53] abind_1.4-5                 lifecycle_1.0.4            </span></span>
+<span><span class="co">##  [55] yaml_2.3.8                  edgeR_4.0.16               </span></span>
+<span><span class="co">##  [57] SummarizedExperiment_1.32.0 gplots_3.1.3.1             </span></span>
+<span><span class="co">##  [59] rhdf5_2.46.1                SparseArray_1.2.4          </span></span>
+<span><span class="co">##  [61] BiocFileCache_2.10.1        grid_4.3.2                 </span></span>
+<span><span class="co">##  [63] blob_1.2.4                  crayon_1.5.2               </span></span>
+<span><span class="co">##  [65] lattice_0.22-6              GenomicFeatures_1.54.4     </span></span>
+<span><span class="co">##  [67] annotate_1.80.0             KEGGREST_1.42.0            </span></span>
+<span><span class="co">##  [69] pillar_1.9.0                knitr_1.45                 </span></span>
+<span><span class="co">##  [71] beanplot_1.3.1              GenomicRanges_1.54.1       </span></span>
+<span><span class="co">##  [73] rjson_0.2.21                codetools_0.2-19           </span></span>
+<span><span class="co">##  [75] glue_1.7.0                  downloader_0.4             </span></span>
+<span><span class="co">##  [77] data.table_1.15.2           vctrs_0.6.5                </span></span>
+<span><span class="co">##  [79] png_0.1-8                   gtable_0.3.4               </span></span>
+<span><span class="co">##  [81] assertthat_0.2.1            gsubfn_0.7                 </span></span>
+<span><span class="co">##  [83] cachem_1.0.8                xfun_0.42                  </span></span>
+<span><span class="co">##  [85] S4Arrays_1.2.1              survival_3.5-8             </span></span>
+<span><span class="co">##  [87] iterators_1.0.14            statmod_1.5.0              </span></span>
+<span><span class="co">##  [89] nlme_3.1-164                Category_2.68.0            </span></span>
+<span><span class="co">##  [91] bit64_4.0.5                 progress_1.2.3             </span></span>
+<span><span class="co">##  [93] filelock_1.0.3              GenomeInfoDb_1.38.8        </span></span>
+<span><span class="co">##  [95] tensorA_0.36.2.1            bslib_0.6.2                </span></span>
+<span><span class="co">##  [97] nor1mix_1.3-2               KernSmooth_2.23-22         </span></span>
+<span><span class="co">##  [99] colorspace_2.1-0            DBI_1.2.2                  </span></span>
+<span><span class="co">## [101] nnet_7.3-19                 processx_3.8.4             </span></span>
+<span><span class="co">## [103] tidyselect_1.2.1            bit_4.0.5                  </span></span>
+<span><span class="co">## [105] compiler_4.3.2              curl_5.2.1                 </span></span>
+<span><span class="co">## [107] chron_2.3-61                graph_1.80.0               </span></span>
+<span><span class="co">## [109] xml2_1.3.6                  desc_1.4.3                 </span></span>
+<span><span class="co">## [111] ggdendro_0.2.0              DelayedArray_0.28.0        </span></span>
+<span><span class="co">## [113] posterior_1.5.0             rtracklayer_1.62.0         </span></span>
+<span><span class="co">## [115] checkmate_2.3.1             scales_1.3.0               </span></span>
+<span><span class="co">## [117] caTools_1.18.2              hexbin_1.28.3              </span></span>
+<span><span class="co">## [119] quadprog_1.5-8              RBGL_1.78.0                </span></span>
+<span><span class="co">## [121] rappdirs_0.3.3              stringr_1.5.1              </span></span>
+<span><span class="co">## [123] digest_0.6.35               rmarkdown_2.26             </span></span>
+<span><span class="co">## [125] GEOquery_2.70.0             XVector_0.42.0             </span></span>
+<span><span class="co">## [127] htmltools_0.5.7             pkgconfig_2.0.3            </span></span>
+<span><span class="co">## [129] base64enc_0.1-3             sparseMatrixStats_1.14.0   </span></span>
+<span><span class="co">## [131] MatrixGenerics_1.14.0       highr_0.10                 </span></span>
+<span><span class="co">## [133] dbplyr_2.5.0                fastmap_1.1.1              </span></span>
+<span><span class="co">## [135] rlang_1.1.3                 DelayedMatrixStats_1.24.0  </span></span>
+<span><span class="co">## [137] jquerylib_0.1.4             jsonlite_1.8.8             </span></span>
+<span><span class="co">## [139] BiocParallel_1.36.0         mclust_6.1                 </span></span>
+<span><span class="co">## [141] RCurl_1.98-1.14             magrittr_2.0.3             </span></span>
+<span><span class="co">## [143] GenomeInfoDbData_1.2.11     Rhdf5lib_1.24.2            </span></span>
+<span><span class="co">## [145] IRkernel_1.3.2              munsell_0.5.0              </span></span>
+<span><span class="co">## [147] Rcpp_1.0.12                 proto_1.0.0                </span></span>
+<span><span class="co">## [149] sqldf_0.4-11                stringi_1.8.3              </span></span>
+<span><span class="co">## [151] RJSONIO_1.3-1.9             zlibbioc_1.48.2            </span></span>
+<span><span class="co">## [153] MASS_7.3-60.0.1             plyr_1.8.9                 </span></span>
+<span><span class="co">## [155] org.Hs.eg.db_3.18.0         bumphunter_1.44.0          </span></span>
+<span><span class="co">## [157] minfi_1.48.0                parallel_4.3.2             </span></span>
+<span><span class="co">## [159] Biostrings_2.70.3           IRdisplay_1.1              </span></span>
+<span><span class="co">## [161] splines_4.3.2               multtest_2.58.0            </span></span>
+<span><span class="co">## [163] hash_2.2.6.3                hms_1.1.3                  </span></span>
+<span><span class="co">## [165] locfit_1.5-9.9              ps_1.7.6                   </span></span>
+<span><span class="co">## [167] uuid_1.2-0                  RUnit_0.4.33               </span></span>
+<span><span class="co">## [169] base64url_1.4               rngtools_1.5.2             </span></span>
+<span><span class="co">## [171] reshape2_1.4.4              biomaRt_2.58.2             </span></span>
+<span><span class="co">## [173] stats4_4.3.2                XML_3.99-0.16.1            </span></span>
+<span><span class="co">## [175] evaluate_0.23               tzdb_0.4.0                 </span></span>
+<span><span class="co">## [177] foreach_1.5.2               tidyr_1.3.1                </span></span>
+<span><span class="co">## [179] openssl_2.1.1               purrr_1.0.2                </span></span>
+<span><span class="co">## [181] reshape_0.8.9               ggplot2_3.5.0              </span></span>
+<span><span class="co">## [183] xtable_1.8-4                restfulr_0.0.15            </span></span>
+<span><span class="co">## [185] viridisLite_0.4.2           ragg_1.3.0                 </span></span>
+<span><span class="co">## [187] RCy3_2.23.2                 tibble_3.2.1               </span></span>
+<span><span class="co">## [189] memoise_2.0.1               AnnotationDbi_1.64.1       </span></span>
+<span><span class="co">## [191] GenomicAlignments_1.38.2    IRanges_2.36.0             </span></span>
+<span><span class="co">## [193] cluster_2.1.6               cmdstanr_0.6.1.9000        </span></span>
+<span><span class="co">## [195] GSEABase_1.64.0</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
