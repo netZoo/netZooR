@@ -169,3 +169,5 @@ reference:
   - mut.ucec
   - exon.size
   - genes
+  - Bladder_data
+  - Skin_data
