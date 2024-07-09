@@ -116,6 +116,37 @@ reference:
   contents:
   - runEgret
 
+- title: BLOBFISH
+  desc: BLOBFISH functions
+  contents:
+  - RunBLOBFISH
+  - GenerateNullPANDADistribution
+  - BuildSubnetwork
+  - CalculatePValues
+  - FindSignificantEdgesForHop
+  - SignificantBreadthFirstSearch
+  - FindConnectionsForAllHopCounts
+  - PlotNetwork
+
+- title: YARN
+  desc: YARN functions
+  contents:
+  - checkMisAnnotation
+  - checkTissuesToMerge
+  - filterGenes
+  - filterLowGenes
+  - normalizeTissueAware
+  - annotateFromBiomart
+  - downloadGTEx
+  - extractMatrix
+  - filterMissingGenes
+  - filterSamples
+  - plotCMDS
+  - plotDensity
+  - plotHeatmap
+  - qsmooth
+  - qstats
+
 - title: Plotting functions
   desc: function to plot the networks and community structures.
   contents:
