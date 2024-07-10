@@ -332,20 +332,20 @@ annotation should be used in the ranked gene list and gene sets.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                 pathway       pval      padj         ES</span></span>
 <span><span class="co">#&gt;                                  &lt;char&gt;      &lt;num&gt;     &lt;num&gt;      &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:      KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.13333333 0.2382022  0.3240518</span></span>
-<span><span class="co">#&gt; 2:         KEGG_CITRATE_CYCLE_TCA_CYCLE 0.52008457 0.6562972 -0.2702159</span></span>
-<span><span class="co">#&gt; 3:       KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.21789883 0.3445800  0.3795079</span></span>
-<span><span class="co">#&gt; 4: KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.04562738 0.1066875  0.4200039</span></span>
-<span><span class="co">#&gt; 5:            KEGG_GALACTOSE_METABOLISM 0.85360825 0.9425258 -0.2250237</span></span>
-<span><span class="co">#&gt; 6:           KEGG_FATTY_ACID_METABOLISM 0.13914657 0.2431242  0.3533304</span></span>
+<span><span class="co">#&gt; 1:      KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.14011516 0.2466531  0.3240518</span></span>
+<span><span class="co">#&gt; 2:         KEGG_CITRATE_CYCLE_TCA_CYCLE 0.52361396 0.6611802 -0.2702159</span></span>
+<span><span class="co">#&gt; 3:       KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.19771863 0.3207884  0.3795079</span></span>
+<span><span class="co">#&gt; 4: KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.04313725 0.1004670  0.4200039</span></span>
+<span><span class="co">#&gt; 5:            KEGG_GALACTOSE_METABOLISM 0.87578947 0.9519166 -0.2250237</span></span>
+<span><span class="co">#&gt; 6:           KEGG_FATTY_ACID_METABOLISM 0.14426877 0.2466531  0.3533304</span></span>
 <span><span class="co">#&gt;           NES nMoreExtreme  size  leadingEdge</span></span>
 <span><span class="co">#&gt;         &lt;num&gt;        &lt;num&gt; &lt;int&gt;       &lt;list&gt;</span></span>
-<span><span class="co">#&gt; 1:  1.2598345           69    47 ALDOB, T....</span></span>
-<span><span class="co">#&gt; 2: -0.9517918          245    29 SDHA, CS....</span></span>
-<span><span class="co">#&gt; 3:  1.2083189          111    21 ALDOB, D....</span></span>
-<span><span class="co">#&gt; 4:  1.4555080           23    30 ALDOB, T....</span></span>
-<span><span class="co">#&gt; 5: -0.7176473          413    20 HK1, GLA....</span></span>
-<span><span class="co">#&gt; 6:  1.2701562           74    33 GCDH, AC....</span></span>
+<span><span class="co">#&gt; 1:  1.2575584           72    47 ALDOB, T....</span></span>
+<span><span class="co">#&gt; 2: -0.9618572          254    29 SDHA, CS....</span></span>
+<span><span class="co">#&gt; 3:  1.2086535          103    21 ALDOB, D....</span></span>
+<span><span class="co">#&gt; 4:  1.4564413           21    30 ALDOB, T....</span></span>
+<span><span class="co">#&gt; 5: -0.7174393          415    20 HK1, GLA....</span></span>
+<span><span class="co">#&gt; 6:  1.2553780           72    33 GCDH, AC....</span></span>
 <span><span class="co"># Subset to pathways with FDR &lt; 0.05</span></span>
 <span><span class="va">sig</span> <span class="op">&lt;-</span> <span class="va">fgseaRes</span><span class="op">[</span><span class="va">fgseaRes</span><span class="op">$</span><span class="va">padj</span> <span class="op">&lt;</span> <span class="fl">0.05</span>,<span class="op">]</span></span>
 <span><span class="co"># Top 10 pathways enriched in females</span></span>
@@ -371,7 +371,7 @@ annotation should be used in the ranked gene list and gene sets.</p>
 <span><span class="co">#&gt;  [7] "KEGG_MTOR_SIGNALING_PATHWAY"               </span></span>
 <span><span class="co">#&gt;  [8] "KEGG_WNT_SIGNALING_PATHWAY"                </span></span>
 <span><span class="co">#&gt;  [9] "KEGG_NOTCH_SIGNALING_PATHWAY"              </span></span>
-<span><span class="co">#&gt; [10] "KEGG_AXON_GUIDANCE"</span></span></code></pre></div>
+<span><span class="co">#&gt; [10] "KEGG_TGF_BETA_SIGNALING_PATHWAY"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="bubble-plot-of-differentially-targeted-pathways-by-sex">Bubble plot of differentially targeted pathways by sex<a class="anchor" aria-label="anchor" href="#bubble-plot-of-differentially-targeted-pathways-by-sex"></a>

@@ -343,9 +343,10 @@ will remain the orginal weights calculated by PANDA.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sjmgarnier.github.io/viridisLite/" class="external-link">viridisLite</a></span><span class="op">)</span></span>
 <span><span class="va">treated_condor_object</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/condorCluster.html">condorCluster</a></span><span class="op">(</span><span class="va">treated_condor_object</span>,project <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "modularity of projected graph 0.308721290928724"</span></span>
-<span><span class="co">#&gt; [1] "Q = 0.308771852639782"</span></span>
-<span><span class="co">#&gt; [1] "Q = 0.308771852639782"</span></span>
+<span><span class="co">#&gt; [1] "modularity of projected graph 0.305307827990727"</span></span>
+<span><span class="co">#&gt; [1] "Q = 0.306247018503079"</span></span>
+<span><span class="co">#&gt; [1] "Q = 0.306499579969213"</span></span>
+<span><span class="co">#&gt; [1] "Q = 0.306499579969213"</span></span>
 <span><span class="va">treated_color_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">treated_condor_object</span><span class="op">$</span><span class="va">red.memb</span><span class="op">$</span><span class="va">com</span><span class="op">)</span></span>
 <span><span class="va">treated_color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html" class="external-link">viridis</a></span><span class="op">(</span><span class="va">treated_color_num</span>, alpha <span class="op">=</span> <span class="fl">1</span>, begin <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">1</span>, direction <span class="op">=</span> <span class="fl">1</span>, option <span class="op">=</span> <span class="st">"D"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/condorPlotCommunities.html">condorPlotCommunities</a></span><span class="op">(</span><span class="va">treated_condor_object</span>, color_list<span class="op">=</span><span class="va">treated_color</span>, point.size<span class="op">=</span><span class="fl">0.04</span>, xlab<span class="op">=</span><span class="st">"Genes"</span>, ylab<span class="op">=</span><span class="st">"TFs"</span><span class="op">)</span></span></code></pre></div>
@@ -360,27 +361,26 @@ network by <code>pandaToAlpaca</code></p>
 <code class="sourceCode R"><span><span class="va">alpaca</span><span class="op">&lt;-</span> <span class="fu"><a href="../reference/pandaToAlpaca.html">pandaToAlpaca</a></span><span class="op">(</span><span class="va">treated_net</span>, <span class="va">control_net</span>, <span class="cn">NULL</span>, verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Detecting communities in control network..."</span></span>
 <span><span class="co">#&gt; Weights detected. Building condor object with weighted edges.</span></span>
-<span><span class="co">#&gt; [1] "modularity of projected graph 0.482340922482979"</span></span>
-<span><span class="co">#&gt; [1] "Q = 0.494479633591018"</span></span>
-<span><span class="co">#&gt; [1] "Q = 0.494479633591018"</span></span>
+<span><span class="co">#&gt; [1] "modularity of projected graph 0.479298199886884"</span></span>
+<span><span class="co">#&gt; [1] "Q = 0.487741857619518"</span></span>
+<span><span class="co">#&gt; [1] "Q = 0.487741857619518"</span></span>
 <span><span class="co">#&gt; [1] "Computing differential modularity matrix..."</span></span>
 <span><span class="co">#&gt; [1] "Computing differential modules..."</span></span>
 <span><span class="co">#&gt; [1] "Merging 2644 communities"</span></span>
 <span><span class="co">#&gt; [1] 1</span></span>
 <span><span class="co">#&gt; [1] 2</span></span>
 <span><span class="co">#&gt; [1] 3</span></span>
-<span><span class="co">#&gt; [1] "Merging 139 communities"</span></span>
+<span><span class="co">#&gt; [1] "Merging 138 communities"</span></span>
 <span><span class="co">#&gt; [1] 1</span></span>
 <span><span class="co">#&gt; [1] 2</span></span>
 <span><span class="co">#&gt; [1] 3</span></span>
 <span><span class="co">#&gt; [1] 4</span></span>
 <span><span class="co">#&gt; [1] 5</span></span>
-<span><span class="co">#&gt; [1] 6</span></span>
-<span><span class="co">#&gt; [1] 7</span></span>
-<span><span class="co">#&gt; [1] "Merging 23 communities"</span></span>
+<span><span class="co">#&gt; [1] "Merging 19 communities"</span></span>
 <span><span class="co">#&gt; [1] 1</span></span>
 <span><span class="co">#&gt; [1] 2</span></span>
-<span><span class="co">#&gt; [1] "Merging 14 communities"</span></span>
+<span><span class="co">#&gt; [1] 3</span></span>
+<span><span class="co">#&gt; [1] "Merging 13 communities"</span></span>
 <span><span class="co">#&gt; [1] 1</span></span>
 <span><span class="co">#&gt; [1] "Computing node scores..."</span></span>
 <span><span class="co">#&gt; [1] 1</span></span>
@@ -395,8 +395,7 @@ network by <code>pandaToAlpaca</code></p>
 <span><span class="co">#&gt; [1] 10</span></span>
 <span><span class="co">#&gt; [1] 11</span></span>
 <span><span class="co">#&gt; [1] 12</span></span>
-<span><span class="co">#&gt; [1] 13</span></span>
-<span><span class="co">#&gt; [1] 14</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 13</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">

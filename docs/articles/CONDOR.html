@@ -152,7 +152,7 @@ overall modularity along with two community membership
 <code class="sourceCode R"><span><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condorCluster.html">condorCluster</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "modularity of projected graph 0"</span></span>
 <span><span class="co">## [1] "Q = 0"</span></span>
-<span><span class="co">## [1] "Q = 0.15702479338843"</span></span>
+<span><span class="co">## [1] "Q = 0.198347107438017"</span></span>
 <span><span class="co">## [1] "Q = 0.231404958677686"</span></span>
 <span><span class="co">## [1] "Q = 0.231404958677686"</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -175,9 +175,9 @@ maximization. Here’s a picture:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gtoy</span> <span class="op">=</span> <span class="fu"><a href="https://r.igraph.org/reference/graph.edgelist.html" class="external-link">graph.edgelist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">elist</span><span class="op">)</span>,directed<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://r.igraph.org/reference/set.graph.attribute.html" class="external-link">set.graph.attribute</a></span><span class="op">(</span><span class="va">gtoy</span>, <span class="st">"layout"</span>, <span class="fu"><a href="https://r.igraph.org/reference/layout.deprecated.html" class="external-link">layout.kamada.kawai</a></span><span class="op">(</span><span class="va">gtoy</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## IGRAPH 3435006 UN-- 8 11 -- </span></span>
+<pre><code><span><span class="co">## IGRAPH 5a9c5ad UN-- 8 11 -- </span></span>
 <span><span class="co">## + attr: layout (g/n), name (v/c)</span></span>
-<span><span class="co">## + edges from 3435006 (vertex names):</span></span>
+<span><span class="co">## + edges from 5a9c5ad (vertex names):</span></span>
 <span><span class="co">##  [1] Alice--Bob    Alice--John   Alice--Ed     Bob  --Sue    John --Sue   </span></span>
 <span><span class="co">##  [6] Sue  --Hank   John --Janine Ed   --Janine Hank --Janine Ed   --Mary  </span></span>
 <span><span class="co">## [11] Hank --Mary</span></span></code></pre>
@@ -206,9 +206,9 @@ interactions between 13 plants and 34 pollinators.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">small1976</span><span class="op">)</span></span>
 <span><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCondorObject.html">createCondorObject</a></span><span class="op">(</span><span class="va">small1976</span><span class="op">)</span></span>
 <span><span class="va">condor.object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/condorCluster.html">condorCluster</a></span><span class="op">(</span><span class="va">condor.object</span>, project<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "modularity of projected graph 0.523013747073361"</span></span>
-<span><span class="co">## [1] "Q = 0.524618317507804"</span></span>
-<span><span class="co">## [1] "Q = 0.524618317507804"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "modularity of projected graph 0.525346928655047"</span></span>
+<span><span class="co">## [1] "Q = 0.52666696475026"</span></span>
+<span><span class="co">## [1] "Q = 0.52666696475026"</span></span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/condorPlotHeatmap.html">condorPlotHeatmap</a></span><span class="op">(</span><span class="va">condor.object</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CONDOR_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
