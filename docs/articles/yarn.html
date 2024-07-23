@@ -8,8 +8,8 @@
 <meta name="description" content="netZooR">
 <title>YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization • netZooR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization">
 <meta property="og:description" content="netZooR">
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">netZooR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.17</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,7 @@
                         <h4 data-toc-skip class="author">Joseph N.
 Paulson &amp; John Quackenbush</h4>
             
-            <h4 data-toc-skip class="date">2023-09-22</h4>
+            <h4 data-toc-skip class="date">2024-07-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/netZoo/netZooR/blob/HEAD/vignettes/yarn.Rmd" class="external-link"><code>vignettes/yarn.Rmd</code></a></small>
       <div class="d-none name"><code>yarn.Rmd</code></div>
@@ -173,19 +173,19 @@ having the user download the</p>
 group-specific genes</li>
 </ol>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/checkMisAnnotation.html" class="external-link">checkMisAnnotation</a></span><span class="op">(</span><span class="va">skin</span>,<span class="st">"GENDER"</span>,controlGenes<span class="op">=</span><span class="st">"Y"</span>,legendPosition<span class="op">=</span><span class="st">"topleft"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/checkMisAnnotation.html">checkMisAnnotation</a></span><span class="op">(</span><span class="va">skin</span>,<span class="st">"GENDER"</span>,controlGenes<span class="op">=</span><span class="st">"Y"</span>,legendPosition<span class="op">=</span><span class="st">"topleft"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="yarn_files/figure-html/checkMisAnnotation-1.png" width="700"></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Decide what sub-groups should be merged</li>
 </ol>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/checkTissuesToMerge.html" class="external-link">checkTissuesToMerge</a></span><span class="op">(</span><span class="va">skin</span>,<span class="st">"SMTS"</span>,<span class="st">"SMTSD"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/checkTissuesToMerge.html">checkTissuesToMerge</a></span><span class="op">(</span><span class="va">skin</span>,<span class="st">"SMTS"</span>,<span class="st">"SMTSD"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="yarn_files/figure-html/checkTissuesToMerge-1.png" width="700"></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Filter lowly expressed genes</li>
 </ol>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">skin_filtered</span> <span class="op">=</span> <span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/filterLowGenes.html" class="external-link">filterLowGenes</a></span><span class="op">(</span><span class="va">skin</span>,<span class="st">"SMTSD"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">skin_filtered</span> <span class="op">=</span> <span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/filterLowGenes.html">filterLowGenes</a></span><span class="op">(</span><span class="va">skin</span>,<span class="st">"SMTSD"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">skin</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Features  Samples </span></span>
 <span><span class="co">##    40824       20</span></span></code></pre>
@@ -195,18 +195,18 @@ group-specific genes</li>
 <span><span class="co">##    19933       20</span></span></code></pre>
 <p>Or group specific genes</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">=</span> <span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/filterGenes.html" class="external-link">filterGenes</a></span><span class="op">(</span><span class="va">skin</span>,labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span>,<span class="st">"Y"</span>,<span class="st">"MT"</span><span class="op">)</span>,featureName <span class="op">=</span> <span class="st">"chromosome_name"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">=</span> <span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/filterGenes.html">filterGenes</a></span><span class="op">(</span><span class="va">skin</span>,labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span>,<span class="st">"Y"</span>,<span class="st">"MT"</span><span class="op">)</span>,featureName <span class="op">=</span> <span class="st">"chromosome_name"</span><span class="op">)</span></span>
 <span><span class="co"># Keep only the sex names</span></span>
-<span><span class="va">tmp</span> <span class="op">=</span> <span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/filterGenes.html" class="external-link">filterGenes</a></span><span class="op">(</span><span class="va">skin</span>,labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span>,<span class="st">"Y"</span>,<span class="st">"MT"</span><span class="op">)</span>,featureName <span class="op">=</span> <span class="st">"chromosome_name"</span>,keepOnly<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">tmp</span> <span class="op">=</span> <span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/filterGenes.html">filterGenes</a></span><span class="op">(</span><span class="va">skin</span>,labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span>,<span class="st">"Y"</span>,<span class="st">"MT"</span><span class="op">)</span>,featureName <span class="op">=</span> <span class="st">"chromosome_name"</span>,keepOnly<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>Normalize in a tissue or group-aware manner</li>
 </ol>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/plotDensity.html" class="external-link">plotDensity</a></span><span class="op">(</span><span class="va">skin_filtered</span>,<span class="st">"SMTSD"</span>,main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="st">'log'</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="st">' raw expression'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/plotDensity.html">plotDensity</a></span><span class="op">(</span><span class="va">skin_filtered</span>,<span class="st">"SMTSD"</span>,main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="st">'log'</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="st">' raw expression'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="yarn_files/figure-html/density-1.png" width="700"></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">skin_filtered</span> <span class="op">=</span> <span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/normalizeTissueAware.html" class="external-link">normalizeTissueAware</a></span><span class="op">(</span><span class="va">skin_filtered</span>,<span class="st">"SMTSD"</span><span class="op">)</span></span>
-<span><span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/plotDensity.html" class="external-link">plotDensity</a></span><span class="op">(</span><span class="va">skin_filtered</span>,<span class="st">"SMTSD"</span>,normalized<span class="op">=</span><span class="cn">TRUE</span>,main<span class="op">=</span><span class="st">"Normalized"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">skin_filtered</span> <span class="op">=</span> <span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/normalizeTissueAware.html">normalizeTissueAware</a></span><span class="op">(</span><span class="va">skin_filtered</span>,<span class="st">"SMTSD"</span><span class="op">)</span></span>
+<span><span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/plotDensity.html">plotDensity</a></span><span class="op">(</span><span class="va">skin_filtered</span>,<span class="st">"SMTSD"</span>,normalized<span class="op">=</span><span class="cn">TRUE</span>,main<span class="op">=</span><span class="st">"Normalized"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## normalizedMatrix is assumed to already be log-transformed</span></span></code></pre>
 <p><img src="yarn_files/figure-html/density-2.png" width="700"></p>
 </div>
@@ -220,147 +220,152 @@ include, <code>plotCMDS</code>, <code>plotDensity</code>,
 <p><code>plotCMDS</code> - PCoA / Classical Multi-Dimensional Scaling of
 the most variable genes.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">skin</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">=</span> <span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/plotCMDS.html" class="external-link">plotCMDS</a></span><span class="op">(</span><span class="va">skin</span>,pch<span class="op">=</span><span class="fl">21</span>,bg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html" class="external-link">pData</a></span><span class="op">(</span><span class="va">skin</span><span class="op">)</span><span class="op">$</span><span class="va">SMTSD</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">skin</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning in data(skin): data set 'skin' not found</span></span></code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">=</span> <span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/plotCMDS.html">plotCMDS</a></span><span class="op">(</span><span class="va">skin</span>,pch<span class="op">=</span><span class="fl">21</span>,bg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html" class="external-link">pData</a></span><span class="op">(</span><span class="va">skin</span><span class="op">)</span><span class="op">$</span><span class="va">SMTSD</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="yarn_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p><code>plotDensity</code> - Density plots colored by phenotype of
 choosing. Allows for inspection of global trend differences.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">filtData</span> <span class="op">=</span> <span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/filterLowGenes.html" class="external-link">filterLowGenes</a></span><span class="op">(</span><span class="va">skin</span>,<span class="st">"SMTSD"</span><span class="op">)</span></span>
-<span><span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/plotDensity.html" class="external-link">plotDensity</a></span><span class="op">(</span><span class="va">filtData</span>,groups<span class="op">=</span><span class="st">"SMTSD"</span>,legendPos<span class="op">=</span><span class="st">"topleft"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">filtData</span> <span class="op">=</span> <span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/filterLowGenes.html">filterLowGenes</a></span><span class="op">(</span><span class="va">skin</span>,<span class="st">"SMTSD"</span><span class="op">)</span></span>
+<span><span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/plotDensity.html">plotDensity</a></span><span class="op">(</span><span class="va">filtData</span>,groups<span class="op">=</span><span class="st">"SMTSD"</span>,legendPos<span class="op">=</span><span class="st">"topleft"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="yarn_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p><code>plotHeatmap</code> - Heatmap of the most variable genes.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span></span>
 <span><span class="va">tissues</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/phenoData.html" class="external-link">pData</a></span><span class="op">(</span><span class="va">skin</span><span class="op">)</span><span class="op">$</span><span class="va">SMTSD</span></span>
 <span><span class="va">heatmapColColors</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span><span class="fl">12</span>,<span class="st">"Set3"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">tissues</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">heatmapCols</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"RdBu"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
-<span><span class="fu">yarn</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/yarn/man/plotHeatmap.html" class="external-link">plotHeatmap</a></span><span class="op">(</span><span class="va">skin</span>,normalized<span class="op">=</span><span class="cn">FALSE</span>,log<span class="op">=</span><span class="cn">TRUE</span>,trace<span class="op">=</span><span class="st">"none"</span>,n<span class="op">=</span><span class="fl">10</span>,</span>
+<span><span class="fu">netZooR</span><span class="fu">::</span><span class="fu"><a href="../reference/plotHeatmap.html">plotHeatmap</a></span><span class="op">(</span><span class="va">skin</span>,normalized<span class="op">=</span><span class="cn">FALSE</span>,log<span class="op">=</span><span class="cn">TRUE</span>,trace<span class="op">=</span><span class="st">"none"</span>,n<span class="op">=</span><span class="fl">10</span>,</span>
 <span> col <span class="op">=</span> <span class="va">heatmapCols</span>,ColSideColors <span class="op">=</span> <span class="va">heatmapColColors</span>,cexRow <span class="op">=</span> <span class="fl">0.25</span>,cexCol <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
 <p><img src="yarn_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="information">Information<a class="anchor" aria-label="anchor" href="#information"></a>
 </h2>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.2.2 (2022-10-31)</span></span>
-<span><span class="co">## Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
-<span><span class="co">## Running under: macOS Big Sur ... 10.16</span></span>
+<pre><code><span><span class="co">## R version 4.3.2 (2023-10-31)</span></span>
+<span><span class="co">## Platform: aarch64-apple-darwin20 (64-bit)</span></span>
+<span><span class="co">## Running under: macOS Sonoma 14.1.2</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
-<span><span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span></span>
-<span><span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span></span>
+<span><span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib </span></span>
+<span><span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
 <span><span class="co">## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## time zone: America/New_York</span></span>
+<span><span class="co">## tzcode source: internal</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## attached base packages:</span></span>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] RColorBrewer_1.1-3  netZooR_1.5.0       matrixcalc_1.0-6   </span></span>
-<span><span class="co">## [4] yarn_1.24.0         pandaR_1.19.6       Biobase_2.58.0     </span></span>
-<span><span class="co">## [7] BiocGenerics_0.44.0 reticulate_1.32.0   igraph_1.5.1       </span></span>
+<span><span class="co">## [1] RColorBrewer_1.1-3  netZooR_1.5.17      matrixcalc_1.0-6   </span></span>
+<span><span class="co">## [4] pandaR_1.34.0       Biobase_2.62.0      BiocGenerics_0.48.1</span></span>
+<span><span class="co">## [7] reticulate_1.35.0   igraph_2.0.3       </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##   [1] utf8_1.2.3                  proto_1.0.0                </span></span>
-<span><span class="co">##   [3] RUnit_0.4.32                tidyselect_1.2.0           </span></span>
-<span><span class="co">##   [5] RSQLite_2.3.1               AnnotationDbi_1.60.0       </span></span>
-<span><span class="co">##   [7] grid_4.2.2                  BiocParallel_1.32.4        </span></span>
-<span><span class="co">##   [9] munsell_0.5.0               base64url_1.4              </span></span>
-<span><span class="co">##  [11] codetools_0.2-19            ragg_1.2.5                 </span></span>
-<span><span class="co">##  [13] preprocessCore_1.60.1       chron_2.3-61               </span></span>
-<span><span class="co">##  [15] pbdZMQ_0.3-10               colorspace_2.1-0           </span></span>
-<span><span class="co">##  [17] Category_2.64.0             filelock_1.0.2             </span></span>
-<span><span class="co">##  [19] knitr_1.44                  uuid_1.1-1                 </span></span>
-<span><span class="co">##  [21] rstudioapi_0.15.0           stats4_4.2.2               </span></span>
-<span><span class="co">##  [23] MatrixGenerics_1.10.0       repr_1.1.6                 </span></span>
-<span><span class="co">##  [25] GenomeInfoDbData_1.2.9      farver_2.1.1               </span></span>
-<span><span class="co">##  [27] bit64_4.0.5                 rhdf5_2.42.0               </span></span>
-<span><span class="co">##  [29] rprojroot_2.0.3             downloader_0.4             </span></span>
-<span><span class="co">##  [31] vctrs_0.6.3                 generics_0.1.3             </span></span>
-<span><span class="co">##  [33] xfun_0.40                   BiocFileCache_2.6.0        </span></span>
-<span><span class="co">##  [35] R6_2.5.1                    doParallel_1.0.17          </span></span>
-<span><span class="co">##  [37] GenomeInfoDb_1.34.4         illuminaio_0.40.0          </span></span>
-<span><span class="co">##  [39] RJSONIO_1.3-1.8             locfit_1.5-9.8             </span></span>
-<span><span class="co">##  [41] bitops_1.0-7                rhdf5filters_1.10.0        </span></span>
-<span><span class="co">##  [43] cachem_1.0.8                reshape_0.8.9              </span></span>
-<span><span class="co">##  [45] DelayedArray_0.24.0         assertthat_0.2.1           </span></span>
-<span><span class="co">##  [47] BiocIO_1.8.0                scales_1.2.1               </span></span>
-<span><span class="co">##  [49] nnet_7.3-19                 gtable_0.3.4               </span></span>
-<span><span class="co">##  [51] processx_3.8.2              rlang_1.1.1                </span></span>
-<span><span class="co">##  [53] genefilter_1.80.2           systemfonts_1.0.4          </span></span>
-<span><span class="co">##  [55] splines_4.2.2               rtracklayer_1.58.0         </span></span>
-<span><span class="co">##  [57] GEOquery_2.66.0             hexbin_1.28.3              </span></span>
-<span><span class="co">##  [59] checkmate_2.2.0             abind_1.4-5                </span></span>
-<span><span class="co">##  [61] reshape2_1.4.4              yaml_2.3.7                 </span></span>
-<span><span class="co">##  [63] backports_1.4.1             GenomicFeatures_1.50.3     </span></span>
-<span><span class="co">##  [65] RBGL_1.74.0                 tensorA_0.36.2             </span></span>
-<span><span class="co">##  [67] tools_4.2.2                 nor1mix_1.3-0              </span></span>
-<span><span class="co">##  [69] ggplot2_3.4.3               gplots_3.1.3               </span></span>
-<span><span class="co">##  [71] posterior_1.4.1             jquerylib_0.1.4            </span></span>
-<span><span class="co">##  [73] ggdendro_0.1.23             siggenes_1.72.0            </span></span>
-<span><span class="co">##  [75] STRINGdb_2.10.0             gsubfn_0.7                 </span></span>
-<span><span class="co">##  [77] hash_2.2.6.3                Rcpp_1.0.11                </span></span>
-<span><span class="co">##  [79] plyr_1.8.8                  base64enc_0.1-3            </span></span>
-<span><span class="co">##  [81] sparseMatrixStats_1.10.0    progress_1.2.2             </span></span>
-<span><span class="co">##  [83] zlibbioc_1.44.0             purrr_1.0.2                </span></span>
-<span><span class="co">##  [85] RCurl_1.98-1.12             ps_1.7.5                   </span></span>
-<span><span class="co">##  [87] prettyunits_1.1.1           sqldf_0.4-11               </span></span>
-<span><span class="co">##  [89] openssl_2.1.0               bumphunter_1.40.0          </span></span>
-<span><span class="co">##  [91] S4Vectors_0.36.1            cluster_2.1.4              </span></span>
-<span><span class="co">##  [93] SummarizedExperiment_1.28.0 fs_1.6.3                   </span></span>
-<span><span class="co">##  [95] magrittr_2.0.3              data.table_1.14.8          </span></span>
-<span><span class="co">##  [97] matrixStats_1.0.0           hms_1.1.3                  </span></span>
-<span><span class="co">##  [99] evaluate_0.21               xtable_1.8-4               </span></span>
-<span><span class="co">## [101] XML_3.99-0.14               mclust_6.0.0               </span></span>
-<span><span class="co">## [103] IRanges_2.32.0              compiler_4.2.2             </span></span>
-<span><span class="co">## [105] biomaRt_2.54.0              minfi_1.44.0               </span></span>
-<span><span class="co">## [107] tibble_3.2.1                RCy3_2.18.0                </span></span>
-<span><span class="co">## [109] KernSmooth_2.23-22          crayon_1.5.2               </span></span>
-<span><span class="co">## [111] htmltools_0.5.6             GOstats_2.64.0             </span></span>
-<span><span class="co">## [113] mgcv_1.9-0                  tzdb_0.4.0                 </span></span>
-<span><span class="co">## [115] tidyr_1.3.0                 DBI_1.1.3                  </span></span>
-<span><span class="co">## [117] dbplyr_2.3.3                MASS_7.3-60                </span></span>
-<span><span class="co">## [119] rappdirs_0.3.3              Matrix_1.6-1.1             </span></span>
-<span><span class="co">## [121] readr_2.1.4                 permute_0.9-7              </span></span>
-<span><span class="co">## [123] cli_3.6.1                   quantro_1.32.0             </span></span>
-<span><span class="co">## [125] uchardet_1.1.1              quadprog_1.5-8             </span></span>
-<span><span class="co">## [127] parallel_4.2.2              GenomicRanges_1.50.2       </span></span>
-<span><span class="co">## [129] pkgconfig_2.0.3             pkgdown_2.0.7              </span></span>
-<span><span class="co">## [131] GenomicAlignments_1.34.0    IRdisplay_1.1              </span></span>
-<span><span class="co">## [133] xml2_1.3.5                  foreach_1.5.2              </span></span>
-<span><span class="co">## [135] annotate_1.76.0             penalized_0.9-52           </span></span>
-<span><span class="co">## [137] bslib_0.5.1                 rngtools_1.5.2             </span></span>
-<span><span class="co">## [139] multtest_2.54.0             beanplot_1.3.1             </span></span>
-<span><span class="co">## [141] XVector_0.38.0              AnnotationForge_1.40.0     </span></span>
-<span><span class="co">## [143] doRNG_1.8.6                 scrime_1.3.5               </span></span>
-<span><span class="co">## [145] distributional_0.3.2        stringr_1.5.0              </span></span>
-<span><span class="co">## [147] digest_0.6.33               vegan_2.6-4                </span></span>
-<span><span class="co">## [149] graph_1.76.0                Biostrings_2.66.0          </span></span>
-<span><span class="co">## [151] rmarkdown_2.25              base64_2.0.1               </span></span>
-<span><span class="co">## [153] edgeR_3.40.1                DelayedMatrixStats_1.20.0  </span></span>
-<span><span class="co">## [155] GSEABase_1.60.0             restfulr_0.0.15            </span></span>
-<span><span class="co">## [157] curl_5.0.2                  Rsamtools_2.14.0           </span></span>
-<span><span class="co">## [159] gtools_3.9.4                rjson_0.2.21               </span></span>
-<span><span class="co">## [161] lifecycle_1.0.3             nlme_3.1-163               </span></span>
-<span><span class="co">## [163] jsonlite_1.8.7              cmdstanr_0.6.1.9000        </span></span>
-<span><span class="co">## [165] Rhdf5lib_1.20.0             viridisLite_0.4.2          </span></span>
-<span><span class="co">## [167] desc_1.4.2                  askpass_1.2.0              </span></span>
-<span><span class="co">## [169] limma_3.54.2                fansi_1.0.4                </span></span>
-<span><span class="co">## [171] pillar_1.9.0                lattice_0.21-8             </span></span>
-<span><span class="co">## [173] plotrix_3.8-2               KEGGREST_1.38.0            </span></span>
-<span><span class="co">## [175] fastmap_1.1.1               httr_1.4.7                 </span></span>
-<span><span class="co">## [177] survival_3.5-7              GO.db_3.16.0               </span></span>
-<span><span class="co">## [179] glue_1.6.2                  png_0.1-8                  </span></span>
-<span><span class="co">## [181] iterators_1.0.14            bit_4.0.5                  </span></span>
-<span><span class="co">## [183] Rgraphviz_2.42.0            stringi_1.7.12             </span></span>
-<span><span class="co">## [185] sass_0.4.7                  HDF5Array_1.26.0           </span></span>
-<span><span class="co">## [187] blob_1.2.4                  textshaping_0.3.6          </span></span>
-<span><span class="co">## [189] org.Hs.eg.db_3.16.0         caTools_1.18.2             </span></span>
-<span><span class="co">## [191] memoise_2.0.1               IRkernel_1.3.2             </span></span>
-<span><span class="co">## [193] dplyr_1.1.3</span></span></code></pre>
+<span><span class="co">##   [1] STRINGdb_2.14.3             fs_1.6.3                   </span></span>
+<span><span class="co">##   [3] matrixStats_1.2.0           bitops_1.0-7               </span></span>
+<span><span class="co">##   [5] httr_1.4.7                  doParallel_1.0.17          </span></span>
+<span><span class="co">##   [7] Rgraphviz_2.46.0            repr_1.1.7                 </span></span>
+<span><span class="co">##   [9] tools_4.3.2                 doRNG_1.8.6                </span></span>
+<span><span class="co">##  [11] backports_1.4.1             utf8_1.2.4                 </span></span>
+<span><span class="co">##  [13] R6_2.5.1                    vegan_2.6-4                </span></span>
+<span><span class="co">##  [15] HDF5Array_1.30.1            mgcv_1.9-1                 </span></span>
+<span><span class="co">##  [17] rhdf5filters_1.14.1         permute_0.9-7              </span></span>
+<span><span class="co">##  [19] prettyunits_1.2.0           base64_2.0.1               </span></span>
+<span><span class="co">##  [21] preprocessCore_1.64.0       cli_3.6.2                  </span></span>
+<span><span class="co">##  [23] textshaping_0.3.7           penalized_0.9-52           </span></span>
+<span><span class="co">##  [25] sass_0.4.9                  readr_2.1.5                </span></span>
+<span><span class="co">##  [27] genefilter_1.84.0           askpass_1.2.0              </span></span>
+<span><span class="co">##  [29] pkgdown_2.0.7               Rsamtools_2.18.0           </span></span>
+<span><span class="co">##  [31] systemfonts_1.0.6           pbdZMQ_0.3-11              </span></span>
+<span><span class="co">##  [33] siggenes_1.76.0             illuminaio_0.44.0          </span></span>
+<span><span class="co">##  [35] AnnotationForge_1.44.0      scrime_1.3.5               </span></span>
+<span><span class="co">##  [37] plotrix_3.8-4               limma_3.58.1               </span></span>
+<span><span class="co">##  [39] rstudioapi_0.16.0           RSQLite_2.3.5              </span></span>
+<span><span class="co">##  [41] generics_0.1.3              GOstats_2.68.0             </span></span>
+<span><span class="co">##  [43] quantro_1.36.0              BiocIO_1.12.0              </span></span>
+<span><span class="co">##  [45] gtools_3.9.5                distributional_0.4.0       </span></span>
+<span><span class="co">##  [47] dplyr_1.1.4                 GO.db_3.18.0               </span></span>
+<span><span class="co">##  [49] Matrix_1.6-5                fansi_1.0.6                </span></span>
+<span><span class="co">##  [51] S4Vectors_0.40.2            abind_1.4-5                </span></span>
+<span><span class="co">##  [53] lifecycle_1.0.4             yaml_2.3.8                 </span></span>
+<span><span class="co">##  [55] edgeR_4.0.16                SummarizedExperiment_1.32.0</span></span>
+<span><span class="co">##  [57] gplots_3.1.3.1              rhdf5_2.46.1               </span></span>
+<span><span class="co">##  [59] SparseArray_1.2.4           BiocFileCache_2.10.1       </span></span>
+<span><span class="co">##  [61] grid_4.3.2                  blob_1.2.4                 </span></span>
+<span><span class="co">##  [63] crayon_1.5.2                lattice_0.22-6             </span></span>
+<span><span class="co">##  [65] GenomicFeatures_1.54.4      annotate_1.80.0            </span></span>
+<span><span class="co">##  [67] KEGGREST_1.42.0             pillar_1.9.0               </span></span>
+<span><span class="co">##  [69] knitr_1.45                  beanplot_1.3.1             </span></span>
+<span><span class="co">##  [71] GenomicRanges_1.54.1        rjson_0.2.21               </span></span>
+<span><span class="co">##  [73] codetools_0.2-19            glue_1.7.0                 </span></span>
+<span><span class="co">##  [75] downloader_0.4              data.table_1.15.2          </span></span>
+<span><span class="co">##  [77] vctrs_0.6.5                 png_0.1-8                  </span></span>
+<span><span class="co">##  [79] gtable_0.3.4                assertthat_0.2.1           </span></span>
+<span><span class="co">##  [81] gsubfn_0.7                  cachem_1.0.8               </span></span>
+<span><span class="co">##  [83] xfun_0.42                   S4Arrays_1.2.1             </span></span>
+<span><span class="co">##  [85] survival_3.5-8              iterators_1.0.14           </span></span>
+<span><span class="co">##  [87] statmod_1.5.0               nlme_3.1-164               </span></span>
+<span><span class="co">##  [89] Category_2.68.0             bit64_4.0.5                </span></span>
+<span><span class="co">##  [91] progress_1.2.3              filelock_1.0.3             </span></span>
+<span><span class="co">##  [93] GenomeInfoDb_1.38.8         tensorA_0.36.2.1           </span></span>
+<span><span class="co">##  [95] bslib_0.6.2                 nor1mix_1.3-2              </span></span>
+<span><span class="co">##  [97] KernSmooth_2.23-22          colorspace_2.1-0           </span></span>
+<span><span class="co">##  [99] DBI_1.2.2                   nnet_7.3-19                </span></span>
+<span><span class="co">## [101] processx_3.8.4              tidyselect_1.2.1           </span></span>
+<span><span class="co">## [103] bit_4.0.5                   compiler_4.3.2             </span></span>
+<span><span class="co">## [105] curl_5.2.1                  chron_2.3-61               </span></span>
+<span><span class="co">## [107] graph_1.80.0                xml2_1.3.6                 </span></span>
+<span><span class="co">## [109] desc_1.4.3                  ggdendro_0.2.0             </span></span>
+<span><span class="co">## [111] DelayedArray_0.28.0         posterior_1.5.0            </span></span>
+<span><span class="co">## [113] rtracklayer_1.62.0          checkmate_2.3.1            </span></span>
+<span><span class="co">## [115] scales_1.3.0                caTools_1.18.2             </span></span>
+<span><span class="co">## [117] hexbin_1.28.3               quadprog_1.5-8             </span></span>
+<span><span class="co">## [119] RBGL_1.78.0                 rappdirs_0.3.3             </span></span>
+<span><span class="co">## [121] stringr_1.5.1               digest_0.6.35              </span></span>
+<span><span class="co">## [123] rmarkdown_2.26              GEOquery_2.70.0            </span></span>
+<span><span class="co">## [125] XVector_0.42.0              htmltools_0.5.7            </span></span>
+<span><span class="co">## [127] pkgconfig_2.0.3             base64enc_0.1-3            </span></span>
+<span><span class="co">## [129] sparseMatrixStats_1.14.0    MatrixGenerics_1.14.0      </span></span>
+<span><span class="co">## [131] highr_0.10                  dbplyr_2.5.0               </span></span>
+<span><span class="co">## [133] fastmap_1.1.1               rlang_1.1.3                </span></span>
+<span><span class="co">## [135] DelayedMatrixStats_1.24.0   jquerylib_0.1.4            </span></span>
+<span><span class="co">## [137] jsonlite_1.8.8              BiocParallel_1.36.0        </span></span>
+<span><span class="co">## [139] mclust_6.1                  RCurl_1.98-1.14            </span></span>
+<span><span class="co">## [141] magrittr_2.0.3              GenomeInfoDbData_1.2.11    </span></span>
+<span><span class="co">## [143] Rhdf5lib_1.24.2             IRkernel_1.3.2             </span></span>
+<span><span class="co">## [145] munsell_0.5.0               Rcpp_1.0.12                </span></span>
+<span><span class="co">## [147] proto_1.0.0                 sqldf_0.4-11               </span></span>
+<span><span class="co">## [149] stringi_1.8.3               RJSONIO_1.3-1.9            </span></span>
+<span><span class="co">## [151] zlibbioc_1.48.2             MASS_7.3-60.0.1            </span></span>
+<span><span class="co">## [153] plyr_1.8.9                  org.Hs.eg.db_3.18.0        </span></span>
+<span><span class="co">## [155] bumphunter_1.44.0           minfi_1.48.0               </span></span>
+<span><span class="co">## [157] parallel_4.3.2              Biostrings_2.70.3          </span></span>
+<span><span class="co">## [159] IRdisplay_1.1               splines_4.3.2              </span></span>
+<span><span class="co">## [161] multtest_2.58.0             hash_2.2.6.3               </span></span>
+<span><span class="co">## [163] hms_1.1.3                   locfit_1.5-9.9             </span></span>
+<span><span class="co">## [165] ps_1.7.6                    uuid_1.2-0                 </span></span>
+<span><span class="co">## [167] RUnit_0.4.33                base64url_1.4              </span></span>
+<span><span class="co">## [169] rngtools_1.5.2              reshape2_1.4.4             </span></span>
+<span><span class="co">## [171] biomaRt_2.58.2              stats4_4.3.2               </span></span>
+<span><span class="co">## [173] XML_3.99-0.16.1             evaluate_0.23              </span></span>
+<span><span class="co">## [175] tzdb_0.4.0                  foreach_1.5.2              </span></span>
+<span><span class="co">## [177] tidyr_1.3.1                 openssl_2.1.1              </span></span>
+<span><span class="co">## [179] purrr_1.0.2                 reshape_0.8.9              </span></span>
+<span><span class="co">## [181] ggplot2_3.5.1               xtable_1.8-4               </span></span>
+<span><span class="co">## [183] restfulr_0.0.15             viridisLite_0.4.2          </span></span>
+<span><span class="co">## [185] ragg_1.3.0                  RCy3_2.23.2                </span></span>
+<span><span class="co">## [187] tibble_3.2.1                memoise_2.0.1              </span></span>
+<span><span class="co">## [189] AnnotationDbi_1.64.1        GenomicAlignments_1.38.2   </span></span>
+<span><span class="co">## [191] IRanges_2.36.0              cluster_2.1.6              </span></span>
+<span><span class="co">## [193] cmdstanr_0.6.1.9000         GSEABase_1.64.0</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
