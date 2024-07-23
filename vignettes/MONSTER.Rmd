@@ -29,7 +29,7 @@ MONSTER takes in sequence motif data linking transcription factors (TFs) to gene
 
 Install and load netZooR package
 ```{r,eval = FALSE}
-# install.packages("devtools") 
+# install.packages("devtools")
 library(devtools)
 # install netZooR pkg with vignettes, otherwise remove the "build_vignettes = TRUE" argument.
 devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
@@ -39,11 +39,14 @@ devtools::install_github("netZoo/netZooR", build_vignettes = TRUE)
 library(netZooR)
 ```
 
-## Input files
+
+## Full MONSTER tutorial in build network mode
+
+### Input files
 
 In this demo, we use the included Yeast dataset, containing three separate Yeast datasets, and a sequence motif object.  The `yeast` dataset includes three separate experimental designs each involving microarray assays of 2555 genes of yeast (Saccharomyces cerevisiae).  `yeast$exp.ko` is a set of 106 gene expression samples of following a number of gene knockouts.  `yeast$exp.cc` is a set of 50 gene expression samples taken sets of two across 25 timepoints spanning the cellular cycle. `yeast$exp.sr` is a set of 173 gene expression samples collected under conditions of stress such as heat shock.  Each expression dataset has been normalized and scaled.
 
-In this tutorial, we will run `monster` to identify suspected TF drivers of the change from the early cell cycle to late cell cycle. 
+In this tutorial, we will run `monster` to identify suspected TF drivers of the change from the early cell cycle to late cell cycle.
 
 First, we load the data included in the `netZooR` package
 
@@ -51,7 +54,7 @@ First, we load the data included in the `netZooR` package
 data(yeast)
 ```
 
-Next, we create our design vector indicating to which group each sample belongs.  This vector must contain only 0's and 1's (NAs allowed). 
+Next, we create our design vector indicating to which group each sample belongs.  This vector must contain only 0's and 1's (NAs allowed).
 
 In this example we are running the analysis on the first 10 timepoints compared to the last 10 timepoints, ignoring the middle 5 for the purposes of simplicity in this tutorial.  Each timepoint contains two samples.
 
@@ -59,11 +62,11 @@ In this example we are running the analysis on the first 10 timepoints compared 
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
 ```
 
-The main method in MONSTER is the `monster` function.  This function has three required arguments, 
+The main method in MONSTER is the `monster` function.  This function has three required arguments,
 
-* A gene expression matrix, `yeast$exp.cc` 
+* A gene expression matrix, `yeast$exp.cc`
 * A motif mapping data.frame, `yeast$motif`
-* A design integer vector, `design` 
+* A design integer vector, `design`
 
 The gene expression argument may be a `matrix`, a `data.frame` or an `ExpressionSet`.  In this example, `yeast$exp.cc` is a `data.frame` consisting of 2555 rows and 50 columns.
 
@@ -74,7 +77,7 @@ yeast$exp.cc[1:5,1:5]
 
 The motif mapping data.frame tells the MONSTER algorithm which genes contain likely transcription factor binding sites in the vicinity of their promoter. This serves as the regulatory prior and informs the initial network inference method by supplying a partial list of TF targeting.
 
-This data.frame contains 3 columns, where each row is a specific edge in the prior network.  
+This data.frame contains 3 columns, where each row is a specific edge in the prior network.
 
 * Column 1 specifies the transcription factor for the edge.
 * Column 2 specifies the targeted gene for the edge
@@ -92,7 +95,7 @@ MONSTER tests the statistical significance of its results by permuting the sampl
 
 Monster is optimized to run on multiple cores, if available.  We can specify the maximum number of cores which are available to run the algorithm.  If `numMaxCores` unspecified, MONSTER will check available resources and run on all but four of the available cores.
 
-## Running MONSTER
+### Running MONSTER
 
 ```{r, message=F}
 yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
@@ -124,7 +127,7 @@ We can view the $dTFI$ with the generic `plot` function
 monsterPlotMonsterAnalysis(monsterRes)
 ```
 
-In this plot, we have the $dTFI$ for each transcription factor along the x-axis.  The observed values are shown in red and the null values are shown in blue.  
+In this plot, we have the $dTFI$ for each transcription factor along the x-axis.  The observed values are shown in red and the null values are shown in blue.
 
 Due to the complex nature of the structure of gene regulatory networks, it is not uncommon to see transcription factors which exhibit a high degree of transitional change, but which is not statistically significant due to the high variability of that particular TF (e.g. YDR463W).  Conversely, some TFs show weak changes, but those changes are large compared to the changes observed in null transitions (e.g. YKL062W).  Ideally, we are most interested in TFs which demonstrate large changes in targetting pattern which is found to be strongly significant (e.g. YJL056C).
 
@@ -138,7 +141,7 @@ Our top hit here is YDL056W, which reassuringly is established in the literature
 
 ***
 
-The dTFI plot focuses primarily on individual transcription factors which have systematically changed their targetting patterns between groups. To dive further into the mechanisms, we may be specifically interested in which TFs are acquiring the targetting signatures of which other TFs. We can visualize the transition matrix in a number of ways using MONSTER.  
+The dTFI plot focuses primarily on individual transcription factors which have systematically changed their targetting patterns between groups. To dive further into the mechanisms, we may be specifically interested in which TFs are acquiring the targetting signatures of which other TFs. We can visualize the transition matrix in a number of ways using MONSTER.
 
 First, using the package `gplots`, we can simply plot the transition matrix. The `heatmap.2` function will show the $m\times m$ transition matrix in the form of a square heatmap with $m$ being the number of transcription factors.  Intuitively, this is the operator, $\textbf{T}$, on which we transform gene regulatory network $\textbf{A}$ (The first 10 timepoints in the Yeast Cell Cycle) to network $\textbf{B}$ (The last 10 timepoints in the Yeast Cell Cycle) via the equation
 $$\textbf{B}=\textbf{AT} + \textbf{E}$$
@@ -148,9 +151,9 @@ where $\textbf{E}$ is the $p\times m$ error matrix which we are minimizing.
 ```{r, fig.width=10, fig.height=8, out.width = 750, out.height = 600, message=FALSE}
 library(gplots)
 heatmap.2(slot(monsterRes, 'tm'), col = "bluered",
-density.info="none",  
-trace="none", 
-dendrogram='none',     
+density.info="none",
+trace="none",
+dendrogram='none',
 Rowv=FALSE,
 Colv=FALSE)
 ```
@@ -185,3 +188,47 @@ Furthermore, we are often interested in correlated targetting pattern sharing.  
 ```
 
 The above plot can also be achieved using the included `MONSTER` function, `monster.transitionPCAPlot(monsterRes)`.
+
+## MONSTER quick-start with pre-made regulatory networks
+
+For analyses where MONSTER is to be performed after a regulatory network has already been estimated (e.g., with PANDA), the `domonster` function can be used to easily prepare the input networks for running `monster`.
+
+`domonster` takes as input 2 networks (`exp_graph` and `control_graph`), either as PANDA objects or adjacency matrices (regulators in rows; genes in columns).
+
+- `exp_graph` is the graph generated from experimental or case samples
+- `control_graph` is the graph generated from control or reference samples
+
+The transition matrix $M_{\mathrm{transition}}$ that the MONSTER algorithm estimates will be that for:
+
+$$G_{\mathrm{control}} M_{\mathrm{transition}} = G_{\mathrm{exp}}$$
+
+where $G_{\mathrm{control}}$ and $G_{\mathrm{exp}}$ are the control and experimental graphs, respectively.
+
+To demonstrate the code set-up with a toy example, we start by creating toy datasets using `pandaToyData`. For the purposes of demonstration, we partition the samples into experimental and control:
+
+```{r, message = F}
+# Generating PANDA networks from partitioned toy data
+
+pandaResult_exp <- panda(pandaToyData$motif, pandaToyData$expression[,1:25], pandaToyData$ppi)
+pandaResult_control <- panda(pandaToyData$motif, pandaToyData$expression[,26:50], pandaToyData$ppi)
+```
+
+Then, these outputs generated by PANDA can be used as input either in PANDA format directly, or with the network. Any of the below code options will work and be equivalent to each other. In addition to PANDA networks, any regulatory network graph in adjacency matrix format (regulators in rows and genes in columns) can be used.
+
+```{r, message = F}
+monster_res1 <- domonster(exp_graph = pandaResult_exp,
+                          control_graph = pandaResult_control,
+                          nullPerms = 10)
+
+monster_res2 <- domonster(exp_graph = pandaResult_exp@regNet,
+                          control_graph = pandaResult_control@regNet,
+                          nullPerms = 10)
+
+monster_res3 <- domonster(exp_graph = pandaResult_exp@regNet,
+                          control_graph = pandaResult_control,
+                          nullPerms = 10)
+```
+
+For this code example, we compute only 10 null permutations. However, the function defaults to 1000, as would likely be used in an actual analysis to ensure sufficient null observations to estimate null distributions and compute empirical p-values.
+
+The results can then be further analyzed and visualized as described in the vignette above.
