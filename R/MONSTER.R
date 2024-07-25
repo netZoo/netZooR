@@ -1189,7 +1189,7 @@ domonster <- function(exp_graph, control_graph, nullPerms = 1000, numMaxCores = 
     exp_graph <- exp_graph[reg_keep,]
     control_graph <- control_graph[reg_keep,]
     
-    cat('\Note: row names are not identical in the input; taking the intersection of them:\n')
+    cat('\nNote: row names are not identical in the input; taking the intersection of them:\n')
     cat(paste0(length(reg_keep), ' regulators included \n'))
   }
   
