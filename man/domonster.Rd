@@ -27,8 +27,8 @@ been estimated, either as \code{panda} objects, or represented as an
 adjacency matrix with regulators in rows and genes in columns.
 }
 \examples{
-
-Generating PANDA networks for demonstration:
+\donttest{
+# Generating PANDA networks for demonstration:
 # For the purposes of this example, first partition the pandaToyData samples, then perform panda:
 pandaResult_exp <- panda(pandaToyData$motif, pandaToyData$expression[,1:25], pandaToyData$ppi)
 pandaResult_control <- panda(pandaToyData$motif, pandaToyData$expression[,26:50], pandaToyData$ppi)
@@ -37,4 +37,5 @@ pandaResult_control <- panda(pandaToyData$motif, pandaToyData$expression[,26:50]
 monster_res1 <- domonster(pandaResult_exp, pandaResult_control)
 monster_res2 <- domonster(pandaResult_exp@regNet, pandaResult_control@regNet)
 monster_res3 <- domonster(pandaResult_exp@regNet, pandaResult_control)
+}
 }

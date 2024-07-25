@@ -1156,8 +1156,8 @@ NULL
 #' @export
 #'
 #' @examples
-#'
-#' Generating PANDA networks for demonstration:
+#' \donttest{
+#' # Generating PANDA networks for demonstration:
 #' # For the purposes of this example, first partition the pandaToyData samples, then perform panda:
 #' pandaResult_exp <- panda(pandaToyData$motif, pandaToyData$expression[,1:25], pandaToyData$ppi)
 #' pandaResult_control <- panda(pandaToyData$motif, pandaToyData$expression[,26:50], pandaToyData$ppi)
@@ -1166,6 +1166,7 @@ NULL
 #' monster_res1 <- domonster(pandaResult_exp, pandaResult_control)
 #' monster_res2 <- domonster(pandaResult_exp@regNet, pandaResult_control@regNet)
 #' monster_res3 <- domonster(pandaResult_exp@regNet, pandaResult_control)
+#' }
 domonster <- function(exp_graph, control_graph, nullPerms = 1000, numMaxCores = 3, ...){
   if('panda' %in% class(exp_graph)){
     exp_graph <- exp_graph@regNet
