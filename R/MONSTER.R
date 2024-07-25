@@ -1156,7 +1156,9 @@ NULL
 #' @export
 #'
 #' @examples
+#' 
 #' \donttest{
+#'
 #' # Generating PANDA networks for demonstration:
 #' # For the purposes of this example, first partition the pandaToyData samples, then perform panda:
 #' pandaResult_exp <- panda(pandaToyData$motif, pandaToyData$expression[,1:25], pandaToyData$ppi)
