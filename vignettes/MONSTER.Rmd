@@ -198,9 +198,9 @@ For analyses where MONSTER is to be performed after a regulatory network has alr
 - `exp_graph` is the graph generated from experimental or case samples
 - `control_graph` is the graph generated from control or reference samples
 
-The transition matrix $M_{\mathrm{transition}}$ that the MONSTER algorithm estimates will be that for:
+The transition matrix $\hat{\Tau}$ that the MONSTER algorithm estimates will be that for:
 
-$$G_{\mathrm{control}} M_{\mathrm{transition}} = G_{\mathrm{exp}}$$
+$$G_{\mathrm{control}} \hat{\tau} = G_{\mathrm{exp}}$$
 
 where $G_{\mathrm{control}}$ and $G_{\mathrm{exp}}$ are the control and experimental graphs, respectively.
 
