@@ -28,7 +28,7 @@ adjacency matrix with regulators in rows and genes in columns.
 }
 \examples{
 
-Generating PANDA networks for demonstration:
+# Generating PANDA networks for demonstration:
 # For the purposes of this example, first partition the pandaToyData samples, then perform panda:
 pandaResult_exp <- panda(pandaToyData$motif, pandaToyData$expression[,1:25], pandaToyData$ppi)
 pandaResult_control <- panda(pandaToyData$motif, pandaToyData$expression[,26:50], pandaToyData$ppi)
