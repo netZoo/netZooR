@@ -85,6 +85,36 @@
     <loc>/notes.html</loc>
   </url>
   <url>
+    <loc>/reference/Bladder_data.html</loc>
+  </url>
+  <url>
+    <loc>/reference/BuildSubnetwork.html</loc>
+  </url>
+  <url>
+    <loc>/reference/CalculatePValues.html</loc>
+  </url>
+  <url>
+    <loc>/reference/FindConnectionsForAllHopCounts.html</loc>
+  </url>
+  <url>
+    <loc>/reference/FindSignificantEdgesForHop.html</loc>
+  </url>
+  <url>
+    <loc>/reference/GenerateNullPANDADistribution.html</loc>
+  </url>
+  <url>
+    <loc>/reference/PlotNetwork.html</loc>
+  </url>
+  <url>
+    <loc>/reference/RunBLOBFISH.html</loc>
+  </url>
+  <url>
+    <loc>/reference/SignificantBreadthFirstSearch.html</loc>
+  </url>
+  <url>
+    <loc>/reference/Skin_data.html</loc>
+  </url>
+  <url>
     <loc>/reference/TIGER.html</loc>
   </url>
   <url>
@@ -232,6 +262,15 @@
     <loc>/reference/alpacatidyconfig.html</loc>
   </url>
   <url>
+    <loc>/reference/annotateFromBiomart.html</loc>
+  </url>
+  <url>
+    <loc>/reference/checkMisAnnotation.html</loc>
+  </url>
+  <url>
+    <loc>/reference/checkTissuesToMerge.html</loc>
+  </url>
+  <url>
     <loc>/reference/cobra.html</loc>
   </url>
   <url>
@@ -310,6 +349,9 @@
     <loc>/reference/degreeAdjust.html</loc>
   </url>
   <url>
+    <loc>/reference/downloadGTEx.html</loc>
+  </url>
+  <url>
     <loc>/reference/dragon.html</loc>
   </url>
   <url>
@@ -335,6 +377,21 @@
   </url>
   <url>
     <loc>/reference/exon.size.html</loc>
+  </url>
+  <url>
+    <loc>/reference/extractMatrix.html</loc>
+  </url>
+  <url>
+    <loc>/reference/filterGenes.html</loc>
+  </url>
+  <url>
+    <loc>/reference/filterLowGenes.html</loc>
+  </url>
+  <url>
+    <loc>/reference/filterMissingGenes.html</loc>
+  </url>
+  <url>
+    <loc>/reference/filterSamples.html</loc>
   </url>
   <url>
     <loc>/reference/genes.html</loc>
@@ -436,6 +493,9 @@
     <loc>/reference/mut.ucec.html</loc>
   </url>
   <url>
+    <loc>/reference/normalizeTissueAware.html</loc>
+  </url>
+  <url>
     <loc>/reference/otter.html</loc>
   </url>
   <url>
@@ -463,6 +523,15 @@
     <loc>/reference/pandaToCondorObject.html</loc>
   </url>
   <url>
+    <loc>/reference/plotCMDS.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plotDensity.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plotHeatmap.html</loc>
+  </url>
+  <url>
     <loc>/reference/prior.pp.html</loc>
   </url>
   <url>
@@ -470,6 +539,12 @@
   </url>
   <url>
     <loc>/reference/puma.html</loc>
+  </url>
+  <url>
+    <loc>/reference/qsmooth.html</loc>
+  </url>
+  <url>
+    <loc>/reference/qstats.html</loc>
   </url>
   <url>
     <loc>/reference/runEgret.html</loc>

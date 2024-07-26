@@ -4,7 +4,7 @@ author: "Marieke L. Kuijjer"
 date: "2018-06-05"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{SAMBAR}
+  %\VignetteIndexEntry{SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

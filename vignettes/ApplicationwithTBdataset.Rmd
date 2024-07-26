@@ -4,7 +4,7 @@ author: "Tian Wang"
 date: "2019-10-16"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ApplicationwithTBdataset}
+  %\VignetteIndexEntry{netZooR application with TB dataset}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

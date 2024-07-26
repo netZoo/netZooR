@@ -6,7 +6,7 @@ output:
   rmarkdown::html_vignette:
     toc: yes
 vignette: >
-  %\VignetteIndexEntry{EGRET_toy_example}
+  %\VignetteIndexEntry{Constructing genotype-specific gene regulatory networks with EGRET}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

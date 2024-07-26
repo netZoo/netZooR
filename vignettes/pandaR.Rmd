@@ -4,7 +4,7 @@ author: "Daniel Schlauch, Albert Young, Joseph N. Paulson"
 date: "2016-05-01"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{pandaR}
+  %\VignetteIndexEntry{An Introduction to the pandaR Package}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

@@ -8,8 +8,8 @@
 <meta name="description" content="netZooR">
 <title>Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER • netZooR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER">
 <meta property="og:description" content="netZooR">
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">netZooR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.17</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -252,12 +252,12 @@ cell line samples and 407 whole blood samples.</p>
 <span><span class="va">ppi_subset</span> <span class="op">&lt;-</span> <span class="va">ppi</span><span class="op">[</span><span class="op">(</span><span class="va">ppi</span><span class="op">$</span><span class="va">V1</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">motif_subset</span><span class="op">$</span><span class="va">V1</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">(</span><span class="va">ppi</span><span class="op">$</span><span class="va">V2</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">motif_subset</span><span class="op">$</span><span class="va">V1</span><span class="op">)</span>,<span class="op">]</span></span>
 <span><span class="co"># Load the sample ids of LCL samples</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.html" class="external-link">system</a></span><span class="op">(</span><span class="st">"curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/LCL_samples.txt"</span><span class="op">)</span></span>
-<span><span class="va">lcl_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./LCL_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">lcl_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./LCL_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co"># Select the columns of the expression matrix corresponding to the LCL samples</span></span>
 <span><span class="va">lcl_exp</span> <span class="op">&lt;-</span> <span class="va">exp</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">lcl_samples</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co"># Load the sample ids of whole blood samples</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.html" class="external-link">system</a></span><span class="op">(</span><span class="st">"curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/WholeBlood_samples.txt"</span><span class="op">)</span></span>
-<span><span class="va">wblood_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./WholeBlood_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">wblood_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./WholeBlood_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co"># Select the columns of the expression matrix corresponding to the whole blood samples</span></span>
 <span><span class="va">wb_exp</span> <span class="op">&lt;-</span> <span class="va">exp</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">wblood_samples</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <p>For use in OTTER, we have to transform the edgelists into matrices
@@ -309,19 +309,19 @@ Cytoscape software. Download Cytoscape from: <a href="https://cytoscape.org" cla
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># We will use the function vis.panda.in.cytoscape to plot a set of nodes and edges on Cytoscape. The input for this function is a data.frame of edges to plot with 4 columns: "tf", "gene", "motif" (TF motif present or not on gene promoter), "force" (edge weight calculated by OTTER).</span></span>
 <span><span class="va">lcl_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html" class="external-link">melt</a></span><span class="op">(</span><span class="va">otterLCL</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in melt(otterLCL): The melt generic in data.table has been passed a</span></span>
-<span><span class="co">#&gt; matrix and will attempt to redirect to the relevant reshape2 method; please</span></span>
-<span><span class="co">#&gt; note that reshape2 is deprecated, and this redirection is now deprecated as</span></span>
-<span><span class="co">#&gt; well. To continue using melt methods from reshape2 while both libraries are</span></span>
-<span><span class="co">#&gt; attached, e.g. melt.list, you can prepend the namespace like</span></span>
+<span><span class="co">#&gt; Warning: The melt generic in data.table has been passed a matrix and will</span></span>
+<span><span class="co">#&gt; attempt to redirect to the relevant reshape2 method; please note that reshape2</span></span>
+<span><span class="co">#&gt; is superseded and is no longer actively developed, and this redirection is now</span></span>
+<span><span class="co">#&gt; deprecated. To continue using melt methods from reshape2 while both libraries</span></span>
+<span><span class="co">#&gt; are attached, e.g. melt.list, you can prepend the namespace, i.e.</span></span>
 <span><span class="co">#&gt; reshape2::melt(otterLCL). In the next version, this warning will become an</span></span>
 <span><span class="co">#&gt; error.</span></span>
 <span><span class="va">wb_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html" class="external-link">melt</a></span><span class="op">(</span><span class="va">otterWB</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in melt(otterWB): The melt generic in data.table has been passed a</span></span>
-<span><span class="co">#&gt; matrix and will attempt to redirect to the relevant reshape2 method; please</span></span>
-<span><span class="co">#&gt; note that reshape2 is deprecated, and this redirection is now deprecated as</span></span>
-<span><span class="co">#&gt; well. To continue using melt methods from reshape2 while both libraries are</span></span>
-<span><span class="co">#&gt; attached, e.g. melt.list, you can prepend the namespace like</span></span>
+<span><span class="co">#&gt; Warning: The melt generic in data.table has been passed a matrix and will</span></span>
+<span><span class="co">#&gt; attempt to redirect to the relevant reshape2 method; please note that reshape2</span></span>
+<span><span class="co">#&gt; is superseded and is no longer actively developed, and this redirection is now</span></span>
+<span><span class="co">#&gt; deprecated. To continue using melt methods from reshape2 while both libraries</span></span>
+<span><span class="co">#&gt; are attached, e.g. melt.list, you can prepend the namespace, i.e.</span></span>
 <span><span class="co">#&gt; reshape2::melt(otterWB). In the next version, this warning will become an</span></span>
 <span><span class="co">#&gt; error.</span></span>
 <span><span class="va">lcl_vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"TF"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>,<span class="st">"Gene"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>,<span class="st">"Motif"</span><span class="op">=</span><span class="cn">NA</span>,<span class="st">"Score"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">lcl_vis</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>,stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -414,46 +414,50 @@ MSigDB.</p>
 <span><span class="va">degreeDiff_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="va">degreeDiff_all</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, <span class="va">degreeDiff_all</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">fgseaRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html" class="external-link">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">degreeDiff_all</span>, minSize<span class="op">=</span><span class="fl">15</span>, maxSize<span class="op">=</span><span class="fl">500</span>, nperm<span class="op">=</span><span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                          pathway        pval       padj</span></span>
-<span><span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.002227171 0.01490903</span></span>
-<span><span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.239622642 0.39271488</span></span>
-<span><span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.065306122 0.14935489</span></span>
-<span><span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.421711900 0.60195973</span></span>
-<span><span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.047210300 0.12769145</span></span>
-<span><span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.329875519 0.50216798</span></span>
-<span><span class="co">#&gt;            ES       NES nMoreExtreme size                          leadingEdge</span></span>
-<span><span class="co">#&gt; 1:  0.4360719  1.734843            0   58    HK1,ENO2,ENO1,ALDOC,BPGM,PFKM,...</span></span>
-<span><span class="co">#&gt; 2: -0.3428560 -1.165893          126   29  DLST,PCK2,SUCLG2P2,MDH2,FH,IDH2,...</span></span>
-<span><span class="co">#&gt; 3:  0.4435710  1.426434           31   21   ALDOC,PFKM,PFKP,ALDOA,PFKL,GPI,...</span></span>
-<span><span class="co">#&gt; 4:  0.3180477  1.030365          201   22   UGT1A1,UGT1A10,UGT1A6,CRYL1,UGT2B7</span></span>
-<span><span class="co">#&gt; 5:  0.4118882  1.445175           21   31 HK1,ALDOC,PFKFB4,PFKM,MTMR2,PFKP,...</span></span>
-<span><span class="co">#&gt; 6:  0.3247973  1.081608          158   25      GLB1,HK1,PFKM,PFKP,PFKL,GAA,...</span></span>
+<span><span class="co">#&gt;                                          pathway       pval       padj</span></span>
+<span><span class="co">#&gt;                                           &lt;char&gt;      &lt;num&gt;      &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1:               KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.00204499 0.01337868</span></span>
+<span><span class="co">#&gt; 2:                  KEGG_CITRATE_CYCLE_TCA_CYCLE 0.22779923 0.37056391</span></span>
+<span><span class="co">#&gt; 3:                KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.07862903 0.16568260</span></span>
+<span><span class="co">#&gt; 4: KEGG_PENTOSE_AND_GLUCURONATE_INTERCONVERSIONS 0.41769547 0.58193359</span></span>
+<span><span class="co">#&gt; 5:          KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.05010438 0.11851528</span></span>
+<span><span class="co">#&gt; 6:                     KEGG_GALACTOSE_METABOLISM 0.33539095 0.49885880</span></span>
+<span><span class="co">#&gt;            ES       NES nMoreExtreme  size  leadingEdge</span></span>
+<span><span class="co">#&gt;         &lt;num&gt;     &lt;num&gt;        &lt;num&gt; &lt;int&gt;       &lt;list&gt;</span></span>
+<span><span class="co">#&gt; 1:  0.4360719  1.803070            0    58 HK1, ENO....</span></span>
+<span><span class="co">#&gt; 2: -0.3428560 -1.173788          117    29 DLST, PC....</span></span>
+<span><span class="co">#&gt; 3:  0.4435710  1.421746           38    21 ALDOC, P....</span></span>
+<span><span class="co">#&gt; 4:  0.3180477  1.026173          202    22 UGT1A1, ....</span></span>
+<span><span class="co">#&gt; 5:  0.4118882  1.465197           23    31 HK1, ALD....</span></span>
+<span><span class="co">#&gt; 6:  0.3247973  1.100695          162    25 GLB1, HK....</span></span>
 <span><span class="co"># Subset to pathways with FDR &lt; 0.05</span></span>
 <span><span class="va">sig</span> <span class="op">&lt;-</span> <span class="va">fgseaRes</span><span class="op">[</span><span class="va">fgseaRes</span><span class="op">$</span><span class="va">padj</span> <span class="op">&lt;</span> <span class="fl">0.05</span>,<span class="op">]</span></span>
 <span><span class="co"># Get the top 10 significant pathways enriched for genes having lower targeting in LCLs  </span></span>
 <span><span class="va">sig</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">sig</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>,<span class="op">]</span></span>
 <span><span class="co">#&gt;                             pathway        pval       padj         ES       NES</span></span>
-<span><span class="co">#&gt;  1:            KEGG_DNA_REPLICATION 0.001879699 0.01490903 -0.7725018 -2.751185</span></span>
-<span><span class="co">#&gt;  2:                 KEGG_CELL_CYCLE 0.001858736 0.01490903 -0.5948628 -2.734800</span></span>
-<span><span class="co">#&gt;  3:                KEGG_SPLICEOSOME 0.001851852 0.01490903 -0.5766563 -2.641762</span></span>
-<span><span class="co">#&gt;  4:             KEGG_PROTEIN_EXPORT 0.001926782 0.01490903 -0.6851677 -2.189553</span></span>
-<span><span class="co">#&gt;  5: KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001912046 0.01490903 -0.5785505 -2.133075</span></span>
-<span><span class="co">#&gt;  6:       KEGG_BASE_EXCISION_REPAIR 0.001876173 0.01490903 -0.5965607 -2.105490</span></span>
-<span><span class="co">#&gt;  7:      KEGG_PYRIMIDINE_METABOLISM 0.001851852 0.01490903 -0.4606911 -2.013456</span></span>
-<span><span class="co">#&gt;  8:            KEGG_MISMATCH_REPAIR 0.001912046 0.01490903 -0.6107380 -1.941010</span></span>
-<span><span class="co">#&gt;  9:             KEGG_RNA_POLYMERASE 0.003824092 0.02183433 -0.5731001 -1.924917</span></span>
-<span><span class="co">#&gt; 10:      KEGG_N_GLYCAN_BIOSYNTHESIS 0.001915709 0.01490903 -0.4815544 -1.818604</span></span>
-<span><span class="co">#&gt;     nMoreExtreme size                                    leadingEdge</span></span>
-<span><span class="co">#&gt;  1:            0   34             RFC5,RFC3,FEN1,MCM7,POLE2,DNA2,...</span></span>
-<span><span class="co">#&gt;  2:            0  121          ORC6,CDC7,CDC20,PKMYT1,CCNE1,ORC1,...</span></span>
-<span><span class="co">#&gt;  3:            0  118          PHF5A,SRSF3,LSM7,SRSF7,LSM4,U2AF2,...</span></span>
-<span><span class="co">#&gt;  4:            0   23       IMMP1L,SRP9,SRPRB,SPCS3,HSPA5,IMMP2L,...</span></span>
-<span><span class="co">#&gt;  5:            0   41             RFC5,RFC3,POLE2,CCNH,RFC4,PCNA,...</span></span>
-<span><span class="co">#&gt;  6:            0   33           FEN1,HMGB1,MUTYH,UNG,POLE2,NEIL3,...</span></span>
-<span><span class="co">#&gt;  7:            0   90         POLR2D,DUT,POLE2,PRIM1,DTYMK,DHODH,...</span></span>
-<span><span class="co">#&gt;  8:            0   22              RFC5,RFC3,RFC4,PCNA,EXO1,RFC2,...</span></span>
-<span><span class="co">#&gt;  9:            1   28 POLR2D,POLR3B,POLR2H,POLR2L,POLR3GL,POLR2J,...</span></span>
-<span><span class="co">#&gt; 10:            0   45         B4GALT2,DPM3,ALG14,FUT8,ALG6,MGAT2,...</span></span></code></pre></div>
+<span><span class="co">#&gt;                              &lt;char&gt;       &lt;num&gt;      &lt;num&gt;      &lt;num&gt;     &lt;num&gt;</span></span>
+<span><span class="co">#&gt;  1:            KEGG_DNA_REPLICATION 0.001893939 0.01337868 -0.7725018 -2.764502</span></span>
+<span><span class="co">#&gt;  2:                 KEGG_CELL_CYCLE 0.001801802 0.01337868 -0.5948628 -2.711463</span></span>
+<span><span class="co">#&gt;  3:                KEGG_SPLICEOSOME 0.001858736 0.01337868 -0.5766563 -2.602881</span></span>
+<span><span class="co">#&gt;  4:             KEGG_PROTEIN_EXPORT 0.001926782 0.01337868 -0.6851677 -2.224867</span></span>
+<span><span class="co">#&gt;  5: KEGG_NUCLEOTIDE_EXCISION_REPAIR 0.001901141 0.01337868 -0.5785505 -2.172554</span></span>
+<span><span class="co">#&gt;  6:       KEGG_BASE_EXCISION_REPAIR 0.001872659 0.01337868 -0.5965607 -2.126697</span></span>
+<span><span class="co">#&gt;  7:      KEGG_PYRIMIDINE_METABOLISM 0.001831502 0.01337868 -0.4606911 -2.003860</span></span>
+<span><span class="co">#&gt;  8:            KEGG_MISMATCH_REPAIR 0.001937984 0.01337868 -0.6107380 -1.958010</span></span>
+<span><span class="co">#&gt;  9:             KEGG_RNA_POLYMERASE 0.001956947 0.01337868 -0.5731001 -1.949662</span></span>
+<span><span class="co">#&gt; 10:      KEGG_N_GLYCAN_BIOSYNTHESIS 0.001937984 0.01337868 -0.4815544 -1.838081</span></span>
+<span><span class="co">#&gt;     nMoreExtreme  size  leadingEdge</span></span>
+<span><span class="co">#&gt;            &lt;num&gt; &lt;int&gt;       &lt;list&gt;</span></span>
+<span><span class="co">#&gt;  1:            0    34 RFC5, RF....</span></span>
+<span><span class="co">#&gt;  2:            0   121 ORC6, CD....</span></span>
+<span><span class="co">#&gt;  3:            0   118 PHF5A, S....</span></span>
+<span><span class="co">#&gt;  4:            0    23 IMMP1L, ....</span></span>
+<span><span class="co">#&gt;  5:            0    41 RFC5, RF....</span></span>
+<span><span class="co">#&gt;  6:            0    33 FEN1, HM....</span></span>
+<span><span class="co">#&gt;  7:            0    90 POLR2D, ....</span></span>
+<span><span class="co">#&gt;  8:            0    22 RFC5, RF....</span></span>
+<span><span class="co">#&gt;  9:            0    28 POLR2D, ....</span></span>
+<span><span class="co">#&gt; 10:            0    45 B4GALT2,....</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="bubble-plot-of-top-differentially-targeted-pathways">Bubble plot of top differentially targeted pathways<a class="anchor" aria-label="anchor" href="#bubble-plot-of-top-differentially-targeted-pathways"></a>
