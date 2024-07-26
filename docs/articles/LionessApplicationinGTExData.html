@@ -8,8 +8,8 @@
 <meta name="description" content="netZooR">
 <title>Comparing LIONESS Regulatory Networks using limma • netZooR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Comparing LIONESS Regulatory Networks using limma">
 <meta property="og:description" content="netZooR">
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">netZooR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.17</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,7 +127,7 @@ differentially targeted by sex in colon cancer.</p>
 <h3 id="load-packages">Load packages<a class="anchor" aria-label="anchor" href="#load-packages"></a>
 </h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://bioinf.wehi.edu.au/limma" class="external-link">limma</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioinf.wehi.edu.au/limma/" class="external-link">limma</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ctlab/fgsea/" class="external-link">fgsea</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/Biobase" class="external-link">Biobase</a></span><span class="op">)</span></span>
@@ -256,7 +256,12 @@ and blue if they have higher coefficients in the male group.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">toptable_edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span>, <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">toptable_edges</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>,<span class="op">]</span>, <span class="va">tb</span><span class="op">$</span><span class="va">logFC</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/graph_from_data_frame.html" class="external-link">graph.data.frame</a></span><span class="op">(</span><span class="va">z</span>, directed<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/graph.data.frame.html" class="external-link">graph.data.frame</a></span><span class="op">(</span><span class="va">z</span>, directed<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `graph.data.frame()` was deprecated in igraph 2.0.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `graph_from_data_frame()` instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span><span class="fu"><a href="https://r.igraph.org/reference/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">z</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://r.igraph.org/reference/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://r.igraph.org/reference/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">weight</span><span class="op">&lt;</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"blue"</span></span>
 <span><span class="fu"><a href="https://r.igraph.org/reference/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://r.igraph.org/reference/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">weight</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span></span>
@@ -326,19 +331,21 @@ annotation should be used in the ranked gene list and gene sets.</p>
 <span><span class="va">fgseaRes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html" class="external-link">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">indegree_rank</span>, minSize<span class="op">=</span><span class="fl">15</span>, maxSize<span class="op">=</span><span class="fl">500</span>, nperm<span class="op">=</span><span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fgseaRes</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                 pathway       pval      padj         ES</span></span>
-<span><span class="co">#&gt; 1:      KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.12144213 0.2219460  0.3240518</span></span>
-<span><span class="co">#&gt; 2:         KEGG_CITRATE_CYCLE_TCA_CYCLE 0.56063618 0.6910167 -0.2702159</span></span>
-<span><span class="co">#&gt; 3:       KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.19723866 0.3167772  0.3795079</span></span>
-<span><span class="co">#&gt; 4: KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.04684318 0.1095304  0.4200039</span></span>
-<span><span class="co">#&gt; 5:            KEGG_GALACTOSE_METABOLISM 0.89390963 0.9539036 -0.2250237</span></span>
-<span><span class="co">#&gt; 6:           KEGG_FATTY_ACID_METABOLISM 0.14201183 0.2508876  0.3533304</span></span>
-<span><span class="co">#&gt;           NES nMoreExtreme size                            leadingEdge</span></span>
-<span><span class="co">#&gt; 1:  1.2659396           63   47  ALDOB,TPI1,ALDH3A1,BPGM,PKLR,PDHB,...</span></span>
-<span><span class="co">#&gt; 2: -0.9412560          281   29      SDHA,CS,OGDH,PDHA1,ACO2,OGDHL,...</span></span>
-<span><span class="co">#&gt; 3:  1.2098128           99   21   ALDOB,DERA,RPE,TALDO1,PGM2,ALDOC,...</span></span>
-<span><span class="co">#&gt; 4:  1.4595859           22   30   ALDOB,TSTA3,MTMR6,TPI1,FPGT,PMM2,...</span></span>
-<span><span class="co">#&gt; 5: -0.7082669          454   20            HK1,GLA,GANC,PFKL,UGP2,PFKM</span></span>
-<span><span class="co">#&gt; 6:  1.2790493           71   33 GCDH,ACAT2,ACOX3,EHHADH,ECHS1,CPT2,...</span></span>
+<span><span class="co">#&gt;                                  &lt;char&gt;      &lt;num&gt;     &lt;num&gt;      &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1:      KEGG_GLYCOLYSIS_GLUCONEOGENESIS 0.14011516 0.2466531  0.3240518</span></span>
+<span><span class="co">#&gt; 2:         KEGG_CITRATE_CYCLE_TCA_CYCLE 0.52361396 0.6611802 -0.2702159</span></span>
+<span><span class="co">#&gt; 3:       KEGG_PENTOSE_PHOSPHATE_PATHWAY 0.19771863 0.3207884  0.3795079</span></span>
+<span><span class="co">#&gt; 4: KEGG_FRUCTOSE_AND_MANNOSE_METABOLISM 0.04313725 0.1004670  0.4200039</span></span>
+<span><span class="co">#&gt; 5:            KEGG_GALACTOSE_METABOLISM 0.87578947 0.9519166 -0.2250237</span></span>
+<span><span class="co">#&gt; 6:           KEGG_FATTY_ACID_METABOLISM 0.14426877 0.2466531  0.3533304</span></span>
+<span><span class="co">#&gt;           NES nMoreExtreme  size  leadingEdge</span></span>
+<span><span class="co">#&gt;         &lt;num&gt;        &lt;num&gt; &lt;int&gt;       &lt;list&gt;</span></span>
+<span><span class="co">#&gt; 1:  1.2575584           72    47 ALDOB, T....</span></span>
+<span><span class="co">#&gt; 2: -0.9618572          254    29 SDHA, CS....</span></span>
+<span><span class="co">#&gt; 3:  1.2086535          103    21 ALDOB, D....</span></span>
+<span><span class="co">#&gt; 4:  1.4564413           21    30 ALDOB, T....</span></span>
+<span><span class="co">#&gt; 5: -0.7174393          415    20 HK1, GLA....</span></span>
+<span><span class="co">#&gt; 6:  1.2553780           72    33 GCDH, AC....</span></span>
 <span><span class="co"># Subset to pathways with FDR &lt; 0.05</span></span>
 <span><span class="va">sig</span> <span class="op">&lt;-</span> <span class="va">fgseaRes</span><span class="op">[</span><span class="va">fgseaRes</span><span class="op">$</span><span class="va">padj</span> <span class="op">&lt;</span> <span class="fl">0.05</span>,<span class="op">]</span></span>
 <span><span class="co"># Top 10 pathways enriched in females</span></span>
@@ -364,7 +371,7 @@ annotation should be used in the ranked gene list and gene sets.</p>
 <span><span class="co">#&gt;  [7] "KEGG_MTOR_SIGNALING_PATHWAY"               </span></span>
 <span><span class="co">#&gt;  [8] "KEGG_WNT_SIGNALING_PATHWAY"                </span></span>
 <span><span class="co">#&gt;  [9] "KEGG_NOTCH_SIGNALING_PATHWAY"              </span></span>
-<span><span class="co">#&gt; [10] "KEGG_AXON_GUIDANCE"</span></span></code></pre></div>
+<span><span class="co">#&gt; [10] "KEGG_TGF_BETA_SIGNALING_PATHWAY"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="bubble-plot-of-differentially-targeted-pathways-by-sex">Bubble plot of differentially targeted pathways by sex<a class="anchor" aria-label="anchor" href="#bubble-plot-of-differentially-targeted-pathways-by-sex"></a>

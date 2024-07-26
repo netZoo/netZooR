@@ -4,7 +4,7 @@ author: Rebekka Burkholz
 date: 2020-9-22
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{otterRApplicationinGTExData}
+  %\VignetteIndexEntry{Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

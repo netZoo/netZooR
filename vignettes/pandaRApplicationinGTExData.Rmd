@@ -6,7 +6,7 @@ output:
   rmarkdown::html_vignette:
     toc: yes
 vignette: >
-  %\VignetteIndexEntry{pandaRApplicationinGTExData}
+  %\VignetteIndexEntry{Building PANDA Regulatory Networks from GTEx Gene Expression Data in R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

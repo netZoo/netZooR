@@ -8,8 +8,8 @@
 <meta name="description" content="netZooR">
 <title>Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R • netZooR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R">
 <meta property="og:description" content="netZooR">
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">netZooR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.17</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,7 +124,7 @@ large datasets as it is more efficient.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"visNetwork"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The downloaded binary packages are in</span></span>
-<span><span class="co">#&gt;  /var/folders/jh/345y9vmx0l7d63r5b05dwp080000gn/T//Rtmp93EhMW/downloaded_packages</span></span>
+<span><span class="co">#&gt;  /var/folders/dc/zj7mjqq93034_xd2wszf4jjw0000gn/T//RtmpHoGYyJ/downloaded_packages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://datastorm-open.github.io/visNetwork/" class="external-link">visNetwork</a></span><span class="op">)</span> <span class="co"># to visualize the networks</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># point R to your python 3 installation. Make sure that this is the installation that has all the required python libraries (numpy, scipy, etc) installed. netZooR uses a python implementation of PANDA under the hood.</span></span>
@@ -183,13 +183,13 @@ AWS bucket.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>,<span class="st">"GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span><span class="op">)</span></span>
 <span><span class="co"># load the GTEx expression matrix</span></span>
-<span><span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">2</span>, data.table <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">2</span>, data.table <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co"># remove the transcript ids so that the genes match the gene ids in the tf-motif prior</span></span>
 <span><span class="va">expr</span><span class="op">$</span><span class="va">Name</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"\\.[0-9]"</span>,<span class="st">""</span>, <span class="va">expr</span><span class="op">$</span><span class="va">Name</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#downlooad and load the sample ids of LCL samples</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/LCL_samples.txt"</span>,<span class="st">"LCL_samples.txt"</span><span class="op">)</span></span>
-<span><span class="va">lcl_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./LCL_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">lcl_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./LCL_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#select the columns of the expression matrix corresponding to the LCL samples.</span></span>
 <span><span class="va">lcl_expr</span> <span class="op">&lt;-</span> <span class="va">expr</span><span class="op">[</span>,<span class="fu"><a href="https://r.igraph.org/reference/union.html" class="external-link">union</a></span><span class="op">(</span><span class="st">"Name"</span>,<span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">lcl_samples</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">149</span>,<span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, with<span class="op">=</span><span class="cn">FALSE</span><span class="op">]</span></span>
@@ -212,12 +212,12 @@ prior and ppi prior.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">panda_results_LCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pandaPy.html">pandaPy</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprLCL.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading motif data ...</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.05 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.02 sec.</span></span>
 <span><span class="co">#&gt; Loading expression data ...</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.61 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.26 sec.</span></span>
 <span><span class="co">#&gt; Loading PPI data ...</span></span>
 <span><span class="co">#&gt; Number of PPIs: 86609</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.04 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.02 sec.</span></span>
 <span><span class="co">#&gt; Remove expression not in motif:</span></span>
 <span><span class="co">#&gt;    55689 rows removed from the initial 56202</span></span>
 <span><span class="co">#&gt; Remove motif not in expression data:</span></span>
@@ -228,53 +228,53 @@ prior and ppi prior.</p>
 <span><span class="co">#&gt; Calculating coexpression network ...</span></span>
 <span><span class="co">#&gt;   Elapsed time: 0.00 sec.</span></span>
 <span><span class="co">#&gt; Creating motif network ...</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.04 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.01 sec.</span></span>
 <span><span class="co">#&gt; Creating PPI network ...</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.10 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.03 sec.</span></span>
 <span><span class="co">#&gt; legacy ./motif_GTEx.txt ./pandaExprLCL.txt ./ppi_GTEx.txt False True False</span></span>
 <span><span class="co">#&gt; Normalizing networks ...</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.04 sec.</span></span>
-<span><span class="co">#&gt; Saving expression matrix and normalized networks ...</span></span>
 <span><span class="co">#&gt;   Elapsed time: 0.02 sec.</span></span>
+<span><span class="co">#&gt; Saving expression matrix and normalized networks ...</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.00 sec.</span></span>
 <span><span class="co">#&gt; Running PANDA algorithm ...</span></span>
 <span><span class="co">#&gt; step: 0, hamming: 0.9678742295275564</span></span>
 <span><span class="co">#&gt; step: 1, hamming: 0.398740485692637</span></span>
-<span><span class="co">#&gt; step: 2, hamming: 0.2844858236370386</span></span>
+<span><span class="co">#&gt; step: 2, hamming: 0.28448582363703867</span></span>
 <span><span class="co">#&gt; step: 3, hamming: 0.2345843939954457</span></span>
 <span><span class="co">#&gt; step: 4, hamming: 0.2042075476717615</span></span>
 <span><span class="co">#&gt; step: 5, hamming: 0.18118973861477952</span></span>
 <span><span class="co">#&gt; step: 6, hamming: 0.1614704894054021</span></span>
 <span><span class="co">#&gt; step: 7, hamming: 0.14360782392336247</span></span>
-<span><span class="co">#&gt; step: 8, hamming: 0.12711049339116653</span></span>
+<span><span class="co">#&gt; step: 8, hamming: 0.1271104933911665</span></span>
 <span><span class="co">#&gt; step: 9, hamming: 0.11185402126446312</span></span>
 <span><span class="co">#&gt; step: 10, hamming: 0.09783344721350776</span></span>
-<span><span class="co">#&gt; step: 11, hamming: 0.08507016957437544</span></span>
+<span><span class="co">#&gt; step: 11, hamming: 0.08507016957437542</span></span>
 <span><span class="co">#&gt; step: 12, hamming: 0.07356780340154848</span></span>
-<span><span class="co">#&gt; step: 13, hamming: 0.06330116711146466</span></span>
+<span><span class="co">#&gt; step: 13, hamming: 0.06330116711146468</span></span>
 <span><span class="co">#&gt; step: 14, hamming: 0.05421852200951187</span></span>
 <span><span class="co">#&gt; step: 15, hamming: 0.04624764701825898</span></span>
 <span><span class="co">#&gt; step: 16, hamming: 0.039301895859622696</span></span>
 <span><span class="co">#&gt; step: 17, hamming: 0.03328718090872966</span></span>
-<span><span class="co">#&gt; step: 18, hamming: 0.028107462583496584</span></span>
+<span><span class="co">#&gt; step: 18, hamming: 0.028107462583496577</span></span>
 <span><span class="co">#&gt; step: 19, hamming: 0.023668722559827687</span></span>
 <span><span class="co">#&gt; step: 20, hamming: 0.01988152451165294</span></span>
 <span><span class="co">#&gt; step: 21, hamming: 0.016662707998748628</span></span>
 <span><span class="co">#&gt; step: 22, hamming: 0.013936416334063792</span></span>
 <span><span class="co">#&gt; step: 23, hamming: 0.011634447928678703</span></span>
-<span><span class="co">#&gt; step: 24, hamming: 0.009696184613626216</span></span>
-<span><span class="co">#&gt; step: 25, hamming: 0.00806828212583198</span></span>
-<span><span class="co">#&gt; step: 26, hamming: 0.006704156831568278</span></span>
-<span><span class="co">#&gt; step: 27, hamming: 0.005563429715892799</span></span>
-<span><span class="co">#&gt; step: 28, hamming: 0.004611309821200676</span></span>
-<span><span class="co">#&gt; step: 29, hamming: 0.003817972519694832</span></span>
+<span><span class="co">#&gt; step: 24, hamming: 0.009696184613626214</span></span>
+<span><span class="co">#&gt; step: 25, hamming: 0.008068282125831978</span></span>
+<span><span class="co">#&gt; step: 26, hamming: 0.006704156831568275</span></span>
+<span><span class="co">#&gt; step: 27, hamming: 0.005563429715892798</span></span>
+<span><span class="co">#&gt; step: 28, hamming: 0.0046113098212006735</span></span>
+<span><span class="co">#&gt; step: 29, hamming: 0.003817972519694833</span></span>
 <span><span class="co">#&gt; step: 30, hamming: 0.0031579704664075493</span></span>
-<span><span class="co">#&gt; step: 31, hamming: 0.0026096760497343573</span></span>
-<span><span class="co">#&gt; step: 32, hamming: 0.002154774682668182</span></span>
-<span><span class="co">#&gt; step: 33, hamming: 0.0017778073470498862</span></span>
-<span><span class="co">#&gt; step: 34, hamming: 0.0014657623367399985</span></span>
-<span><span class="co">#&gt; step: 35, hamming: 0.0012077153464268792</span></span>
+<span><span class="co">#&gt; step: 31, hamming: 0.002609676049734357</span></span>
+<span><span class="co">#&gt; step: 32, hamming: 0.0021547746826681815</span></span>
+<span><span class="co">#&gt; step: 33, hamming: 0.0017778073470498855</span></span>
+<span><span class="co">#&gt; step: 34, hamming: 0.0014657623367399968</span></span>
+<span><span class="co">#&gt; step: 35, hamming: 0.00120771534642688</span></span>
 <span><span class="co">#&gt; step: 36, hamming: 0.0009945161790090437</span></span>
-<span><span class="co">#&gt; Running panda took: 1.31 seconds!</span></span></code></pre></div>
+<span><span class="co">#&gt; Running panda took: 1.70 seconds!</span></span></code></pre></div>
 <p>Let’s take a look at the results. The output contains a list of three
 data frames:</p>
 <ul>
@@ -329,14 +329,14 @@ download the raw data and process;</p>
 <code class="sourceCode R"><span><span class="co">#### skip this part if you already did same process in LCL expression data section</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>,<span class="st">"GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span><span class="op">)</span></span>
 <span><span class="co"># load the GTEx expression matrix</span></span>
-<span><span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">2</span>, data.table <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./GTEx_Analysis_2016-01-15_v7_RNASeQCv1.1.8_gene_tpm.gct"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, skip <span class="op">=</span> <span class="fl">2</span>, data.table <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co"># remove the transcript ids so that the genes match the gene ids in the tf-motif prior</span></span>
 <span><span class="va">expr</span><span class="op">$</span><span class="va">Name</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"\\.[0-9]"</span>,<span class="st">""</span>, <span class="va">expr</span><span class="op">$</span><span class="va">Name</span><span class="op">)</span></span>
 <span><span class="co">#####</span></span>
 <span></span>
 <span><span class="co">#load the sample ids of Whole Blood samples</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"https://netzoo.s3.us-east-2.amazonaws.com/netZooR/tutorial_datasets/WholeBlood_samples.txt"</span>,<span class="st">"WholeBlood_samples.txt"</span><span class="op">)</span></span>
-<span><span class="va">wblood_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./WholeBlood_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">wblood_samples</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"./WholeBlood_samples.txt"</span>, header <span class="op">=</span> <span class="cn">FALSE</span>, data.table<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#select the columns of the expression matrix corresponding to the LCL samples.</span></span>
 <span><span class="va">wblood_expr</span> <span class="op">&lt;-</span> <span class="va">expr</span><span class="op">[</span>,<span class="fu"><a href="https://r.igraph.org/reference/union.html" class="external-link">union</a></span><span class="op">(</span><span class="st">"Name"</span>,<span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">wblood_samples</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">149</span>,<span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, with<span class="op">=</span><span class="cn">FALSE</span><span class="op">]</span></span>
@@ -358,12 +358,12 @@ Bucket.</p>
 <span><span class="va">panda_results_wblood</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pandaPy.html">pandaPy</a></span><span class="op">(</span>expr_file <span class="op">=</span> <span class="st">"./pandaExprWholeBlood.txt"</span> , motif_file <span class="op">=</span> <span class="st">"./motif_GTEx.txt"</span>, ppi_file <span class="op">=</span> <span class="st">"./ppi_GTEx.txt"</span>, modeProcess<span class="op">=</span><span class="st">"legacy"</span>, remove_missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Use the legacy mode to pre-process the input dataset and keep only the matched TFs or Genes</span></span>
 <span><span class="co">#&gt; Loading motif data ...</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.05 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.02 sec.</span></span>
 <span><span class="co">#&gt; Loading expression data ...</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.24 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.07 sec.</span></span>
 <span><span class="co">#&gt; Loading PPI data ...</span></span>
 <span><span class="co">#&gt; Number of PPIs: 86609</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.07 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.02 sec.</span></span>
 <span><span class="co">#&gt; Remove expression not in motif:</span></span>
 <span><span class="co">#&gt;    55689 rows removed from the initial 56202</span></span>
 <span><span class="co">#&gt; Remove motif not in expression data:</span></span>
@@ -372,14 +372,14 @@ Bucket.</p>
 <span><span class="co">#&gt;    0 rows removed from the initial 86609</span></span>
 <span><span class="co">#&gt; new case</span></span>
 <span><span class="co">#&gt; Calculating coexpression network ...</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.01 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.00 sec.</span></span>
 <span><span class="co">#&gt; Creating motif network ...</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.04 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.01 sec.</span></span>
 <span><span class="co">#&gt; Creating PPI network ...</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.10 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.03 sec.</span></span>
 <span><span class="co">#&gt; legacy ./motif_GTEx.txt ./pandaExprWholeBlood.txt ./ppi_GTEx.txt False True False</span></span>
 <span><span class="co">#&gt; Normalizing networks ...</span></span>
-<span><span class="co">#&gt;   Elapsed time: 0.04 sec.</span></span>
+<span><span class="co">#&gt;   Elapsed time: 0.02 sec.</span></span>
 <span><span class="co">#&gt; Saving expression matrix and normalized networks ...</span></span>
 <span><span class="co">#&gt;   Elapsed time: 0.01 sec.</span></span>
 <span><span class="co">#&gt; Running PANDA algorithm ...</span></span>
@@ -396,32 +396,32 @@ Bucket.</p>
 <span><span class="co">#&gt; step: 10, hamming: 0.10712627123983814</span></span>
 <span><span class="co">#&gt; step: 11, hamming: 0.09299263928203307</span></span>
 <span><span class="co">#&gt; step: 12, hamming: 0.08031383413612993</span></span>
-<span><span class="co">#&gt; step: 13, hamming: 0.06903610891148329</span></span>
+<span><span class="co">#&gt; step: 13, hamming: 0.0690361089114833</span></span>
 <span><span class="co">#&gt; step: 14, hamming: 0.05908483808770143</span></span>
-<span><span class="co">#&gt; step: 15, hamming: 0.050368570841309156</span></span>
+<span><span class="co">#&gt; step: 15, hamming: 0.05036857084130915</span></span>
 <span><span class="co">#&gt; step: 16, hamming: 0.04278429695791332</span></span>
 <span><span class="co">#&gt; step: 17, hamming: 0.036223979927264414</span></span>
 <span><span class="co">#&gt; step: 18, hamming: 0.030579252521705833</span></span>
-<span><span class="co">#&gt; step: 19, hamming: 0.025745150525848713</span></span>
-<span><span class="co">#&gt; step: 20, hamming: 0.02162261509032571</span></span>
+<span><span class="co">#&gt; step: 19, hamming: 0.025745150525848724</span></span>
+<span><span class="co">#&gt; step: 20, hamming: 0.021622615090325713</span></span>
 <span><span class="co">#&gt; step: 21, hamming: 0.018120119978282237</span></span>
-<span><span class="co">#&gt; step: 22, hamming: 0.015154398422204283</span></span>
+<span><span class="co">#&gt; step: 22, hamming: 0.015154398422204278</span></span>
 <span><span class="co">#&gt; step: 23, hamming: 0.012650788145759574</span></span>
-<span><span class="co">#&gt; step: 24, hamming: 0.010543041908389053</span></span>
+<span><span class="co">#&gt; step: 24, hamming: 0.010543041908389054</span></span>
 <span><span class="co">#&gt; step: 25, hamming: 0.008772952126201682</span></span>
-<span><span class="co">#&gt; step: 26, hamming: 0.007289762109077401</span></span>
+<span><span class="co">#&gt; step: 26, hamming: 0.0072897621090774025</span></span>
 <span><span class="co">#&gt; step: 27, hamming: 0.006049506006422676</span></span>
-<span><span class="co">#&gt; step: 28, hamming: 0.005014322747086903</span></span>
-<span><span class="co">#&gt; step: 29, hamming: 0.004151769096928693</span></span>
+<span><span class="co">#&gt; step: 28, hamming: 0.0050143227470869035</span></span>
+<span><span class="co">#&gt; step: 29, hamming: 0.004151769096928692</span></span>
 <span><span class="co">#&gt; step: 30, hamming: 0.0034341712803001153</span></span>
-<span><span class="co">#&gt; step: 31, hamming: 0.002838014367091253</span></span>
-<span><span class="co">#&gt; step: 32, hamming: 0.0023433884769824887</span></span>
-<span><span class="co">#&gt; step: 33, hamming: 0.0019334886365366026</span></span>
-<span><span class="co">#&gt; step: 34, hamming: 0.0015941705108742312</span></span>
-<span><span class="co">#&gt; step: 35, hamming: 0.001313559430530958</span></span>
-<span><span class="co">#&gt; step: 36, hamming: 0.0010817088184296897</span></span>
-<span><span class="co">#&gt; step: 37, hamming: 0.0008903048282875378</span></span>
-<span><span class="co">#&gt; Running panda took: 1.51 seconds!</span></span>
+<span><span class="co">#&gt; step: 31, hamming: 0.002838014367091252</span></span>
+<span><span class="co">#&gt; step: 32, hamming: 0.0023433884769824866</span></span>
+<span><span class="co">#&gt; step: 33, hamming: 0.0019334886365366035</span></span>
+<span><span class="co">#&gt; step: 34, hamming: 0.0015941705108742305</span></span>
+<span><span class="co">#&gt; step: 35, hamming: 0.0013135594305309585</span></span>
+<span><span class="co">#&gt; step: 36, hamming: 0.0010817088184296895</span></span>
+<span><span class="co">#&gt; step: 37, hamming: 0.0008903048282875369</span></span>
+<span><span class="co">#&gt; Running panda took: 1.64 seconds!</span></span>
 <span><span class="co">#&gt; ...Finish PANDA...</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"visNetwork"</span>,repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span>,dependencies<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>

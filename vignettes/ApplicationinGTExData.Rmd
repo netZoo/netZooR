@@ -4,7 +4,7 @@ author: Deborah Weighill
 date: "2019-11-06"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ApplicationinGTExData}
+  %\VignetteIndexEntry{Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

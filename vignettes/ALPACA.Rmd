@@ -4,7 +4,7 @@ author: Megha Padi
 date: "2017-10-19"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ALPACA}
+  %\VignetteIndexEntry{Detecting differential modules using ALPACA}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
