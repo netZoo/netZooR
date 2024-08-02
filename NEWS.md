@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.6.0
+--------------------------
+
+    - New method: COBRA for batch-effect correction in correlation networks
+    - New method: BLOBFISH for estimating null models for gene regulatory networks
+    - New method: TIGER finds transcription factor activity using a Bayesian approach
+
+
 CHANGES IN VERSION 1.3.2
 --------------------------
 
