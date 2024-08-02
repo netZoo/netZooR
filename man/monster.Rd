@@ -45,7 +45,8 @@ to give to indirect compared to direct evidence. The default is 0.5 to give an
 equal weight to direct and indirect evidence.}
 
 \item{mode}{A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
-('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA.}
+('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA. Gene regulatory
+networks are supplied in the 'expr' variable as a TF-by-Gene matrix, by concatenating the TF-by-Gene matrices of case and control, expr has size nTFs x 2nGenes.}
 }
 \value{
 An object of class "monsterAnalysis" containing results
@@ -85,4 +86,6 @@ expr = as.data.frame(cbind(control,case))
 design=c(rep(0,nGenes),rep(1, nGenes))
 monsterRes <- monster(expr, design, motif=NA, nullPerms=10, numMaxCores=1, mode='regNet')
 }
+# alternatively, if a gene regulatory network has already been estimated,
+# see the domonster function for quick start
 }
