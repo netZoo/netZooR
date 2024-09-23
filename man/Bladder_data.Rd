@@ -21,7 +21,7 @@ Bladder RNA-seq data from the GTEx consortium. V6 release.
 }
 \examples{
 \donttest{data(bladder);
-checkMissAnnotation(bladder);}
+checkMisAnnotation(bladder, "GENDER");}
 }
 \references{
 GTEx Consortium, 2015. The Genotype-Tissue Expression (GTEx) pilot analysis: Multitissue gene regulation in humans. Science, 348(6235), pp.648-660.

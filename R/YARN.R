@@ -737,7 +737,7 @@ qstats <- function(exprs, groups, window) {
 #' @name Skin_data
 #' @examples
 #' \donttest{data(skin);
-#' checkMissAnnotation(skin,"GENDER");}
+#' checkMisAnnotation(skin,"GENDER");}
 system('wget https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/skin.rdata')
 system('mv skin.rdata data/')
 "skin"
@@ -765,7 +765,7 @@ system('mv skin.rdata data/')
 #' @name Bladder_data
 #' @examples
 #' \donttest{data(bladder);
-#' checkMissAnnotation(bladder);}
+#' checkMisAnnotation(bladder, "GENDER");}
 system('wget https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/bladder.rdata')
 system('mv bladder.rdata data/')
 "bladder"
