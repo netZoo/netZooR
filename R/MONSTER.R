@@ -1165,9 +1165,9 @@ NULL
 #' pandaResult_control <- panda(pandaToyData$motif, pandaToyData$expression[,26:50], pandaToyData$ppi)
 #'
 #' # function takes both panda objects and matrices, or a mixture
-#' monster_res1 <- domonster(pandaResult_exp, pandaResult_control)
-#' monster_res2 <- domonster(pandaResult_exp@regNet, pandaResult_control@regNet)
-#' monster_res3 <- domonster(pandaResult_exp@regNet, pandaResult_control)
+#' monster_res1 <- domonster(pandaResult_exp, pandaResult_control, numMaxCores = 1)
+#' monster_res2 <- domonster(pandaResult_exp@regNet, pandaResult_control@regNet, numMaxCores = 1)
+#' monster_res3 <- domonster(pandaResult_exp@regNet, pandaResult_control, numMaxCores = 1)
 #' }
 domonster <- function(exp_graph, control_graph, nullPerms = 1000, numMaxCores = 3, ...){
   if('panda' %in% class(exp_graph)){
