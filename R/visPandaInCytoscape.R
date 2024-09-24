@@ -14,8 +14,8 @@
 #' ppi_file_path <- system.file("extdata", "ppi_matched.txt", package = "netZooR", mustWork = TRUE)
 #' 
 #' # Run PANDA algorithm
-#' control_all_panda_result <- panda.py(expr = control_expression_file_path, motif = motif_file_path, 
-#' ppi = ppi_file_path, mode_process="legacy", rm_missing = TRUE )
+#' control_all_panda_result <- pandaPy(expr = control_expression_file_path, motif = motif_file_path, 
+#' ppi = ppi_file_path, modeProcess="legacy", remove_missing = TRUE )
 #' 
 #' # access PANDA regulatory network
 #' control_net <- control_all_panda_result$panda
