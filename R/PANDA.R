@@ -192,7 +192,18 @@ pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", 
     
     
   } else{ py_run_string("panda_network=panda_obj.panda_network",local = FALSE, convert = TRUE) 
-    panda_net <- py$panda_network
+    panda_net_py <- py$panda_network
+    
+    # Convert from a numpy-type matrix to an R matrix.
+    panda_net <- do.call(cbind, lapply(1:ncol(panda_net_py), function(i){
+      r_obj <- unlist(lapply(0:(length(panda_net_py[,i])-1), function(j){
+        return(as.numeric(panda_net_py[,i][j]$tolist()[[1]]))
+      }))
+      return(as.matrix(r_obj))
+    }))
+    colnames(panda_net) <- colnames(panda_net_py)
+    rownames(panda_net) <- rownames(panda_net_py)
+
     # weighted adjacency matrix of PANDA network 
     output <- list("WAMpanda" = panda_net)
   }
