@@ -31,15 +31,12 @@ test_that("panda function works", {
   
    # test 6: when processMode = legacy, remove_missing=FALSE
    test3Panda <- pandaPy(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = FALSE)$panda
-   print("THE RESULT IS")
-   str(test3Panda)
    expect_equal(test3Panda[1,4],5.86307,tolerance=1e-7)
   
    # test 7: when processMode = legacy, remove_missing=TRUE
    test4List  <- pandaPy(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = TRUE)
    test4Panda <-  test4List$panda
-   str(test4Panda)
-   
+
    # test 8-11: check data type in PANDA network
    expect_equal(class(test4Panda$TF), "character")
    expect_equal(class(test4Panda$Gene), "character")
