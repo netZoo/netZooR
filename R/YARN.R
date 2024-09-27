@@ -734,7 +734,7 @@ qstats <- function(exprs, groups, window) {
 #' (\href{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4547484/}{PubMed})
 #'
 #' @source GTEx Portal
-#' @name Skin_data
+#' @name skin
 #' @examples
 #' \donttest{data(skin);
 #' checkMisAnnotation(skin,"GENDER");}
@@ -762,7 +762,7 @@ system('mv skin.rdata data/')
 #' @source GTEx Portal
 #'
 #' @return ExpressionSet object
-#' @name Bladder_data
+#' @name bladder
 #' @examples
 #' \donttest{data(bladder);
 #' checkMisAnnotation(bladder, "GENDER");}
