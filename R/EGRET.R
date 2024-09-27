@@ -92,7 +92,7 @@ runEgret <- function(b,v,q,m,e,p,g,t){
   colnames(vcf) <- c("CHROM",  "POS"  ,   "ID"  ,    "REF"  ,   "ALT"   ,  "QUAL"   , "FILTER" , "INFO"   , "FORMAT", "NA12878")
   snp_ids <- paste0(vcf$CHROM,"_",vcf$POS)
   rownames(vcf) <- snp_ids
-  vcf <- tidyr::separate(vcf, NA12878, c("allele1", "allele2"), "\\|", remove = TRUE)
+  vcf <- tidyr::separate(vcf, col="NA12878", into=c("allele1", "allele2"), sep="\\|", remove = TRUE)
   vcf$alt_allele_count <- as.numeric(vcf$allele1) + as.numeric(vcf$allele2)
   vcf$snp_id <- snp_ids
   qbic_ag$alt_allele_count <- vcf$alt_allele_count[match(qbic_ag$snpID, vcf$snp_id)]
