@@ -47,7 +47,6 @@ Imports:
     RCy3, 
     viridisLite,
     STRINGdb,
-    Biobase,
     GOstats,
     AnnotationDbi,
     matrixStats,
