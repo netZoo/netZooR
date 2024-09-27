@@ -68,7 +68,7 @@ spider <- function(motif,expr=NULL,epifilter=NULL,ppi=NULL,alpha=0.1,hamming=0.0
     stop('Chromatin accessibility data does not match motif data size and order.')
   }
   
-  if(class(expr)=="ExpressionSet")
+  if(is(expr, "ExpressionSet"))
     expr <- assayData(expr)[["exprs"]]
   
   if (is.null(expr)){

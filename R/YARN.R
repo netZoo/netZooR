@@ -235,7 +235,7 @@ downloadGTEx <- function(type = "genes", file = NULL, ...) {
 #' head(netZooR:::extractMatrix(skin,normalized=FALSE,log=FALSE))
 #'
 extractMatrix <- function(obj, normalized = FALSE, log = TRUE) {
-  if (class(obj) == "ExpressionSet") {
+  if (is(obj, "ExpressionSet")) {
     if (!normalized) {
       obj <- exprs(obj)
     } else {

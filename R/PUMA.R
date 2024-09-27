@@ -60,7 +60,7 @@ puma <- function(motif,expr=NULL,ppi=NULL,alpha=0.1,mir_file,hamming=0.001,
   if(progress)
     print('Initializing and validating')
   
-  if(class(expr)=="ExpressionSet")
+  if(is(expr, "ExpressionSet"))
     expr <- assayData(expr)[["exprs"]]
   
   if (is.null(expr)){
