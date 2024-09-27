@@ -835,20 +835,19 @@ condorPlotCommunities = function(condor.object,color_list,point.size=0.01,
 #'  
 condorPlotHeatmap = function(condor.object, main="", xlab="blues", ylab="reds"){
   bo <- condor.object
-  attach(bo)
   # convert edge lists to adjacency matrices (n reds x m blues)
-  adj = get.adjacency(G, attr="weight", sparse=FALSE)
+  adj = get.adjacency(bo$G, attr="weight", sparse=FALSE)
   # reorder reds according to community membership
-  reds = as.character(red.memb[order(red.memb[,2]),1])
+  reds = as.character(bo$red.memb[order(bo$red.memb[,2]),1])
   adj = adj[reds,]
   # reorder blues according to community membership
-  blues = as.character(blue.memb[order(blue.memb[,2]),1])
+  blues = as.character(bo$blue.memb[order(bo$blue.memb[,2]),1])
   adj = adj[,blues]
-  rowsep = cumsum(as.vector(table(red.memb[,2])))
-  colsep = cumsum(as.vector(table(blue.memb[,2])))
-  labCol <- as.character(sort(blue.memb[,2]))
+  rowsep = cumsum(as.vector(table(bo$red.memb[,2])))
+  colsep = cumsum(as.vector(table(bo$blue.memb[,2])))
+  labCol <- as.character(sort(bo$blue.memb[,2]))
   labCol[duplicated(labCol)] <- ""
-  labRow <- as.character(sort(red.memb[,2]))
+  labRow <- as.character(sort(bo$red.memb[,2]))
   labRow[duplicated(labRow)] <- ""
   heatmap.2(adj, Rowv=FALSE, Colv=FALSE, dendrogram="none", keysize=1.25,
             col=colorpanel(10, "white", "black"), scale="none",
@@ -857,7 +856,6 @@ condorPlotHeatmap = function(condor.object, main="", xlab="blues", ylab="reds"){
             sepwidth = c(0.025, 0.025), ylab=ylab, xlab=xlab, margins=c(3,3),
             labCol=labCol, labRow=labRow, offsetRow=0, offsetCol=0,
             breaks=sort(c(0.1,seq(0, max(adj),length.out=10))))
-  detach(bo)
 }
 
 
