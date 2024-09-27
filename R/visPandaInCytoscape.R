@@ -21,10 +21,10 @@
 #' control_net <- control_all_panda_result$panda
 #' 
 #' # select top 1000 edges in PANDA network by edge weight.
-#' panda.net <- head(control_net[order(control_net$force,decreasing = TRUE),], 1000)
+#' panda.net <- head(control_net[order(control_net$Score,decreasing = TRUE),], 1000)
 #' 
 #' # run this function to create a network in Cytoscape.
-#' visPandaInCytoscape(panda.net, network.name="PANDA")
+#' visPandaInCytoscape(panda.net, network_name="PANDA")
 #' }
 #' @return PANDA network in Cytoscape
 #' @import RCy3
