@@ -20,8 +20,11 @@
 #' @importClassesFrom Biobase ExpressionSet
 #'
 #' @examples
-#' download.file('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/bladder.rdata',destfile='netZooR/data/bladder.rdata')
-#' download.file('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/skin.rdata',destfile='netZooR/data/skin.rdata')
+#' u <- 'https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/'
+#' bladder <- paste0(u, 'yarn/bladder.rdata')
+#' skin <- paste0(u, 'yarn/skin.rdata')
+#' download.file(bladder, destfile='netZooR/data/bladder.rdata')
+#' download.file(skin, destfile='netZooR/data/skin.rdata')
 #' data(skin)
 #' # subsetting and changing column name just for a silly example
 #' skin <- skin[1:10,]
