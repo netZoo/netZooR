@@ -195,6 +195,9 @@ The result is a data frame in which the first colum  contains TFs, the second co
 lionessLCL[1:5,1:10]
 ```
 
-
+## Remove output directory.
+```{r}
+unlink("lioness_output", recursive=TRUE)
+```
 
 

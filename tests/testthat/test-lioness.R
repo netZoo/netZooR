@@ -5,6 +5,7 @@ test_that("lionessPy() function works", {
   
   # test 1: check test error message when empty inputs
   expect_error(lionessPy())
+  unlink("lioness_output", recursive=TRUE)
   
   # input file path
   system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4_200_L.txt")
@@ -79,7 +80,6 @@ test_that("lioness() function works for network.inference.method = 'pearson'", {
   expect_equal(lionessNets[[2]],ssNet2,tolerance=1e-15) 
   expect_equal(lionessNets[[3]],ssNet3,tolerance=1e-15) 
   expect_equal(lionessNets[[4]],ssNet4,tolerance=1e-15) 
-  
 })
 
 test_that("lioness() function throws appropriate error for undefined network.inference.method", {
@@ -91,6 +91,5 @@ test_that("lioness() function throws appropriate error for undefined network.inf
   
   # run LIONESS on the toy data w/undefined method
   expect_error(lioness(expr=t(X),network.inference.method="divination"))
-  
 })
 

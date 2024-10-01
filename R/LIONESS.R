@@ -41,6 +41,7 @@
 #'     motif_file = motif_file_path, ppi_file = ppi_file_path, 
 #'     modeProcess="union",start_sample=1, end_sample=1, precision="single")
 #' }
+#' unlink("lioness_output", recursive=TRUE)
 #' @import reticulate
 #' @export
 lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double", save_tmp=TRUE, modeProcess="union", remove_missing=FALSE, start_sample=1, end_sample="None", save_single_network=FALSE, save_dir="lioness_output", save_fmt='npy'){
