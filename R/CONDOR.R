@@ -61,7 +61,7 @@ condorCluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=
   
   #make sure there's only one connected component
   g.component.test <- graph_from_data_frame(elist,directed=FALSE)
-  if(!is.connected(g.component.test)){
+  if(!is_connected(g.component.test)){
     stop("More than one connected component detected,
          method requires only one connected component")
   }  
@@ -362,7 +362,7 @@ condorMatrixModularity = function(condor.object,T0=cbind(seq_len(q),rep(1,q)),we
   esub <- condor.object$edges
   #make sure there's only one connected component
   g.component.test <- graph_from_data_frame(esub,directed=FALSE)
-  if(!is.connected(g.component.test)){
+  if(!is_connected(g.component.test)){
     stop("More than one connected component,
          method requires only one connected component")
   }
@@ -568,7 +568,7 @@ condorModularityMax = function(condor.object,T0=cbind(seq_len(q),rep(1,q)),weigh
   esub <- condor.object$edges
   #make sure there's only one connected component
   g.component.test <- graph_from_data_frame(esub,directed=FALSE)
-  if(!is.connected(g.component.test)){
+  if(!is_connected(g.component.test)){
     stop("More than one connected component,
          method requires only one connected component")
   }
