@@ -10,7 +10,7 @@
 #' \code{condor.object$edges}
 #' @param cs.method is a string to specify which unipartite community 
 #' structure algorithm should be used for the seed clustering. 
-#' Options are \code{LCS} (\code{\link[igraph]{multilevel.community}}), 
+#' Options are \code{LCS} (\code{\link[igraph]{cluster_louvain}}), 
 #' \code{LEC} (\code{\link[igraph]{leading.eigenvector.community}}), 
 #' \code{FG} (\code{\link[igraph]{fastgreedy.community}}).
 #' @param project Provides options for initial seeding of the bipartite 
@@ -104,7 +104,7 @@ condorCluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=
     #blue.indx <- V(G)$name %in% blue.names
   }
   
-  if(cs.method=="LCS"){cs0 = multilevel.community(gcc.initialize, weights=project.weights)}
+  if(cs.method=="LCS"){cs0 = cluster_louvain(gcc.initialize, weights=project.weights)}
   if(cs.method=="LEC"){cs0 = leading.eigenvector.community(gcc.initialize, weights=project.weights)}
   if(cs.method=="FG"){cs0 = fastgreedy.community(gcc.initialize, weights=project.weights)}
   print(paste("modularity of projected graph",max(cs0$modularity)))
