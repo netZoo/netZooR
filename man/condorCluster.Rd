@@ -18,7 +18,7 @@ condorCluster(
 
 \item{cs.method}{is a string to specify which unipartite community 
 structure algorithm should be used for the seed clustering. 
-Options are \code{LCS} (\code{\link[igraph]{multilevel.community}}), 
+Options are \code{LCS} (\code{\link[igraph]{cluster_louvain}}), 
 \code{LEC} (\code{\link[igraph]{leading.eigenvector.community}}), 
 \code{FG} (\code{\link[igraph]{fastgreedy.community}}).}
 

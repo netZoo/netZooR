@@ -88,7 +88,7 @@ condorCluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=
     gc()
     colnames(gM) <- blue.names
     rownames(gM) <- blue.names
-    G1 = graph.adjacency(gM,mode="undirected",weighted=TRUE,diag=FALSE);
+    G1 = graph_from_adjacency_matrix(gM,mode="undirected",weighted=TRUE,diag=FALSE);
     #if(clusters(G1)$no > 1){print("Warning more than one component! May cause indexing error")}
     #V(G1)$name <- sort(unique(as.vector(esub[,2])))
     #remove loops and multiple edges
