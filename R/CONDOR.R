@@ -836,7 +836,7 @@ condorPlotCommunities = function(condor.object,color_list,point.size=0.01,
 condorPlotHeatmap = function(condor.object, main="", xlab="blues", ylab="reds"){
   bo <- condor.object
   # convert edge lists to adjacency matrices (n reds x m blues)
-  adj = get.adjacency(bo$G, attr="weight", sparse=FALSE)
+  adj = as_adjacency_matrix(bo$G, attr="weight", sparse=FALSE)
   # reorder reds according to community membership
   reds = as.character(bo$red.memb[order(bo$red.memb[,2]),1])
   adj = adj[reds,]
