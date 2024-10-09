@@ -1021,7 +1021,7 @@ max.component = function(g){
   # return largest connected component of the iGraph graph object g
   g.clust = components(g);
   maxclust.id = which(g.clust$csize == max(g.clust$csize))[1];
-  h = induced.subgraph(g, which(g.clust$membership == maxclust.id)); # 1-indexed here
+  h = induced_subgraph(g, which(g.clust$membership == maxclust.id)); # 1-indexed here
   return(h);
 }
 
