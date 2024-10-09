@@ -1019,7 +1019,7 @@ createCondorObject <- function(edgelist,return.gcc=TRUE){
 
 max.component = function(g){
   # return largest connected component of the iGraph graph object g
-  g.clust = clusters(g);
+  g.clust = components(g);
   maxclust.id = which(g.clust$csize == max(g.clust$csize))[1];
   h = induced.subgraph(g, which(g.clust$membership == maxclust.id)); # 1-indexed here
   return(h);
