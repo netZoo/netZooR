@@ -149,14 +149,14 @@ pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", 
     py_run_string("panda_network=panda_obj.export_panda_results",local = FALSE, convert = TRUE)
     # convert python object to R vector
     panda_net <- py$panda_network
-
+    
     # re-assign data type
-    panda_net$tf <- panda_net$tf$tolist()
-    panda_net$gene <- panda_net$gene$tolist()
+    panda_net$tf <- as.character(panda_net$tf)
+    panda_net$gene <- as.character(panda_net$gene)
     if("motif" %in% names(panda_net)){
-      panda_net$motif <- panda_net$motif$tolist()
+      panda_net$motif <- as.numeric(panda_net$motif)
     }
-    panda_net$force <- panda_net$force$tolist()
+    panda_net$force <- as.numeric(panda_net$force)
     if("motif" %in% names(panda_net)){
       # adjust column order
       panda_net <- panda_net[,c("tf","gene","motif","force")]
@@ -169,18 +169,15 @@ pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", 
       colnames(panda_net) <- c("TF","Gene","Score")
     }
     
-    
     # in-degree of panda network
     py_run_string(paste("indegree=panda_obj.return_panda_indegree()"))
     indegree_net <- py$indegree
-    indegree_net$force <- indegree_net$force$tolist()
     indegree_net <- as.data.frame(cbind(Target = rownames(indegree_net), Target_Score = indegree_net$force), stringsAsFactors =FALSE)
     indegree_net$`Target_Score` <- as.numeric(indegree_net$`Target_Score`)
     
     # out-degree of panda netwook
     py_run_string(paste("outdegree=panda_obj.return_panda_outdegree()"))
     outdegree_net <- py$outdegree
-    outdegree_net$force <- outdegree_net$force$tolist()
     outdegree_net <- as.data.frame(cbind(Regulator = rownames(outdegree_net), Regulator_Score = outdegree_net$force), stringsAsFactors =FALSE)
     outdegree_net$`Regulator_Score` <- as.numeric(outdegree_net$`Regulator_Score`)
     
@@ -195,17 +192,9 @@ pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", 
   } else{ 
     py_run_string("panda_network=panda_obj.panda_network",local = FALSE, convert = TRUE) 
     panda_net_py <- py$panda_network
-    
-    # Convert from a numpy-type matrix to an R matrix.
-    panda_net <- do.call(cbind, lapply(1:ncol(panda_net_py), function(i){
-      r_obj <- panda_net_py[,i]$tolist()
-      return(as.matrix(r_obj))
-    }))
-    colnames(panda_net) <- colnames(panda_net_py)
-    rownames(panda_net) <- rownames(panda_net_py)
 
     # weighted adjacency matrix of PANDA network 
-    output <- list("WAMpanda" = panda_net)
+    output <- list("WAMpanda" = panda_net_py)
   }
   
   message ("...Finish PANDA...")
