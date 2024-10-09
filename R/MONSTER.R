@@ -622,7 +622,7 @@ monsterTransitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10,
   
   adj.combined <- adj.combined[
     abs(adj.combined[,4])>=sort(abs(adj.combined[,4]),decreasing=TRUE)[numEdges],]
-  tfNet <- graph.data.frame(adj.combined, directed=TRUE)
+  tfNet <- graph_from_data_frame(adj.combined, directed=TRUE)
   vSize <- -log(dTFI_pVals_All)
   vSize[vSize<0] <- 0
   vSize[vSize>3] <- 3
