@@ -35,7 +35,7 @@ alpaca <- function(net.table,file.stem,verbose=FALSE)
     if (!(is.null(file.stem))) write.table(ctrl.memb, paste(c(file.stem,"_ALPACA_ctrl_memb.txt"),collapse=""),row.names=TRUE,col.names=FALSE,quote=FALSE,sep="\t")
   
     pos.table <- net.table[intersect(which(net.table[,3]>=0),which(net.table[,4]>=0)),]
-    pos.graph <- graph.edgelist(as.matrix(pos.table[,seq_len(2)]),directed=TRUE)
+    pos.graph <- graph_from_edgelist(as.matrix(pos.table[,seq_len(2)]),directed=TRUE)
   
     if (length(setdiff(V(pos.graph)$name,names(ctrl.memb)))>0)
     {
