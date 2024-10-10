@@ -12,6 +12,10 @@
 #' # between the TF and gene). You can further customize the network style 
 #' # directly from Cytoscape.
 #' \donttest{
+#' sampleNet <- data.frame("TF"=c("TF1", "TF2", "TF3"),
+#'   "Gene"=c("gene1", "gene2", "gene3"),"Motif"=NA,
+#'   "Score"=c(1,2,3),stringsAsFactors = FALSE)
+#' visPandaInCytoscape(sampleNet, network_name="sample")
 #' createPandaStyle(style_name="PandaStyle")
 #' }
 #' @export
@@ -19,7 +23,7 @@
 createPandaStyle <- function(style_name="PandaStyle"){
   
   # node properties
-  nodeShape <- mapVisualProperty('node shape','group','d',c("TF","Gene"),c("ELLIPSE","RECTANGLE"))
+  nodeShape <- mapVisualProperty('node shape','group','d',c("TF","Gene"),c("ELLIPSE","RECTANGLE"), network = "current")
   nodeColor <- mapVisualProperty('node fill color', 'group','d', c("TF","Gene"), c('#FD7622', '#499df3'))
   nodeBorderColor <- mapVisualProperty("Node Border Paint", 'group', 'd', c("TF","Gene"), c('#FD7622', '#499df3'))
   nodeLabel <- mapVisualProperty("node label","id",'p')

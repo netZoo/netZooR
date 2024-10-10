@@ -10,7 +10,7 @@
 #' \code{condor.object$edges}
 #' @param cs.method is a string to specify which unipartite community 
 #' structure algorithm should be used for the seed clustering. 
-#' Options are \code{LCS} (\code{\link[igraph]{multilevel.community}}), 
+#' Options are \code{LCS} (\code{\link[igraph]{cluster_louvain}}), 
 #' \code{LEC} (\code{\link[igraph]{leading.eigenvector.community}}), 
 #' \code{FG} (\code{\link[igraph]{fastgreedy.community}}).
 #' @param project Provides options for initial seeding of the bipartite 
@@ -60,13 +60,13 @@ condorCluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=
   }
   
   #make sure there's only one connected component
-  g.component.test <- graph.data.frame(elist,directed=FALSE)
-  if(!is.connected(g.component.test)){
+  g.component.test <- graph_from_data_frame(elist,directed=FALSE)
+  if(!is_connected(g.component.test)){
     stop("More than one connected component detected,
          method requires only one connected component")
   }  
   
-  G <- graph.data.frame(elist,directed=FALSE)
+  G <- graph_from_data_frame(elist,directed=FALSE)
   
   project.weights <- weights
   #Use unipartite community structure method for first pass
@@ -88,7 +88,7 @@ condorCluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=
     gc()
     colnames(gM) <- blue.names
     rownames(gM) <- blue.names
-    G1 = graph.adjacency(gM,mode="undirected",weighted=TRUE,diag=FALSE);
+    G1 = graph_from_adjacency_matrix(gM,mode="undirected",weighted=TRUE,diag=FALSE);
     #if(clusters(G1)$no > 1){print("Warning more than one component! May cause indexing error")}
     #V(G1)$name <- sort(unique(as.vector(esub[,2])))
     #remove loops and multiple edges
@@ -104,7 +104,7 @@ condorCluster <- function(condor.object,cs.method="LCS",project=TRUE,low.memory=
     #blue.indx <- V(G)$name %in% blue.names
   }
   
-  if(cs.method=="LCS"){cs0 = multilevel.community(gcc.initialize, weights=project.weights)}
+  if(cs.method=="LCS"){cs0 = cluster_louvain(gcc.initialize, weights=project.weights)}
   if(cs.method=="LEC"){cs0 = leading.eigenvector.community(gcc.initialize, weights=project.weights)}
   if(cs.method=="FG"){cs0 = fastgreedy.community(gcc.initialize, weights=project.weights)}
   print(paste("modularity of projected graph",max(cs0$modularity)))
@@ -361,8 +361,8 @@ condorMatrixModularity = function(condor.object,T0=cbind(seq_len(q),rep(1,q)),we
   #Convert the edgelist to a sparseMatrix object
   esub <- condor.object$edges
   #make sure there's only one connected component
-  g.component.test <- graph.data.frame(esub,directed=FALSE)
-  if(!is.connected(g.component.test)){
+  g.component.test <- graph_from_data_frame(esub,directed=FALSE)
+  if(!is_connected(g.component.test)){
     stop("More than one connected component,
          method requires only one connected component")
   }
@@ -567,8 +567,8 @@ condorModularityMax = function(condor.object,T0=cbind(seq_len(q),rep(1,q)),weigh
   #Convert the edgelist to a sparseMatrix object
   esub <- condor.object$edges
   #make sure there's only one connected component
-  g.component.test <- graph.data.frame(esub,directed=FALSE)
-  if(!is.connected(g.component.test)){
+  g.component.test <- graph_from_data_frame(esub,directed=FALSE)
+  if(!is_connected(g.component.test)){
     stop("More than one connected component,
          method requires only one connected component")
   }
@@ -835,20 +835,19 @@ condorPlotCommunities = function(condor.object,color_list,point.size=0.01,
 #'  
 condorPlotHeatmap = function(condor.object, main="", xlab="blues", ylab="reds"){
   bo <- condor.object
-  attach(bo)
   # convert edge lists to adjacency matrices (n reds x m blues)
-  adj = get.adjacency(G, attr="weight", sparse=FALSE)
+  adj = as_adjacency_matrix(bo$G, attr="weight", sparse=FALSE)
   # reorder reds according to community membership
-  reds = as.character(red.memb[order(red.memb[,2]),1])
+  reds = as.character(bo$red.memb[order(bo$red.memb[,2]),1])
   adj = adj[reds,]
   # reorder blues according to community membership
-  blues = as.character(blue.memb[order(blue.memb[,2]),1])
+  blues = as.character(bo$blue.memb[order(bo$blue.memb[,2]),1])
   adj = adj[,blues]
-  rowsep = cumsum(as.vector(table(red.memb[,2])))
-  colsep = cumsum(as.vector(table(blue.memb[,2])))
-  labCol <- as.character(sort(blue.memb[,2]))
+  rowsep = cumsum(as.vector(table(bo$red.memb[,2])))
+  colsep = cumsum(as.vector(table(bo$blue.memb[,2])))
+  labCol <- as.character(sort(bo$blue.memb[,2]))
   labCol[duplicated(labCol)] <- ""
-  labRow <- as.character(sort(red.memb[,2]))
+  labRow <- as.character(sort(bo$red.memb[,2]))
   labRow[duplicated(labRow)] <- ""
   heatmap.2(adj, Rowv=FALSE, Colv=FALSE, dendrogram="none", keysize=1.25,
             col=colorpanel(10, "white", "black"), scale="none",
@@ -857,7 +856,6 @@ condorPlotHeatmap = function(condor.object, main="", xlab="blues", ylab="reds"){
             sepwidth = c(0.025, 0.025), ylab=ylab, xlab=xlab, margins=c(3,3),
             labCol=labCol, labRow=labRow, offsetRow=0, offsetCol=0,
             breaks=sort(c(0.1,seq(0, max(adj),length.out=10))))
-  detach(bo)
 }
 
 
@@ -996,7 +994,7 @@ createCondorObject <- function(edgelist,return.gcc=TRUE){
          same column of 'edgelist'.")
   }
   
-  g <- graph.data.frame(edgelist,directed=FALSE)
+  g <- graph_from_data_frame(edgelist,directed=FALSE)
   blue.indx <- V(g)$name %in% unique(edgelist[, 2])
   V(g)$color <- "red"
   V(g)$color[blue.indx] <- "blue"
@@ -1021,9 +1019,9 @@ createCondorObject <- function(edgelist,return.gcc=TRUE){
 
 max.component = function(g){
   # return largest connected component of the iGraph graph object g
-  g.clust = clusters(g);
+  g.clust = components(g);
   maxclust.id = which(g.clust$csize == max(g.clust$csize))[1];
-  h = induced.subgraph(g, which(g.clust$membership == maxclust.id)); # 1-indexed here
+  h = induced_subgraph(g, which(g.clust$membership == maxclust.id)); # 1-indexed here
   return(h);
 }
 

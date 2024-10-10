@@ -104,13 +104,12 @@ monsterPrintMonsterAnalysis <- function(x, ...){
 #' data(yeast)
 #' design <- c(rep(0,20),rep(NA,10),rep(1,20))
 #' yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
-#' #monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 #' # Example with provided networks
 #' \donttest{
 #' pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
-#' case=getRegNet(pandaResult)
-#' nelemReg=dim(getRegNet(pandaResult))[1]*dim(getRegNet(pandaResult))[2]
-#' nGenes=length(colnames(getRegNet(pandaResult)))
+#' case=pandaResult@regNet
+#' nelemReg=dim(pandaResult@regNet)[1]*dim(pandaResult@regNet)[2]
+#' nGenes=length(colnames(pandaResult@regNet))
 #' control=matrix(rexp(nelemReg, rate=.1), ncol=nGenes)
 #' colnames(control) = colnames(case)
 #' rownames(control) = rownames(case) 
@@ -623,7 +622,7 @@ monsterTransitionNetworkPlot <- function(monsterObj, numEdges=100, numTopTFs=10,
   
   adj.combined <- adj.combined[
     abs(adj.combined[,4])>=sort(abs(adj.combined[,4]),decreasing=TRUE)[numEdges],]
-  tfNet <- graph.data.frame(adj.combined, directed=TRUE)
+  tfNet <- graph_from_data_frame(adj.combined, directed=TRUE)
   vSize <- -log(dTFI_pVals_All)
   vSize[vSize<0] <- 0
   vSize[vSize>3] <- 3
@@ -1165,9 +1164,9 @@ NULL
 #' pandaResult_control <- panda(pandaToyData$motif, pandaToyData$expression[,26:50], pandaToyData$ppi)
 #'
 #' # function takes both panda objects and matrices, or a mixture
-#' monster_res1 <- domonster(pandaResult_exp, pandaResult_control)
-#' monster_res2 <- domonster(pandaResult_exp@regNet, pandaResult_control@regNet)
-#' monster_res3 <- domonster(pandaResult_exp@regNet, pandaResult_control)
+#' monster_res1 <- domonster(pandaResult_exp, pandaResult_control, numMaxCores = 1)
+#' monster_res2 <- domonster(pandaResult_exp@regNet, pandaResult_control@regNet, numMaxCores = 1)
+#' monster_res3 <- domonster(pandaResult_exp@regNet, pandaResult_control, numMaxCores = 1)
 #' }
 domonster <- function(exp_graph, control_graph, nullPerms = 1000, numMaxCores = 3, ...){
   if('panda' %in% class(exp_graph)){

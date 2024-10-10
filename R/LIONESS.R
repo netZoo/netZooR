@@ -41,6 +41,7 @@
 #'     motif_file = motif_file_path, ppi_file = ppi_file_path, 
 #'     modeProcess="union",start_sample=1, end_sample=1, precision="single")
 #' }
+#' unlink("lioness_output", recursive=TRUE)
 #' @import reticulate
 #' @export
 lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", precision="double", save_tmp=TRUE, modeProcess="union", remove_missing=FALSE, start_sample=1, end_sample="None", save_single_network=FALSE, save_dir="lioness_output", save_fmt='npy'){
@@ -179,7 +180,8 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
 #' "coopNet" is the cooperative network
 #' @examples
 #' data(pandaToyData)
-#' lionessRes <- lioness(expr = pandaToyData$expression[,1:3], motif = pandaToyData$motif, ppi = pandaToyData$ppi,hamming=1,progress=FALSE)
+#' lionessRes <- lioness(expr = pandaToyData$expression[,1:3], motif = pandaToyData$motif, 
+#'   ppi = pandaToyData$ppi,hamming=1,progress=FALSE)
 #' @references
 #' Kuijjer, M.L., Tung, M., Yuan, G., Quackenbush, J. and Glass, K., 2015. 
 #' Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.

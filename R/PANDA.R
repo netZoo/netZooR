@@ -169,7 +169,6 @@ pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", 
       colnames(panda_net) <- c("TF","Gene","Score")
     }
     
-    
     # in-degree of panda network
     py_run_string(paste("indegree=panda_obj.return_panda_indegree()"))
     indegree_net <- py$indegree
@@ -187,14 +186,15 @@ pandaPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu", 
       panda_net$Gene <- paste('tar_', panda_net$Gene, sep='')
       message("Rename the content of first two columns with prefix 'reg_' and 'tar_' as there are some duplicate node names between the first two columns" )
     }
-    
     output <- list("panda" = panda_net, "indegree" = indegree_net, "outdegree" = outdegree_net)
     
     
-  } else{ py_run_string("panda_network=panda_obj.panda_network",local = FALSE, convert = TRUE) 
-    panda_net <- py$panda_network
+  } else{ 
+    py_run_string("panda_network=panda_obj.panda_network",local = FALSE, convert = TRUE) 
+    panda_net_py <- py$panda_network
+
     # weighted adjacency matrix of PANDA network 
-    output <- list("WAMpanda" = panda_net)
+    output <- list("WAMpanda" = panda_net_py)
   }
   
   message ("...Finish PANDA...")

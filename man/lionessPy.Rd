@@ -72,4 +72,5 @@ control_lioness_result <- lionessPy(expr_file = control_expression_file_path,
     motif_file = motif_file_path, ppi_file = ppi_file_path, 
     modeProcess="union",start_sample=1, end_sample=1, precision="single")
 }
+unlink("lioness_output", recursive=TRUE)
 }

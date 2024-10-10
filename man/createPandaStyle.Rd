@@ -22,6 +22,10 @@ This function is able to create a Cytoscape visual style for any PANDA network o
 # between the TF and gene). You can further customize the network style 
 # directly from Cytoscape.
 \donttest{
+sampleNet <- data.frame("TF"=c("TF1", "TF2", "TF3"),
+  "Gene"=c("gene1", "gene2", "gene3"),"Motif"=NA,
+  "Score"=c(1,2,3),stringsAsFactors = FALSE)
+visPandaInCytoscape(sampleNet, network_name="sample")
 createPandaStyle(style_name="PandaStyle")
 }
 }

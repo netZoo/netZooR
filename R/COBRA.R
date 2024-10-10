@@ -62,7 +62,7 @@ cobra <- function(X, expressionData, method = "pearson"){
     print(dim(expressionData))
   }
   if(method == "pcorsh"){
-   C <- matrix(as.numeric(pcor.shrink(t(expressionData))), dim(expressionData)[1], dim(expressionData)[1])
+   C <- matrix(as.numeric(corpcor::pcor.shrink(t(expressionData))), dim(expressionData)[1], dim(expressionData)[1])
   }
   
   eigenG <- rARPACK::eigs_sym(C,N)

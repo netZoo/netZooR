@@ -72,13 +72,12 @@ BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y
 data(yeast)
 design <- c(rep(0,20),rep(NA,10),rep(1,20))
 yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
-#monsterRes <- monster(yeast$exp.cc[1:500,], design, yeast$motif, nullPerms=10, numMaxCores=1)
 # Example with provided networks
 \donttest{
 pandaResult <- panda(pandaToyData$motif, pandaToyData$expression, pandaToyData$ppi)
-case=getRegNet(pandaResult)
-nelemReg=dim(getRegNet(pandaResult))[1]*dim(getRegNet(pandaResult))[2]
-nGenes=length(colnames(getRegNet(pandaResult)))
+case=pandaResult@regNet
+nelemReg=dim(pandaResult@regNet)[1]*dim(pandaResult@regNet)[2]
+nGenes=length(colnames(pandaResult@regNet))
 control=matrix(rexp(nelemReg, rate=.1), ncol=nGenes)
 colnames(control) = colnames(case)
 rownames(control) = rownames(case) 
