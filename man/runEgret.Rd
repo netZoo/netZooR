@@ -76,4 +76,7 @@ tag <- "my_toy_egret_run"
 \donttest{
 runEgret(qtl,vcf,qbic,motif,expr,ppi,nameGeneMap,tag)
 }
+file.remove("my_toy_egret_run_egret.RData")
+file.remove("my_toy_egret_run_panda.RData")
+file.remove("priors_my_toy_egret_run.txt")
 }

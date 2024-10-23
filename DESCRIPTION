@@ -29,7 +29,6 @@ Depends: R (>= 4.2.0),
    igraph,
 	 reticulate,
 	 pandaR,
-   matrixcalc,
    Biobase
 Remotes: 
 	 stan-dev/cmdstanr,
@@ -47,7 +46,6 @@ Imports:
     RCy3, 
     viridisLite,
     STRINGdb,
-    Biobase,
     GOstats,
     AnnotationDbi,
     matrixStats,
@@ -88,7 +86,8 @@ Imports:
     preprocessCore,
     readr,
     RColorBrewer,
-    quantro
+    quantro,
+    matrixcalc
 License: GPL-3
 Encoding: UTF-8
 LazyData: false
@@ -97,7 +96,7 @@ Suggests:
     knitr,
     rmarkdown,
     pkgdown,
-    dorothea
+    dorothea,
 VignetteEngine: knitr
 VignetteBuilder: knitr
 RoxygenNote: 7.3.1

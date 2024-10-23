@@ -45,6 +45,14 @@ modeProcess="legacy", remove_missing = TRUE )$panda
  
 # Run ALPACA
 alpaca<- pandaToAlpaca(treated_panda_net, control_panda_net, "./TB", verbose=TRUE)
+
+# Delete files.
+file.remove("TB_ALPACA_ctrl_memb.txt")
+file.remove("TB_ALPACA_final_memb.txt")
+file.remove("TB_ALPACA_scores.txt")
+file.remove("TB_DWBM.txt")
+file.remove("TB_DWBM_colnames.txt")
+file.remove("TB_DWBM_rownames.txt")
 }
 
 }

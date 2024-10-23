@@ -20,8 +20,11 @@
 #' @importClassesFrom Biobase ExpressionSet
 #'
 #' @examples
-#' download.file('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/bladder.rdata',destfile='netZooR/data/bladder.rdata')
-#' download.file('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/skin.rdata',destfile='netZooR/data/skin.rdata')
+#' u <- 'https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/'
+#' bladder <- paste0(u, 'yarn/bladder.rdata')
+#' skin <- paste0(u, 'yarn/skin.rdata')
+#' download.file(bladder, destfile='netZooR/data/bladder.rdata')
+#' download.file(skin, destfile='netZooR/data/skin.rdata')
 #' data(skin)
 #' # subsetting and changing column name just for a silly example
 #' skin <- skin[1:10,]
@@ -235,7 +238,7 @@ downloadGTEx <- function(type = "genes", file = NULL, ...) {
 #' head(netZooR:::extractMatrix(skin,normalized=FALSE,log=FALSE))
 #'
 extractMatrix <- function(obj, normalized = FALSE, log = TRUE) {
-  if (class(obj) == "ExpressionSet") {
+  if (is(obj, "ExpressionSet")) {
     if (!normalized) {
       obj <- exprs(obj)
     } else {
@@ -561,8 +564,8 @@ plotDensity <- function(obj, groups = NULL, normalized = FALSE,
 #' # library(RColorBrewer)
 #' data(skin)
 #' tissues <- pData(skin)$SMTSD
-#' heatmapColColors <- brewer.pal(12,"Set3")[as.integer(factor(tissues))]
-#' heatmapCols <- colorRampPalette(brewer.pal(9, "RdBu"))(50)
+#' heatmapColColors <- RColorBrewer::brewer.pal(12,"Set3")[as.integer(factor(tissues))]
+#' heatmapCols <- colorRampPalette(RColorBrewer::brewer.pal(9, "RdBu"))(50)
 #' plotHeatmap(skin,normalized=FALSE,log=TRUE,trace="none",n=10,
 #'  col = heatmapCols,ColSideColors = heatmapColColors,cexRow = 0.6,cexCol = 0.6)
 #'}
@@ -734,10 +737,10 @@ qstats <- function(exprs, groups, window) {
 #' (\href{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4547484/}{PubMed})
 #'
 #' @source GTEx Portal
-#' @name Skin_data
+#' @name skin
 #' @examples
 #' \donttest{data(skin);
-#' checkMissAnnotation(skin,"GENDER");}
+#' checkMisAnnotation(skin,"GENDER");}
 system('wget https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/skin.rdata')
 system('mv skin.rdata data/')
 "skin"
@@ -762,10 +765,10 @@ system('mv skin.rdata data/')
 #' @source GTEx Portal
 #'
 #' @return ExpressionSet object
-#' @name Bladder_data
+#' @name bladder
 #' @examples
 #' \donttest{data(bladder);
-#' checkMissAnnotation(bladder);}
+#' checkMisAnnotation(bladder, "GENDER");}
 system('wget https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/bladder.rdata')
 system('mv bladder.rdata data/')
 "bladder"
