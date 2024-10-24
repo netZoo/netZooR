@@ -187,6 +187,12 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
 #' Estimating sample-specific regulatory networks. arXiv preprint arXiv:1505.06440.
 #' Kuijjer, M.L., Hsieh, PH., Quackenbush, J. et al. lionessR: single sample network inference in R. BMC Cancer 19, 1003 (2019). https://doi.org/10.1186/s12885-019-6235-7
 lioness = function(expr, motif = NULL, ppi = NULL, network.inference.method = "panda", ncores = 1, ...){
+  
+  # If both the PPI and motif are NULL, default to Pearson instead of PANDA.
+  if(is.null(motif) && is.null(ppi) && network.inference.method == "panda"){
+    message("Because input has neither a motif nor a PPI, we are defaulting to Pearson inference.")
+    network.inference.method = "pearson"
+  }
   N <- ncol(expr)
   if(ncores < 1){
     print('Setting number of cores to 1.')
