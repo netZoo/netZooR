@@ -2,9 +2,8 @@
 #' @param signature A file containing gene sets (signatures) in .gmt format. These gene sets will be used to de-sparsify the gene-level mutation scores.
 #' @param cagenes A vector of genes, for example of cancer-associated genes. This will be used to subset the gene-level mutation data to.
 #' @return A matrix containing gene set mutation scores.
-#
-# OBS! cagenes should be optional
-# dependencies: utils
+#' @export
+#' 
 sambarConvertgmt <- function(signature, cagenes){
   
   # determine the maximum number of genes a signature can have in the .gmt file
@@ -43,7 +42,8 @@ sambarConvertgmt <- function(signature, cagenes){
 #' @param cagenes A vector of genes, for example of cancer-associated genes. This will be used to subset the gene-level mutation data to.
 #' @param exonsize A vector of gene lengths. This will be used to normalize the gene mutation scores.
 #' @return Mutation rate-adjusted gene mutation scores.
-#
+#' @export
+#' 
 sambarCorgenelength <- function(x, cagenes, exonsize){
   
   # subset mutation data to cancer-associated genes
