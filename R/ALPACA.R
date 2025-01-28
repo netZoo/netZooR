@@ -476,7 +476,7 @@ alpacaNodeToGene <- function(x){strsplit(x,split="_")[[1]][1]}
 #' @rawNamespace import(GOstats, except= makeGOGraph)
 #' @import org.Hs.eg.db
 #' @rawNamespace import(AnnotationDbi, except= select)
-#' 
+#' @export
 
 alpacaListToGo <- function(gene.list,univ.vec,comm.nums){
   
