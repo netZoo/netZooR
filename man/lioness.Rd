@@ -10,6 +10,7 @@ lioness(
   ppi = NULL,
   network.inference.method = "panda",
   ncores = 1,
+  mode = "union",
   ...
 )
 }
@@ -31,6 +32,8 @@ Options include "pearson".}
 (Note: constructing panda networks can be memory-intensive, and the number of cores should take into consideration available memory.)}
 
 \item{...}{additional arguments for panda analysis}
+
+\item{union}{Aggregation mode between three input networks: Union (default), intersection, legacy (maps on motif network).}
 }
 \value{
 A list of length N, containing objects of class "panda" 
