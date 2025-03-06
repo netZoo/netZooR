@@ -23,7 +23,7 @@ for the ids to filter. Default is the column names}
 
 \item{normalizationMethod}{Choice of 'qsmooth' or 'quantile'}
 
-\item{...}{Options for \code{\link{qsmooth}} function or \code{\link[limma]{normalizeQuantiles}}}
+\item{...}{Options for \code{\link{qsmooth}} function or \code{\link{normalizeQuantiles}}}
 }
 \value{
 ExpressionSet object with an assayData called normalizedMatrix

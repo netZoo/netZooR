@@ -5,7 +5,7 @@
 \alias{skin}
 \title{Skin RNA-seq data from the GTEx consortium}
 \format{
-An object of class \code{"ExpressionSet"}; see \code{\link[Biobase]{ExpressionSet}}.
+An object of class \code{"ExpressionSet"}, see \code{\linkS4class{ExpressionSet}}.
 }
 \source{
 GTEx Portal

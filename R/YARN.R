@@ -393,7 +393,7 @@ filterSamples <- function(obj, ids, groups = colnames(obj), keepOnly = FALSE) {
 #' @param groups Vector of labels for each sample or a column name of the phenoData slot
 #' for the ids to filter. Default is the column names
 #' @param normalizationMethod Choice of 'qsmooth' or 'quantile'
-#' @param ... Options for \code{\link{qsmooth}} function or \code{\link[limma]{normalizeQuantiles}}
+#' @param ... Options for \code{\link{qsmooth}} function or \code{\link{normalizeQuantiles}}
 #'
 #' @return ExpressionSet object with an assayData called normalizedMatrix
 #' @export
@@ -727,7 +727,7 @@ qstats <- function(exprs, groups, window) {
 #'
 #' @usage data(skin)
 #'
-#' @format An object of class \code{"ExpressionSet"}; see \code{\link[Biobase]{ExpressionSet}}.
+#' @format An object of class \code{"ExpressionSet"}, see \code{\linkS4class{ExpressionSet}}.
 #'
 #' @keywords datasets
 #'
@@ -755,7 +755,7 @@ system('mv skin.rdata data/')
 #'
 #' @usage data(bladder)
 #'
-#' @format An object of class \code{"ExpressionSet"}; see \code{\link[Biobase]{ExpressionSet}}.
+#' @format An object of class \code{"ExpressionSet"}, see \code{\linkS4class{ExpressionSet}}.
 #'
 #' @keywords datasets
 #'

@@ -715,13 +715,13 @@ condorModularityMax = function(condor.object,T0=cbind(seq_len(q),rep(1,q)),weigh
 #' @param condor.object output of either \code{\link{condorCluster}} or 
 #' \code{\link{condorModularityMax}}
 #' @param color_list vector of colors accepted by \code{col} inside the 
-#' \code{\link[graphics]{plot}} function. There must be as many colors as 
+#' \code{\link{plot}} function. There must be as many colors as 
 #' communities.
 #' @param point.size passed to \code{cex} in the 
-#' \code{\link[graphics]{plot}}
+#' \code{\link{plot}}
 #' @param xlab x axis label
 #' @param ylab y axis label
-#' @return produces a \code{\link[graphics]{plot}} output.
+#' @return produces a \code{\link{plot}} output.
 #' @references \url{http://tools.medialab.sciences-po.fr/iwanthue/} for 
 #'  a nice color generator at 
 #' @note For the condor paper \url{http://arxiv.org/abs/1509.02816}, I used
@@ -824,7 +824,7 @@ condorPlotCommunities = function(condor.object,color_list,point.size=0.01,
 #' @param main plot title
 #' @param xlab x axis label
 #' @param ylab y axis label
-#' @return produces a \code{\link[graphics]{plot}} output.
+#' @return produces a \code{\link{plot}} output.
 #' @examples
 #' data(small1976)
 #' condor.object <- createCondorObject(small1976)

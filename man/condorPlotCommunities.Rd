@@ -17,18 +17,18 @@ condorPlotCommunities(
 \code{\link{condorModularityMax}}}
 
 \item{color_list}{vector of colors accepted by \code{col} inside the 
-\code{\link[graphics]{plot}} function. There must be as many colors as 
+\code{\link{plot}} function. There must be as many colors as 
 communities.}
 
 \item{point.size}{passed to \code{cex} in the 
-\code{\link[graphics]{plot}}}
+\code{\link{plot}}}
 
 \item{xlab}{x axis label}
 
 \item{ylab}{y axis label}
 }
 \value{
-produces a \code{\link[graphics]{plot}} output.
+produces a \code{\link{plot}} output.
 }
 \description{
 This function will generate the network link 'heatmap' with colored dots

@@ -17,7 +17,7 @@ condorPlotHeatmap(condor.object, main = "", xlab = "blues", ylab = "reds")
 \item{ylab}{y axis label}
 }
 \value{
-produces a \code{\link[graphics]{plot}} output.
+produces a \code{\link{plot}} output.
 }
 \description{
 This function will generate the network link 'heatmap' for a weighted network

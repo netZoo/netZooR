@@ -31,9 +31,9 @@ Options include "pearson".}
 \item{ncores}{int specifying the number of cores to be used. Default is 1. 
 (Note: constructing panda networks can be memory-intensive, and the number of cores should take into consideration available memory.)}
 
-\item{...}{additional arguments for panda analysis}
+\item{mode}{Aggregation mode between three input networks: Union (default), intersection, legacy (maps on motif network).}
 
-\item{union}{Aggregation mode between three input networks: Union (default), intersection, legacy (maps on motif network).}
+\item{...}{additional arguments for panda analysis}
 }
 \value{
 A list of length N, containing objects of class "panda" 
