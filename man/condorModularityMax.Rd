@@ -24,7 +24,7 @@ node name, the second column the community assignment.}
 \item{weights}{edgeweights for each edge in \code{edgelist}.}
 
 \item{deltaQmin}{convergence parameter determining the minimum required increase
-in the modularity for each iteration. Default is min(10^-4,1/(number of edges)),
+in the modularity for each iteration. Default is min(10^(-4),1/(number of edges)),
 with number of edges determined by \code{nrow(condor.object$edges)}. User can
 set this parameter by passing a numeric value to deltaQmin.}
 }
@@ -44,7 +44,7 @@ by Michael J. Barber, Phys. Rev. E 76, 066102 (2007)
 This function uses a slightly different implementation from the paper. It 
 does not use the "adaptive BRIM" method for identifying the number of 
 modules. Rather, it simply continues to iterate until the difference in 
-modularity between iterations is less that 10^-4. Starting from a random 
+modularity between iterations is less that 10^(-4). Starting from a random 
 initial condition, this could take some time. Use 
 \code{\link{condorCluster}} for quicker runtimes and likely better 
 clustering, it initializes the blue 

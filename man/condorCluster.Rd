@@ -36,7 +36,7 @@ matrices in memory. Useful on a machine with low RAM. However, runtimes
 are (much) longer.}
 
 \item{deltaQmin}{convergence parameter determining the minimum required increase
-in the modularity for each iteration. Default is min(10^{-4},1/(number of edges)),
+in the modularity for each iteration. Default is min(10^(-4),1/(number of edges)),
 with number of edges determined by \code{nrow(condor.object$edges)}. User can
 set this parameter by passing a numeric value to deltaQmin.}
 }

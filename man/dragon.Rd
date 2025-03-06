@@ -26,12 +26,12 @@ dragon(
 \value{
 A list of model results. cov : the shrunken covariance matrix
 \itemize{
- \item{\code{cov}}{  the shrunken covariance matrix}
- \item{\code{prec}}{  the shrunken precision matrix}
- \item{\code{ggm}}{ the shrunken Gaussian graphical model; matrix of partial correlations. Self-edges (diagonal elements) are set to zero.}
- \item{\code{lambdas}}{  Vector of omics-specific tuning parameters (lambda1, lambda2) for \code{layer1} and \code{layer2}}
- \item{\code{gammas}}{  Reparameterized tuning parameters; gamma = 1 - lambda^2}
- \item{\code{risk_grid}}{  Risk grid, for assessing optimization. Grid boundaries are in terms of gamma.}
+ \item \code{cov}: the shrunken covariance matrix
+ \item \code{prec}: the shrunken precision matrix
+ \item \code{ggm}: the shrunken Gaussian graphical model; matrix of partial correlations. Self-edges (diagonal elements) are set to zero.
+ \item \code{lambdas}: Vector of omics-specific tuning parameters (lambda1, lambda2) for \code{layer1} and \code{layer2}
+ \item \code{gammas}:  Reparameterized tuning parameters; gamma = 1 - lambda^2
+ \item \code{risk_grid}: Risk grid, for assessing optimization. Grid boundaries are in terms of gamma.
 }
 }
 \description{
