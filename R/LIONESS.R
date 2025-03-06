@@ -164,7 +164,7 @@ lionessPy <- function(expr_file, motif_file=NULL, ppi_file=NULL, computing="cpu"
 #' Options include "pearson". 
 #' @param ncores int specifying the number of cores to be used. Default is 1. 
 #' (Note: constructing panda networks can be memory-intensive, and the number of cores should take into consideration available memory.)
-#' @param union Aggregation mode between three input networks: Union (default), intersection, legacy (maps on motif network).
+#' @param mode Aggregation mode between three input networks: Union (default), intersection, legacy (maps on motif network).
 #' @param ... additional arguments for panda analysis
 #' @keywords keywords
 #' @importFrom matrixStats rowSds
