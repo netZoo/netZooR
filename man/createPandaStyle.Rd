@@ -15,17 +15,3 @@ A visual style in Cytoscape Control Panel under "Style" button.
 \description{
 This function is able to create a Cytoscape visual style for any PANDA network output.
 }
-\examples{
-# Here we will load a customized visual style for our network, in which TF 
-# nodes are orange circles, target gene nodes are blue squares, and edges 
-# shade and width are the edge weight (likelyhood of regulatory interaction 
-# between the TF and gene). You can further customize the network style 
-# directly from Cytoscape.
-\donttest{
-sampleNet <- data.frame("TF"=c("TF1", "TF2", "TF3"),
-  "Gene"=c("gene1", "gene2", "gene3"),"Motif"=NA,
-  "Score"=c(1,2,3),stringsAsFactors = FALSE)
-visPandaInCytoscape(sampleNet, network_name="sample")
-createPandaStyle(style_name="PandaStyle")
-}
-}
