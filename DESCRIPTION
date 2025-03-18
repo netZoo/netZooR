@@ -42,6 +42,7 @@ biocViews:
          Microarray,   
          GraphAndNetwork
 Imports:
+    cmdstanr,
     RCy3, 
     viridisLite,
     STRINGdb,
@@ -73,7 +74,6 @@ Imports:
     methods,
     dplyr,
     graphics,
-    cmdstanr,
     GeneNet,
     loo,
     rARPACK,
