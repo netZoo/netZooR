@@ -45,7 +45,10 @@ otter <- function(W, P, C, lambda = 0.035, gamma = 0.335, Iter = 60, eta = 0.000
   nGenes <- dW[2]
   C <- C/sum(diag(C))
   W <- W/sqrt(sum(diag(W%*%t(W))))
-  P <- P/sum(diag(P))
+  diagP ->  sum(diag(P))
+  if(diagP > 0){
+    P <- P/sum(diag(P))
+  }
   
   P <- -P*(1-lambda) + gamma*diag(nTF)
   C <- -C*lambda
