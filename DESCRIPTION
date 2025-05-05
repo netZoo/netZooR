@@ -30,7 +30,6 @@ Depends: R (>= 4.2.0),
 	 pandaR,
    Biobase,
 Remotes: 
-	 stan-dev/cmdstanr,
 	 jnpaulson/pandaR, 
 	 cytoscape/RCy3
 biocViews:
