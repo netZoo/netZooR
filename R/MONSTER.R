@@ -748,12 +748,12 @@ monsterCalculateTmPValues <- function(monsterObj, method="z-score"){
   num.iterations <- length(monsterObj@nullTM)
   # Calculate the off-diagonal squared mass for each transition matrix
   null.SSODM <- lapply(monsterObj@nullTM,function(x){
-    apply(x,1,function(y){t(y)%*%y})
+    apply(x,2,function(y){t(y)%*%y})
   })
   null.ssodm.matrix <- matrix(unlist(null.SSODM),ncol=num.iterations)
   null.ssodm.matrix <- t(apply(null.ssodm.matrix,1,sort))
   
-  ssodm <- apply(monsterObj@tm,1,function(x){t(x)%*%x})
+  ssodm <- apply(monsterObj@tm,2,function(x){t(x)%*%x})
   
   # Get p-value (rank of observed within null ssodm)
   if(method=="non-parametric"){
