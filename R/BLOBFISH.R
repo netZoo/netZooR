@@ -595,6 +595,11 @@ PlotNetwork <- function(network, genesOfInterest,
                         tfColor = "blue", nodeSize = 1,
                         edgeWidth = 0.5, vertexLabels = NA, vertexLabelSize = 0.7,
                         vertexLabelOffset = 0.5, layoutBipartite = TRUE, geneColorMapping = NULL){
+  
+  # Convert from factor to character.
+  network$tf <- as.character(network$tf)
+  network$gene <- as.character(network$gene)
+  
   # Set the node attributes.
   uniqueNodes <- unique(c(network$tf, network$gene))
   nodeAttrs <- data.frame(node = uniqueNodes,
