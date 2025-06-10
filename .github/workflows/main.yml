@@ -74,7 +74,6 @@ jobs:
       - name: Install reticulate
         run: |
             library("reticulate")
-            py_config()
             py_install("numpy")
             py_install("scipy")
             py_install("pandas")
