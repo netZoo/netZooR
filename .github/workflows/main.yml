@@ -63,7 +63,7 @@ jobs:
             extSoftVersion()["BLAS"]
         shell: Rscript {0}
 
-      - if: matrix.os == 'ubuntu-22.04'
+      - if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get install python3-venv
           pip install --upgrade pip
@@ -74,7 +74,6 @@ jobs:
       - name: Install reticulate
         run: |
             library("reticulate")
-            py_config()
             py_install("numpy")
             py_install("scipy")
             py_install("pandas")
