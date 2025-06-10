@@ -63,7 +63,7 @@ jobs:
             extSoftVersion()["BLAS"]
         shell: Rscript {0}
 
-      - if: matrix.os == 'ubuntu-latest'
+      - if: matrix.os == 'ubuntu-22.04'
         run: |
           sudo apt-get install python3-venv
           pip install --upgrade pip
