@@ -45,8 +45,8 @@ test_that("MONSTER function works", {
   #expect_equal(monsterCalculateTmPValues(monsterRes), monster_tm_pval)
 
   # Before refactoring the test, we can check that the non-paramentrc and z-score methods are similar
-  c = mymonsterCalculateTmPValues(monsterRes)
-  d = mymonsterCalculateTmPValues(monsterRes, method = 'non-parametric')
+  c = monsterCalculateTmPValues(monsterRes)
+  d = monsterCalculateTmPValues(monsterRes, method = 'non-parametric')
   r <- cor(c, d, use = "complete.obs")  # Handle NAs if needed
   expect_gt(r, 0.1) 
   
