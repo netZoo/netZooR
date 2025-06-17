@@ -21,6 +21,7 @@ test_that("MONSTER function works", {
   # to do: Add L1 method in test
   
   data("monsterRes")
+  data("testDatasetMonster")
   
   # Transformation matrix plot
   expect_error(monsterHclHeatmapPlot(monsterRes), NA)
@@ -55,7 +56,7 @@ test_that("MONSTER function works", {
 
 
   # To load the data again
-  load("../data/monsterPvals.RData")
+  #load("../data/monsterPvals.RData")
   monster_pvals = monsterPvals$p.values
   monster_tvals = monsterPvals$t.values
   ssodm = monsterPvals$ssodm
