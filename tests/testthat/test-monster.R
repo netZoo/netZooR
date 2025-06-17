@@ -40,6 +40,8 @@ test_that("MONSTER function works", {
   # plots the Off diagonal mass of an observed Transition Matrix compared to a set of null TMs
   expect_error(monsterdTFIPlot(monsterRes), NA)
   
+  monsterCalculateTmStats(monsterRes)
+
   # Calculate p-values for a tranformation matrix
   # #TODO: update data to include this test
   #expect_equal(monsterCalculateTmPValues(monsterRes), monster_tm_pval)

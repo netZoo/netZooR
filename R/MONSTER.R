@@ -670,7 +670,7 @@ monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight
   }
   num.iterations <- length(monsterObj@nullTM)
   # Calculate the off-diagonal squared mass for each transition matrix
-  e = mosterCalculateTmStats(monsterObj)
+  e = monsterCalculateTmStats(monsterObj)
   p.values = e$p.values
   t.values = e$t.values
   ssodm = e$ssodm
@@ -737,7 +737,7 @@ monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
 #' data(monsterRes)
 #' mosterCalculateTmStats(monsterRes)
-mosterCalculateTmStats <- function(monsterObj, method="z-score"){
+monsterCalculateTmStats <- function(monsterObj, method="z-score"){
   num.iterations <- length(monsterObj@nullTM)
   # Calculate the off-diagonal squared mass for each transition matrix
   null.SSODM <- lapply(monsterObj@nullTM,function(x){
@@ -798,7 +798,7 @@ mosterCalculateTmStats <- function(monsterObj, method="z-score"){
 #' monsterCalculateTmPValues(monsterRes)
 monsterCalculateTmPValues <- function(monsterObj, method="z-score"){
 
-  e = mosterCalculateTmStats(monsterObj, method = method)
+  e = monsterCalculateTmStats(monsterObj, method = method)
   p.values = e$p.values
 
   p.values
