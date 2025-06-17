@@ -41,6 +41,7 @@ test_that("MONSTER function works", {
   expect_error(monsterdTFIPlot(monsterRes), NA)
   
   monsterCalculateTmStats(monsterRes)
+  stopifnot("monsterCalculateTmStats" %in% ls("package:netZooR"))
 
   # Calculate p-values for a tranformation matrix
   # #TODO: update data to include this test

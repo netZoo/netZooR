@@ -736,7 +736,8 @@ monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight
 #' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
 #' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
 #' data(monsterRes)
-#' mosterCalculateTmStats(monsterRes)
+#' monsterCalculateTmStats(monsterRes)
+
 monsterCalculateTmStats <- function(monsterObj, method="z-score"){
   num.iterations <- length(monsterObj@nullTM)
   # Calculate the off-diagonal squared mass for each transition matrix
