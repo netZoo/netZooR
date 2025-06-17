@@ -54,9 +54,6 @@ test_that("MONSTER function works", {
   expect_gt(r, 0.1) 
 
 
-
-  # Save multiple objects
-  save(monsterPvals, file = "monsterPvals.RData")
   # To load the data again
   load("../data/monsterPvals.RData")
   monster_pvals = monsterPvals$p.values
