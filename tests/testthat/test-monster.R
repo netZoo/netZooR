@@ -21,7 +21,6 @@ test_that("MONSTER function works", {
   # to do: Add L1 method in test
   
   data("monsterRes")
-  data("monsterPvals")
   
   # Transformation matrix plot
   expect_error(monsterHclHeatmapPlot(monsterRes), NA)
