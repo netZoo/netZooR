@@ -670,23 +670,11 @@ monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight
   }
   num.iterations <- length(monsterObj@nullTM)
   # Calculate the off-diagonal squared mass for each transition matrix
-  null.SSODM <- lapply(monsterObj@nullTM,function(x){
-    apply(x,2,function(y){t(y)%*%y})
-  })
-  null.ssodm.matrix <- matrix(unlist(null.SSODM),ncol=num.iterations)
-  null.ssodm.matrix <- t(apply(null.ssodm.matrix,1,sort))
-  
-  ssodm <- apply(monsterObj@tm,2,function(x){t(x)%*%x})
-  
-  seqssdom <- seq_along(ssodm)
-  names(seqssdom) <- names(ssodm)
-  p.values <- 1-pnorm(vapply(seqssdom,function(i){
-    (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-  }, FUN.VALUE = numeric(1), USE.NAMES = TRUE))
-  
-  t.values <- vapply(seqssdom,function(i){
-    (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-  }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
+  e = monsterCalculateTmStats(monsterObj)
+  p.values = e$p.values
+  t.values = e$t.values
+  ssodm = e$ssodm
+  null.ssodm.matrix = e$null.ssodm.matrix
   
   # Process the data for ggplot2
   combined.mat <- cbind(null.ssodm.matrix, ssodm)
@@ -728,6 +716,71 @@ monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight
   
 }
 
+
+#' Calculate statistics for a tranformation matrix
+#'
+#' This function powers both the p-value and t-value calculations
+#' for a transformation matrix.  It calculates the off-diagonal squared mass
+#' for each transition matrix, and then calculates the p-values and t-values
+#' for the observed transition matrix compared to the null transition matrices.
+#' It is used by the monsterCalculateTmPValues function and by the monsterdTFIPlot
+#'
+#' @param monsterObj monsterAnalysis Object
+#' @param method one of 'z-score' or 'non-parametric'
+#' @return p-values, t-values, off-diagonal squared mass for the observed transition matrix,
+#' and the null off-diagonal squared mass matrix
+#' @export
+#' @examples
+#' # data(yeast)
+#' # design <- c(rep(0,20),rep(NA,10),rep(1,20))
+#' # yeast$exp.cc[is.na(yeast$exp.cc)] <- mean(as.matrix(yeast$exp.cc),na.rm=TRUE)
+#' # monsterRes <- monster(yeast$exp.cc, design, yeast$motif, nullPerms=100, numMaxCores=4)
+#' data(monsterRes)
+#' monsterCalculateTmStats(monsterRes)
+
+monsterCalculateTmStats <- function(monsterObj, method="z-score"){
+  num.iterations <- length(monsterObj@nullTM)
+  # Calculate the off-diagonal squared mass for each transition matrix
+  null.SSODM <- lapply(monsterObj@nullTM,function(x){
+    apply(x,2,function(y){t(y)%*%y})
+  })
+  null.ssodm.matrix <- matrix(unlist(null.SSODM),ncol=num.iterations)
+  null.ssodm.matrix <- t(apply(null.ssodm.matrix,1,sort))
+  
+  ssodm <- apply(monsterObj@tm,2,function(x){t(x)%*%x})
+  
+  # Get p-value (rank of observed within null ssodm)
+  if(method=="non-parametric"){
+    seqssodm <- seq_along(ssodm)
+    names(seqssodm) <- names(ssodm)
+
+    p.values <- vapply(seqssodm,function(i){
+      1-findInterval(ssodm[i], null.ssodm.matrix[i,])/num.iterations
+    }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
+
+    # tvalues are now the rank of the observed ssodm within the null ssodm matrix
+    # divided by the number of iterations
+    # This is the proportion of null ssodm that are less than the observed ssodm
+    t.values <- vapply(seqssodm,function(i){
+      findInterval(ssodm[i], null.ssodm.matrix[i,])/num.iterations
+    }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
+  } else if (method=="z-score"){
+    seqssdom=seq_along(ssodm)
+    names(seqssdom)=names(ssodm)
+
+    p.values <- 1-pnorm(vapply(seqssdom,function(i){
+      (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
+    }, FUN.VALUE = numeric(1), USE.NAMES = TRUE))
+    
+    t.values <- vapply(seqssdom,function(i){
+    (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
+  }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
+  } else {
+    print('Undefined method')
+  }
+  return(list(p.values=p.values, t.values=t.values, ssodm=ssodm, null.ssodm.matrix=null.ssodm.matrix))
+}
+
 #' Calculate p-values for a tranformation matrix
 #'
 #' This function calculates the significance of an observed
@@ -745,32 +798,10 @@ monsterdTFIPlot <- function(monsterObj, rescale='none', plot.title=NA, highlight
 #' data(monsterRes)
 #' monsterCalculateTmPValues(monsterRes)
 monsterCalculateTmPValues <- function(monsterObj, method="z-score"){
-  num.iterations <- length(monsterObj@nullTM)
-  # Calculate the off-diagonal squared mass for each transition matrix
-  null.SSODM <- lapply(monsterObj@nullTM,function(x){
-    apply(x,1,function(y){t(y)%*%y})
-  })
-  null.ssodm.matrix <- matrix(unlist(null.SSODM),ncol=num.iterations)
-  null.ssodm.matrix <- t(apply(null.ssodm.matrix,1,sort))
-  
-  ssodm <- apply(monsterObj@tm,1,function(x){t(x)%*%x})
-  
-  # Get p-value (rank of observed within null ssodm)
-  if(method=="non-parametric"){
-    seqssodm <- seq_along(ssodm)
-    names(seqssodm) <- names(ssodm)
-    p.values <- vapply(seqssodm,function(i){
-      1-findInterval(ssodm[i], null.ssodm.matrix[i,])/num.iterations
-    }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
-  } else if (method=="z-score"){
-    seqssdom=seq_along(ssodm)
-    names(seqssdom)=names(ssodm)
-    p.values <- pnorm(vapply(seqssdom,function(i){
-      (ssodm[i]-mean(null.ssodm.matrix[i,]))/sd(null.ssodm.matrix[i,])
-    }, FUN.VALUE = numeric(1), USE.NAMES = TRUE))
-  } else {
-    print('Undefined method')
-  }
+
+  e = monsterCalculateTmStats(monsterObj, method = method)
+  p.values = e$p.values
+
   p.values
 }
 
