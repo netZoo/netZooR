@@ -1,12 +1,12 @@
 Package: netZooR
 Type: Package
-Title: Unified methods for the inference and analysis of gene regulatory networks
-Version: 1.6.1
+Title: A menagerie of Methods for the inference and analysis of gene regulatory networks
+Version: 1.6.2
 Date: 2024-11-26
 Authors@R: c(person("Tara", "Eicher",
-                        email = "teicher@hsph.harvard.edu", role = c("aut","cre"), comment = c(ORCID = "0000-0003-1809-4458")),
+                        email = "teicher@hsph.harvard.edu", role = c("aut"), comment = c(ORCID = "0000-0003-1809-4458")),
              person("Marouen", "Ben Guebila",
-			email = "benguebila@hsph.harvard.edu", role = c("aut"), comment = c(ORCID = "0000-0001-5934-966X")),
+			email = "marouen.b.guebila@gmail.com", role = c("aut","cre"), comment = c(ORCID = "0000-0001-5934-966X")),
 	     person("Tian", "Wang", 
 			email = "tian.wang@bc.edu", role = c("aut"), comment = c(ORCID = "0000-0002-2767-3243")),
 	     person("John", "Platig",
@@ -98,6 +98,6 @@ Suggests:
     dorothea,
 VignetteEngine: knitr
 VignetteBuilder: knitr
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 BugReports: https://github.com/netZoo/netZooR/issues
 URL: https://github.com/netZoo/netZooR, https://netzoo.github.io/
