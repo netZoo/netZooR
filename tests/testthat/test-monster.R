@@ -84,4 +84,21 @@ test_that("MONSTER function works", {
 })
 
 
+test_that('domonster runs on toy PANDA data', {
+  pandaResult_exp <- panda(pandaToyData$motif, pandaToyData$expression[,1:25], pandaToyData$ppi)
+  pandaResult_control <- panda(pandaToyData$motif, pandaToyData$expression[,26:50], pandaToyData$ppi)
 
+  # function takes both panda objects and matrices, or a mixture
+  set.seed(123)
+  monster_res1 <- domonster(pandaResult_exp, pandaResult_control, numMaxCores = 1)
+  
+  set.seed(123)
+  monster_res2 <- domonster(pandaResult_exp@regNet, pandaResult_control@regNet, numMaxCores = 1)
+  
+  set.seed(123)
+  monster_res3 <- domonster(pandaResult_exp@regNet, pandaResult_control, numMaxCores = 1)
+  
+  # these should all yield same result; confirming they are the same
+  expect_equal(monster_res1, monster_res2, tolerance=1e-15) 
+  expect_equal(monster_res1, monster_res3, tolerance=1e-15) 
+})

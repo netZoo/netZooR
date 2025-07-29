@@ -69,13 +69,24 @@ monsterPrintMonsterAnalysis <- function(x, ...){
 #' changes associated with phenotypic state transition.
 #' Important note: the direct regulatory network observed from gene expression is currently
 #' implemented as a regular correlation as opposed to the partial correlation described 
-#' in the paper.
+#' in the paper. 
+#' Additionally, there are 2 modes to run MONSTER:
+#' (1) MONSTER can internally estimate a gene regulatory network, in which case 
+#' it will take as input an expression data plus a motif network
+#' (2) MONSTER can run on pre-computed gene regulatory networks (e.g., from PANDA),
+#' in which case the `motif` argument is set to `NA`, and the `expr` argument will
+#' contain the concatenated gene regulatory networks. Alternatively, see the `domonster`
+#' function for a quick-start way to run this mode.
 #' Citation: Schlauch, Daniel, et al. "Estimating drivers of cell state transitions using gene regulatory network models." 
 #' BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y
 #' @param expr Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet. 
+#' If `motif` is set to `NA`, MONSTER will be run in pre-computed gene regulatory network mode, in which case
+#' gene regulatory networks can be passed for this argument. See also `domonster` to use this mode.
 #' @param design Binary vector indicating case control partition. 1 for case and 0 for control.
 #' @param motif Regulatory data.frame consisting of three columns.  For each row, a transcription factor (column 1) 
-#' regulates a gene (column 2) with a defined strength (column 3), usually taken to be 0 or 1 
+#' regulates a gene (column 2) with a defined strength (column 3), usually taken to be 0 or 1.
+#' May also be NA, if MONSTER is being run on pre-computed gene regulatory networks, passed in the `expr` argument.
+#' See also `domonster` to use this mode.
 #' @param nullPerms number of random permutations to run (default 100).  Set to 0 to only 
 #' calculate observed transition matrix. When mode is is 'buildNet' it randomly permutes the case and control expression
 #' samples, if mode is 'regNet' it will randomly permute the case and control networks.
