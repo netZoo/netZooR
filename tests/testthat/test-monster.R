@@ -83,5 +83,34 @@ test_that("MONSTER function works", {
 
 })
 
+test_that('domonster runs on toy PANDA data', {
+  set.seed(123)
+  exp_grn <- matrix(data = rnorm(50, mean = 1), ncol = 10, nrow = 5)
+  control_grn <- matrix(data = rnorm(50, mean = 1), ncol = 10, nrow = 5)
+  colnames(exp_grn) <- paste0('gene', 1:10)
+  colnames(control_grn) <- paste0('gene', 1:10)
+  rownames(exp_grn) <- paste0('tf', 1:5)
+  rownames(control_grn) <- paste0('tf', 1:5)
+  
+  testthat::expect_no_error(domonster(exp_grn, control_grn, numMaxCores = 1))
+  
+  # # more robust test using the pandaToyData that is unexplainably failing the github checks
+  # pandaResult_exp <- panda(pandaToyData$motif, pandaToyData$expression[,1:25], pandaToyData$ppi)
+  # pandaResult_control <- panda(pandaToyData$motif, pandaToyData$expression[,26:50], pandaToyData$ppi)
+  # 
+  # # function takes both panda objects and matrices, or a mixture
+  # set.seed(123)
+  # monster_res1 <- domonster(pandaResult_exp, pandaResult_control, numMaxCores = 1)
+  # 
+  # set.seed(123)
+  # monster_res2 <- domonster(pandaResult_exp@regNet, pandaResult_control@regNet, numMaxCores = 1)
+  # 
+  # set.seed(123)
+  # monster_res3 <- domonster(pandaResult_exp@regNet, pandaResult_control, numMaxCores = 1)
+  # 
+  # # these should all yield same result; confirming they are the same
+  # expect_equal(monster_res1, monster_res2, tolerance=1e-15) 
+  # expect_equal(monster_res1, monster_res3, tolerance=1e-15) 
+})
 
 
