@@ -139,9 +139,6 @@ monster <- function(expr,
                     ni.coefficient.cutoff = NA,
                     numMaxCores=1, 
                     outputDir=NA, alphaw=0.5, mode='buildNet'){
-  if(is.na(motif)){
-    mode <- 'regNet'
-  }
   if(mode=='regNet'){
     motif=NA
     alphaw=NA
@@ -153,6 +150,10 @@ monster <- function(expr,
   }else{
     if(is.null(motif)){
       stop("motif may not be NULL")
+    }
+    if(is.na(motif)){
+      stop('Set mode to "regNet" if using as input pre-made regulatory networks.\n
+           Otherwise, motif should not be NA if using buildNet mode.')
     }
   }
   # Data type checking
