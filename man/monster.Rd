@@ -14,7 +14,9 @@ monster(
   numMaxCores = 1,
   outputDir = NA,
   alphaw = 0.5,
-  mode = "buildNet"
+  mode = "buildNet",
+  by.tfs = TRUE,
+  method = "ols"
 )
 }
 \arguments{
@@ -47,6 +49,12 @@ equal weight to direct and indirect evidence.}
 \item{mode}{A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
 ('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA. Gene regulatory
 networks are supplied in the 'expr' variable as a TF-by-Gene matrix, by concatenating the TF-by-Gene matrices of case and control, expr has size nTFs x 2nGenes.}
+
+\item{by.tfs}{logical indicating a transcription factor based transformation.    If 
+false, gives gene by gene transformation matrix}
+
+\item{method}{character specifying which algorithm to use, default='ols'. Options are
+"ols" (Ordinary Least Squares),"kabsch" (Kabsch algorithm),"L1" (LASSO), and "orig" (SVD).}
 }
 \value{
 An object of class "monsterAnalysis" containing results

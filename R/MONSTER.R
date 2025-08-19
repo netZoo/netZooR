@@ -92,6 +92,10 @@ monsterPrintMonsterAnalysis <- function(x, ...){
 #' @param mode A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
 #' ('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA. Gene regulatory
 #' networks are supplied in the 'expr' variable as a TF-by-Gene matrix, by concatenating the TF-by-Gene matrices of case and control, expr has size nTFs x 2nGenes.
+#' @param by.tfs logical indicating a transcription factor based transformation.    If 
+#' false, gives gene by gene transformation matrix
+#' @param method character specifying which algorithm to use, default='ols'. Options are
+#' "ols" (Ordinary Least Squares),"kabsch" (Kabsch algorithm),"L1" (LASSO), and "orig" (SVD).
 #' @export
 #' @import doParallel
 #' @import parallel
@@ -126,7 +130,8 @@ monster <- function(expr,
                     ni_method="BERE",
                     ni.coefficient.cutoff = NA,
                     numMaxCores=1, 
-                    outputDir=NA, alphaw=0.5, mode='buildNet'){
+                    outputDir=NA, alphaw=0.5, mode='buildNet', 
+                    by.tfs = TRUE, method = "ols"){
   
   if(mode=='regNet'){
     motif=NA
@@ -214,7 +219,7 @@ monster <- function(expr,
         tmpNetControls = nullExpr[,design==0]
       }
       transitionMatrix <- monsterTransformationMatrix(
-        tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
+        tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method=method, by.tfs = by.tfs)    
       print(paste("Finished running iteration", i))
       if (!is.na(outputDir)){
         saveRDS(transitionMatrix,file.path(outputDir,'tms',paste0('tm_',i,'.rds')))
@@ -254,7 +259,8 @@ monster <- function(expr,
                                  tmpNetControls = nullExpr[,design==0]
                                }
                                transitionMatrix <- monsterTransformationMatrix(
-                                 tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
+                                 tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method=method,
+                                 by.tfs = by.tfs)    
                                print(paste("Finished running iteration", i))
                                if (!is.na(outputDir)){
                                  saveRDS(transitionMatrix,file.path(outputDir,'tms',paste0('tm_',i,'.rds')))
