@@ -165,8 +165,10 @@ BuildSubnetwork <- function(geneSet, networks, alpha, hopConstraint, nullDistrib
     })
     # Paste together the networks.
     combinedNetwork <- networksNamed[[1]]
-    for(i in 2:length(networksNamed)){
-      combinedNetwork[,2+i] <- networksNamed[[i]]$score
+    if(length(networksNamed) > 1){
+      for(i in 2:length(networksNamed)){
+        combinedNetwork[,2+i] <- networksNamed[[i]]$score
+      }
     }
   }
   
@@ -239,15 +241,31 @@ CalculatePValues <- function(network, nullDistribution, pValueChunks = 100,
   endIndex <- min(startIndex + ceiling(nrow(network) / pValueChunks),
                   nrow(network))
   i <- 1
-  while(i < pValueChunks && startIndex <= endIndex){
+  while(i <= pValueChunks && startIndex <= endIndex){
     
     # Calculate p-values for this chunk.
-    ourEdgeVals <- network[startIndex:endIndex, 3:ncol(network)]
+    ourEdgeVals <- as.data.frame(network[startIndex:endIndex, 3:ncol(network)])
     nullEdgeVals <- t(matrix(rep(nullDistribution, 
                                  nrow(ourEdgeVals)), ncol = nrow(ourEdgeVals)))
-    pValues[startIndex:endIndex] <- matrixTests::row_wilcoxon_twosample(x = ourEdgeVals, 
-                                                                        y = nullEdgeVals, 
-                                                                        alternative = "greater")$pvalue
+    
+    # Do a Wilcoxon two-sample test if we have multiple sample-specific networks.
+    # Otherwise, calculate the empirical p-value.
+    pValues[startIndex:endIndex] <- NA
+    if(ncol(ourEdgeVals) > 1){
+      pValues[startIndex:endIndex] <- matrixTests::row_wilcoxon_twosample(x = ourEdgeVals, 
+                                                                          y = nullEdgeVals, 
+                                                                          alternative = "greater")$pvalue
+    }else{
+      N <- ncol(nullEdgeVals)
+      T0 <- matrix(rep(as.matrix(ourEdgeVals), ncol(nullEdgeVals)), nrow = nrow(nullEdgeVals))
+      TiDiff <- nullEdgeVals - T0
+      TiIsGreater <- matrix(rep(0, nrow(TiDiff) * ncol(TiDiff)), nrow = nrow(TiDiff))
+      TiIsGreater[which(TiDiff > 0)] <- 1
+      S <- rowSums(TiIsGreater)
+      pValues[startIndex:endIndex] <- S / N
+      names(pValues)[startIndex:endIndex] <- rownames(network)[startIndex:endIndex]
+    }
+    
     
     # Print status.
     if(verbose == TRUE){
@@ -595,6 +613,11 @@ PlotNetwork <- function(network, genesOfInterest,
                         tfColor = "blue", nodeSize = 1,
                         edgeWidth = 0.5, vertexLabels = NA, vertexLabelSize = 0.7,
                         vertexLabelOffset = 0.5, layoutBipartite = TRUE, geneColorMapping = NULL){
+  
+  # Convert from factor to character.
+  network$tf <- as.character(network$tf)
+  network$gene <- as.character(network$gene)
+  
   # Set the node attributes.
   uniqueNodes <- unique(c(network$tf, network$gene))
   nodeAttrs <- data.frame(node = uniqueNodes,
