@@ -1,5 +1,5 @@
 #' Run SEAHORSE in R
-#' 
+#' Author(s): Enakshi Saha
 #' Description:
 #'               SEAHORSE computes gene-gene coexpression matrix,
 #'               associations between a set of given phenotypes and each gene,
@@ -53,11 +53,12 @@
 #' # Run seahorse
 #' results <- seahorse(expression_data, phenotype_data, phenotype_dictionary, pathways)
 #'  
-#' @export
 #' 
-#' Author(s): Enakshi Saha
+#'  
+
 
 # Function to run GSEA for a numeric phenotype
+#' @export
 gsea_numeric <- function(expression, pheno, pathways, results){
   output_seahorse = list()
   output_seahorse$cor = list()
@@ -76,6 +77,7 @@ gsea_numeric <- function(expression, pheno, pathways, results){
 }
 
 # Function to run GSEA for a categorical phenotype
+#' @export
 gsea_categorical <- function(expression, pheno, pathways, results){
   output_seahorse = list()
   output_seahorse$cor = list()
@@ -94,6 +96,7 @@ gsea_categorical <- function(expression, pheno, pathways, results){
 }
 
 # Main SEAHORSE function
+#' @export
 seahorse <- function(expression, phenotype, phenotype_dictionary, pathways){
   set.seed(0)
   library(fgsea)

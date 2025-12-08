@@ -32,7 +32,6 @@ Depends: R (>= 4.2.0),
 Remotes: 
 	 stan-dev/cmdstanr,
 	 jnpaulson/pandaR, 
-	 cytoscape/RCy3
 biocViews:
 	 NetworkInference,
 	 Network,
@@ -42,7 +41,6 @@ biocViews:
          Microarray,   
          GraphAndNetwork
 Imports:
-    RCy3, 
     viridisLite,
     STRINGdb,
     GOstats,
