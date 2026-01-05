@@ -84,7 +84,8 @@ Imports:
     readr,
     RColorBrewer,
     quantro,
-    matrixcalc
+    matrixcalc,
+    fgsea
 License: GPL-3
 Encoding: UTF-8
 LazyData: false

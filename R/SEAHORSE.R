@@ -59,6 +59,8 @@
 
 # Function to run GSEA for a numeric phenotype
 #' @export
+#' @import fgsea
+
 gsea_numeric <- function(expression, pheno, pathways, results){
   output_seahorse = list()
   output_seahorse$cor = list()
@@ -77,6 +79,7 @@ gsea_numeric <- function(expression, pheno, pathways, results){
 }
 
 # Function to run GSEA for a categorical phenotype
+#' @import fgsea
 #' @export
 gsea_categorical <- function(expression, pheno, pathways, results){
   output_seahorse = list()
@@ -96,11 +99,11 @@ gsea_categorical <- function(expression, pheno, pathways, results){
 }
 
 # Main SEAHORSE function
+#' @import fgsea
 #' @export
 seahorse <- function(expression, phenotype, phenotype_dictionary, pathways){
   set.seed(0)
-  library(fgsea)
-  
+
   results = list()
   
   # Compute coexpression of genes
