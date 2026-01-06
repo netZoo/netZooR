@@ -32,7 +32,6 @@ Depends: R (>= 4.2.0),
 Remotes: 
 	 stan-dev/cmdstanr,
 	 jnpaulson/pandaR, 
-	 cytoscape/RCy3
 biocViews:
 	 NetworkInference,
 	 Network,
@@ -42,7 +41,6 @@ biocViews:
          Microarray,   
          GraphAndNetwork
 Imports:
-    RCy3, 
     viridisLite,
     STRINGdb,
     GOstats,
@@ -86,7 +84,8 @@ Imports:
     readr,
     RColorBrewer,
     quantro,
-    matrixcalc
+    matrixcalc,
+    fgsea
 License: GPL-3
 Encoding: UTF-8
 LazyData: false
