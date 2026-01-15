@@ -104,6 +104,9 @@ monsterPrintMonsterAnalysis <- function(x, ...){
 #' @param mode A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
 #' ('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA. Gene regulatory
 #' networks are supplied in the 'expr' variable as a TF-by-Gene matrix, by concatenating the TF-by-Gene matrices of case and control, expr has size nTFs x 2nGenes.
+#' @param method Method to use in computing the transition matrix. These include "ols" (default),"kabsch","L1", and "orig" (SVD).
+#' @param remove.diagonal #' Logical for returning a result containing 0s across the diagonal (default = TRUE).
+
 #' @export
 #' @import doParallel
 #' @import parallel
@@ -138,7 +141,8 @@ monster <- function(expr,
                     ni_method="BERE",
                     ni.coefficient.cutoff = NA,
                     numMaxCores=1, 
-                    outputDir=NA, alphaw=0.5, mode='buildNet'){
+                    outputDir=NA, alphaw=0.5, mode='buildNet',
+                    method="ols", remove.diagonal = TRUE){
   if(mode=='regNet'){
     motif=NA
     alphaw=NA
@@ -229,7 +233,7 @@ monster <- function(expr,
         tmpNetControls = nullExpr[,design==0]
       }
       transitionMatrix <- monsterTransformationMatrix(
-        tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
+        tmpNetControls, tmpNetCases, remove.diagonal=remove.diagonal, method=method)    
       print(paste("Finished running iteration", i))
       if (!is.na(outputDir)){
         saveRDS(transitionMatrix,file.path(outputDir,'tms',paste0('tm_',i,'.rds')))
@@ -269,7 +273,7 @@ monster <- function(expr,
                                  tmpNetControls = nullExpr[,design==0]
                                }
                                transitionMatrix <- monsterTransformationMatrix(
-                                 tmpNetControls, tmpNetCases, remove.diagonal=TRUE, method="ols")    
+                                 tmpNetControls, tmpNetCases, remove.diagonal=remove.diagonal, method=method)    
                                print(paste("Finished running iteration", i))
                                if (!is.na(outputDir)){
                                  saveRDS(transitionMatrix,file.path(outputDir,'tms',paste0('tm_',i,'.rds')))
@@ -375,8 +379,8 @@ monsterTransformationMatrix <- function(network.1, network.2, by.tfs=TRUE, stand
     tf.trans.matrix <- kabsch(net1,net2)
   }
   if (method == "orig"){
-    svd.net2 <- svd(net2)
-    tf.trans.matrix <- svd.net2$v %*% diag(1/svd.net2$d) %*% t(svd.net2$u) %*% net1
+    svd.net1 <- svd(net1)
+    tf.trans.matrix <- svd.net1$v %*% diag(1/svd.net1$d) %*% t(svd.net1$u) %*% net2
   }
   if (method == "ols"){
     net2.star <- vapply(seq_len(ncol(net1)), function(i,x,y){

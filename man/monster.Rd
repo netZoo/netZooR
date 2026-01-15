@@ -14,16 +14,22 @@ monster(
   numMaxCores = 1,
   outputDir = NA,
   alphaw = 0.5,
-  mode = "buildNet"
+  mode = "buildNet",
+  method = "ols",
+  remove.diagonal = TRUE
 )
 }
 \arguments{
-\item{expr}{Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet.}
+\item{expr}{Gene Expression dataset, can be matrix or data.frame of expression values or ExpressionSet. 
+If `mode` is set to `regNet`, MONSTER will be run in pre-computed gene regulatory network mode, in which case
+gene regulatory networks can be passed for this argument. See also `domonster` to use this mode.}
 
 \item{design}{Binary vector indicating case control partition. 1 for case and 0 for control.}
 
 \item{motif}{Regulatory data.frame consisting of three columns.  For each row, a transcription factor (column 1) 
-regulates a gene (column 2) with a defined strength (column 3), usually taken to be 0 or 1}
+regulates a gene (column 2) with a defined strength (column 3), usually taken to be 0 or 1.
+May also be NA, if MONSTER is being run on pre-computed gene regulatory networks, passed in the `expr` argument.
+See also `domonster` to use this mode.}
 
 \item{nullPerms}{number of random permutations to run (default 100).  Set to 0 to only 
 calculate observed transition matrix. When mode is is 'buildNet' it randomly permutes the case and control expression
@@ -47,6 +53,10 @@ equal weight to direct and indirect evidence.}
 \item{mode}{A parameter telling whether to build the regulatory networks ('buildNet') or to use provided regulatory networks
 ('regNet'). If set to 'regNet', then the parameters motif, ni_method, ni.coefficient.cutoff, and alphaw will be set to NA. Gene regulatory
 networks are supplied in the 'expr' variable as a TF-by-Gene matrix, by concatenating the TF-by-Gene matrices of case and control, expr has size nTFs x 2nGenes.}
+
+\item{method}{Method to use in computing the transition matrix. These include "ols" (default),"kabsch","L1", and "orig" (SVD).}
+
+\item{remove.diagonal}{#' Logical for returning a result containing 0s across the diagonal (default = TRUE).}
 }
 \value{
 An object of class "monsterAnalysis" containing results
@@ -64,6 +74,14 @@ changes associated with phenotypic state transition.
 Important note: the direct regulatory network observed from gene expression is currently
 implemented as a regular correlation as opposed to the partial correlation described 
 in the paper.
+There are 2 modes to run MONSTER:
+(1) MONSTER can internally estimate a gene regulatory network, in which case 
+it will take as input an expression data plus a motif network
+(2) MONSTER can run on pre-computed gene regulatory networks (e.g., from PANDA),
+in which case the `motif` argument is set to `NA`, and the `expr` argument will
+contain the concatenated gene regulatory networks. This mode can be selected
+by setting the `mode` argument to `regNet`.
+Alternatively, see the `domonster` function for a quick-start way to run this mode.
 Citation: Schlauch, Daniel, et al. "Estimating drivers of cell state transitions using gene regulatory network models." 
 BMC systems biology 11.1 (2017): 139. https://doi.org/10.1186/s12918-017-0517-y
 }
