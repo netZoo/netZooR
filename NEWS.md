@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.6.1
+--------------------------
+
+    - Update: MONSTER has a wrapper function to process input
+    - Update: LIONESS can use new data merging strategies ('union','intersection','legacy') as opposed to union by default
+
+
 CHANGES IN VERSION 1.6.0
 --------------------------
 

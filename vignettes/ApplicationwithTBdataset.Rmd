@@ -41,8 +41,6 @@ netZooR is an R package which consists of  seven main algorithms and is able to 
 
 Using this pacakage requires [**Python**](https://www.python.org/downloads/) (3.X) and some [Python libraries](#required-python-libraries), [**R**](https://cran.r-project.org/) (>= 3.3.3), and stable **Internet access**.
 
-Some plotting functions will require the [**Cytoscape**](https://cytoscape.org/) installed.
-
 ### Required Python libraries
 
 How to install Python libraries depends varies from different platforms. More instructions could be find [here](https://packaging.python.org/tutorials/installing-packages/). 
@@ -133,17 +131,6 @@ Use `$panda`to access the entire PANDA network.
 ```{r}
 treated_net <- treated_all_panda_result$panda
 control_net <- control_all_panda_result$panda
-```
-
-### PANDA Cytoscape Plotting
-Cytoscape is an interactivity network visualization tool highly recommanded to explore the PANDA network. Before using this function `plot.panda.in.cytoscape`, please install and launch Cytoscape (3.6.1 or greater) and keep it running whenever using.
-
-```R
-# select top 1000 edges in PANDA network by edge weight.
-panda.net <- head(treated_net[order(control_net$force,decreasing = TRUE),], 1000)
- 
-# run this function to create a network in Cytoscape.
-vis.panda.in.cytoscape(panda.net, network.name="PANDA")
 ```
 
 ### LIONESS Algorithm 

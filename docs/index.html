@@ -5,80 +5,66 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="netZooR unifies the implementations of several Network Zoo methods (netzoo, netzoo.github.io) into a single package by creating interfaces between network inference and network analysis methods. Currently, the package has 3 methods for network inference including PANDA and its optimized implementation OTTER (network reconstruction using mutliple lines of biological evidence), LIONESS (single-sample network inference), and EGRET (genotype-specific networks). Network analysis methods include CONDOR (community detection), ALPACA (differential community detection), CRANE (significance estimation of differential modules), MONSTER (estimation of network transition states). In addition, YARN allows to process gene expresssion data for tissue-specific analyses and SAMBAR infers missing mutation data based on pathway information.">
 <title>Unified methods for the inference and analysis of gene regulatory networks • netZooR</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Unified methods for the inference and analysis of gene regulatory networks">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Unified methods for the inference and analysis of gene regulatory networks">
+<meta name="description" content="netZooR unifies the implementations of several Network Zoo methods (netzoo, netzoo.github.io) into a single package by creating interfaces between network inference and network analysis methods. Currently, the package has 3 methods for network inference including PANDA and its optimized implementation OTTER (network reconstruction using mutliple lines of biological evidence), LIONESS (single-sample network inference), and EGRET (genotype-specific networks). Network analysis methods include CONDOR (community detection), ALPACA (differential community detection), CRANE (significance estimation of differential modules), MONSTER (estimation of network transition states). In addition, YARN allows to process gene expresssion data for tissue-specific analyses and SAMBAR infers missing mutation data based on pathway information.">
 <meta property="og:description" content="netZooR unifies the implementations of several Network Zoo methods (netzoo, netzoo.github.io) into a single package by creating interfaces between network inference and network analysis methods. Currently, the package has 3 methods for network inference including PANDA and its optimized implementation OTTER (network reconstruction using mutliple lines of biological evidence), LIONESS (single-sample network inference), and EGRET (genotype-specific networks). Network analysis methods include CONDOR (community detection), ALPACA (differential community detection), CRANE (significance estimation of differential modules), MONSTER (estimation of network transition states). In addition, YARN allows to process gene expresssion data for tissue-specific analyses and SAMBAR infers missing mutation data based on pathway information.">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="index.html">netZooR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.17</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/ALPACA.html">Detecting differential modules using ALPACA</a>
-    <a class="dropdown-item" href="articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a>
-    <a class="dropdown-item" href="articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a>
-    <a class="dropdown-item" href="articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a>
-    <a class="dropdown-item" href="articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a>
-    <a class="dropdown-item" href="articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a>
-    <a class="dropdown-item" href="articles/MONSTER.html">An Introduction to the MONSTER Package</a>
-    <a class="dropdown-item" href="articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a>
-    <a class="dropdown-item" href="articles/TutorialOTTER.html">Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER</a>
-    <a class="dropdown-item" href="articles/pandaR.html">An Introduction to the pandaR Package</a>
-    <a class="dropdown-item" href="articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a>
-    <a class="dropdown-item" href="articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/ALPACA.html">Detecting differential modules using ALPACA</a></li>
+    <li><a class="dropdown-item" href="articles/ApplicationinGTExData.html">Building PANDA and LIONESS Regulatory Networks from GTEx Gene Expression Data in R</a></li>
+    <li><a class="dropdown-item" href="articles/ApplicationwithTBdataset.html">netZooR application with TB dataset</a></li>
+    <li><a class="dropdown-item" href="articles/CONDOR.html">Using CONDOR for community detection in bipartite graphs</a></li>
+    <li><a class="dropdown-item" href="articles/EGRET_toy_example.html">Constructing genotype-specific gene regulatory networks with EGRET</a></li>
+    <li><a class="dropdown-item" href="articles/LionessApplicationinGTExData.html">Comparing LIONESS Regulatory Networks using limma</a></li>
+    <li><a class="dropdown-item" href="articles/MONSTER.html">An Introduction to the MONSTER Package</a></li>
+    <li><a class="dropdown-item" href="articles/pandaR.html">An Introduction to the pandaR Package</a></li>
+    <li><a class="dropdown-item" href="articles/pandaRApplicationinGTExData.html">Building PANDA Regulatory Networks from GTEx Gene Expression Data in R</a></li>
+    <li><a class="dropdown-item" href="articles/SAMBAR.html">SAMBAR: Subtyping Agglomerated Mutations By Annotation Relations</a></li>
+    <li><a class="dropdown-item" href="articles/TutorialOTTER.html">Inferring Gene Regulatory Networks from GTEx Gene Expression Data in R with OTTER</a></li>
+    <li><a class="dropdown-item" href="articles/yarn.html">YARN: Robust Multi-Tissue RNA-Seq Preprocessing and Normalization</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/netZoo/netZooR/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/netZoo/netZooR/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9">
-<p>netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v4.3)</p>
+<p>netZooR is tested on: (OS: Ubuntu + Macos) X (Language: R v4.4)</p>
 <div class="section level2">
 <h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
 </h2>
@@ -90,13 +76,13 @@
 <p>netZooR currently integrates:</p>
 <details><summary>
 PANDA
-</summary><b>PANDA</b> (Passing Attributes between Networks for Data Assimilation) <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832" class="external-link">Glass et al. 2013</a>: PANDA is a method for estimating bipartite gene regulatory networks (GRNs) consisting of two types of nodes: transcription factors (TFs) and genes. An edge between TF <span class="math inline"><em>i</em></span> and gene <span class="math inline"><em>j</em></span> indicates that gene <span class="math inline"><em>j</em></span> is regulated by TF <span class="math inline"><em>i</em></span>. The edge weight represents the strength of evidence for this regulatory relationship obtained by integrating three types of biological data: gene expression data, protein-protein interaction (PPI) data, and transcription factor binding motif (TFBM) data. PANDA is an iterative approach that begins with a seed GRN estimated from TFBMs and uses message passing between data types to refine the seed network to a final GRN that is consistent with the information contained in gene expression, PPI, and TFBM data.
+</summary><b>PANDA</b> (Passing Attributes between Networks for Data Assimilation) <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0064832" class="external-link">Glass et al. 2013</a>: PANDA is a method for estimating bipartite gene regulatory networks (GRNs) consisting of two types of nodes: transcription factors (TFs) and genes. An edge between TF <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math> and gene <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math> indicates that gene <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math> is regulated by TF <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>. The edge weight represents the strength of evidence for this regulatory relationship obtained by integrating three types of biological data: gene expression data, protein-protein interaction (PPI) data, and transcription factor binding motif (TFBM) data. PANDA is an iterative approach that begins with a seed GRN estimated from TFBMs and uses message passing between data types to refine the seed network to a final GRN that is consistent with the information contained in gene expression, PPI, and TFBM data.
 </details><details><summary>
 CONDOR
 </summary><b>CONDOR</b> (COmplex Network Description Of Regulators) <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005033" class="external-link">Platig et al. 2016</a>: CONDOR is a tool for community detection in bipartite networks. Many community detection methods for unipartite networks are based on the concept of maximizing a modularity metric that compares the weight of edges within communities to the weight of edges between communities, prioritizing community assignments with higher values of the former relative to the latter. CONDOR extends this concept to bipartite networks by optimizing a bipartite version of modularity defined by <a href="https://pubmed.ncbi.nlm.nih.gov/18233893/" class="external-link">Barber (2007)</a>. To enable bipartite community detection on large networks such gene regulatory networks, CONDOR uses a fast unipartite modularity maximization method on one of the two unipartite projections of the bipartite network. In Platig et al. (2016), CONDOR is applied to bipartite networks of single nucleotide polymorphisms (SNPs) and gene expression, where a network edge from a SNP node to a gene node is indicative of an association between the SNP and the gene expression level, commonly known as an expression quantitative trait locus (eQTL). Communities detected with CONDOR contained local hub nodes (“core SNPs”) enriched for association with disease, suggesting that functional eQTL relationships are encoded at the community level.
 </details><details><summary>
 LIONESS
-</summary><b>LIONESS</b> (Linear Interpolation to Obtain Network Estimates for Single Samples) <a href="https://doi.org/10.1016/j.isci.2019.03.021" class="external-link">Kuijjer et al. 2019</a>: LIONESS is a flexible method for single-sample network integration. The machinery behind LIONESS is a leave-one-out approach. To construct a single-sample network for sample <span class="math inline"><em>i</em></span>, a first network is estimated on the full dataset and a second network is estimated on the dataset with sample <span class="math inline"><em>i</em></span> withheld. The single-sample network is then estimated based on the difference between these two networks. Any method that can be used to estimate a network can be used with LIONESS to estimate single-sample networks. Two common use cases are the use of LIONESS to generate single-sample GRNs based on PANDA and the use of LIONESS to generate single-sample Pearson correlation networks.
+</summary><b>LIONESS</b> (Linear Interpolation to Obtain Network Estimates for Single Samples) <a href="https://doi.org/10.1016/j.isci.2019.03.021" class="external-link">Kuijjer et al. 2019</a>: LIONESS is a flexible method for single-sample network integration. The machinery behind LIONESS is a leave-one-out approach. To construct a single-sample network for sample <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>, a first network is estimated on the full dataset and a second network is estimated on the dataset with sample <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math> withheld. The single-sample network is then estimated based on the difference between these two networks. Any method that can be used to estimate a network can be used with LIONESS to estimate single-sample networks. Two common use cases are the use of LIONESS to generate single-sample GRNs based on PANDA and the use of LIONESS to generate single-sample Pearson correlation networks.
 </details><details><summary>
 ALPACA
 </summary><p><b>ALPACA</b> (ALtered Partitions Across Community Architectures) <a href="https://www.nature.com/articles/s41540-018-0052-5" class="external-link">Padi and Quackenbush 2018</a>: ALPACA is a method for differential network analysis that is based on a novel approach to comparison of network community structures. Comparisons of community structure have typically been accomplished by assessing which nodes switch community membership between networks (“community comparison”) or by computing the edge weight differences by subtracting the adjacency matrices of two networks and then performing community detection on the resulting differential network (“edge subtraction”). Both these approaches have important limitations. Community comparison is subject to a resolution limit and cannot detect differences smaller than the average community size in a network. Edge subtraction transfers noise from both of the original networks to the differential network, leading to an imprecise estimator. Moreover, positive and negative edge differences cannot be distinguished in the subsequent community detection performed on the differential network.</p>
@@ -106,7 +92,7 @@ SAMBAR
 </summary><b>SAMBAR</b> (Subtyping Agglomerated Mutations By Annotation Relations) <a href="https://www.nature.com/articles/s41416-018-0109-7" class="external-link">Kuijjer et al.</a>: SAMBAR is a tool for studying cancer subtypes based on patterns of somatic mutations in curated biological pathways. Rather than characterize cancer according to mutations at the gene level, SAMBAR agglomerates mutations within pathways to define a pathway mutation score. To avoid bias based on pathway representation, these pathway mutation scores correct for the number of genes in each pathway as well as the number of times each gene is represented in the universe of pathways. By taking a pathway rather than gene-by-gene lens, SAMBAR both de-sparsifies somatic mutation data and incorporates important prior biological knowledge. Kuijjer et al. (2018) demonstrate that SAMBAR is capable of outperforming other methods for cancer subtyping, producing subtypes with greater between-subtype distances; the authors use SAMBAR for a pan-cancer subtyping analysis that identifies four diverse pan-cancer subtypes linked to distinct molecular processes.
 </details><details><summary>
 MONSTER
-</summary><b>MONSTER</b> (Modeling Network State Transitions from Expression and Regulatory data) <a href="https://doi.org/10.1186/s12918-017-0517-y" class="external-link">Schlauch et al.</a>: MONSTER is a method for estimating transitions between network states by modeling the adjacency matrix of one state as a linear transformation of the adjacency matrix of another. Like LIONESS, MONSTER is a flexible method that does not require a particular type of network structure. MONSTER models the perturbation of an initial network A into a perturbed network B according to a matrix product B = AT. T is a transition matrix encoding the changes that map A to B. When A and B are gene regulatory networks, i.e., bipartite networks between TFs and genes, the MONSTER framework leads naturally to the definition of TF involvement as the sum of the off-diagonal weights for a transcription factor <span class="math inline"><em>i</em></span> in the transition matrix T. This perspective enables MONSTER to identify differentially involved TFs that contribute to network transitions differently between different conditions. This dimension cannot be captured from a traditional differential expression analysis of TFs, which will not detect TFs that have the same concentration between conditions.
+</summary><b>MONSTER</b> (Modeling Network State Transitions from Expression and Regulatory data) <a href="https://doi.org/10.1186/s12918-017-0517-y" class="external-link">Schlauch et al.</a>: MONSTER is a method for estimating transitions between network states by modeling the adjacency matrix of one state as a linear transformation of the adjacency matrix of another. Like LIONESS, MONSTER is a flexible method that does not require a particular type of network structure. MONSTER models the perturbation of an initial network A into a perturbed network B according to a matrix product B = AT. T is a transition matrix encoding the changes that map A to B. When A and B are gene regulatory networks, i.e., bipartite networks between TFs and genes, the MONSTER framework leads naturally to the definition of TF involvement as the sum of the off-diagonal weights for a transcription factor <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math> in the transition matrix T. This perspective enables MONSTER to identify differentially involved TFs that contribute to network transitions differently between different conditions. This dimension cannot be captured from a traditional differential expression analysis of TFs, which will not detect TFs that have the same concentration between conditions.
 </details><details><summary>
 OTTER
 </summary><b>OTTER</b> (Optimization to Estimate Regulation) <a href="https://www.biorxiv.org/content/10.1101/2020.06.23.167999v2.abstract" class="external-link">Weighill et al.</a>: OTTER is a GRN inference method based on the idea that observed biological data (PPI data and gene co-expression data) are projections of a bipartite GRN between TFs and genes. Specifically, PPI data represent the projection of the GRN onto the TF-TF space and gene co-expression data represent the projection of the GRN onto the gene-gene space. OTTER reframes the problem of GRN inference as a problem of relaxed graph matching and finds a GRN that has optimal agreement with the observed PPI and coexpression data. The OTTER objective function is tunable in two ways: first, one can prioritize matching the PPI data or the coexpression data more heavily depending on one’s confidence in the data source; second, there is a regularization parameter that can be applied to induce sparsity on the estimated GRN. The OTTER objective function can be solved using spectral decomposition techniques and gradient descent; the latter is shown to be closely related to the PANDA message-passing approach (Glass et al. 2013).
@@ -234,8 +220,8 @@ BLOBFISH
 <p>Contributions are welcome! The contribution guide to netZooR can be found <a href="https://netzoo.github.io/contribute/contribute/" class="external-link">here</a>.</p>
 <p>We follow the <a href="https://bioconductor.org/packages/devel/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html" class="external-link">Bioconductor code guidelines</a>. Before pushing a contribution, please run</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">BiocCheck</span><span class="op">)</span></span>
-<span><span class="fu">BiocCheck</span><span class="op">(</span><span class="st">"packageDirOrTarball"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Bioconductor/BiocCheck" class="external-link">BiocCheck</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocCheck/man/BiocCheck.html" class="external-link">BiocCheck</a></span><span class="op">(</span><span class="st">"packageDirOrTarball"</span><span class="op">)</span></span></code></pre></div>
 <p>And resolve any warnings, notes, and errors before committing the code.</p>
 <p>After adding new features or optimizing a function in the package, please re-build the package and run <code>R CMD check .</code> in the terminal or follow the instructions below before doing the pull request to the devel branch. To run only the tests:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -300,13 +286,15 @@ BLOBFISH
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Marouen Ben Guebila <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-5934-966X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Tara Eicher <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-1809-4458" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Marouen Ben Guebila <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-5934-966X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Tian Wang <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-2767-3243" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>John Platig <br><small class="roles"> Author </small>  </li>
 <li>Marieke Kuijjer <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6280-3130" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Megha Padi <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-3446-4562" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Rebekka Burkholz <br><small class="roles"> Author </small>  </li>
 <li>Des Weighill <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-4979-5871" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Chen Chen <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-8042-7201" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Kate Shutta <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-0402-3771" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
@@ -331,21 +319,19 @@ BLOBFISH
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Des Weighill, Kate Shutta.</p>
+  <p>Developed by Tara Eicher, Marouen Ben Guebila, Tian Wang, John Platig, Marieke Kuijjer, Megha Padi, Rebekka Burkholz, Des Weighill, Chen Chen, Kate Shutta.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

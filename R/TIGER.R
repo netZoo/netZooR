@@ -53,9 +53,11 @@
 #' @export
 #'
 #' @examples
-#' data(TIGER_expr)
-#' data(TIGER_prior)
-#' tiger(TIGER_expr,TIGER_prior)
+#' if (requireNamespace("cmdstanr", quietly = TRUE)) {
+#'    data(TIGER_expr)
+#'    data(TIGER_prior)
+#'    tiger(TIGER_expr,TIGER_prior)
+#' }
 tiger = function(expr,prior,method="VB",TFexpressed = TRUE,
                  signed=TRUE,baseline=TRUE,psis_loo = FALSE,
                  seed=123,out_path=NULL,out_size = 300,
