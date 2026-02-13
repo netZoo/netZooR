@@ -28,7 +28,7 @@ test_that("panda function works", {
    # i.e computing = "cpu", save_memory =T , precision="single", save_memory = T, save_tmp=F, keep_expression_matrix = T, modeProcess = 'intersection'
    test2Panda <- pandaPy(T4_expression_file_path, motif_file_path,ppi_file_path,precision = "single", save_memory = T, save_tmp = F,keep_expression_matrix = TRUE, modeProcess = "intersection" )$WAMpanda
    test2Panda_mat <- as.matrix(test2Panda)
-   expect_equal(test2Panda[1,1],2.229422, tolerance=1e-5)
+   expect_equal(test2Panda_mat[1,1],2.229422, tolerance=1e-5)
   
    # test 6: when processMode = legacy, remove_missing=FALSE
    test3Panda <- pandaPy(T4_expression_file_path, motif_file_path,ppi_file_path, modeProcess = "legacy", remove_missing = FALSE)$panda
