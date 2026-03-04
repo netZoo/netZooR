@@ -94,23 +94,32 @@ test_that("checkMisAnnotation() returns coordinates without error", {
   expect_true(!is.null(result))
 })
 
-# ---- Tests using the shipped skin dataset ----
+# ---- Tests using the skin dataset (downloaded at test runtime) ----
+
+# Helper to load the skin dataset from the downloaded file
+load_skin <- function() {
+  skin_path <- file.path("skin.rdata")
+  if (!file.exists(skin_path)) skip("skin.rdata not available (download failed)")
+  env <- new.env(parent = emptyenv())
+  load(skin_path, envir = env)
+  env$skin
+}
 
 test_that("skin dataset loads and is an ExpressionSet", {
-  data(skin, package = "netZooR")
+  skin <- load_skin()
   expect_s4_class(skin, "ExpressionSet")
   expect_true(nrow(skin) > 0)
   expect_true(ncol(skin) > 0)
 })
 
 test_that("checkTissuesToMerge() works on skin data", {
-  data(skin, package = "netZooR")
+  skin <- load_skin()
   result <- checkTissuesToMerge(skin, "SMTS", "SMTSD", plotFlag = FALSE)
   expect_true(!is.null(result))
 })
 
 test_that("filterGenes() works on skin data", {
-  data(skin, package = "netZooR")
+  skin <- load_skin()
   filtered <- filterGenes(skin, labels = c("X", "Y", "MT"),
                           featureName = "chromosome_name")
   remaining <- Biobase::fData(filtered)[, "chromosome_name"]
@@ -119,19 +128,19 @@ test_that("filterGenes() works on skin data", {
 
 test_that("filterLowGenes() works on skin data", {
   skip_if_not_installed("edgeR")
-  data(skin, package = "netZooR")
+  skin <- load_skin()
   filtered <- filterLowGenes(skin, "SMTSD")
   expect_true(nrow(filtered) <= nrow(skin))
 })
 
 test_that("filterMissingGenes() works on skin data", {
-  data(skin, package = "netZooR")
+  skin <- load_skin()
   filtered <- filterMissingGenes(skin)
   expect_s4_class(filtered, "ExpressionSet")
 })
 
 test_that("filterSamples() works on skin data", {
-  data(skin, package = "netZooR")
+  skin <- load_skin()
   filtered <- filterSamples(skin, ids = "Skin - Not Sun Exposed (Suprapubic)",
                             groups = "SMTSD")
   remaining <- Biobase::pData(filtered)[, "SMTSD"]
@@ -139,7 +148,7 @@ test_that("filterSamples() works on skin data", {
 })
 
 test_that("plotCMDS() works on skin data", {
-  data(skin, package = "netZooR")
+  skin <- load_skin()
   coords <- plotCMDS(skin, comp = 1:2, plotFlag = FALSE)
   expect_true(is.matrix(coords) || is.data.frame(coords))
   expect_equal(ncol(coords), 2)
@@ -147,7 +156,7 @@ test_that("plotCMDS() works on skin data", {
 
 test_that("normalizeTissueAware() works on skin data", {
   skip_if_not_installed("preprocessCore")
-  data(skin, package = "netZooR")
+  skin <- load_skin()
   # Use a small subset for speed
   skinSub <- skin[1:100, ]
   normalized <- normalizeTissueAware(skinSub, "SMTSD",

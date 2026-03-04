@@ -27,6 +27,7 @@ if (!identical(Sys.getenv("NETZOOR_SKIP_DOWNLOADS"), "true")) {
   download_if_missing('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/dragon/dragon_python_prec.csv', 'dragon_python_prec.csv')
   download_if_missing('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/dragon/dragon_python_parcor.csv', 'dragon_python_parcor.csv')
   download_if_missing('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/dragon/risk_grid_netzoopy.csv', 'risk_grid_netzoopy.csv')
+  download_if_missing('https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/yarn/skin.rdata', 'skin.rdata')
 }
 
 test_check("netZooR")
