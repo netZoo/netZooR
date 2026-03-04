@@ -73,8 +73,12 @@ test_that("priorPp() filters inconsistent edges", {
   genes <- paste0("G", 1:5)
   prior <- matrix(sample(c(-1, 0, 1), 15, replace = TRUE), nrow = 3,
                   dimnames = list(tfs, genes))
-  expr <- matrix(rnorm(80), nrow = 8,
-                 dimnames = list(c(tfs, genes), paste0("S", 1:10)))
+  # Use enough samples (n >> p) so corpcor shrinkage lambda < 1;
+  # with n ~ p, lambda = 1 (perfect shrinkage) can trigger a C-level
+  # heap corruption in corpcor::cor.shrink on some platforms.
+  n_samples <- 50L
+  expr <- matrix(rnorm(8 * n_samples), nrow = 8,
+                 dimnames = list(c(tfs, genes), paste0("S", seq_len(n_samples))))
 
   result <- priorPp(prior, expr)
 
