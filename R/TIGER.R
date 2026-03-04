@@ -131,7 +131,6 @@ tiger = function(expr,prior,method="VB",TFexpressed = TRUE,
   #1. compile stan model, only once
   write_stan <- .get_cmdstanr_fun("write_stan_file")
   f = write_stan(TIGER_C) # save to .stan file in root folder
-  #mod = cmdstanr::cmdstan_model(f,cpp_options = list(stan_threads = TRUE)) # compile stan program, allow within-chain parallel
   stan_model <- .get_cmdstanr_fun("cmdstan_model")
   mod = stan_model(f)
   
@@ -203,9 +202,11 @@ tiger = function(expr,prior,method="VB",TFexpressed = TRUE,
     if (!requireNamespace("loo", quietly = TRUE)) {
       stop("Package 'loo' is required but not installed.")
     }
-    loocv = loo::loo(fit$draws("log_lik",format = "draws_array"),
-                     r_eff=loo::relative_eff(fit$draws("log_lik",format = "draws_array")),
-                     moment_match=TRUE)
+    loo_fn <- utils::getFromNamespace("loo", "loo")
+    relative_eff_fn <- utils::getFromNamespace("relative_eff", "loo")
+    loocv = loo_fn(fit$draws("log_lik",format = "draws_array"),
+                   r_eff=relative_eff_fn(fit$draws("log_lik",format = "draws_array")),
+                   moment_match=TRUE)
     print(loocv)
     elpd_loo = loocv$pointwise[,"elpd_loo"]
   }else{

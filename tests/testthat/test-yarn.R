@@ -93,3 +93,62 @@ test_that("checkMisAnnotation() returns coordinates without error", {
                                controlGenes = "all", plotFlag = FALSE)
   expect_true(!is.null(result))
 })
+
+# ---- Tests using the shipped skin dataset ----
+
+test_that("skin dataset loads and is an ExpressionSet", {
+  data(skin)
+  expect_s4_class(skin, "ExpressionSet")
+  expect_true(nrow(skin) > 0)
+  expect_true(ncol(skin) > 0)
+})
+
+test_that("checkTissuesToMerge() works on skin data", {
+  data(skin)
+  result <- checkTissuesToMerge(skin, "SMTS", "SMTSD", plotFlag = FALSE)
+  expect_true(!is.null(result))
+})
+
+test_that("filterGenes() works on skin data", {
+  data(skin)
+  filtered <- filterGenes(skin, labels = c("X", "Y", "MT"),
+                          featureName = "chromosome_name")
+  remaining <- Biobase::fData(filtered)[, "chromosome_name"]
+  expect_true(!any(remaining %in% c("X", "Y", "MT")))
+})
+
+test_that("filterLowGenes() works on skin data", {
+  data(skin)
+  filtered <- filterLowGenes(skin, "SMTSD")
+  expect_true(nrow(filtered) <= nrow(skin))
+})
+
+test_that("filterMissingGenes() works on skin data", {
+  data(skin)
+  filtered <- filterMissingGenes(skin)
+  expect_s4_class(filtered, "ExpressionSet")
+})
+
+test_that("filterSamples() works on skin data", {
+  data(skin)
+  filtered <- filterSamples(skin, ids = "Skin - Not Sun Exposed (Suprapubic)",
+                            groups = "SMTSD")
+  remaining <- Biobase::pData(filtered)[, "SMTSD"]
+  expect_true(!any(remaining == "Skin - Not Sun Exposed (Suprapubic)"))
+})
+
+test_that("plotCMDS() works on skin data", {
+  data(skin)
+  coords <- plotCMDS(skin, comp = 1:2, plotFlag = FALSE)
+  expect_true(is.matrix(coords) || is.data.frame(coords))
+  expect_equal(ncol(coords), 2)
+})
+
+test_that("normalizeTissueAware() works on skin data", {
+  data(skin)
+  # Use a small subset for speed
+  skinSub <- skin[1:100, ]
+  normalized <- normalizeTissueAware(skinSub, "SMTSD",
+                                     normalizationMethod = "quantile")
+  expect_s4_class(normalized, "ExpressionSet")
+})
