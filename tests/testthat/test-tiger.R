@@ -68,14 +68,15 @@ test_that("adj2regulon() creates valid regulon from adjacency", {
 
 test_that("priorPp() filters inconsistent edges", {
   skip_if_not_installed("GeneNet")
+  # Skip: corpcor::cor.shrink() has a latent C-level heap corruption bug
+  # that causes SIGABRT on CI runners. The crash is non-deterministic and
+  # depends on memory layout at package load time. See netZoo/netZooR#383.
+  skip("corpcor C-level crash in cor.shrink (netZoo/netZooR#383)")
   set.seed(42)
   tfs <- paste0("TF", 1:3)
   genes <- paste0("G", 1:5)
   prior <- matrix(sample(c(-1, 0, 1), 15, replace = TRUE), nrow = 3,
                   dimnames = list(tfs, genes))
-  # Use enough samples (n >> p) so corpcor shrinkage lambda < 1;
-  # with n ~ p, lambda = 1 (perfect shrinkage) can trigger a C-level
-  # heap corruption in corpcor::cor.shrink on some platforms.
   n_samples <- 50L
   expr <- matrix(rnorm(8 * n_samples), nrow = 8,
                  dimnames = list(c(tfs, genes), paste0("S", seq_len(n_samples))))
