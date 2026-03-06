@@ -52,6 +52,7 @@ jobs:
           extra-packages: |
              any::rcmdcheck
              any::covr
+             stan-dev/cmdstanr
           needs: |
              website
              coverage

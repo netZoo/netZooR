@@ -67,6 +67,7 @@ jobs:
           extra-packages: |
             any::BiocCheck
             any::rcmdcheck
+            stan-dev/cmdstanr
 
       # Setup Python for reticulate (cross-platform)
       - name: Setup Python
