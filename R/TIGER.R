@@ -223,10 +223,7 @@ tiger = function(expr,prior,method="VB",TFexpressed = TRUE,
   return(tiger_fit)
 }
 
-#' This function exists as a workaround for calling packages from cmdstanr without
-#' triggering package warnings. We cannot use cmdstanr::function() because cmdstanr
-#' is not included in Suggests under the DESCRIPTION file. It cannot be included
-#' under Suggests because it is not supported by Bioconductor.
+#' Helper to retrieve an exported function from cmdstanr.
 #' @keywords internal
 .get_cmdstanr_fun <- function(fun) {
   pkg <- "cmdstanr"
