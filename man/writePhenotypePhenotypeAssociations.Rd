@@ -10,8 +10,7 @@ writePhenotypePhenotypeAssociations(
   resultFiles,
   file,
   corCutoff = -2,
-  padjCutoff = 2,
-  estimatePValue = FALSE
+  padjCutoff = 2
 )
 }
 \arguments{
@@ -23,9 +22,7 @@ writePhenotypePhenotypeAssociations(
 
 \item{corCutoff}{The cutoff for correlation. Default is -2 (all values will be retained.)}
 
-\item{padjCutoff}{The cutoff for adjusted p-value. Default is 2 (all values will be retained.)}
-
-\item{estimatePValue}{Whether or not p-values should be estimated for correlation results.
+\item{padjCutoff}{The cutoff for adjusted p-value. Default is 2 (all values will be retained.)
 Default is FALSE.}
 }
 \description{

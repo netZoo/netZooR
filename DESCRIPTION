@@ -101,7 +101,8 @@ Suggests:
     quantro,
     fgsea,
     rhdf5,
-    peakRAM
+    peakRAM,
+    psych
 Remotes: jnpaulson/pandaR
 VignetteBuilder: knitr
 BugReports: https://github.com/netZoo/netZooR/issues
