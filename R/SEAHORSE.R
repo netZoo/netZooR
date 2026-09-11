@@ -95,6 +95,9 @@ seahorse <- function(expression = NULL, network = NULL, phenotype, phenotype_dic
   if (!requireNamespace("limma", quietly = TRUE)) {
     stop("Package 'limma' is required but not installed.")
   }
+  if(!requireNamespace("psych", quietly = TRUE)) {
+    stop("Package 'psych' is required but not installed.")
+  }
   set.seed(0)
   
   # Return an error if pval_adj_method is not an accepted method.
@@ -421,8 +424,9 @@ computeLinearRegression <- function(expression, phenotype, phenotype_dictionary,
   # Format p-values as a list for all covariates.
   p_list <- lapply(colnames(p_vals), function(c){
     p <- p_vals[,c]
+    t <- t_stats[,c]
     padj <- stats::p.adjust(p_vals[,c], method = pval_adj_method)
-    return(data.frame(stat = p, padj = padj, row.names = rownames(p_vals)))
+    return(data.frame(stat = t, pval = p, padj = padj, testType = "linear", row.names = rownames(p_vals)))
   })
   names(p_list) <- colnames(p_vals)
 
@@ -475,6 +479,9 @@ computeLinearRegressionNetwork <- function(network, phenotype, phenotype_diction
   
   # Initialize pvals.
   pval <- NA
+  thisstat <- NA
+  thisTestType <- NA
+  coef <- NA
   
   # Do linear or logistic regression depending on the network feature type.
   if(featureType == "continuous"){
@@ -491,23 +498,40 @@ computeLinearRegressionNetwork <- function(network, phenotype, phenotype_diction
       -abs(tstat),
       df = fit$df.residual
     )
+    thisstat <- tstat
+    thisTestType <- rep("linear", nrow(tstat))
   }else{
     
     # Run the linear models. We need to use GLM here because these are logistic regression models.
-    pval <- t(apply(t(network), 1, function(feat){
-      concatMat <- cbind(phenotype, feat)
+    resList <- lapply(colnames(network), function(feat){
+      concatMat <- cbind(phenotype, network[,feat])
+      colnames(concatMat)[ncol(concatMat)] <- "feat"
       fitFeat <- glm(formula = paste("feat", formula), data = concatMat, family = "binomial")
       zStatFeat <- coef(summary(fitFeat))[,3]
       pvalFeat <- coef(summary(fitFeat))[,4]
-      return(pvalFeat)
+      fitFeatDF <- data.frame(z = zStatFeat, p = pvalFeat)
+      rownames(fitFeatDF) <- rownames(coef(summary(fitFeat)))
+      return(fitFeatDF)
+    })
+    pval <- do.call(rbind, lapply(1:length(resList), function(i){
+      return(resList[[i]]$p)
     }))
+    thisstat <- do.call(rbind, lapply(1:length(resList), function(i){
+      return(resList[[i]]$z)
+    }))
+    rownames(pval) <- colnames(network)
+    rownames(thisstat) <- colnames(network)
+    colnames(pval) <- rownames(resList[[1]])
+    colnames(thisstat) <- rownames(resList[[1]])
+    thisTestType <- rep("logistic", nrow(thisstat))
   }
-  
+
   # Format p-values as a list for all covariates.
   p_list <- lapply(colnames(pval), function(c){
     p <- pval[,c]
+    stat <- thisstat[,c] 
     padj <- stats::p.adjust(pval[,c], method = pval_adj_method)
-    return(data.frame(stat = p, padj = padj, row.names = rownames(pval)))
+    return(data.frame(stat = stat, pval = p, padj = padj, testType = thisTestType, row.names = rownames(pval)))
   })
   names(p_list) <- colnames(pval)
   phenoAssoc = p_list
@@ -536,23 +560,24 @@ computeCorrelations <- function(expression, phenotype, phenotype_dictionary, pat
   
   phenoAssoc <- list()
   gsea <- list()
+  output_seahorse <- data.frame(stat = NA, pval = NA, testType = NA)
   for (i in 1:ncol(phenotype)){
     pheno = phenotype[,i]
     pheno_name = colnames(phenotype)[i]
 
     if (phenotype_dictionary[i] == "continuous"){
       output_seahorse = gsea_continuous(expression, pheno, pathways, method = method)
-      output_seahorse_padj <- rep("NA", length(output_seahorse$cor))
     }else if (phenotype_dictionary[i] == "nominal") {
       output_seahorse = gsea_nominal(expression, pheno, pathways)
-      output_seahorse_padj <- stats::p.adjust(output_seahorse$cor, method = pval_adj_method)
     }else{
     	output_seahorse = gsea_dichotomous(expression, pheno, pathways)
-    	output_seahorse_padj <- stats::p.adjust(output_seahorse$cor, method = pval_adj_method)
     }
-    phenoAssoc[[pheno_name]] = data.frame(stat = output_seahorse$cor,
+    output_seahorse_padj <- stats::p.adjust(output_seahorse$p, method = pval_adj_method)
+    phenoAssoc[[pheno_name]] = data.frame(stat = output_seahorse$stat,
+                                          pval = output_seahorse$p,
                                           padj = output_seahorse_padj,
-                                          row.names = names(output_seahorse$cor))
+                                          testType = output_seahorse$testType,
+                                          row.names = names(output_seahorse$stat))
     gsea[[pheno_name]] = output_seahorse$GSEA
   }
   return(list(pheno = phenoAssoc, gsea = gsea))
@@ -583,24 +608,21 @@ computeCorrelationsNetwork <- function(network, phenotype, phenotype_dictionary,
     
     if (phenotype_dictionary[i] == "continuous" && featureType == "continuous"){
       output_seahorse = networkContinuous(network, pheno, method = method)
-      output_seahorse_padj <- rep(NA, length(output_seahorse$cor))
     }else if (phenotype_dictionary[i] == "nominal" && featureType == "continuous") {
       output_seahorse = networkANOVA(network, pheno)
-      output_seahorse_padj <- stats::p.adjust(output_seahorse$cor, method = pval_adj_method)
     }else if (phenotype_dictionary[i] == "dichotomous" && featureType == "continuous") {
       output_seahorse = networkTTest(network, pheno, dichotomousVar = "phenotype")
-      output_seahorse_padj <- stats::p.adjust(output_seahorse$cor, method = pval_adj_method)
     }else if (phenotype_dictionary[i] == "continuous" && featureType == "dichotomous") {
       output_seahorse = networkTTest(network, pheno, dichotomousVar = "feature")
-      output_seahorse_padj <- stats::p.adjust(output_seahorse$cor, method = pval_adj_method)
     }else if ((phenotype_dictionary[i] == "nominal" || phenotype_dictionary[i] == "dichotomous") && featureType == "dichotomous") {
       output_seahorse = networkChisq(network, pheno)
-      output_seahorse_padj <- stats::p.adjust(output_seahorse$cor, method = pval_adj_method)
     }
-    phenoAssoc[[pheno_name]] = data.frame(stat = output_seahorse$cor,
+    output_seahorse_padj <- stats::p.adjust(output_seahorse$p, method = pval_adj_method)
+    phenoAssoc[[pheno_name]] = data.frame(stat = output_seahorse$stat,
+                                          pval = output_seahorse$p,
                                           padj = output_seahorse_padj,
                                           testType = output_seahorse$testType,
-                                          row.names = names(output_seahorse$cor))
+                                          row.names = names(output_seahorse$stat))
   }
   return(phenoAssoc)
 }
@@ -612,18 +634,19 @@ computeCorrelationsNetwork <- function(network, phenotype, phenotype_dictionary,
 #' @param method : One of "pearson", "spearman", or "kendall".
 #' @export
 networkContinuous <- function(network, pheno, method){
-  
-  output_seahorse = list()
-  output_seahorse$cor = list()
 
   # Run correlations.
+  # We use corr.test from the psych package rather than cor.test because cor.test
+  # only allows vectorized input.
   phenotype_vector = as.numeric(pheno)
-  cors <- cor(network, phenotype_vector, use = "pairwise.complete.obs", method = method)
-  cors <- as.numeric(cors)
-  names(cors) <- colnames(network)
-  output_seahorse$cor = cors
-
-  return(data.frame(cor = cors,
+  cors <- psych::corr.test(network, phenotype_vector, use = "pairwise", method = method)
+  corvals <- as.numeric(cors$r)
+  pvals <- as.numeric(cors$p)
+  names(corvals) <- colnames(network)
+  names(pvals) <- colnames(network)
+  
+  return(data.frame(stat = corvals,
+                    pvals = pvals,
                     V = rep(NA, ncol(network)),
                     testType = rep("Cor", ncol(network)),
                     row.names = colnames(network)))
@@ -636,21 +659,21 @@ networkContinuous <- function(network, pheno, method){
 #' @export
 networkANOVA <- function(network, phenotype){
   
-  output_seahorse = list()
-  output_seahorse$cor = list()
-  
   phenotype_vector = factor(as.character(phenotype))
-  cor <- unlist(apply(network, MARGIN=2, function(x){
-    results <- NA
+  anovares <- do.call(rbind, lapply(colnames(network), function(x){
+    results <- data.frame(stat = NA, p = NA)
     tryCatch({
-      results <- anova(lm(as.numeric(as.character(x))~phenotype_vector))$`Pr(>F)`[1]
+      res <- anova(lm(as.numeric(as.character(network[,x]))~phenotype_vector))
+      results$p <- res$`Pr(>F)`[1]
+      results$stat <- res$`F value`[1]
     }, error = function(cond){
       warning("In this phenotype pair, all continuous values are missing for all but one phenotype level - NA result will be returned")
     })
     return(results)
   }))
   
-  return(data.frame(cor = cor,
+  return(data.frame(stat = anovares$stat,
+                    p = anovares$p,
                     V = rep(NA, ncol(network)),
                     testType = rep("ANOVA", ncol(network)),
                     row.names = colnames(network)))
@@ -680,14 +703,14 @@ networkTTest <- function(network, phenotype, dichotomousVar){
     # Check that thresholds are met.
     whichLevel1 <- length(which(phenotype_vector == levels[1]))
     whichLevel2 <- length(which(phenotype_vector == levels[2]))
-    cor <- NA
+    tres <- data.frame(stat = NA, pval = NA)
     
     if(length(dim(group1)) >= 2 || length(dim(group2)) >= 2){
       meetsThreshold <- colSums(!is.na(group1)) >= 2 & colSums(!is.na(group2)) >= 2
       
       # Initialize result to NA.
-      cor <- rep(NA, ncol(group1))
-      names(cor) <- rownames(group1)
+      tres <- data.frame(stat = rep(NA, ncol(group1)), pval = rep(NA, ncol(group1)))
+      rownames(tres) <- colnames(group1)
       
       # Only compute correlations if both levels are represented in the phenotype vector.
       if(whichLevel1 > 0 && whichLevel2 > 0 && length(which(meetsThreshold == TRUE)) > 0){
@@ -698,23 +721,25 @@ networkTTest <- function(network, phenotype, dichotomousVar){
         )
         
         # Compute remaining t-tests.
-        cor[meetsThreshold] <- tresValid$pvalue
+        tres[meetsThreshold, "pval"] <- tresValid$pvalue
+        tres[meetsThreshold, "stat"] <- tresValid$statistic
       }
     }else{
       meetsThreshold <- sum(!is.na(group1)) >= 2 & sum(!is.na(group2)) >= 2
       
       # Initialize result to NA.
-      names(cor) <- names(group1)
+      rownames(tres) <- names(group1)
       
       # Only compute correlations if both levels are represented in the phenotype vector.
       if(whichLevel1 > 0 && whichLevel2 > 0 && length(which(meetsThreshold == TRUE)) > 0){
         tryCatch({
-          # Compute t-test where thresholds are met.
+          # Compute t-test where thresholds are met. Welch's t-test is computed by default.
           tresValid <- t.test(group1[meetsThreshold, drop = FALSE], 
                               group2[meetsThreshold, drop = FALSE])
           
           # Compute remaining t-tests.
-          cor[meetsThreshold] <- tresValid$p.value
+          tres[meetsThreshold, "pval"] <- tresValid$p.value
+          tres[meetsThreshold, "stat"] <- tresValid$statistic
         }, error = function(cond){
           warning("Could not compute t-test (it is possible that variance is too low). Returning NA.")
         })
@@ -722,30 +747,33 @@ networkTTest <- function(network, phenotype, dichotomousVar){
     }
     
   }else{
-    cor <- unlist(lapply(1:ncol(network), function(i){
+    tres <- do.call(rbind, lapply(1:ncol(network), function(i){
       network_vector = factor(as.character(network[,i]))
       levels <- unique(network_vector)
       group1 <- phenotype[which(network_vector == levels[1])]
       group2 <- phenotype[which(network_vector == levels[2])]
-      stat <- NA
+      result <- data.frame(stat = NA, p = NA)
       if(length(which(!is.na(group1))) > 2 && length(which(!is.na(group2))) > 2){
         tryCatch({
-          tres <- t.test(group1, group2)
-          stat = tres$p.value
+          testres <- t.test(group1, group2)
+          result$stat <- testres$statistic
+          result$p <- testres$p.value
         }, error = function(cond){
           warning("Could not compute t-test (it is possible that variance is too low). Returning NA.")
         })
       }
-      names(stat) <- colnames(network)[i]
-      return(stat)
+      rownames(result) <- colnames(network)[i]
+
+      return(result)
     }))
   }
-  if(length(which(is.na(cor))) > 0){
+  if(length(which(is.na(tres$stat))) > 0){
     warning("Some network features did not have sufficient sample sizes to perform a t-test - NAs will be returned")
   }
   
   # Return the data frame.
-  return(data.frame(cor = cor,
+  return(data.frame(stat = tres$stat,
+                    p = tres$p,
                     V = rep(NA, ncol(network)),
                     testType = rep("T-Test", ncol(network)),
                     row.names = colnames(network)))
@@ -777,6 +805,7 @@ networkChisq <- function(network, phenotype){
     nonzeroRowMarginalCount <- length(which(rowMarginals > 0))
     nonzeroColMarginalCount <- length(which(colMarginals > 0))
     pval <- NA
+    stat <- NA
     V <- NA
     type <- "Chi-square"
     if(nonzeroRowMarginalCount >= 2 && nonzeroColMarginalCount >= 2){
@@ -794,15 +823,19 @@ networkChisq <- function(network, phenotype){
       
       # Get the p-value and Cramer's V.
       pval <- chisq$p.value
+      stat <- chisq$statistic
       V <- sqrt(chisq$statistic / (sum(chisqTable) * min(nrow(chisqTable) - 1, 
                                                          ncol(chisqTable) - 1)))
     }else{
       warning("Less than 2 nonzero marginals in the contingency table - Chi-square will return NA")
     }
-    return(list(pval = pval, v = V, testType = type))
+    return(list(pval = pval, stat = stat, v = V, testType = type))
   })
   chisqP <- unlist(lapply(chisqRes, function(res){
     return(res$pval)
+  }))
+  chisqStat <- unlist(lapply(chisqRes, function(res){
+    return(res$stat)
   }))
   cramerV <- unlist(lapply(chisqRes, function(res){
     return(res$v)
@@ -810,7 +843,8 @@ networkChisq <- function(network, phenotype){
   testType <- unlist(lapply(chisqRes, function(res){
     return(res$testType)
   }))
-  corResNotLessFull <- data.frame(cor = chisqP,
+  corResNotLessFull <- data.frame(stat = chisqStat,
+                                  pval = chisqP,
                                   V = cramerV,
                                   testType = testType,
                                   row.names = colnames(network))
@@ -841,19 +875,25 @@ networkChisq <- function(network, phenotype){
 #' @export
 gsea_continuous <- function(expression, pheno, pathways, method){
 
-  output_seahorse = list()
-  output_seahorse$cor = list()
-  output_seahorse$GSEA = list()
+  output_seahorse <- list()
+  output_seahorse$stat <- list()
+  output_seahorse$p <- list()
+  output_seahorse$GSEA <- list()
+  output_seahorse$testType <- list()
   
   # Run correlations.
   phenotype_vector = as.numeric(pheno)
-  cors <- cor(t(expression), phenotype_vector, use = "pairwise.complete.obs", method = method)
-  cors <- as.numeric(cors)
-  names(cors) <- rownames(expression)
-  output_seahorse$cor = cors
+  cors <- psych::corr.test(t(expression), phenotype_vector, use = "pairwise", method = method)
+  corvals <- as.numeric(cors$r)
+  pvals <- as.numeric(cors$p)
+  names(corvals) <- rownames(expression)
+  names(pvals) <- rownames(expression)
+  output_seahorse$stat <- corvals
+  output_seahorse$p <- pvals
+  output_seahorse$testType <- rep("Cor", length(pvals))
   
   # Run GSEA
-  cor_rank = sort(output_seahorse$cor, decreasing = TRUE)
+  cor_rank = sort(output_seahorse$stat, decreasing = TRUE)
   fgseaRes <- fgsea::fgsea(pathways, cor_rank, minSize=15, maxSize=500)
   output_seahorse$GSEA = fgseaRes
   
@@ -874,12 +914,14 @@ gsea_continuous <- function(expression, pheno, pathways, method){
 #' @export
 gsea_nominal <- function(expression, pheno, pathways){
 
-  output_seahorse = list()
-  output_seahorse$cor = list()
-  output_seahorse$GSEA = list()
+  output_seahorse <- list()
+  output_seahorse$stat <- list()
+  output_seahorse$testType <- list()
+  output_seahorse$p <- list()
+  output_seahorse$GSEA <- list()
   
   # Run the linear models.
-  phenotype_vector = factor(as.character(pheno))
+  phenotype_vector <- factor(as.character(pheno))
   # Remove NA values.
   hasVal <- which(!is.na(phenotype_vector))
   phenotype_vector <- phenotype_vector[hasVal]
@@ -897,11 +939,14 @@ gsea_nominal <- function(expression, pheno, pathways){
     
     # Format p-values as a list for all covariates.
     p <- anova_res[,"P.Value"]
-    output_seahorse$cor <- p
-    names(output_seahorse$cor) <- rownames(anova_res)
+    output_seahorse$p <- p
+    names(output_seahorse$p) <- rownames(anova_res)
+    output_seahorse$stat <- anova_res[,"F"]
+    names(output_seahorse$stat) <- rownames(anova_res)
+    output_seahorse$testType <- rep("ANOVA", nrow(anova_res))
     
     # Run GSEA
-    statSorted <- sort(-1 * log10(output_seahorse$cor), decreasing = TRUE)
+    statSorted <- sort(-1 * log10(output_seahorse$p), decreasing = TRUE)
     fgseaRes <- fgsea::fgsea(pathways, statSorted, minSize=15, maxSize=500, scoreType = "pos")
     output_seahorse$GSEA = fgseaRes
   }, error = function(cond){
@@ -925,8 +970,10 @@ gsea_nominal <- function(expression, pheno, pathways){
 gsea_dichotomous <- function(expression, pheno, pathways){
   
   output_seahorse = list()
-  output_seahorse$cor = list()
+  output_seahorse$stat = list()
+  output_seahorse$p = list()
   output_seahorse$GSEA = list()
+  output_seahorse$testType <- list()
   
   # Run the linear models.
   phenotype_vector = factor(as.character(pheno))
@@ -937,7 +984,9 @@ gsea_dichotomous <- function(expression, pheno, pathways){
   expression <- expression[,hasVal]
   
   # Check that we still have multiple values. If not, return NA for this covariate.
-  output_seahorse$cor <- NA
+  output_seahorse$stat <- NA
+  output_seahorse$p <- NA
+  output_seahorse$testType <- NA
   output_seahorse$GSEA <- NA
   if(length(unique(phenotype_vector)) > 1){
     design <- model.matrix(~ phenotype_vector)
@@ -953,27 +1002,28 @@ gsea_dichotomous <- function(expression, pheno, pathways){
       # Format p-values as a list for all covariates.
       p <- t_res[,"P.Value"]
       t <- t_res[,"t"]
-      output_seahorse$cor <- p
-      names(output_seahorse$cor) <- rownames(t_res)
-      names(t) <- rownames(t_res)
-      
+      output_seahorse$stat <- t
+      output_seahorse$p <- p
+      output_seahorse$testType <- rep("LIMMA Moderated t-test", nrow(t_res))
+      names(output_seahorse$p) <- rownames(t_res)
+      names(output_seahorse$stat) <- rownames(t_res)
+
       # Run GSEA
       fgseaRes <- NA
       tryCatch({
-        statSorted <- sort(t, decreasing = TRUE)
+        statSorted <- sort(output_seahorse$stat, decreasing = TRUE)
         fgseaRes <- fgsea::fgsea(pathways, statSorted, minSize=15, maxSize=500)
       }, error = function(cond){
         print(cond)
       })
-      
       output_seahorse$GSEA = fgseaRes
     }, error = function(cond){
+      print(cond)
       warning("Could not compute empirical Bayes statistics for this phenotypic variable. Returning empty list.")
     })
   }else{
     warning("Phenotype has only one level. Returning NA for all gene associations.")
   }
-  
   return(output_seahorse)
 }
 
@@ -1018,8 +1068,10 @@ computePhenotypeCorrelations <- function(phenotype, phenotype_dictionary, method
     typesAfter <- phenotype_dictionary[rangeAfter]
     
     # Initialize an empty data frame.
-    emptyDF <- data.frame(cor = c(),
+    emptyDF <- data.frame(stat = c(),
+                          p = c(),
                           V = c(),
+                          padj = c(),
                           testType = c(),
                           row.names = c())
     emptyPadj <- c()
@@ -1039,10 +1091,14 @@ computePhenotypeCorrelations <- function(phenotype, phenotype_dictionary, method
                                                phenotypesToCompare = phenoCat, 
                                                phenotypeType = phenoType)
         output_seahorse_padj_cat <- rep(NA, nrow(output_seahorse_cat))
-        output_seahorse_padj_cat[which(output_seahorse_cat$testType == "FFH")] <- 
-          stats::p.adjust(output_seahorse_cat[which(output_seahorse_cat$testType == "FFH"), "cor"], method = pval_adj_method)
-        output_seahorse_padj_cat[which(output_seahorse_cat$testType == "Chi-square")] <- 
-          stats::p.adjust(output_seahorse_cat[which(output_seahorse_cat$testType == "Chi-square"), "cor"], method = pval_adj_method)
+        whichFFH <- which(output_seahorse_cat$testType == "FFH")
+        whichChisq <- which(output_seahorse_cat$testType == "Chi-square")
+        if(length(whichFFH) > 0){
+          output_seahorse_padj_cat[whichFFH] <- stats::p.adjust(output_seahorse_cat[whichFFH, "pval"], method = pval_adj_method)
+        }
+        if(length(whichChisq) > 0){
+          output_seahorse_padj_cat[whichChisq] <- stats::p.adjust(output_seahorse_cat[whichChisq, "pval"], method = pval_adj_method)
+        }
       }
       
       # Do continuous phenotypes.
@@ -1056,16 +1112,17 @@ computePhenotypeCorrelations <- function(phenotype, phenotype_dictionary, method
         output_seahorse_con <- phenotype_ttest(phenotype = pheno, 
                                               phenotypesToCompare = phenoCon, 
                                               phenotypeType = phenoType)
-        output_seahorse_padj_con <- stats::p.adjust(output_seahorse_con$cor, method = pval_adj_method)
+        output_seahorse_padj_con <- stats::p.adjust(output_seahorse_con$pval, method = pval_adj_method)
       }
       
       # Concatenate categorical and continuous results.
-      output_seahorse <- data.frame(stat = c(output_seahorse_cat$cor, output_seahorse_con$cor),
+      output_seahorse <- data.frame(stat = c(output_seahorse_cat$stat, output_seahorse_con$stat),
+                                    pval = c(output_seahorse_cat$pval, output_seahorse_con$pval),
                                cramerV = c(output_seahorse_cat$V, output_seahorse_con$V),
                                padj = c(output_seahorse_padj_cat, output_seahorse_padj_con),
                                testType = c(output_seahorse_cat$testType, output_seahorse_con$testType),
                                row.names = c(rownames(output_seahorse_cat), rownames(output_seahorse_con)))
-      
+
     }else if(phenoType == "nominal"){
       
       # Do categorical phenotypes.
@@ -1080,10 +1137,14 @@ computePhenotypeCorrelations <- function(phenotype, phenotype_dictionary, method
                                                     phenotypesToCompare = phenoCat, 
                                                     phenotypeType = phenoType)
         output_seahorse_padj_cat <- rep(NA, nrow(output_seahorse_cat))
-        output_seahorse_padj_cat[which(output_seahorse_cat$testType == "FFH")] <- 
-          stats::p.adjust(output_seahorse_cat[which(output_seahorse_cat$testType == "FFH"), "cor"], method = pval_adj_method)
-        output_seahorse_padj_cat[which(output_seahorse_cat$testType == "Chi-square")] <- 
-          stats::p.adjust(output_seahorse_cat[which(output_seahorse_cat$testType == "Chi-square"), "cor"], method = pval_adj_method)
+        whichFFH <- which(output_seahorse_cat$testType == "FFH")
+        whichChisq <- which(output_seahorse_cat$testType == "Chi-square")
+        if(length(whichFFH) > 0){
+          output_seahorse_padj_cat[whichFFH] <- stats::p.adjust(output_seahorse_cat[whichFFH, "pval"], method = pval_adj_method)
+        }
+        if(length(whichChisq) > 0){
+          output_seahorse_padj_cat[whichChisq] <- stats::p.adjust(output_seahorse_cat[whichChisq, "pval"], method = pval_adj_method)
+        }
       }
       
       # Do continuous phenotypes.
@@ -1097,11 +1158,12 @@ computePhenotypeCorrelations <- function(phenotype, phenotype_dictionary, method
         output_seahorse_con <- phenotype_anova(phenotype = pheno, 
                                               phenotypesToCompare = phenoCon, 
                                               phenotypeType = phenoType)
-        output_seahorse_padj_con <- stats::p.adjust(output_seahorse_con$cor, method = pval_adj_method)
+        output_seahorse_padj_con <- stats::p.adjust(output_seahorse_con$p, method = pval_adj_method)
       }
       
       # Concatenate categorical and continuous results.
-      output_seahorse <- data.frame(stat = c(output_seahorse_cat$cor, output_seahorse_con$cor),
+      output_seahorse <- data.frame(stat = c(output_seahorse_cat$stat, output_seahorse_con$stat),
+                                    pval = c(output_seahorse_cat$p, output_seahorse_con$p),
                                    cramerV = c(output_seahorse_cat$V, output_seahorse_con$V),
                                    padj = c(output_seahorse_padj_cat, output_seahorse_padj_con),
                                    testType = c(output_seahorse_cat$testType, output_seahorse_con$testType),
@@ -1120,7 +1182,7 @@ computePhenotypeCorrelations <- function(phenotype, phenotype_dictionary, method
         output_seahorse_dich <- phenotype_ttest(phenotype = pheno, 
                                                     phenotypesToCompare = phenoDich, 
                                                     phenotypeType = phenoType)
-        output_seahorse_padj_dich <- stats::p.adjust(output_seahorse_dich$cor, method = pval_adj_method)
+        output_seahorse_padj_dich <- stats::p.adjust(output_seahorse_dich$p, method = pval_adj_method)
       }
       
       # Do nominal phenotypes.
@@ -1134,7 +1196,7 @@ computePhenotypeCorrelations <- function(phenotype, phenotype_dictionary, method
         output_seahorse_nom <- phenotype_anova(phenotype = pheno, 
                                               phenotypesToCompare = phenoNom, 
                                               phenotypeType = phenoType)
-        output_seahorse_padj_nom <- stats::p.adjust(output_seahorse_nom$cor, method = pval_adj_method)
+        output_seahorse_padj_nom <- stats::p.adjust(output_seahorse_nom$p, method = pval_adj_method)
       }
 
       # Do continuous phenotypes.
@@ -1152,7 +1214,8 @@ computePhenotypeCorrelations <- function(phenotype, phenotype_dictionary, method
       }
       
       # Concatenate categorical and continuous results.
-      output_seahorse <- data.frame(stat = c(output_seahorse_dich$cor, output_seahorse_nom$cor, output_seahorse_con$cor),
+      output_seahorse <- data.frame(stat = c(output_seahorse_dich$stat, output_seahorse_nom$stat, output_seahorse_con$stat),
+                                    pval = c(output_seahorse_dich$p, output_seahorse_nom$p, output_seahorse_con$p),
                                    cramerV = c(output_seahorse_dich$V, output_seahorse_nom$V, output_seahorse_con$V),
                                    padj = c(output_seahorse_padj_dich, output_seahorse_padj_nom, output_seahorse_padj_con),
                                    testType = c(output_seahorse_dich$testType, output_seahorse_nom$testType, output_seahorse_con$testType),
@@ -1162,6 +1225,7 @@ computePhenotypeCorrelations <- function(phenotype, phenotype_dictionary, method
     # Add the NA values.
     varsNotAdded <- setdiff(colnames(phenotype), row.names(output_seahorse))
     additionalVars <- data.frame(stat = rep(NA, length(varsNotAdded)),
+                                 pval = rep(NA, length(varsNotAdded)),
                                  cramerV = rep(NA, length(varsNotAdded)),
                                  padj = rep(NA, length(varsNotAdded)),
                                  testType = rep(NA, length(varsNotAdded)),
@@ -1176,6 +1240,12 @@ computePhenotypeCorrelations <- function(phenotype, phenotype_dictionary, method
   # Compile each vector list into a matrix. Add an extra NA row at the end.
   statMat <- t(as.matrix(do.call(cbind, list(lapply(1:length(phenoAssoc), function(i){
     df <- data.frame(phenoAssoc[[i]]$stat)
+    colnames(df) <- names(phenoAssoc)[i]
+    rownames(df) <- names(phenotype)
+    return(df)
+  }), setNames(data.frame(X=rep(NA, ncol(phenotype))), colnames(phenotype)[ncol(phenotype)])))))
+  pvalMat <- t(as.matrix(do.call(cbind, list(lapply(1:length(phenoAssoc), function(i){
+    df <- data.frame(phenoAssoc[[i]]$pval)
     colnames(df) <- names(phenoAssoc)[i]
     rownames(df) <- names(phenotype)
     return(df)
@@ -1200,7 +1270,7 @@ computePhenotypeCorrelations <- function(phenotype, phenotype_dictionary, method
   }), setNames(data.frame(X=rep(NA, ncol(phenotype))), colnames(phenotype)[ncol(phenotype)])))))
 
   # Return all matrices.
-  phenoAssocList <- list(stat = statMat, cramerV = vMat, padj = adjMat, testType = typeMat)
+  phenoAssocList <- list(stat = statMat, pval = pvalMat, cramerV = vMat, padj = adjMat, testType = typeMat)
   return(phenoAssocList)
 }
 
@@ -1232,6 +1302,7 @@ phenotype_chisq <- function(phenotype, phenotypesToCompare, phenotypeType){
     nonzeroColMarginalCount <- length(which(colMarginals > 0))
     pval <- NA
     V <- NA
+    stat <- NA
     type <- "Chi-square"
     if(nonzeroRowMarginalCount >= 2 && nonzeroColMarginalCount >= 2){
       # Run the test. If a warning is thrown, switch to FFH.
@@ -1247,16 +1318,20 @@ phenotype_chisq <- function(phenotype, phenotypesToCompare, phenotypeType){
       )
       
       # Get the p-value and Cramer's V.
+      stat <- chisq$statistic
       pval <- chisq$p.value
       V <- sqrt(chisq$statistic / (sum(chisqTable) * min(nrow(chisqTable) - 1, 
                                                          ncol(chisqTable) - 1)))
     }else{
       warning("Less than 2 nonzero marginals in the contingency table - Chi-square will return NA")
     }
-    return(list(pval = pval, v = V, testType = type))
+    return(list(pval = pval, stat = stat, v = V, testType = type))
   })
   chisqP <- unlist(lapply(chisqRes, function(res){
     return(res$pval)
+  }))
+  chisqStat <- unlist(lapply(chisqRes, function(res){
+    return(res$stat)
   }))
   cramerV <- unlist(lapply(chisqRes, function(res){
     return(res$v)
@@ -1264,7 +1339,8 @@ phenotype_chisq <- function(phenotype, phenotypesToCompare, phenotypeType){
   testType <- unlist(lapply(chisqRes, function(res){
     return(res$testType)
   }))
-  corResNotLessFull <- data.frame(cor = chisqP,
+  corResNotLessFull <- data.frame(stat = chisqStat,
+                                  pval = chisqP,
                               V = cramerV,
                               testType = testType,
                               row.names = colnames(phenotypesToCompare))
@@ -1294,7 +1370,8 @@ phenotype_ffs <- function(tables){
   }))
 
   # Return the results.
-  return(data.frame(cor = pvals,
+  return(data.frame(stat = rep(NA, length(tables)),
+                    pval = pvals,
                     V = rep(NA, length(tables)),
                     testType = rep("FFH", length(tables)),
                     row.names = names(tables)))
@@ -1308,35 +1385,41 @@ phenotype_ffs <- function(tables){
 #' and "V" which is set to NA.
 phenotype_anova <- function(phenotype, phenotypesToCompare, phenotypeType){
   
-  cor <- rep(NA, ncol(phenotypesToCompare))
-  
+  res <- data.frame(p = rep(NA, ncol(phenotypesToCompare)),
+                    stat = rep(NA, ncol(phenotypesToCompare)))
+
   # Case 1 - the phenotype is nominal and the phenotypes to compare are numeric.
   # Case 2 - the phenotype is numeric and the phenotypes to compare are nominal.
   if(phenotypeType == "nominal"){
     phenotype_vector = factor(as.character(phenotype))
-    cor <- unlist(apply(phenotypesToCompare, MARGIN=2, function(x){
-      results <- NA
+    res <- do.call(rbind, lapply(colnames(phenotypesToCompare), function(x){
+      results <- data.frame(p = NA, stat = NA)
       tryCatch({
-        results <- anova(lm(as.numeric(as.character(x))~phenotype_vector))$`Pr(>F)`[1]
+        anovares <- anova(lm(as.numeric(as.character(phenotypesToCompare[,x]))~phenotype_vector))
+        results <- data.frame(p = anovares$`Pr(>F)`[1],
+                              stat = anovares$`F value`[1])
       }, error = function(cond){
         warning("In this phenotype pair, all continuous values are missing for all but one phenotype level - NA result will be returned")
       })
       return(results)
     }))
   }else{
-    cor <- unlist(lapply(1:ncol(phenotypesToCompare), function(i){
-      results <- NA
+    res <- do.call(rbind, lapply(1:ncol(phenotypesToCompare), function(i){
+      results <- data.frame(p = NA, stat = NA)
       phenotype_vector <- factor(as.character(phenotypesToCompare[,i]))
       tryCatch({
-        results <- anova(lm(as.numeric(as.character(phenotype))~phenotype_vector))$`Pr(>F)`[1]
+        anovares <- anova(lm(as.numeric(as.character(phenotype))~phenotype_vector))
+        results <- data.frame(p = anovares$`Pr(>F)`[1],
+                              stat = anovares$`F value`[1])
       }, error = function(cond){
+        print(cond)
         warning("In this phenotype pair, all continuous values are missing for all but one phenotype level - NA result will be returned")
       })
       return(results)
     }))
   }
-    
-  return(data.frame(cor = cor,
+  return(data.frame(stat = res$stat,
+                    p = res$p,
                     V = rep(NA, ncol(phenotypesToCompare)),
                     testType = rep("ANOVA", ncol(phenotypesToCompare)),
                     row.names = colnames(phenotypesToCompare)))
@@ -1354,6 +1437,8 @@ phenotype_ttest <- function(phenotype, phenotypesToCompare, phenotypeType){
   # We can vectorize this and use matrixTests.
   # Case 2 - the phenotype is numeric and the phenotypes to compare are dichotomous.
   # We cannot vectorize this and use t.test instead, which defaults to Welch's t-test.
+  res <- data.frame(p = rep(NA, ncol(phenotypesToCompare)),
+                    stat = rep(NA, ncol(phenotypesToCompare)))
   if(phenotypeType == "dichotomous"){
     
     # Split groups.
@@ -1365,14 +1450,14 @@ phenotype_ttest <- function(phenotype, phenotypesToCompare, phenotypeType){
     # Check that thresholds are met.
     whichLevel1 <- length(which(phenotype_vector == levels[1]))
     whichLevel2 <- length(which(phenotype_vector == levels[2]))
-    cor <- NA
     
     if(length(dim(group1)) >= 2 || length(dim(group2)) >= 2){
       meetsThreshold <- colSums(!is.na(group1)) >= 2 & colSums(!is.na(group2)) >= 2
       
       # Initialize result to NA.
-      cor <- rep(NA, ncol(group1))
-      names(cor) <- colnames(group1)
+      res <- data.frame(p = rep(NA, ncol(group1)),
+                         stat = rep(NA, ncol(group1)))
+      rownames(res) <- colnames(group1)
       
       # Only compute correlations if both levels are represented in the phenotype vector.
       if(whichLevel1 > 0 && whichLevel2 > 0 && length(which(meetsThreshold == TRUE)) > 0){
@@ -1383,13 +1468,14 @@ phenotype_ttest <- function(phenotype, phenotypesToCompare, phenotypeType){
         )
         
         # Compute remaining t-tests.
-        cor[meetsThreshold] <- tresValid$pvalue
+        res[meetsThreshold, "p"] <- tresValid$pvalue
+        res[meetsThreshold, "stat"] <- tresValid$statistic
       }
     }else{
       meetsThreshold <- sum(!is.na(group1)) >= 2 & sum(!is.na(group2)) >= 2
       
       # Initialize result to NA.
-      names(cor) <- names(group1)
+      rownames(res) <- names(group1)
       
       # Only compute correlations if both levels are represented in the phenotype vector.
       if(whichLevel1 > 0 && whichLevel2 > 0 && length(which(meetsThreshold == TRUE)) > 0){
@@ -1397,40 +1483,44 @@ phenotype_ttest <- function(phenotype, phenotypesToCompare, phenotypeType){
           # Compute t-test where thresholds are met.
           tresValid <- t.test(group1[meetsThreshold, drop = FALSE], 
                               group2[meetsThreshold, drop = FALSE])
-          
+
           # Compute remaining t-tests.
-          cor[meetsThreshold] <- tresValid$p.value
+          res[meetsThreshold, "p"] <- tresValid$p.value
+          res[meetsThreshold, "stat"] <- tresValid$statistic
         }, error = function(cond){
           warning("Could not compute t-test (it is possible that variance is too low). Returning NA.")
         })
       }
     }
-    
   }else{
-    cor <- unlist(lapply(1:ncol(phenotypesToCompare), function(i){
+    res <- do.call(rbind, lapply(1:ncol(phenotypesToCompare), function(i){
       phenotype_vector = factor(as.character(phenotypesToCompare[,i]))
       levels <- unique(phenotype_vector)
       group1 <- phenotype[which(phenotype_vector == levels[1])]
       group2 <- phenotype[which(phenotype_vector == levels[2])]
       stat <- NA
+      p <- NA
       if(length(which(!is.na(group1))) > 2 && length(which(!is.na(group2))) > 2){
         tryCatch({
           tres <- t.test(group1, group2)
-          stat = tres$p.value
+          p = tres$p.value
+          stat = tres$statistic
         }, error = function(cond){
           warning("Could not compute t-test (it is possible that variance is too low). Returning NA.")
         })
       }
-      names(stat) <- colnames(phenotypesToCompare)[i]
-      return(stat)
+      toreturn <- data.frame(p = p, stat = stat)
+      rownames(toreturn) <- colnames(phenotypesToCompare)[i]
+      return(toreturn)
     }))
   }
-  if(length(which(is.na(cor))) > 0){
+  if(length(which(is.na(res))) > 0){
     warning("Some phenotypes did not have sufficient sample sizes to perform a t-test - NAs will be returned")
   }
   
   # Return the data frame.
-  return(data.frame(cor = cor,
+  return(data.frame(stat = res$stat,
+                    pval = res$p,
                     V = rep(NA, ncol(phenotypesToCompare)),
                     testType = rep("T-Test", ncol(phenotypesToCompare)),
                     row.names = colnames(phenotypesToCompare)))
@@ -1445,8 +1535,13 @@ phenotype_ttest <- function(phenotype, phenotypesToCompare, phenotypeType){
 #' @returns A data frame with two vectors: "cor", which lists the t-test p-values, 
 #' and "V" which is set to NA.
 phenotype_cor <- function(phenotype, phenotypesToCompare, method){
-  corRes = cor(phenotype, phenotypesToCompare, use="pairwise.complete.obs", method = method)
-  return(data.frame(cor = unname(c(corRes)),
+  corRes <- psych::corr.test(phenotype, phenotypesToCompare, use = "pairwise", method = method)
+  corvals <- as.numeric(corRes$r)
+  pvals <- as.numeric(corRes$p)
+  names(corvals) <- colnames(phenotype)
+  names(pvals) <- colnames(phenotype)
+  return(data.frame(stat = corvals,
+                    p = pvals,
                     testType = rep("Cor", ncol(phenotypesToCompare)),
                     V = rep(NA, ncol(phenotypesToCompare)),
                     row.names = colnames(phenotypesToCompare)))
@@ -1547,14 +1642,12 @@ seahorseFormatForUI <- function(input_directory, result_directory, output_direct
   message("Preparing to write phenotype-gene associations...")
   writePhenotypeGeneAssociations(inFiles = paste(input_directory, inputfiles, sep = "/"),
                   resultFiles = paste(result_directory, resultfiles, sep = "/"),
-                 file = paste(output_directory, "metadata2expression", sep = "/"),
-                 estimatePValue = TRUE)
+                 file = paste(output_directory, "metadata2expression", sep = "/"))
   message("Phenotype-gene associations done.")
   message("Preparing to write phenotype associations...")
   writePhenotypePhenotypeAssociations(inFiles = paste(input_directory, inputfiles, sep = "/"),
                                       resultFiles = paste(result_directory, resultfiles, sep = "/"),
-                                 file = paste(output_directory, "metadata2metadata", sep = "/"),
-                                 estimatePValue = TRUE)
+                                 file = paste(output_directory, "metadata2metadata", sep = "/"))
   message("Phenotype associations done")
   message("Preparing to write gene associations...")
   writeGeneGene(inFiles = paste(result_directory, resultfiles, sep = "/"),
@@ -1881,11 +1974,8 @@ writePhenotype <- function(inFiles, file){
 #' @param file The file where results should be stored. .tsv.gz will be appended.
 #' @param corCutoff The cutoff for correlation. Default is -2 (all values will be retained.)
 #' @param padjCutoff The cutoff for adjusted p-value. Default is 2 (all values will be retained.)
-#' @param estimatePValue Whether or not to estimate the p-value for the correlation results.
-#' Default is FALSE.
 #' @return NULL
-writePhenotypeGeneAssociations <- function(inFiles, resultFiles, file, corCutoff = -2, padjCutoff = 2,
-                                           estimatePValue = FALSE){
+writePhenotypeGeneAssociations <- function(inFiles, resultFiles, file, corCutoff = -2, padjCutoff = 2){
   
   # Open the file.
   con <- gzfile(paste0(file, ".tsv.gz"), "wt")
@@ -1910,7 +2000,7 @@ writePhenotypeGeneAssociations <- function(inFiles, resultFiles, file, corCutoff
                               tissue = character(), TEST = character(),
                               TESTSTAT = numeric(), TESTPVALUE = numeric())
           if(var %in% colnames(inputs$phenotype)){
-            outDf <- results$phenotype_association[[var]]
+            outDf <- results$phenotype_association[[var]][,c("stat", "padj")]
             if(length(outDf) > 1){
               colnames(outDf) <- c("TESTSTAT", "TESTPVALUE")
               outDf$GENE <- rownames(outDf)
@@ -1922,15 +2012,6 @@ writePhenotypeGeneAssociations <- function(inFiles, resultFiles, file, corCutoff
                 outDf$TEST <- "LIMMA Moderated t-test"
               }else if(dictVal == "nominal"){
                 outDf$TEST <- "ANOVA"
-              }else if(dictVal == "continuous" && estimatePValue == TRUE){
-                nPheno <- which(!is.na(inputs$phenotype[,var]))
-                n <- unlist(lapply(1:nrow(inputs$expression), function(i){
-                  nGene <- which(!is.na(inputs$expression[i,]))
-                  nShared <- intersect(nGene, nPheno)
-                  return(length(nShared))
-                }))
-                pval <- spearmanPFromRho(rho = outDf$TESTSTAT, n = n)
-                outDf$TESTPVALUE <- p.adjust(pval, method = "fdr")
               }
               outDf <- outDf[,c("VARNAME", "GENE", "tissue", "TEST", "TESTSTAT", "TESTPVALUE")]
             }
@@ -1943,9 +2024,12 @@ writePhenotypeGeneAssociations <- function(inFiles, resultFiles, file, corCutoff
         # Subset by cutoffs.
         whichCorCutoff <- intersect(which(abs(phenotypeToGeneDf$TESTSTAT) > corCutoff),
                                     which(phenotypeToGeneDf$TEST == "Correlation"))
-        whichPadjCutoff <- intersect(which(phenotypeToGeneDf$TESTSTAT < padjCutoff),
+        whichPadjCutoff <- intersect(which(phenotypeToGeneDf$TESTPVALUE < padjCutoff),
                                     which(phenotypeToGeneDf$TEST != "Correlation"))
-        phenotypeToGeneDf <- phenotypeToGeneDf[sort(c(whichCorCutoff, whichPadjCutoff)),]
+        whichPadjCorCutoff <- intersect(which(phenotypeToGeneDf$TESTPVALUE < padjCutoff),
+                                     which(phenotypeToGeneDf$TEST == "Correlation"))
+        phenotypeToGeneDf <- phenotypeToGeneDf[sort(c(intersect(whichCorCutoff, whichPadjCorCutoff), 
+                                                      whichPadjCutoff)),]
     }
     write.table(phenotypeToGeneDf, file = con, sep = "\t", row.names = FALSE, quote = FALSE,
                 col.names = i == 1)
@@ -1970,11 +2054,10 @@ spearmanPFromRho <- function(rho, n) {
 #' @param file The file where results should be stored. .tsv.gz will be appended.
 #' @param corCutoff The cutoff for correlation. Default is -2 (all values will be retained.)
 #' @param padjCutoff The cutoff for adjusted p-value. Default is 2 (all values will be retained.)
-#' @param estimatePValue Whether or not p-values should be estimated for correlation results.
 #' Default is FALSE.
 #' @return NULL
 writePhenotypePhenotypeAssociations <- function(inFiles, resultFiles, file, corCutoff = -2,
-                                                padjCutoff = 2, estimatePValue = FALSE){
+                                                padjCutoff = 2){
   
   # Open the file.
   con <- gzfile(paste0(file, ".tsv.gz"), "wt")
@@ -2002,19 +2085,6 @@ writePhenotypePhenotypeAssociations <- function(inFiles, resultFiles, file, corC
         VARNAME1 <- rep(var, length((j+1):ncol(results$phenocor$padj)))
         tissue <- tissueNames[i]
         
-        # Add p-value estimation if desired.
-        if(estimatePValue == TRUE){
-          whichCor <- which(TEST == "Cor")
-          if(length(whichCor) > 0){
-            nPheno2 <- apply(as.matrix(VARNAME2[whichCor]), 1, function(x) which(!is.na(inputs$phenotype[,x])))
-            nPheno <- which(!is.na(inputs$phenotype[,var]))
-            n <- unlist(lapply(nPheno2, function(n2){
-              return(length(intersect(n2, nPheno)))
-            }))
-            pval <- spearmanPFromRho(rho = TESTSTAT[whichCor], n = n)
-            TESTPVALUE[whichCor] <- p.adjust(pval, method = "fdr")
-          }
-        }
         return(data.frame(VARNAME1 = VARNAME1, VARNAME2 = VARNAME2, tissue = tissue,
                           TEST = TEST, TESTSTAT = TESTSTAT, TESTPVALUE = TESTPVALUE))
       })
@@ -2022,10 +2092,13 @@ writePhenotypePhenotypeAssociations <- function(inFiles, resultFiles, file, corC
       
       # Subset by cutoffs.
       whichCorCutoff <- intersect(which(abs(phenotypeToPhenotypeDf$TESTSTAT) > corCutoff),
-                                  which(phenotypeToPhenotypeDf$TEST == "Cor"))
-      whichPadjCutoff <- intersect(which(phenotypeToPhenotypeDf$TESTSTAT < padjCutoff),
-                                   which(phenotypeToPhenotypeDf$TEST != "Cor"))
-      phenotypeToPhenotypeDf <- phenotypeToPhenotypeDf[sort(c(whichCorCutoff, whichPadjCutoff)),]
+                                  which(phenotypeToPhenotypeDf$TEST == "Correlation"))
+      whichPadjCutoff <- intersect(which(phenotypeToPhenotypeDf$TESTPVALUE < padjCutoff),
+                                   which(phenotypeToPhenotypeDf$TEST != "Correlation"))
+      whichPadjCorCutoff <- intersect(which(phenotypeToPhenotypeDf$TESTPVALUE < padjCutoff),
+                                      which(phenotypeToPhenotypeDf$TEST == "Correlation"))
+      phenotypeToPhenotypeDf <- phenotypeToPhenotypeDf[sort(c(intersect(whichCorCutoff, whichPadjCorCutoff), 
+                                                    whichPadjCutoff)),]
     }
     write.table(phenotypeToPhenotypeDf, file = con, sep = "\t", row.names = FALSE, quote = FALSE,
                 col.names = i == 1)
@@ -2469,6 +2542,8 @@ writeTable <- function(result, phenotype = NULL, variable, variableType, resultT
                                        as.matrix(result$phenocor$stat[otherVars, variable]))
     filteredDat$phenocor$cramerV <- rbind(as.matrix(result$phenocor$cramerV[variable,otherVars]),
                                           as.matrix(result$phenocor$cramerV[otherVars, variable]))
+    filteredDat$phenocor$pval <- rbind(as.matrix(result$phenocor$pval[variable,otherVars]),
+                                       as.matrix(result$phenocor$pval[otherVars, variable]))
     filteredDat$phenocor$padj <- rbind(as.matrix(result$phenocor$padj[variable,otherVars]),
                                        as.matrix(result$phenocor$padj[otherVars, variable]))
     filteredDat$phenocor$testType <-rbind(as.matrix(result$phenocor$testType[variable,otherVars]),
@@ -2477,15 +2552,18 @@ writeTable <- function(result, phenotype = NULL, variable, variableType, resultT
     whichNotNA <- which(!is.na(filteredDat$phenocor$stat))
     filteredDat$phenocor$stat <- as.matrix(filteredDat$phenocor$stat[whichNotNA])
     filteredDat$phenocor$cramerV <- as.matrix(filteredDat$phenocor$cramerV[whichNotNA])
+    filteredDat$phenocor$pval <- as.matrix(filteredDat$phenocor$pval[whichNotNA])
     filteredDat$phenocor$padj <- as.matrix(filteredDat$phenocor$padj[whichNotNA])
     filteredDat$phenocor$testType <- as.matrix(filteredDat$phenocor$testType[whichNotNA])
     rowFinal <- row[whichNotNA]
     rownames(filteredDat$phenocor$stat) <-
       rownames(filteredDat$phenocor$cramerV) <-
+      rownames(filteredDat$phenocor$pval) <-
       rownames(filteredDat$phenocor$padj) <-
       rownames(filteredDat$phenocor$testType) <- rowFinal
     colnames(filteredDat$phenocor$stat) <-
       colnames(filteredDat$phenocor$cramerV) <-
+      colnames(filteredDat$phenocor$pval) <-
       colnames(filteredDat$phenocor$padj) <-
       colnames(filteredDat$phenocor$testType) <- variable
     
