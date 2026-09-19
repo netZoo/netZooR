@@ -10,7 +10,7 @@ test_that("panda function works", {
    expect_error(pandaPy())
    
    # input file path
-   system("curl -O  https://netzoo.s3.us-east-2.amazonaws.com/netZooR/example_datasets/expr4_200_L.txt")
+   netzoo_download("example_datasets/expr4_200_L.txt")
    T4_expression_file_path <- "./expr4_200_L.txt"
    motif_file_path <- system.file("extdata", "chip_medium.txt", package = "netZooR", mustWork = TRUE)
    ppi_file_path <- "./ppi_medium.txt"

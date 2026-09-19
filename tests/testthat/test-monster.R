@@ -2,7 +2,7 @@ context("test MONSTER result")
 
 test_that("MONSTER function works", {
   
-  system('curl -O https://netzoo.s3.us-east-2.amazonaws.com/netZooR/unittest_datasets/testDatasetMonster.RData')
+  netzoo_download("unittest_datasets/testDatasetMonster.RData")
   load("./testDatasetMonster.RData")
   data("yeast")
   design <- c(rep(0,20),rep(NA,10),rep(1,20))
